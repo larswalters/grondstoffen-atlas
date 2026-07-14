@@ -118,6 +118,16 @@ const UI = (function () {
       cb.onclick = () => { filters.showCentralBanks = !filters.showCentralBanks; onChange(); };
       filterRow.appendChild(cb);
     }
+
+    // Beursvoorraden-laag: alleen aanbieden als een actieve grondstof beursdata heeft (koper).
+    if (opts && opts.hasExchange) {
+      const ex = document.createElement("button");
+      ex.className = "chip" + (filters.showExchangeStocks ? " on" : "");
+      ex.textContent = "beursvoorraden";
+      ex.title = "LME/SHFE/COMEX-magazijnen + bufferstromen tonen (buffer, geen verbruik)";
+      ex.onclick = () => { filters.showExchangeStocks = !filters.showExchangeStocks; onChange(); };
+      filterRow.appendChild(ex);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL
@@ -259,7 +269,7 @@ const UI = (function () {
     mine: "Mijn / winning", refinery: "Raffinage / verwerking",
     port: "Haven / overslag", market: "Fabriek / afzetmarkt",
     airport: "Luchthaven / gateway", hub: "Handels- & kluishub",
-    cb: "Centrale bank", recycler: "Recycling",
+    cb: "Centrale bank", recycler: "Recycling", exchange: "Beursmagazijn",
   };
   const WP_KIND_LABEL = { zeestraat: "Zeestraat", kanaal: "Kanaal", kaap: "Kaap",
     vaarpunt: "Vaarpunt", grensovergang: "Grenspost" };
@@ -314,6 +324,8 @@ const UI = (function () {
       const meta = [];
       if (n.share) meta.push("aandeel wereldproductie ≈ " + n.share + "%");
       if (n.reserve) meta.push("goudvoorraad ≈ " + n.reserve + " t");
+      if (n.stock) meta.push("beursvoorraad ≈ " + n.stock + " kt");
+      if (n.exchange) meta.push(n.exchange);
       if (n.potential) meta.push("potentie: " + n.potential);
       if (n.capacity) meta.push(n.capacity);
       if (n.operator) meta.push(n.operator);

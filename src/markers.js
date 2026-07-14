@@ -27,6 +27,7 @@ const MarkerLayer = (function () {
   function defaultTier(node) {
     if (node.tier) return node.tier;
     if (node.type === "port" || node.type === "airport" || node.type === "recycler") return 2;
+    if (node.type === "exchange") return 2;
     if (node.type === "hub" || node.type === "cb") return 1;
     if (node.type === "mine") return (node.share || 0) >= 10 ? 1 : 2;
     return 1;
@@ -103,12 +104,17 @@ const MarkerLayer = (function () {
       // centrale banken schalen op voorraad (goud); sqrt zodat de VS niet álles verplettert
       const maxReserve = Math.max(1,
         ...res.nodes.filter((n) => n.type === "cb" && n.reserve).map((n) => n.reserve));
+      // beursmagazijnen (koper) schalen op voorraad, √ zodat het grootste niet álles verplettert
+      const maxStock = Math.max(1,
+        ...res.nodes.filter((n) => n.type === "exchange" && n.stock).map((n) => n.stock));
 
       res.nodes.forEach((node) => {
         const planned = node.status === "project" || node.status === "gepland";
         if (planned && !showProjects) return;
         // centrale-bank-nodes alleen tonen als de CB-laag aanstaat
         if (node.type === "cb" && !(filters && filters.showCentralBanks)) return;
+        // beursmagazijn-nodes alleen tonen als de beursvoorraden-laag aanstaat
+        if (node.type === "exchange" && !(filters && filters.showExchangeStocks)) return;
 
         const pos = latLonToVec3(node.lat, node.lon, R + C.lift);
         let mesh, ring = null;
@@ -165,6 +171,16 @@ const MarkerLayer = (function () {
           mesh = new THREE.Mesh(
             new THREE.BoxGeometry(s * 1.6, s * 0.7, s),
             new THREE.MeshBasicMaterial({ color: 0xe9c85a, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "exchange") {
+          // beursmagazijn: koperkleurige spoel/schijf, grootte ∝ √voorraad
+          const s = node.stock
+            ? C.exchange.minSize + (C.exchange.maxSize - C.exchange.minSize) *
+                normalize(Math.sqrt(node.stock), Math.sqrt(maxStock))
+            : C.exchange.minSize;
+          mesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(s, s, s * 0.55, 18),
+            new THREE.MeshBasicMaterial({ color: 0xd98e5a, transparent: true, opacity: baseOpacity })
           );
         } else if (node.type === "recycler") {
           // recycling: gedempte groene ring (schroot terug de keten in)

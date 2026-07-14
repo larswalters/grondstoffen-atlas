@@ -10,10 +10,12 @@ const ATLAS = (function () {
     stages: new Set(["erts", "raffinaat", "product"]),
     showProjects: true,
     showCentralBanks: false,           // goud: optionele centrale-bank-laag
+    showExchangeStocks: false,         // koper: optionele beursvoorraden-laag
   };
 
   function activeResources() { return RESOURCES.filter((r) => activeIds.includes(r.id)); }
   function hasCentralBanks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "cb")); }
+  function hasExchangeStocks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "exchange")); }
   function activeHasAir() { return activeResources().some((r) => (r.flows || []).some((f) => f.mode === "air")); }
 
   // Chrome die van de ACTIEVE grondstoffen afhangt: de CB-chip (alleen bij goud)
@@ -24,7 +26,8 @@ const ATLAS = (function () {
       ? { one: "vlucht", many: "vluchten", btn: "✈ vluchten" }
       : { one: "schip", many: "schepen", btn: "⚓ schepen" });
     UI.renderViewModes(filters, onFilterChange);
-    UI.renderFilters(filters, onFilterChange, { hasCB: hasCentralBanks() });
+    UI.renderFilters(filters, onFilterChange,
+      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks() });
   }
 
   // focus: null | {type:"node", id} | {type:"flow", key, nodeIds}
@@ -65,6 +68,7 @@ const ATLAS = (function () {
       (res.flows || []).forEach((f) => {
         if (!filters.stages.has(f.stage || "raffinaat")) return;
         if (f.layer === "cb" && !filters.showCentralBanks) return;
+        if (f.layer === "exchange" && !filters.showExchangeStocks) return;
         const from = getNode(res, f.from);
         const to = getNode(res, f.to);
         if (!from || !to) return;

@@ -121,6 +121,8 @@ const FlowLayer = (function () {
 
         // Centrale-bank-laag (goud): alleen tonen als de toggle aanstaat.
         if (flow.layer === "cb" && !(filters && filters.showCentralBanks)) return;
+        // Beursvoorraden-laag (koper): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "exchange" && !(filters && filters.showExchangeStocks)) return;
 
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);

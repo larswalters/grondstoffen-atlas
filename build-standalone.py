@@ -65,6 +65,8 @@ def main():
     checks = {
         "goud geregistreerd": 'id: "goud"' in html,
         "bevat data/goud (Valcambi)": "Valcambi" in html,
+        "koper geregistreerd": 'id: "copper"' in html,
+        "bevat data/copper (Escondida)": "Escondida" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
