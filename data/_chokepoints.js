@@ -153,6 +153,24 @@ REGISTER_WAYPOINTS([
 
   { id: "wp-st-laurent-4", name: "Saint-Laurent (Montréal)", kind: "vaarpunt", marker: false,
     lat: 45.80, lon: -73.20, openRadius: 0.7 },
+
+  // ============================================ URANIUM: KASPISCHE OVERSTEEK
+  // De Kaspische Zee is een INGESLOTEN zee; in het grove raster valt hij deels als
+  // land. Deze drie vaarpunten forceren een smal watercorridor Aktau <-> Bakoe, zodat
+  // de Trans-Kaspische uraniumroute (Kazachstan om Rusland heen) over water blijft in
+  // plaats van dwars over de Kaukasus/steppe te snijden. Alleen uranium gebruikt ze.
+  { id: "wp-kaspisch-n", name: "Kaspische Zee (noord)", kind: "vaarpunt", marker: false,
+    lat: 43.20, lon: 50.90, note: "Aanloop vanaf de Kazachse Caspische haven Aktau." },
+  { id: "wp-kaspisch-m", name: "Kaspische Zee (midden)", kind: "vaarpunt", marker: false,
+    lat: 42.00, lon: 50.70 },
+  { id: "wp-kaspisch-z", name: "Kaspische Zee (zuid)", kind: "vaarpunt", marker: false,
+    lat: 40.90, lon: 50.40, note: "Aanloop naar Bakoe." },
+
+  // De Dardanellen: samen met de Bosporus de uitgang van de Zwarte Zee. Even smal als
+  // de Bosporus, dus apart open te houden — anders sluit de Zwarte Zee zich af en vindt
+  // de Trans-Kaspische route (Poti -> Middellandse Zee) geen weg naar buiten.
+  { id: "wp-dardanellen", name: "Dardanellen", kind: "vaarpunt", marker: false,
+    lat: 40.20, lon: 26.40, openRadius: 1.0, note: "Zwarte Zee -> Egeïsche Zee, na de Bosporus." },
 ]);
 
 // ============================================================================
