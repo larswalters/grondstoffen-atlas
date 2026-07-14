@@ -34,9 +34,9 @@
 - [x] Verificatie headless (LAR-409): koper **145 legs / 0 kapot**; regressie **388 legs / 0 kapot** over alle 10 grondstoffen; toggle +6 nodes/+7 flows; geen console-errors. 4 route-bugs onderweg gefixt (markt-kustpunten + Korea→Japan als ship + beursmagazijnen coastal). `build-standalone.py` (checks + koper) → `atlas-standalone.html` geregenereerd.
 
 **Open (M7 afronden, niet-code):**
-- [ ] **Visuele bevestiging op Netlify/mobiel** — alleen Lars (WebGL-screenshot lukt niet headless). Checken: Andes→China-concentraatbundel, Copperbelt-kathode over land, beursvoorraden-toggle + spoel-markers, scheeps-voyages voor koper.
-- [ ] **Code-commit** — `data/copper.js` + `src/{flows,main,markers,ui}.js` + `config.js` + `build-standalone.py` staan dirty; commit los van de wrapup-docs, op Lars' seintje (agent-trailer). Repo lokaal-only.
-- [ ] **Linear** LAR-404 t/m 409 → Done — kon deze sessie niet (Linear-MCP-auth ontbrak); Lars zelf of Linear autoriseren.
+- [ ] **Visuele bevestiging op Netlify/mobiel** — alleen Lars (WebGL-screenshot lukt niet headless). Checken: Andes→China-concentraatbundel, Copperbelt-kathode over land, beursvoorraden-toggle + spoel-markers, scheeps-voyages voor koper. (= laatste open stuk van LAR-409.)
+- [x] **Code-commit** — gecommit op `main` (lokaal-only): code `233b882` + wrapup-docs `7e46092` (twee aparte commits, Claude-trailer).
+- [x] **Linear** LAR-404 t/m 409 → Done (via Linear-MCP).
 
 **Herbruikbaar uit M6+M7:** de optionele-laag-toggle (CB bij goud, beursvoorraden bij koper) is een vast, herbruikbaar
 `layer:"..."`-filterpatroon (vier filterplekken + config-size + ui-chip + marker-vorm); het landcorridor-patroon

@@ -7,9 +7,9 @@
 > — de **Andes-concentraat-trechter** → Chinese smelters + de **Copperbelt-kathode** over land (Kasumbalesa), plus een
 > nieuwe **beursvoorraden-laag** (LME/SHFE/COMEX-toggle, zelfde patroon als de goud-CB-laag). Headless geverifieerd:
 > **koper 145 legs / 0 kapot**, regressie **388 legs / 0 kapot** over alle 10 grondstoffen. **Modulair = bron van
-> waarheid**; `build-standalone.py` genereert `atlas-standalone.html`. Rest: **visuele bevestiging op Netlify/mobiel**
-> (WebGL-screenshot lukt niet headless), code-commit (op Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
-> Draaien lokaal: `python -m http.server 8732` (launch.json-entry `grondstoffen-atlas`).
+> waarheid**; `build-standalone.py` genereert `atlas-standalone.html`. **Gecommit** (`main`, code `233b882` +
+> wrapup-docs `7e46092`, lokaal-only); **Linear LAR-404..409 → Done**. Rest: alleen nog de **visuele bevestiging op
+> Netlify/mobiel** (WebGL-screenshot lukt niet headless). Draaien lokaal: `python -m http.server 8732` (launch.json-entry `grondstoffen-atlas`).
 
 ## A - What this folder is
 
