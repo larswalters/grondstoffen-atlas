@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M6 · Goud uitgevoerd)*
+*Last updated: 2026-07-14 (M7 · Koper uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -103,6 +103,32 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   globale `openRadiusDeg`, anders forceer je water dwars door een landengte.
 - **Seto-brug (Kojima–Sakaide) als `LAND_LINK`.** Reden: Shikoku is een apart eiland in het raster → de landrouter
   vond geen pad Niihama→Osaka (kobalt). Zelfde truc als Øresund/Kanaaltunnel.
+
+## Koper — bouwbesluiten (M7, 2026-07-14) — ✅ GEBOUWD + geverifieerd
+- **Schip/land, géén nieuwe render-modus.** Koper hergebruikt de bestaande zee-A\*/land-A\*-routes (M3) + scheeps-
+  voyages (M4). De luchtroute-modus was goud-specifiek; koper heeft die niet nodig.
+- **Twee productvormen via `stage`.** Sulfide-**concentraat** = `stage: erts` (dof/donker) → moet naar een smelter;
+  de Andes→China-trechter. **SX-EW-kathode** (oxide-erts, direct bij de mijn geraffineerd) = `stage: raffinaat` al
+  bij de bron → reist meteen als afgewerkt metaal. Reden: dat ís het fysieke onderscheid; het stuurt de stromen en
+  het emergent plaatje (donkere concentraatbogen die knijpen bij China vs. volle kathode direct naar de markt).
+- **Copperbelt-landcorridor via het kobalt-patroon.** DR Congo/Zambia is landlocked → een **land-flow** mijn→haven
+  (`mode: road`/`rail`, `via: ["grens-kasumbalesa"]`) + een **aparte ship-flow** haven→markt. Reden: in een ship-flow
+  worden twee opeenvolgende landpunten (mijn→grenspost) een rechte lijn; splitsen op de haven geeft schone land- én
+  zee-routering. Exact zoals kobalt Kasumbalesa doet.
+- **Recycling ALWAYS-ON, niet achter de toggle.** Koperschroot (~⅓ van het aanbod) = `type: recycler` + `stage: erts`
+  feedstock terug naar de smelters, standaard zichtbaar — net als goud. Reden: te belangrijk om te verbergen, en het
+  hoort bij de fysieke keten. **Bewuste afwijking** van de emergent-picture-tekst in `design/koper.md` (die schroot
+  bij de beursvoorraden-toggle noemde); gedocumenteerd in de brief.
+- **Beursvoorraden = optionele toggle-laag, default UIT** (`type:"exchange"`-nodes + `layer:"exchange"`-flows),
+  exact hetzelfde patroon als de goud-CB-laag (`flows.js`/`markers.js`/`main.js`/`ui.js`-filter op
+  `filters.showExchangeStocks`; chip alleen als een actieve grondstof exchange-data heeft). Marker = koperkleurige
+  **CylinderGeometry-spoel**, grootte ∝ √`stock` (kt Cu). Reden: LME/SHFE/COMEX is buffer-/handelsvoorraad, geen
+  verbruik — bijzaak die je erbij kunt zetten. Bevestigt "herbruikbaar patroon voor toekomstige optionele lagen".
+- **Markt-/magazijnnodes die per schip beleverd worden krijgen `coastal: true`.** Ontdekt tijdens verificatie: een
+  zee-leg die op een landinwaarts punt eindigt valt terug op de landkaart (of vindt geen pad). Fixes: Japan/Korea-markt
+  → kustpunt Nagoya (`coastal: true`) + Onsan→markt naar `mode: ship` (Korea→Japan kan niet over land, geen landbrug);
+  alle beursmagazijnen `coastal: true` (het zijn havenmagazijnen); Walvis→VS gereroute naar Rotterdam (geen VS-haven-
+  node). **Les:** elke ship-leg moet op een kustpunt (`port`/`coastal`/`wp-`) landen.
 
 ## Nog te beslissen (open)
 - `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná **visuele** bevestiging op Netlify/mobiel

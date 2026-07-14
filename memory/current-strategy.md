@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M6 · Goud uitgevoerd)*
+*Last updated: 2026-07-14 (M7 · Koper uitgevoerd)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -29,10 +29,13 @@
   (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand) — óók in de `routes`-weergave. Korte hops blijven
   `road`/`rail` (land-A\*). `makeRouteCurve` schaalde de booghoogte al met de routelengte. Voyages pusht nu
   ship+air; de tijdlijn-teller is resource-bewust ("✈ vluchten" ↔ "⚓ schepen", via `UI.setVoyageNoun`).
-- **Optionele lagen via filter:** `layer:"cb"`-flows + `type:"cb"`-nodes worden gefilterd op
-  `filters.showCentralBanks` (default uit) in `flows.js`/`markers.js`/`main.js`; de chip verschijnt alleen als
-  een actieve grondstof CB-data heeft. Zelfde patroon herbruikbaar voor toekomstige optionele lagen.
-- **Marker-types:** `mine`/`refinery`/`port`/`market` + (sinds M6) `airport`/`hub`/`cb`/`recycler` in `markers.js`.
+- **Optionele lagen via filter:** `layer:"cb"`-flows + `type:"cb"`-nodes gefilterd op `filters.showCentralBanks`
+  (goud); sinds M7 óók `layer:"exchange"` + `type:"exchange"` op `filters.showExchangeStocks` (koper — beursvoorraden).
+  Beide default uit, in `flows.js`/`markers.js`/`main.js`; de chip verschijnt alleen als een actieve grondstof die
+  data heeft. **Herbruikbaar patroon** voor elke toekomstige optionele laag (kopieer de vier filterplekken + config +
+  ui-chip + een marker-vorm).
+- **Marker-types:** `mine`/`refinery`/`port`/`market` + (M6) `airport`/`hub`/`cb`/`recycler` + (M7) `exchange`
+  (koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`) in `markers.js`.
 - **Single-file build:** `build-standalone.py` genereert `atlas-standalone.html` uit `index.html` (lijnt CSS +
   lokale scripts inline, houdt three.js-CDN extern). Modulair = bron van waarheid; draai het script na wijzigingen.
 
@@ -50,15 +53,19 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 
 ## Detailniveaus
 
-- **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag).
-- **Basis:** de 7 overige grondstoffen — laden en renderen, maar zonder operators/capaciteiten/route-detail.
+- **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag),
+  **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag).
+- **Basis:** de 7 overige grondstoffen (nikkel/REE/grafiet/PGM/uranium/olie) — laden en renderen, maar zonder
+  operators/capaciteiten/route-detail.
 
-## Nu (2026-07-14 — M6 · Goud uitgevoerd)
+## Nu (2026-07-14 — M7 · Koper uitgevoerd)
 
-- **M0–M6 done (op de visuele check na).** Goud volledig gebouwd: brief `data/goud.md` → `data/goud.js`
-  (Ticino-raffinage-trechter als knijp, China-put, CB-laag), nieuwe luchtroute-modus, marker-types, CB-toggle,
-  voyages-lucht, `build-standalone.py`. Headless geverifieerd: **371 legs / 0 kapot** over alle 10 grondstoffen,
-  regressievrij voor lithium/kobalt.
-- **Rest:** **visuele bevestiging op Netlify/mobiel** (LAR-403 — WebGL-screenshot lukt niet headless) +
-  opruimen bureaublad-restanten daarna. Project-repo staat met wijzigingen open (code-commit los, op Lars' seintje).
-- **Volgende:** volgende grondstof volgens dezelfde brief→bouw-flow (koper op de roadmap).
+- **M0–M7 done (op de visuele check na).** Koper volledig gebouwd: `data/copper.js` (Andes-concentraat-trechter →
+  Chinese smelters, `stage: erts`; Copperbelt-**kathode** over land via Kasumbalesa, `stage: raffinaat`;
+  concentraat-vs-SX-EW via `stage`; recycling always-on) + nieuwe **beursvoorraden-laag** (LME/SHFE/COMEX-toggle,
+  `type:"exchange"`/`layer:"exchange"`, zelfde patroon als de goud-CB-laag). Headless geverifieerd: **koper 145 legs /
+  0 kapot**, regressie **388 legs / 0 kapot** over alle 10 grondstoffen; toggle +6 nodes/+7 flows; geen console-errors.
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless, zelfde gat als M5/M6);
+  **code-commit** staat dirty (op Lars' seintje, agent-trailer, repo lokaal-only); **Linear** LAR-404 t/m 409 → Done
+  (Linear-MCP-auth ontbrak deze sessie — Lars zelf of autoriseren).
+- **Volgende:** volgende grondstof (nikkel/REE/grafiet/PGM/uranium/olie) volgens dezelfde brief→bouw-flow.

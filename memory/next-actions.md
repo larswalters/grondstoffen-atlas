@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M6 · Goud uitgevoerd; M7 · Koper staat klaar)*
+*Last updated: 2026-07-14 (M7 · Koper uitgevoerd; M8 · Zeldzame aardmetalen in voorbereiding)*
 
 ## M6 · Goud ✅ uitgevoerd (2026-07-14)
 - [x] Research → brief `data/goud.md` (LAR-397/398).
@@ -25,19 +25,22 @@
 - [ ] Air-specifieke voyage-snelheid/`ktPerShipment` (nu ship-tempo uit `config.time`).
 - [ ] Eigen CB voor Oezbekistan/Kazachstan; evt. meer mijn-/consumptie-nodes (Lars: "extra nodes kan altijd").
 
-## Daarna — inhoudelijk: KOPER (schip + land, na goud)
-**Linear: milestone `M7 · Koper` — LAR-404 t/m LAR-409** (opgezet 2026-07-14), staat klaar in de backlog.
-Ontwerp-skelet ligt in `design/koper.md` (volgens `design/_brief-template.md`); research (LAR-404/405) vult het aan.
-- LAR-404 research mijn+smelting · LAR-405 research consumptie/schroot/beursvoorraden · LAR-406 concentraat-vs-kathode + Copperbelt-landroutes · LAR-407 data/copper.js · LAR-408 beursvoorraden-toggle · LAR-409 verificatie+build.
+## M7 · Koper ✅ uitgevoerd (2026-07-14) — LAR-404 t/m 409
+`data/copper.js` van "basis" (13/5) → volledig **uitgewerkt** (69 nodes / 50 flows / 5 tensions, goud-niveau).
+- [x] Andes-concentraat-trechter (Escondida/Collahuasi/Cerro Verde/Antamina/Las Bambas → Chinese smelters over de Stille Oceaan, `stage: erts`) = de koper-"aha".
+- [x] Copperbelt-**kathode** (Tenke/Kolwezi/Kansanshi/Kamoa, SX-EW `stage: raffinaat`) over land via `grens-kasumbalesa` → Durban/Dar/Lobito/Walvis, dan per schip (kobalt-patroon: land-flow mijn→haven + aparte ship-flow haven→markt).
+- [x] Concentraat vs. SX-EW-kathode via `stage`; recycling **always-on** (niet achter de toggle).
+- [x] **Beursvoorraden-laag** (LAR-408): optionele toggle `type:"exchange"`/`layer:"exchange"` (LME/SHFE/COMEX), default uit — zelfde patroon als de goud-CB-laag; chip "beursvoorraden", koperkleurige spoel-marker (grootte ∝ √voorraad).
+- [x] Verificatie headless (LAR-409): koper **145 legs / 0 kapot**; regressie **388 legs / 0 kapot** over alle 10 grondstoffen; toggle +6 nodes/+7 flows; geen console-errors. 4 route-bugs onderweg gefixt (markt-kustpunten + Korea→Japan als ship + beursmagazijnen coastal). `build-standalone.py` (checks + koper) → `atlas-standalone.html` geregenereerd.
 
-**Structuur = goud-skelet, aangepast aan een schip-grondstof:** géén luchtroute-modus/air-voyages (koper
-hergebruikt de bestaande zee-A\*/land-A\*-routes uit M3 + de scheeps-voyages uit M4). Kern-"aha" = de
-**China-smelttrechter** (~50% wereldraffinage): Andes-concentraat (Chili/Peru) over de Stille Oceaan → Chinese
-smelters. Tweede trechter = de **Afrikaanse Copperbelt** (DRC/Zambia → Durban/Dar es Salaam over land, als
-kathode). `data/copper.js` gaat van "basis" → "uitgewerkt".
+**Open (M7 afronden, niet-code):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** — alleen Lars (WebGL-screenshot lukt niet headless). Checken: Andes→China-concentraatbundel, Copperbelt-kathode over land, beursvoorraden-toggle + spoel-markers, scheeps-voyages voor koper.
+- [ ] **Code-commit** — `data/copper.js` + `src/{flows,main,markers,ui}.js` + `config.js` + `build-standalone.py` staan dirty; commit los van de wrapup-docs, op Lars' seintje (agent-trailer). Repo lokaal-only.
+- [ ] **Linear** LAR-404 t/m 409 → Done — kon deze sessie niet (Linear-MCP-auth ontbrak); Lars zelf of Linear autoriseren.
 
-**Herbruikbaar uit M6 voor koper:** de optionele-laag-toggle (nu CB; voor koper de LME/COMEX/SHFE-beursvoorraden,
-LAR-408) volgt exact hetzelfde `layer:"..."`-filterpatroon; de brief→bouw-flow is identiek.
+**Herbruikbaar uit M6+M7:** de optionele-laag-toggle (CB bij goud, beursvoorraden bij koper) is een vast, herbruikbaar
+`layer:"..."`-filterpatroon (vier filterplekken + config-size + ui-chip + marker-vorm); het landcorridor-patroon
+(Kasumbalesa) = land-flow mijn→haven + aparte ship-flow. **Elke ship-leg moet op een kustpunt (`port`/`coastal`/`wp-`) landen.**
 
 ## Verderop — M8 · Zeldzame aardmetalen / magneet-REE (ontwerp-skelet klaar, ná koper)
 **Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, herzien 2026-07-15 → **optie 2:

@@ -1,6 +1,14 @@
 # Koper — ontwerp (op papier)
-*Aangemaakt 2026-07-14 · status: ontwerp-skelet. Exacte coördinaten, volumes en operators = research (LAR-404 / LAR-405).*
-*Milestone: `M7 · Koper` (LAR-404 t/m LAR-409). Vul dit skelet aan tot een volledige brief volgens `design/_brief-template.md`, waarna LAR-407 het 1-op-1 naar `data/copper.js` omzet.*
+*Aangemaakt 2026-07-14 · **status: ✅ GEBOUWD** (2026-07-14) → `data/copper.js` = "uitgewerkt" (69 nodes / 50 flows / 5 tensions).*
+*Milestone: `M7 · Koper` (LAR-404 t/m LAR-409). Cijfers indicatief/afgerond (USGS MCS 2025, ICSG, IEA) — dezelfde standaard als goud/lithium, exacte USGS-verfijning kan later.*
+
+> **Wat er gebouwd is (2026-07-14):** het skelet hieronder is 1-op-1 omgezet naar `data/copper.js`.
+> - **Andes-concentraat-trechter** (Escondida/Collahuasi/Cerro Verde/Antamina/Las Bambas → Chinese smelters over de Stille Oceaan, `stage: erts`) = de koper-"aha".
+> - **Copperbelt-kathode** (Tenke/Kolwezi/Kansanshi/Kamoa, `stage: raffinaat` al bij de bron via SX-EW) reist over **land** via `grens-kasumbalesa` naar Durban/Dar/Lobito/Walvis, dan per schip verder — patroon geleend van kobalt (land-flow mijn→haven + aparte ship-flow haven→markt).
+> - **Concentraat vs. SX-EW-kathode** onderscheiden via `stage` (erts vs. raffinaat-bij-de-bron); Morenci/Buenavista = SX-EW naar de VS over land.
+> - **Recycling** (~⅓ van het aanbod) is **always-on** (`type: recycler`, `stage: erts` feedstock terug naar smelters) — net als goud; NIET achter de toggle (bewuste afwijking van de emergent-picture-tekst, die schroot bij de toggle noemde).
+> - **Beursvoorraden-laag** = optionele toggle `type:"exchange"` / `flow.layer:"exchange"` (LME/SHFE/COMEX), default uit, exact hetzelfde patroon als de goud-CB-laag. Nieuwe chip "beursvoorraden", marker = koperkleurige spoel (grootte ∝ √voorraad).
+> - **Verificatie:** headless in de draaiende atlas — koper 145 zee/land-legs, **0 kapot**; regressie 388 legs / 0 kapot over alle 10 grondstoffen; toggle +6 nodes/+7 flows; geen console-errors. Rest = visuele bevestiging op Netlify/mobiel (WebGL-screenshot lukt niet headless).
 
 > Principe: we vertellen geen verhaal, we modelleren de werkelijkheid nauwkeurig — het plaatje vertelt
 > zichzelf. Voor lithium is dat "alles door China"; voor koper is het bijna hetzelfde maar één stap

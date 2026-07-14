@@ -1,13 +1,15 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (M6 · Goud uitgevoerd)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (M7 · Koper uitgevoerd)*
 
-> **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M6 done** (op de
-> visuele check na): naast lithium+kobalt is nu **goud volledig uitgewerkt** (`data/goud.js`, 73 nodes/48 flows)
-> met een nieuwe **luchtroute-modus** (great-circle, 3e route-type) + centrale-bank-toggle. Headless geverifieerd:
-> **371 legs / 0 kapot** over alle 10 grondstoffen. **Modulair = bron van waarheid**; `build-standalone.py`
-> genereert `atlas-standalone.html` (single-file). Rest: **visuele bevestiging op Netlify/mobiel** (LAR-403; WebGL-
-> screenshot lukt niet headless). Draaien lokaal: `python -m http.server 8732` (launch.json-entry `grondstoffen-atlas`).
+> **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M7 done** (op de
+> visuele check na): naast lithium+kobalt+goud is nu **koper volledig uitgewerkt** (`data/copper.js`, 69 nodes/50 flows)
+> — de **Andes-concentraat-trechter** → Chinese smelters + de **Copperbelt-kathode** over land (Kasumbalesa), plus een
+> nieuwe **beursvoorraden-laag** (LME/SHFE/COMEX-toggle, zelfde patroon als de goud-CB-laag). Headless geverifieerd:
+> **koper 145 legs / 0 kapot**, regressie **388 legs / 0 kapot** over alle 10 grondstoffen. **Modulair = bron van
+> waarheid**; `build-standalone.py` genereert `atlas-standalone.html`. Rest: **visuele bevestiging op Netlify/mobiel**
+> (WebGL-screenshot lukt niet headless), code-commit (op Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
+> Draaien lokaal: `python -m http.server 8732` (launch.json-entry `grondstoffen-atlas`).
 
 ## A - What this folder is
 
@@ -72,6 +74,16 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   toekomstige optionele lagen (bv. koper-beursvoorraden). Nieuwe marker-types airport/hub/cb/recycler.
 - **2026-07-14 · M6 single-file als gegenereerde build** — `build-standalone.py` lijnt CSS + lokale scripts uit
   `index.html` inline (three.js-CDN blijft extern) → `atlas-standalone.html`. Niet handmatig editen; regenereren.
+- **2026-07-14 · M7 koper = schip/land, geen nieuwe render-modus** — hergebruikt zee-A\*/land-A\* (M3) + scheeps-voyages
+  (M4). Twee productvormen via `stage`: sulfide-concentraat (`erts` → smelter, de Andes→China-trechter) vs. SX-EW-kathode
+  (`raffinaat` al bij de bron, direct als metaal). Recycling **always-on** (net als goud, niet achter de toggle).
+- **2026-07-14 · M7 Copperbelt-landcorridor via het kobalt-patroon** — land-flow mijn→haven (`mode: road/rail`,
+  `via: ["grens-kasumbalesa"]`) + aparte ship-flow haven→markt. In een ship-flow worden twee opeenvolgende landpunten
+  een rechte lijn → splitsen op de haven. **Elke ship-leg moet op een kustpunt (`port`/`coastal`/`wp-`) landen.**
+- **2026-07-14 · M7 beursvoorraden-laag** (`type:"exchange"` / `layer:"exchange"`, filter `showExchangeStocks`) — LME/
+  SHFE/COMEX als optionele toggle, default uit, exact het CB-laag-patroon (vier filterplekken + config + ui-chip +
+  marker). Marker = koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`. Herbevestigt: optionele lagen zijn een
+  herbruikbaar patroon.
 
 ## E - Memory Map
 
@@ -111,4 +123,5 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 4. [x] Modulaire code **verplaatst** naar deze map + `git init` (2 commits `b9d69fa`, `177bc6b`) = werkbasis. GitHub-remote nog optioneel.
 5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
-7. [ ] Daarna: **M7 · Koper** (LAR-404 t/m 409, `design/koper.md`) — schip-grondstof, hergebruikt de optionele-laag-toggle als beursvoorraden-laag.
+7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
+8. [ ] Daarna: volgende grondstof (nikkel/REE/grafiet/PGM/uranium/olie) volgens dezelfde brief→bouw-flow. (Een tweede chat bereidt **M8 · zeldzame aardmetalen** voor — `design/zeldzame-aardmetalen.md`.)
