@@ -1,49 +1,32 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M7 · Koper milestone + issues opgezet)*
+*Last updated: 2026-07-14 (M6 · Goud uitgevoerd; M7 · Koper staat klaar)*
 
-## Onboarding ✅ afgerond (2026-07-14)
-- [x] Wiki-pagina + `now.md` + eerste Pinecone-gist.
-- [x] **Beslist: modulair = bron van waarheid** (single-file = gegenereerde build). Zie decisions.md.
-- [x] **Modulaire code → `Projects\General\grondstoffen-atlas` + `git init`** (2 commits `b9d69fa`, `177bc6b`). Werkbasis staat nu hier.
-- [x] **M5-fixes geport** uit `atlas-lithium-kobalt.html`: Dover/Deense Straten/Kasumbalesa/Saint-Laurent in `_chokepoints.js`; grensovergang-logica in `searoute.js`/`flows.js`; labels in `ui.js`; tegelnaad-fix zat al in `tiles.js`. `cobalt.js` → volledig uitgewerkt. Seto-brug voor Niihama→Osaka. **Geverifieerd headless: 214 legs, 0 kapotte routes.**
+## M6 · Goud ✅ uitgevoerd (2026-07-14)
+- [x] Research → brief `data/goud.md` (LAR-397/398).
+- [x] Luchtroute-modus: great-circle 3e route-type in `flows.js` + marker-types airport/hub/cb/recycler (LAR-399).
+- [x] `voyages.js` uitgebreid naar lucht + resource-bewuste teller "✈ vluchten" (LAR-400).
+- [x] `data/goud.js` (73 nodes/48 flows, Ticino-trechter) + registratie in `index.html` (LAR-401).
+- [x] Centrale-bank-laag als optionele toggle, default uit (LAR-402).
+- [x] Verificatie headless: 371 legs / 0 kapot over alle 10 grondstoffen, regressievrij (deel LAR-403).
+- [x] `build-standalone.py` → `atlas-standalone.html` (gegenereerde single-file build).
 
-## Openstaande restpunten (klein)
-- [ ] **Visuele bevestiging** op Netlify/mobiel (screenshot lukte niet in de preview → WebGL-time-out). Zit al in LAR-403.
-- [ ] `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná die visuele bevestiging.
-- [ ] Optioneel: **GitHub-remote** voor de nieuwe repo (nu lokaal-only).
+## Openstaand — LAR-403 (In Progress)
+- [ ] **Visuele bevestiging op Netlify/mobiel** — kan alleen Lars (WebGL-screenshot lukt niet headless). Checken:
+      Ticino-trechter zichtbaar/mooi?, luchtbogen plausibel (netjes via de hubs, geen rare knikken)?,
+      labels/knopen leesbaar?, CB-toggle + voyages-vliegtuigjes werken visueel? Daarna LAR-403 → Done.
+- [ ] Na visuele OK: bureaublad-restanten opruimen (`atlas-lithium-kobalt.html`, `globe-oud`).
 
-## Daarna — inhoudelijk: GOUD (Lars' focus) — ontwerp op papier
-Ontwerprichting vastgelegd 2026-07-14 (zie decisions.md): volle keten, alle lagen, luchtroutes als aparte modus.
-**Linear: milestone `M6 · Goud` — LAR-397 t/m LAR-403** (research → dev → verificatie), staat klaar in de backlog.
-- LAR-397 research mijn+raffinage · LAR-398 research hubs/consumptie/CB · LAR-399 luchtroute-modus · LAR-400 voyages-luchtpuntjes · LAR-401 data/goud.js · LAR-402 CB-laag toggle · LAR-403 verificatie+build.
+## Openstaand — project-hygiëne
+- [ ] **Project-repo committen** — goud.js/goud.md/edits/build-standalone.py staan dirty. Code-commit los van de
+      wrapup-docs, op Lars' seintje (agent-trailer). Overweeg `atlas-standalone.html` in `.gitignore` (gegenereerd, 1,4 MB).
+- [ ] Optioneel: **GitHub-remote** voor de repo (nu lokaal-only).
 
-Nodes/lagen om uit te werken (mijn → raffinage → hub/kluis → consumptie → centrale banken → recycling):
-- [ ] **Mijnbouw** (wijd verspreid, géén trechter): China, Rusland, Australië, Canada, VS, Kazachstan, Peru,
-      Mexico, Ghana, Indonesië (Grasberg), Zuid-Afrika, West-Afrika (Mali/Burkina, artisanaal), Uzbekistan, Brazilië, PNG...
-- [ ] **Raffinage**: Zwitserland/Ticino (Valcambi, PAMP, Argor-Heraeus, Metalor) = hoofdtrechter;
-      + Perth Mint, India (MMTC-PAMP), Dubai, China-intern, Rand Refinery, Royal Canadian Mint.
-- [ ] **Handels-/kluishubs**: Londen (LBMA/BoE), New York (COMEX + NY Fed), Zürich, Shanghai (SGE),
-      Dubai, Singapore, Hongkong — inclusief onderlinge stromen (Londen↔Zürich↔NY).
-- [ ] **Consumptie**: India + China (sieraden), Midden-Oosten, Turkije; tech (Japan/Korea/Taiwan).
-- [ ] **Centrale banken** (optionele laag): voorraden (Fort Knox/NY Fed, BoE, Frankfurt, ...) + huidige
-      inkopers (Polen, China, Turkije, India, Kazachstan, Tsjechië, Singapore; Rusland absorbeert eigen mijn).
-- [ ] **Recycling**: schroot → raffinage (India, Italië, China, Midden-Oosten).
-- [ ] **Luchthaven-nodes**: ZRH, LHR, JFK, HKG, DXB, SIN, DEL/BOM, PVG, FRA, IST, JNB, PER, ACC...
+## Optionele verfijningen goud (later, niet-blokkerend)
+- [ ] Per-leg touch-down bij hubs i.p.v. één boog over de via-punten (nu bulge't de boog in het midden).
+- [ ] Air-specifieke voyage-snelheid/`ktPerShipment` (nu ship-tempo uit `config.time`).
+- [ ] Eigen CB voor Oezbekistan/Kazachstan; evt. meer mijn-/consumptie-nodes (Lars: "extra nodes kan altijd").
 
-**Vul de brief in:** research (LAR-397/398) levert `data/goud.md` op volgens `design/_brief-template.md`
-(alle nodes + stromen), waarna LAR-401 dat 1-op-1 naar `data/goud.js` omzet.
-
-Databehoefte (voor de uitwerking):
-- [ ] Volumes/capaciteiten (t/jr) per stroom om bogen + voyages-puntjes te schalen en de teller te vullen.
-- [ ] Coördinaten mijnen/raffinaderijen/luchthavens (lat/lon, west negatief — dubbelcheck).
-
-Bouwstappen (na ontwerp + na M5):
-- [ ] **Air-route path-generator** (great-circle, opgetilde boog) als derde route-modus naast zee-A\* en land-A\*.
-- [ ] `voyages.js` uitbreiden: lichtpuntjes/vliegtuig-glyph over luchtlijnen.
-- [ ] Ontwerp omzetten naar `data/goud.js` volgens het lithium-schema + registreren in `_registry.js`.
-- [ ] Verifiëren in de atlas (routes plausibel, labels, trechter Ticino zichtbaar) → wrapup.
-
-## Daarna — inhoudelijk: KOPER (schip + land, na/naast goud)
+## Daarna — inhoudelijk: KOPER (schip + land, na goud)
 **Linear: milestone `M7 · Koper` — LAR-404 t/m LAR-409** (opgezet 2026-07-14), staat klaar in de backlog.
 Ontwerp-skelet ligt in `design/koper.md` (volgens `design/_brief-template.md`); research (LAR-404/405) vult het aan.
 - LAR-404 research mijn+smelting · LAR-405 research consumptie/schroot/beursvoorraden · LAR-406 concentraat-vs-kathode + Copperbelt-landroutes · LAR-407 data/copper.js · LAR-408 beursvoorraden-toggle · LAR-409 verificatie+build.
@@ -53,3 +36,6 @@ hergebruikt de bestaande zee-A\*/land-A\*-routes uit M3 + de scheeps-voyages uit
 **China-smelttrechter** (~50% wereldraffinage): Andes-concentraat (Chili/Peru) over de Stille Oceaan → Chinese
 smelters. Tweede trechter = de **Afrikaanse Copperbelt** (DRC/Zambia → Durban/Dar es Salaam over land, als
 kathode). `data/copper.js` gaat van "basis" → "uitgewerkt".
+
+**Herbruikbaar uit M6 voor koper:** de optionele-laag-toggle (nu CB; voor koper de LME/COMEX/SHFE-beursvoorraden,
+LAR-408) volgt exact hetzelfde `layer:"..."`-filterpatroon; de brief→bouw-flow is identiek.

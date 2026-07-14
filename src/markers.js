@@ -26,7 +26,8 @@ const MarkerLayer = (function () {
 
   function defaultTier(node) {
     if (node.tier) return node.tier;
-    if (node.type === "port") return 2;
+    if (node.type === "port" || node.type === "airport" || node.type === "recycler") return 2;
+    if (node.type === "hub" || node.type === "cb") return 1;
     if (node.type === "mine") return (node.share || 0) >= 10 ? 1 : 2;
     return 1;
   }
@@ -99,10 +100,15 @@ const MarkerLayer = (function () {
       const color = new THREE.Color(res.color);
       const flowColor = flowColorOf(res);
       const maxShare = Math.max(1, ...res.nodes.filter((n) => n.share).map((n) => n.share));
+      // centrale banken schalen op voorraad (goud); sqrt zodat de VS niet álles verplettert
+      const maxReserve = Math.max(1,
+        ...res.nodes.filter((n) => n.type === "cb" && n.reserve).map((n) => n.reserve));
 
       res.nodes.forEach((node) => {
         const planned = node.status === "project" || node.status === "gepland";
         if (planned && !showProjects) return;
+        // centrale-bank-nodes alleen tonen als de CB-laag aanstaat
+        if (node.type === "cb" && !(filters && filters.showCentralBanks)) return;
 
         const pos = latLonToVec3(node.lat, node.lon, R + C.lift);
         let mesh, ring = null;
@@ -137,6 +143,34 @@ const MarkerLayer = (function () {
           mesh = new THREE.Mesh(
             new THREE.BoxGeometry(C.port.size, C.port.size, C.port.size),
             new THREE.MeshBasicMaterial({ color: 0x9fd8ff, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "airport") {
+          // klein pyramidetje — subtiel, want gateways zijn passagepunten
+          mesh = new THREE.Mesh(
+            new THREE.TetrahedronGeometry(C.airport.size * 1.25, 0),
+            new THREE.MeshBasicMaterial({ color: 0xbcd3e8, transparent: true, opacity: baseOpacity * 0.9 })
+          );
+        } else if (node.type === "hub") {
+          // handels-/kluishub: opvallende gouden ring (Londen/NY/Zürich/Shanghai…)
+          mesh = new THREE.Mesh(
+            new THREE.TorusGeometry(C.hub.size, C.hub.size * 0.34, 10, 28),
+            new THREE.MeshBasicMaterial({ color: 0xffd257, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "cb") {
+          // centrale bank: goudstaaf-blokje, grootte ∝ √voorraad
+          const s = node.reserve
+            ? C.cb.minSize + (C.cb.maxSize - C.cb.minSize) *
+                normalize(Math.sqrt(node.reserve), Math.sqrt(maxReserve))
+            : C.cb.minSize;
+          mesh = new THREE.Mesh(
+            new THREE.BoxGeometry(s * 1.6, s * 0.7, s),
+            new THREE.MeshBasicMaterial({ color: 0xe9c85a, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "recycler") {
+          // recycling: gedempte groene ring (schroot terug de keten in)
+          mesh = new THREE.Mesh(
+            new THREE.TorusGeometry(C.recycler.size, C.recycler.size * 0.3, 8, 18),
+            new THREE.MeshBasicMaterial({ color: 0x7fc9a6, transparent: true, opacity: baseOpacity })
           );
         } else {
           // market

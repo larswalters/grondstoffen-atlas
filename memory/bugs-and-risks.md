@@ -1,5 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-14 (na M5-port)*
+*Last updated: 2026-07-14 (na M6 · Goud)*
+
+## M6 · Goud — geverifieerd headless (2026-07-14)
+- Goud volledig gebouwd + geverifieerd in de draaiende preview: 31 luchtroutes (alle `air`, bogen tillen
+  2,5–12,7% op), CB-toggle 31→35 routes + 12 voorraad-nodes, "✈ vluchten"-teller, regressie **371 legs / 0 kapot**
+  over alle 10 grondstoffen (lithium/kobalt onaangeraakt). `atlas-standalone.html` laadt schoon.
+- ⚠️ **Visuele bevestiging blijft open (LAR-403)** — WebGL-canvas laat zich niet headless screenshotten (zelfde gat
+  als M5). Op Netlify/mobiel te checken: Ticino-trechter mooi in beeld?, luchtbogen plausibel (bendten netjes via de
+  hubs, geen rare knikken)?, labels/knopen leesbaar?, voyages-vliegtuigjes lopen?
+- **Aandachtspunt `atlas-standalone.html`:** gegenereerd artefact (1,4 MB) — overweeg te gitignoren zodat de repo
+  niet vervuilt; niet handmatig editen (regenereer via `build-standalone.py`).
 
 ## M5-port naar modulaire code — geverifieerd (2026-07-14)
 - M5-fixes zitten nu ook in de **modulaire bron van waarheid** (waren alleen in de single-file). Headless
@@ -36,9 +46,10 @@ Referentie-symptomen hieronder:
   `_chokepoints.js` als water geforceerd worden.
 - **Gewogen A\* is niet gegarandeerd optimaal** — bewust ingeruild voor "wel een route vinden". Bij vreemde
   paden eerst hier kijken.
-- **Goud-specifiek risico:** goud reist grotendeels per **luchtvracht**, terwijl de hele route-engine op
-  zee/land-A\* is gebouwd. Zonder ontwerpbeslissing over luchtroutes wordt een goudketen ofwel onjuist
-  (alles over zee) ofwel visueel inconsistent. Los dit op vóór implementatie.
+- **Goud-luchtvracht — OPGELOST (M6):** de route-engine was zee/land-A\*; goud kreeg een **3e route-modus**
+  (great-circle-boog, `mode:"air"`, buiten het A\*-raster om). Korte hops blijven road/rail. Zie decisions.md.
+  Restpunt (niet-blokkerend): het is nu één boog over de via-luchthavens (geen touch-down bij elke hub) en
+  voyages gebruikt ship-tempo voor lucht — bewuste v1-vereenvoudiging, later te verfijnen.
 - **Mobiele performance:** tegellaag + veel stromen + voyages kunnen zwaar worden; bewaken bij uitbreiding.
 - **Modulair vs single-file — OPGELOST:** modulair is nu de bron van waarheid in de projectmap-git-repo, M5-fixes
   geport. Single-file blijft alleen als referentie tot visuele bevestiging.

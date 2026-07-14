@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-14*
+*Last updated: 2026-07-14 (M6 · Goud uitgevoerd)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -23,7 +23,18 @@
   `Math.pow(d/dref, exp)` met `d = camera.z - R`), kaderloze labels met botsingsdetectie
   (prioriteit `tier × 100 − share`), tegellaag (`tiles.js`, Esri/OSM) onder z=6.2, autorotate uit na
   eerste interactie.
-- **Tijd:** `voyages.js` + afspeelbalk — schepen bewegen over de tijd langs hun gerouteerde pad.
+- **Tijd:** `voyages.js` + afspeelbalk — schepen/vluchten bewegen over de tijd langs hun gerouteerde pad.
+- **Luchtroute-modus (sinds M6):** een **3e route-type** naast zee-A\*/land-A\*. In `flows.js` krijgt
+  `mode:"air"` een `&& !airMode`-uitzondering op de A\*-routering en wordt het een **opgetilde great-circle-boog**
+  (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand) — óók in de `routes`-weergave. Korte hops blijven
+  `road`/`rail` (land-A\*). `makeRouteCurve` schaalde de booghoogte al met de routelengte. Voyages pusht nu
+  ship+air; de tijdlijn-teller is resource-bewust ("✈ vluchten" ↔ "⚓ schepen", via `UI.setVoyageNoun`).
+- **Optionele lagen via filter:** `layer:"cb"`-flows + `type:"cb"`-nodes worden gefilterd op
+  `filters.showCentralBanks` (default uit) in `flows.js`/`markers.js`/`main.js`; de chip verschijnt alleen als
+  een actieve grondstof CB-data heeft. Zelfde patroon herbruikbaar voor toekomstige optionele lagen.
+- **Marker-types:** `mine`/`refinery`/`port`/`market` + (sinds M6) `airport`/`hub`/`cb`/`recycler` in `markers.js`.
+- **Single-file build:** `build-standalone.py` genereert `atlas-standalone.html` uit `index.html` (lijnt CSS +
+  lokale scripts inline, houdt three.js-CDN extern). Modulair = bron van waarheid; draai het script na wijzigingen.
 
 ## Aanpak per grondstof (het sjabloon)
 
@@ -39,14 +50,15 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 
 ## Detailniveaus
 
-- **Volledig:** lithium (template), kobalt.
-- **Basis:** de 8 overige grondstoffen — laden en renderen, maar zonder operators/capaciteiten/route-detail.
-- **Nog niet aanwezig:** goud (te ontwerpen).
+- **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag).
+- **Basis:** de 7 overige grondstoffen — laden en renderen, maar zonder operators/capaciteiten/route-detail.
 
-## Nu (2026-07-14)
+## Nu (2026-07-14 — M6 · Goud uitgevoerd)
 
-- **M0–M5 done.** Modulaire code staat als **git-repo** in deze projectmap; M5-fixes geport uit de single-file;
-  `cobalt.js` volledig uitgewerkt; **214 legs / 0 kapotte routes** geverifieerd. Goud-ontwerp op papier (`design/goud.md`).
-- **Rest:** alleen nog visuele bevestiging op Netlify/mobiel + opruimen bureaublad-restanten.
-- **Volgende sessie:** **M6 · Goud** — research (coördinaten, volumes t/jr, operators, CB-tonnages, mine→gateway-airport)
-  → development (`data/goud.js` + air-route-modus als 3e route-type + voyages-luchtpuntjes). LAR-397 t/m 403.
+- **M0–M6 done (op de visuele check na).** Goud volledig gebouwd: brief `data/goud.md` → `data/goud.js`
+  (Ticino-raffinage-trechter als knijp, China-put, CB-laag), nieuwe luchtroute-modus, marker-types, CB-toggle,
+  voyages-lucht, `build-standalone.py`. Headless geverifieerd: **371 legs / 0 kapot** over alle 10 grondstoffen,
+  regressievrij voor lithium/kobalt.
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (LAR-403 — WebGL-screenshot lukt niet headless) +
+  opruimen bureaublad-restanten daarna. Project-repo staat met wijzigingen open (code-commit los, op Lars' seintje).
+- **Volgende:** volgende grondstof volgens dezelfde brief→bouw-flow (koper op de roadmap).

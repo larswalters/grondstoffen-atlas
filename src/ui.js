@@ -15,6 +15,10 @@ const UI = (function () {
   let selected = null;
   let hovered = null;
 
+  // Tijdlijn-woordkeus: schepen (zee) of vluchten (goud). main.js zet dit per
+  // actieve grondstof, zodat de teller "3 vluchten onderweg" toont i.p.v. schepen.
+  let voyageNoun = { one: "schip", many: "schepen", btn: "⚓ schepen" };
+
   // ------------------------------------------------------------- GRONDSTOFFEN
   function renderPills(activeIds, onToggle) {
     pillList.innerHTML = "";
@@ -74,14 +78,14 @@ const UI = (function () {
     if (filters.viewMode === "route") {
       const sail = document.createElement("button");
       sail.className = "viewBtn sail" + (filters.ships ? " on" : "");
-      sail.textContent = "⚓ schepen";
+      sail.textContent = voyageNoun.btn;
       sail.title = "Speel enkele maanden af: elk lichtje is een lading onderweg";
       sail.onclick = () => { filters.ships = !filters.ships; onChange(); };
       viewRow.appendChild(sail);
     }
   }
 
-  function renderFilters(filters, onChange) {
+  function renderFilters(filters, onChange, opts) {
     filterRow.innerHTML = "";
 
     Object.keys(STAGE_CHIP).forEach((stage) => {
@@ -104,6 +108,16 @@ const UI = (function () {
     proj.title = "Geplande mijnen, fabrieken en routes tonen";
     proj.onclick = () => { filters.showProjects = !filters.showProjects; onChange(); };
     filterRow.appendChild(proj);
+
+    // Centrale-bank-laag: alleen aanbieden als een actieve grondstof CB-data heeft (goud).
+    if (opts && opts.hasCB) {
+      const cb = document.createElement("button");
+      cb.className = "chip" + (filters.showCentralBanks ? " on" : "");
+      cb.textContent = "centrale banken";
+      cb.title = "Voorraden + de huidige inkoop-/repatriëringsstromen tonen";
+      cb.onclick = () => { filters.showCentralBanks = !filters.showCentralBanks; onChange(); };
+      filterRow.appendChild(cb);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL
@@ -205,7 +219,7 @@ const UI = (function () {
     timeSlider.value = String(Math.round((day / Voyages.totalDays()) * 1000));
     timeDate.textContent = Voyages.dateLabel(day);
     const n = Voyages.shipsAtSea();
-    timeCount.textContent = n + (n === 1 ? " schip onderweg" : " schepen onderweg");
+    timeCount.textContent = n + " " + (n === 1 ? voyageNoun.one : voyageNoun.many) + " onderweg";
   }
 
   function paintPlayBtn() {
@@ -238,11 +252,14 @@ const UI = (function () {
 
   // ---------------------------------------------------------------- INFOPANEEL
   const MODE_LABEL = {
-    ship: "per schip", pipeline: "pijpleiding", rail: "per spoor", road: "over land",
+    ship: "per schip", air: "luchtvracht", pipeline: "pijpleiding",
+    rail: "per spoor", road: "over land",
   };
   const TYPE_LABEL = {
     mine: "Mijn / winning", refinery: "Raffinage / verwerking",
     port: "Haven / overslag", market: "Fabriek / afzetmarkt",
+    airport: "Luchthaven / gateway", hub: "Handels- & kluishub",
+    cb: "Centrale bank", recycler: "Recycling",
   };
   const WP_KIND_LABEL = { zeestraat: "Zeestraat", kanaal: "Kanaal", kaap: "Kaap",
     vaarpunt: "Vaarpunt", grensovergang: "Grenspost" };
@@ -296,6 +313,7 @@ const UI = (function () {
         (n.status && n.status !== "actief" ? " · " + n.status : "");
       const meta = [];
       if (n.share) meta.push("aandeel wereldproductie ≈ " + n.share + "%");
+      if (n.reserve) meta.push("goudvoorraad ≈ " + n.reserve + " t");
       if (n.potential) meta.push("potentie: " + n.potential);
       if (n.capacity) meta.push(n.capacity);
       if (n.operator) meta.push(n.operator);
@@ -319,6 +337,7 @@ const UI = (function () {
     renderPills,
     renderViewModes,
     renderFilters,
+    setVoyageNoun(n) { voyageNoun = n; },
     renderTileStyles,
     paintAttrib,
     showTimeBar,

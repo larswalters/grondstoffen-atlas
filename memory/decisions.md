@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (code-onboarding + M5-port)*
+*Last updated: 2026-07-14 (M6 · Goud uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -39,7 +39,7 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 - **Deploy via Netlify** drag-and-drop van de `atlas`-map (+ standalone HTML voor mobiel).
 - UI-teksten/annotaties **Nederlandstalig**.
 
-## Goud — ontwerpbesluiten (op papier, 2026-07-14; nog niet gebouwd)
+## Goud — ontwerpbesluiten (2026-07-14) — ✅ UITGEVOERD in M6
 - **Principe:** we vertellen geen verhaal, we modelleren de werkelijkheid nauwkeurig; het plaatje vertelt
   zichzelf. Voor goud is die werkelijkheid anders van vorm dan lithium → automatisch een ander plaatje.
 - **Alle lagen meenemen:** mijn → raffinage → handels-/kluishub → consumptie → centrale banken → recycling.
@@ -65,6 +65,25 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   (bv. West-Afrika → Accra/Dubai); niet per mijn een eigen luchthaven. Truthful + node-aantal beheersbaar.
 - **Volumes:** per stroom een grofweg ton/jaar-getal verzamelen (research volgende sessie) om bogen +
   voyages-puntjes te schalen en de teller te vullen.
+
+## Goud — bouwbesluiten (M6, 2026-07-14) — ✅ GEBOUWD + geverifieerd
+- **Air = 3e route-modus, geïmplementeerd als arc i.p.v. A\*.** `mode:"air"` krijgt in `flows.js` een
+  `&& !airMode`-uitzondering op de land/zee-routering en wordt een **opgetilde great-circle-boog** (`flat:false` +
+  `arcStyle`-lift, hoogte ∝ afstand) — óók in route-view. Reden: goud vliegt écht die boog; de A\*-router is voor
+  lucht zinloos. Korte EU/binnenland-hops blijven `road`/`rail` (land-A\*). Zero-regressie: lithium/kobalt hebben
+  geen air-flows, dus de tak wordt voor hen nooit geraakt.
+- **Stages hergebruikt i.p.v. nieuwe codes:** `erts`=doré (mijn→raffinage + recyclingschroot),
+  `raffinaat`=baren (raffinage→hubs, hub↔hub), `product`=eindbestemming (consumptie + CB-repatriëring).
+  Reden: geen nieuwe stage-styling nodig; sluit aan op de bestaande kleur/hoogte-logica.
+- **Centrale-bank-laag = optionele toggle, default UIT** (`type:"cb"`-nodes + `layer:"cb"`-flows). Reden: v1 toont
+  de pure fysieke keten; de CB-laag (voorraden + inkoop/repatriëring) is bijzaak die je erbij kunt zetten.
+  Chip verschijnt alleen als een actieve grondstof CB-data heeft (geen ruis bij lithium). CB-node-grootte ∝ √voorraad.
+- **Insulaire landen niet naar Zwitserland geleid:** Rusland (Olimpiada→eigen CB), Oezbekistan/Muruntau,
+  Kazachstan en China-intern blijven binnenlands (node zonder uitgaande boog, of naar de eigen CB in de CB-laag).
+  Reden: dat ís de werkelijkheid — de Ticino-convergentie komt uit de rést van de wereld.
+- **Single-file = gegenereerde build via script** (`build-standalone.py`) i.p.v. handmatig knippen/plakken. Reden:
+  operationaliseert "modulair = bron van waarheid"; reproduceerbaar. Bureaublad-referentie blijft onaangeraakt.
+- **Tijdlijn-woordkeus resource-bewust** (`UI.setVoyageNoun`): "✈ vluchten" bij goud, "⚓ schepen" bij zee-grondstoffen.
 
 ## Architectuur-besluit (2026-07-14): MODULAIR = bron van waarheid — ✅ UITGEVOERD
 - Lars koos **modulair** als bron van waarheid; de single-file wordt een **gegenereerde deploy-build**

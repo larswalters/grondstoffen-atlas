@@ -6,10 +6,26 @@ const ATLAS = (function () {
 
   const filters = {
     viewMode: CONFIG.flows.viewMode,   // "route" | "hemelsbreed"
-    ships: false,                      // tijdmodus: schepen met lichtspoor
+    ships: false,                      // tijdmodus: schepen/vluchten met lichtspoor
     stages: new Set(["erts", "raffinaat", "product"]),
     showProjects: true,
+    showCentralBanks: false,           // goud: optionele centrale-bank-laag
   };
+
+  function activeResources() { return RESOURCES.filter((r) => activeIds.includes(r.id)); }
+  function hasCentralBanks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "cb")); }
+  function activeHasAir() { return activeResources().some((r) => (r.flows || []).some((f) => f.mode === "air")); }
+
+  // Chrome die van de ACTIEVE grondstoffen afhangt: de CB-chip (alleen bij goud)
+  // en de tijdlijn-woordkeus (schepen ↔ vluchten). syncVoyageNoun eerst, want
+  // renderViewModes zet daar de knoptekst op.
+  function refreshChrome() {
+    UI.setVoyageNoun(activeHasAir()
+      ? { one: "vlucht", many: "vluchten", btn: "✈ vluchten" }
+      : { one: "schip", many: "schepen", btn: "⚓ schepen" });
+    UI.renderViewModes(filters, onFilterChange);
+    UI.renderFilters(filters, onFilterChange, { hasCB: hasCentralBanks() });
+  }
 
   // focus: null | {type:"node", id} | {type:"flow", key, nodeIds}
   //             | {type:"waypoint", id} | {type:"tension", tension}
@@ -48,6 +64,7 @@ const ATLAS = (function () {
     active.forEach((res) => {
       (res.flows || []).forEach((f) => {
         if (!filters.stages.has(f.stage || "raffinaat")) return;
+        if (f.layer === "cb" && !filters.showCentralBanks) return;
         const from = getNode(res, f.from);
         const to = getNode(res, f.to);
         if (!from || !to) return;
@@ -95,6 +112,7 @@ const ATLAS = (function () {
       : activeIds.concat([id]);
     UI.renderPills(activeIds, toggle);
     UI.renderTensions(activeIds, pickTension);
+    refreshChrome();   // CB-chip + schepen/vluchten hangen van de actieve set af
     rebuild();
   }
 
@@ -110,12 +128,10 @@ const ATLAS = (function () {
   UI.renderStyles((s) => Basemap.setStyle(s));
   UI.renderPills(activeIds, toggle);
   function onFilterChange() {
-    UI.renderViewModes(filters, onFilterChange);
-    UI.renderFilters(filters, onFilterChange);
+    refreshChrome();
     rebuild();
   }
-  UI.renderViewModes(filters, onFilterChange);
-  UI.renderFilters(filters, onFilterChange);
+  refreshChrome();
   UI.renderTensions(activeIds, pickTension);
   UI.renderTileStyles();
   UI.paintAttrib();

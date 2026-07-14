@@ -18,6 +18,11 @@ internet valt hij automatisch terug op de zelfgetekende vectorkaart.
 > (CORS/tainted textures). Wil je de textures uit de map `textures/` gebruiken,
 > zet dan `source: "local"` **én** draai een server.
 
+**Single-file build (voor Netlify/mobiel):** `python build-standalone.py` genereert
+`atlas-standalone.html` uit de modulaire bron (lijnt CSS + lokale scripts inline,
+three.js blijft van de CDN). Modulair = bron van waarheid; regenereer na wijzigingen —
+edit `atlas-standalone.html` niet met de hand.
+
 ## Structuur
 
 ```
@@ -65,7 +70,8 @@ Een node:
 ```
 
 - `type`: `mine` (bol, grootte = `share`) · `refinery` (ruit) · `port` (kubus) ·
-  `market` (ring)
+  `market` (ring) · `airport` (pyramide) · `hub` (gouden ring) · `cb` (staaf, grootte = `reserve`) ·
+  `recycler` (groene ring) — de laatste vier zijn voor goud (M6)
 - `status`: `actief` · `project` · `gepland` (projecten worden halftransparant)
 
 Een stroom:
@@ -77,7 +83,8 @@ Een stroom:
 
 - `value` bepaalt de **dikte** van de boog en het aantal deeltjes, relatief aan
   de grootste stroom van diezelfde grondstof.
-- `mode`: `ship` (doorgetrokken) · `pipeline` / `rail` / `road` (gestreept)
+- `mode`: `ship` (doorgetrokken, zee-A\*) · `pipeline` / `rail` / `road` (gestreept, land-A\*) ·
+  `air` (goud: opgetilde great-circle-boog, geen A\*; korte hops houd je op `road`/`rail`)
 
 Zet `detail: "uitgewerkt"` zodra een grondstof af is — dan krijgt de knop een
 "detail"-label.

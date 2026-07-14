@@ -119,6 +119,9 @@ const FlowLayer = (function () {
         const stage = flow.stage || "raffinaat";
         if (stages && !stages.has(stage)) return;
 
+        // Centrale-bank-laag (goud): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "cb" && !(filters && filters.showCentralBanks)) return;
+
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);
         if (!from || !to) return;
@@ -153,6 +156,10 @@ const FlowLayer = (function () {
         //                               zinloos: er lóópt geen weg van Nigeria
         //                               naar Amerika.
         const shipMode = (flow.mode || "ship") === "ship";
+        // LUCHTVRACHT (goud): geen A* over land/zee — goud vliegt de great-circle.
+        // De via-luchthavens buigen alleen de grondbaan; makeRouteCurve tilt de
+        // boog op (hoogte ∝ afstand). De korte EU-hops blijven `road`/`rail` (land-A*).
+        const airMode = flow.mode === "air";
         const routePts = [stops[0]];
         const anchors = [];
 
@@ -163,7 +170,7 @@ const FlowLayer = (function () {
           const seaB = isSeaPoint(b);
           let leg = null;
 
-          if (routeView && useRouting) {
+          if (routeView && useRouting && !airMode) {
             if (shipMode && seaA && seaB) {
               leg = Routing.sea(a, b);
             } else if (useLand && (!shipMode || seaA !== seaB)) {
@@ -185,10 +192,15 @@ const FlowLayer = (function () {
           * band.width * vs.widthScale;
         const style = C.modeStyle[flow.mode || "ship"] || C.modeStyle.ship;
 
-        // hoogte: route = dunne laag per ketenstap, boog = sinusprofiel
-        const lift = routeView
-          ? (vs.lift + (vs.stageOffset[stage] || 0)) * band.lift
-          : vs.lift * (vs.stageLift[stage] || 1) * band.lift;
+        // hoogte: route = dunne laag per ketenstap, boog = sinusprofiel.
+        // Lucht is ALTIJD een boog (ook in route-view): hoogte ∝ afstand, want
+        // goud vliegt écht die boog — voor lithium was diezelfde boog juist fout.
+        const as = C.arcStyle;
+        const lift = airMode
+          ? as.lift * (as.stageLift[stage] || 1) * band.lift
+          : routeView
+            ? (vs.lift + (vs.stageOffset[stage] || 0)) * band.lift
+            : vs.lift * (vs.stageLift[stage] || 1) * band.lift;
 
         // VAARBAAN: elke stroom een eigen baan, maar samenknijpend bij elk anker
         const L = C.lanes;
@@ -196,7 +208,7 @@ const FlowLayer = (function () {
         const lane = laneIdx * L.spacing;
 
         const { curve, totalAngle } = makeRouteCurve(routePts, R, lift, {
-          flat: routeView, lane, anchors,
+          flat: routeView && !airMode, lane, anchors,
         });
 
         const color = stageColorOf(res, stage);
@@ -234,11 +246,11 @@ const FlowLayer = (function () {
           particles: flowParticles, baseOpacity,
         });
 
-        // voor de schepen-laag: alleen echte zeeroutes, en alleen als we in
-        // de route-weergave zitten (in hemelsbreed vaart niemand)
-        if (routeView && mode === "ship") {
+        // voor de tijdlijn-laag: echte zeeroutes (schip) én luchtroutes (goud),
+        // en alleen in de route-weergave (in hemelsbreed reist er niemand).
+        if (routeView && (mode === "ship" || mode === "air")) {
           routes.push({
-            key, curve, totalAngle, color, res, flow,
+            key, curve, totalAngle, color, res, flow, mode,
             value: flow.value || 1, planned,
           });
         }
@@ -310,7 +322,7 @@ const FlowLayer = (function () {
     // deeltjes animeren. Staan de schepen aan, dan verdwijnen de abstracte
     // deeltjes op de zeeroutes — daar varen nu echte schepen.
     particles.forEach((p) => {
-      if (shipsActive && p.mode === "ship") { p.dot.visible = false; return; }
+      if (shipsActive && (p.mode === "ship" || p.mode === "air")) { p.dot.visible = false; return; }
       p.dot.visible = true;
       const u = (t * C.particleSpeed + p.offset) % 1;
       p.dot.position.copy(p.curve.getPoint(u));

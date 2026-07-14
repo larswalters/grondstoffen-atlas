@@ -1,12 +1,13 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (code-onboarding)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (M6 · Goud uitgevoerd)*
 
-> **STATUS VAN DEZE MAP (2026-07-14):** ✅ dit is nu de **code-root** — de modulaire atlas staat hier als
-> **git-repo** (2 commits `b9d69fa`, `177bc6b`). De M5-fixes zijn uit de single-file geport en geverifieerd
-> (214 legs, 0 kapotte routes). **Modulair = bron van waarheid** (single-file `atlas-lithium-kobalt.html` op
-> het bureaublad = nog slechts referentie/deploy-build, onaangeraakt tot visuele bevestiging op Netlify/mobiel).
-> Draaien lokaal: `python -m http.server 8732` in deze map (launch.json-entry `grondstoffen-atlas`).
+> **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M6 done** (op de
+> visuele check na): naast lithium+kobalt is nu **goud volledig uitgewerkt** (`data/goud.js`, 73 nodes/48 flows)
+> met een nieuwe **luchtroute-modus** (great-circle, 3e route-type) + centrale-bank-toggle. Headless geverifieerd:
+> **371 legs / 0 kapot** over alle 10 grondstoffen. **Modulair = bron van waarheid**; `build-standalone.py`
+> genereert `atlas-standalone.html` (single-file). Rest: **visuele bevestiging op Netlify/mobiel** (LAR-403; WebGL-
+> screenshot lukt niet headless). Draaien lokaal: `python -m http.server 8732` (launch.json-entry `grondstoffen-atlas`).
 
 ## A - What this folder is
 
@@ -63,6 +64,14 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 - **2026-07-14 · grensovergang als landpunt** — `kind: "grensovergang"` stempelt de LANDkaart open (niet de
   zeekaart); `isSeaPoint` behandelt hem als landpunt. Per-waypoint `openRadius` voor smalle rivieren (Saint-Laurent).
 - **2026-07-14 · Seto-brug** als `LAND_LINK` — Shikoku is een apart raster-eiland → landroute Niihama→Osaka.
+- **2026-07-14 · M6 luchtroute-modus** — `mode:"air"` = 3e route-type: buiten de A\*-routering om (`&& !airMode`
+  in `flows.js`), altijd een opgetilde great-circle-boog (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand), óók
+  in route-view. Korte hops blijven road/rail. Reden: goud vliegt écht die boog (voor lithium was hij fout).
+- **2026-07-14 · M6 optionele CB-laag via `layer`-filter** — `type:"cb"`-nodes + `layer:"cb"`-flows filteren op
+  `filters.showCentralBanks` (default uit); chip alleen bij grondstoffen met CB-data. Herbruikbaar patroon voor
+  toekomstige optionele lagen (bv. koper-beursvoorraden). Nieuwe marker-types airport/hub/cb/recycler.
+- **2026-07-14 · M6 single-file als gegenereerde build** — `build-standalone.py` lijnt CSS + lokale scripts uit
+  `index.html` inline (three.js-CDN blijft extern) → `atlas-standalone.html`. Niet handmatig editen; regenereren.
 
 ## E - Memory Map
 
@@ -101,4 +110,5 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 3. [x] Beslist: **modulair = bron van waarheid** (single-file = gegenereerde build).
 4. [x] Modulaire code **verplaatst** naar deze map + `git init` (2 commits `b9d69fa`, `177bc6b`) = werkbasis. GitHub-remote nog optioneel.
 5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
-6. [ ] Daarna: **M6 · Goud** als eerste nieuw uitgewerkte grondstof (research LAR-397/398 → `data/goud.js` LAR-401 + air-route-modus LAR-399).
+6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
+7. [ ] Daarna: **M7 · Koper** (LAR-404 t/m 409, `design/koper.md`) — schip-grondstof, hergebruikt de optionele-laag-toggle als beursvoorraden-laag.

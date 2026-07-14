@@ -105,6 +105,10 @@ const CONFIG = {
     refinery: { size: 0.042 },
     port:     { size: 0.026 },
     market:   { size: 0.038 },
+    airport:  { size: 0.019 },   // gateway-luchthavens (goud vliegt); klein/subtiel
+    hub:      { size: 0.034 },   // handels- & kluishubs (Londen/NY/Zürich/Shanghai…)
+    cb:       { minSize: 0.030, maxSize: 0.080 }, // centrale banken; grootte = voorraad
+    recycler: { size: 0.026 },   // schroot terug naar raffinage
     waypoint: { size: 0.020 },   // zeestraten/kanalen (knelpunten op de route)
     lift: 0.015,             // hoe ver boven het oppervlak markers zweven
 
@@ -185,6 +189,7 @@ const CONFIG = {
 
     modeStyle: {             // per transportmodus
       ship:     { dash: false, label: "scheepvaart" },
+      air:      { dash: false, label: "luchtvracht" },   // great-circle-boog (goud); zie flows.js
       pipeline: { dash: true,  label: "pijpleiding" },
       rail:     { dash: true,  label: "spoor" },
       road:     { dash: true,  label: "over land" },
