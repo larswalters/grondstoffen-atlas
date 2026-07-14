@@ -1,5 +1,20 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-14 (na M7 · Koper)*
+*Last updated: 2026-07-15 (na M9 · Uranium)*
+
+## M9 · Uranium — geverifieerd headless (2026-07-15)
+- Uranium volledig gebouwd + geverifieerd in de draaiende atlas (mijn eigen server poort 8743, want 8732 bezet door de
+  M8-sessie): **uranium 54 legs / 0 kapot** (20 zee + 34 land, **0 straight** → de nieuwe Kaspische oversteek routeert écht
+  over water, geen fallback). Regressie schoon: de 5 overige nulls zijn de bekende `degDist:0` same-city hops uit de
+  M5/M6-baseline (lithium 4, goud 1), **niet nieuw**. Structuurcheck groen (geen onbekende node-/via-/tension-ids, geen duplicaten).
+- **Nieuwe vaarpunten in `_chokepoints.js`** (`wp-kaspisch-n/-m/-z` + `wp-dardanellen`): alleen uranium verwijst ernaar via
+  `via`, dus geen impact op de andere 9 grondstoffen (geverifieerd: hun leg-tellingen ongewijzigd). Risico bij een volgende
+  ingesloten-zee-grondstof: dezelfde geforceerd-water-truc, let op contiguïteit (overlappende discs, zie de Saint-Laurent-keten).
+- ⚠️ **Visuele bevestiging blijft open (LAR-415)** — WebGL-canvas laat zich niet headless screenshotten (zelfde gat als
+  M5/M6). Op Netlify/mobiel te checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst)?, de twee Kazachstan-
+  routes (Rusland-transit vs. Trans-Kaspische omweg)?, de VVER-lock-in-lijn naar Midden-Europa?, de CANDU-uitzondering?,
+  scheeps-voyages voor uranium?
+- **Militaire-kringloop-toggle bewust uitgesteld (LAR-414):** vereist code in `flows/ui/main/config` — destijds dirty door
+  de parallelle M8-sessie. Alleen de data-laag gebouwd om botsing te vermijden. Geen risico, wél openstaand werk.
 
 ## M7 · Koper — geverifieerd headless (2026-07-14)
 - Koper volledig gebouwd + geverifieerd in de draaiende atlas (poort 8742): **koper 145 zee/land-legs, 0 kapot**;

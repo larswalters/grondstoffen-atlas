@@ -1,6 +1,20 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-15 (sessie 6) — M9 · Uranium uitgevoerd (data/uranium.js + Kaspische oversteek)
+- **Taak (Lars):** nieuwe grondstof voorbereiden + committen "in dezelfde stijl", keuze aan mij → daarna ook echt uitwerken (data-file) + Linear-milestone/issues + wrapup.
+- **Gekozen: uranium** (niet nikkel, de runner-up). Reden: de meest *distinctieve nieuwe vorm* — een **4-staps kernbrandstofketen** met de knijp twee stappen downstream in een vijandige staat + twee landlocked-routes, i.p.v. nóg een China-processing-trechter. Eerst het ontwerp-skelet `design/uranium.md` (commit `d016ab8`), daarna de bouw.
+- **Gebouwd:** `data/uranium.js` van "basis" (9/2) → **uitgewerkt** (38 nodes / 36 flows / 6 tensions). De 4 stappen op de 3 bestaande stages: `erts` = winning + conversie (feed) · `raffinaat` = **verrijking (de flessenhals, ~44% Rusland)** · `product` = splijtstof → reactor. Node-types alle bestaand → geen nieuwe marker-styling. De verrijkings-knijp draagt via een `tension` (geen `wp-`), zoals Ticino bij goud.
+- **Twee landlocked-routeringen (nieuw voor de atlas):** Kazachstan (~43%, geen kust) met twee concurrerende exportroutes — per spoor door Rusland vs. de **Trans-Kaspische route** eromheen (Aktau → Kaspische Zee → Bakoe → Kaukasus → Poti → Bosporus/Dardanellen → Rotterdam). Niger (~4%, post-coup) over land naar Cotonou. Corridorpatroon geleend van kobalt/koper (land-flow → haven + aparte ship-flow).
+- **Nieuw route-element (puur data):** 3 Kaspische vaarpunten (`wp-kaspisch-n/-m/-z`) + `wp-dardanellen` in `_chokepoints.js` — forceren de Aktau↔Bakoe-watercorridor (ingesloten zee) en de Zwarte-Zee-uitgang. Alleen uranium gebruikt ze.
+- **VVER-lock-in** (TVEL → Paks/Dukovany/Kozloduy, Westinghouse breekt in) + **CANDU-uitzondering** (Canadees natuurlijk uranium, geen verrijking) — beide eigen `tensions`.
+- **Bewust uitgesteld:** militaire-kringloop-toggle (`layer:"secondary"`) → LAR-414 Backlog; vereist code in `flows/ui/main/config` = de dirty M8-bestanden. Alleen de data-laag gebouwd.
+- **Verificatie headless** (mijn eigen server poort 8743, want 8732 bezet door de M8-sessie): uranium **54 legs / 0 kapot** (20 zee + 34 land, 0 straight → de Kaspische oversteek routeert écht over water). Regressie schoon: 5 overige nulls = bekende `degDist:0` same-city baseline-hops (lithium 4, goud 1). Structuurcheck groen. WebGL-screenshot lukt niet headless → visueel = Lars.
+- **Commits (repo `main`, lokaal-only, Claude-trailer):** `d016ab8` (brief) + `76c0333` (data/uranium.js + _chokepoints.js). Parallelle M8-werk bewust ongemoeid gelaten.
+- **Linear:** milestone **M9 · Uranium** + LAR-410..415 (410-413 Done, 414 Backlog, 415 In Progress).
+- **NB concurrency:** parallelle M8-sessie (zeldzame aardmetalen) bewerkte gelijktijdig atlas-code + memory + vault. Vóór schrijven gepulld; hun dirty files niet meegecommit. Tegen sessie-einde had die sessie alles gecommit → werkboom weer schoon, dus deze wrapup kon de project-local memory alsnog schoon syncen.
+- **Status:** M9 gebouwd + geverifieerd + gecommit. **Open:** visuele bevestiging Netlify/mobiel (LAR-415, Lars) + de uitgestelde toggle (LAR-414). Volgende grondstof: nikkel (runner-up), grafiet, PGM, olie.
+
 ## 2026-07-15 (sessie 5) — M8 · Zeldzame aardmetalen (magneet-REE) voorbereid
 - **Taak (Lars):** een nieuwe grondstof voorbereiden zoals de andere (koper = model: milestone + `design/<grondstof>.md`-skelet) + committen in dezelfde stijl. Keuze aan mij.
 - **Gekozen: zeldzame aardmetalen** — meest iconische kritieke-grondstof, en voegt de atlas iets nieuws toe i.p.v. nóg een China-trechter in dezelfde vorm. Skelet geschreven volgens `design/_brief-template.md` → `design/zeldzame-aardmetalen.md` (commit `1a4e808`).

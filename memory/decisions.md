@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen voorbereid — magneet-REE-framing)*
+*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 · Zeldzame aardmetalen voorbereid)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -147,6 +147,37 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 - **Nieuw knelpunt bij de bouw:** grensovergang **Myanmar→China** (Kachin/Ruili) als `grens-*`-punt in `_chokepoints.js`,
   analoog aan `grens-kasumbalesa` (`kind:"grensovergang"`). Draagt de Dy/Tb-landstroom; enige nieuwe chokepoint.
 - **Linear M8 niet aangemaakt** (MCP-auth ontbrak): geen valse LAR-nummers verzonnen, milestone/issues "aan te maken".
+
+## Uranium — bouwbesluiten (M9, 2026-07-15) — ✅ GEBOUWD + geverifieerd
+- **Grondstofkeuze: uranium** als volgende uitwerking (niet nikkel, de runner-up). Reden: de meest *distinctieve nieuwe
+  vorm* — een 4-staps keten met de knijp twee stappen downstream in een vijandige staat + twee landlocked-routes, i.p.v.
+  nóg een China-processing-trechter (lithium/koper/REE hebben die al). Zelfde "ander beest"-argument waarmee goud gekozen werd.
+- **4-staps keten op de 3 bestaande stages gemapt** (zoals REE de "4e stage?"-vraag oploste): `erts` = winning + conversie
+  (feed, dof) · `raffinaat` = **verrijking** (de flessenhals, volle uraankleur) · `product` = splijtstoffabricage → reactor
+  (licht). Reactoren = `market`. Reden: geen nieuwe stage-styling; de verrijking wordt zo de visuele `raffinaat`-knijp —
+  precies waar het verhaal zit. Node-types alle bestaand (mine/refinery/market/port) → **geen nieuwe marker-styling nodig**.
+- **De verrijkings-flessenhals (~44% Rusland) draagt via een `tension`, niet een `wp-`.** Reden: het is een institutionele/
+  technologische knijp zónder zeestraat — analoog aan de Zwitserse goudraffinage (Ticino). Winning is breed verspreid en
+  juist *niet* de flessenhals.
+- **Schip + land, géén nieuwe render-modus** (net als koper/REE) — hergebruikt zee-A\*/land-A\* (M3) + scheeps-voyages (M4).
+  Landlocked-routering (Kazachstan/Niger) = het kobalt/koper-corridorpatroon: land-flow mijn→haven + aparte ship-flow haven→markt.
+- **Nieuw route-element = de Kaspische oversteek** (het enige "nieuwe" stuk, à la de goud-luchtroute maar veel lichter — puur
+  data): 3 vaarpunten (`wp-kaspisch-n/-m/-z`) forceren een watercorridor Aktau↔Bakoe (de Kaspische Zee is een INGESLOTEN zee
+  die deels als land in het raster valt), plus **`wp-dardanellen`** naast de bestaande `wp-bosporus` (anders sluit de Zwarte
+  Zee zich af en vindt Poti→Middellandse Zee geen uitgang). Toegevoegd aan `_chokepoints.js`; **alleen uranium gebruikt ze**
+  → geen impact op andere grondstoffen. Zelfde geforceerd-water-truc als Lombok/Suez, met een vaarpunten-keten zoals Saint-Laurent.
+- **CANDU-uitzondering eerlijk gemodelleerd:** Canadees natuurlijk uranium → CANDU-reactoren **zonder verrijking** → slaat de
+  Russische knijp volledig over (eigen `tension`). Reden: dat ís de werkelijkheid; het verklaart waarom Canada erts, conversie
+  én reactoren in één binnenlandse keten kan houden.
+- **VVER-lock-in** als downstream-verhaal: TVEL (Elektrostal) → Paks/Dukovany/Kozloduy (Russische splijtstof voor Russische
+  reactorontwerpen in de EU), met Westinghouse (Västerås) die inbreekt = de eerste barst.
+- **Militaire-kringloop-toggle BEWUST UITGESTELD** (LAR-414 Backlog). De optionele `layer:"secondary"`-laag (down-blended
+  wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` — exact de bestanden die de parallelle M8-sessie
+  op dat moment dirty had. Om botsing te vermijden alleen de **data-laag** gebouwd. Het `layer:"..."`-filterpatroon is al vast
+  en herbruikbaar (CB → exchange → secondary).
+- **Verificatie (headless, mijn eigen server poort 8743):** uranium **54 legs / 0 kapot** (20 zee + 34 land, **0 straight** →
+  de Kaspische oversteek routeert écht over water). Regressie schoon: de 5 overige nulls zijn de bekende `degDist:0` same-city
+  hops uit de M5/M6-baseline (lithium 4, goud 1), niet nieuw. Structuurcheck groen. WebGL-screenshot lukt niet headless → visueel = Lars.
 
 ## Nog te beslissen (open)
 - `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná **visuele** bevestiging op Netlify/mobiel

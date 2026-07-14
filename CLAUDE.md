@@ -1,6 +1,14 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M8 zeldzame aardmetalen voorbereid; M7 · Koper uitgevoerd)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M9 · Uranium uitgevoerd; M8 zeldzame aardmetalen voorbereid; M7 · Koper uitgevoerd)*
+
+> **M9 · URANIUM UITGEVOERD (2026-07-15):** `data/uranium.js` van "basis" (9/2) → **uitgewerkt** (38 nodes / 36 flows /
+> 6 tensions). Eerste grondstof met een bewust *andere vorm* — een **4-staps kernbrandstofketen** (winning → conversie →
+> verrijking → splijtstof → reactor) met de **verrijking (~44% Rusland) als raffinaat-flessenhals**. Nieuw: de
+> **Trans-Kaspische route** om Rusland heen (3 Kaspische vaarpunten + Dardanellen in `_chokepoints.js`), de **VVER-lock-in**
+> en de **CANDU-uitzondering**. Headless: **uranium 54 legs / 0 kapot**, regressievrij. Militaire-kringloop-toggle bewust
+> uitgesteld (LAR-414). Commits `d016ab8` (brief) + `76c0333` (data). Linear-milestone **M9 + LAR-410..415**. Rest = visuele
+> bevestiging (LAR-415).
 
 > **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M7 done** (op de
 > visuele check na): naast lithium+kobalt+goud is nu **koper volledig uitgewerkt** (`data/copper.js`, 69 nodes/50 flows)
@@ -89,6 +97,17 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   winning blijft gemengd erts, scheiding = de knijp). Magneet = stage `product`; schip+land (géén nieuwe render-modus);
   nieuw Myanmar→China `grens-*`-knelpunt bij de bouw; recycling = optionele toggle. Nog niet gebouwd; Linear M8 aan te
   maken (MCP-auth ontbrak). Details in `memory/decisions.md`.
+- **2026-07-15 · M9 uranium = 4-staps keten op 3 stages** — winning + conversie = `erts` (feed), **verrijking = `raffinaat`
+  (de flessenhals)**, splijtstof = `product`, reactoren = `market`. Node-types alle bestaand → géén nieuwe marker-styling.
+  De verrijkings-knijp (~44% Rusland) draagt via een `tension`, geen `wp-` — zoals Ticino bij goud. Schip+land, geen nieuwe modus.
+- **2026-07-15 · M9 Kaspische oversteek + Dardanellen** (`_chokepoints.js`) — 3 vaarpunten (`wp-kaspisch-n/-m/-z`) forceren
+  een watercorridor Aktau↔Bakoe (Kaspische Zee = ingesloten zee, valt deels als land in het raster); `wp-dardanellen` houdt
+  naast `wp-bosporus` de Zwarte-Zee-uitgang open (anders geen weg Poti→Middellandse Zee). Alleen uranium gebruikt ze → geen
+  impact op andere grondstoffen. Landlocked-routering (Kazachstan/Niger) = het kobalt/koper-corridorpatroon (land-flow →
+  haven + aparte ship-flow). **CANDU-uitzondering** eerlijk gemodelleerd (natuurlijk uranium, geen verrijking). Details in `memory/decisions.md`.
+- **2026-07-15 · M9 militaire-kringloop-toggle uitgesteld** — de optionele `layer:"secondary"`-laag vereist code in
+  `flows/ui/main/config`, exact de bestanden die de parallelle M8-sessie dirty had → alleen de data-laag gebouwd om botsing
+  te vermijden (LAR-414 Backlog). Het `layer:"..."`-filterpatroon is al vast en herbruikbaar (CB → exchange → secondary).
 
 ## E - Memory Map
 
@@ -129,4 +148,5 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
-8. [~] **Volgende grondstoffen voorbereid (ontwerp-skelet, nog niet gebouwd):** **M8 · Zeldzame aardmetalen** — `design/zeldzame-aardmetalen.md`, magneet-REE-framing (NdPr+Dy/Tb, optie 2), gecommit (`1a4e808` + reframe `faf0288`). **M9 · Uranium** — `design/uranium.md` (parallelle sessie, `d016ab8`). Linear-milestones M8/M9 nog aan te maken; bouwen ná koper's visuele bevestiging.
+8. [x] **M9 · Uranium uitgevoerd** (2026-07-15): `design/uranium.md` (`d016ab8`) → `data/uranium.js` "uitgewerkt" (38 nodes/36 flows/6 tensions) + Kaspische oversteek/Dardanellen in `_chokepoints.js` (`76c0333`). 4-staps keten met verrijking als flessenhals (~44% Rusland) + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering. Headless: 54 legs/0 kapot, regressievrij. **Linear M9 · Uranium + LAR-410..415** aangemaakt (410-413 Done; 414 Backlog = uitgestelde militaire-kringloop-toggle; 415 In Progress = visuele bevestiging). Rest = visuele bevestiging Netlify/mobiel.
+9. [~] **M8 · Zeldzame aardmetalen voorbereid (ontwerp-skelet, nog niet gebouwd):** `design/zeldzame-aardmetalen.md`, magneet-REE-framing (NdPr+Dy/Tb, optie 2), gecommit (`1a4e808` + reframe `faf0288`). Linear-milestone M8 nog aan te maken; bouwen ná koper's visuele bevestiging. Overige op basis: nikkel (runner-up), grafiet, PGM, olie.

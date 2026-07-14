@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M7 · Koper uitgevoerd; M8 zeldzame aardmetalen + M9 uranium voorbereid)*
+*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 zeldzame aardmetalen voorbereid)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -54,21 +54,23 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 ## Detailniveaus
 
 - **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag),
-  **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag).
-- **Basis:** de 7 overige grondstoffen (nikkel/REE/grafiet/PGM/uranium/olie) — laden en renderen, maar zonder
+  **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag),
+  **uranium** (M9 — 38 nodes/36 flows, 4-staps kernbrandstofketen met verrijking als flessenhals + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering).
+- **Basis:** de 6 overige grondstoffen (nikkel/grafiet/PGM/olie + zeldzame aarden-basis) — laden en renderen, maar zonder
   operators/capaciteiten/route-detail.
 - **Voorbereid (ontwerp-skelet, nog niet gebouwd):** **zeldzame aardmetalen** (M8, `design/zeldzame-aardmetalen.md` —
-  magneet-REE-framing NdPr+Dy/Tb, optie 2) en **uranium** (M9, `design/uranium.md`, parallelle sessie). Beide volgens
-  het brief→bouw-sjabloon; bouwen ná koper's visuele bevestiging. Linear-milestones M8/M9 nog aan te maken.
+  magneet-REE-framing NdPr+Dy/Tb, optie 2). Volgens het brief→bouw-sjabloon; bouwen ná koper's visuele bevestiging.
+  Linear-milestone M8 nog aan te maken. Overige kandidaten op basis: nikkel (runner-up), grafiet, PGM, olie.
 
-## Nu (2026-07-14 — M7 · Koper uitgevoerd)
+## Nu (2026-07-15 — M9 · Uranium uitgevoerd)
 
-- **M0–M7 done (op de visuele check na).** Koper volledig gebouwd: `data/copper.js` (Andes-concentraat-trechter →
-  Chinese smelters, `stage: erts`; Copperbelt-**kathode** over land via Kasumbalesa, `stage: raffinaat`;
-  concentraat-vs-SX-EW via `stage`; recycling always-on) + nieuwe **beursvoorraden-laag** (LME/SHFE/COMEX-toggle,
-  `type:"exchange"`/`layer:"exchange"`, zelfde patroon als de goud-CB-laag). Headless geverifieerd: **koper 145 legs /
-  0 kapot**, regressie **388 legs / 0 kapot** over alle 10 grondstoffen; toggle +6 nodes/+7 flows; geen console-errors.
-- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless, zelfde gat als M5/M6);
-  **code-commit** staat dirty (op Lars' seintje, agent-trailer, repo lokaal-only); **Linear** LAR-404 t/m 409 → Done
-  (Linear-MCP-auth ontbrak deze sessie — Lars zelf of autoriseren).
-- **Volgende:** volgende grondstof (nikkel/REE/grafiet/PGM/uranium/olie) volgens dezelfde brief→bouw-flow.
+- **Uranium volledig gebouwd + geverifieerd.** `data/uranium.js` (38 nodes/36 flows/6 tensions): 4-staps kernbrandstof-
+  keten op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-flessenhals** (institutionele knijp,
+  via een `tension`, zoals Ticino). Nieuw: de **Trans-Kaspische route** om Rusland heen (3 Kaspische vaarpunten +
+  Dardanellen in `_chokepoints.js`), de **VVER-lock-in** en de **CANDU-uitzondering**. Node-types alle bestaand → geen
+  nieuwe render-modus/marker-styling. Headless: **uranium 54 legs / 0 kapot**, regressievrij. Gecommit (`d016ab8` brief +
+  `76c0333` data, `main`, lokaal-only). **Linear M9 · Uranium + LAR-410..415** aangemaakt.
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-415, Lars) + de
+  bewust uitgestelde **militaire-kringloop-toggle** (LAR-414, oppakken ná de M8-code).
+- **Ook eerder klaar:** M7 · Koper (gecommit, LAR-404..409 Done). M8 · Zeldzame aardmetalen op papier voorbereid.
+- **Volgende grondstof:** nikkel (runner-up), grafiet, PGM, olie — volgens dezelfde brief→bouw-flow.

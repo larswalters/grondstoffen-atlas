@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M7 · Koper uitgevoerd; M8 · Zeldzame aardmetalen in voorbereiding)*
+*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 · Zeldzame aardmetalen in voorbereiding)*
 
 ## M6 · Goud ✅ uitgevoerd (2026-07-14)
 - [x] Research → brief `data/goud.md` (LAR-397/398).
@@ -41,6 +41,19 @@
 **Herbruikbaar uit M6+M7:** de optionele-laag-toggle (CB bij goud, beursvoorraden bij koper) is een vast, herbruikbaar
 `layer:"..."`-filterpatroon (vier filterplekken + config-size + ui-chip + marker-vorm); het landcorridor-patroon
 (Kasumbalesa) = land-flow mijn→haven + aparte ship-flow. **Elke ship-leg moet op een kustpunt (`port`/`coastal`/`wp-`) landen.**
+
+## M9 · Uranium ✅ uitgevoerd (2026-07-15) — LAR-410 t/m 415
+`data/uranium.js` van "basis" (9/2) → volledig **uitgewerkt** (38 nodes / 36 flows / 6 tensions). Eerste grondstof met een
+bewust *andere vorm*: een **4-staps kernbrandstofketen** (winning → conversie → verrijking → splijtstof → reactor), gemapt
+op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-flessenhals**.
+- [x] Ontwerp-skelet `design/uranium.md` (LAR-410/411 research) + commit `d016ab8`.
+- [x] **Kaspische oversteek + Dardanellen** (LAR-412): 3 vaarpunten (`wp-kaspisch-n/-m/-z`) + `wp-dardanellen` in `_chokepoints.js` — forceren de Aktau↔Bakoe-watercorridor (ingesloten zee) + de Zwarte-Zee-uitgang. Alleen uranium gebruikt ze.
+- [x] `data/uranium.js` (LAR-413): 4-staps keten + Trans-Kaspische route (om Rusland heen) + VVER-lock-in + CANDU-uitzondering. Commit `76c0333`.
+- [x] Verificatie headless (LAR-415, deel): uranium **54 legs / 0 kapot** (20 zee + 34 land, 0 straight → de Kaspische oversteek routeert écht over water); regressievrij (5 nulls = bekende `degDist:0` baseline-hops); structuurcheck groen.
+
+**Open (M9 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
+- [ ] **Militaire-kringloop-toggle** (LAR-414, Backlog) — bewust uitgesteld: de optionele `layer:"secondary"`-laag (down-blended wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` (destijds dirty door de M8-sessie). Oppakken zodra de M8-code gecommit is; het `layer:"..."`-filterpatroon is al vast (CB → exchange → secondary).
 
 ## Verderop — M8 · Zeldzame aardmetalen / magneet-REE (ontwerp-skelet klaar, ná koper)
 **Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, herzien 2026-07-15 → **optie 2:
