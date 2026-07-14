@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M7 · Koper uitgevoerd)*
+*Last updated: 2026-07-15 (M7 · Koper uitgevoerd; M8 zeldzame aardmetalen + M9 uranium voorbereid)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -57,6 +57,9 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
   **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag).
 - **Basis:** de 7 overige grondstoffen (nikkel/REE/grafiet/PGM/uranium/olie) — laden en renderen, maar zonder
   operators/capaciteiten/route-detail.
+- **Voorbereid (ontwerp-skelet, nog niet gebouwd):** **zeldzame aardmetalen** (M8, `design/zeldzame-aardmetalen.md` —
+  magneet-REE-framing NdPr+Dy/Tb, optie 2) en **uranium** (M9, `design/uranium.md`, parallelle sessie). Beide volgens
+  het brief→bouw-sjabloon; bouwen ná koper's visuele bevestiging. Linear-milestones M8/M9 nog aan te maken.
 
 ## Nu (2026-07-14 — M7 · Koper uitgevoerd)
 

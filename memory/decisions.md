@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (M7 · Koper uitgevoerd)*
+*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen voorbereid — magneet-REE-framing)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -129,6 +129,24 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   → kustpunt Nagoya (`coastal: true`) + Onsan→markt naar `mode: ship` (Korea→Japan kan niet over land, geen landbrug);
   alle beursmagazijnen `coastal: true` (het zijn havenmagazijnen); Walvis→VS gereroute naar Rotterdam (geen VS-haven-
   node). **Les:** elke ship-leg moet op een kustpunt (`port`/`coastal`/`wp-`) landen.
+
+## Zeldzame aardmetalen — voorbereidingsbesluiten (M8, 2026-07-15) — ⏳ ONTWERP-SKELET, nog niet gebouwd
+- **Grondstofkeuze: zeldzame aardmetalen** als volgende uitwerking. Reden: meest iconische kritieke-grondstof + voegt
+  de atlas iets nieuws toe (niet nóg een China-trechter in dezelfde vorm). Skelet `design/zeldzame-aardmetalen.md`.
+- **Magneet-REE-framing (optie 2), na Lars' "is REE niet te generiek?".** Niet "alle 17 elementen" (→ vage blob incl.
+  La/Ce-bulk) maar de **magneetmetalen NdPr (licht) + Dy/Tb (zwaar)**. Reden: leest als één stof zoals lithium/kobalt,
+  terwijl de winning eerlijk het **gemengde erts** blijft (Nd niet los te winnen — dat ís de crux; scheiding = de knijp).
+  REE is intrinsiek een groep (samen uit één erts, chemisch bijna identiek), niet generiek zoals "metalen"; precedent = PGM.
+- **Metadata sharpenen** (bij de bouw): `id` blijft `rare-earths` (basis-file + registratie intact), `symbol → NdPr`,
+  `unit → kt magneet-REO/jaar` (alleen NdPr + Dy/Tb-oxide-inhoud), scherpere `name`/`blurb`. Mijn-`share` telt de
+  magneet-relevante fractie (Dy/Tb-rijke ionklei weegt zwaarder dan tonnage).
+- **Magneet = stage `product`** (geen aparte 4e stage) → de eerdere "4e stage?"-open-vraag vervalt in deze framing.
+  Consumptie beperkt tot magneet-eindgebruik (EV/wind/defensie); La/Ce-bulk (glas/katalysatoren) buiten scope.
+- **Schip+land, géén nieuwe render-modus** (net als koper) — hergebruikt zee-A\*/land-A\* (M3) + scheeps-voyages (M4).
+  Recycling (magneetschroot → scheiding) = optionele toggle `layer:"recycle"` (default uit), het CB/beursvoorraden-patroon.
+- **Nieuw knelpunt bij de bouw:** grensovergang **Myanmar→China** (Kachin/Ruili) als `grens-*`-punt in `_chokepoints.js`,
+  analoog aan `grens-kasumbalesa` (`kind:"grensovergang"`). Draagt de Dy/Tb-landstroom; enige nieuwe chokepoint.
+- **Linear M8 niet aangemaakt** (MCP-auth ontbrak): geen valse LAR-nummers verzonnen, milestone/issues "aan te maken".
 
 ## Nog te beslissen (open)
 - `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná **visuele** bevestiging op Netlify/mobiel

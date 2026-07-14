@@ -1,6 +1,15 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-15 (sessie 5) — M8 · Zeldzame aardmetalen (magneet-REE) voorbereid
+- **Taak (Lars):** een nieuwe grondstof voorbereiden zoals de andere (koper = model: milestone + `design/<grondstof>.md`-skelet) + committen in dezelfde stijl. Keuze aan mij.
+- **Gekozen: zeldzame aardmetalen** — meest iconische kritieke-grondstof, en voegt de atlas iets nieuws toe i.p.v. nóg een China-trechter in dezelfde vorm. Skelet geschreven volgens `design/_brief-template.md` → `design/zeldzame-aardmetalen.md` (commit `1a4e808`).
+- **Lars' vraag "is REE niet te generiek?"** → uitgelegd dat REE intrinsiek een groep is (17 elementen, samen uit één erts, chemisch bijna identiek → dáárom is scheiding de flessenhals; precedent = PGM). Wél een granulariteits-keuze aangeboden; Lars koos **optie 2 = scherpe magneet-REE-framing**. Skelet herzien (commit `faf0288`): draait om **NdPr (licht) + Dy/Tb (zwaar)**, winning blijft gemengd erts, magneet = stage `product` (4e-stage-vraag vervalt), consumptie beperkt tot magneet-eindgebruik (La/Ce-bulk buiten scope); metadata sharpenen (`symbol → NdPr`, `unit → kt magneet-REO`, blurb/name; `id` blijft `rare-earths`).
+- **Drie nieuwe atlas-elementen (distinct van lithium/koper):** (1) **Dy/Tb-landstroom over de grens Myanmar→China** (Kachin → Ruili) = nieuw `grens-*`-knelpunt, analoog aan `grens-kasumbalesa`; (2) de **Mountain Pass-rondreis** (VS delft → China scheidt → oxide terug); (3) de **NdFeB-magneet-flessenhals** downstream. Schip+land, **géén nieuwe render-modus** (net als koper); recycling = optionele toggle (`layer:"recycle"`, default uit).
+- **Linear:** MCP niet bereikbaar (auth) → geen valse LAR-nummers verzonnen; milestone `M8` + issues "aan te maken" gemarkeerd, M6/M7-patroon gespiegeld in de brief. next-actions M8-pointer bijgewerkt.
+- **NB concurrency:** parallelle chat deed intussen koper M7 (af, gecommit + vault-gewrapt) én een **uranium M9-skelet** (`design/uranium.md`, commit `d016ab8`). Ik bewerkte alleen mijn eigen bestanden; koper-working-tree bewust ongemoeid gelaten bij mijn commits. **Gapje gesignaleerd:** koper-vault linkt `[[...m7-koper-uitgevoerd]]` maar die dated summary is niet geschreven (dangling link in `_grondstoffen-atlas.md`/`index.md`/`log.md`).
+- **Status:** M8 op papier klaar + gecommit (2 commits, Claude-trailer, repo lokaal-only). **Niet gebouwd.** Volgende: Linear M8 aanmaken + bouwen ná koper's visuele bevestiging.
+
 ## 2026-07-14 (sessie 4) — M7 · Koper uitgevoerd (data/copper.js + beursvoorraden-laag)
 - **Hele M7-milestone in één sessie.** `design/koper.md`-skelet → `data/copper.js` van "basis" (13/5) naar volledig
   **uitgewerkt** (69 nodes / 50 flows / 5 tensions, goud-niveau).

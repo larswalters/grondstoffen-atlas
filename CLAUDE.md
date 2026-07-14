@@ -1,6 +1,6 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (M7 · Koper uitgevoerd)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M8 zeldzame aardmetalen voorbereid; M7 · Koper uitgevoerd)*
 
 > **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M7 done** (op de
 > visuele check na): naast lithium+kobalt+goud is nu **koper volledig uitgewerkt** (`data/copper.js`, 69 nodes/50 flows)
@@ -84,6 +84,11 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   SHFE/COMEX als optionele toggle, default uit, exact het CB-laag-patroon (vier filterplekken + config + ui-chip +
   marker). Marker = koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`. Herbevestigt: optionele lagen zijn een
   herbruikbaar patroon.
+- **2026-07-15 · M8 zeldzame aardmetalen voorbereid (magneet-REE-framing)** — ontwerp-skelet `design/zeldzame-aardmetalen.md`;
+  framing = **magneet-REE (NdPr + Dy/Tb)** (optie 2 na Lars' "is REE niet te generiek?": REE is intrinsiek een groep,
+  winning blijft gemengd erts, scheiding = de knijp). Magneet = stage `product`; schip+land (géén nieuwe render-modus);
+  nieuw Myanmar→China `grens-*`-knelpunt bij de bouw; recycling = optionele toggle. Nog niet gebouwd; Linear M8 aan te
+  maken (MCP-auth ontbrak). Details in `memory/decisions.md`.
 
 ## E - Memory Map
 
@@ -124,4 +129,4 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
-8. [ ] Daarna: volgende grondstof (nikkel/REE/grafiet/PGM/uranium/olie) volgens dezelfde brief→bouw-flow. (Een tweede chat bereidt **M8 · zeldzame aardmetalen** voor — `design/zeldzame-aardmetalen.md`.)
+8. [~] **Volgende grondstoffen voorbereid (ontwerp-skelet, nog niet gebouwd):** **M8 · Zeldzame aardmetalen** — `design/zeldzame-aardmetalen.md`, magneet-REE-framing (NdPr+Dy/Tb, optie 2), gecommit (`1a4e808` + reframe `faf0288`). **M9 · Uranium** — `design/uranium.md` (parallelle sessie, `d016ab8`). Linear-milestones M8/M9 nog aan te maken; bouwen ná koper's visuele bevestiging.
