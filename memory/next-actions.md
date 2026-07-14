@@ -1,16 +1,16 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-14*
+*Last updated: 2026-07-14 (na code-onboarding + M5-port)*
 
-## M5 ✅ afgerond + geverifieerd (2026-07-14)
-- LAR-393/394/395/396 → **Done**. Aanpak: Dover + St. Lawrence als knelpunt open geforceerd (kobaltroutes);
-  shell-laag + detailpatch (tegelnaad). Regressie 0 kapotte routes. ⚠️ nog niet met screenshot bevestigd.
-
-## Onboarding-restpunten
-- [x] Wiki-pagina + `now.md` + eerste Pinecone-gist (2026-07-14).
+## Onboarding ✅ afgerond (2026-07-14)
+- [x] Wiki-pagina + `now.md` + eerste Pinecone-gist.
 - [x] **Beslist: modulair = bron van waarheid** (single-file = gegenereerde build). Zie decisions.md.
-- [ ] **Modulaire code (`globe-oud\grondstoffen-atlas-v2\atlas`) → `Projects\General\grondstoffen-atlas`** verplaatsen + `git init` (+ evt. GitHub-repo). Dit wordt de werkbasis.
-- [ ] **M5-fixes porten** uit `atlas-lithium-kobalt.html` naar de modulaire code: Dover/St.Lawrence-knelpunten in `_chokepoints.js`; shell-laag + detailpatch in de tegel/basemap-laag. Verifiëren (regressie 0 kapotte routes) + visueel op Netlify/mobiel.
-- [ ] `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen zodra M5 geport + visueel bevestigd.
+- [x] **Modulaire code → `Projects\General\grondstoffen-atlas` + `git init`** (2 commits `b9d69fa`, `177bc6b`). Werkbasis staat nu hier.
+- [x] **M5-fixes geport** uit `atlas-lithium-kobalt.html`: Dover/Deense Straten/Kasumbalesa/Saint-Laurent in `_chokepoints.js`; grensovergang-logica in `searoute.js`/`flows.js`; labels in `ui.js`; tegelnaad-fix zat al in `tiles.js`. `cobalt.js` → volledig uitgewerkt. Seto-brug voor Niihama→Osaka. **Geverifieerd headless: 214 legs, 0 kapotte routes.**
+
+## Openstaande restpunten (klein)
+- [ ] **Visuele bevestiging** op Netlify/mobiel (screenshot lukte niet in de preview → WebGL-time-out). Zit al in LAR-403.
+- [ ] `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná die visuele bevestiging.
+- [ ] Optioneel: **GitHub-remote** voor de nieuwe repo (nu lokaal-only).
 
 ## Daarna — inhoudelijk: GOUD (Lars' focus) — ontwerp op papier
 Ontwerprichting vastgelegd 2026-07-14 (zie decisions.md): volle keten, alle lagen, luchtroutes als aparte modus.

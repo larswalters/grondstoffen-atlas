@@ -3,9 +3,9 @@
 
 ## Architectuur (hoe we bouwen)
 
-> ⚠️ **Modulair vs single-file (open):** onderstaande beschrijft de **modulaire** opzet (backup in `globe-oud`).
-> De huidige werkende versie is de **single-file** `atlas-lithium-kobalt.html` (M5 daarin gedaan). Bron van
-> waarheid kiezen vóór goud — zie `decisions.md`.
+> ✅ **Modulair = bron van waarheid, in gebruik.** Onderstaande beschrijft de **modulaire** opzet, die nu als
+> git-repo in déze projectmap staat (`Projects\General\grondstoffen-atlas`, 2 commits). De M5-fixes zijn erin
+> geport. De single-file `atlas-lithium-kobalt.html` op het bureaublad is nog slechts referentie/deploy-build.
 
 - **Vanilla JS + Three.js, geen bundler.** Losse globals-bestanden, vaste laadvolgorde via
   `<script>`-tags in `index.html`.
@@ -45,7 +45,8 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 
 ## Nu (2026-07-14)
 
-- **M5 afgerond** (door de aparte CC-sessie; die deed geen wrapup → wij starten hier clean).
-- Deze sessie: **brain-scaffold** + **goud-ontwerp op papier** (zie `design/goud.md`). Alle ontwerpkeuzes
-  vastgelegd; hierna eerste wrapup (onboarding vault/Pinecone/Linear).
-- **Volgende sessie:** research (coördinaten, volumes, operators) → development (`data/goud.js` + air-route-modus).
+- **M0–M5 done.** Modulaire code staat als **git-repo** in deze projectmap; M5-fixes geport uit de single-file;
+  `cobalt.js` volledig uitgewerkt; **214 legs / 0 kapotte routes** geverifieerd. Goud-ontwerp op papier (`design/goud.md`).
+- **Rest:** alleen nog visuele bevestiging op Netlify/mobiel + opruimen bureaublad-restanten.
+- **Volgende sessie:** **M6 · Goud** — research (coördinaten, volumes t/jr, operators, CB-tonnages, mine→gateway-airport)
+  → development (`data/goud.js` + air-route-modus als 3e route-type + voyages-luchtpuntjes). LAR-397 t/m 403.

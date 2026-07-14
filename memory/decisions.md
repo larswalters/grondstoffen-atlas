@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-14*
+*Last updated: 2026-07-14 (code-onboarding + M5-port)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -66,15 +66,26 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 - **Volumes:** per stroom een grofweg ton/jaar-getal verzamelen (research volgende sessie) om bogen +
   voyages-puntjes te schalen en de teller te vullen.
 
-## Architectuur-besluit (2026-07-14): MODULAIR = bron van waarheid
+## Architectuur-besluit (2026-07-14): MODULAIR = bron van waarheid — ✅ UITGEVOERD
 - Lars koos **modulair** als bron van waarheid; de single-file wordt een **gegenereerde deploy-build**
   (mobiel/Netlify), zoals `atlas-standalone.html` in M0. Reden: schoonste per-grondstof-workflow (`data/<x>.js`),
   beste voor git-diffs + agent-edits, eert de M0-splitsing.
-- **Gevolg:** de modulaire code in `globe-oud\grondstoffen-atlas-v2\atlas\` wordt de **werkbasis** (→ verplaatsen
-  naar `Projects\General\grondstoffen-atlas` + `git init`). De M5-fixes (Dover/St.Lawrence-knelpunten + shell-laag/
-  detailpatch tegels) moeten **eenmalig uit de single-file `atlas-lithium-kobalt.html` geport** worden. De single-file
-  blijft referentie tot dat gedaan + visueel bevestigd is.
+- **✅ Uitgevoerd (2026-07-14):** modulaire code verplaatst naar `Projects\General\grondstoffen-atlas` +
+  **`git init`** (2 commits `b9d69fa`, `177bc6b`). M5-fixes geport uit de single-file (Dover/Deense Straten/
+  Kasumbalesa-grensovergang/Saint-Laurent in `_chokepoints.js` + grensovergang-logica in `searoute.js`/`flows.js`
+  + labels in `ui.js`; tegelnaad-fix zat al in `tiles.js`/`config.js`). `cobalt.js` vervangen door de volledig
+  uitgewerkte versie. Geverifieerd: 214 legs, 0 kapotte routes.
+
+## Grensovergang als landpunt + Seto-brug (2026-07-14)
+- **Grensovergangen (`kind: "grensovergang"`, bv. Kasumbalesa) stempelen de LANDkaart open**, niet de zeekaart.
+  Reden: een grenspost is een landknelpunt (weg), geen zeestraat; `isSeaPoint` behandelt hem als landpunt zodat
+  road/rail-legs erlangs routeren. Id begint bewust NIET met `wp-` (dat markeert zeepunten).
+- **Per-waypoint `openRadius`** (Saint-Laurent-keten): smalle rivieren met kleine schijfjes openen i.p.v. de
+  globale `openRadiusDeg`, anders forceer je water dwars door een landengte.
+- **Seto-brug (Kojima–Sakaide) als `LAND_LINK`.** Reden: Shikoku is een apart eiland in het raster → de landrouter
+  vond geen pad Niihama→Osaka (kobalt). Zelfde truc als Øresund/Kanaaltunnel.
 
 ## Nog te beslissen (open)
-- Migratie modulaire code (globe-oud) → `Projects\General\grondstoffen-atlas` + `git init` (volgende sessie).
-- `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná M5-port + visuele bevestiging.
+- `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná **visuele** bevestiging op Netlify/mobiel
+  (routeverificatie is al headless gedaan; screenshot lukte niet door WebGL-time-out).
+- Evt. **GitHub-remote** voor de nieuwe repo (nu lokaal-only).

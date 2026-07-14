@@ -1,12 +1,12 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-14 (code-onboarding)*
 
-> **STATUS VAN DEZE MAP (2026-07-14):** dit is voorlopig alleen de **brain-laag** (spec + `memory/` + `design/`).
-> De werkende code staat op het bureaublad (zie sectie C). **M5 is af** (aparte CC-sessie; geverifieerd
-> numeriek/geometrisch, nog niet met screenshot). **Beslist (2026-07-14): modulair = bron van waarheid**
-> (single-file = gegenereerde build). Open: modulaire code (globe-oud) → deze map + `git init`, en de M5-fixes
-> eenmalig porten uit de single-file. Tot dan: deze map niet als code-root gebruiken.
+> **STATUS VAN DEZE MAP (2026-07-14):** ✅ dit is nu de **code-root** — de modulaire atlas staat hier als
+> **git-repo** (2 commits `b9d69fa`, `177bc6b`). De M5-fixes zijn uit de single-file geport en geverifieerd
+> (214 legs, 0 kapotte routes). **Modulair = bron van waarheid** (single-file `atlas-lithium-kobalt.html` op
+> het bureaublad = nog slechts referentie/deploy-build, onaangeraakt tot visuele bevestiging op Netlify/mobiel).
+> Draaien lokaal: `python -m http.server 8732` in deze map (launch.json-entry `grondstoffen-atlas`).
 
 ## A - What this folder is
 
@@ -34,14 +34,15 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 
 - **Tech:** vanilla JS + Three.js. **Geen bundler** — losse globals-bestanden met vaste laadvolgorde
   via `<script>`-tags in `index.html`.
-- **Huidige code-locatie (bureaublad):** `C:\Users\lars\Desktop\globe\atlas-lithium-kobalt.html` — **single-file**
-  (hierin is M5 gedaan, ~138 KB). De **oude modulaire versie** staat als backup in
-  `C:\Users\lars\Desktop\globe-oud\grondstoffen-atlas-v2\atlas\` (config.js/_registry.js/src/…), plus nog oudere
-  bestanden in `C:\Users\lars\Desktop\globe-oud\files\`.
-- **✅ Beslist (2026-07-14): modulair = bron van waarheid** (single-file = gegenereerde build). De modulaire code
-  in `globe-oud` wordt de werkbasis (→ deze map). De M5-fixes moeten nog uit de single-file geport worden.
-- **Deploy:** Netlify, drag-and-drop (single-file is daarvoor juist handig).
-- **Bestandsindeling (modulaire opzet — in `globe-oud`):**
+- **Huidige code-locatie:** ✅ **deze projectmap** (`Projects\General\grondstoffen-atlas`, git-repo). De modulaire
+  code (config/geo-data/index/style/src/data/textures) is hier de werkbasis. Referenties op het bureaublad:
+  single-file `C:\Users\lars\Desktop\globe\atlas-lithium-kobalt.html` (M5-referentie/deploy-build) en de oude
+  modulaire backup `C:\Users\lars\Desktop\globe-oud\grondstoffen-atlas-v2\atlas\` — beide **onaangeraakt**, mogen
+  weg zodra de repo visueel op Netlify/mobiel bevestigd is.
+- **✅ Beslist + uitgevoerd (2026-07-14): modulair = bron van waarheid** (single-file = gegenereerde build). Code
+  verplaatst + `git init`; M5-fixes geport (214 legs, 0 kapotte routes geverifieerd).
+- **Deploy:** Netlify, drag-and-drop (single-file build daarvoor handig).
+- **Bestandsindeling (modulaire opzet — in deze map):**
   - `config.js` — alle instellingen op één plek
   - `geo-data.js` — landpolygonen (`LAND_POLYS`)
   - `index.html` — vaste script-laadvolgorde
@@ -57,6 +58,11 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); A\* over een
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
+
+- **2026-07-14 · modulair = bron van waarheid, uitgevoerd** — code → deze map + `git init`; M5-fixes geport.
+- **2026-07-14 · grensovergang als landpunt** — `kind: "grensovergang"` stempelt de LANDkaart open (niet de
+  zeekaart); `isSeaPoint` behandelt hem als landpunt. Per-waypoint `openRadius` voor smalle rivieren (Saint-Laurent).
+- **2026-07-14 · Seto-brug** als `LAND_LINK` — Shikoku is een apart raster-eiland → landroute Niihama→Osaka.
 
 ## E - Memory Map
 
@@ -93,6 +99,6 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 1. [x] M5 door aparte CC-sessie klaar + geverifieerd (2026-07-14); LAR-393/394/395/396 Done.
 2. [x] Wiki-pagina + `now.md`-regel + Pinecone-gist (eerste wrapup, 2026-07-14).
 3. [x] Beslist: **modulair = bron van waarheid** (single-file = gegenereerde build).
-4. [ ] Modulaire code (`globe-oud`) **verplaatsen** naar deze map + `git init` (+ evt. GitHub-repo) = werkbasis.
-5. [ ] **M5-fixes porten** uit de single-file naar de modulaire code + verifiëren (regressie + visueel Netlify/mobiel).
-6. [ ] Daarna: goud als eerste nieuw uitgewerkte grondstof (research → `data/goud.js`).
+4. [x] Modulaire code **verplaatst** naar deze map + `git init` (2 commits `b9d69fa`, `177bc6b`) = werkbasis. GitHub-remote nog optioneel.
+5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
+6. [ ] Daarna: **M6 · Goud** als eerste nieuw uitgewerkte grondstof (research LAR-397/398 → `data/goud.js` LAR-401 + air-route-modus LAR-399).

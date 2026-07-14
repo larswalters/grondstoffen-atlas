@@ -1,5 +1,13 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-14*
+*Last updated: 2026-07-14 (na M5-port)*
+
+## M5-port naar modulaire code — geverifieerd (2026-07-14)
+- M5-fixes zitten nu ook in de **modulaire bron van waarheid** (waren alleen in de single-file). Headless
+  routeverificatie in de draaiende atlas: **214 legs gerouteerd, 0 kapotte routes**; 3 M5-bugroutes
+  geometrisch correct (Antwerpen→Newark + Kaap→Deense Straten via Nauw van Calais, Cuba→Montréal de
+  Saint-Laurent op). Eén restfout (kobalt Niihama→Osaka, null-route) gefixt met de **Seto-brug**.
+- ⚠️ **Visuele bevestiging blijft open** — preview-screenshot liep vast (WebGL-time-out). Op Netlify/mobiel
+  te bekijken (zit al in LAR-403). Dit is de enige rest vóór `globe-oud`/single-file opgeruimd mag worden.
 
 ## M5-bugs — OPGELOST + geverifieerd (2026-07-14, aparte CC-sessie) → LAR-393/394/395/396 Done
 **Aanpak 395/396** (kobaltroutes Cuba→Canada + Europa→Amerika): Straat van Dover + St. Lawrence als knelpunt
@@ -32,10 +40,10 @@ Referentie-symptomen hieronder:
   zee/land-A\* is gebouwd. Zonder ontwerpbeslissing over luchtroutes wordt een goudketen ofwel onjuist
   (alles over zee) ofwel visueel inconsistent. Los dit op vóór implementatie.
 - **Mobiele performance:** tegellaag + veel stromen + voyages kunnen zwaar worden; bewaken bij uitbreiding.
-- **Modulair vs single-file (open):** huidige werkende versie is single-file `atlas-lithium-kobalt.html`; modulair
-  staat in `globe-oud`. Beslissen vóór goud. Risico: doorgaan in single-file = geen per-grondstof `data/<x>.js`-scheiding;
-  terug naar modulair = de M5-fixes moeten worden overgezet.
-- **Visuele M5-bevestiging ontbreekt** (screenshot). Bevestig op Netlify/mobiel voordat `globe-oud` definitief weg mag.
+- **Modulair vs single-file — OPGELOST:** modulair is nu de bron van waarheid in de projectmap-git-repo, M5-fixes
+  geport. Single-file blijft alleen als referentie tot visuele bevestiging.
+- **Visuele M5-bevestiging ontbreekt** (screenshot lukt niet in de preview → WebGL-time-out). Bevestig op
+  Netlify/mobiel voordat `globe-oud`/single-file definitief weg mag.
 
 ## Verholpen (referentie)
 - Schaalbug (delen door camerastand i.p.v. afstand tot oppervlak) — opgelost in M2 (`scaleFor()`).
