@@ -177,4 +177,6 @@ const LAND_LINKS = [
     note: "Calais–Folkestone: de enige spoorverbinding tussen het vasteland en Groot-Brittannië." },
   { id: "ll-bosporus", name: "Bosporusbruggen", lat: 41.08, lon: 29.05,
     note: "Istanbul: waar het spoor van Europa naar Azië oversteekt (Marmaray-tunnel)." },
+  { id: "ll-seto", name: "Grote Seto-brug", lat: 34.40, lon: 133.81,
+    note: "Kojima–Sakaide: verbindt Shikoku met Honshu. Zonder deze brug vindt de landrouter geen pad van de Sumitomo-raffinaderij in Niihama naar Osaka (kobalt)." },
 ];
