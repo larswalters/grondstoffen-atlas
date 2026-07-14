@@ -38,3 +38,16 @@ kathode). `data/copper.js` gaat van "basis" → "uitgewerkt".
 
 **Herbruikbaar uit M6 voor koper:** de optionele-laag-toggle (nu CB; voor koper de LME/COMEX/SHFE-beursvoorraden,
 LAR-408) volgt exact hetzelfde `layer:"..."`-filterpatroon; de brief→bouw-flow is identiek.
+
+## Verderop — M8 · Zeldzame aardmetalen (ontwerp-skelet klaar, ná koper)
+**Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, volgens `design/_brief-template.md`) →
+data-doel `data/rare-earths.js` van "basis" → "uitgewerkt". **Linear-milestone `M8 · Zeldzame aardmetalen` +
+issues nog aan te maken** (spiegelt M6/M7: research × 2 → licht/zwaar-REE + Myanmar-grenscorridor → data-file →
+recycling-toggle → verificatie). LAR-nummers volgen bij aanmaken.
+
+**Kern-"aha" (distinct van lithium/koper):** winning breed verspreid, maar scheiding ~85–90% in Zuid-China
+(Ganzhou) én NdFeB-magneten ~90%+ China. Drie nieuwe elementen voor de atlas: (1) **zware-REE-landstroom over
+de grens Myanmar→China** (Kachin → Ruili — nieuw `grens-*`-knelpunt, analoog aan Kasumbalesa), (2) de
+**Mountain Pass-rondreis** (VS delft → China scheidt → terug), (3) de **magneet-flessenhals** downstream.
+**Hergebruikt schip+land — géén nieuwe render-modus** (net als koper); recycling-laag = het CB/beursvoorraden-
+toggle-equivalent. Open bouw-vraag: magneet als stage `product` of aparte 4e stage `magneet`.
