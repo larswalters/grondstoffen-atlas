@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-14 (na code-onboarding + M5-port)*
+*Last updated: 2026-07-14 (M7 · Koper milestone + issues opgezet)*
 
 ## Onboarding ✅ afgerond (2026-07-14)
 - [x] Wiki-pagina + `now.md` + eerste Pinecone-gist.
@@ -42,3 +42,14 @@ Bouwstappen (na ontwerp + na M5):
 - [ ] `voyages.js` uitbreiden: lichtpuntjes/vliegtuig-glyph over luchtlijnen.
 - [ ] Ontwerp omzetten naar `data/goud.js` volgens het lithium-schema + registreren in `_registry.js`.
 - [ ] Verifiëren in de atlas (routes plausibel, labels, trechter Ticino zichtbaar) → wrapup.
+
+## Daarna — inhoudelijk: KOPER (schip + land, na/naast goud)
+**Linear: milestone `M7 · Koper` — LAR-404 t/m LAR-409** (opgezet 2026-07-14), staat klaar in de backlog.
+Ontwerp-skelet ligt in `design/koper.md` (volgens `design/_brief-template.md`); research (LAR-404/405) vult het aan.
+- LAR-404 research mijn+smelting · LAR-405 research consumptie/schroot/beursvoorraden · LAR-406 concentraat-vs-kathode + Copperbelt-landroutes · LAR-407 data/copper.js · LAR-408 beursvoorraden-toggle · LAR-409 verificatie+build.
+
+**Structuur = goud-skelet, aangepast aan een schip-grondstof:** géén luchtroute-modus/air-voyages (koper
+hergebruikt de bestaande zee-A\*/land-A\*-routes uit M3 + de scheeps-voyages uit M4). Kern-"aha" = de
+**China-smelttrechter** (~50% wereldraffinage): Andes-concentraat (Chili/Peru) over de Stille Oceaan → Chinese
+smelters. Tweede trechter = de **Afrikaanse Copperbelt** (DRC/Zambia → Durban/Dar es Salaam over land, als
+kathode). `data/copper.js` gaat van "basis" → "uitgewerkt".
