@@ -1,0 +1,46 @@
+// Aardolie — losse grondstof-module.
+// Werk dit bestand bij om locaties en stromen voor aardolie te verfijnen.
+// Cijfers zijn indicatief (o.a. USGS Mineral Commodity Summaries). Nog niet gedetailleerd uitgewerkt.
+REGISTER({
+  id: "oil", name: "Aardolie", symbol: "Oil",
+  color: "#1c1a17", flowColor: "#E8A838",
+  detail: "basis", // "basis" = automatisch overgezet, "uitgewerkt" = handmatig verrijkt
+  blurb: "Ruwe olie: brandstof, plastics en chemie. Reserves zitten sterk geconcentreerd rond de Golfregio, Venezuela en Rusland; raffinage juist bij de grote afzetmarkten (VS, China, India, Europa, Oost-Azië). De bogen tonen de belangrijkste handelsstromen van ruwe olie.",
+  nodes: [
+    { id: "oil-venezuela", type: "mine", name: "Venezuela", country: "Venezuela", lat: 9, lon: -63.5, share: 17, note: "Orinoco-gordel — grootste bewezen reserves (zware olie)" },
+    { id: "oil-saoedi-arabie", type: "mine", name: "Saoedi-Arabië", country: "Saoedi-Arabië", lat: 26, lon: 49, share: 15, note: "Ghawar — grootste conventionele olieveld ter wereld" },
+    { id: "oil-canada", type: "mine", name: "Canada", country: "Canada", lat: 57, lon: -111.5, share: 9, note: "Athabasca-oliezanden, Alberta" },
+    { id: "oil-iran", type: "mine", name: "Iran", country: "Iran", lat: 31.3, lon: 49.7, share: 9, note: "Khuzestan — grote zuidwestelijke velden" },
+    { id: "oil-irak", type: "mine", name: "Irak", country: "Irak", lat: 30.5, lon: 47.8, share: 8, note: "Rumaila/Basra — zuidelijke megavelden" },
+    { id: "oil-rusland", type: "mine", name: "Rusland", country: "Rusland", lat: 61, lon: 74, share: 6, note: "West-Siberië — Samotlor e.a." },
+    { id: "oil-koeweit", type: "mine", name: "Koeweit", country: "Koeweit", lat: 29.3, lon: 47.7, share: 6, note: "Burgan — enorm ondiep veld" },
+    { id: "oil-vae", type: "mine", name: "VAE", country: "VAE", lat: 24, lon: 54, share: 6, note: "Abu Dhabi — offshore en onshore" },
+    { id: "oil-vs", type: "mine", name: "VS", country: "VS", lat: 31.9, lon: -102.3, share: 4, note: "Permian Basin (Texas) — schalie-olie" },
+    { id: "oil-nigeria", type: "mine", name: "Nigeria", country: "Nigeria", lat: 5.3, lon: 6, share: 3, note: "Nigerdelta — lichte zoete ruwe olie" },
+    { id: "oil-ref-vs", type: "refinery", name: "VS", country: "VS", lat: 29.7, lon: -93.9, note: "Golfkust (Houston/Port Arthur) — grootste raffinagecluster ter wereld" },
+    { id: "oil-ref-china", type: "refinery", name: "China", country: "China", lat: 38.9, lon: 121.6, note: "Dalian/Zhoushan — 2e raffinagenatie, snel groeiend" },
+    { id: "oil-ref-india", type: "refinery", name: "India", country: "India", lat: 22.35, lon: 69.85, note: "Jamnagar (Reliance) — grootste raffinaderij ter wereld" },
+    { id: "oil-ref-zuid-korea", type: "refinery", name: "Zuid-Korea", country: "Zuid-Korea", lat: 35.5, lon: 129.36, note: "Ulsan — raffineert vooral Midden-Oostenolie" },
+    { id: "oil-ref-japan", type: "refinery", name: "Japan", country: "Japan", lat: 35.5, lon: 140.1, note: "Chiba/Tokio-baai — grote importraffinage" },
+    { id: "oil-ref-nederland", type: "refinery", name: "Nederland", country: "Nederland", lat: 51.9, lon: 4.1, note: "Rotterdam/Pernis — grootste raffinagehub van Europa" },
+    { id: "oil-ref-singapore", type: "refinery", name: "Singapore", country: "Singapore", lat: 1.26, lon: 103.7, note: "Jurong — knooppunt voor Aziatische raffinage" },
+    { id: "oil-ref-saoedi-arabie", type: "refinery", name: "Saoedi-Arabië", country: "Saoedi-Arabië", lat: 27, lon: 49.6, note: "Ras Tanura — grote exportraffinaderij" },
+  ],
+  flows: [
+    { from: "oil-venezuela", to: "oil-ref-vs", value: 10, note: "Venezuela → Golfkust VS" },
+    { from: "oil-canada", to: "oil-ref-vs", value: 10, note: "Canada → Golfkust VS (pijpleiding)" },
+    { from: "oil-nigeria", to: "oil-ref-vs", value: 10, note: "Nigeria → VS" },
+    { from: "oil-saoedi-arabie", to: "oil-ref-china", value: 10, note: "Saoedi-Arabië → China" },
+    { from: "oil-iran", to: "oil-ref-china", value: 10, note: "Iran → China" },
+    { from: "oil-rusland", to: "oil-ref-china", value: 10, note: "Rusland → China (ESPO-pijpleiding)" },
+    { from: "oil-saoedi-arabie", to: "oil-ref-india", value: 10, note: "Saoedi-Arabië → India" },
+    { from: "oil-irak", to: "oil-ref-india", value: 10, note: "Irak → India" },
+    { from: "oil-rusland", to: "oil-ref-india", value: 10, note: "Rusland → India (sterk gegroeid)" },
+    { from: "oil-saoedi-arabie", to: "oil-ref-zuid-korea", value: 10, note: "Saoedi-Arabië → Zuid-Korea" },
+    { from: "oil-vae", to: "oil-ref-japan", value: 10, note: "VAE → Japan" },
+    { from: "oil-koeweit", to: "oil-ref-singapore", value: 10, note: "Koeweit → Singapore" },
+    { from: "oil-vae", to: "oil-ref-singapore", value: 10, note: "VAE → Singapore" },
+    { from: "oil-saoedi-arabie", to: "oil-ref-nederland", value: 10, note: "Midden-Oosten → Rotterdam/Europa" },
+    { from: "oil-nigeria", to: "oil-ref-nederland", value: 10, note: "Nigeria → Europa" },
+  ],
+});

@@ -1,0 +1,145 @@
+/* style.css — opmaak van de grondstoffen-globe */
+* { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 100%; height: 100%; background: #070b14; overflow: hidden;
+    font-family: 'Segoe UI', ui-sans-serif, system-ui, sans-serif; }
+  #app { position: relative; width: 100%; height: 100vh; min-height: 480px; }
+  #canvasWrap { position: absolute; inset: 0; z-index: 1; touch-action: none; }
+  canvas { display: block; cursor: grab; touch-action: none; }
+
+  #header { position: absolute; top: 0; left: 0; right: 0; padding: 22px 28px 10px; z-index: 5;
+    pointer-events: none; background: linear-gradient(180deg, rgba(7,11,20,0.92) 10%, rgba(7,11,20,0)); }
+  #eyebrow { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px;
+    letter-spacing: 0.14em; color: #C9A227; margin-bottom: 6px; }
+  h1 { margin: 0; font-size: clamp(20px, 3.4vw, 30px); font-weight: 700; color: #F3EFE4; letter-spacing: -0.01em; }
+  #subtitle { margin: 6px 0 0; font-size: 13px; color: #8592A6; max-width: 520px; line-height: 1.4; }
+
+  #legendPanel { position: absolute; left: 20px; bottom: 20px; z-index: 5; width: 280px;
+    max-width: calc(100vw - 40px); background: rgba(19,27,46,0.88); border: 1px solid #25344a;
+    border-radius: 12px; padding: 16px; backdrop-filter: blur(6px); }
+  #legendLabel { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: #6B7B93; margin-bottom: 10px; text-transform: uppercase; }
+  #pillList { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 5px 10px;
+    border-radius: 999px; border: 1px solid #25344a; cursor: pointer; transition: all 0.15s ease;
+    background: transparent; color: #8592A6; }
+  .pill.active { color: #F3EFE4; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+  #blurb { font-size: 12.5px; line-height: 1.5; color: #AEB8C9; margin: 8px 0 12px;
+    border-top: 1px solid #1E2A3E; padding-top: 10px; display: none; }
+  #markerKey { font-size: 11px; color: #6B7B93; border-top: 1px solid #1E2A3E; padding-top: 10px;
+    display: flex; flex-direction: column; gap: 5px; }
+  .markerKeyRow { display: flex; align-items: center; gap: 8px; }
+  .keyCircle { width: 9px; height: 9px; border-radius: 50%; background: #8592A6; display: inline-block; flex-shrink: 0; }
+  .keyDiamond { width: 8px; height: 8px; background: #F3EFE4; display: inline-block; transform: rotate(45deg); flex-shrink: 0; }
+
+  #zoomControls { position: absolute; right: 20px; bottom: 20px; z-index: 6; display: flex;
+    flex-direction: column; gap: 8px; }
+  #zoomControls button { width: 44px; height: 44px; border-radius: 10px; border: 1px solid #25344a;
+    background: rgba(19,27,46,0.9); color: #F3EFE4; font-size: 24px; line-height: 1; cursor: pointer;
+    backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; }
+  #zoomControls button:active { background: rgba(40,55,80,0.95); }
+
+  #infoPanel { position: absolute; right: 20px; top: 100px; z-index: 5; width: 250px;
+    max-width: calc(100vw - 40px); background: rgba(19,27,46,0.92); border: 1px solid #25344a;
+    border-radius: 12px; padding: 16px; backdrop-filter: blur(6px); display: none; }
+  #infoKicker { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #AEB8C9;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #infoSymbol { color: #6B7B93; }
+  #infoCountry { font-size: 19px; font-weight: 700; color: #F3EFE4; margin-top: 6px; }
+  #infoKind { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #C9A227; margin-top: 4px; }
+  #infoNote { font-size: 13px; line-height: 1.5; color: #AEB8C9; margin-top: 10px; }
+
+  /* --- toevoegingen v2 --------------------------------------------------- */
+  .badge { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; color: #C9A227;
+    border: 1px solid #4a3d16; border-radius: 4px; padding: 1px 4px; margin-left: 2px; }
+
+  #stylePanel { position: absolute; right: 20px; top: 22px; z-index: 6;
+    background: rgba(19,27,46,0.88); border: 1px solid #25344a; border-radius: 10px;
+    padding: 6px; backdrop-filter: blur(6px); }
+  #styleList { display: flex; gap: 4px; }
+  .styleBtn { font-size: 11px; padding: 6px 10px; border-radius: 7px; border: 1px solid transparent;
+    background: transparent; color: #6B7B93; cursor: pointer; text-transform: capitalize; }
+  .styleBtn:hover { color: #AEB8C9; }
+  .styleBtn.active { background: rgba(63,86,124,0.5); color: #F3EFE4; border-color: #3d5273; }
+
+  #infoPanel { top: 84px; width: 270px; }
+  #infoTitle { font-size: 19px; font-weight: 700; color: #F3EFE4; margin-top: 6px; line-height: 1.25; }
+  #infoSub { font-size: 11px; letter-spacing: 0.05em; text-transform: uppercase; color: #C9A227; margin-top: 5px; }
+  #infoMeta { font-size: 12px; color: #8592A6; margin-top: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #infoNote { font-size: 13px; line-height: 1.5; color: #AEB8C9; margin-top: 10px; }
+
+  .keySquare { width: 8px; height: 8px; border-radius: 2px; background: #4FD1C5; display: inline-block; flex-shrink: 0; }
+  .keyLine { width: 14px; height: 2px; background: linear-gradient(90deg, #1f5b55, #4FD1C5, #b8f0ea);
+    display: inline-block; flex-shrink: 0; }
+  .keyPort { width: 8px; height: 8px; border-radius: 2px; background: #9fd8ff; display: inline-block; flex-shrink: 0; }
+  .keyWp { width: 9px; height: 9px; border-radius: 50%; border: 2px solid #C9A227; background: transparent;
+    display: inline-block; flex-shrink: 0; }
+
+  /* --- filterchips (ketenstap + projecten) ------------------------------- */
+  #viewRow { display: flex; gap: 3px; margin-bottom: 6px; padding: 3px; border-radius: 8px;
+    background: rgba(10,16,28,0.55); border: 1px solid #1E2A3E; }
+  .viewBtn { flex: 1; font-size: 11px; padding: 5px 8px; border-radius: 6px; border: 1px solid transparent;
+    background: transparent; color: #6B7B93; cursor: pointer; transition: all 0.15s ease; }
+  .viewBtn:hover { color: #AEB8C9; }
+  .viewBtn.on { background: rgba(63,86,124,0.5); color: #F3EFE4; border-color: #3d5273; }
+
+  #filterRow { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
+  .chip { font-size: 10.5px; padding: 3px 9px; border-radius: 999px; border: 1px solid #25344a;
+    background: transparent; color: #55647c; cursor: pointer; transition: all 0.15s ease;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: 0.04em; }
+  .chip:hover { color: #AEB8C9; }
+  .chip.on { color: #F3EFE4; border-color: #3d5273; background: rgba(63,86,124,0.35); }
+
+  .viewBtn.sail { flex: 0 0 auto; padding: 5px 9px; }
+  .viewBtn.sail.on { background: rgba(201,162,39,0.18); border-color: #4a3d16; color: #F3EFE4; }
+
+  /* --- tegellaag: schakelaar + verplichte bronvermelding ------------------ */
+  #styleLabel, #styleLabel2 { font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 9px; letter-spacing: 0.1em; color: #55647c; text-transform: uppercase;
+    padding: 2px 4px 4px; }
+  #styleLabel2 { border-top: 1px solid #1E2A3E; margin-top: 5px; padding-top: 7px; }
+  #tileRow { display: flex; gap: 4px; }
+  .tileBtn { font-size: 11px; padding: 5px 9px; border-radius: 7px; border: 1px solid transparent;
+    background: transparent; color: #6B7B93; cursor: pointer; transition: all 0.15s ease; }
+  .tileBtn:hover { color: #AEB8C9; }
+  .tileBtn.on { background: rgba(201,162,39,0.16); color: #F3EFE4; border-color: #4a3d16; }
+  #attrib { position: absolute; right: 14px; bottom: 4px; z-index: 4; font-size: 9.5px;
+    color: #55647c; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    pointer-events: none; text-shadow: 0 1px 3px rgba(0,0,0,0.8); }
+
+  /* --- afspeelbalk (schepen over de tijd) -------------------------------- */
+  #timeBar { position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 6;
+    display: none; align-items: center; gap: 12px; padding: 10px 14px; border-radius: 12px;
+    background: rgba(19,27,46,0.92); border: 1px solid #25344a; backdrop-filter: blur(6px);
+    width: min(520px, calc(100vw - 380px)); }
+  #playBtn { width: 34px; height: 34px; flex-shrink: 0; border-radius: 8px; border: 1px solid #3d5273;
+    background: rgba(63,86,124,0.4); color: #F3EFE4; font-size: 13px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; }
+  #playBtn:hover { background: rgba(63,86,124,0.7); }
+  #timeInfo { flex-shrink: 0; min-width: 108px; }
+  #timeDate { font-size: 13px; font-weight: 600; color: #F3EFE4; }
+  #timeCount { font-size: 10.5px; color: #6B7B93; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #timeSlider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 2px;
+    background: #25344a; outline: none; cursor: pointer; }
+  #timeSlider::-webkit-slider-thumb { -webkit-appearance: none; width: 13px; height: 13px;
+    border-radius: 50%; background: #C9A227; cursor: pointer; }
+  #timeSlider::-moz-range-thumb { width: 13px; height: 13px; border: none; border-radius: 50%;
+    background: #C9A227; cursor: pointer; }
+  #speedBtn { flex-shrink: 0; font-size: 11px; padding: 5px 9px; border-radius: 7px;
+    border: 1px solid #25344a; background: transparent; color: #8592A6; cursor: pointer;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #speedBtn:hover { color: #F3EFE4; border-color: #3d5273; }
+
+  /* --- knelpunten & spanningen ------------------------------------------- */
+  #tensionBox { display: none; border-top: 1px solid #1E2A3E; margin-top: 10px; padding-top: 10px; }
+  #tensionLabel { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px;
+    letter-spacing: 0.12em; color: #C9A227; margin-bottom: 8px; text-transform: uppercase; }
+  #tensionList { display: flex; flex-direction: column; gap: 4px; max-height: 160px; overflow-y: auto; }
+  .tension { display: flex; align-items: baseline; gap: 8px; text-align: left; font-size: 11.5px;
+    padding: 5px 8px; border-radius: 8px; border: 1px solid transparent; background: transparent;
+    color: #AEB8C9; cursor: pointer; transition: all 0.15s ease; line-height: 1.35; }
+  .tension:hover { background: rgba(63,86,124,0.25); color: #F3EFE4; }
+  .tension.picked { border-color: #4a3d16; background: rgba(201,162,39,0.10); color: #F3EFE4; }
+  .tIcon { color: #C9A227; font-size: 12px; flex-shrink: 0; width: 14px; text-align: center; }
+  .tTitle { flex: 1; }

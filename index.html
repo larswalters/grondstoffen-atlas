@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grondstoffen van de wereld</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div id="app">
+  <div id="header">
+    <div id="eyebrow">ONDERGRONDS ATLAS · WERELDVOORRADEN</div>
+    <h1>Grondstoffen van de wereld</h1>
+    <p id="subtitle">Sleep om te draaien, scroll om in te zoomen. Klik op een locatie of stroom voor details.</p>
+  </div>
+
+  <div id="canvasWrap"></div>
+
+  <div id="stylePanel">
+    <div id="styleLabel">Bol</div>
+    <div id="styleList"></div>
+    <div id="styleLabel2">Scherpe kaart bij inzoomen</div>
+    <div id="tileRow"></div>
+  </div>
+
+  <div id="attrib"></div>
+
+  <div id="zoomControls">
+    <button id="zoomIn" aria-label="Inzoomen">+</button>
+    <button id="zoomOut" aria-label="Uitzoomen">−</button>
+  </div>
+
+  <!-- Afspeelbalk: verschijnt alleen als de schepen aanstaan (route-weergave) -->
+  <div id="timeBar">
+    <button id="playBtn" aria-label="Afspelen">▶</button>
+    <div id="timeInfo">
+      <div id="timeDate">1 januari</div>
+      <div id="timeCount">0 schepen onderweg</div>
+    </div>
+    <input id="timeSlider" type="range" min="0" max="1000" value="0" step="1" />
+    <button id="speedBtn" title="Snelheid">1×</button>
+  </div>
+
+  <div id="legendPanel">
+    <div id="legendLabel">Grondstof</div>
+    <div id="pillList"></div>
+    <div id="viewRow"></div>
+    <div id="filterRow"></div>
+    <p id="blurb"></p>
+    <div id="markerKey">
+      <div class="markerKeyRow"><span class="keyCircle"></span> mijn / winning (grootte = aandeel)</div>
+      <div class="markerKeyRow"><span class="keyDiamond"></span> raffinage / verwerking</div>
+      <div class="markerKeyRow"><span class="keySquare"></span> fabriek / afzetmarkt</div>
+      <div class="markerKeyRow"><span class="keyPort"></span> haven / overslag</div>
+      <div class="markerKeyRow"><span class="keyWp"></span> knelpunt (zeestraat / kanaal)</div>
+      <div class="markerKeyRow"><span class="keyLine"></span> stroom (dikte = volume · kleur = ketenstap: donker erts → licht product)</div>
+    </div>
+    <div id="tensionBox">
+      <div id="tensionLabel">Knelpunten &amp; spanningen</div>
+      <div id="tensionList"></div>
+    </div>
+  </div>
+
+  <div id="infoPanel">
+    <div id="infoKicker"><span class="dot" id="infoDot"></span><span id="infoResource"></span> <span id="infoSymbol"></span></div>
+    <div id="infoTitle"></div>
+    <div id="infoSub"></div>
+    <div id="infoMeta"></div>
+    <div id="infoNote"></div>
+  </div>
+</div>
+
+<!-- ==========================================================================
+     LAADVOLGORDE — belangrijk, want alles werkt met globals (geen bundler).
+     1. config      : alle instellingen
+     2. geo-data    : achtergrondkaart (kust, grenzen)
+     3. data/*      : één bestand per grondstof — hier voeg je nieuwe toe
+     4. src/*       : de logica, per laag opgeknipt
+     ========================================================================== -->
+<script src="config.js"></script>
+<script src="geo-data.js"></script>
+
+<script src="data/_registry.js"></script>
+<script src="data/_chokepoints.js"></script>
+<script src="data/lithium.js"></script>
+<script src="data/cobalt.js"></script>
+<script src="data/copper.js"></script>
+<script src="data/nickel.js"></script>
+<script src="data/rare-earths.js"></script>
+<script src="data/graphite.js"></script>
+<script src="data/pgm.js"></script>
+<script src="data/uranium.js"></script>
+<script src="data/oil.js"></script>
+
+<script src="src/util.js"></script>
+<script src="src/globe-core.js"></script>
+<script src="src/basemap.js"></script>
+<script src="src/tiles.js"></script>
+<script src="src/searoute.js"></script>
+<script src="src/markers.js"></script>
+<script src="src/flows.js"></script>
+<script src="src/voyages.js"></script>
+<script src="src/ui.js"></script>
+<script src="src/main.js"></script>
+</body>
+</html>
