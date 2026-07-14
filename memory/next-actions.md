@@ -39,15 +39,18 @@ kathode). `data/copper.js` gaat van "basis" → "uitgewerkt".
 **Herbruikbaar uit M6 voor koper:** de optionele-laag-toggle (nu CB; voor koper de LME/COMEX/SHFE-beursvoorraden,
 LAR-408) volgt exact hetzelfde `layer:"..."`-filterpatroon; de brief→bouw-flow is identiek.
 
-## Verderop — M8 · Zeldzame aardmetalen (ontwerp-skelet klaar, ná koper)
-**Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, volgens `design/_brief-template.md`) →
-data-doel `data/rare-earths.js` van "basis" → "uitgewerkt". **Linear-milestone `M8 · Zeldzame aardmetalen` +
-issues nog aan te maken** (spiegelt M6/M7: research × 2 → licht/zwaar-REE + Myanmar-grenscorridor → data-file →
-recycling-toggle → verificatie). LAR-nummers volgen bij aanmaken.
+## Verderop — M8 · Zeldzame aardmetalen / magneet-REE (ontwerp-skelet klaar, ná koper)
+**Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, herzien 2026-07-15 → **optie 2:
+scherpe magneet-REE-framing**, NdPr + Dy/Tb i.p.v. alle 17 elementen) → data-doel `data/rare-earths.js` van
+"basis" → "uitgewerkt" (metadata sharpenen: `name`/`symbol=NdPr`/`unit=kt magneet-REO/blurb`, id blijft
+`rare-earths`). **Linear-milestone `M8 · Zeldzame aardmetalen` + issues nog aan te maken** (spiegelt M6/M7:
+research × 2 → NdPr/Dy-onderscheid + Myanmar-grenscorridor → data-file → recycling-toggle → verificatie).
+LAR-nummers volgen bij aanmaken.
 
-**Kern-"aha" (distinct van lithium/koper):** winning breed verspreid, maar scheiding ~85–90% in Zuid-China
-(Ganzhou) én NdFeB-magneten ~90%+ China. Drie nieuwe elementen voor de atlas: (1) **zware-REE-landstroom over
-de grens Myanmar→China** (Kachin → Ruili — nieuw `grens-*`-knelpunt, analoog aan Kasumbalesa), (2) de
-**Mountain Pass-rondreis** (VS delft → China scheidt → terug), (3) de **magneet-flessenhals** downstream.
-**Hergebruikt schip+land — géén nieuwe render-modus** (net als koper); recycling-laag = het CB/beursvoorraden-
-toggle-equivalent. Open bouw-vraag: magneet als stage `product` of aparte 4e stage `magneet`.
+**Kern-"aha" (distinct van lithium/koper):** winning breed verspreid, maar scheiding van NdPr/Dy uit het
+gemengde erts ~85–90% in Zuid-China (Ganzhou) én NdFeB-magneten ~90%+ China. Drie nieuwe elementen voor de
+atlas: (1) **Dy/Tb-landstroom over de grens Myanmar→China** (Kachin → Ruili — nieuw `grens-*`-knelpunt, analoog
+aan Kasumbalesa), (2) de **Mountain Pass-rondreis** (VS delft → China scheidt → terug), (3) de
+**NdFeB-magneet-flessenhals** downstream. **Hergebruikt schip+land — géén nieuwe render-modus** (net als koper);
+recycling-laag = het CB/beursvoorraden-toggle-equivalent. Magneet = stage `product` (de eerdere "4e stage?"-vraag
+vervalt in deze framing).
