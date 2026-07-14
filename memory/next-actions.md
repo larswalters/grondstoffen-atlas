@@ -10,11 +10,10 @@
 - [x] Verificatie headless: 371 legs / 0 kapot over alle 10 grondstoffen, regressievrij (deel LAR-403).
 - [x] `build-standalone.py` → `atlas-standalone.html` (gegenereerde single-file build).
 
-## Openstaand — LAR-403 (In Progress)
-- [ ] **Visuele bevestiging op Netlify/mobiel** — kan alleen Lars (WebGL-screenshot lukt niet headless). Checken:
-      Ticino-trechter zichtbaar/mooi?, luchtbogen plausibel (netjes via de hubs, geen rare knikken)?,
-      labels/knopen leesbaar?, CB-toggle + voyages-vliegtuigjes werken visueel? Daarna LAR-403 → Done.
-- [ ] Na visuele OK: bureaublad-restanten opruimen (`atlas-lithium-kobalt.html`, `globe-oud`).
+## LAR-403 ✅ afgerond (2026-07-14) — M6 volledig af
+- [x] **Visuele bevestiging** — Lars bekeek de build thuis in de browser: "ziet er cool uit, geen aanmerkingen".
+      LAR-403 → Done; alle M6-issues (LAR-397 t/m 403) Done. Lars zet `atlas-standalone.html` zelf op Netlify.
+- [ ] Nog te doen (klein): bureaublad-restanten opruimen (`atlas-lithium-kobalt.html`, `globe-oud`) — nu unblocked.
 
 ## Openstaand — project-hygiëne
 - [ ] **Project-repo committen** — goud.js/goud.md/edits/build-standalone.py staan dirty. Code-commit los van de
