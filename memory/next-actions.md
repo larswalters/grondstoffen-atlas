@@ -1,5 +1,21 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd)*
+*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd — de eerste écht nieuwe grondstof)*
+
+## M13 · Zilver ✅ uitgevoerd (2026-07-15) — LAR-434 t/m 439
+**De eerste écht nieuwe grondstof sinds de basis-10** (niet basis→uitgewerkt maar een nieuw `data/silver.js`
+(42 nodes / 37 flows / 6 tensions) + `<script>`-tag in `index.html` + zilver-checks in `build-standalone.py`).
+De vorm is fundamenteel anders: **géén winnings-trechter** — ~70-75% bijproduct van zink/lood/koper/goud
+(aanbod inelastisch), terwijl de concentratie **downstream** zit (Chinese zonnepanelen/PV) → structureel
+tekort dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt. Schip+land, **géén nieuw chokepoint** (derde na nikkel/olie).
+- [x] Research by-product-winning / solar-vraag inline in `design/zilver.md` (LAR-434/435).
+- [x] **Zilver als 11e grondstof geregistreerd** (LAR-436): `data/silver.js` + `<script src="data/silver.js">` na `oil.js` in `index.html` + 5 zilver-sanity-checks in `build-standalone.py`.
+- [x] `data/silver.js` uitgewerkt (LAR-437): by-product-mijn-nodes (elk met hoofdmetaal-`note`), convergentie op Peñoles(Mexico)/KGHM(Polen)/Korea/China, solar-pull SGE→Jiangsu, 6 tensions. Keten erts(doré)→raffinaat(good-delivery baar)→product(solar/elektronica/sieraad).
+- [x] **Kluis-/beursvoorraden-laag** (LAR-438) = hergebruik van de bestaande exchange-toggle met **0 engine-wijziging** (nikkel-patroon); 3 exchange-nodes (LBMA/COMEX/SGE) + 3 `layer:"exchange"`-aftap-flows; COMEX registered-vs-eligible + 2021-squeeze-nuance. Recycling always-on.
+- [x] Verificatie headless (LAR-439, deel): **zilver 85 legs / 0 kapot / 0 straight / 0 warnings**; regressie schoon (andere uitgewerkte grondstoffen 0/0). 2 route-bugs gefixt (VS-raffinage Tacoma→Astoria; China-solar Suzhou→Jiangsu-kust) na empirisch testen. Exchange-chip + blurb + 6 tensions renderen. `build-standalone.py` (+5 zilver-checks) → `atlas-standalone.html` geregenereerd.
+- [x] Code-commit `e091848` (repo `main`, lokaal-only, Claude-trailer) — **alléén eigen bestanden** gestaged (parallelle uranium-toggle-sessie op de gedeelde engine-files ongemoeid, sectie J).
+
+**Open (M13 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-439, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: de diffuse mijn-origin bovenop andermans mijnen (geen winnings-trechter), de convergentie op Peñoles/KGHM/Korea/China, de dikke `product`-boog SGE→Chinese zonnecel-industrie, de India-sieradenstroom, en de kluis-toggle (LBMA/COMEX/SGE) die de aftap onder het tekort toont.
 
 ## M11 · Olie ✅ uitgevoerd (2026-07-15) — LAR-428 t/m 433
 `data/oil.js` van "basis" (18/15) → volledig **uitgewerkt** (45 nodes / 46 flows / 6 tensions). Olie's vorm is bewust
@@ -95,8 +111,8 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
 - [x] **Militaire-kringloop-toggle** (LAR-414, **Done** — commit `6a6d062`, 2026-07-15) — de uitgestelde backlog-toggle afgemaakt zodra de engine-bestanden schoon waren. Het **vijfde** optionele-laag-patroon (`type:"military"`/`layer:"secondary"`/`showMilitary`), exact het olie-reserve-patroon in 5 plekken. 4 military-nodes (down-blend Rosatom/HEU, tails, US DOE, US reserve) + 5 `secondary`-flows (o.a. Megatons-to-Megawatts Rusland→VS) + tension `u-t-military`. Headless: uranium 60 legs / 0 kapot / 0 straight; toggle uit→aan +4/+5; chip alleen bij uranium.
 
-## Verderop — volgende grondstof (grafiet / PGM)
-**Acht uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, **olie**); nog op "basis": **grafiet**, **PGM**.
+## Verderop — volgende grondstof (grafiet)
+**Tien uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, **zilver (M13, nieuwe 11e)**, + **PGM (M12)** in een parallelle sessie); nog op "basis": **grafiet** (het laatste van de basis-10).
 Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
 `data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
 

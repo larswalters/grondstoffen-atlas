@@ -1,6 +1,24 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd; M8/M9)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M13 · Zilver uitgevoerd — nieuwe 11e grondstof; M11 · Olie; M10 · Nikkel; M8/M9)*
+
+> **M13 · ZILVER UITGEVOERD (2026-07-15):** de **eerste écht nieuwe grondstof** sinds de basis-10 (niet basis→uitgewerkt):
+> nieuw `data/silver.js` (42 nodes / 37 flows / 6 tensions) + brief `design/zilver.md` + `<script src="data/silver.js">` in
+> `index.html` + 5 zilver-checks in `build-standalone.py`. De vorm is **fundamenteel anders**: zilver heeft **géén enkel
+> geografisch knelpunt** — de knijp is tweezijdig en structureel: (1) **aanbod-inelasticiteit** (~70-75% is **bijproduct** van
+> zink/lood/koper/goud; mijn-nodes = eigenlijk andermans mijnen, elk met een hoofdmetaal-`note`), (2) **vraagconcentratie** (de
+> energietransitie trekt zilver naar de **Chinese zonnepanelen-industrie**; PV = grootste + snelst groeiende toepassing) →
+> een **structureel tekort** dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt. Schip+land (industrieel metaal, géén goud-luchtmodus),
+> **géén nieuwe render-modus, géén nieuw chokepoint** (derde na nikkel/olie op de bestaande routekaart), géén nieuwe marker-types.
+> Keten op de 3 stages: erts=mijn(bijproduct)→doré/concentraat / raffinaat=good-delivery baar / product=industrieel (solar/
+> elektronica/sieraad). Mexico als winning+raffinage-anker (Fresnillo + Peñoles/Torreón). **Kluis-/beursvoorraden-laag** =
+> hergebruik van de bestaande `exchange`-toggle met **0 engine-wijziging** (nikkel-patroon, 2e datagedreven hergebruik): 3
+> exchange-nodes (LBMA/COMEX/SGE) + 3 `layer:"exchange"`-aftap-flows; recycling always-on. Twee route-bugs empirisch gefixt
+> (VS-raffinage Tacoma→Astoria open kust; China-solar Suzhou-binnenland→Jiangsu-kust). Headless (poort 8734): **zilver 85 legs /
+> 0 kapot / 0 straight / 0 warnings**, regressievrij (andere uitgewerkte grondstoffen 0/0). `atlas-standalone.html` geregenereerd
+> (5 zilver-checks OK). Commit `e091848` (lokaal-only, Claude-trailer, **alléén eigen bestanden** — parallelle uranium-toggle-sessie
+> op de gedeelde engine-files ongemoeid, sectie J). **Linear M13 · Zilver + LAR-434..438 Done, 439 In Progress** (visuele
+> bevestiging Netlify/mobiel = Lars). M12 = PGM (parallelle sessie); alleen **grafiet** nog op "basis".
 
 > **M11 · OLIE UITGEVOERD (2026-07-15):** `data/oil.js` van "basis" (18/15) → **uitgewerkt** (45 nodes / 46 flows /
 > 6 tensions). Olie's vorm is bewust **anders dan alle eerdere**: geen enkele trechter maar het **hele knelpunten-
@@ -194,6 +212,22 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   patroon, exact het koper-`exchange`-patroon (dedicated `type:"reserve"`, `hasReserves()` op `n.type`) + olie-amber tank-marker.
   5 SPR-nodes + 5 vul-flows + tension `oil-t-spr`. Headless: toggle uit=45/46, aan=50/51 (+5/+5), 0 kapot/0 straight, chip alleen bij olie, regressievrij.
 
+- **2026-07-15 · M13 zilver = de eerste écht nieuwe grondstof (11e), niet een basis-upgrade** — nieuw `data/silver.js` +
+  `<script>`-tag in `index.html` + 5 zilver-checks in `build-standalone.py` (LAR-436, apart issue want het is het concrete
+  "anders" t.o.v. het patroon). De vorm: **géén geografisch knelpunt** — de knijp is tweezijdig/structureel (bijproduct-aanbod
+  ~70-75% inelastisch + vraagconcentratie in de Chinese zonnepanelen-industrie → tekort dat de kluisvoorraden aftapt). Het
+  grondstof-eigen "nieuwe element" is dus geen chokepoint maar het **by-product-winning-model** (mijn-nodes = zink/lood/koper/
+  goud-mijnen met hoofdmetaal-`note`). Schip+land (koper/nikkel-model, géén goud-lucht), géén nieuwe render-modus, **géén nieuw
+  chokepoint** (derde na nikkel/olie). Keten erts(doré)→raffinaat(good-delivery baar)→product(solar/elektronica/sieraad).
+- **2026-07-15 · M13 kluis-/beursvoorraden = exchange-toggle hergebruikt, 0 engine-wijziging** — zilver-kluizen (LBMA/COMEX/SGE)
+  ZIJN beurs-/kluisvoorraden → de bestaande koper/nikkel-`exchange`-semantiek (`type:"exchange"`/`layer:"exchange"`,
+  `showExchangeStocks`) past exact; géén dedicated `type` nodig (anders dan olie-reserve). 2e puur-datagedreven hergebruik na
+  nikkel: 3 exchange-nodes + 3 `layer:"exchange"`-aftap-flows (tonen het tekort), chip "beursvoorraden" verschijnt automatisch.
+  Recycling always-on (~15-18%, koper/nikkel-patroon). Details in `memory/decisions.md`.
+- **2026-07-15 · M13 twee route-bugs empirisch gefixt** — kandidaat-coördinaten eerst door `Routing.sea` gehaald, dán verplaatst:
+  VS-raffinage Tacoma→Astoria (Puget Sound valt dicht in het grove raster) + China-solar Suzhou-binnenland→Jiangsu-kust. Sectie J
+  gevolgd: alléén eigen bestanden gecommit (`e091848`) — parallelle sessie's engine-files (uranium-toggle) ongemoeid.
+
 ## E - Memory Map
 
 De projectgeschiedenis en werkgeheugen leven in `memory/` (6 files, conventie zoals de andere projecten):
@@ -238,10 +272,12 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 10. [x] **M10 · Nikkel uitgevoerd** (2026-07-15): `data/nickel.js` van "basis" (13/4) → "uitgewerkt" (50 nodes/46 flows/6 tensions) + `design/nikkel.md` + nikkel-checks in `build-standalone.py`. Indonesië-onshoring-trechter (exportban: mijn+raffinage in tien jaar, IMIP/IWIP) + twee nikkels (class-1 batterij vs class-2 roestvrij) + prijscrash-shakeout (Nickel West 2024) + LME-nuance (2022-squeeze). Schip+land, géén nieuw chokepoint; beursvoorraden-laag hergebruikt de bestaande exchange-toggle (**0 engine-wijziging**); recycling always-on. Headless: **nikkel 91 legs / 0 kapot / 0 straight**, regressie schoon. Commit `08aa4f5` (lokaal-only, Claude-trailer). **Linear M10 · LAR-422..426 Done, 427 In Progress**. Overige op basis: grafiet, PGM.
 11. [x] **M11 · Olie uitgevoerd** (2026-07-15): `data/oil.js` van "basis" (18/15) → "uitgewerkt" (45 nodes/46 flows/6 tensions) + `design/olie.md` + 4 olie-checks in `build-standalone.py`. Het **knelpunten-netwerk dat tegelijk oplicht** (Hormuz #1 met 15 stromen, Malakka, Suez/Bab, Bosporus, Panama, Kaap) → **géén nieuw chokepoint** (eigen aha), wel 3 olie-only vaarpunten (`wp-golf-mexico`/`wp-florida`/`wp-caribisch`) in `_chokepoints.js`. Drie verhalen: Hormuz-bypass-pijpleidingen (Yanbu/Fujairah) + Rusland-omleiding 2022→ (India/China) + VS-schalie-ommekeer. Keten 3 stages (erts/raffinaat/petrochemie), schip+pijpleiding, géén nieuwe render-modus. Headless: **olie 210 legs / 0 kapot / 0 straight**, regressievrij (baseline 5 = lithium 4 + goud 1). Commit `1d4ece5` (lokaal-only, Claude-trailer). **SPR-voorraden-toggle (`layer:"reserve"`) daarna alsnog gebouwd** (LAR-432 Done, commit `86c8c1f`) = het vierde optionele-laag-patroon; toggle uit=45/46, aan=50/51, chip "voorraden" alleen bij olie. **Linear M11 · LAR-428..432 Done, 433 In Progress**. Overige op basis: grafiet, PGM.
 
+12. [x] **M13 · Zilver uitgevoerd** (2026-07-15): de **eerste écht nieuwe grondstof** sinds de basis-10 — nieuw `data/silver.js` (42 nodes/37 flows/6 tensions) + `design/zilver.md` + `<script src="data/silver.js">` in `index.html` + 5 zilver-checks in `build-standalone.py`. Géén winnings-trechter: ~70-75% **bijproduct** van zink/lood/koper/goud (aanbod inelastisch); de concentratie zit downstream — de **Chinese zonnepanelen-industrie** trekt zilver weg → **structureel tekort** dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt. Schip+land, géén nieuwe render-modus, **géén nieuw chokepoint** (derde na nikkel/olie). Kluis-/beursvoorraden-laag = hergebruik van de bestaande exchange-toggle (**0 engine-wijziging**, nikkel-patroon); recycling always-on. 2 route-bugs empirisch gefixt (Tacoma→Astoria; solar Suzhou→Jiangsu-kust). Headless: **zilver 85 legs / 0 kapot / 0 straight**, regressievrij. Commit `e091848` (lokaal-only, Claude-trailer, alléén eigen bestanden — sectie J). **Linear M13 · LAR-434..438 Done, 439 In Progress**. M12 = PGM (parallelle sessie); alleen grafiet nog op basis.
+
 ## I - Runbook: "werk grondstof X uit" (self-serve)
 
 Vaste flow om een grondstof van **"basis" → "uitgewerkt"** te brengen, identiek aan hoe goud/koper/uranium/REE zijn gedaan.
-Nog op "basis": **grafiet**, **PGM**. Doe de stappen op volgorde; commit code en wrapup-docs apart.
+Nog op "basis": **grafiet** (het laatste van de basis-10; PGM/M12 loopt in een parallelle sessie, zilver/M13 = de nieuwe 11e, gedaan). Doe de stappen op volgorde; commit code en wrapup-docs apart.
 
 **0. Oriënteer.** Lees `memory/current-strategy.md` (architectuur + sjabloon) + `memory/decisions.md` (de vaste patronen) +
    `design/_brief-template.md`. Kijk naar een recent uitgewerkt bestand als voorbeeld — `data/copper.js` (schip/land + optionele

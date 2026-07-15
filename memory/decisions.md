@@ -1,7 +1,38 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd)*
+*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M13 · Zilver — uitgevoerd (2026-07-15)
+- **Zilver = de eerste écht nieuwe grondstof (11e), niet een basis-upgrade.** Alle M6–M12 brachten een bestaand `data/<x>.js`
+  van "basis" → "uitgewerkt"; zilver bestond nog niet in de atlas. Daarom een aparte registratie-stap: nieuw `data/silver.js` +
+  `<script src="data/silver.js">` na `oil.js` in `index.html` + 5 zilver-checks in `build-standalone.py`. Reden om dit als eigen
+  Linear-issue (LAR-436) vast te leggen: het is het concrete "anders" t.o.v. het patroon (Lars vroeg verschillen apart te vangen).
+- **De vorm = twee-zijdige structurele knijp, GEEN geografisch knelpunt.** Anders dan lithium/koper/REE (China-raffinage), goud
+  (Zwitserland), uranium (Russische verrijking) of olie (het zeestraten-net) heeft zilver géén enkele geografische flessenhals.
+  De knijp is (1) **aanbod-inelasticiteit** — ~70-75% is bijproduct van zink/lood/koper/goud; en (2) **vraagconcentratie** — de
+  Chinese zonnepanelen-industrie. Reden: dat ís de werkelijkheid van zilver; het plaatje vertelt zichzelf (diffuse origin +
+  downstream-pull). Het grondstof-eigen "nieuwe element" is dus geen chokepoint maar het **by-product-winning-model** (mijn-nodes =
+  eigenlijk zink/lood/koper/goud-mijnen, elk met een `note` over het hoofdmetaal).
+- **Schip + land, GEEN nieuwe render-modus, GEEN nieuw chokepoint** (derde na nikkel/olie op de bestaande routekaart). Zilver is
+  een industrieel metaal (~1/80 van goud's waarde per gram) → het vaart, het vliegt niet (koper/nikkel-model, NIET goud/lucht).
+  Keten op de 3 bestaande stages: `erts` = mijn(bijproduct)→doré/concentraat, `raffinaat` = good-delivery baar (1000 oz),
+  `product` = industrieel (solar/elektronica/sieraad). Inland-origins bij een ship-flow met een haven als 1e via-punt
+  (gathering-leg routeert auto als land).
+- **Kluis-/beursvoorraden = hergebruik van de bestaande exchange-toggle, 0 engine-wijziging** (`type:"exchange"`/`layer:"exchange"`,
+  `showExchangeStocks`). Nikkel bewees al dat dit generiek is; zilver is het **tweede** puur-datagedreven hergebruik. 3 exchange-nodes
+  (LBMA ~22.000 t / COMEX ~9.000 t registered / SGE ~3.000 t) + 3 `layer:"exchange"`-aftap-flows die het structurele tekort tonen
+  (kluis → industrie). Reden geen dedicated `type` (zoals olie-reserve): zilver-kluizen ZIJN beurs-/kluisvoorraden — de koper/nikkel-
+  `exchange`-semantiek past exact, dus geen nieuw patroon nodig. Recycling always-on (~15-18%, koper/nikkel-patroon, `type:"recycler"` zonder `layer`).
+- **Twee route-bugs empirisch gefixt (niet gegokt).** Kandidaat-coördinaten eerst door `Routing.sea` gehaald, dán verplaatst:
+  (1) VS-raffinage Tacoma→Astoria (Puget Sound valt dicht in het grove raster); (2) China-solar Suzhou-binnenland→Jiangsu-kust
+  (landinwaarts per zee onbereikbaar). Herbevestigt de vaste regel: elke ship-endpoint moet op een echt zee-cel liggen.
+- **Alléén eigen bestanden gecommit (sectie J).** Een parallelle sessie had de gedeelde engine-files dirty (uranium-toggle-werk:
+  `config.js`/`src/{flows,main,markers,ui}.js`/`data/uranium.js`). Zilver raakt de engine niet (0 engine-wijziging) → commit `e091848`
+  bevat alleen `data/silver.js` + `design/zilver.md` + `index.html` + `build-standalone.py`. Nooit `git add -A`.
+- **Verificatie (headless, poort 8734):** zilver **85 legs / 0 kapot / 0 straight / 0 warnings**; regressie schoon. Exchange-chip +
+  blurb + 6 tensions renderen. `atlas-standalone.html` geregenereerd (5 zilver-checks OK; gitignored). Visueel = Lars (LAR-439).
+- **M12 bleek al PGM.** Bij het aanmaken van de milestone was M12 bezet door "M12 · PGM" (parallelle sessie) → zilver werd **M13**.
 
 ## M11 · Olie — uitgevoerd (2026-07-15)
 - **Olie's vorm = het knelpunten-netwerk, niet één trechter.** Alle eerdere grondstoffen hadden één knijp (raffinage-China /

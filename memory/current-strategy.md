@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd)*
+*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd — de eerste écht nieuwe grondstof)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -65,12 +65,35 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
   **uranium** (M9 — 38 nodes/36 flows, 4-staps kernbrandstofketen met verrijking als flessenhals + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering),
   **zeldzame aardmetalen** (M8 — 41 nodes/38 flows, magneet-REE NdPr+Dy/Tb: Ganzhou-scheidingstrechter + Dy/Tb-landstroom Myanmar→China over `grens-ruili` + Mountain-Pass-rondreis + NdFeB-waaier + recycling-toggle),
   **nikkel** (M10 — 50 nodes/46 flows, Indonesië-onshoring-trechter: mijn+raffinage in tien jaar via de exportban + class-1/class-2-splitsing + prijscrash-shakeout + LME-nuance; beursvoorraden-toggle hergebruikt met 0 engine-wijziging),
-  **olie** (M11 — 45 nodes/46 flows, het knelpunten-netwerk dat tegelijk oplicht: Hormuz #1 + Malakka + Suez/Bab + Bosporus + Panama + Kaap; géén nieuw chokepoint = eigen aha; Hormuz-bypass-pijpleidingen + Rusland-omleiding 2022→ + VS-schalie-ommekeer; 3 stages erts/raffinaat/petrochemie).
-- **Basis:** de 2 overige grondstoffen (grafiet/PGM) — laden en renderen, maar zonder
-  operators/capaciteiten/route-detail.
-- **Volgende kandidaten op basis:** grafiet, PGM — volgens het brief→bouw-sjabloon.
+  **olie** (M11 — 45 nodes/46 flows, het knelpunten-netwerk dat tegelijk oplicht: Hormuz #1 + Malakka + Suez/Bab + Bosporus + Panama + Kaap; géén nieuw chokepoint = eigen aha; Hormuz-bypass-pijpleidingen + Rusland-omleiding 2022→ + VS-schalie-ommekeer; 3 stages erts/raffinaat/petrochemie),
+  **zilver** (M13 — 42 nodes/37 flows, de **eerste écht nieuwe grondstof**: géén winnings-trechter — ~70-75% bijproduct van zink/lood/koper/goud (aanbod inelastisch) — terwijl de concentratie downstream zit (Chinese zonnepanelen/PV) → structureel tekort dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt; schip+land, géén nieuw chokepoint; exchange-toggle hergebruikt met 0 engine-wijziging).
+- **Basis:** grafiet (het laatste van de basis-10) — laadt en rendert, maar zonder operators/capaciteiten/route-detail.
+  **PGM (M12)** loopt in een parallelle sessie.
+- **Volgende kandidaat op basis:** grafiet — volgens het brief→bouw-sjabloon.
 
-## Nu (2026-07-15 — M11 · Olie uitgevoerd)
+## Nu (2026-07-15 — M13 · Zilver uitgevoerd)
+
+- **Zilver volledig gebouwd + geverifieerd — de eerste écht nieuwe grondstof.** Anders dan M6–M12 (die een bestaand
+  "basis"-bestand naar "uitgewerkt" brachten) bestond zilver nog niet: nieuw `data/silver.js` (42 nodes / 37 flows /
+  6 tensions) + brief `design/zilver.md` + `<script src="data/silver.js">` in `index.html` + 5 zilver-checks in
+  `build-standalone.py`. De vorm is **fundamenteel anders**: **géén winnings-trechter** — ~70-75% is **bijproduct** van
+  zink/lood/koper/goud (aanbod inelastisch; mijn-nodes = eigenlijk andermans mijnen), terwijl de concentratie **downstream
+  aan de vraagkant** zit: de energietransitie trekt zilver naar de **Chinese zonnepanelen-industrie** (PV = grootste + snelst
+  groeiende toepassing) → een **structureel tekort** dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt.
+- **Schip+land, géén nieuwe render-modus, géén nieuw chokepoint** (derde na nikkel/olie op de bestaande routekaart). Keten
+  op de 3 stages: erts=mijn(bijproduct)→doré/concentraat → raffinaat=good-delivery baar → product=industrieel (solar/
+  elektronica/sieraad). Mexico als winning+raffinage-anker (Fresnillo + Peñoles/Torreón). **Kluis-/beursvoorraden-laag** =
+  hergebruik van de bestaande exchange-toggle met **0 engine-wijziging** (nikkel-patroon, 2e datagedreven hergebruik):
+  3 exchange-nodes (LBMA/COMEX/SGE) + 3 `layer:"exchange"`-aftap-flows; recycling always-on.
+- **Verificatie (headless, poort 8734 — eigen server naast de parallelle uranium-toggle-sessie):** zilver **85 legs / 0 kapot /
+  0 straight / 0 warnings**; regressie schoon (andere uitgewerkte grondstoffen 0/0). 2 route-bugs empirisch gefixt (VS-raffinage
+  Tacoma→Astoria; China-solar Suzhou→Jiangsu-kust). Exchange-chip "beursvoorraden" + blurb + 6 tensions renderen.
+  `atlas-standalone.html` geregenereerd (5 zilver-checks OK). **Code-commit `e091848`** (repo lokaal-only, Claude-trailer;
+  alléén eigen bestanden gestaged — de parallelle sessie's engine-files ongemoeid, sectie J). **Linear M13 · LAR-434..438 Done, 439 In Progress.**
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-439, Lars).
+- **Volgende grondstof:** grafiet (het laatste van de basis-10; PGM/M12 loopt parallel) — zelfde brief→bouw-flow.
+
+## Eerder (2026-07-15 — M11 · Olie uitgevoerd)
 
 - **Olie volledig gebouwd + geverifieerd.** `data/oil.js` van "basis" (18/15) → **uitgewerkt** (45 nodes / 46 flows /
   6 tensions) + brief `design/olie.md`. Olie's "aha" is bewust **anders dan alle eerdere**: geen enkele trechter maar het

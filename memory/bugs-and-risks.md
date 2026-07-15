@@ -1,5 +1,30 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-15 (na M8 · Zeldzame aardmetalen)*
+*Last updated: 2026-07-15 (na M13 · Zilver)*
+
+## M13 · Zilver — geverifieerd headless (2026-07-15)
+- Volledig gebouwd + geverifieerd in de draaiende atlas (eigen server poort 8734): **zilver 85 legs / 0 kapot /
+  0 straight / 0 warnings** (42 nodes / 37 flows / 6 tensions). Legs-check repliceert exact de `flows.js`-leglogica
+  (`Routing.sea`/`Routing.land`, `isSeaPoint`, gathering-legs). Regressie schoon: de andere uitgewerkte grondstoffen
+  (kobalt/koper/nikkel/REE/uranium/goud) allemaal 0/0; de bekende baseline (lithium 4× same-cell + grafiet/PGM op "basis")
+  ongewijzigd — zilver voegt **0** toe.
+- **2 route-bugs onderweg gevonden + gefixt** (empirisch getest vóór de fix, niet gegokt — kandidaat-coördinaten door
+  `Routing.sea` gehaald): (1) **VS-raffinage Tacoma → Astoria/Columbia-monding** (47.25/-122.44 → 46.20/-123.90): Puget
+  Sound valt in het grove 0,25°-raster dicht → Greens Creek→Tacoma per zee onbereikbaar (0 legs); open Pacific-kust wél (20).
+  (2) **China-solar Suzhou-binnenland → Jiangsu-kust Nantong** (31.30/120.60 → 32.00/121.60): het binnenland is per zee
+  onbereikbaar → de 2 ship-flows ernaartoe braken; de kustpositie routeert wél (de grote rail-flows werkten al). **Les/risico
+  (herbevestigd):** elke ship-endpoint moet op een echt zee-cel liggen; diep-in-baai-steden (Puget Sound) en landinwaartse
+  clusters (Jiangsu-solar) falen in het grove raster → verplaats naar de open kust of route via een haven.
+- **Exchange-toggle hergebruikt met 0 engine-wijziging** (nikkel-patroon, nu 2e datagedreven hergebruik): de "beursvoorraden"-chip
+  verschijnt automatisch voor zilver omdat het exchange-nodes/-flows heeft; toggle uit=34 flows, aan=37; blurb + 6 tensions renderen.
+  Geen console-warnings (geen onbekende via-/node-ids).
+- **Co-locatie bewaakt:** zilver-eigen nodes rond Shanghai (ref-china/SGE/solar) en Mumbai (markt/haven/recycler) staan ≥1 rastercel
+  uit elkaar → geen `degDist:0`-arc.
+- ⚠️ **Visuele bevestiging blijft open (LAR-439)** — WebGL-screenshot lukt niet headless (timeout, zelfde gat als M5–M11).
+  Op Netlify/mobiel door Lars: de diffuse by-product-mijn-origin (geen winnings-trechter), de convergentie op Peñoles/KGHM/Korea/China,
+  de dikke solar-boog SGE→Jiangsu, de India-sieradenstroom, en de kluis-toggle (LBMA/COMEX/SGE) die de aftap toont.
+- ⚠️ **Concurrency (sectie J):** een parallelle sessie werkte tegelijk aan uranium's engine-laag op de gedeelde bestanden
+  (`config.js`, `src/{flows,main,markers,ui}.js`, `data/uranium.js`, dirty). Zilver raakt de engine niet (0 engine-wijziging) →
+  alléén de eigen bestanden gestaged (`data/silver.js` + `design/zilver.md` + `index.html` + `build-standalone.py`); nooit `git add -A`.
 
 ## M8 · Zeldzame aardmetalen — geverifieerd headless (2026-07-15)
 - Volledig gebouwd + geverifieerd in de draaiende atlas (poort 8732): **rare-earths 90 legs (39 land + 51 zee) / 0 kapot /
