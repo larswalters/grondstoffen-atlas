@@ -27,7 +27,7 @@ const MarkerLayer = (function () {
   function defaultTier(node) {
     if (node.tier) return node.tier;
     if (node.type === "port" || node.type === "airport" || node.type === "recycler") return 2;
-    if (node.type === "exchange") return 2;
+    if (node.type === "exchange" || node.type === "reserve") return 2;
     if (node.type === "hub" || node.type === "cb") return 1;
     if (node.type === "mine") return (node.share || 0) >= 10 ? 1 : 2;
     return 1;
@@ -107,6 +107,9 @@ const MarkerLayer = (function () {
       // beursmagazijnen (koper) schalen op voorraad, √ zodat het grootste niet álles verplettert
       const maxStock = Math.max(1,
         ...res.nodes.filter((n) => n.type === "exchange" && n.stock).map((n) => n.stock));
+      // strategische reserves (olie/SPR) schalen op voorraad, √ zoals de beursmagazijnen
+      const maxReserveStock = Math.max(1,
+        ...res.nodes.filter((n) => n.type === "reserve" && n.stock).map((n) => n.stock));
 
       res.nodes.forEach((node) => {
         const planned = node.status === "project" || node.status === "gepland";
@@ -115,6 +118,8 @@ const MarkerLayer = (function () {
         if (node.type === "cb" && !(filters && filters.showCentralBanks)) return;
         // beursmagazijn-nodes alleen tonen als de beursvoorraden-laag aanstaat
         if (node.type === "exchange" && !(filters && filters.showExchangeStocks)) return;
+        // strategische-reserve-nodes (olie/SPR) alleen tonen als de voorraden-laag aanstaat
+        if (node.type === "reserve" && !(filters && filters.showReserves)) return;
         // recycling-nodes met een recycle-laag (REE) alleen tonen met de toggle aan.
         // (Koper-recyclers hebben géén `layer` en blijven dus altijd zichtbaar.)
         if (node.layer === "recycle" && !(filters && filters.showRecycle)) return;
@@ -184,6 +189,16 @@ const MarkerLayer = (function () {
           mesh = new THREE.Mesh(
             new THREE.CylinderGeometry(s, s, s * 0.55, 18),
             new THREE.MeshBasicMaterial({ color: 0xd98e5a, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "reserve") {
+          // strategische reserve (SPR): olie-amber opslagtank (platte cilinder), grootte ∝ √voorraad
+          const s = node.stock
+            ? C.reserve.minSize + (C.reserve.maxSize - C.reserve.minSize) *
+                normalize(Math.sqrt(node.stock), Math.sqrt(maxReserveStock))
+            : C.reserve.minSize;
+          mesh = new THREE.Mesh(
+            new THREE.CylinderGeometry(s, s, s * 0.42, 22),
+            new THREE.MeshBasicMaterial({ color: 0xE8A838, transparent: true, opacity: baseOpacity })
           );
         } else if (node.type === "recycler") {
           // recycling: gedempte groene ring (schroot terug de keten in)

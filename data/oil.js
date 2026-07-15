@@ -202,6 +202,26 @@ REGISTER({
     { id: "oil-pchem-ningbo", type: "market", name: "Ningbo", country: "China",
       lat: 29.87, lon: 121.55, tier: 3, coastal: true,
       note: "Chinese kraker-nieuwbouw: China bouwt petrochemie bij om zelfvoorzienend te worden in kunststof (en importeert daarvoor juist méér crude)." },
+
+    // ================================ STRATEGISCHE RESERVES (SPR) — optionele laag
+    // type "reserve" / flow.layer "reserve" -> alleen zichtbaar met de voorraden-toggle
+    // (default uit). `stock` (mln vaten) bepaalt de markergrootte. Olie's equivalent van
+    // de goud-CB-laag / koper-beursvoorraden: buffer tegen aanbodschokken, geen dagstroom.
+    { id: "oil-spr-us", type: "reserve", name: "US SPR (Bryan Mound/Big Hill)", country: "VS",
+      lat: 28.95, lon: -95.35, stock: 350, tier: 2, coastal: true,
+      note: "'s Werelds grootste strategische voorraad: ruwe olie in zoutkoepels aan de Golfkust van Texas/Louisiana. Fors aangesproken in 2022 na de Russische invasie (~180 mln vaten vrijgegeven) en sindsdien voorzichtig weer aangevuld." },
+    { id: "oil-spr-china", type: "reserve", name: "China SPR (Dalian/kust)", country: "China",
+      lat: 38.90, lon: 121.60, stock: 300, tier: 2, coastal: true,
+      note: "China bouwt de grootste noodvoorraad ter wereld op (strategisch + commercieel) — deels ondoorzichtig. Kocht juist bij toen de prijs laag stond; een stille hefboom op de wereldmarkt." },
+    { id: "oil-spr-japan", type: "reserve", name: "Japan (Kiire)", country: "Japan",
+      lat: 31.38, lon: 130.55, stock: 130, tier: 3, coastal: true,
+      note: "Grote overheids- + verplichte bedrijfsvoorraden (IEA-90-dagenverplichting) bij o.a. de Kiire-terminal op Kyushu — Japan importeert vrijwel al z'n olie en houdt daarom flink achter de hand." },
+    { id: "oil-spr-india", type: "reserve", name: "India SPR (Mangalore/Padur)", country: "India",
+      lat: 12.87, lon: 74.84, stock: 40, tier: 3, coastal: true,
+      note: "India's groeiende strategische voorraad in ondergrondse rotscavernes langs de zuidwestkust — deels gevuld door Golf-leveranciers (o.a. ADNOC). Klein t.o.v. de import, maar in opbouw." },
+    { id: "oil-spr-eu", type: "reserve", name: "IEA / EU-noodvoorraad (Le Havre)", country: "Frankrijk",
+      lat: 49.48, lon: 0.12, stock: 90, tier: 3, coastal: true,
+      note: "Symbool voor de EU/IEA-90-dagen-noodvoorraadplicht: elk IEA-lid houdt 90 dagen netto-import achter de hand. Le Havre = een van de grote Europese opslag-/importpunten voor die reserve." },
   ],
 
   // ==========================================================================
@@ -362,6 +382,23 @@ REGISTER({
       note: "Zuid-Korea: raffinage-feed → de Yeosu-krakers, kunststof-export naar Azië." },
     { from: "oil-ref-china", to: "oil-pchem-ningbo", value: 0.2, mode: "ship", stage: "product",
       note: "China bouwt petrochemie bij (Ningbo) om zelfvoorzienend te worden in kunststof — en importeert daarvoor juist méér crude." },
+
+    // === I. STRATEGISCHE VOORRADEN (layer:"reserve" -> alleen met de toggle) =====
+    // Representatieve vul-stromen: crude die de SPR in gaat (buffer, geen dagstroom).
+    { from: "oil-term-corpus", to: "oil-spr-us", value: 0.4, mode: "ship", stage: "erts", layer: "reserve",
+      note: "De VS vult haar SPR met binnenlandse Golf-crude — korte hop langs de Golfkust naar de zoutkoepels." },
+    { from: "oil-saoedi", to: "oil-spr-china", value: 0.5, mode: "ship", stage: "erts", layer: "reserve",
+      via: ["oil-term-rastanura", "wp-hormuz", "wp-aceh", "wp-malakka", "wp-singapore", "wp-scs", "wp-taiwan"],
+      note: "China stockpilet Golf-crude: dezelfde Hormuz-Malakka-route, maar de olie verdwijnt in de noodvoorraad i.p.v. de raffinage." },
+    { from: "oil-vae", to: "oil-spr-japan", value: 0.3, mode: "ship", stage: "erts", layer: "reserve",
+      via: ["oil-term-jebeldhanna", "wp-hormuz", "wp-aceh", "wp-malakka", "wp-singapore", "wp-scs", "wp-taiwan"],
+      note: "Japan houdt Golf-crude achter de hand (IEA-90-dagen) — dezelfde levenslijn door Hormuz en Malakka." },
+    { from: "oil-vae", to: "oil-spr-india", value: 0.2, mode: "ship", stage: "erts", layer: "reserve",
+      via: ["oil-term-jebeldhanna", "wp-hormuz"],
+      note: "Golf-leveranciers (o.a. ADNOC) helpen India's strategische cavernes vullen — door Hormuz, recht over de Arabische Zee." },
+    { from: "oil-noorwegen", to: "oil-spr-eu", value: 0.2, mode: "ship", stage: "erts", layer: "reserve",
+      via: ["wp-dover"],
+      note: "Niet-Russische crude (Noorse Noordzee) naar de Europese noodvoorraad — door het Nauw van Calais naar Le Havre." },
   ],
 
   // ==========================================================================
@@ -416,5 +453,12 @@ REGISTER({
       flows: ["oil-kazachstan>oil-ref-rotterdam", "oil-rusland>oil-ref-jamnagar"],
       metric: "Kazachstan (landlocked) kiest tussen de CPC-pijp dóór Rusland of de BTC-bypass",
       note: "Alle olie uit de Zwarte Zee — Russisch én Kazachs — moet door de Bosporus en de Dardanellen, waar tankers zich opstapelen. Kazachstan zit bovendien landlocked ingeklemd: zijn Tengiz-crude gaat óf via de CPC-pijpleiding dwars door Rusland naar Novorossiysk (afhankelijk van Russisch grondgebied), óf via de BTC-corridor naar Ceyhan aan de Middellandse Zee — om Rusland én de Golf heen. Dezelfde landlocked-keuze als bij het Kazachse uranium, nu voor olie." },
+
+    { id: "oil-t-spr", type: "beleid", title: "Strategische reserves (SPR): de buffer tegen schokken",
+      lat: 29.00, lon: -95.35,
+      nodes: ["oil-spr-us", "oil-spr-china", "oil-spr-japan", "oil-spr-india", "oil-spr-eu"],
+      flows: ["oil-term-corpus>oil-spr-us", "oil-saoedi>oil-spr-china", "oil-noorwegen>oil-spr-eu"],
+      metric: "US SPR ~350 · China ~300 · Japan ~130 · IEA-leden houden 90 dagen netto-import achter de hand",
+      note: "Zet de voorraden-laag aan om de andere kant van de olieafhankelijkheid te zien: honderden miljoenen vaten crude in reserve tegen aanbodschokken. De VS-SPR (grootste ter wereld) werd in 2022 fors aangesproken; China bouwt stilletjes de grootste noodvoorraad op en koopt juist bij als de prijs laag is; elk IEA-lid moet 90 dagen import achter de hand houden. Een buffer, geen dagstroom — precies zoals de koper-beursvoorraden en de goud-centrale-bankvoorraden. Dít is wat landen doen omdat het knelpunten-netwerk (Hormuz, Malakka) elk moment kan haperen." },
   ],
 });

@@ -125,6 +125,8 @@ const FlowLayer = (function () {
         if (flow.layer === "exchange" && !(filters && filters.showExchangeStocks)) return;
         // Recycling-laag (zeldzame aardmetalen): alleen tonen als de toggle aanstaat.
         if (flow.layer === "recycle" && !(filters && filters.showRecycle)) return;
+        // Strategische-voorraden-laag (olie/SPR): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "reserve" && !(filters && filters.showReserves)) return;
 
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);

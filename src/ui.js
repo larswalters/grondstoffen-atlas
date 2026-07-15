@@ -138,6 +138,16 @@ const UI = (function () {
       rc.onclick = () => { filters.showRecycle = !filters.showRecycle; onChange(); };
       filterRow.appendChild(rc);
     }
+
+    // Strategische-voorraden-laag: alleen aanbieden als een actieve grondstof reserve-data heeft (olie/SPR).
+    if (opts && opts.hasReserves) {
+      const rv = document.createElement("button");
+      rv.className = "chip" + (filters.showReserves ? " on" : "");
+      rv.textContent = "voorraden";
+      rv.title = "Strategische petroleumreserves (US SPR/China/Japan/India/IEA) tonen (buffer tegen aanbodschokken)";
+      rv.onclick = () => { filters.showReserves = !filters.showReserves; onChange(); };
+      filterRow.appendChild(rv);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL
@@ -280,6 +290,7 @@ const UI = (function () {
     port: "Haven / overslag", market: "Fabriek / afzetmarkt",
     airport: "Luchthaven / gateway", hub: "Handels- & kluishub",
     cb: "Centrale bank", recycler: "Recycling", exchange: "Beursmagazijn",
+    reserve: "Strategische reserve",
   };
   const WP_KIND_LABEL = { zeestraat: "Zeestraat", kanaal: "Kanaal", kaap: "Kaap",
     vaarpunt: "Vaarpunt", grensovergang: "Grenspost" };
@@ -334,7 +345,8 @@ const UI = (function () {
       const meta = [];
       if (n.share) meta.push("aandeel wereldproductie ≈ " + n.share + "%");
       if (n.reserve) meta.push("goudvoorraad ≈ " + n.reserve + " t");
-      if (n.stock) meta.push("beursvoorraad ≈ " + n.stock + " kt");
+      if (n.stock && n.type === "reserve") meta.push("strategische voorraad ≈ " + n.stock + " mln vaten");
+      else if (n.stock) meta.push("beursvoorraad ≈ " + n.stock + " kt");
       if (n.exchange) meta.push(n.exchange);
       if (n.potential) meta.push("potentie: " + n.potential);
       if (n.capacity) meta.push(n.capacity);
