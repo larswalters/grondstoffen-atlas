@@ -1,5 +1,26 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd — de eerste écht nieuwe grondstof)*
+*Last updated: 2026-07-15 (M14 · Grafiet uitgevoerd — het LAATSTE basis-10-bestand, alle 11 grondstoffen nu uitgewerkt)*
+
+## 🎉 De atlas is inhoudelijk COMPLEET — 11/11 grondstoffen uitgewerkt
+Na M14 (grafiet) staat er **geen enkele grondstof meer op "basis"**. Volledig uitgewerkt: lithium, kobalt, goud,
+koper, uranium, REE, nikkel, olie, PGM, zilver, grafiet. Het brief→bouw-runbook (sectie I) heeft z'n werk gedaan.
+**Resterend werk is niet-inhoudelijk:** visuele bevestigingen (Lars, per milestone) + de twee PGM-backlog-afwijkingen.
+
+## M14 · Grafiet ✅ uitgevoerd (2026-07-15) — LAR-449 t/m 454
+`data/graphite.js` van "basis" (10/3) → volledig **uitgewerkt** (31 nodes / 26 flows / 6 tensions). De vorm = een
+**REE-achtige verwerkingstrechter met TWEE feedstocks**: natuurlijk vlokgrafiet + synthetische naaldcokes convergeren
+op de anode-verwerking die **~90%+ in China** zit (Shandong natuurlijk, Binnen-Mongolië synthetisch). Schip+land,
+**géén nieuw chokepoint** (4e na nikkel/olie/zilver). Grafiet was het **laatste basis-10-bestand** (bestond al + stond
+al in `index.html` → basis→uitgewerkt, géén nieuwe script-tag).
+- [x] Research upstream (vlok + naaldcokes) / downstream (verwerkingstrechter + dec-2023 exportcontroles) inline in `design/grafiet.md` (LAR-449/450).
+- [x] Ontwerp-brief `design/grafiet.md` (LAR-451): mijnen + naaldcokes-bronnen, anode-verwerkers, havens, gigafabrieken, recyclers, 6 tensions.
+- [x] `data/graphite.js` uitgewerkt (LAR-452): 8 natuurlijke vlokmijnen (China #1, Balama/Mozambique, Madagascar, Brazilië, Tanzania, Noorwegen, Oekraïne, Sri Lanka vein) + 2 naaldcokes-bronnen (VS/China) + 8 anode-verwerkers (Shandong/Binnen-Mongolië-trechter + Japan/POSCO/Vidalia/Novonix/Talga/NMG) + 6 havens + 4 gigafabriek-markten + 3 recyclers. Keten erts(vlok+naaldcokes)→raffinaat(gecoat sferisch/gegrafitiseerd anodepoeder)→product(cellen).
+- [x] **Recycling-toggle** (LAR-453) = hergebruik van het REE/PGM-`recycle`-patroon met **0 engine-wijziging** (`layer:"recycle"` op nodes én flows); bewust bescheiden (3 recyclers, batterijgrafiet-recycling nog nascent). Chip verschijnt automatisch.
+- [x] Verificatie headless (LAR-454, deel): **grafiet 77 legs (57 zee + 20 land) / 0 kapot / 0 straight / 0 warnings**; toggle aan=80 (+3 recycle); regressie schoon (0 kapot over álle grondstoffen). Route-bug gefixt: `gr-ref-japan→gr-mkt-korea-japan` road→ship (Japan→Korea over de Straat van Korea). `build-standalone.py` (+5 grafiet-checks) → `atlas-standalone.html` geregenereerd.
+- [x] Code-commit `34b1ed4` (repo `main`, Claude-trailer) — **alléén eigen bestanden** gestaged (`data/graphite.js`, `design/grafiet.md`, `build-standalone.py`, `.claude/launch.json`; sectie J). **Gepusht** naar GitHub → live op Pages.
+
+**Open (M14 afronden):**
+- [ ] **Visuele bevestiging op de live URL/mobiel** (LAR-454, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless), nu triviaal via https://larswalters.github.io/grondstoffen-atlas/. Checken: de twee feedstock-stromen (vlok + naaldcokes) die op China convergeren, het emblematische Balama→Vidalia-draadje rond de Kaap, de dunne ex-China buildout-waaier (Talga/Novonix/NMG/POSCO), en de recycling-toggle (default uit).
 
 ## M13 · Zilver ✅ uitgevoerd (2026-07-15) — LAR-434 t/m 439
 **De eerste écht nieuwe grondstof sinds de basis-10** (niet basis→uitgewerkt maar een nieuw `data/silver.js`
@@ -126,11 +147,18 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
 - [x] **Militaire-kringloop-toggle** (LAR-414, **Done** — commit `6a6d062`, 2026-07-15) — de uitgestelde backlog-toggle afgemaakt zodra de engine-bestanden schoon waren. Het **vijfde** optionele-laag-patroon (`type:"military"`/`layer:"secondary"`/`showMilitary`), exact het olie-reserve-patroon in 5 plekken. 4 military-nodes (down-blend Rosatom/HEU, tails, US DOE, US reserve) + 5 `secondary`-flows (o.a. Megatons-to-Megawatts Rusland→VS) + tension `u-t-military`. Headless: uranium 60 legs / 0 kapot / 0 straight; toggle uit→aan +4/+5; chip alleen bij uranium.
 
-## Verderop — volgende grondstof (grafiet)
-**Tien uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, **PGM (M12)**, **zilver (M13, nieuwe 11e)**); nog op "basis": **grafiet** — nu de énige, het laatste van de basis-10.
-Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
-`data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
+## Verderop — geen grondstoffen meer op "basis" (atlas inhoudelijk compleet)
+**Alle 11 uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, PGM, zilver, grafiet). Het brief→bouw-
+runbook (sectie I) is voor alle basis-10 + zilver doorlopen. Toekomstig grondstof-werk = alleen nog een *nieuwe 12e+*
+grondstof (zoals zilver een nieuw bestand + script-tag + build-check vergt), niet meer een basis→uitgewerkt-upgrade.
 
-**Los, klein:** de uranium-restpunt LAR-415 (visuele bevestiging Netlify/mobiel, Lars) — LAR-414 (militaire-kringloop-toggle)
-is nu **Done**. Verder het opruimen van de bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) ná Lars' visuele
-bevestiging. `atlas-standalone.html` blijft gitignored (gegenereerd); repo blijft lokaal-only (GitHub-remote optioneel).
+**Nog open (niet-inhoudelijk):**
+- [ ] **Visuele bevestigingen per milestone** (Lars, In Progress): LAR-415 (uranium), 421 (REE), 427 (nikkel), 433 (olie),
+      439 (zilver), 445 (PGM), 454 (grafiet). Nu triviaal via de live GitHub-Pages-URL.
+- [ ] **PGM-backlog-afwijkingen:** LAR-447 (recycle-chip-tooltip generiek maken — nu REE-bewoord in de gedeelde `ui.js`,
+      raakt nu óók grafiet), LAR-448 (optionele Pt/Pd-exchange-laag — pure data).
+- [ ] Bureaublad-originelen opruimen (`atlas-lithium-kobalt.html` + `globe-oud`) ná visuele bevestiging.
+
+**Repo-status (gecorrigeerd 2026-07-15):** de repo is **niet** lokaal-only — hij staat op GitHub (`larswalters/grondstoffen-atlas`)
+en draait **live op GitHub Pages** (https://larswalters.github.io/grondstoffen-atlas/); **elke `git push origin main` deployt**.
+`atlas-standalone.html` blijft gitignored (gegenereerd). De "lokaal-only"-notities in oudere milestones zijn achterhaald.

@@ -1,7 +1,36 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd)*
+*Last updated: 2026-07-15 (M14 · Grafiet uitgevoerd — alle 11 grondstoffen uitgewerkt)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M14 · Grafiet — uitgevoerd (2026-07-15)
+- **De vorm = een REE-achtige verwerkingstrechter, met TWEE feedstocks.** Grafiet is HET anodemateriaal in Li-ionbatterijen
+  (grootste celcomponent naar massa, ~1 kg/kWh). Twee grondstofstromen komen op dezelfde knijp samen: **natuurlijk vlokgrafiet**
+  (gedolven) én **synthetisch grafiet** (uit petroleum-**naaldcokes**, gegrafitiseerd bij ~3000 °C). De omzetting tot gecoat
+  sferisch/gegrafitiseerd anodepoeder zit **~90%+ in China** (Shandong natuurlijk, Binnen-Mongolië synthetisch op goedkope
+  kolenstroom). Reden voor deze framing: het is de werkelijkheid en de sterkste parallel met REE-Ganzhou — winning is verspreid,
+  de *verwerking* is de knijp; zelfs ex-China vlok (Balama/Molo/Minas Gerais) vaart naar China om verwerkt te worden. De twee
+  feedstocks zijn gemodelleerd als twee soorten `mine`-nodes (vlok met `share`; naaldcokes zonder share = raffinage-bijproduct).
+- **De naaldcokes-bron als `mine`-node (zonder share).** Synthetisch grafiet start niet in een mijn maar bij naaldcokes
+  (petroleum-cokes/koolteerpek). Gemodelleerd als 2 `type:"mine"`-nodes (VS Lake Charles premium + China Liaoning) zónder `share`,
+  met een `note` dat het een raffinage-bijproduct is. Zo staat de synthetische route eerlijk náást de natuurlijke, beide
+  convergerend op de Chinese verwerking. Reden: geen nieuw node-type nodig (0 marker-wijziging), verhaal blijft leesbaar.
+- **Levende geopolitiek = de China-exportvergunningen op grafiet (dec 2023)** — gedragen via een `tension` (`gr-t-export-controls`),
+  niet via een nieuw route-element. Reden: het is een beleidshefboom bovenop de bestaande verwerkingsdominantie, geen zeestraat.
+- **Schip+land, GEEN nieuwe render-modus, GEEN nieuw chokepoint** — vierde grondstof (na nikkel/olie/zilver) die volledig op de
+  bestaande routekaart draait (Malakka/Singapore/SCS/Taiwan voor Azië-aanvoer; Kaap + Golf van Mexico/Florida voor de trans-
+  Atlantische Balama→Vidalia-lijn; Suez/Bab/Gibraltar + Rotterdam voor China→EU; Øresund/Narvik-spoor voor het Europese vlok).
+  Reden: grafiet reist als gewoon industrieel bulkgoed; niets aan `_chokepoints.js` toegevoegd = regressievrij.
+- **Recycling-toggle = hergebruik van het REE/PGM-`recycle`-patroon met 0 engine-wijziging.** `type:"recycler"` + `layer:"recycle"`
+  op nodes én flows; node-gate op `node.layer==="recycle"`, `hasRecycle()` op `f.layer==="recycle"` (generiek, REE/PGM bevestigden
+  dit). **Bewust bescheiden gemodelleerd** (3 recyclers, kleine volumes, default uit): batterijgrafiet-terugwinning is nog nascent
+  (meeste verbruikte grafiet wordt nu verbrand/gestort; EU-batterijverordening trekt het pas op gang). De chip verschijnt automatisch.
+- **`gr-ref-japan → gr-mkt-korea-japan` van `road` → `ship`** — Japan→Korea gaat over de Straat van Korea; een landroute is
+  onmogelijk (was kapot in de check). Beide punten `coastal` → korte directe zee-hop. Herbevestigt de koper/PGM-les.
+- **Basis→uitgewerkt, géén nieuwe registratie.** Anders dan zilver (M13, nieuw 11e bestand) bestond `data/graphite.js` al en stond
+  het al in `index.html` → alleen het bestand verrijkt, geen script-tag/index-wijziging. Grafiet was het **laatste basis-10-bestand**.
+- **Repo-status gecorrigeerd:** de eerdere "repo lokaal-only (geen push)"-besluitregels zijn **achterhaald** — de repo staat sinds
+  M13 op GitHub en draait live op GitHub Pages (elke `git push origin main` deployt). Deze sessie is code + docs **wél gepusht**.
 
 ## M12 · PGM — uitgevoerd (2026-07-15)
 - **PGM vliegt = hergebruik van de goud-air-mode (géén nieuw element).** Geraffineerd Pt/Pd/Rh is per kilo even waardevol als

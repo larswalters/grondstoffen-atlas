@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M13 · Zilver uitgevoerd — de eerste écht nieuwe grondstof)*
+*Last updated: 2026-07-15 (M14 · Grafiet uitgevoerd — het LAATSTE basis-10-bestand, alle 11 grondstoffen uitgewerkt)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -67,11 +67,36 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
   **nikkel** (M10 — 50 nodes/46 flows, Indonesië-onshoring-trechter: mijn+raffinage in tien jaar via de exportban + class-1/class-2-splitsing + prijscrash-shakeout + LME-nuance; beursvoorraden-toggle hergebruikt met 0 engine-wijziging),
   **olie** (M11 — 45 nodes/46 flows, het knelpunten-netwerk dat tegelijk oplicht: Hormuz #1 + Malakka + Suez/Bab + Bosporus + Panama + Kaap; géén nieuw chokepoint = eigen aha; Hormuz-bypass-pijpleidingen + Rusland-omleiding 2022→ + VS-schalie-ommekeer; 3 stages erts/raffinaat/petrochemie),
   **zilver** (M13 — 42 nodes/37 flows, de **eerste écht nieuwe grondstof**: géén winnings-trechter — ~70-75% bijproduct van zink/lood/koper/goud (aanbod inelastisch) — terwijl de concentratie downstream zit (Chinese zonnepanelen/PV) → structureel tekort dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt; schip+land, géén nieuw chokepoint; exchange-toggle hergebruikt met 0 engine-wijziging),
-  **PGM** (M12 — 38 nodes/41 flows, de scherpste twee-landen/twee-metalen-concentratie: Zuid-Afrika/Bushveld = Pt/Rh + Rusland/Norilsk = Pd; **luchtvracht** (hergebruik goud-air-mode, JNB-gateway) — concentraat/matte over land; géén nieuw chokepoint; recycling-toggle hergebruikt van REE met 0 engine-wijziging; 6 tensions incl. autokat-leiband + Pt↔Pd-substitutie, rodium-spof, waterstof-hedge, Eskom-stroomcrisis).
-- **Basis:** grafiet — nu de **énige** nog op basis (het laatste van de basis-10); laadt en rendert, maar zonder operators/capaciteiten/route-detail.
-- **Volgende kandidaat op basis:** grafiet — volgens het brief→bouw-sjabloon.
+  **PGM** (M12 — 38 nodes/41 flows, de scherpste twee-landen/twee-metalen-concentratie: Zuid-Afrika/Bushveld = Pt/Rh + Rusland/Norilsk = Pd; **luchtvracht** (hergebruik goud-air-mode, JNB-gateway) — concentraat/matte over land; géén nieuw chokepoint; recycling-toggle hergebruikt van REE met 0 engine-wijziging; 6 tensions incl. autokat-leiband + Pt↔Pd-substitutie, rodium-spof, waterstof-hedge, Eskom-stroomcrisis),
+  **grafiet** (M14 — 31 nodes/26 flows, een REE-achtige **verwerkingstrechter met TWEE feedstocks**: natuurlijk vlokgrafiet + synthetische naaldcokes convergeren op de anode-verwerking die ~90%+ in China zit (Shandong natuurlijk, Binnen-Mongolië synthetisch); zelfs ex-China vlok vaart naar China; dec-2023 China-exportvergunningen; dunne ex-China buildout Syrah Vidalia/Talga/Novonix/NMG/POSCO; schip+land, géén nieuw chokepoint (4e na nikkel/olie/zilver); recycling-toggle hergebruikt REE/PGM-patroon met 0 engine-wijziging, bewust bescheiden).
+- **Basis:** — **geen** meer. Alle 11 grondstoffen staan op "uitgewerkt"; de basis-10 + zilver is compleet.
+- **Volgende kandidaat:** géén basis-grondstof meer. Verder grondstof-werk = alleen nog een *nieuwe 12e+* grondstof (nieuw bestand + script-tag + build-check, zoals zilver).
 
-## Nu (2026-07-15 — M13 · Zilver uitgevoerd)
+## Nu (2026-07-15 — M14 · Grafiet uitgevoerd — atlas inhoudelijk COMPLEET)
+
+- **Grafiet volledig gebouwd + geverifieerd — het laatste basis-10-bestand.** `data/graphite.js` van "basis" (10/3) →
+  **uitgewerkt** (31 nodes / 26 flows / 6 tensions) + brief `design/grafiet.md` + 5 grafiet-checks in `build-standalone.py`.
+  Na M14 staat **geen enkele grondstof meer op "basis"** — alle 11 zijn uitgewerkt.
+- **De vorm = een REE-achtige verwerkingstrechter met TWEE feedstocks.** Grafiet is HET anodemateriaal in Li-ionbatterijen
+  (~1 kg/kWh). **Natuurlijk vlokgrafiet** (China #1, Balama/Mozambique, Madagascar, Brazilië, Tanzania, +Europa/Sri Lanka) én
+  **synthetisch grafiet** (uit petroleum-**naaldcokes**, gegrafitiseerd bij ~3000 °C) convergeren op de anode-verwerking die
+  **~90%+ in China** zit (Shandong natuurlijk, Binnen-Mongolië synthetisch). **Zelfs ex-China vlok vaart naar China.** Levende
+  geopolitiek: de **China-exportvergunningen op grafiet (dec 2023)**. Dunne ex-China buildout: Syrah Vidalia (Louisiana, uit
+  Balama-vlok, IRA-FEOC) + Talga/Novonix/NMG/POSCO.
+- **Schip+land, géén nieuwe render-modus, géén nieuw chokepoint** (4e na nikkel/olie/zilver). **Recycling-toggle**
+  (`layer:"recycle"`, default uit) = hergebruik van het REE/PGM-patroon met **0 engine-wijziging**, bewust bescheiden
+  (batterijgrafiet-recycling nog nascent).
+- **Verificatie (headless, poort 8735 — eigen `-4`-server):** grafiet **77 legs (57 zee + 20 land) / 0 kapot / 0 straight /
+  0 warnings**; toggle aan = 80 legs (+3 recycle); regressie schoon (0 kapot over álle grondstoffen). Route-bug gefixt
+  (`gr-ref-japan→gr-mkt-korea-japan` road→ship). Browser-pane cachete de oude data hardnekkig → verse schijf-data via synchrone
+  fetch + `REGISTER`-capture geverifieerd. `atlas-standalone.html` geregenereerd (5 grafiet-checks OK). **Code-commit `34b1ed4`**,
+  **gepusht** naar GitHub → live op Pages. **Linear M14 · LAR-449..454** (449–453 Done, 454 In Progress).
+- **Repo-correctie:** de repo is **niet** lokaal-only — hij staat op GitHub (`larswalters/grondstoffen-atlas`) en draait live op
+  **GitHub Pages** (https://larswalters.github.io/grondstoffen-atlas/); elke `git push origin main` deployt. De "lokaal-only"-
+  notities in oudere milestones zijn achterhaald.
+- **Rest:** alleen visuele bevestiging op de live URL (LAR-454, Lars). **Geen grondstoffen meer op "basis".**
+
+## Eerder (2026-07-15 — M13 · Zilver uitgevoerd)
 
 - **Zilver volledig gebouwd + geverifieerd — de eerste écht nieuwe grondstof.** Anders dan M6–M12 (die een bestaand
   "basis"-bestand naar "uitgewerkt" brachten) bestond zilver nog niet: nieuw `data/silver.js` (42 nodes / 37 flows /

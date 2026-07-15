@@ -1,5 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-15 (na M13 · Zilver)*
+*Last updated: 2026-07-15 (na M14 · Grafiet — alle 11 grondstoffen uitgewerkt)*
+
+## M14 · Grafiet — geverifieerd headless (2026-07-15)
+- Volledig gebouwd + geverifieerd (eigen server poort 8735, `grondstoffen-atlas-4` toegevoegd aan `launch.json`):
+  **grafiet 77 legs (57 zee + 20 land) / 0 kapot / 0 straight / 0 warnings** (31 nodes / 26 flows / 6 tensions);
+  toggle aan (recycling) = **80 legs** (+3 recycle-flows). Regressie schoon: **0 kapot over álle grondstoffen**.
+- **Browser-pane-cache-gotcha (nieuw, belangrijk):** de Browser-pane cachete de oude `graphite.js` (basis 10/3)
+  hardnekkig — óók na `location.reload(true)` bleef `getResource('graphite')` de oude data tonen. Dit is een
+  **pane-cache, geen codeprobleem**. Workaround die werkte: de verse schijf-data via **synchrone XHR** (`?ts=`-buster)
+  ophalen, `window.REGISTER` tijdelijk shadowen om het resource-object te capturen, en de leg-check dáárop draaien
+  (repliceert exact de `flows.js`-leglogica: `Routing.sea`/`Routing.land`, `isSeaPoint`, gathering-legs). Voor de
+  live render: het verse resource in `RESOURCES` splicen + de grafiet-pill klikken (ATLAS re-render). **Les:** vertrouw
+  headless niet op een gewone reload voor verse data-files; fetch+capture of splice-in.
+- **1 route-bug onderweg gevonden + gefixt:** `gr-ref-japan → gr-mkt-korea-japan` stond op `mode:"road"`, maar Japan→Korea
+  gaat over zee (Straat van Korea) → de landrouter vond geen pad (kapot). Beide punten zijn `coastal` → mode veranderd naar
+  `ship` (directe korte zee-hop, géén via). Daarna 0 kapot. **Les (herbevestigd, koper/PGM-echo):** een `road`/`rail`-flow
+  tussen twee landen gescheiden door zee is onmogelijk; zulke hops moeten `ship` zijn (beide endpoints `coastal`/`port`).
+- **Recycling-toggle hergebruikt met 0 engine-wijziging** (REE/PGM-patroon, 3e datagedreven hergebruik van dít patroon):
+  de "recycling"-chip verschijnt automatisch voor grafiet omdat het `layer:"recycle"`-nodes/-flows heeft; toggle uit=23 flows
+  (77 legs), aan=26 flows (80 legs). Blurb + 6 tensions renderen, geen console-warnings (geen onbekende via-/node-ids).
+- **Co-locatie bewaakt:** grafiet-eigen nodes ~30-45 km uit elkaar gehouden (gr-ref-korea vs gr-mkt-korea-japan ~58 km;
+  gr-ref-shandong vs gr-nc-china) → 0 `degDist:0`-arcs (0 degenerate in de check).
+- ⚠️ **Visuele bevestiging blijft open (LAR-454)** — WebGL-screenshot lukt niet headless (timeout, zelfde gat als M5–M13).
+  Nu triviaal via de live URL: de twee feedstock-stromen die op China convergeren, het Balama→Vidalia-draadje rond de Kaap,
+  de ex-China buildout-waaier, de recycling-toggle.
+- ✅ **Concurrency (sectie J) schoon:** werktree schoon bij start én vóór commit; grafiet raakt de engine niet
+  (0 engine-wijziging) → alléén eigen bestanden gestaged. **Repo-correctie:** de docs zeiden "lokaal-only", maar de repo
+  is sinds M13 live op GitHub Pages → deze sessie **wél gepusht** (code + docs).
 
 ## M13 · Zilver — geverifieerd headless (2026-07-15)
 - Volledig gebouwd + geverifieerd in de draaiende atlas (eigen server poort 8734): **zilver 85 legs / 0 kapot /

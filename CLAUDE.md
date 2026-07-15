@@ -1,6 +1,25 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M12 · PGM uitgevoerd; M13 · Zilver — nieuwe 11e grondstof; M11 · Olie; M10 · Nikkel)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M14 · Grafiet uitgevoerd — het LAATSTE basis-10-bestand, alle 11 grondstoffen nu uitgewerkt; M12 · PGM; M13 · Zilver)*
+
+> **M14 · GRAFIET UITGEVOERD (2026-07-15) — DE ATLAS IS INHOUDELIJK COMPLEET (11/11):** `data/graphite.js` van "basis"
+> (10/3) → **uitgewerkt** (31 nodes / 26 flows / 6 tensions) + brief `design/grafiet.md` + 5 grafiet-checks in
+> `build-standalone.py`. Grafiet was het **laatste basis-10-bestand** (bestond al + stond al in `index.html` →
+> basis→uitgewerkt, géén nieuwe script-tag). De vorm = een **REE-achtige verwerkingstrechter met TWEE feedstocks**:
+> **natuurlijk vlokgrafiet** (China #1 ~65%, Balama/Mozambique, Madagascar, Brazilië, Tanzania) én **synthetisch grafiet**
+> uit petroleum-**naaldcokes** convergeren op de anode-verwerking die **~90%+ in China** zit (Shandong natuurlijk,
+> Binnen-Mongolië synthetisch op goedkope kolenstroom) — **zelfs ex-China vlok vaart naar China** om verwerkt te worden
+> (de Ganzhou-REE-parallel). Levende geopolitiek: de **China-exportvergunningen op grafiet (dec 2023)**. Dunne ex-China
+> buildout (Syrah Vidalia/Louisiana uit Balama-vlok, Talga/Novonix/NMG/POSCO). Schip+land, **géén nieuwe render-modus,
+> géén nieuw chokepoint** (4e na nikkel/olie/zilver); recycling-toggle hergebruikt het REE/PGM-patroon met **0 engine-
+> wijziging** (bewust bescheiden, batterijgrafiet-recycling nog nascent). Headless (poort 8735): **grafiet 77 legs
+> (57 zee + 20 land) / 0 kapot / 0 straight / 0 warnings**, toggle aan=80, regressie schoon (0 kapot overal). Route-bug
+> gefixt (`gr-ref-japan→gr-mkt-korea-japan` road→ship). `atlas-standalone.html` geregenereerd (5 grafiet-checks OK).
+> Commit `34b1ed4` (Claude-trailer, **alléén eigen bestanden** — sectie J; **gepusht** → live op GitHub Pages). **Linear
+> M14 · Grafiet + LAR-449..454** (449–453 Done, 454 In Progress = visuele bevestiging Lars). **Geen grondstoffen meer op
+> "basis".** ⚠️ **Repo-correctie:** de "repo lokaal-only"-notities hieronder zijn achterhaald — de repo staat op GitHub
+> (`larswalters/grondstoffen-atlas`) en draait live op **GitHub Pages** (https://larswalters.github.io/grondstoffen-atlas/);
+> elke `git push origin main` deployt.
 
 > **M13 · ZILVER UITGEVOERD (2026-07-15):** de **eerste écht nieuwe grondstof** sinds de basis-10 (niet basis→uitgewerkt):
 > nieuw `data/silver.js` (42 nodes / 37 flows / 6 tensions) + brief `design/zilver.md` + `<script src="data/silver.js">` in
