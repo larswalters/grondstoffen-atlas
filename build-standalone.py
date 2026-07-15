@@ -88,6 +88,11 @@ def main():
         "pgm uitgewerkt (Bushveld/Norilsk)": "Mogalakwena" in html and "Rustenburg PMR" in html and "Norilsk" in html,
         "pgm luchtvracht + recycling (JNB/rec)": "pgm-air-jnb" in html and "pgm-rec-eu" in html,
         "pgm waterstof-hedge (PEM)": "PEM-elektrolysers" in html,
+        "grafiet geregistreerd": 'id: "graphite"' in html,
+        "grafiet uitgewerkt (Balama/Vidalia)": "Balama" in html and "Vidalia" in html,
+        "grafiet twee feedstocks (naaldcokes)": "naaldcokes" in html and "gr-nc-china" in html,
+        "grafiet China-verwerkingstrechter (Shandong/Binnen-Mongolië)": "gr-ref-shandong" in html and "gr-ref-innermongolia" in html,
+        "grafiet exportcontroles (dec 2023)": "exportvergunning" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
