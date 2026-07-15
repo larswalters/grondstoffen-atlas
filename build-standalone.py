@@ -70,6 +70,9 @@ def main():
         "zeldzame aardmetalen geregistreerd": 'id: "rare-earths"' in html,
         "bevat data/rare-earths (Ganzhou/Kachin)": "Ganzhou" in html and "Kachin" in html,
         "REE-grenscorridor (grens-ruili)": "grens-ruili" in html,
+        "nikkel geregistreerd": 'id: "nickel"' in html,
+        "nikkel uitgewerkt": 'id: "nickel"' in html and "IMIP Morowali" in html and "Weda Bay" in html,
+        "nikkel class-1/2 + LME-nuance": "class-1" in html and "LME-nikkel" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
