@@ -1,10 +1,10 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-16 (na M15 · Kolen — de nieuwe 12e grondstof)*
+*Last updated: 2026-07-16 (na M17 · Kolen — de nieuwe 14e grondstof)*
 
-## M15 · Kolen — geverifieerd headless (2026-07-16)
+## M17 · Kolen — geverifieerd headless (2026-07-16)
 - Volledig gebouwd + geverifieerd (eigen server poort 8735 = `grondstoffen-atlas-4`): **kolen 111 legs / 0 kapot /
-  0 straight / 0 degen / 0 unresolved via** (34 nodes / 33 flows / 6 tensions). Regressie schoon: alle 12 grondstoffen
-  op hun bekende baseline; kolen voegt 0 kapot/straight/degen toe.
+  0 straight / 0 degen / 0 unresolved via** (34 nodes / 33 flows / 6 tensions). Regressie schoon: alle
+  op dat moment geladen grondstoffen (12 tijdens de test) op hun bekende baseline; kolen voegt 0 kapot/straight/degen toe.
 - **1 route-bug onderweg gevonden + gefixt (zilver-Tacoma→Astoria-echo):** de 2 kapotte legs zaten op `coal-port-vancouver
   → wp-pac-noord`. Empirisch gediagnosticeerd door kandidaat-coördinaten door `Routing.sea` te halen: **Roberts Bank /
   Westshore ligt ingesloten in de Salish Sea** (achter Vancouver Island) en valt dicht in het grove 0,25°-raster

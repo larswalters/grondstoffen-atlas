@@ -1,9 +1,9 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof)*
+*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
-## M15 · Kolen — uitgevoerd (2026-07-16)
+## M17 · Kolen — uitgevoerd (2026-07-16)
 - **De vorm = de binnenlandsheid, GÉÉN trechter.** Waar lithium/koper/REE bij de raffinage knijpen, goud bij Zwitserland,
   uranium bij de Russische verrijking, olie het zeestraten-net laat oplichten en zilver een inelastische bijproduct-vraagknijp
   heeft — heeft kolen **géén enkele mondiale flessenhals** omdat het overweldigend **binnenlands** is: ~85% wordt verbrand waar
@@ -28,7 +28,7 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 - **GÉÉN optionele toggle-laag.** Kolen heeft geen zinvol CB/beurs/recycling-equivalent (geen bovengrondse kluisvoorraden;
   kolen wordt verbrand, niet gerecycled). Bewust weggelaten (het runbook staat dit toe: "alleen als de grondstof er een heeft").
   Bonus: houdt de engine schoon tijdens de parallelle diamant-/gas-sessies (sectie J). **Géén nieuwe render-modus/marker-types.**
-- **Nieuwe 12e grondstof (registratie-plumbing), net als zilver.** Kolen zit niet in de basis-10 → nieuw `data/coal.js` +
+- **Nieuwe 14e grondstof (registratie-plumbing), net als zilver.** Kolen zit niet in de basis-10 → nieuw `data/coal.js` +
   `<script>`-tag + build-check. Dat structurele verschil met het patroon bewust als **eigen Linear-issue** (LAR-457), zoals
   LAR-436 bij zilver. Reden: het is de enige echte afwijking en verdient een eigen spoor.
 - **Route-bug: Canadese haven van Roberts Bank → Ridley/Prince Rupert.** De 2 kapotte legs zaten op `coal-port-vancouver →

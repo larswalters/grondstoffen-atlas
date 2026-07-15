@@ -1,8 +1,8 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof; M14 · Grafiet; M13 · Zilver)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof; M14 · Grafiet; M13 · Zilver)*
 
-> **M15 · KOLEN UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** na zilver (11e) de tweede écht nieuwe grondstof
+> **M17 · KOLEN UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** na zilver (11e) de tweede écht nieuwe grondstof
 > (kolen zit niet in de basis-10): nieuw `data/coal.js` (34 nodes / 33 flows / 6 tensions) + brief `design/kolen.md` +
 > `<script src="data/coal.js">` in `index.html` + `grens-gashuunsukhait` (Mongolië-Gobi) in `_chokepoints.js` + 5 kolen-
 > checks in `build-standalone.py`. De vorm is **fundamenteel anders**: **géén mondiale flessenhals** want kolen is
@@ -19,8 +19,8 @@
 > gefixt (Canadese haven Roberts Bank ingesloten in de Salish Sea → **Ridley/Prince Rupert** open kust). Commit `75c3483`
 > (lokaal, Claude-trailer, **alléén eigen bestanden** — 3 parallelle sessies grafiet/diamant/gas ongemoeid, sectie J: de
 > gedeelde `index.html` kreeg diamond/coal/gas in één hunk → alléén de coal-regel gestaged via `git apply --cached`).
-> **Linear M15 · Kolen + LAR-455..459 Done, 461 In Progress** (visuele bevestiging = Lars). De atlas telt nu **12
-> grondstoffen** (basis-10 + zilver + kolen); diamant + gas lopen in parallelle sessies (13/14).
+> **Linear M17 · Kolen + LAR-455..459 Done, 461 In Progress** (visuele bevestiging = Lars). De atlas telt nu **14
+> grondstoffen** (basis-10 + zilver + gas M15 + diamant M16 + kolen M17); gas + diamant lopen in parallelle sessies.
 
 > **M14 · GRAFIET UITGEVOERD (2026-07-15) — DE ATLAS IS INHOUDELIJK COMPLEET (11/11):** `data/graphite.js` van "basis"
 > (10/3) → **uitgewerkt** (31 nodes / 26 flows / 6 tensions) + brief `design/grafiet.md` + 5 grafiet-checks in
@@ -182,14 +182,14 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
-- **2026-07-16 · M15 kolen = de binnenlands-grondstof, géén trechter** — kolen heeft als eerste grondstof **géén enkele
+- **2026-07-16 · M17 kolen = de binnenlands-grondstof, géén trechter** — kolen heeft als eerste grondstof **géén enkele
   mondiale flessenhals**: ~85% wordt verbrand waar gedolven (China ~50%, India, VS, Rusland), ~15% zeehandel. Stages als
   ketenpositie: `erts` = mijn→haven/centrale · `raffinaat` = de **internationaal verhandelde bulk** (zeekruisingen +
   landcorridor, waar élk ban/her-routeringsverhaal leeft) · `product` = stroom/staal → binnenlandse kolen (erts+product)
   leest visueel anders dan verhandelde (mét raffinaat-zeeboog). **Twee kolen** (thermisch/cokeskool) via `note`+`tension`
   (nikkel-patroon, niet via stage). China = swing-koper; drie her-routeringen als tensions (Australië-ban/Rusland-oost-draai/
-  Mongolië-corridor). **Géén render-modus/marker-types/toggle-laag.** Nieuwe 12e grondstof (plumbing als eigen issue LAR-457).
-- **2026-07-16 · M15 één nieuw LANDknelpunt `grens-gashuunsukhait`** (Mongolië-China-Gobi, `kind:"grensovergang"`) in een eigen
+  Mongolië-corridor). **Géén render-modus/marker-types/toggle-laag.** Nieuwe 14e grondstof (plumbing als eigen issue LAR-457).
+- **2026-07-16 · M17 één nieuw LANDknelpunt `grens-gashuunsukhait`** (Mongolië-China-Gobi, `kind:"grensovergang"`) in een eigen
   COAL-blok in `_chokepoints.js` — Kasumbalesa/Ruili-patroon; alléén kolen verwijst ernaar → regressievrij. Kolen = 4e grondstof
   (na nikkel/olie/zilver) zonder nieuw zéé-knelpunt. Route-bug: Canadese haven Roberts Bank ingesloten in de Salish Sea (dicht in
   het grove raster) → verplaatst naar Ridley/Prince Rupert (open kust; empirisch getest, zilver-Tacoma→Astoria-les herbevestigd).
@@ -357,7 +357,7 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 Vaste flow om een grondstof uit te werken, identiek aan hoe goud/koper/uranium/REE/zilver/kolen zijn gedaan.
 **De basis-10 is compleet** (grafiet/M14 was de laatste). De groei zit nu in **nieuwe grondstoffen** (niet basis→uitgewerkt maar
 een nieuw `data/<x>.js` + `<script>`-tag + build-check, het zilver/kolen-patroon — leg dat "anders"-punt als eigen issue vast,
-zoals LAR-436/457). Gedaan als nieuwe grondstof: zilver (M13), kolen (M15); diamant + gas lopen parallel. Doe de stappen op
+zoals LAR-436/457). Gedaan als nieuwe grondstof: zilver (M13), kolen (M17); diamant + gas lopen parallel. Doe de stappen op
 volgorde; commit code en wrapup-docs apart. **Let bij parallel werk streng op sectie J** (alléén eigen bestanden stagen; bij een
 gedeelde `index.html` met meerdere nieuwe script-regels in één hunk: stage alléén je eigen regel via `git apply --cached`).
 

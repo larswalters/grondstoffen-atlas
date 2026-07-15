@@ -254,7 +254,7 @@ markt-nodes valt de haven samen met de verbrander (coastal) → dan draagt de ze
 ---
 
 ## Build-handoff (naar de bouw-issues)
-- **Nieuwe 12e grondstof** — er is nog géén `data/coal.js`: aanmaken + `<script src="data/coal.js">`
+- **Nieuwe 14e grondstof (milestone M17)** — er is nog géén `data/coal.js`: aanmaken + `<script src="data/coal.js">`
   toevoegen aan `index.html` (na `silver.js`) + kolen-sanity-check in `build-standalone.py`. Dit is het
   concrete "anders dan het patroon" (zoals zilver de 11e was) → **apart issue** (plumbing).
 - **Géén nieuwe marker-types** — `mine`/`port`/`market` bestaan; kolen gebruikt géén `refinery`/`recycler`/`exchange`/`cb`.

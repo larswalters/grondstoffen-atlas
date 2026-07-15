@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof; nu 12 uitgewerkt, diamant/gas parallel)*
+*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof; richting 14 uitgewerkt, gas M15/diamant M16 parallel)*
 
 ## Architectuur (hoe we bouwen)
 

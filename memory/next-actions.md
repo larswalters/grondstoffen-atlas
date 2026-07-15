@@ -1,14 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof)*
+*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof)*
 
-## 🎉 De basis-10 is compleet — nu uitbreiden met nieuwe grondstoffen (12 en groeiend)
+## 🎉 De basis-10 is compleet — nu uitbreiden met nieuwe grondstoffen (14 en groeiend)
 Na M14 (grafiet) stond er geen enkele grondstof van de **basis-10** meer op "basis". Daarna komen de **nieuwe
 grondstoffen** erbij (niet basis→uitgewerkt maar een nieuw `data/<x>.js` + script-tag + build-check, het zilver-patroon):
-zilver (M13), **kolen (M15)**. Volledig uitgewerkt nu: lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, PGM,
-grafiet + zilver + kolen = **12**. **Diamant + gas lopen in parallelle sessies** (nieuwe grondstoffen 13/14). Het
+zilver (M13), gas (M15), diamant (M16), **kolen (M17)**. Volledig uitgewerkt nu: de basis-10 + zilver + gas + diamant +
+kolen = **14** (gas M15 / diamant M16 / kolen M17 = de nieuwe batch, waarvan gas + diamant in parallelle sessies). Het
 brief→bouw-runbook (sectie I) + het nieuwe-grondstof-plumbing-patroon (LAR-436/457) blijven de vaste flow.
 
-## M15 · Kolen ✅ uitgevoerd (2026-07-16) — LAR-455 t/m 459, 461
+## M17 · Kolen ✅ uitgevoerd (2026-07-16) — LAR-455 t/m 459, 461
 Nieuw `data/coal.js` (34 nodes / 33 flows / 6 tensions) + brief `design/kolen.md` + `<script>`-tag in `index.html` +
 `grens-gashuunsukhait` (Mongolië-Gobi) in `_chokepoints.js` + 5 kolen-checks in `build-standalone.py`. De vorm = **de
 binnenlandsheid, géén trechter** (~85% verstookt waar gedolven; ~15% zeehandel); China = swing-koper; twee kolen
@@ -21,7 +21,7 @@ corridor). Schip+land, géén render-modus/marker-types/toggle-laag.
 - [x] Verificatie headless (LAR-461, deel): **kolen 111 legs / 0 kapot / 0 straight / 0 degen / 0 unresolved via**, regressievrij. Route-bug gefixt (Roberts Bank ingesloten → Ridley/Prince Rupert). `build-standalone.py` (+5 kolen-checks) → `atlas-standalone.html` geregenereerd.
 - [x] Code-commit `75c3483` (repo `main`, Claude-trailer) — **alléén eigen bestanden** gestaged (sectie J: 3 parallelle sessies grafiet/diamant/gas ongemoeid; alléén de coal-regel uit de gedeelde `index.html` via gerichte patch).
 
-**Open (M15 afronden):**
+**Open (M17 afronden):**
 - [ ] **Code-commit `75c3483` pushen** naar GitHub → live op Pages (repo is sinds M13 live). *(Nog niet gepusht — zie onder.)*
 - [ ] **Visuele bevestiging op de live URL/mobiel** (LAR-461, In Progress) — alleen Lars (WebGL-screenshot hangt headless), via https://larswalters.github.io/grondstoffen-atlas/. Checken: de grote binnenlandse blokken (China/India/VS/Rusland, dof) vs. de zeehandelslaag; de twee kolen (thermisch→centrales, cokeskool→staalhubs); de Mongolië-Gobi-landcorridor; het naspel van de Australië-ban (export naar India/Japan/Korea).
 
