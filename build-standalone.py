@@ -102,6 +102,11 @@ def main():
         "kolen Mongolië-Gobi-corridor": "grens-gashuunsukhait" in html,
         "kolen twee kolen (thermisch/cokeskool)": "cokeskool" in html and "coal-mkt-china-steel" in html,
         "kolen binnenlands + China-swing": "Qinhuangdao" in html and "swing-koper" in html,
+        "gas geregistreerd": 'id: "gas"' in html,
+        "gas uitgewerkt (Ras Laffan/Sabine Pass)": "Ras Laffan" in html and "Sabine Pass" in html,
+        "gas LNG-trechter + Hormuz-afhankelijkheid": "gas-lng-raslaffan" in html and "Hormuz-afhankelijkheid" in html,
+        "gas Europa-pivot 2022 + Power of Siberia": "Europa-pivot" in html and "Power of Siberia" in html,
+        "gas opslag hergebruikt reserve-toggle": "gas-store-eu" in html and 'type: "reserve"' in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
