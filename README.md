@@ -1,5 +1,11 @@
 # Grondstoffen-atlas — v2
 
+**🌍 Live:** https://larswalters.github.io/grondstoffen-atlas/ — werkt op elke PC en mobiel.
+
+> **Deploy = GitHub Pages** (branch `main`, root). Elke `git push` naar `origin` werkt de live site automatisch bij (~1-2 min rebuild).
+> Een `.nojekyll`-bestand in de root zorgt dat de `_`-bestanden (`data/_registry.js`, `data/_chokepoints.js`) óók geserveerd worden —
+> zonder dat negeert Jekyll ze en werkt de atlas niet.
+
 ## Starten
 
 **Aanbevolen — via een lokale server** (dan werken ook de lokale textures):
@@ -91,10 +97,9 @@ Zet `detail: "uitgewerkt"` zodra een grondstof af is — dan krijgt de knop een
 
 ## Volgorde van aanpak
 
-1. ✅ lithium — af
-2. kobalt, koper, nikkel, zeldzame aardmetalen, grafiet, PGM, uranium, aardolie
-   — staan in het nieuwe format maar hebben nog de oude, grove data
-   (mijnen op landniveau, stromen alleen mijn→dichtstbijzijnde raffinaderij).
+**Stand (2026-07-15):** 10 van de 11 grondstoffen volledig uitgewerkt — lithium ✅, kobalt ✅,
+goud ✅, koper ✅, uranium ✅, zeldzame aardmetalen ✅, nikkel ✅, olie ✅, PGM ✅, **zilver ✅**
+(de nieuwe 11e grondstof). Alleen **grafiet** staat nog op "basis" (oude grove data).
 
 Per grondstof herhalen we dezelfde stap: echte mijnen en fabrieken met naam en
 coördinaat, en de werkelijke handelsroutes met volume en transportmodus.
