@@ -1,5 +1,18 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 · Zeldzame aardmetalen in voorbereiding)*
+*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
+
+## M8 · Zeldzame aardmetalen ✅ uitgevoerd (2026-07-15) — LAR-416 t/m 421
+`data/rare-earths.js` van "basis" (9/5) → volledig **uitgewerkt** (41 nodes / 38 flows / 6 tensions), **magneet-REE-framing**
+(NdPr + Dy/Tb; `symbol: NdPr`, `unit: kt magneet-REO/jaar`). Schip+land, géén nieuwe render-modus.
+- [x] Research → skelet `design/zeldzame-aardmetalen.md` 1-op-1 omgezet (LAR-416/417).
+- [x] **Nieuwe grenscorridor `grens-ruili`** (Myanmar→China, `kind:"grensovergang"`) in `_chokepoints.js` — draagt de Dy/Tb-landstroom Kachin→Ganzhou (LAR-418).
+- [x] `data/rare-earths.js` uitgewerkt (LAR-419): Ganzhou-scheidingstrechter + Mountain-Pass-rondreis + NdFeB-waaier + Lynas-draadje + EU-draadje.
+- [x] **Recycling-toggle** (`layer:"recycle"`, default uit) bedraad over config/main/flows/markers/ui (LAR-420) — het derde optionele-laag-patroon; via `layer` op flows én nodes zodat koper's always-on recyclers ongemoeid blijven.
+- [x] Verificatie headless (LAR-421, deel): **rare-earths 90 legs (39 land + 51 zee) / 0 kapot / 0 straight**; regressie schoon (5 kapot = bekende lithium/goud-baseline); toggle-test bevestigd. `build-standalone.py` (+ REE-checks) → `atlas-standalone.html` geregenereerd.
+
+**Open (M8 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-421, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: convergeren de scheidings-bogen op Zuid-China?, loopt de Dy/Tb-landstroom over Ruili?, zichtbaar de Mountain-Pass-rondreis VS↔China?, de NdFeB-waaier naar EV/wind/defensie?, scheeps-voyages voor REE?, recycling-toggle aan/uit.
+- [ ] **Code-commit** — 7 gewijzigde bestanden (`data/rare-earths.js`, `data/_chokepoints.js`, `src/{flows,main,markers,ui}.js`, `build-standalone.py`) + de wrapup-docs; repo lokaal-only (geen remote), branch `main`, Claude-trailer.
 
 ## M6 · Goud ✅ uitgevoerd (2026-07-14)
 - [x] Research → brief `data/goud.md` (LAR-397/398).
@@ -55,17 +68,11 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
 - [ ] **Militaire-kringloop-toggle** (LAR-414, Backlog) — bewust uitgesteld: de optionele `layer:"secondary"`-laag (down-blended wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` (destijds dirty door de M8-sessie). Oppakken zodra de M8-code gecommit is; het `layer:"..."`-filterpatroon is al vast (CB → exchange → secondary).
 
-## Verderop — M8 · Zeldzame aardmetalen / magneet-REE (ontwerp-skelet klaar, ná koper)
-**Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, herzien 2026-07-15 → **optie 2:
-scherpe magneet-REE-framing**, NdPr + Dy/Tb i.p.v. alle 17 elementen) → data-doel `data/rare-earths.js` van
-"basis" → "uitgewerkt" (metadata sharpenen: `name`/`symbol=NdPr`/`unit=kt magneet-REO/blurb`, id blijft
-`rare-earths`). **Linear-milestone `M8 · Zeldzame aardmetalen` + issues LAR-416 t/m 421 aangemaakt** (Backlog;
-spiegelt M6/M7/M9: research × 2 → Myanmar-grenscorridor → data-file → recycling-toggle → verificatie).
+## Verderop — volgende grondstof (nikkel / grafiet / PGM / olie)
+Vijf uitgewerkt (lithium, kobalt, goud, koper, uranium, REE — feitelijk zes); nog op "basis": **nikkel** (runner-up),
+**grafiet**, **PGM**, **olie**. Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
+`data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup. Nog geen Linear-milestone aangemaakt.
 
-**Kern-"aha" (distinct van lithium/koper):** winning breed verspreid, maar scheiding van NdPr/Dy uit het
-gemengde erts ~85–90% in Zuid-China (Ganzhou) én NdFeB-magneten ~90%+ China. Drie nieuwe elementen voor de
-atlas: (1) **Dy/Tb-landstroom over de grens Myanmar→China** (Kachin → Ruili — nieuw `grens-*`-knelpunt, analoog
-aan Kasumbalesa), (2) de **Mountain Pass-rondreis** (VS delft → China scheidt → terug), (3) de
-**NdFeB-magneet-flessenhals** downstream. **Hergebruikt schip+land — géén nieuwe render-modus** (net als koper);
-recycling-laag = het CB/beursvoorraden-toggle-equivalent. Magneet = stage `product` (de eerdere "4e stage?"-vraag
-vervalt in deze framing).
+**Los, klein:** de uranium-restpunten (LAR-415 visueel + LAR-414 militaire-kringloop-toggle, nu de code niet meer
+dirty is) en het opruimen van de bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) ná Lars' visuele
+bevestiging. `atlas-standalone.html` blijft gitignored (gegenereerd); repo blijft lokaal-only (GitHub-remote optioneel).

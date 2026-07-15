@@ -1,7 +1,29 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 · Zeldzame aardmetalen voorbereid)*
+*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M8 · Zeldzame aardmetalen (magneet-REE) — uitgevoerd (2026-07-15)
+- **Magneet-REE-framing (optie 2), 1-op-1 uit het skelet gebouwd.** `id` blijft `rare-earths` (registratie intact),
+  `name` = "Zeldzame aardmetalen (magneet-REE)", `symbol` = `NdPr`, `unit` = "kt magneet-REO/jaar". Reden: REE als één
+  verhaal (NdPr licht + Dy/Tb zwaar) i.p.v. de vage 17-elementen-blob; winning blijft eerlijk gemengd erts → scheiding = de knijp.
+- **Scheiding én magneetfabrieken beide `type:"refinery"`** (diamant-marker); consumptie = `type:"market"`. Reden: het
+  `erts`→`raffinaat`→`product`-stagekleur op de flows draagt het onderscheid concentraat→NdPr/Dy-oxide→NdFeB-magneet.
+  Precedent = uranium (conversie/verrijking/fab alle refinery, reactoren market). Magneet = stage `product` (geen 4e stage).
+- **Nieuwe grenscorridor `grens-ruili`** (24.02, 97.85; Myanmar→China) in `_chokepoints.js`, `kind:"grensovergang"` — exact
+  het Kasumbalesa-patroon (landpunt, houdt de landkaart open, id begint niet met `wp-`). Draagt de Dy/Tb-landstroom
+  Kachin→Ganzhou. Enige nieuwe knelpunt; alleen REE gebruikt het → geen impact op de andere grondstoffen.
+- **Recycling-toggle via `layer:"recycle"` op flows ÉN nodes** (default uit) — het derde optionele-laag-patroon
+  (goud=CB, koper=beursvoorraden, REE=recycling). Reden voor de dubbele `layer`: node-gate op `node.layer==="recycle"`
+  (i.p.v. `node.type==="recycler"`) zodat **koper's always-on recyclers** (die géén `layer` hebben) ongemoeid blijven en
+  alleen REE de chip/zichtbaarheid krijgt. `hasRecycle()` detecteert op `f.layer==="recycle"` (niet op recycler-type), dus
+  koper krijgt geen chip. Vijf plekken: `config.js` (marker-size bestond al) · `main.js` (default + `hasRecycle()` + voyages-gate)
+  · `flows.js` (flow-gate) · `markers.js` (node-gate) · `ui.js` (chip).
+- **5 co-located nodes ~30–45 km verschoven** (Baotou/Ganzhou ref+mag, MP mijn+scheiding, La Rochelle ref+recycler,
+  Fort Worth mag+recycler). Reden: ze zaten in dezelfde 0,25°-rastercel → de router gaf een 1-punts pad (`degDist:0`,
+  onzichtbare arc). Verschoven binnen dezelfde stad/regio zodat de lokale scheiding→magneet-arcs zichtbaar renderen én
+  de headless-teller schoon op 0 kapot komt i.p.v. de bekende `degDist:0`-baseline uit te breiden.
+- **Géén nieuwe render-modus** (schip+land, net als koper); recycling reist over land (`road`). Geen luchtroute-modus.
 
 ## Architectuur
 - **Geen bundler.** Losse globals-bestanden met vaste laadvolgorde via `<script>`-tags in `index.html`.

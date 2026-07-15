@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M9 · Uranium uitgevoerd; M8 zeldzame aardmetalen voorbereid)*
+*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -29,11 +29,13 @@
   (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand) — óók in de `routes`-weergave. Korte hops blijven
   `road`/`rail` (land-A\*). `makeRouteCurve` schaalde de booghoogte al met de routelengte. Voyages pusht nu
   ship+air; de tijdlijn-teller is resource-bewust ("✈ vluchten" ↔ "⚓ schepen", via `UI.setVoyageNoun`).
-- **Optionele lagen via filter:** `layer:"cb"`-flows + `type:"cb"`-nodes gefilterd op `filters.showCentralBanks`
-  (goud); sinds M7 óók `layer:"exchange"` + `type:"exchange"` op `filters.showExchangeStocks` (koper — beursvoorraden).
-  Beide default uit, in `flows.js`/`markers.js`/`main.js`; de chip verschijnt alleen als een actieve grondstof die
-  data heeft. **Herbruikbaar patroon** voor elke toekomstige optionele laag (kopieer de vier filterplekken + config +
-  ui-chip + een marker-vorm).
+- **Optionele lagen via filter (herbruikbaar patroon, nu 3×):** `layer:"cb"`-flows + `type:"cb"`-nodes op
+  `filters.showCentralBanks` (goud); `layer:"exchange"` + `type:"exchange"` op `filters.showExchangeStocks` (koper —
+  beursvoorraden); sinds M8 `layer:"recycle"` op `filters.showRecycle` (REE — recycling). Alle default uit, in
+  `flows.js`/`markers.js`/`main.js` + `ui.js`-chip + `config.js`-marker; de chip verschijnt alleen als een actieve grondstof
+  die data heeft. **Nuance bij recycling (M8):** de node-gate zit op `node.layer==="recycle"` (niet op `type==="recycler"`)
+  en `hasRecycle()` detecteert op `f.layer==="recycle"` — zo blijft **koper's always-on recycling** (recyclers zónder `layer`)
+  ongemoeid en krijgt alleen REE de toggle/chip. Kopieer de vier filterplekken + config + ui-chip + marker-vorm voor elke nieuwe laag.
 - **Marker-types:** `mine`/`refinery`/`port`/`market` + (M6) `airport`/`hub`/`cb`/`recycler` + (M7) `exchange`
   (koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`) in `markers.js`.
 - **Single-file build:** `build-standalone.py` genereert `atlas-standalone.html` uit `index.html` (lijnt CSS +
@@ -55,22 +57,23 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 
 - **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag),
   **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag),
-  **uranium** (M9 — 38 nodes/36 flows, 4-staps kernbrandstofketen met verrijking als flessenhals + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering).
-- **Basis:** de 6 overige grondstoffen (nikkel/grafiet/PGM/olie + zeldzame aarden-basis) — laden en renderen, maar zonder
+  **uranium** (M9 — 38 nodes/36 flows, 4-staps kernbrandstofketen met verrijking als flessenhals + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering),
+  **zeldzame aardmetalen** (M8 — 41 nodes/38 flows, magneet-REE NdPr+Dy/Tb: Ganzhou-scheidingstrechter + Dy/Tb-landstroom Myanmar→China over `grens-ruili` + Mountain-Pass-rondreis + NdFeB-waaier + recycling-toggle).
+- **Basis:** de 4 overige grondstoffen (nikkel/grafiet/PGM/olie) — laden en renderen, maar zonder
   operators/capaciteiten/route-detail.
-- **Voorbereid (ontwerp-skelet, nog niet gebouwd):** **zeldzame aardmetalen** (M8, `design/zeldzame-aardmetalen.md` —
-  magneet-REE-framing NdPr+Dy/Tb, optie 2). Volgens het brief→bouw-sjabloon; bouwen ná koper's visuele bevestiging.
-  Linear-milestone M8 + LAR-416 t/m 421 aangemaakt (Backlog). Overige kandidaten op basis: nikkel (runner-up), grafiet, PGM, olie.
+- **Volgende kandidaten op basis:** nikkel (runner-up), grafiet, PGM, olie — volgens het brief→bouw-sjabloon.
 
-## Nu (2026-07-15 — M9 · Uranium uitgevoerd)
+## Nu (2026-07-15 — M8 · Zeldzame aardmetalen uitgevoerd)
 
-- **Uranium volledig gebouwd + geverifieerd.** `data/uranium.js` (38 nodes/36 flows/6 tensions): 4-staps kernbrandstof-
-  keten op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-flessenhals** (institutionele knijp,
-  via een `tension`, zoals Ticino). Nieuw: de **Trans-Kaspische route** om Rusland heen (3 Kaspische vaarpunten +
-  Dardanellen in `_chokepoints.js`), de **VVER-lock-in** en de **CANDU-uitzondering**. Node-types alle bestaand → geen
-  nieuwe render-modus/marker-styling. Headless: **uranium 54 legs / 0 kapot**, regressievrij. Gecommit (`d016ab8` brief +
-  `76c0333` data, `main`, lokaal-only). **Linear M9 · Uranium + LAR-410..415** aangemaakt.
-- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-415, Lars) + de
-  bewust uitgestelde **militaire-kringloop-toggle** (LAR-414, oppakken ná de M8-code).
-- **Ook eerder klaar:** M7 · Koper (gecommit, LAR-404..409 Done). M8 · Zeldzame aardmetalen op papier voorbereid.
+- **Zeldzame aardmetalen volledig gebouwd + geverifieerd.** `data/rare-earths.js` van "basis" (9/5) → **uitgewerkt**
+  (41 nodes/38 flows/6 tensions), **magneet-REE-framing** (NdPr licht + Dy/Tb zwaar; `symbol: NdPr`, `unit: kt magneet-REO/jaar`).
+  De extreemste trechter van de atlas: winning breed verspreid, **scheiding ~85–90% Zuid-China** (Ganzhou/Baotou/Sichuan).
+  Vier kern-aha's renderen: Ganzhou-scheidingstrechter, **Dy/Tb-landstroom Myanmar→China** over de nieuwe grenscorridor
+  **`grens-ruili`** (`_chokepoints.js`, Kasumbalesa-patroon), **Mountain-Pass-rondreis** (concentraat heen over de Stille
+  Oceaan, oxide terug), **NdFeB-magneet-waaier** vanuit China. Plus het dunne Lynas-draadje (Mount Weld→Kuantan→Japan/EU).
+  Nieuwe **recycling-toggle** (`layer:"recycle"`, default uit) = het derde optionele-laag-patroon.
+- **Headless:** rare-earths **90 legs (39 land + 51 zee) / 0 kapot / 0 straight**; regressievrij (5 kapot = bekende
+  lithium/goud-baseline). `atlas-standalone.html` geregenereerd (REE-checks OK). **Linear M8 · LAR-416..420 Done, 421 In Progress.**
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-421, Lars).
+- **Ook open (uranium, M9):** visuele bevestiging (LAR-415, Lars) + de uitgestelde militaire-kringloop-toggle (LAR-414).
 - **Volgende grondstof:** nikkel (runner-up), grafiet, PGM, olie — volgens dezelfde brief→bouw-flow.

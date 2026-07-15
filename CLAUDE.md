@@ -1,6 +1,17 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M9 · Uranium uitgevoerd; M8 zeldzame aardmetalen voorbereid; M7 · Koper uitgevoerd)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd; M9 · Uranium uitgevoerd)*
+
+> **M8 · ZELDZAME AARDMETALEN UITGEVOERD (2026-07-15):** `data/rare-earths.js` van "basis" (9/5) → **uitgewerkt**
+> (41 nodes / 38 flows / 6 tensions) in de **magneet-REE-framing** (NdPr licht + Dy/Tb zwaar; `symbol: NdPr`,
+> `unit: kt magneet-REO/jaar`). De **extreemste trechter** van de atlas: winning breed verspreid, scheiding ~85–90%
+> Zuid-China (**Ganzhou**). Vier kern-aha's: Ganzhou-scheidingstrechter, **Dy/Tb-landstroom Myanmar→China** over de
+> nieuwe grenscorridor **`grens-ruili`** (`_chokepoints.js`, Kasumbalesa-patroon), de **Mountain-Pass-rondreis**
+> (concentraat heen over de Stille Oceaan, oxide terug) en de **NdFeB-magneet-waaier** vanuit China. Nieuwe
+> **recycling-toggle** (`layer:"recycle"`, default uit) = het derde optionele-laag-patroon (goud=CB, koper=beurs,
+> REE=recycling), bewust via `layer` op flows én nodes zodat koper's always-on recyclers ongemoeid blijven. Headless:
+> **rare-earths 90 legs / 0 kapot / 0 straight**, regressievrij. `atlas-standalone.html` geregenereerd (REE-checks OK).
+> **Linear M8 · LAR-416..420 Done, 421 In Progress.** Rest = visuele bevestiging Netlify/mobiel (Lars). Repo lokaal-only, `main`.
 
 > **M9 · URANIUM UITGEVOERD (2026-07-15):** `data/uranium.js` van "basis" (9/2) → **uitgewerkt** (38 nodes / 36 flows /
 > 6 tensions). Eerste grondstof met een bewust *andere vorm* — een **4-staps kernbrandstofketen** (winning → conversie →
@@ -108,6 +119,19 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 - **2026-07-15 · M9 militaire-kringloop-toggle uitgesteld** — de optionele `layer:"secondary"`-laag vereist code in
   `flows/ui/main/config`, exact de bestanden die de parallelle M8-sessie dirty had → alleen de data-laag gebouwd om botsing
   te vermijden (LAR-414 Backlog). Het `layer:"..."`-filterpatroon is al vast en herbruikbaar (CB → exchange → secondary).
+- **2026-07-15 · M8 magneet-REE-framing gebouwd** — `data/rare-earths.js` "uitgewerkt" (41/38/6): `id` blijft `rare-earths`,
+  `symbol: NdPr`, `unit: kt magneet-REO/jaar`. Scheiding én magneetfabrieken beide `type:"refinery"` (het `erts`/`raffinaat`/
+  `product`-stagekleur draagt het onderscheid concentraat→NdPr/Dy-oxide→NdFeB-magneet); magneet = stage `product` (geen 4e stage).
+  Schip+land, géén nieuwe render-modus. Reden: één scherp verhaal (NdPr+Dy/Tb), winning blijft eerlijk gemengd erts → scheiding = de knijp.
+- **2026-07-15 · M8 grenscorridor `grens-ruili`** (`_chokepoints.js`, `kind:"grensovergang"`, 24.02/97.85) — Myanmar→China, exact
+  het Kasumbalesa-patroon (landpunt, houdt de landkaart open). Draagt de Dy/Tb-landstroom Kachin→Ganzhou; alleen REE gebruikt het.
+- **2026-07-15 · M8 recycling-toggle** (`layer:"recycle"`, `showRecycle`, default uit) = het **derde** optionele-laag-patroon (na
+  CB en exchange). Bewust `layer:"recycle"` op flows **én** recycler-nodes: de node-gate zit op `node.layer==="recycle"` (niet op
+  `type==="recycler"`) en `hasRecycle()` op `f.layer==="recycle"`, zodat **koper's always-on recyclers** (zónder `layer`) ongemoeid
+  blijven en alleen REE de toggle/chip krijgt. Vijf plekken: `config.js`/`main.js`/`flows.js`/`markers.js`/`ui.js`.
+- **2026-07-15 · M8 co-located nodes ~30–45 km uit elkaar** — twee nodes van dezelfde grondstof in één 0,25°-cel geven een 1-punts
+  route (`degDist:0`, onzichtbare arc). Ref/magneet/recycler in dezelfde stad (Baotou/Ganzhou/MP/La Rochelle/Fort Worth) verschoven
+  zodat de lokale scheiding→magneet-arcs zichtbaar renderen én de headless-teller schoon op 0 kapot blijft.
 
 ## E - Memory Map
 
@@ -149,4 +173,4 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
 8. [x] **M9 · Uranium uitgevoerd** (2026-07-15): `design/uranium.md` (`d016ab8`) → `data/uranium.js` "uitgewerkt" (38 nodes/36 flows/6 tensions) + Kaspische oversteek/Dardanellen in `_chokepoints.js` (`76c0333`). 4-staps keten met verrijking als flessenhals (~44% Rusland) + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering. Headless: 54 legs/0 kapot, regressievrij. **Linear M9 · Uranium + LAR-410..415** aangemaakt (410-413 Done; 414 Backlog = uitgestelde militaire-kringloop-toggle; 415 In Progress = visuele bevestiging). Rest = visuele bevestiging Netlify/mobiel.
-9. [~] **M8 · Zeldzame aardmetalen voorbereid (ontwerp-skelet, nog niet gebouwd):** `design/zeldzame-aardmetalen.md`, magneet-REE-framing (NdPr+Dy/Tb, optie 2), gecommit (`1a4e808` + reframe `faf0288`). Linear-milestone M8 + LAR-416 t/m 421 aangemaakt (Backlog); bouwen ná koper's visuele bevestiging. Overige op basis: nikkel (runner-up), grafiet, PGM, olie.
+9. [x] **M8 · Zeldzame aardmetalen uitgevoerd** (2026-07-15): `data/rare-earths.js` van "basis" (9/5) → "uitgewerkt" (41 nodes/38 flows/6 tensions), magneet-REE-framing (NdPr+Dy/Tb) + `grens-ruili` (Myanmar→China) in `_chokepoints.js` + recycling-toggle (`layer:"recycle"`, 5 plekken). Ganzhou-scheidingstrechter + Dy/Tb-landstroom + Mountain-Pass-rondreis + NdFeB-waaier. Headless: 90 legs/0 kapot/0 straight, regressievrij. **Linear M8 · LAR-416..420 Done; 421 In Progress** (visuele bevestiging Netlify/mobiel = Lars). Overige op basis: nikkel (runner-up), grafiet, PGM, olie.
