@@ -3,6 +3,29 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## M12 · PGM — uitgevoerd (2026-07-15)
+- **PGM vliegt = hergebruik van de goud-air-mode (géén nieuw element).** Geraffineerd Pt/Pd/Rh is per kilo even waardevol als
+  goud → beveiligde luchtvracht (`mode:"air"`: great-circle, buiten de A\* om), met **JNB (OR Tambo)** als uitgaande trechter.
+  Concentraat/matte-hops binnen een land = `road`/`rail` (land-A\*). Reden: het is de werkelijkheid (edelmetaal-logistiek), en
+  het is 0 engine-wijziging — de tijdlijn toont automatisch "✈ vluchten" via `activeHasAir()`. Het grondstof-eigen "nieuwe
+  element" is dus bewust géén nieuw element: PGM is de derde grondstof na koper/nikkel die niets aan `_chokepoints.js` toevoegt.
+- **De vorm = de scherpste twee-landen/twee-metalen-concentratie.** Zuid-Afrika/Bushveld = Pt/Rh (~70%/~80%), Rusland/Norilsk =
+  Pd (~40%, Ni-Cu-bijproduct). De knijp is niet geografisch (een zeestraat) maar **structureel** → gedragen door `tensions`, niet
+  door een `wp-`: twee-landen-concentratie, autokat-leiband + Pt↔Pd-substitutie, rodium-spof, palladium/Rusland-sanctie,
+  waterstof-hedge (Pt/Ir PEM-elektrolyse), Eskom-stroomcrisis.
+- **Recycling = optionele toggle (hergebruik REE-patroon, 0 engine-wijziging).** Autokat-recycling (~25% van het aanbod) via
+  dezelfde westerse huizen die de katalysatoren máken (JM/BASF/Umicore/Heraeus/Tanaka): `type:"recycler"` + `layer:"recycle"` op
+  nodes én flows, chip via `hasRecycle()`. Reden voor recycling i.p.v. de exchange-laag als PGM's ene optionele toggle: het is
+  het dominantere PGM-verhaal (secundair aanbod ~25%). Eén SAMECELL-fix onderweg: de Japan-recycler zat in Tokyo Bay (water) →
+  snapte naar Tanaka's cel → verplaatst naar Kanagawa (het `degDist:0`-patroon uit de REE-notities).
+- **Afwijkingen bewust als aparte issues (Lars' verzoek).** LAR-447: de gedeelde recycling-chip-tooltip in `ui.js` is nog
+  REE-bewoord ("<5% van het aanbod") — onjuist voor PGM (~25%); generiek/per-resource maken (raakt gedeelde `ui.js`, dus niet
+  tijdens de parallelle sessie). LAR-448: een optionele **Pt/Pd-exchange-laag** (NYMEX/TOCOM-futures + Zürich/Londen-kluizen) is
+  mogelijk als pure data (hergebruik exchange-toggle, 0 engine), maar bewust niet gebouwd — één optionele toggle per grondstof.
+- **Sectie J bij parallel werk.** Gebouwd náást een M13-zilver- (+ uranium-toggle-)sessie met de gedeelde build-bestanden dirty
+  → alleen `data/pgm.js` + `design/pgm.md` gecommit (`2c4b668`); de single-file build (LAR-446) + `now.md`/project-sync
+  uitgesteld tot de tree schoon was, daarna afgemaakt.
+
 ## M13 · Zilver — uitgevoerd (2026-07-15)
 - **Zilver = de eerste écht nieuwe grondstof (11e), niet een basis-upgrade.** Alle M6–M12 brachten een bestaand `data/<x>.js`
   van "basis" → "uitgewerkt"; zilver bestond nog niet in de atlas. Daarom een aparte registratie-stap: nieuw `data/silver.js` +

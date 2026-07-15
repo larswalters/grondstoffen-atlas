@@ -84,6 +84,10 @@ def main():
         "zilver by-product + KGHM": "bijproduct" in html and "KGHM" in html,
         "zilver solar-pull (zonnepanelen)": "zonnepanelen" in html and "ag-mkt-china-solar" in html,
         "zilver hergebruikt exchange-toggle (LBMA/COMEX)": 'exchange: "LBMA"' in html and 'exchange: "COMEX"' in html,
+        "pgm geregistreerd": 'id: "pgm"' in html,
+        "pgm uitgewerkt (Bushveld/Norilsk)": "Mogalakwena" in html and "Rustenburg PMR" in html and "Norilsk" in html,
+        "pgm luchtvracht + recycling (JNB/rec)": "pgm-air-jnb" in html and "pgm-rec-eu" in html,
+        "pgm waterstof-hedge (PEM)": "PEM-elektrolysers" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }

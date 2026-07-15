@@ -17,6 +17,21 @@ tekort dat de kluisvoorraden (LBMA/COMEX/SGE) aftapt. Schip+land, **géén nieuw
 **Open (M13 afronden):**
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-439, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: de diffuse mijn-origin bovenop andermans mijnen (geen winnings-trechter), de convergentie op Peñoles/KGHM/Korea/China, de dikke `product`-boog SGE→Chinese zonnecel-industrie, de India-sieradenstroom, en de kluis-toggle (LBMA/COMEX/SGE) die de aftap onder het tekort toont.
 
+## M12 · PGM ✅ uitgevoerd (2026-07-15) — LAR-440 t/m 448
+`data/pgm.js` van "basis" (9/3) → volledig **uitgewerkt** (38 nodes / 41 flows / 6 tensions). De scherpste twee-landen-
+concentratie van de atlas, gesplitst over twee metalen: **Zuid-Afrika/Bushveld** = Pt/Rh, **Rusland/Norilsk** = Pd. PGM
+**vliegt** (hergebruik goud-air-mode); **géén nieuw chokepoint, géén engine-wijziging** (derde na koper/nikkel).
+- [x] Research upstream/downstream inline in `design/pgm.md` (LAR-440/441): ZA ~60% 3E (Pt/Rh), Rusland ~25% (Pd), Zimbabwe/NA/Finland; raffinage (Rustenburg PMR/Springs/Krasnoyarsk/Columbus + westerse huizen JM/BASF/Umicore/Heraeus/Tanaka); autokat + waterstof + recycling.
+- [x] **PGM = luchtvracht, géén nieuw chokepoint** (LAR-442): hergebruik van de goud-air-mode (`mode:"air"`, JNB-gateway; "✈ vluchten" via `activeHasAir()`), concentraat/matte over land (Beitbridge/Kanaaltunnel/Baltische bruggen). Het grondstof-eigen "nieuwe element" is bewust géén nieuw element.
+- [x] `data/pgm.js` uitgewerkt (LAR-443): 16 mijnen (8 ZA-Bushveld + Norilsk + Zimbabwe + Noord-Amerika + Kevitsa) / 9 raffinage-nodes / JNB-gateway / 8 markten / 4 recyclers. 6 tensions (concentratie, autokat + Pt↔Pd, rodium-spof, palladium/Rusland, waterstof-hedge, Eskom).
+- [x] **Recycling-toggle** (LAR-444) = hergebruik van het REE-patroon met **0 engine-wijziging**; 4 recycler-nodes + 5 `layer:"recycle"`-flows (~25% autokat-recycling via de westerse huizen); chip via `hasRecycle()`.
+- [x] Verificatie headless (LAR-445, deel): **pgm 49 legs / 0 kapot / 0 straight / 0 degenerate arcs**, regressievrij; lange risico-legs routeren correct; SAMECELL-fix (Japan-recycler uit Tokyo Bay → Kanagawa). `build-standalone.py` (+ 4 PGM-checks) → `atlas-standalone.html` geregenereerd (LAR-446).
+- [x] Code-commit `2c4b668` (repo `main`, lokaal-only, Claude-trailer) — **alléén eigen bestanden** gestaged (parallelle zilver-/uranium-toggle-sessie op de gedeelde build-bestanden ongemoeid, sectie J).
+
+**Open (M12 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-445, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: de dichte Bushveld-kluwen + de zware Norilsk-punt (twee bronnen), de hoge **luchtbogen** (géén zeeroutes) naar de westerse huizen + Azië, de recycling-retourbogen met de toggle aan, het dunne waterstof-draadje naast de autokat-bundel, scheeps-… nee: **vlucht**-voyages voor PGM.
+- [ ] **Afwijkingen (Backlog):** LAR-447 (recycling-chip-tooltip generiek maken, nu REE-bewoord — raakt gedeelde `ui.js`), LAR-448 (optionele Pt/Pd-exchange-laag — pure data, hergebruik exchange-toggle).
+
 ## M11 · Olie ✅ uitgevoerd (2026-07-15) — LAR-428 t/m 433
 `data/oil.js` van "basis" (18/15) → volledig **uitgewerkt** (45 nodes / 46 flows / 6 tensions). Olie's vorm is bewust
 ANDERS dan alle eerdere: geen enkele trechter maar het **hele knelpunten-netwerk dat tegelijk oplicht** — Hormuz #1
@@ -112,7 +127,7 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [x] **Militaire-kringloop-toggle** (LAR-414, **Done** — commit `6a6d062`, 2026-07-15) — de uitgestelde backlog-toggle afgemaakt zodra de engine-bestanden schoon waren. Het **vijfde** optionele-laag-patroon (`type:"military"`/`layer:"secondary"`/`showMilitary`), exact het olie-reserve-patroon in 5 plekken. 4 military-nodes (down-blend Rosatom/HEU, tails, US DOE, US reserve) + 5 `secondary`-flows (o.a. Megatons-to-Megawatts Rusland→VS) + tension `u-t-military`. Headless: uranium 60 legs / 0 kapot / 0 straight; toggle uit→aan +4/+5; chip alleen bij uranium.
 
 ## Verderop — volgende grondstof (grafiet)
-**Tien uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, **zilver (M13, nieuwe 11e)**, + **PGM (M12)** in een parallelle sessie); nog op "basis": **grafiet** (het laatste van de basis-10).
+**Tien uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, olie, **PGM (M12)**, **zilver (M13, nieuwe 11e)**); nog op "basis": **grafiet** — nu de énige, het laatste van de basis-10.
 Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
 `data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
 
