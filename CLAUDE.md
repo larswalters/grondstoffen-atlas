@@ -46,9 +46,10 @@
 > 6 tensions). Eerste grondstof met een bewust *andere vorm* — een **4-staps kernbrandstofketen** (winning → conversie →
 > verrijking → splijtstof → reactor) met de **verrijking (~44% Rusland) als raffinaat-flessenhals**. Nieuw: de
 > **Trans-Kaspische route** om Rusland heen (3 Kaspische vaarpunten + Dardanellen in `_chokepoints.js`), de **VVER-lock-in**
-> en de **CANDU-uitzondering**. Headless: **uranium 54 legs / 0 kapot**, regressievrij. Militaire-kringloop-toggle bewust
-> uitgesteld (LAR-414). Commits `d016ab8` (brief) + `76c0333` (data). Linear-milestone **M9 + LAR-410..415**. Rest = visuele
-> bevestiging (LAR-415).
+> en de **CANDU-uitzondering**. Headless: **uranium 54 legs / 0 kapot**, regressievrij. Commits `d016ab8` (brief) + `76c0333`
+> (data). Linear-milestone **M9 + LAR-410..415**. Rest = visuele bevestiging (LAR-415). **Militaire-kringloop-toggle (LAR-414)
+> ALSNOG GEBOUWD (2026-07-15, commit `6a6d062`):** het 5e optionele-laag-patroon (`type:"military"`/`layer:"secondary"`, down-blend/
+> tails/reserves; Megatons-to-Megawatts) — headless uranium 60 legs / 0 kapot / 0 straight, toggle +4 nodes/+5 flows, chip alleen bij uranium.
 
 > **STATUS VAN DEZE MAP (2026-07-14):** ✅ code-root (modulaire atlas als **git-repo**). **M0–M7 done** (op de
 > visuele check na): naast lithium+kobalt+goud is nu **koper volledig uitgewerkt** (`data/copper.js`, 69 nodes/50 flows)
@@ -145,9 +146,13 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   naast `wp-bosporus` de Zwarte-Zee-uitgang open (anders geen weg Poti→Middellandse Zee). Alleen uranium gebruikt ze → geen
   impact op andere grondstoffen. Landlocked-routering (Kazachstan/Niger) = het kobalt/koper-corridorpatroon (land-flow →
   haven + aparte ship-flow). **CANDU-uitzondering** eerlijk gemodelleerd (natuurlijk uranium, geen verrijking). Details in `memory/decisions.md`.
-- **2026-07-15 · M9 militaire-kringloop-toggle uitgesteld** — de optionele `layer:"secondary"`-laag vereist code in
-  `flows/ui/main/config`, exact de bestanden die de parallelle M8-sessie dirty had → alleen de data-laag gebouwd om botsing
-  te vermijden (LAR-414 Backlog). Het `layer:"..."`-filterpatroon is al vast en herbruikbaar (CB → exchange → secondary).
+- **2026-07-15 · M9 militaire-kringloop-toggle uitgesteld → ALSNOG GEBOUWD** (LAR-414 Backlog → **Done**, commit `6a6d062`) — de
+  optionele `layer:"secondary"`-laag vereiste code in `flows/ui/main/config/markers`, destijds dirty door de parallelle M8-sessie →
+  eerst alleen de data-laag. Op Lars' verzoek afgemaakt zodra de engine schoon was: het **5e** optionele-laag-patroon
+  (`type:"military"`-nodes + `layer:"secondary"`-flows + `showMilitary`/`hasMilitary()`), exact het olie-`reserve`-patroon in 5 plekken.
+  4 military-nodes (Rosatom down-blend/HEU, tails-herverrijking, US DOE, US strategische reserve) + 5 `secondary`-flows (o.a. de
+  historische Megatons-to-Megawatts-stroom Rusland→VS via `u-fab-us` `coastal:true`) + tension `u-t-military`. Headless: uranium 60 legs /
+  0 kapot / 0 straight; toggle uit→aan +4 nodes/+5 flows; chip alleen bij uranium. Sectie J: alleen mijn 6 bestanden gestaged (PGM/silver-sessie ontzien).
 - **2026-07-15 · M8 magneet-REE-framing gebouwd** — `data/rare-earths.js` "uitgewerkt" (41/38/6): `id` blijft `rare-earths`,
   `symbol: NdPr`, `unit: kt magneet-REO/jaar`. Scheiding én magneetfabrieken beide `type:"refinery"` (het `erts`/`raffinaat`/
   `product`-stagekleur draagt het onderscheid concentraat→NdPr/Dy-oxide→NdFeB-magneet); magneet = stage `product` (geen 4e stage).

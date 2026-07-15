@@ -29,7 +29,9 @@
   (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand) — óók in de `routes`-weergave. Korte hops blijven
   `road`/`rail` (land-A\*). `makeRouteCurve` schaalde de booghoogte al met de routelengte. Voyages pusht nu
   ship+air; de tijdlijn-teller is resource-bewust ("✈ vluchten" ↔ "⚓ schepen", via `UI.setVoyageNoun`).
-- **Optionele lagen via filter (herbruikbaar patroon, nu 4×):** `layer:"cb"`-flows + `type:"cb"`-nodes op
+- **Optionele lagen via filter (herbruikbaar patroon, nu 5×):** goud-CB, koper-exchange, REE-recycle, olie-reserve, en sinds
+  LAR-414 **uranium-`military`** (`type:"military"`/`layer:"secondary"`/`showMilitary`, de militaire kringloop = down-blend/tails/reserves).
+  `layer:"cb"`-flows + `type:"cb"`-nodes op
   `filters.showCentralBanks` (goud); `layer:"exchange"` + `type:"exchange"` op `filters.showExchangeStocks` (koper —
   beursvoorraden); sinds M8 `layer:"recycle"` op `filters.showRecycle` (REE — recycling); sinds M11 `layer:"reserve"` +
   `type:"reserve"` op `filters.showReserves` (olie — strategische voorraden/SPR). Alle default uit, in
@@ -125,5 +127,5 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 - **Headless:** rare-earths **90 legs (39 land + 51 zee) / 0 kapot / 0 straight**; regressievrij (5 kapot = bekende
   lithium/goud-baseline). `atlas-standalone.html` geregenereerd (REE-checks OK). **Linear M8 · LAR-416..420 Done, 421 In Progress.**
 - **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-421, Lars).
-- **Ook open (uranium, M9):** visuele bevestiging (LAR-415, Lars) + de uitgestelde militaire-kringloop-toggle (LAR-414).
+- **Ook open (uranium, M9):** alleen nog de visuele bevestiging (LAR-415, Lars). De militaire-kringloop-toggle (LAR-414) is nu **Done** (commit `6a6d062`, 5e optionele laag `type:"military"`/`layer:"secondary"`; headless 60 legs/0 kapot/0 straight).
 - **Volgende grondstof:** nikkel (runner-up), grafiet, PGM, olie — volgens dezelfde brief→bouw-flow.

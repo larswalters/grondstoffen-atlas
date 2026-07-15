@@ -255,10 +255,15 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   én reactoren in één binnenlandse keten kan houden.
 - **VVER-lock-in** als downstream-verhaal: TVEL (Elektrostal) → Paks/Dukovany/Kozloduy (Russische splijtstof voor Russische
   reactorontwerpen in de EU), met Westinghouse (Västerås) die inbreekt = de eerste barst.
-- **Militaire-kringloop-toggle BEWUST UITGESTELD** (LAR-414 Backlog). De optionele `layer:"secondary"`-laag (down-blended
-  wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` — exact de bestanden die de parallelle M8-sessie
-  op dat moment dirty had. Om botsing te vermijden alleen de **data-laag** gebouwd. Het `layer:"..."`-filterpatroon is al vast
-  en herbruikbaar (CB → exchange → secondary).
+- **Militaire-kringloop-toggle ALSNOG GEBOUWD** (LAR-414 Done, commit `6a6d062`, 2026-07-15 — Lars vroeg de backlog-toggle af
+  te maken). Het **vijfde** optionele-laag-patroon (na goud-CB, koper-exchange, REE-recycle, olie-reserve): `type:"military"`-nodes
+  + `layer:"secondary"`-flows + `showMilitary`/`hasMilitary()`, bedraad op exact het olie-reserve-patroon in 5 plekken
+  (`config.js` marker · `main.js` filter+has+opts+usedNodeIds · `flows.js` gate · `markers.js` maxMilitaryStock+node-gate+rode-octaëder ·
+  `ui.js` chip+label+meta). 4 military-nodes (down-blend Rosatom/HEU, tails-herverrijking, US DOE, US strategische reserve) +
+  5 `secondary`-flows (o.a. de historische Megatons-to-Megawatts-stroom Rusland→VS) + tension `u-t-military`. `u-fab-us` op
+  `coastal:true` gezet zodat de transatlantische down-blend-ship-leg landt. Headless: uranium 60 legs / 0 kapot / 0 straight;
+  toggle uit→aan +4 nodes/+5 flows; chip alleen bij uranium. Nu de code niet meer dirty was (M8/oil gecommit) kon de engine-laag
+  eindelijk erbij — sectie J werkte: alleen mijn 6 bestanden gestaged, de parallelle PGM/silver-sessie ontzien.
 - **Verificatie (headless, mijn eigen server poort 8743):** uranium **54 legs / 0 kapot** (20 zee + 34 land, **0 straight** →
   de Kaspische oversteek routeert écht over water). Regressie schoon: de 5 overige nulls zijn de bekende `degDist:0` same-city
   hops uit de M5/M6-baseline (lithium 4, goud 1), niet nieuw. Structuurcheck groen. WebGL-screenshot lukt niet headless → visueel = Lars.

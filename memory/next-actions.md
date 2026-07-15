@@ -93,13 +93,13 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 
 **Open (M9 afronden):**
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
-- [ ] **Militaire-kringloop-toggle** (LAR-414, Backlog) — bewust uitgesteld: de optionele `layer:"secondary"`-laag (down-blended wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` (destijds dirty door de M8-sessie). Oppakken zodra de M8-code gecommit is; het `layer:"..."`-filterpatroon is al vast (CB → exchange → secondary).
+- [x] **Militaire-kringloop-toggle** (LAR-414, **Done** — commit `6a6d062`, 2026-07-15) — de uitgestelde backlog-toggle afgemaakt zodra de engine-bestanden schoon waren. Het **vijfde** optionele-laag-patroon (`type:"military"`/`layer:"secondary"`/`showMilitary`), exact het olie-reserve-patroon in 5 plekken. 4 military-nodes (down-blend Rosatom/HEU, tails, US DOE, US reserve) + 5 `secondary`-flows (o.a. Megatons-to-Megawatts Rusland→VS) + tension `u-t-military`. Headless: uranium 60 legs / 0 kapot / 0 straight; toggle uit→aan +4/+5; chip alleen bij uranium.
 
 ## Verderop — volgende grondstof (grafiet / PGM)
 **Acht uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, **olie**); nog op "basis": **grafiet**, **PGM**.
 Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
 `data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
 
-**Los, klein:** de uranium-restpunten (LAR-415 visueel + LAR-414 militaire-kringloop-toggle, nu de code niet meer
-dirty is) en het opruimen van de bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) ná Lars' visuele
+**Los, klein:** de uranium-restpunt LAR-415 (visuele bevestiging Netlify/mobiel, Lars) — LAR-414 (militaire-kringloop-toggle)
+is nu **Done**. Verder het opruimen van de bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) ná Lars' visuele
 bevestiging. `atlas-standalone.html` blijft gitignored (gegenereerd); repo blijft lokaal-only (GitHub-remote optioneel).

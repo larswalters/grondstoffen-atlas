@@ -32,8 +32,9 @@
   M5/M6). Op Netlify/mobiel te checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst)?, de twee Kazachstan-
   routes (Rusland-transit vs. Trans-Kaspische omweg)?, de VVER-lock-in-lijn naar Midden-Europa?, de CANDU-uitzondering?,
   scheeps-voyages voor uranium?
-- **Militaire-kringloop-toggle bewust uitgesteld (LAR-414):** vereist code in `flows/ui/main/config` — destijds dirty door
-  de parallelle M8-sessie. Alleen de data-laag gebouwd om botsing te vermijden. Geen risico, wél openstaand werk.
+- ✅ **Militaire-kringloop-toggle GEBOUWD (LAR-414 Done, 2026-07-15, commit `6a6d062`)** — de uitgestelde engine-laag afgemaakt
+  zodra de gedeelde bestanden schoon waren; het vijfde optionele-laag-patroon (`type:"military"`/`layer:"secondary"`). Headless
+  geverifieerd (uranium 60 legs / 0 kapot / 0 straight; toggle +4 nodes/+5 flows; chip alleen bij uranium). Niet meer openstaand.
 
 ## M7 · Koper — geverifieerd headless (2026-07-14)
 - Koper volledig gebouwd + geverifieerd in de draaiende atlas (poort 8742): **koper 145 zee/land-legs, 0 kapot**;
