@@ -174,3 +174,73 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
 8. [x] **M9 · Uranium uitgevoerd** (2026-07-15): `design/uranium.md` (`d016ab8`) → `data/uranium.js` "uitgewerkt" (38 nodes/36 flows/6 tensions) + Kaspische oversteek/Dardanellen in `_chokepoints.js` (`76c0333`). 4-staps keten met verrijking als flessenhals (~44% Rusland) + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering. Headless: 54 legs/0 kapot, regressievrij. **Linear M9 · Uranium + LAR-410..415** aangemaakt (410-413 Done; 414 Backlog = uitgestelde militaire-kringloop-toggle; 415 In Progress = visuele bevestiging). Rest = visuele bevestiging Netlify/mobiel.
 9. [x] **M8 · Zeldzame aardmetalen uitgevoerd** (2026-07-15): `data/rare-earths.js` van "basis" (9/5) → "uitgewerkt" (41 nodes/38 flows/6 tensions), magneet-REE-framing (NdPr+Dy/Tb) + `grens-ruili` (Myanmar→China) in `_chokepoints.js` + recycling-toggle (`layer:"recycle"`, 5 plekken). Ganzhou-scheidingstrechter + Dy/Tb-landstroom + Mountain-Pass-rondreis + NdFeB-waaier. Headless: 90 legs/0 kapot/0 straight, regressievrij. **Linear M8 · LAR-416..420 Done; 421 In Progress** (visuele bevestiging Netlify/mobiel = Lars). Overige op basis: nikkel (runner-up), grafiet, PGM, olie.
+
+## I - Runbook: "werk grondstof X uit" (self-serve)
+
+Vaste flow om een grondstof van **"basis" → "uitgewerkt"** te brengen, identiek aan hoe goud/koper/uranium/REE zijn gedaan.
+Nog op "basis": **nikkel** (runner-up), **grafiet**, **PGM**, **olie**. Doe de stappen op volgorde; commit code en wrapup-docs apart.
+
+**0. Oriënteer.** Lees `memory/current-strategy.md` (architectuur + sjabloon) + `memory/decisions.md` (de vaste patronen) +
+   `design/_brief-template.md`. Kijk naar een recent uitgewerkt bestand als voorbeeld — `data/copper.js` (schip/land + optionele
+   toggle) of `data/uranium.js` (tension-knijp + nieuw chokepoint) liggen het dichtst bij de meeste grondstoffen.
+
+**1. Linear vastleggen vóór het codewerk.** Maak (via de Linear-MCP die zónder OAuth werkt — de `331d1eb1…`-server met
+   `save_milestone`/`save_issue`, **niet** de auth-vereiste `plugin:engineering:linear`; zie [[linear-mcp-two-surfaces]]) een
+   **milestone** `M<n> · <Grondstof>` in project "Grondstoffen Atlas" (team **Lars/LAR**) + de standaard **±6 issues**, gespiegeld op M6/M7/M9:
+   - research upstream (winning/mijnbouw) · research downstream (raffinage/consumptie/recycling)
+   - het grondstof-eigen **nieuwe element** (nieuw chokepoint/corridor, of een render-modus) — sla over als de grondstof volledig bestaande routes hergebruikt
+   - `data/<x>.js` van "basis" → "uitgewerkt"
+   - de optionele **toggle-laag** (CB/beurs/recycling-stijl) — alleen als de grondstof er een heeft
+   - verificatie (headless) + single-file build + visuele bevestiging Netlify/mobiel
+   Research mag inline in de brief (stap 2) — die research-issues gaan Done zodra de brief staat.
+
+**2. Ontwerp eerst (brief).** Kopieer `design/_brief-template.md` → `design/<x>.md` en vul alle knopen/stromen in
+   (operators, capaciteiten, `lat`/`lon`, transportmodi, de "aha"/knijp van deze grondstof). Eerst ontwerpen, dan bouwen.
+
+**3. Bouw `data/<x>.js`** volgens het lithium-schema (zie `data/_registry.js` voor het veld-schema):
+   - Metadata: `id`/`name`/`symbol`/`color`/`unit`/`blurb`, `detail:"uitgewerkt"`.
+   - Nodes (`mine`/`refinery`/`port`/`market` + evt. `recycler`/`exchange`/`cb`), flows met `stage` (`erts`→`raffinaat`→`product`)
+     + `mode` (`ship`/`rail`/`road`) + `via:[...]` langs havens en `wp-*`/`grens-*`, en `tensions` voor de knijppunten.
+   - **Registratie is er al** voor de bestaande 10 grondstoffen (script-tag in `index.html`). Een *nieuwe 11e* grondstof: voeg een
+     `<script src="data/<x>.js">` toe in `index.html` (de build leest die volgorde).
+   - **Harde regel:** elke ship-leg moet op een kustpunt landen (`port` / `coastal:true` / `wp-*`), anders valt hij op de landkaart terug
+     of vindt geen pad. Landlocked → kobalt/koper-corridorpatroon (land-flow mijn→haven `via:["grens-…"]` + aparte ship-flow haven→markt).
+   - Nieuw chokepoint/corridor nodig? Voeg het toe aan `data/_chokepoints.js` (`kind:"grensovergang"` voor een landgrens; `wp-…` + evt.
+     `openRadius` voor een zeestraat/ingesloten zee). Twee nodes in dezelfde 0,25°-cel geven een onzichtbare `degDist:0`-arc → ~30–45 km uit elkaar.
+
+**4. Engine-wijziging (alleen als nodig).** Een nieuwe **optionele toggle-laag** = het vaste patroon op vijf plekken
+   (`config.js` marker-size · `main.js` filters-default + `has…()` + voyages-gate · `flows.js` flow-gate · `markers.js` node-gate · `ui.js` chip).
+   Een nieuwe **render-modus** (zoals goud-lucht) raakt `flows.js`. Zie sectie J vóór je gedeelde `src/*`-bestanden aanraakt bij parallel werk.
+
+**5. Verifieer headless in de draaiende atlas.** Start de dev-server (launch.json-entry, zie sectie J voor de poort), open 'm in de
+   Browser-pane, en draai via `javascript_tool` een legs-check die per flow de stops (`from`+`via`+`to`) langs `Routing.sea`/`Routing.land`
+   routeert en telt: **doel = <grondstof> X legs / 0 kapot / 0 straight**, plus **regressie** over alle grondstoffen (globaal blijft 5 kapot =
+   de bekende `degDist:0` lithium(4)+goud(1)-baseline; nieuwe grondstof voegt 0 toe). Check ook: geen console-warnings (onbekende via-/node-ids),
+   toggle aan/uit voegt de juiste flows/nodes toe. Visueel het emergente plaatje bekijken (screenshot); **volledige visuele bevestiging op
+   Netlify/mobiel = Lars** (WebGL-screenshot lukt niet betrouwbaar headless).
+
+**6. Build + wrapup.** `python build-standalone.py` (voeg een REE-stijl sanity-check toe voor je grondstof) → `atlas-standalone.html`.
+   Dan de **`wrapup`-skill**: die voert de Definition of Done uit (vault-sessiesamenvatting + integratie in projectpagina/`now.md`/`index.md`/
+   `log.md`/`timeline.md`, project-`memory/`-sync, `CLAUDE.md`/checklist, Linear op Done, Pinecone-gist, code + docs committen). Commit code en
+   wrapup-docs als **twee aparte commits** met de Claude-trailer; repo is **lokaal-only** (geen remote → geen push).
+
+## J - Parallel werken (meerdere sessies tegelijk)
+
+Twee sessies kunnen **verschillende grondstoffen tegelijk** uitwerken (is al gebeurd: M7+M8, en M9 naast M8). Elke grondstof heeft z'n
+eigen `data/<x>.js` + `design/<x>.md` — die botsen nooit. Frictie zit alleen op het **gedeelde oppervlak**. Regels:
+
+1. **Stage alleen je eigen bestanden — nooit `git add -A`/`git add .`.** De working tree bevat de half-af bestanden van de andere sessie.
+   Voorbeeld: `git add data/<x>.js design/<x>.md` (+ je eigen `_chokepoints.js`-toevoeging als je die deed). Veeg je alles op, dan commit
+   je hun onvoltooide werk. Twijfel je of een gewijzigd bestand van jou is? Laat het ongestaged en noem het.
+2. **Gedeelde engine-bestanden = `src/*.js`, `config.js`, `data/_chokepoints.js`, `build-standalone.py`.** Raakt jouw grondstof die, en heeft
+   de andere sessie ze dirty? **Bouw dan eerst alleen de data-laag en stel de engine-wijziging uit** (zoals uranium's militaire-toggle → LAR-414
+   Backlog). Voeg de toggle/modus later toe als de tree schoon is.
+3. **Nieuwe chokepoints append je in een eigen, gelabeld blok** in `data/_chokepoints.js` en commit dat vroeg/apart — losse toevoegingen aan het
+   eind conflicteren zelden textueel. Alleen jouw grondstof mag ernaar verwijzen (geen impact op de andere 9).
+4. **Eigen dev-server-poort per sessie** (launch.json): `grondstoffen-atlas` (8732) · `grondstoffen-atlas-2` (8733) · `-3` (8734) · `-4` (8735).
+   Laat niet twee sessies dezelfde poort binden. (Één draaiende server delen kan ook — het is statische file-serving; elke browser-load leest vers.)
+5. **Wrapups sequentieel, `git pull --rebase` eerst.** De vault is een gedeelde repo: `log.md`/`index.md`/`timeline.md` mergen automatisch
+   (`merge=union`), maar `now.md` en de projectpagina niet — laat één sessie helemaal afwrappen (incl. vault-push) vóór de ander z'n vault-write doet.
+   Linear (aparte milestones/issues) en Pinecone zijn onafhankelijk en botsen niet.
+6. **Maximale isolatie (optioneel):** geef elke sessie een eigen **git-worktree** (aparte werkmap, eigen branch) → de working trees zijn fysiek
+   gescheiden en conflicten komen pas netjes bij het mergen boven i.p.v. als rommelige gedeelde tree. Werkt ook op deze lokaal-only repo; kost een merge-stap.
