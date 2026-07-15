@@ -1,5 +1,19 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M10 · Nikkel uitgevoerd)*
+*Last updated: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd)*
+
+## M11 · Olie ✅ uitgevoerd (2026-07-15) — LAR-428 t/m 433
+`data/oil.js` van "basis" (18/15) → volledig **uitgewerkt** (45 nodes / 46 flows / 6 tensions). Olie's vorm is bewust
+ANDERS dan alle eerdere: geen enkele trechter maar het **hele knelpunten-netwerk dat tegelijk oplicht** — Hormuz #1
+(15 stromen), Malakka, Taiwan, Suez/Bab, Bosporus, Panama, Kaap (10 knelpunten). **Géén nieuw chokepoint** = het eigen aha.
+- [x] Research upstream/downstream inline in `design/olie.md` (LAR-428/429): producenten + reserves≠productie (OPEC+), raffinage/product-trade/petrochemie.
+- [x] **3 olie-only navigatie-vaarpunten** (`wp-golf-mexico`/`wp-florida`/`wp-caribisch`) in een gelabeld OIL-blok in `_chokepoints.js` (LAR-430) — houden de VS/Venezuela-routes op het water; geen nieuw knelpunt (olie hergebruikt het hele bestaande net).
+- [x] `data/oil.js` uitgewerkt (LAR-431): crude (erts) → raffinage; producten (raffinaat) → markt; petrochemie (product). Drie levende verhalen: Hormuz-bypass-pijpleidingen (Yanbu/Fujairah), Rusland-omleiding 2022→ (Primorsk/Novorossiysk/ESPO-Kozmino/Druzhba → India/China), Amerikaanse schalie-ommekeer (Corpus Christi). Kust-raffinaderijen `coastal:true`.
+- [x] Verificatie headless (LAR-433, deel): **olie 210 legs / 0 kapot / 0 straight**; regressie schoon (baseline 5 = lithium 4 + goud 1, olie voegt 0 toe). Knelpunt-gebruik bevestigt het plaatje: Hormuz #1 (15), Malakka (14), Taiwan (12). `build-standalone.py` (+ 4 olie-checks) → `atlas-standalone.html` geregenereerd + zelf geverifieerd (210/0/0).
+- [x] Code-commit `1d4ece5` (repo `main`, lokaal-only, Claude-trailer) — alleen mijn eigen bestanden gestaged (parallelle nikkel-sessie ontzien).
+
+**Open (M11 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-433, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: gloeit Hormuz als dikste knoop, dan Malakka erachter?; de Golf→Azië-bundel als dikste stroom; de twee dunne bypass-pijpleidingen (Yanbu/Fujairah) om Hormuz heen; de dikke Rusland→India-omleiding náást de gekrompen Rusland→Europa-pijl; de VS-exportpijlen uit Corpus Christi; het dunne Venezuela-pijltje (reserves-paradox); scheeps-voyages voor olie.
+- [ ] **Optionele SPR-voorraden-toggle** (LAR-432, Backlog) — bewust uitgesteld: de `layer:"reserve"`-laag (strategische petroleumreserves US SPR/China/Japan/India/IEA) raakt de gedeelde engine-bestanden (config/main/flows/markers/ui) terwijl de M10-nikkel-sessie parallel liep. Oppakken zodra de tree bevestigd schoon is; exact het koper-`exchange`-patroon. Ontwerp in `design/olie.md` §6.
 
 ## M10 · Nikkel ✅ uitgevoerd (2026-07-15) — LAR-422 t/m 427
 `data/nickel.js` van "basis" (13/4) → volledig **uitgewerkt** (50 nodes / 46 flows / 6 tensions). Schip+land, géén nieuwe
@@ -82,8 +96,8 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [ ] **Militaire-kringloop-toggle** (LAR-414, Backlog) — bewust uitgesteld: de optionele `layer:"secondary"`-laag (down-blended wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` (destijds dirty door de M8-sessie). Oppakken zodra de M8-code gecommit is; het `layer:"..."`-filterpatroon is al vast (CB → exchange → secondary).
 
 ## Verderop — volgende grondstof (grafiet / PGM)
-Zeven uitgewerkt (lithium, kobalt, goud, koper, uranium, REE, **nikkel**); nog op "basis": **grafiet**, **PGM**
-(**olie** loopt in een parallelle sessie). Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
+**Acht uitgewerkt** (lithium, kobalt, goud, koper, uranium, REE, nikkel, **olie**); nog op "basis": **grafiet**, **PGM**.
+Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
 `data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
 
 **Los, klein:** de uranium-restpunten (LAR-415 visueel + LAR-414 militaire-kringloop-toggle, nu de code niet meer

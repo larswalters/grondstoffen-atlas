@@ -1,7 +1,35 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M10 · Nikkel uitgevoerd)*
+*Last updated: 2026-07-15 (M11 · Olie uitgevoerd; M10 · Nikkel uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M11 · Olie — uitgevoerd (2026-07-15)
+- **Olie's vorm = het knelpunten-netwerk, niet één trechter.** Alle eerdere grondstoffen hadden één knijp (raffinage-China /
+  Zwitserland / Russische verrijking). Olie's knijp is een **heel netwerk van zeestraten** — en precies het net dat de atlas al
+  had. Reden: dat ís de werkelijkheid; het plaatje vertelt zichzelf zodra alle tankerstromen door hun echte straten lopen.
+- **GÉÉN nieuw chokepoint = het eigen aha.** Olie hergebruikt het volledige bestaande knelpunten-net (Hormuz/Malakka/Suez/Bab/
+  Bosporus/Panama/Kaap/Gibraltar/Deense-Straten/Dardanellen). Bewust géén nieuw knelpunt toegevoegd — dat olie het hele net
+  tegelijk laat oplichten (Hormuz #1 met 15 stromen) ís de boodschap. Wél 3 kleine **navigatie-vaarpunten** (`wp-golf-mexico`/
+  `wp-florida`/`wp-caribisch`) in een gelabeld OIL-blok in `_chokepoints.js`, om de VS/Venezuela-routes op het water te houden;
+  alleen olie gebruikt ze → geen impact op de andere grondstoffen (regressievrij geverifieerd).
+- **Keten op de 3 bestaande stages, mét petrochemie als 3e daad.** `erts` = ruwe olie (crude, draagt het knelpunten-verhaal) →
+  `raffinaat` = geraffineerde producten (diesel/benzine, product-trade) → `product` = petrochemie (nafta→kraker→kunststof). Olie
+  is in de kern 2-staps (crude→product); de 3e stage benut voor petrochemie zodat "olie wordt ook plastic" zichtbaar wordt.
+- **Schip + pijpleiding, géén nieuwe render-modus.** Tankers = zee-A\*; pijpleidingen (`mode:"pipeline"`) = land-A\* (dashed).
+  Elke crude-stroom start bij de mijn met de export-terminal als eerste via-punt → de gathering-leg mijn→terminal routeert
+  automatisch als land, de rest als zee. Kust-raffinaderijen `coastal:true` zodat de tanker tot de kade vaart.
+- **Drie levende her-routeringen als kern-tensions.** (1) De **Hormuz-bypass-pijpleidingen** (Saoedi Oost-West→Yanbu aan de Rode
+  Zee; UAE Habshan→Fujairah aan de Golf van Oman) = het fysieke antwoord op de Golf-flessenhals. (2) De **Rusland-omleiding
+  2022→**: Europese crude omgeleid naar India/China (Primorsk om Europa heen, ESPO→Kozmino, Novorossiysk door de Bosporus,
+  Druzhba over land) — een beleidsgedreven her-routering zoals uranium's Trans-Kaspische, maar andersom. (3) De **Amerikaanse
+  schalie-ommekeer**: de VS van importeur naar exporteur (Corpus Christi → Atlantische Oceaan), een omgekeerde pijl.
+- **SPR-voorraden-toggle BEWUST UITGESTELD** (LAR-432 Backlog). De optionele `layer:"reserve"`-laag (strategische
+  petroleumreserves, olie's equivalent van goud-CB/koper-beursvoorraden/REE-recycling) raakt de 5 gedeelde engine-bestanden
+  (config/main/flows/markers/ui) terwijl de **parallelle M10-nikkel-sessie** live was — exact het scenario waarin uranium z'n
+  toggle uitstelde (LAR-414). Alleen de **data-laag** gebouwd om botsing te vermijden; het `layer:"..."`-patroon is al vast.
+- **Verificatie (headless, mijn eigen server poort 8734 — de nikkel-sessie bezette 8732/8733):** olie **210 legs / 0 kapot /
+  0 straight**. Regressie schoon: de globale 5 nulls zijn de bekende `degDist:0` same-city hops (lithium 4 + goud 1), olie voegt
+  0 toe. `atlas-standalone.html` geregenereerd (4 olie-checks OK) + zelf geverifieerd. WebGL-screenshot lukt niet headless → visueel = Lars.
 
 ## M10 · Nikkel — uitgevoerd (2026-07-15)
 - **De omgekeerde trechter; koper als template (niet goud).** Nikkel is een schip/land-grondstof → hergebruikt de zee-A\*/

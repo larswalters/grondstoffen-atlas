@@ -1,6 +1,15 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-15 (sessie 9) — M11 · Olie uitgevoerd (data/oil.js, het knelpunten-netwerk licht op)
+- **Taak (Lars):** "begin met het uitwerken van olie voor de grondstoffen atlas zoals we de rest ook gedaan hebben" → runbook sectie I gevolgd (uranium/koper = dichtstbijzijnde modellen). In één sessie gebouwd + geverifieerd + wrapup.
+- **Gebouwd:** `data/oil.js` van "basis" (18 nodes/15 flows) → **uitgewerkt** (45 nodes / 46 flows / 6 tensions) + brief `design/olie.md` + 4 olie-sanity-checks in `build-standalone.py`. 14 mijnen + 14 export-terminals + 9 raffinaderijen + 8 markten (4 verbruik + 4 petrochemie). Stages: 35 erts (crude) / 6 raffinaat (product-trade) / 5 product (petrochemie). Modi: 41 tanker + 5 pijpleiding.
+- **De vorm van olie (het aha):** bewust anders dan alle eerdere — geen enkele trechter maar het **hele knelpunten-netwerk dat tegelijk oplicht**. Data bevestigt: Hormuz #1 (15 stromen), Malakka (14), Taiwan (12), + Gibraltar/Suez/Bab/Kaap/Bosporus/Deense-Straten = 10 knelpunten. Daarom **géén nieuw chokepoint**; wel 3 olie-only navigatie-vaarpunten (`wp-golf-mexico`/`wp-florida`/`wp-caribisch`).
+- **Drie levende verhalen:** Hormuz-bypass-pijpleidingen (Yanbu/Fujairah), Rusland-omleiding 2022→ (Primorsk/Novorossiysk/ESPO-Kozmino/Druzhba → India/China), Amerikaanse schalie-ommekeer (Corpus Christi export). Schip+pijpleiding, géén nieuwe render-modus. Kust-raffinaderijen `coastal:true`.
+- **Verificatie (headless, eigen server poort 8734):** olie **210 legs / 0 kapot / 0 straight**; regressie schoon (globale baseline 5 = lithium 4 + goud 1, olie voegt 0 toe). Statische Node-check vooraf (id-resolutie) + browser-legs-check (Routing.sea/land) + zelf-check op de standalone-build. `atlas-standalone.html` geregenereerd (1608 KB, alle checks groen).
+- **SPR-voorraden-toggle bewust uitgesteld** (LAR-432 Backlog): raakt de gedeelde engine-bestanden terwijl een **parallelle M10-nikkel-sessie** live was (dev-servers op 8732/8733 + concurrent vault-/memory-writes). Sectie J regel 5 gevolgd: op nikkel's wrapup gewacht vóór de eigen vault/memory-sync, om niets te clobberen.
+- **Afgerond:** code-commit `1d4ece5` (Claude-trailer, alleen eigen bestanden). Linear **M11 · Olie** + LAR-428..433 (4 Done, 432 Backlog, 433 In Progress). Pinecone-gist opgeslagen. Rest = visuele bevestiging Netlify/mobiel (Lars).
+
 ## 2026-07-15 (sessie 8) — M10 · Nikkel uitgevoerd (data/nickel.js, Indonesië-onshoring-trechter)
 - **Taak (Lars):** "werk nikkel uit voor de grondstoffen atlas zoals de rest, volgens hetzelfde patroon" → runbook sectie I gevolgd (koper = dichtstbijzijnde model). In één sessie gebouwd + geverifieerd + wrapup.
 - **Gebouwd:** `data/nickel.js` van "basis" (13 nodes/4 flows) → **uitgewerkt** (50 nodes / 46 flows / 6 tensions) + brief `design/nikkel.md` + 3 nikkel-sanity-checks in `build-standalone.py`. Stages erts (ruw lateriet/sulfide) → raffinaat (NPI/ferronikkel/matte/MHP/class-1/sulfaat) → product (roestvrij staal + batterijkathode); schip+land, géén nieuwe render-modus.
