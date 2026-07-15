@@ -79,6 +79,11 @@ def main():
         "olie-vaarpunten (Golf van Mexico)": "wp-golf-mexico" in html,
         "olie SPR-voorraden-laag (data)": 'type: "reserve"' in html and "US SPR" in html,
         "olie SPR-toggle bedraad (engine)": "showReserves" in html and "hasReserves" in html,
+        "zilver geregistreerd": 'id: "silver"' in html,
+        "zilver uitgewerkt (Fresnillo/Peñoles)": "Fresnillo" in html and "Met-Mex Pe" in html,
+        "zilver by-product + KGHM": "bijproduct" in html and "KGHM" in html,
+        "zilver solar-pull (zonnepanelen)": "zonnepanelen" in html and "ag-mkt-china-solar" in html,
+        "zilver hergebruikt exchange-toggle (LBMA/COMEX)": 'exchange: "LBMA"' in html and 'exchange: "COMEX"' in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
