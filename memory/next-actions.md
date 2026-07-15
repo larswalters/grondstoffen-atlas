@@ -5,8 +5,21 @@
 Na M14 (grafiet) stond er geen enkele grondstof van de **basis-10** meer op "basis". Daarna komen de **nieuwe
 grondstoffen** erbij (niet basis→uitgewerkt maar een nieuw `data/<x>.js` + script-tag + build-check, het zilver-patroon):
 zilver (M13), gas (M15), diamant (M16), **kolen (M17)**. Volledig uitgewerkt nu: de basis-10 + zilver + gas + diamant +
-kolen = **14** (gas M15 / diamant M16 / kolen M17 = de nieuwe batch, waarvan gas + diamant in parallelle sessies). Het
-brief→bouw-runbook (sectie I) + het nieuwe-grondstof-plumbing-patroon (LAR-436/457) blijven de vaste flow.
+kolen = **14** (gas M15 / diamant M16 / kolen M17 = de nieuwe batch, alle drie in parallelle sessies gebouwd + gepusht).
+Het brief→bouw-runbook (sectie I) + het nieuwe-grondstof-plumbing-patroon (LAR-436/457/463) blijven de vaste flow.
+
+## M15 · Gas ✅ uitgevoerd (2026-07-16) — LAR-460, 462, 463, 464, 465, 466
+Nieuw `data/gas.js` (42 nodes / 51 flows / 6 tensions) + brief `design/gas.md` + `<script>`-tag in `index.html` + 5 gas-checks
+in `build-standalone.py`. Aardgas/LNG: **gas is nauwelijks te verplaatsen** → captive pijpleidingen vs de LNG-liquefactie-
+trechter (VS-Golfkust/Qatar/Australië); Europa-pivot 2022 + Russische oost-pivot; Qatar via Hormuz (géén bypass, scherper
+dan olie). Schip+pipeline, **géén nieuw chokepoint/render-modus/marker-types**; opslag hergebruikt de olie-`reserve`-toggle
+(0 engine-wijziging). Headless: **97 legs / 0 kapot / 0 straight**, regressievrij (2 Arctische Yamal-routes + captive-
+pijpleidingen routeren correct zonder nieuw vaarpunt). Commits `040d2b7` (data) + `a8378ef` (build-checks), **gepusht → live
+op Pages** (git-index-race met de diamant-sessie teruggedraaid met `reset`+`--only`, sectie J). LAR-460/462/463/464/466 Done.
+- [ ] **LAR-465** — visuele bevestiging op de live URL/mobiel (https://larswalters.github.io/grondstoffen-atlas/) = **Lars**.
+  Checken: de twee leversystemen (donkere pijpleiding-arcs vs. heldere LNG-oceaan-arcs), Hormuz als Qatar's enige uitgang,
+  de VS-Golfkust-waaier (oost naar Europa + west via Panama), de gekrompen Rusland→EU-pijl + de dikke Power-of-Siberia→China,
+  en de opslag-toggle ("voorraden", default uit).
 
 ## M16 · Diamant ✅ uitgevoerd (2026-07-16) — LAR-467 t/m 472
 Nieuw `data/diamond.js` (25 nodes / 35 flows / 6 tensions) + brief `design/diamant.md` + `<script>`-tag in `index.html` +

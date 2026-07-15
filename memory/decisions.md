@@ -1,7 +1,37 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M16 · Diamant uitgevoerd — de nieuwe 12e grondstof; M17 · Kolen)*
+*Last updated: 2026-07-16 (M15 · Gas + M16 · Diamant + M17 · Kolen uitgevoerd — drie nieuwe grondstoffen, atlas nu 14)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M15 · Gas — uitgevoerd (2026-07-16)
+
+- **2026-07-16 · gas = de natuurkunde: gas is nauwelijks te verplaatsen.** De vorm is bewust anders dan alle eerdere:
+  géén enkele trechter maar **twee gescheiden leversystemen** die op de kaart tegen elkaar afsteken — **captive
+  pijpleidingen** (lage donkere `erts`-land-arcs: Rusland↔EU was, Power of Siberia→China, Turkmenistan→China, Noorwegen→
+  EU, Zuidelijke Gascorridor) vs **LNG** (heldere `raffinaat`-oceaan-arcs). Waarom: over land zit gas vast in een pijp
+  (wie aan het andere eind zit is je enige klant/leverancier); écht globaal wordt het pas na vloeibaarmaking.
+- **2026-07-16 · de liquefactie-stap is de trechter (niet een zeestraat).** Gas' equivalent van de China-raffinage bij
+  lithium: pas ná vloeibaarmaking (−162 °C, een trein kost $10-20 mld) is een molecuul een omleidbare wereldgrondstof.
+  Capaciteit bij **drie polen** (VS-Golfkust flexibel / Qatar-Ras Laffan grootste-via-Hormuz / Australië→Azië). Dat draagt
+  via een `tension`, geen `wp-`. Liquefactie-terminal = `refinery`, regas-terminal = `port`, opslag = `reserve` → **géén
+  nieuwe marker-types**. Schip + `pipeline` (beide bestaan; pipeline kwam met olie) → **géén nieuwe render-modus**.
+- **2026-07-16 · géén nieuw chokepoint (4e na nikkel/olie/zilver).** Gas hergebruikt de bestaande routekaart volledig
+  (Hormuz/Malakka/Suez/Bab/Rode Zee/Gibraltar/Panama/Kaap/Lombok/Makassar/SCS/Taiwan/Florida). **Empirisch bevestigd** dat
+  géén nieuw vaarpunt nodig is: de 2 Arctische Yamal-routes (Sabetta→EU via de Barentszzee 107 pts, →China via de
+  Noordelijke Zeeroute 255 pts), de Med-crossing (Arzew→Spanje) en de lange captive-pijpleidingen (POS 55/Turkmenistan 75/
+  Azerbeidzjan-Balkan 55 pts) routeren allemaal correct. Qatar's Hormuz-afhankelijkheid is **scherper dan olie** (géén
+  Yanbu/Fujairah-bypass — LNG kan alleen over zee weg). Iran = het scherpste reserves≠export (zelfde veld als Qatar).
+- **2026-07-16 · opslag-laag hergebruikt de olie-`reserve`-toggle met 0 engine-wijziging.** `hasReserves()` is generiek op
+  `n.type==="reserve"` (geverifieerd `src/main.js:23`) + de flow-gate `f.layer==="reserve"` (flows.js) — dus gas voegt
+  4 `type:"reserve"`-nodes (EU Rehden/Bergermeer, Oekraïne-caverns, US Henry Hub, China) + 5 `layer:"reserve"`-vul-flows
+  toe als **pure data**; de "voorraden"-chip + amber tank-marker verschijnen automatisch. 3e datagedreven hergebruik van
+  het reserve/exchange-patroon (na nikkel/zilver-exchange). De EU-winter-vulgraad (90%-mandaat) = gas' geopolitieke metric na 2022.
+- **2026-07-16 · nieuwe 12e grondstof — de git-index-race als les (sectie J).** Gas bestond nog niet → nieuw `data/gas.js`
+  + `<script>`-tag in `index.html` + 5 gas-checks in `build-standalone.py`. Gebouwd náást 3 andere nieuwe-grondstof-sessies
+  (grafiet/kolen/diamant). Een **git-index-race** veegde diamant's gestagede bestanden in mijn eerste commit; teruggedraaid
+  met `reset --soft` + `restore --staged` + **`commit --only`**. **Vastgelegde les:** bij een gedeelde working tree +
+  index is `git commit <paths>` / `--only` race-bestendiger dan `git add` gevolgd door een kale `git commit`. Milestone
+  hernummerd (Gas=M15/Diamant=M16/Kolen=M17). Commits `040d2b7` (data) + `a8378ef` (build-checks), gepusht → live op Pages.
 
 ## M16 · Diamant — uitgevoerd (2026-07-16)
 - **De vorm = de scherpste DOWNSTREAM-trechter, niet een winnings- of raffinage-knijp.** Winning is verspreid; de knijp zit

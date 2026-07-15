@@ -1,6 +1,25 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M16 · Diamant uitgevoerd — de nieuwe 12e grondstof; M17 · Kolen; M14 · Grafiet)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M15 · Gas + M16 · Diamant + M17 · Kolen uitgevoerd — drie nieuwe grondstoffen; atlas nu 14/14)*
+
+> **M15 · GAS UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF (aardgas/LNG):** net als zilver (M13)/diamant/kolen een
+> échte nieuwe grondstof (niet basis→uitgewerkt): nieuw `data/gas.js` (42 nodes / 51 flows / 6 tensions) + brief
+> `design/gas.md` + `<script src="data/gas.js">` in `index.html` + 5 gas-checks in `build-standalone.py`. **De vorm = de
+> natuurkunde: gas is nauwelijks te verplaatsen** → twee gescheiden leversystemen op de kaart: lage donkere **pijpleiding-
+> arcs** (captive/regionaal — Rusland↔EU was, Power of Siberia→China, Turkmenistan→China, Noorwegen→EU) náást heldere
+> **LNG-oceaan-arcs** (globaal). **De liquefactie-stap is de trechter** (institutioneel/kapitaal, geen zeestraat):
+> capaciteit bij drie polen (VS-Golfkust/Qatar/Australië). Qatar via **Hormuz** (géén Yanbu/Fujairah-bypass — scherper dan
+> olie). Stages: `erts` = veldgas + pijpleidinggas → `raffinaat` = LNG (het verhaal) → `product` = geleverd. Liquefactie=
+> `refinery`, regas=`port`, opslag=`reserve`; schip + `pipeline` → **géén nieuwe render-modus/marker-types/chokepoint**
+> (4e na nikkel/olie/zilver). 6 tensions (Hormuz, liquefactie-flessenhals, Europa-pivot 2022, Russische oost-pivot, drie
+> prijszones, Panama-LNG-knelpunt); Iran = reserves≠export. **Opslag-laag = hergebruik olie-`reserve`-toggle, 0 engine-
+> wijziging** (`hasReserves()` generiek, `src/main.js:23`): 4 reserve-nodes + 5 vul-flows; EU-winter-vulgraad = de metric.
+> Headless (poort 8736): **gas 97 legs / 0 kapot / 0 straight / 0 onbekende via-ids**, regressievrij; de 2 Arctische Yamal-
+> routes + captive-pijpleidingen routeren correct zónder nieuw vaarpunt (empirisch). `atlas-standalone.html` geregenereerd
+> (5 gas-checks OK). Commits `040d2b7` (gas.js+gas.md) + `a8378ef` (build-checks), **gepusht → live op Pages** (alléén
+> eigen bestanden; git-index-race met de diamant-sessie teruggedraaid met `reset`+`--only` — les: `git commit <paths>`/
+> `--only` is race-bestendiger bij een gedeelde tree, sectie J). **Linear M15 · LAR-460/462/463/464/466 Done, 465 In
+> Progress** (visueel = Lars). Milestones hernummerd: Gas=M15 / Diamant=M16 / Kolen=M17.
 
 > **M16 · DIAMANT UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** net als zilver (M13)/gas (M15) een échte nieuwe
 > grondstof (niet basis→uitgewerkt): nieuw `data/diamond.js` (25 nodes / 35 flows / 6 tensions) + brief `design/diamant.md`
