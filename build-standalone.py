@@ -67,6 +67,9 @@ def main():
         "bevat data/goud (Valcambi)": "Valcambi" in html,
         "koper geregistreerd": 'id: "copper"' in html,
         "bevat data/copper (Escondida)": "Escondida" in html,
+        "zeldzame aardmetalen geregistreerd": 'id: "rare-earths"' in html,
+        "bevat data/rare-earths (Ganzhou/Kachin)": "Ganzhou" in html and "Kachin" in html,
+        "REE-grenscorridor (grens-ruili)": "grens-ruili" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }

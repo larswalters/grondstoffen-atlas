@@ -123,6 +123,8 @@ const FlowLayer = (function () {
         if (flow.layer === "cb" && !(filters && filters.showCentralBanks)) return;
         // Beursvoorraden-laag (koper): alleen tonen als de toggle aanstaat.
         if (flow.layer === "exchange" && !(filters && filters.showExchangeStocks)) return;
+        // Recycling-laag (zeldzame aardmetalen): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "recycle" && !(filters && filters.showRecycle)) return;
 
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);

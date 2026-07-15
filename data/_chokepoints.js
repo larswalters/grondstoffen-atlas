@@ -85,6 +85,13 @@ REGISTER_WAYPOINTS([
     lat: -12.22, lon: 27.79,
     note: "De grenspost tussen Congo en Zambia. Vrijwel al het kobalt op weg naar Durban wringt zich hierdoorheen — kilometers vrachtwagens, wachttijden van dagen tot weken. Het knelpunt van deze keten ligt niet op zee, maar op een landweg in Centraal-Afrika." },
 
+  // REE-LANDKNELPUNT — de grens Myanmar->China, waarlangs het zware Dy/Tb uit de
+  // Kachin-ionklei naar de Chinese scheiding stroomt. Zelfde `grensovergang`-truc
+  // als Kasumbalesa: LANDpunt (searoute.js houdt de landkaart open), geen zeestraat.
+  { id: "grens-ruili", name: "Ruili (Myanmar-China)", kind: "grensovergang",
+    lat: 24.02, lon: 97.85,
+    note: "De grenspost tussen Kachin (Myanmar) en Yunnan (China) bij Ruili/Muse. Vrijwel al het zware magneet-REE (Dy/Tb) uit de Myanmarese ionklei steekt hier over land de grens over, richting de scheidingsfabrieken in Ganzhou. Een landknelpunt zonder zeestraat — met milieuschade en conflictfinanciering als beladen onderbuik." },
+
   // ============================================ VAARPUNTEN (geen knelpunt)
   // Puur om de route op het water te houden. Geen marker, geen paneel.
   { id: "wp-aceh", name: "Noordwest-Sumatra", kind: "vaarpunt", marker: false,

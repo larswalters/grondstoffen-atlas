@@ -128,6 +128,16 @@ const UI = (function () {
       ex.onclick = () => { filters.showExchangeStocks = !filters.showExchangeStocks; onChange(); };
       filterRow.appendChild(ex);
     }
+
+    // Recycling-laag: alleen aanbieden als een actieve grondstof een recycle-laag heeft (REE).
+    if (opts && opts.hasRecycle) {
+      const rc = document.createElement("button");
+      rc.className = "chip" + (filters.showRecycle ? " on" : "");
+      rc.textContent = "recycling";
+      rc.title = "Magneetschroot terug naar scheiding/magneet tonen (nu <5% van het aanbod)";
+      rc.onclick = () => { filters.showRecycle = !filters.showRecycle; onChange(); };
+      filterRow.appendChild(rc);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL

@@ -11,11 +11,15 @@ const ATLAS = (function () {
     showProjects: true,
     showCentralBanks: false,           // goud: optionele centrale-bank-laag
     showExchangeStocks: false,         // koper: optionele beursvoorraden-laag
+    showRecycle: false,                // zeldzame aardmetalen: optionele recycling-laag
   };
 
   function activeResources() { return RESOURCES.filter((r) => activeIds.includes(r.id)); }
   function hasCentralBanks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "cb")); }
   function hasExchangeStocks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "exchange")); }
+  // recycling-toggle: alleen bij grondstoffen die de kringloop achter een `layer:"recycle"`-
+  // laag zetten (REE) — koper heeft recycling always-on (geen layer) en krijgt dus geen chip.
+  function hasRecycle() { return activeResources().some((r) => (r.flows || []).some((f) => f.layer === "recycle")); }
   function activeHasAir() { return activeResources().some((r) => (r.flows || []).some((f) => f.mode === "air")); }
 
   // Chrome die van de ACTIEVE grondstoffen afhangt: de CB-chip (alleen bij goud)
@@ -27,7 +31,7 @@ const ATLAS = (function () {
       : { one: "schip", many: "schepen", btn: "⚓ schepen" });
     UI.renderViewModes(filters, onFilterChange);
     UI.renderFilters(filters, onFilterChange,
-      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks() });
+      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks(), hasRecycle: hasRecycle() });
   }
 
   // focus: null | {type:"node", id} | {type:"flow", key, nodeIds}
@@ -69,6 +73,7 @@ const ATLAS = (function () {
         if (!filters.stages.has(f.stage || "raffinaat")) return;
         if (f.layer === "cb" && !filters.showCentralBanks) return;
         if (f.layer === "exchange" && !filters.showExchangeStocks) return;
+        if (f.layer === "recycle" && !filters.showRecycle) return;
         const from = getNode(res, f.from);
         const to = getNode(res, f.to);
         if (!from || !to) return;

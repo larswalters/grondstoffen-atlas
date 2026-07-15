@@ -115,6 +115,9 @@ const MarkerLayer = (function () {
         if (node.type === "cb" && !(filters && filters.showCentralBanks)) return;
         // beursmagazijn-nodes alleen tonen als de beursvoorraden-laag aanstaat
         if (node.type === "exchange" && !(filters && filters.showExchangeStocks)) return;
+        // recycling-nodes met een recycle-laag (REE) alleen tonen met de toggle aan.
+        // (Koper-recyclers hebben géén `layer` en blijven dus altijd zichtbaar.)
+        if (node.layer === "recycle" && !(filters && filters.showRecycle)) return;
 
         const pos = latLonToVec3(node.lat, node.lon, R + C.lift);
         let mesh, ring = null;
