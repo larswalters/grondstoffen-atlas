@@ -73,6 +73,10 @@ def main():
         "nikkel geregistreerd": 'id: "nickel"' in html,
         "nikkel uitgewerkt": 'id: "nickel"' in html and "IMIP Morowali" in html and "Weda Bay" in html,
         "nikkel class-1/2 + LME-nuance": "class-1" in html and "LME-nikkel" in html,
+        "olie geregistreerd": 'id: "oil"' in html,
+        "olie uitgewerkt": 'id: "oil"' in html and "Ghawar" in html and "Fujairah" in html,
+        "olie Hormuz-bypass + Rusland-omleiding": "Habshan" in html and "Kozmino" in html,
+        "olie-vaarpunten (Golf van Mexico)": "wp-golf-mexico" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }

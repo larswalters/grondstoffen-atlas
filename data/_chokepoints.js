@@ -178,6 +178,19 @@ REGISTER_WAYPOINTS([
   // de Trans-Kaspische route (Poti -> Middellandse Zee) geen weg naar buiten.
   { id: "wp-dardanellen", name: "Dardanellen", kind: "vaarpunt", marker: false,
     lat: 40.20, lon: 26.40, openRadius: 1.0, note: "Zwarte Zee -> Egeïsche Zee, na de Bosporus." },
+
+  // ============================================ OLIE: GOLF VAN MEXICO / CARIBISCH
+  // Puur navigatie-vaarpunten om de Amerikaanse (Corpus Christi) en Venezolaanse
+  // (José) tankerroutes op het water te houden: de Golf van Mexico uit langs Florida
+  // naar de Atlantische Oceaan, en door het Caribisch gebied richting Panama. Zonder
+  // deze punten snijdt de kortste lijn dwars over Midden-Amerika/Florida. Alleen olie
+  // gebruikt ze -> geen impact op de andere grondstoffen.
+  { id: "wp-golf-mexico", name: "Golf van Mexico", kind: "vaarpunt", marker: false,
+    lat: 25.50, lon: -90.00, note: "Open water tussen Texas/Louisiana en het schiereiland Yucatán." },
+  { id: "wp-florida", name: "Straat van Florida", kind: "vaarpunt", marker: false,
+    lat: 24.60, lon: -81.20, note: "De uitgang van de Golf van Mexico langs Florida naar de Atlantische Oceaan." },
+  { id: "wp-caribisch", name: "Caribische Zee", kind: "vaarpunt", marker: false,
+    lat: 15.50, lon: -73.00, note: "Open water tussen het Caribisch gebied en de noordkust van Zuid-Amerika, aanloop naar Panama/José." },
 ]);
 
 // ============================================================================
