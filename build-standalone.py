@@ -93,6 +93,11 @@ def main():
         "grafiet twee feedstocks (naaldcokes)": "naaldcokes" in html and "gr-nc-china" in html,
         "grafiet China-verwerkingstrechter (Shandong/Binnen-Mongolië)": "gr-ref-shandong" in html and "gr-ref-innermongolia" in html,
         "grafiet exportcontroles (dec 2023)": "exportvergunning" in html,
+        "kolen geregistreerd": 'id: "coal"' in html,
+        "kolen uitgewerkt (Bowen/Tavan Tolgoi)": "Bowen Basin" in html and "Tavan Tolgoi" in html,
+        "kolen Mongolië-Gobi-corridor": "grens-gashuunsukhait" in html,
+        "kolen twee kolen (thermisch/cokeskool)": "cokeskool" in html and "coal-mkt-china-steel" in html,
+        "kolen binnenlands + China-swing": "Qinhuangdao" in html and "swing-koper" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }

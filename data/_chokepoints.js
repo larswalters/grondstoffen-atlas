@@ -191,6 +191,15 @@ REGISTER_WAYPOINTS([
     lat: 24.60, lon: -81.20, note: "De uitgang van de Golf van Mexico langs Florida naar de Atlantische Oceaan." },
   { id: "wp-caribisch", name: "Caribische Zee", kind: "vaarpunt", marker: false,
     lat: 15.50, lon: -73.00, note: "Open water tussen het Caribisch gebied en de noordkust van Zuid-Amerika, aanloop naar Panama/José." },
+
+  // ============================================ KOLEN: MONGOLIË-GOBI-CORRIDOR
+  // Landknelpunt (geen zeestraat): waar de Mongoolse cokeskool (Tavan Tolgoi)
+  // per truck/spoor over de Gobi-grens China binnenrolt richting de staalfabrieken.
+  // Zelfde `grensovergang`-truc als Kasumbalesa/Ruili: LANDpunt (searoute.js houdt
+  // de landkaart open), geen water stempelen. Alleen kolen verwijst ernaar.
+  { id: "grens-gashuunsukhait", name: "Gashuun Sukhait / Ganqimaodu", kind: "grensovergang",
+    lat: 42.60, lon: 105.90,
+    note: "De belangrijkste kolengrensovergang tussen Mongolië (Zuid-Gobi) en China (Binnen-Mongolië). Vrijwel alle Mongoolse cokeskool uit Tavan Tolgoi steekt hier over land de grens over naar de Chinese hoogovens — Mongolië is landlocked en heeft geen alternatief. Tijdens de China-Australië-kolenban schoot deze corridor omhoog als vervanger van de Australische cokeskool." },
 ]);
 
 // ============================================================================
