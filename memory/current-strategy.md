@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
+*Last updated: 2026-07-15 (M10 · Nikkel uitgevoerd)*
 
 ## Architectuur (hoe we bouwen)
 
@@ -58,12 +58,33 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
 - **Volledig:** lithium (template), kobalt, **goud** (M6 — 73 nodes/48 flows, luchtroutes + CB-laag),
   **koper** (M7 — 69 nodes/50 flows, China-smelttrechter + Copperbelt-kathode over land + beursvoorraden-laag),
   **uranium** (M9 — 38 nodes/36 flows, 4-staps kernbrandstofketen met verrijking als flessenhals + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering),
-  **zeldzame aardmetalen** (M8 — 41 nodes/38 flows, magneet-REE NdPr+Dy/Tb: Ganzhou-scheidingstrechter + Dy/Tb-landstroom Myanmar→China over `grens-ruili` + Mountain-Pass-rondreis + NdFeB-waaier + recycling-toggle).
-- **Basis:** de 4 overige grondstoffen (nikkel/grafiet/PGM/olie) — laden en renderen, maar zonder
-  operators/capaciteiten/route-detail.
-- **Volgende kandidaten op basis:** nikkel (runner-up), grafiet, PGM, olie — volgens het brief→bouw-sjabloon.
+  **zeldzame aardmetalen** (M8 — 41 nodes/38 flows, magneet-REE NdPr+Dy/Tb: Ganzhou-scheidingstrechter + Dy/Tb-landstroom Myanmar→China over `grens-ruili` + Mountain-Pass-rondreis + NdFeB-waaier + recycling-toggle),
+  **nikkel** (M10 — 50 nodes/46 flows, Indonesië-onshoring-trechter: mijn+raffinage in tien jaar via de exportban + class-1/class-2-splitsing + prijscrash-shakeout + LME-nuance; beursvoorraden-toggle hergebruikt met 0 engine-wijziging).
+- **Basis:** de 3 overige grondstoffen (grafiet/PGM/olie) — laden en renderen, maar zonder
+  operators/capaciteiten/route-detail (olie loopt in een parallelle sessie).
+- **Volgende kandidaten op basis:** grafiet, PGM — volgens het brief→bouw-sjabloon.
 
-## Nu (2026-07-15 — M8 · Zeldzame aardmetalen uitgevoerd)
+## Nu (2026-07-15 — M10 · Nikkel uitgevoerd)
+
+- **Nikkel volledig gebouwd + geverifieerd.** `data/nickel.js` van "basis" (13/4) → **uitgewerkt** (50 nodes / 46 flows /
+  6 tensions) + brief `design/nikkel.md`. De nikkel-"aha": de **trechter staat op z'n kop** t.o.v. koper — **Indonesië heeft
+  in tien jaar de mijn ÉN de raffinage** naar zich toe getrokken via de **exportban op ruw erts** (IMIP Morowali / IWIP Weda
+  Bay, Chinees kapitaal Tsingshan/Huayou); het erts blíjft in het land (korte mijn→smelter-hops), pas als NPI/matte/MHP de
+  zee op. Plus **twee nikkels** (class-1 batterij/sulfaat vs class-2 roestvrij/NPI, HPAL→MHP/matte als brug), de **prijscrash-
+  shakeout** (BHP Nickel West stilgelegd 2024, Nieuw-Caledonië in crisis), de **LME-nuance** (alleen class-1 leverbaar + de
+  2022-squeeze) en het **Filipijnse ruw-erts-contrast** (geen ban).
+- **Schip+land, géén nieuwe render-modus, géén nieuw chokepoint** (tweede grondstof na koper die volledig op de bestaande
+  routekaart draait: Makassar/Lombok/SCS/Taiwan/Deense-Straten/Panama/Saint-Laurent). **Beursvoorraden-laag (LME)** hergebruikt
+  de bestaande exchange-toggle van koper met **0 engine-wijziging** (eerste keer dat een optionele laag puur via de data-laag
+  wordt hergebruikt); recycling always-on (koper-patroon).
+- **Verificatie (headless, poort 8733 — eigen server want een parallelle olie-sessie bezette 8732):** nikkel **91 legs
+  (63 zee + 18 land + 10 korte hops) / 0 kapot / 0 straight**; regressie schoon (0 kapot over álle grondstoffen).
+  `atlas-standalone.html` geregenereerd (nikkel-checks OK). **Code-commit `08aa4f5`** (repo lokaal-only, Claude-trailer).
+  **Linear M10 · LAR-422..426 Done, 427 In Progress.**
+- **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-427, Lars).
+- **Volgende grondstof:** grafiet, PGM (olie loopt in een parallelle sessie) — zelfde brief→bouw-flow.
+
+### Eerder (2026-07-15 — M8 · Zeldzame aardmetalen uitgevoerd)
 
 - **Zeldzame aardmetalen volledig gebouwd + geverifieerd.** `data/rare-earths.js` van "basis" (9/5) → **uitgewerkt**
   (41 nodes/38 flows/6 tensions), **magneet-REE-framing** (NdPr licht + Dy/Tb zwaar; `symbol: NdPr`, `unit: kt magneet-REO/jaar`).

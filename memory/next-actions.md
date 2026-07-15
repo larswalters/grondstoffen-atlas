@@ -1,5 +1,18 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
+*Last updated: 2026-07-15 (M10 · Nikkel uitgevoerd)*
+
+## M10 · Nikkel ✅ uitgevoerd (2026-07-15) — LAR-422 t/m 427
+`data/nickel.js` van "basis" (13/4) → volledig **uitgewerkt** (50 nodes / 46 flows / 6 tensions). Schip+land, géén nieuwe
+render-modus, **géén nieuw chokepoint** (tweede na koper die volledig op de bestaande routekaart draait).
+- [x] Research upstream/downstream inline in `design/nikkel.md` (LAR-422/423): Indonesië-onshoring + class-1/class-2 + shakeout + LME.
+- [x] `data/nickel.js` uitgewerkt (LAR-424): Indonesië-onshoring-trechter (erts blijft in het land = korte mijn→smelter-hops), twee nikkels (class-1 batterij vs class-2 roestvrij, HPAL→MHP/matte als brug), prijscrash-shakeout (Nickel West stilgelegd 2024), Filipijns ruw-erts-contrast. Coastal-markten (koper-fix).
+- [x] **Beursvoorraden-laag (LME)** = hergebruik van de bestaande exchange-toggle met **0 engine-wijziging** (LAR-425); 4 LME-nodes + 5 `layer:"exchange"`-flows; nuance: alleen class-1 leverbaar + de 2022-squeeze. Recycling always-on.
+- [x] Verificatie headless (LAR-426): **nikkel 91 legs (63 zee + 18 land + 10 korte hops) / 0 kapot / 0 straight**; regressie schoon (0 kapot over alle grondstoffen). `build-standalone.py` (+ nikkel-checks) → `atlas-standalone.html` geregenereerd.
+- [x] Code-commit `08aa4f5` (repo `main`, lokaal-only, Claude-trailer) — alleen mijn 3 bestanden gestaged (parallelle olie-sessie ontzien).
+
+**Open (M10 afronden):**
+- [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-427, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: de Indonesische korte-hops-kluwen, de twee waaiers naar China (roestvrij + batterij) door Makassar/Lombok, de Filipijnse ruw-erts-contrastboog, het dunnere "oude wereld"-class-1-web, de scheeps-voyages, en de beursvoorraden-toggle (LME) aan/uit.
+- [ ] **Vault push** — de vault-`git pull`/`push` faalde op een netwerkfout; lokaal gecommit, push zodra de verbinding terug is.
 
 ## M8 · Zeldzame aardmetalen ✅ uitgevoerd (2026-07-15) — LAR-416 t/m 421
 `data/rare-earths.js` van "basis" (9/5) → volledig **uitgewerkt** (41 nodes / 38 flows / 6 tensions), **magneet-REE-framing**
@@ -68,10 +81,10 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 - [ ] **Visuele bevestiging op Netlify/mobiel** (LAR-415, In Progress) — alleen Lars (WebGL-screenshot lukt niet headless). Checken: verrijkings-flessenhals (dun ringetje nodes, Rusland dikst), de twee Kazachstan-routes, de VVER-lock-in-lijn, de CANDU-uitzondering, scheeps-voyages voor uranium.
 - [ ] **Militaire-kringloop-toggle** (LAR-414, Backlog) — bewust uitgesteld: de optionele `layer:"secondary"`-laag (down-blended wapen-HEU / strategische voorraden) vereist code in `flows/ui/main/config` (destijds dirty door de M8-sessie). Oppakken zodra de M8-code gecommit is; het `layer:"..."`-filterpatroon is al vast (CB → exchange → secondary).
 
-## Verderop — volgende grondstof (nikkel / grafiet / PGM / olie)
-Vijf uitgewerkt (lithium, kobalt, goud, koper, uranium, REE — feitelijk zes); nog op "basis": **nikkel** (runner-up),
-**grafiet**, **PGM**, **olie**. Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
-`data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup. Nog geen Linear-milestone aangemaakt.
+## Verderop — volgende grondstof (grafiet / PGM)
+Zeven uitgewerkt (lithium, kobalt, goud, koper, uranium, REE, **nikkel**); nog op "basis": **grafiet**, **PGM**
+(**olie** loopt in een parallelle sessie). Zelfde brief→bouw-flow: `design/_brief-template.md` → `design/<grondstof>.md` →
+`data/<grondstof>.js` van "basis" → "uitgewerkt" → headless legs-check → build → wrapup.
 
 **Los, klein:** de uranium-restpunten (LAR-415 visueel + LAR-414 militaire-kringloop-toggle, nu de code niet meer
 dirty is) en het opruimen van de bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) ná Lars' visuele

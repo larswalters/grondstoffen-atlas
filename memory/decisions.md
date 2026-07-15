@@ -1,7 +1,32 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd)*
+*Last updated: 2026-07-15 (M10 · Nikkel uitgevoerd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M10 · Nikkel — uitgevoerd (2026-07-15)
+- **De omgekeerde trechter; koper als template (niet goud).** Nikkel is een schip/land-grondstof → hergebruikt de zee-A\*/
+  land-A\*-routes + scheeps-voyages, géén luchtvracht-modus. De "aha": andersom dan koper/lithium (breed graven, in China
+  raffineren) trok **Indonesië via de exportban op ruw erts de mijn ÉN de raffinage aan land**. Modelmatig: het erts blíjft
+  in het land (korte hops mijn→smelter, `stage:"erts"`, `mode:"road"`) en gaat pas als NPI/matte/MHP de zee op. Het Filipijnse
+  ruw-erts naar China (`stage:"erts"`, géén ban) = het bewuste contrast ernaast.
+- **Class-1 vs class-2 via `stage` + `note` + een `tension`, geen 4e stage.** Class-2 (NPI/ferronikkel → roestvrij) en class-1
+  (nikkelsulfaat/kathode → batterij) worden gedragen door de bestaande drie stages + de tension "Twee nikkels"; HPAL→MHP en matte
+  zijn de bruggen. Reden: consistent met REE/uranium (geen stage-styling voor een 4e stap). IMIP maakt roestvrij ter plekke →
+  die flow is `stage:"product"`.
+- **Géén nieuw chokepoint (tweede grondstof na koper).** Nikkel draait volledig op de bestaande routekaart (Makassar/Lombok/
+  SCS/Taiwan; Deense Straten voor Fins/Baltisch class-1; Panama + Pacific-vaarpunten voor Cuba/NC; de Saint-Laurent-keten voor
+  Voisey's Bay→Sudbury). Bewust zo — óók om de gedeelde `_chokepoints.js` niet te raken terwijl de parallelle olie-sessie die dirty had.
+- **Beursvoorraden-laag (LME) = 0 engine-wijziging.** De exchange-toggle van koper (`type:"exchange"`/`layer:"exchange"`,
+  `showExchangeStocks`) is generiek: `hasExchangeStocks()` vuurt op elke actieve grondstof met een exchange-node; flow-gate/marker/
+  chip zijn niet koper-specifiek. Nikkel voegt 4 LME-nodes + 5 `layer:"exchange"`-flows toe **zonder één `src/*`/`config.js`-regel
+  te wijzigen** — de eerste optionele laag die puur via de data-laag wordt hergebruikt. Nuance eerlijk gemodelleerd: **alleen class-1
+  is LME-leverbaar** (NPI/MHP/sulfaat niet) → LME-prijs ≠ fysieke markt; de 2022-squeeze (Tsingshan) als `tension`. Recycling
+  **always-on** (koper-patroon, `type:"recycler"` zónder `layer`).
+- **Coastal-markten (koper-fix hergebruikt).** De Aziatische/EU-afzetmarkten die per schip beleverd worden (Foshan/Ningbo/Korea/
+  Japan/EU-roestvrij) staan `coastal:true` zodat elke ship-leg op een kustpunt landt i.p.v. op de landkaart terug te vallen.
+- **Parallelle-sessie-hygiëne (sectie J).** Een andere sessie werkte tegelijk aan olie (`data/oil.js`/`design/olie.md`/
+  `_chokepoints.js` dirty). Alleen mijn eigen 3 bestanden gestaged (`data/nickel.js` + `design/nikkel.md` + `build-standalone.py`),
+  nooit `git add -A`; commit `08aa4f5` (lokaal-only, Claude-trailer).
 
 ## M8 · Zeldzame aardmetalen (magneet-REE) — uitgevoerd (2026-07-15)
 - **Magneet-REE-framing (optie 2), 1-op-1 uit het skelet gebouwd.** `id` blijft `rare-earths` (registratie intact),

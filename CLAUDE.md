@@ -1,6 +1,20 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M8 · Zeldzame aardmetalen uitgevoerd; M9 · Uranium uitgevoerd)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M10 · Nikkel uitgevoerd; M8 · Zeldzame aardmetalen; M9 · Uranium)*
+
+> **M10 · NIKKEL UITGEVOERD (2026-07-15):** `data/nickel.js` van "basis" (13/4) → **uitgewerkt** (50 nodes / 46 flows /
+> 6 tensions). De nikkel-"aha": de **trechter staat op z'n kop** t.o.v. koper — waar koper/lithium breed graven en in
+> China raffineren, heeft **Indonesië in tien jaar de mijn ÉN de raffinage** naar zich toe getrokken via de **exportban
+> op ruw erts** (IMIP Morowali / IWIP Weda Bay, Chinees kapitaal Tsingshan/Huayou); het erts blíjft in het land (korte
+> mijn→smelter-hops). Plus **twee nikkels** (class-1 batterij/sulfaat vs class-2 roestvrij/NPI, met HPAL→MHP/matte als
+> brug), de **prijscrash-shakeout** (BHP Nickel West stilgelegd 2024, Nieuw-Caledonië in crisis), de **LME-nuance**
+> (alleen class-1 leverbaar + de 2022-squeeze) en het **Filipijnse ruw-erts-contrast** (geen ban). Schip+land, **géén
+> nieuwe render-modus, géén nieuw chokepoint** (hergebruikt Makassar/Lombok/SCS/Taiwan/Deense-Straten/Panama/Saint-Laurent).
+> **Beursvoorraden-laag (LME)** hergebruikt de **bestaande** exchange-toggle van koper met **0 engine-wijziging**
+> (bevestigd generiek); recycling always-on. Headless: **nikkel 91 legs (63 zee + 18 land + 10 korte hops) / 0 kapot /
+> 0 straight**, regressie schoon (0 kapot over alle grondstoffen). `atlas-standalone.html` geregenereerd (nikkel-checks OK).
+> Commit `08aa4f5` (lokaal-only, Claude-trailer). **Linear M10 · LAR-422..426 Done, 427 In Progress** (visuele bevestiging =
+> Lars). Overige op "basis": grafiet, PGM (olie loopt in een parallelle sessie).
 
 > **M8 · ZELDZAME AARDMETALEN UITGEVOERD (2026-07-15):** `data/rare-earths.js` van "basis" (9/5) → **uitgewerkt**
 > (41 nodes / 38 flows / 6 tensions) in de **magneet-REE-framing** (NdPr licht + Dy/Tb zwaar; `symbol: NdPr`,
@@ -132,6 +146,20 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 - **2026-07-15 · M8 co-located nodes ~30–45 km uit elkaar** — twee nodes van dezelfde grondstof in één 0,25°-cel geven een 1-punts
   route (`degDist:0`, onzichtbare arc). Ref/magneet/recycler in dezelfde stad (Baotou/Ganzhou/MP/La Rochelle/Fort Worth) verschoven
   zodat de lokale scheiding→magneet-arcs zichtbaar renderen én de headless-teller schoon op 0 kapot blijft.
+- **2026-07-15 · M10 nikkel = de omgekeerde trechter, koper als template** — nikkel is een schip/land-grondstof (géén luchtvracht →
+  koper, niet goud, is het model). De "aha" is dat Indonesië via de **exportban op ruw erts** de mijn ÉN de raffinage aan land trok:
+  het erts blíjft in het land (korte mijn→smelter-hops, `stage:"erts"`, `mode:"road"`) en gaat pas als NPI/matte/MHP de zee op —
+  andersom dan koper/lithium waar het erts/concentraat naar China vaart. Class-1 (batterij/sulfaat) vs class-2 (roestvrij/NPI) gedragen
+  via `stage` + `note` + een `tension` (geen 4e stage). Het Filipijnse ruw-erts (`stage:"erts"` naar China, géén ban) = het contrast.
+- **2026-07-15 · M10 géén nieuw chokepoint (tweede na koper)** — nikkel draait volledig op de bestaande routekaart (Makassar/Lombok/
+  SCS/Taiwan; Deense Straten voor Fins/Baltisch class-1; Panama + Pacific-vaarpunten voor Cuba/NC; de Saint-Laurent-keten voor
+  Voisey's Bay→Sudbury). Bewust zo — óók om de gedeelde `_chokepoints.js` niet te raken terwijl de parallelle olie-sessie die dirty had.
+- **2026-07-15 · M10 beursvoorraden-laag (LME) = 0 engine-wijziging** — de optionele exchange-toggle van koper (`type:"exchange"`/
+  `layer:"exchange"`, `showExchangeStocks`) is generiek: `hasExchangeStocks()` vuurt op elke actieve grondstof met een exchange-node,
+  en de flow-gate/marker/chip zijn niet koper-specifiek. Nikkel voegt dus 4 LME-nodes + 5 `layer:"exchange"`-flows toe **zonder één
+  `src/*`/`config.js`-regel te wijzigen** — de eerste keer dat een optionele laag puur via de data-laag wordt hergebruikt. Nuance eerlijk
+  gemodelleerd: **alleen class-1 is LME-leverbaar** (NPI/MHP/sulfaat niet) → LME-prijs ≠ fysieke markt (de 2022-squeeze als `tension`).
+  Recycling **always-on** (koper-patroon, `type:"recycler"` zónder `layer`).
 
 ## E - Memory Map
 
@@ -173,12 +201,13 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
 8. [x] **M9 · Uranium uitgevoerd** (2026-07-15): `design/uranium.md` (`d016ab8`) → `data/uranium.js` "uitgewerkt" (38 nodes/36 flows/6 tensions) + Kaspische oversteek/Dardanellen in `_chokepoints.js` (`76c0333`). 4-staps keten met verrijking als flessenhals (~44% Rusland) + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering. Headless: 54 legs/0 kapot, regressievrij. **Linear M9 · Uranium + LAR-410..415** aangemaakt (410-413 Done; 414 Backlog = uitgestelde militaire-kringloop-toggle; 415 In Progress = visuele bevestiging). Rest = visuele bevestiging Netlify/mobiel.
-9. [x] **M8 · Zeldzame aardmetalen uitgevoerd** (2026-07-15): `data/rare-earths.js` van "basis" (9/5) → "uitgewerkt" (41 nodes/38 flows/6 tensions), magneet-REE-framing (NdPr+Dy/Tb) + `grens-ruili` (Myanmar→China) in `_chokepoints.js` + recycling-toggle (`layer:"recycle"`, 5 plekken). Ganzhou-scheidingstrechter + Dy/Tb-landstroom + Mountain-Pass-rondreis + NdFeB-waaier. Headless: 90 legs/0 kapot/0 straight, regressievrij. **Linear M8 · LAR-416..420 Done; 421 In Progress** (visuele bevestiging Netlify/mobiel = Lars). Overige op basis: nikkel (runner-up), grafiet, PGM, olie.
+9. [x] **M8 · Zeldzame aardmetalen uitgevoerd** (2026-07-15): `data/rare-earths.js` van "basis" (9/5) → "uitgewerkt" (41 nodes/38 flows/6 tensions), magneet-REE-framing (NdPr+Dy/Tb) + `grens-ruili` (Myanmar→China) in `_chokepoints.js` + recycling-toggle (`layer:"recycle"`, 5 plekken). Ganzhou-scheidingstrechter + Dy/Tb-landstroom + Mountain-Pass-rondreis + NdFeB-waaier. Headless: 90 legs/0 kapot/0 straight, regressievrij. **Linear M8 · LAR-416..420 Done; 421 In Progress** (visuele bevestiging Netlify/mobiel = Lars).
+10. [x] **M10 · Nikkel uitgevoerd** (2026-07-15): `data/nickel.js` van "basis" (13/4) → "uitgewerkt" (50 nodes/46 flows/6 tensions) + `design/nikkel.md` + nikkel-checks in `build-standalone.py`. Indonesië-onshoring-trechter (exportban: mijn+raffinage in tien jaar, IMIP/IWIP) + twee nikkels (class-1 batterij vs class-2 roestvrij) + prijscrash-shakeout (Nickel West 2024) + LME-nuance (2022-squeeze). Schip+land, géén nieuw chokepoint; beursvoorraden-laag hergebruikt de bestaande exchange-toggle (**0 engine-wijziging**); recycling always-on. Headless: **nikkel 91 legs / 0 kapot / 0 straight**, regressie schoon. Commit `08aa4f5` (lokaal-only, Claude-trailer). **Linear M10 · LAR-422..426 Done, 427 In Progress**. Overige op basis: grafiet, PGM (olie parallel).
 
 ## I - Runbook: "werk grondstof X uit" (self-serve)
 
 Vaste flow om een grondstof van **"basis" → "uitgewerkt"** te brengen, identiek aan hoe goud/koper/uranium/REE zijn gedaan.
-Nog op "basis": **nikkel** (runner-up), **grafiet**, **PGM**, **olie**. Doe de stappen op volgorde; commit code en wrapup-docs apart.
+Nog op "basis": **grafiet**, **PGM** (olie loopt in een parallelle sessie). Doe de stappen op volgorde; commit code en wrapup-docs apart.
 
 **0. Oriënteer.** Lees `memory/current-strategy.md` (architectuur + sjabloon) + `memory/decisions.md` (de vaste patronen) +
    `design/_brief-template.md`. Kijk naar een recent uitgewerkt bestand als voorbeeld — `data/copper.js` (schip/land + optionele
