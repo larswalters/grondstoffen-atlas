@@ -1,7 +1,41 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M14 · Grafiet uitgevoerd — alle 11 grondstoffen uitgewerkt)*
+*Last updated: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M15 · Kolen — uitgevoerd (2026-07-16)
+- **De vorm = de binnenlandsheid, GÉÉN trechter.** Waar lithium/koper/REE bij de raffinage knijpen, goud bij Zwitserland,
+  uranium bij de Russische verrijking, olie het zeestraten-net laat oplichten en zilver een inelastische bijproduct-vraagknijp
+  heeft — heeft kolen **géén enkele mondiale flessenhals** omdat het overweldigend **binnenlands** is: ~85% wordt verbrand waar
+  gedolven (China ~50% van de wereld, India, VS, Rusland), slechts ~15% van de ~8.700 Mt gaat over zee. Reden: dat ís de
+  werkelijkheid van kolen, en het is de scherpst mogelijke tegenpool van de andere grondstoffen — de kaart moet grote binnenlandse
+  blokken tonen tegenover een dunne, geopolitiek beladen zeehandelslaag.
+- **Stages als KETENPOSITIE (gedolven → verhandeld → verbrand), niet als bewerking.** `erts` = mijn→haven/centrale (dof) ·
+  `raffinaat` = de **internationaal verhandelde bulk** (de zeekruisingen + de Mongolië-landcorridor; hier leeft élk ban/her-
+  routeringsverhaal) · `product` = eindgebruik (stroom/staal). Gevolg: binnenlandse kolen (alleen erts+product, géén zeekruising)
+  leest visueel ánders dan verhandelde kolen (mét de heldere `raffinaat`-zeeboog) → de ~85/15-splitsing wordt zichtbaar. Reden:
+  kolen wordt niet geraffineerd zoals metaal; de stages dragen hier de reis, niet een chemische transformatie.
+- **Twee kolen (thermisch vs. cokeskool) via `note` + `tension`, NIET via `stage`.** Thermisch→stroom en cokeskool→cokesovens→
+  hoogoven-staal zijn parallelle producttypes, geen opeenvolgende stages. Gedragen zoals nikkel z'n class-1/class-2 deed (note +
+  een aparte tension), zodat `stage` de ketenpositie blijft. Premium harde cokeskool ~Bowen Basin, India = #1 cokeskool-importeur.
+- **China = swing-koper** (grootste producent én importeur) + **drie her-routeringen als institutionele knijp** (tensions, geen `wp-`):
+  China-Australië-ban (okt 2020–begin 2023, keten die zichzelf omlegde), Rusland-oost-draai (2022→, EU-embargo → overbelast
+  Trans-Siberisch spoor naar de Pacific), Mongolië-Gobi-corridor. Reden: kolens kwetsbaarheid is beleid/vraag, geen zeestraat.
+- **Grondstof-eigen "nieuwe element" = één LANDknelpunt `grens-gashuunsukhait`** (Gashuun Sukhait / Ganqimaodu, Mongolië-China-
+  Gobi-grens), `kind:"grensovergang"` in een eigen gelabeld COAL-blok in `_chokepoints.js`. Draagt de Mongoolse cokeskool
+  (Tavan Tolgoi) over land naar het Chinese staal — exact het `grens-kasumbalesa`/`grens-ruili`-patroon. Alléén kolen verwijst
+  ernaar → regressievrij. Kolen = 4e grondstof (na nikkel/olie/zilver) zonder nieuw ZEE-knelpunt.
+- **GÉÉN optionele toggle-laag.** Kolen heeft geen zinvol CB/beurs/recycling-equivalent (geen bovengrondse kluisvoorraden;
+  kolen wordt verbrand, niet gerecycled). Bewust weggelaten (het runbook staat dit toe: "alleen als de grondstof er een heeft").
+  Bonus: houdt de engine schoon tijdens de parallelle diamant-/gas-sessies (sectie J). **Géén nieuwe render-modus/marker-types.**
+- **Nieuwe 12e grondstof (registratie-plumbing), net als zilver.** Kolen zit niet in de basis-10 → nieuw `data/coal.js` +
+  `<script>`-tag + build-check. Dat structurele verschil met het patroon bewust als **eigen Linear-issue** (LAR-457), zoals
+  LAR-436 bij zilver. Reden: het is de enige echte afwijking en verdient een eigen spoor.
+- **Route-bug: Canadese haven van Roberts Bank → Ridley/Prince Rupert.** De 2 kapotte legs zaten op `coal-port-vancouver →
+  wp-pac-noord`. Empirisch gediagnosticeerd (kandidaten door `Routing.sea`): **Roberts Bank/Westshore ligt ingesloten in de
+  Salish Sea** en valt dicht in het grove raster (robertsbank→open zee = null). Verplaatst naar **Ridley Terminal / Prince
+  Rupert** (open kust) — dat is bovendien feitelijk dé Canadese cokeskool-exporthaven. Herbevestigt de zilver-Tacoma→Astoria-les:
+  test kandidaat-coördinaten door de router vóór je ze vastzet.
 
 ## M14 · Grafiet — uitgevoerd (2026-07-15)
 - **De vorm = een REE-achtige verwerkingstrechter, met TWEE feedstocks.** Grafiet is HET anodemateriaal in Li-ionbatterijen

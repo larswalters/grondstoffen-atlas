@@ -1,6 +1,26 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-15 (M14 · Grafiet uitgevoerd — het LAATSTE basis-10-bestand, alle 11 grondstoffen nu uitgewerkt; M12 · PGM; M13 · Zilver)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof; M14 · Grafiet; M13 · Zilver)*
+
+> **M15 · KOLEN UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** na zilver (11e) de tweede écht nieuwe grondstof
+> (kolen zit niet in de basis-10): nieuw `data/coal.js` (34 nodes / 33 flows / 6 tensions) + brief `design/kolen.md` +
+> `<script src="data/coal.js">` in `index.html` + `grens-gashuunsukhait` (Mongolië-Gobi) in `_chokepoints.js` + 5 kolen-
+> checks in `build-standalone.py`. De vorm is **fundamenteel anders**: **géén mondiale flessenhals** want kolen is
+> overweldigend **binnenlands** — ~85% verstookt waar gedolven (China ~50% van de wereld, India, VS, Rusland), slechts
+> ~15% van de ~8.700 Mt gaat over zee. De kaart toont grote binnenlandse blokken (`erts`+`product`) tegenover een dunnere
+> **zeehandelslaag** (`raffinaat` = de internationaal verhandelde bulk, waar élk ban/her-routeringsverhaal leeft).
+> **China = swing-koper** (grootste producent én importeur). **Twee kolen** (thermisch→stroom vs. cokeskool→staal) via
+> `note`+`tension` (nikkel-patroon). **Drie her-routeringen** (tensions): China-Australië-ban (2020-2023), Rusland-oost-
+> draai (2022→), Mongolië-Gobi-corridor. Grondstof-eigen "nieuwe element" = **één LANDknelpunt** `grens-gashuunsukhait`
+> (Tavan-Tolgoi-cokeskool over de Gobi → Chinees staal; Kasumbalesa/Ruili-patroon; alléén kolen verwijst ernaar →
+> regressievrij). Schip+land, **géén nieuwe render-modus, géén nieuwe marker-types, géén optionele toggle-laag** (kolen
+> heeft geen zinvol CB/beurs/recycling-equivalent). Kolen = **4e** grondstof (na nikkel/olie/zilver) zonder nieuw **zéé**-
+> knelpunt. Headless (poort 8735): **kolen 111 legs / 0 kapot / 0 straight / 0 degen**, regressievrij; route-bug empirisch
+> gefixt (Canadese haven Roberts Bank ingesloten in de Salish Sea → **Ridley/Prince Rupert** open kust). Commit `75c3483`
+> (lokaal, Claude-trailer, **alléén eigen bestanden** — 3 parallelle sessies grafiet/diamant/gas ongemoeid, sectie J: de
+> gedeelde `index.html` kreeg diamond/coal/gas in één hunk → alléén de coal-regel gestaged via `git apply --cached`).
+> **Linear M15 · Kolen + LAR-455..459 Done, 461 In Progress** (visuele bevestiging = Lars). De atlas telt nu **12
+> grondstoffen** (basis-10 + zilver + kolen); diamant + gas lopen in parallelle sessies (13/14).
 
 > **M14 · GRAFIET UITGEVOERD (2026-07-15) — DE ATLAS IS INHOUDELIJK COMPLEET (11/11):** `data/graphite.js` van "basis"
 > (10/3) → **uitgewerkt** (31 nodes / 26 flows / 6 tensions) + brief `design/grafiet.md` + 5 grafiet-checks in
@@ -162,6 +182,18 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-16 · M15 kolen = de binnenlands-grondstof, géén trechter** — kolen heeft als eerste grondstof **géén enkele
+  mondiale flessenhals**: ~85% wordt verbrand waar gedolven (China ~50%, India, VS, Rusland), ~15% zeehandel. Stages als
+  ketenpositie: `erts` = mijn→haven/centrale · `raffinaat` = de **internationaal verhandelde bulk** (zeekruisingen +
+  landcorridor, waar élk ban/her-routeringsverhaal leeft) · `product` = stroom/staal → binnenlandse kolen (erts+product)
+  leest visueel anders dan verhandelde (mét raffinaat-zeeboog). **Twee kolen** (thermisch/cokeskool) via `note`+`tension`
+  (nikkel-patroon, niet via stage). China = swing-koper; drie her-routeringen als tensions (Australië-ban/Rusland-oost-draai/
+  Mongolië-corridor). **Géén render-modus/marker-types/toggle-laag.** Nieuwe 12e grondstof (plumbing als eigen issue LAR-457).
+- **2026-07-16 · M15 één nieuw LANDknelpunt `grens-gashuunsukhait`** (Mongolië-China-Gobi, `kind:"grensovergang"`) in een eigen
+  COAL-blok in `_chokepoints.js` — Kasumbalesa/Ruili-patroon; alléén kolen verwijst ernaar → regressievrij. Kolen = 4e grondstof
+  (na nikkel/olie/zilver) zonder nieuw zéé-knelpunt. Route-bug: Canadese haven Roberts Bank ingesloten in de Salish Sea (dicht in
+  het grove raster) → verplaatst naar Ridley/Prince Rupert (open kust; empirisch getest, zilver-Tacoma→Astoria-les herbevestigd).
+
 - **2026-07-14 · modulair = bron van waarheid, uitgevoerd** — code → deze map + `git init`; M5-fixes geport.
 - **2026-07-14 · grensovergang als landpunt** — `kind: "grensovergang"` stempelt de LANDkaart open (niet de
   zeekaart); `isSeaPoint` behandelt hem als landpunt. Per-waypoint `openRadius` voor smalle rivieren (Saint-Laurent).
@@ -322,8 +354,12 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 
 ## I - Runbook: "werk grondstof X uit" (self-serve)
 
-Vaste flow om een grondstof van **"basis" → "uitgewerkt"** te brengen, identiek aan hoe goud/koper/uranium/REE zijn gedaan.
-Nog op "basis": **grafiet** — nu de énige (het laatste van de basis-10; PGM/M12 + zilver/M13 = gedaan). Doe de stappen op volgorde; commit code en wrapup-docs apart.
+Vaste flow om een grondstof uit te werken, identiek aan hoe goud/koper/uranium/REE/zilver/kolen zijn gedaan.
+**De basis-10 is compleet** (grafiet/M14 was de laatste). De groei zit nu in **nieuwe grondstoffen** (niet basis→uitgewerkt maar
+een nieuw `data/<x>.js` + `<script>`-tag + build-check, het zilver/kolen-patroon — leg dat "anders"-punt als eigen issue vast,
+zoals LAR-436/457). Gedaan als nieuwe grondstof: zilver (M13), kolen (M15); diamant + gas lopen parallel. Doe de stappen op
+volgorde; commit code en wrapup-docs apart. **Let bij parallel werk streng op sectie J** (alléén eigen bestanden stagen; bij een
+gedeelde `index.html` met meerdere nieuwe script-regels in één hunk: stage alléén je eigen regel via `git apply --cached`).
 
 **0. Oriënteer.** Lees `memory/current-strategy.md` (architectuur + sjabloon) + `memory/decisions.md` (de vaste patronen) +
    `design/_brief-template.md`. Kijk naar een recent uitgewerkt bestand als voorbeeld — `data/copper.js` (schip/land + optionele

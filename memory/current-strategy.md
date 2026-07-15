@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-15 (M14 · Grafiet uitgevoerd — het LAATSTE basis-10-bestand, alle 11 grondstoffen uitgewerkt)*
+*Last updated: 2026-07-16 (M15 · Kolen uitgevoerd — de nieuwe 12e grondstof; nu 12 uitgewerkt, diamant/gas parallel)*
 
 ## Architectuur (hoe we bouwen)
 

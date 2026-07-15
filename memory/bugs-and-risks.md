@@ -1,5 +1,21 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-15 (na M14 · Grafiet — alle 11 grondstoffen uitgewerkt)*
+*Last updated: 2026-07-16 (na M15 · Kolen — de nieuwe 12e grondstof)*
+
+## M15 · Kolen — geverifieerd headless (2026-07-16)
+- Volledig gebouwd + geverifieerd (eigen server poort 8735 = `grondstoffen-atlas-4`): **kolen 111 legs / 0 kapot /
+  0 straight / 0 degen / 0 unresolved via** (34 nodes / 33 flows / 6 tensions). Regressie schoon: alle 12 grondstoffen
+  op hun bekende baseline; kolen voegt 0 kapot/straight/degen toe.
+- **1 route-bug onderweg gevonden + gefixt (zilver-Tacoma→Astoria-echo):** de 2 kapotte legs zaten op `coal-port-vancouver
+  → wp-pac-noord`. Empirisch gediagnosticeerd door kandidaat-coördinaten door `Routing.sea` te halen: **Roberts Bank /
+  Westshore ligt ingesloten in de Salish Sea** (achter Vancouver Island) en valt dicht in het grove 0,25°-raster
+  (robertsbank→open zee = `null`). Verplaatst naar **Ridley Terminal / Prince Rupert** (open kust) — dat is bovendien
+  feitelijk dé Canadese cokeskool-exporthaven. Daarna 0 kapot. **Les (herbevestigd):** ingesloten binnenzeeën (Salish Sea,
+  Puget Sound, Bohai) sluiten in het grove raster; test een haven-coördinaat door de router vóór je hem vastzet, en kies
+  een open-kust-terminal.
+- **Risico (parallel werk, sectie J):** deze sessie draaide náást **3** andere (grafiet mid-wrapup, diamant, gas). De
+  gedeelde `index.html` kreeg drie script-regels (diamond/coal/gas) in één hunk → alléén de coal-regel gestaged via een
+  gerichte `git apply --cached`-patch. `atlas-standalone.html` (gitignored) bevatte tijdens de build ook diamant/gas-data;
+  geen probleem want het is een lokaal artefact. **Blijf bij nieuwe grondstoffen selectief stagen (nooit `git add -A`).**
 
 ## M14 · Grafiet — geverifieerd headless (2026-07-15)
 - Volledig gebouwd + geverifieerd (eigen server poort 8735, `grondstoffen-atlas-4` toegevoegd aan `launch.json`):
