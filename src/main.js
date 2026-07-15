@@ -13,6 +13,7 @@ const ATLAS = (function () {
     showExchangeStocks: false,         // koper: optionele beursvoorraden-laag
     showRecycle: false,                // zeldzame aardmetalen: optionele recycling-laag
     showReserves: false,               // olie: optionele strategische-voorraden-laag (SPR)
+    showMilitary: false,               // uranium: optionele militaire-kringloop-laag
   };
 
   function activeResources() { return RESOURCES.filter((r) => activeIds.includes(r.id)); }
@@ -20,6 +21,8 @@ const ATLAS = (function () {
   function hasExchangeStocks() { return activeResources().some((r) => r.nodes.some((n) => n.type === "exchange")); }
   // strategische-voorraden-toggle: alleen bij grondstoffen met `type:"reserve"`-nodes (olie/SPR).
   function hasReserves() { return activeResources().some((r) => r.nodes.some((n) => n.type === "reserve")); }
+  // militaire-kringloop-toggle: alleen bij grondstoffen met `type:"military"`-nodes (uranium).
+  function hasMilitary() { return activeResources().some((r) => r.nodes.some((n) => n.type === "military")); }
   // recycling-toggle: alleen bij grondstoffen die de kringloop achter een `layer:"recycle"`-
   // laag zetten (REE) — koper heeft recycling always-on (geen layer) en krijgt dus geen chip.
   function hasRecycle() { return activeResources().some((r) => (r.flows || []).some((f) => f.layer === "recycle")); }
@@ -34,7 +37,7 @@ const ATLAS = (function () {
       : { one: "schip", many: "schepen", btn: "⚓ schepen" });
     UI.renderViewModes(filters, onFilterChange);
     UI.renderFilters(filters, onFilterChange,
-      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks(), hasRecycle: hasRecycle(), hasReserves: hasReserves() });
+      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks(), hasRecycle: hasRecycle(), hasReserves: hasReserves(), hasMilitary: hasMilitary() });
   }
 
   // focus: null | {type:"node", id} | {type:"flow", key, nodeIds}
@@ -78,6 +81,7 @@ const ATLAS = (function () {
         if (f.layer === "exchange" && !filters.showExchangeStocks) return;
         if (f.layer === "recycle" && !filters.showRecycle) return;
         if (f.layer === "reserve" && !filters.showReserves) return;
+        if (f.layer === "secondary" && !filters.showMilitary) return;
         const from = getNode(res, f.from);
         const to = getNode(res, f.to);
         if (!from || !to) return;

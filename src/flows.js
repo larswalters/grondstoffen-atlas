@@ -127,6 +127,8 @@ const FlowLayer = (function () {
         if (flow.layer === "recycle" && !(filters && filters.showRecycle)) return;
         // Strategische-voorraden-laag (olie/SPR): alleen tonen als de toggle aanstaat.
         if (flow.layer === "reserve" && !(filters && filters.showReserves)) return;
+        // Militaire-kringloop-laag (uranium): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "secondary" && !(filters && filters.showMilitary)) return;
 
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);

@@ -110,6 +110,7 @@ const CONFIG = {
     cb:       { minSize: 0.030, maxSize: 0.080 }, // centrale banken; grootte = voorraad
     exchange: { minSize: 0.028, maxSize: 0.070 }, // beursmagazijnen (koper); grootte = voorraad
     reserve:  { minSize: 0.032, maxSize: 0.085 }, // strategische reserves (olie/SPR); grootte = voorraad
+    military: { minSize: 0.026, maxSize: 0.062 }, // militaire kringloop (uranium); grootte = voorraad
     recycler: { size: 0.026 },   // schroot terug naar raffinage
     waypoint: { size: 0.020 },   // zeestraten/kanalen (knelpunten op de route)
     lift: 0.015,             // hoe ver boven het oppervlak markers zweven

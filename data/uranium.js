@@ -32,9 +32,12 @@
 // nieuwe render-modus. De Kaspische oversteek en de Dardanellen zijn nieuwe
 // vaarpunten in _chokepoints.js (alleen uranium gebruikt ze).
 //
-// NB: de optionele "militaire kringloop"-laag (down-blended wapen-HEU / strategische
-// voorraden) uit de brief is bewust NIET meegenomen — die toggle vereist code in
-// flows/ui/main/config en wacht op een aparte sessie. Deze module is de kern-keten.
+// OPTIONELE "MILITAIRE KRINGLOOP"-LAAG (type:"military" / flow.layer:"secondary",
+// filter showMilitary) — de vijfde optionele toggle-laag (na goud-CB, koper-exchange,
+// REE-recycle, olie-reserve), default UIT. Down-geblend wapen-HEU ("Megatons to
+// Megawatts"), tails-herverrijking en strategische reserves (US DOE / Rosatom):
+// secundair aanbod dat het gat vult tussen winning (~60 kt) en reactorbehoefte (~65 kt).
+// Chip alleen bij uranium; rode "kringloop"-marker (grootte ∝ √voorraad).
 // ============================================================================
 
 REGISTER({
@@ -126,8 +129,8 @@ REGISTER({
     // ================================ SPLIJTSTOFFABRICAGE (verrijkt U -> elementen)
     // stage product: verrijkt uranium -> brandstofelementen -> reactor.
     { id: "u-fab-us", type: "refinery", name: "Westinghouse (Columbia, SC)", country: "VS",
-      lat: 33.93, lon: -80.93, tier: 2, operator: "Westinghouse",
-      note: "Grote Amerikaanse splijtstoffabriek; Westinghouse kwalificeert óók VVER-brandstof om de Russische lock-in in Midden-Europa te breken." },
+      lat: 33.93, lon: -80.93, tier: 2, operator: "Westinghouse", coastal: true,
+      note: "Grote Amerikaanse splijtstoffabriek; Westinghouse kwalificeert óók VVER-brandstof om de Russische lock-in in Midden-Europa te breken. (coastal: het down-geblende Russische LEU landde hier via de Atlantische Oceaan — Megatons to Megawatts.)" },
     { id: "u-fab-fr", type: "refinery", name: "Framatome (Romans)", country: "Frankrijk",
       lat: 45.05, lon: 5.05, tier: 2, operator: "Framatome",
       note: "Franse splijtstofelementen voor de eigen (grootste in Europa) reactorvloot." },
@@ -192,6 +195,24 @@ REGISTER({
     { id: "u-port-china", type: "port", name: "Shanghai (Yangshan)", country: "China",
       lat: 30.62, lon: 122.07, tier: 3,
       note: "Invoerpoort voor geïmporteerd uranium; vandaar per spoor het binnenland in (o.a. Lanzhou)." },
+
+    // ============================ MILITAIRE KRINGLOOP (optionele toggle-laag)
+    // type "military" -> alleen zichtbaar met de militaire-kringloop-toggle.
+    // `stock` (tU-equivalent) = secundaire voorraad -> node-grootte. NUANCE: dit is
+    // GÉÉN mijnbouw maar secundair aanbod (down-blend/tails/reserves) dat het gat
+    // tussen winning (~60 kt) en reactorbehoefte (~65 kt) vult.
+    { id: "u-mil-ru-heu", type: "military", name: "Down-blending wapen-HEU (Rosatom)", country: "Rusland",
+      lat: 59.40, lon: 28.50, stock: 500, tier: 2, coastal: true,
+      note: "De Russische down-blending van hoogverrijkt wapen-uranium (HEU) tot reactor-LEU. Het hart van 'Megatons to Megawatts' (1993–2013): kernkoppen die als reactorbrandstof eindigden. Export historisch over de Oostzee naar het Westen." },
+    { id: "u-mil-ru-tails", type: "military", name: "Tails-herverrijking (Rosatom)", country: "Rusland",
+      lat: 56.85, lon: 60.60, stock: 300, tier: 3,
+      note: "Rusland herverrijkt de verarmde 'tails' (het afvalstroompje van de verrijking) opnieuw tot bruikbare feed — een secundaire bron die alleen bij grote, goedkope centrifugecapaciteit rendabel is. Ook Westerse tails gingen hierheen." },
+    { id: "u-mil-us-doe", type: "military", name: "US DOE (down-blend + reserve)", country: "VS",
+      lat: 33.35, lon: -81.65, stock: 250, tier: 3,
+      note: "Het Amerikaanse ministerie van Energie down-blendt eigen overtollig militair HEU en houdt een strategische uraniumvoorraad (o.a. Savannah River) — een binnenlandse buffer los van de Russische keten." },
+    { id: "u-mil-us-reserve", type: "military", name: "VS strategische U-reserve", country: "VS",
+      lat: 35.93, lon: -84.31, stock: 150, tier: 3,
+      note: "De nieuwe Amerikaanse strategische uraniumreserve (aangekondigd 2020): binnenlands gewonnen en verrijkt uranium als buffer tegen de afhankelijkheid van Russische SWU en HALEU." },
   ],
 
   // ==========================================================================
@@ -306,6 +327,20 @@ REGISTER({
     { from: "u-mine-us", to: "u-enr-us", value: 1500, mode: "rail", stage: "erts",
       status: "gepland",
       note: "Gepland: heropstartende Amerikaanse ISR-mijnbouw -> Urenco USA, om de eigen keten te sluiten en de Russische SWU-afhankelijkheid af te bouwen." },
+
+    // === H. MILITAIRE KRINGLOOP (layer:"secondary" -> alleen met de toggle) ===
+    // Secundair aanbod: down-geblend wapen-HEU, tails-herverrijking, reserves.
+    { from: "u-mil-ru-heu", to: "u-fab-us", value: 400, mode: "ship", stage: "raffinaat", layer: "secondary",
+      via: ["wp-deense-straten"],
+      note: "'Megatons to Megawatts' (1993–2013): Russisch down-geblend wapen-HEU als LEU over de Oostzee en de Atlantische Oceaan naar de Amerikaanse splijtstofketen — twee decennia lang ~10% van de Amerikaanse kernstroom. Beëindigd in 2013." },
+    { from: "u-mil-ru-heu", to: "u-mkt-ru", value: 200, mode: "rail", stage: "product", layer: "secondary",
+      note: "Rusland down-blendt óók voor de eigen reactoren: overtollig militair HEU dat als binnenlandse reactorbrandstof eindigt." },
+    { from: "u-mil-ru-tails", to: "u-enr-ru", value: 300, mode: "rail", stage: "erts", layer: "secondary",
+      note: "Herverrijkte tails terug de verrijking in als goedkope feed — een secundaire kringloop die Ruslands enorme centrifugecapaciteit benut." },
+    { from: "u-mil-us-doe", to: "u-mkt-us", value: 250, mode: "rail", stage: "product", layer: "secondary",
+      note: "Down-geblend Amerikaans militair HEU + DOE-voorraad -> de eigen reactorvloot, over land." },
+    { from: "u-mil-us-reserve", to: "u-mkt-us", value: 150, mode: "rail", stage: "product", layer: "secondary",
+      note: "De strategische reserve als buffer richting de reactoren — geen mijnbouw, wél leveringszekerheid." },
   ],
 
   // ==========================================================================
@@ -356,5 +391,12 @@ REGISTER({
       flows: ["u-mine-ca>u-mkt-ca"],
       metric: "zwaarwaterreactoren draaien op natuurlijk uranium — de flessenhals valt weg",
       note: "Niet elke reactor heeft verrijking nodig. De Canadese CANDU-zwaarwaterreactoren draaien op NATUURLIJK uranium en slaan de hele verrijkingsstap — en dus de Russische knijp — over. Het verklaart waarom Canada erts, conversie én reactoren in één binnenlandse keten kan houden." },
+
+    { id: "u-t-military", type: "beleid", title: "Militaire kringloop: van kernkoppen naar reactorbrandstof",
+      lat: 52.0, lon: 40.0,
+      nodes: ["u-mil-ru-heu", "u-mil-ru-tails", "u-mil-us-doe", "u-mil-us-reserve"],
+      flows: ["u-mil-ru-heu>u-fab-us", "u-mil-us-doe>u-mkt-us", "u-mil-ru-tails>u-enr-ru"],
+      metric: "secundair aanbod vult het gat mijn (~60 kt) ↔ reactorbehoefte (~65 kt)",
+      note: "Zet de militaire-kringloop-laag aan. Niet al het reactoruranium komt uit een mijn: onder 'Megatons to Megawatts' (1993–2013) werd het hoogverrijkte uranium uit ~20.000 ontmantelde Russische kernkoppen down-geblend tot reactor-LEU — twee decennia lang goed voor ~10% van de Amerikaanse stroom. Daarnaast herverrijkt Rusland zijn verarmde tails, en houden de VS (DOE) en Rosatom strategische reserves. Dit secundaire aanbod vult het structurele gat tussen winning (~60 kt) en reactorbehoefte (~65 kt) — geen mijnbouw, wél een geopolitieke buffer die de afhankelijkheden verzacht óf verscherpt." },
   ],
 });

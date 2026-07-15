@@ -148,6 +148,16 @@ const UI = (function () {
       rv.onclick = () => { filters.showReserves = !filters.showReserves; onChange(); };
       filterRow.appendChild(rv);
     }
+
+    // Militaire-kringloop-laag: alleen aanbieden als een actieve grondstof militaire data heeft (uranium).
+    if (opts && opts.hasMilitary) {
+      const ml = document.createElement("button");
+      ml.className = "chip" + (filters.showMilitary ? " on" : "");
+      ml.textContent = "militaire kringloop";
+      ml.title = "Down-geblend wapen-HEU, tails-herverrijking en strategische reserves tonen (secundair aanbod)";
+      ml.onclick = () => { filters.showMilitary = !filters.showMilitary; onChange(); };
+      filterRow.appendChild(ml);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL
@@ -290,7 +300,7 @@ const UI = (function () {
     port: "Haven / overslag", market: "Fabriek / afzetmarkt",
     airport: "Luchthaven / gateway", hub: "Handels- & kluishub",
     cb: "Centrale bank", recycler: "Recycling", exchange: "Beursmagazijn",
-    reserve: "Strategische reserve",
+    reserve: "Strategische reserve", military: "Militaire kringloop",
   };
   const WP_KIND_LABEL = { zeestraat: "Zeestraat", kanaal: "Kanaal", kaap: "Kaap",
     vaarpunt: "Vaarpunt", grensovergang: "Grenspost" };
@@ -346,6 +356,7 @@ const UI = (function () {
       if (n.share) meta.push("aandeel wereldproductie ≈ " + n.share + "%");
       if (n.reserve) meta.push("goudvoorraad ≈ " + n.reserve + " t");
       if (n.stock && n.type === "reserve") meta.push("strategische voorraad ≈ " + n.stock + " mln vaten");
+      if (n.stock && n.type === "military") meta.push("secundaire voorraad ≈ " + n.stock + " tU");
       else if (n.stock) meta.push("beursvoorraad ≈ " + n.stock + " kt");
       if (n.exchange) meta.push(n.exchange);
       if (n.potential) meta.push("potentie: " + n.potential);
