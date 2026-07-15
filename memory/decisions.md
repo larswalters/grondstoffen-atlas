@@ -1,7 +1,31 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof)*
+*Last updated: 2026-07-16 (M16 · Diamant uitgevoerd — de nieuwe 12e grondstof; M17 · Kolen)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M16 · Diamant — uitgevoerd (2026-07-16)
+- **De vorm = de scherpste DOWNSTREAM-trechter, niet een winnings- of raffinage-knijp.** Winning is verspreid; de knijp zit
+  bij de **bewerking**: ~90-95% van álle diamant wordt geslepen/gepolijst in **één stad (Surat, Gujarat)** — scherper nog dan
+  de China-raffinage (lithium/koper) of Ganzhou-scheiding (REE). Alle rough-arcs convergeren op Surat = het emergente aha.
+- **Antwerpen = een institutioneel knelpunt, gemodelleerd als een fysieke omweg.** Sinds de G7-sanctie op Russische/Alrosa
+  diamant (maart 2024) is Antwerpen het verplichte **certificeringsknooppunt**: niet-Russische rough gaat mijn→Antwerpen→Surat,
+  terwijl de **Russische rough zichtbaar om Antwerpen heen buigt** via Dubai/direct India. Reden: modelleer de sanctie-
+  werkelijkheid als routing, niet als losse tekst — "de stroom buigt om, niet weg". Draagt ook via een `tension` (zoals Ticino/goud).
+- **Diamant vliegt → hergebruik van de goud/PGM air-mode, 0 engine-wijziging.** Per kilo extreem waardevol → beveiligde
+  luchtvracht (`mode:"air"`, great-circle). **Géén nieuw chokepoint** (zoals PGM), **géén nieuwe marker-types** (`hub`=
+  Antwerpen/Dubai/Gaborone/Mumbai, `refinery`=slijperij Surat/China — de ruit-marker past treffend). Alleen korte hops binnen
+  een land = `road`. Diamant is de 3e grondstof na koper/nikkel-familie die niets aan de engine/`_chokepoints.js` toevoegt.
+- **Lab-grown-toggle = een écht "anders"-punt → aparte, uitgestelde issue (LAR-471).** Kweekdiamant (China/Henan HPHT + India/
+  Surat CVD) past niet op een bestaande toggle (recycle/exchange/reserve/military hebben andere semantiek) → een nieuwe optionele
+  laag (`layer:"labgrown"`, 5 engine-bestanden). Bewust NIET in v1 gebouwd (parallelle sessies op de gedeelde engine, sectie J),
+  zoals uranium's militaire-toggle (LAR-414) en olie's SPR (LAR-432). In v1 leeft lab-grown als `tension` (`dia-t-labgrown`).
+- **Route-artefact pragmatisch opgelost:** de ene 2-punts landhop (Dubai→Golf-retail, kust-artefact van het grove 0,25°-raster —
+  Dubai valt net als water in `LAND_POLYS`) omgezet naar `air` i.p.v. `road` → 0 straight, consistent want diamant vliegt.
+- **Sectie-J-race (4 parallelle sessies) + gas-tag-co-commit.** Mijn gestagede bestanden werden éénmaal meegeveegd in gas'
+  brede `git add` en raakten bij de rebase (M15→M17-renummering) weer untracked (inhoud intact; **geen historie herschreven**).
+  Bij het afmaken: 2 schone pathspec-commits; de meeliftende `data/gas.js`-tag in `index.html` bewust meegenomen omdat die al
+  naar de **gecommitte** gas.js verwees → consistent, geen duplicaat, gas' resume ziet geen diff. **Les:** bij een gedeelde
+  staging-index nooit `git add` zonder pathspec; committen met `git commit -- <paths>` isoleert betrouwbaar.
 
 ## M17 · Kolen — uitgevoerd (2026-07-16)
 - **De vorm = de binnenlandsheid, GÉÉN trechter.** Waar lithium/koper/REE bij de raffinage knijpen, goud bij Zwitserland,

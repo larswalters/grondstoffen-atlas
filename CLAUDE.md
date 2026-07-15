@@ -1,6 +1,30 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof; M14 · Grafiet; M13 · Zilver)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M16 · Diamant uitgevoerd — de nieuwe 12e grondstof; M17 · Kolen; M14 · Grafiet)*
+
+> **M16 · DIAMANT UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** net als zilver (M13)/gas (M15) een échte nieuwe
+> grondstof (niet basis→uitgewerkt): nieuw `data/diamond.js` (25 nodes / 35 flows / 6 tensions) + brief `design/diamant.md`
+> + `<script src="data/diamond.js">` in `index.html` + 4 diamant-checks in `build-standalone.py`. Milestones liepen t/m M14
+> (grafiet); M15 was door de gas-sessie bezet → diamant = **M16**. De vorm = **de scherpste DOWNSTREAM-trechter van de
+> atlas**: winning verspreid (Rusland/Alrosa #1 op **volume**, Botswana/Debswana #1 op **waarde**, Canada, Angola, Zuid-
+> Afrika, Zimbabwe, Namibië-marien, Lesotho; **Argyle gesloten 2020** = schaarste-verhaal; volume-vs-waarde via `note`),
+> maar **~90-95% van álle diamant wordt geslepen/gepolijst in één stad: Surat (Gujarat)** — scherper nog dan de China-
+> raffinage of Ganzhou-scheiding; alle rough-arcs convergeren op Surat. **Antwerpen** = het verplichte **G7-
+> certificeringsknooppunt** (sanctie op Russische/Alrosa diamant, maart 2024) → fysieke omweg mijn→Antwerpen→Surat,
+> terwijl de **Alrosa-rough zichtbaar om Antwerpen heen buigt** via Dubai/direct India ("de stroom buigt om, niet weg").
+> De Beers-sights via Gaborone. Diamant **vlíégt** (beveiligde koeriers) → **hergebruik van de goud/PGM air-mode**
+> (`mode:"air"`), **0 engine-wijziging, géén nieuw chokepoint, géén nieuwe marker-types** (`hub`=Antwerpen/Dubai/Gaborone/
+> Mumbai; `refinery`=slijperij Surat/China). Korte hops binnen een land = `road`. Keten 3 stages (erts=rough → raffinaat=
+> polished bij Surat → product=sieraad; VS #1 ~50%). 6 tensions: Surat-trechter, De Beers/Alrosa-duopolie, Antwerpen-
+> certificering, Alrosa/G7-sanctie, **lab-grown-ontwrichting**, waarde-vs-volume + Botswana-beneficiation. **Twee "anders"-
+> punten → aparte issues** (Lars' verzoek): LAR-470 (plumbing, zoals zilvers LAR-436) + de **lab-grown-toggle** (LAR-471,
+> `layer:"labgrown"`, 5 engine-bestanden) **bewust in de backlog** i.v.m. de parallelle sessies (zoals uranium's LAR-414 /
+> olie's LAR-432); in v1 leeft lab-grown als `tension`. Headless (poort 8734): **diamant 35 legs (27 air + 8 road) /
+> 0 kapot / 0 straight / 0 degen**, 0 warnings, regressievrij; 1 kust-artefact-landhop (Dubai→Golf) → `air` voor 0 straight.
+> `atlas-standalone.html` geregenereerd (4 diamant-checks OK). Commits `72d134c` (feat) + `7d06a0c` (build), **gepusht →
+> live op Pages** (`8497f24..7d06a0c`, fast-forward, alléén eigen commits — 4 parallelle sessies grafiet/kolen/gas/diamant,
+> sectie J; de meeliftende `gas.js`-tag verwees al naar de gecommitte gas.js → consistent, geen duplicaat). **Linear M16 ·
+> Diamant + LAR-467..472:** 467/468/469/470 Done, 472 In Progress (visueel=Lars), 471 Backlog.
 
 > **M17 · KOLEN UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF:** na zilver (11e) de tweede écht nieuwe grondstof
 > (kolen zit niet in de basis-10): nieuw `data/coal.js` (34 nodes / 33 flows / 6 tensions) + brief `design/kolen.md` +

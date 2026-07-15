@@ -8,6 +8,18 @@ zilver (M13), gas (M15), diamant (M16), **kolen (M17)**. Volledig uitgewerkt nu:
 kolen = **14** (gas M15 / diamant M16 / kolen M17 = de nieuwe batch, waarvan gas + diamant in parallelle sessies). Het
 brief→bouw-runbook (sectie I) + het nieuwe-grondstof-plumbing-patroon (LAR-436/457) blijven de vaste flow.
 
+## M16 · Diamant ✅ uitgevoerd (2026-07-16) — LAR-467 t/m 472
+Nieuw `data/diamond.js` (25 nodes / 35 flows / 6 tensions) + brief `design/diamant.md` + `<script>`-tag in `index.html` +
+4 diamant-checks in `build-standalone.py`. De scherpste downstream-trechter (Surat ~90-95%) + Antwerpen-G7-certificering +
+Alrosa-herrouting; diamant **vliegt** (hergebruik goud/PGM air-mode, 0 engine-wijziging, géén nieuw chokepoint/marker-types).
+Headless: 35 legs (27 air + 8 road) / 0 kapot / 0 straight / 0 degen, regressievrij. Commits `72d134c` (feat) + `7d06a0c`
+(build), **gepusht → live op Pages**. LAR-467/468/469/470 Done.
+- [ ] **LAR-472** — visuele bevestiging op de live URL/mobiel (https://larswalters.github.io/grondstoffen-atlas/) = **Lars**.
+- [ ] **LAR-471 (Backlog) — lab-grown-toggle** bouwen zodra de gedeelde engine-tree schoon is: nieuwe optionele laag
+  `layer:"labgrown"` + `showLabGrown` op 5 plekken (`config`/`main`/`flows`/`markers`/`ui`); 2-3 productie-nodes (China/Henan
+  HPHT + India/Surat CVD) die de Surat-slijperij én de VS-markt ondergraven. Bewust uitgesteld i.v.m. de parallelle sessies
+  (zoals uranium's LAR-414 / olie's LAR-432). In v1 leeft lab-grown als `tension`.
+
 ## M17 · Kolen ✅ uitgevoerd (2026-07-16) — LAR-455 t/m 459, 461
 Nieuw `data/coal.js` (34 nodes / 33 flows / 6 tensions) + brief `design/kolen.md` + `<script>`-tag in `index.html` +
 `grens-gashuunsukhait` (Mongolië-Gobi) in `_chokepoints.js` + 5 kolen-checks in `build-standalone.py`. De vorm = **de
