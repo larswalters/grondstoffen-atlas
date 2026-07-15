@@ -27,6 +27,13 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   petroleumreserves, olie's equivalent van goud-CB/koper-beursvoorraden/REE-recycling) raakt de 5 gedeelde engine-bestanden
   (config/main/flows/markers/ui) terwijl de **parallelle M10-nikkel-sessie** live was — exact het scenario waarin uranium z'n
   toggle uitstelde (LAR-414). Alleen de **data-laag** gebouwd om botsing te vermijden; het `layer:"..."`-patroon is al vast.
+- **SPR-voorraden-toggle ALSNOG GEBOUWD** (LAR-432 Done, commit `86c8c1f`) — zodra de nikkel-sessie klaar was en de tree
+  schoon (Lars gaf groen licht: "de voorraden bij olie is een goed idee"). Het **vierde** optionele-laag-patroon; bewust een
+  **dedicated `type:"reserve"`** (i.p.v. het REE-`layer`-op-nodes-trucje) omdat geen andere grondstof reserve-nodes heeft →
+  `hasReserves()` mag simpel op `n.type==="reserve"` detecteren, net als `hasExchangeStocks()`. 5 SPR-nodes (`stock` in mln
+  vaten) + 5 vul-flows + tension `oil-t-spr`; olie-amber tank-marker (grootte ∝ √`stock`). Reden voor de dedicated tank-marker
+  i.p.v. hergebruik van de koper-spoel: olie-eigen visuele taal (voorraad-tank), en de koper-spoel leest als "beurs". Headless:
+  toggle uit=45/46, aan=50/51 (+5/+5), 0 kapot/0 straight, chip "voorraden" alleen bij olie, regressievrij.
 - **Verificatie (headless, mijn eigen server poort 8734 — de nikkel-sessie bezette 8732/8733):** olie **210 legs / 0 kapot /
   0 straight**. Regressie schoon: de globale 5 nulls zijn de bekende `degDist:0` same-city hops (lithium 4 + goud 1), olie voegt
   0 toe. `atlas-standalone.html` geregenereerd (4 olie-checks OK) + zelf geverifieerd. WebGL-screenshot lukt niet headless → visueel = Lars.

@@ -149,11 +149,11 @@ Olie is in de kern een **2-staps** keten (ruwe olie → geraffineerde producten)
 - **NIEUW knelpunt: géén.** Dat is olie's eigen aha — het is de grondstof waar het hele knelpunten-net al voor bestaat; olie laat het compleet oplichten. Alleen eventueel een paar **navigatie-vaarpunten** (Golf van Mexico / Caribisch / Arabische Zee) toevoegen als de headless legs-check rechte/kapotte legs toont; oil-only, in een eigen gelabeld blok.
 - **Institutionele "knijp" (geen zeestraat), via `tensions`:** de **reserves-concentratie + OPEC+** (Saoedi+Rusland als prijszetters) en de **Rusland-omleiding** (sanctie/prijsplafond-beleid).
 
-## 6. Optionele toggle-laag — strategische voorraden (SPR) — `layer:"reserve"`
-Olie's equivalent van de goud-CB-laag / koper-beursvoorraden / REE-recycling: **strategische petroleumreserves** als optionele toggle (default uit).
-- Nodes (`type:"reserve"`, `stock` = ~mln vaten → markergrootte): **US SPR** (Golfkust-zoutkoepels, Bryan Mound/Big Hill), **China SPR** (Zhoushan/Dalian), **Japan** (Kiire), **India** (Visakhapatnam), **IEA/EU-stocks**.
+## 6. Optionele toggle-laag — strategische voorraden (SPR) — `layer:"reserve"` ✅ GEBOUWD (2026-07-15)
+Olie's equivalent van de goud-CB-laag / koper-beursvoorraden / REE-recycling: **strategische petroleumreserves** als optionele toggle (default uit). **Uitgevoerd** in een tweede sessie (LAR-432, commit `86c8c1f`), nadat de parallelle nikkel-sessie klaar was en de gedeelde engine-bestanden vrij waren.
+- Nodes (`type:"reserve"`, `stock` = mln vaten → markergrootte, olie-amber tank): **US SPR** (Golfkust-zoutkoepels, Bryan Mound/Big Hill, ~350), **China SPR** (Dalian/kust, ~300), **Japan** (Kiire, ~130), **India** (Mangalore/Padur, ~40), **IEA/EU** (Le Havre, ~90). + 5 vul-flows (`layer:"reserve"`, stage erts) + tension `oil-t-spr`.
 - Nuance: buffer tegen aanbodschokken, geen dagelijkse handelsstroom — net als de koper-beursvoorraden.
-- **Bouwbeslissing:** de tree is schoon (geen parallelle sessie) → de toggle mag mee, exact het koper-`exchange`-patroon op 5 plekken (`config`/`main`/`flows`/`markers`/`ui`) met een nieuwe `reserve`-key. Kern eerst bouwen + verifiëren, dan de toggle als aparte stap.
+- **Het vierde optionele-laag-patroon** (goud=CB, koper=exchange, REE=recycle, **olie=reserve**), exact het koper-`exchange`-patroon op 5 plekken (`config`/`main`/`flows`/`markers`/`ui`) + een nieuwe `reserve`-key. Chip "voorraden" verschijnt alleen bij olie (`hasReserves()` generiek). Headless geverifieerd: toggle uit=45/46, aan=50/51 (+5/+5), 0 kapot/0 straight, regressievrij.
 
 ## 7. Emergent plaatje (verificatie-lat)
 1. **Hormuz gloeit op** als de dikste knoop — bijna alle Golf-crude wringt zich hierdoor, en meteen daarna door **Malakka** naar Oost-Azië (twee ringen achter elkaar).

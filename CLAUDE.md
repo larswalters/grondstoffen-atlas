@@ -10,10 +10,12 @@
 > pijpleidingen** (Saoedi→Yanbu, UAE→Fujairah), de **Rusland-omleiding 2022→** (Europese crude → India/China via
 > Primorsk/Novorossiysk/ESPO-Kozmino/Druzhba) en de **Amerikaanse schalie-ommekeer** (Corpus Christi export). Keten op
 > 3 stages: erts=ruwe olie / raffinaat=producten / product=petrochemie; schip+pijpleiding, **géén nieuwe render-modus**.
-> Optionele **SPR-voorraden-toggle** (`layer:"reserve"`) bewust uitgesteld (LAR-432, parallelle nikkel-sessie op gedeelde
-> engine-bestanden — zoals uranium's LAR-414). Headless: **olie 210 legs / 0 kapot / 0 straight**, regressievrij.
-> `atlas-standalone.html` geregenereerd (olie-checks OK). Commit `1d4ece5` (lokaal-only, Claude-trailer). **Linear M11 ·
-> LAR-428..433 (4 Done, 432 Backlog, 433 In Progress).** Rest = visuele bevestiging Netlify/mobiel (Lars).
+> Optionele **SPR-voorraden-toggle** (`layer:"reserve"`) eerst uitgesteld tijdens de parallelle nikkel-sessie, **daarna
+> alsnog gebouwd** (LAR-432 Done, commit `86c8c1f`) = het **vierde** optionele-laag-patroon (goud-CB/koper-beurs/REE-recycling/
+> olie-reserve): 5 SPR-nodes (`type:"reserve"`, `stock` mln vaten) + 5 vul-flows + tension, olie-amber tank-marker, chip
+> "voorraden" alleen bij olie. Headless: **olie 210 legs / 0 kapot / 0 straight** (232 incl. reserve); toggle uit=45/46,
+> aan=50/51; regressievrij. `atlas-standalone.html` geregenereerd (olie- + reserve-checks OK). Commits `1d4ece5` (data) +
+> `86c8c1f` (toggle), lokaal-only, Claude-trailer. **Linear M11 · LAR-428..432 Done, 433 In Progress.** Rest = visuele bevestiging Netlify/mobiel (Lars).
 
 > **M10 · NIKKEL UITGEVOERD (2026-07-15):** `data/nickel.js` van "basis" (13/4) → **uitgewerkt** (50 nodes / 46 flows /
 > 6 tensions). De nikkel-"aha": de **trechter staat op z'n kop** t.o.v. koper — waar koper/lithium breed graven en in
@@ -180,9 +182,12 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   Venezuela-routes op het water te houden; olie-only → regressievrij. Keten op de 3 stages met **petrochemie als 3e daad**
   (`erts`=crude → `raffinaat`=producten → `product`=nafta→kraker→kunststof). Schip + `mode:"pipeline"`, géén nieuwe render-modus;
   crude-stromen starten bij de mijn met de export-terminal als 1e via-punt (gathering-leg routeert auto als land). Kust-raffinaderijen `coastal:true`.
-- **2026-07-15 · M11 SPR-voorraden-toggle uitgesteld** (LAR-432 Backlog) — de optionele `layer:"reserve"`-laag (strategische
-  petroleumreserves, olie's CB/beurs/recycling-equivalent) raakt de 5 gedeelde engine-bestanden terwijl de parallelle M10-nikkel-sessie
-  live was → alleen de data-laag gebouwd (zoals uranium's LAR-414). Sectie J gevolgd: op nikkel's wrapup gewacht vóór de eigen vault/memory-sync.
+- **2026-07-15 · M11 SPR-voorraden-toggle uitgesteld → alsnog gebouwd** (LAR-432 Backlog → **Done**, commit `86c8c1f`) — de
+  optionele `layer:"reserve"`-laag (strategische petroleumreserves, olie's CB/beurs/recycling-equivalent) raakt de 5 gedeelde
+  engine-bestanden; tijdens de parallelle M10-nikkel-sessie eerst alleen de data-laag gebouwd (zoals uranium's LAR-414, sectie J).
+  Zodra de tree schoon was (Lars: "de voorraden bij olie is een goed idee") de toggle alsnog toegevoegd = het **vierde** optionele-laag-
+  patroon, exact het koper-`exchange`-patroon (dedicated `type:"reserve"`, `hasReserves()` op `n.type`) + olie-amber tank-marker.
+  5 SPR-nodes + 5 vul-flows + tension `oil-t-spr`. Headless: toggle uit=45/46, aan=50/51 (+5/+5), 0 kapot/0 straight, chip alleen bij olie, regressievrij.
 
 ## E - Memory Map
 
@@ -226,7 +231,7 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 8. [x] **M9 · Uranium uitgevoerd** (2026-07-15): `design/uranium.md` (`d016ab8`) → `data/uranium.js` "uitgewerkt" (38 nodes/36 flows/6 tensions) + Kaspische oversteek/Dardanellen in `_chokepoints.js` (`76c0333`). 4-staps keten met verrijking als flessenhals (~44% Rusland) + Trans-Kaspische route + VVER-lock-in + CANDU-uitzondering. Headless: 54 legs/0 kapot, regressievrij. **Linear M9 · Uranium + LAR-410..415** aangemaakt (410-413 Done; 414 Backlog = uitgestelde militaire-kringloop-toggle; 415 In Progress = visuele bevestiging). Rest = visuele bevestiging Netlify/mobiel.
 9. [x] **M8 · Zeldzame aardmetalen uitgevoerd** (2026-07-15): `data/rare-earths.js` van "basis" (9/5) → "uitgewerkt" (41 nodes/38 flows/6 tensions), magneet-REE-framing (NdPr+Dy/Tb) + `grens-ruili` (Myanmar→China) in `_chokepoints.js` + recycling-toggle (`layer:"recycle"`, 5 plekken). Ganzhou-scheidingstrechter + Dy/Tb-landstroom + Mountain-Pass-rondreis + NdFeB-waaier. Headless: 90 legs/0 kapot/0 straight, regressievrij. **Linear M8 · LAR-416..420 Done; 421 In Progress** (visuele bevestiging Netlify/mobiel = Lars).
 10. [x] **M10 · Nikkel uitgevoerd** (2026-07-15): `data/nickel.js` van "basis" (13/4) → "uitgewerkt" (50 nodes/46 flows/6 tensions) + `design/nikkel.md` + nikkel-checks in `build-standalone.py`. Indonesië-onshoring-trechter (exportban: mijn+raffinage in tien jaar, IMIP/IWIP) + twee nikkels (class-1 batterij vs class-2 roestvrij) + prijscrash-shakeout (Nickel West 2024) + LME-nuance (2022-squeeze). Schip+land, géén nieuw chokepoint; beursvoorraden-laag hergebruikt de bestaande exchange-toggle (**0 engine-wijziging**); recycling always-on. Headless: **nikkel 91 legs / 0 kapot / 0 straight**, regressie schoon. Commit `08aa4f5` (lokaal-only, Claude-trailer). **Linear M10 · LAR-422..426 Done, 427 In Progress**. Overige op basis: grafiet, PGM.
-11. [x] **M11 · Olie uitgevoerd** (2026-07-15): `data/oil.js` van "basis" (18/15) → "uitgewerkt" (45 nodes/46 flows/6 tensions) + `design/olie.md` + 4 olie-checks in `build-standalone.py`. Het **knelpunten-netwerk dat tegelijk oplicht** (Hormuz #1 met 15 stromen, Malakka, Suez/Bab, Bosporus, Panama, Kaap) → **géén nieuw chokepoint** (eigen aha), wel 3 olie-only vaarpunten (`wp-golf-mexico`/`wp-florida`/`wp-caribisch`) in `_chokepoints.js`. Drie verhalen: Hormuz-bypass-pijpleidingen (Yanbu/Fujairah) + Rusland-omleiding 2022→ (India/China) + VS-schalie-ommekeer. Keten 3 stages (erts/raffinaat/petrochemie), schip+pijpleiding, géén nieuwe render-modus. Headless: **olie 210 legs / 0 kapot / 0 straight**, regressievrij (baseline 5 = lithium 4 + goud 1). Commit `1d4ece5` (lokaal-only, Claude-trailer). **Linear M11 · LAR-428..433 (4 Done, 432 Backlog = uitgestelde SPR-toggle, 433 In Progress)**. Overige op basis: grafiet, PGM.
+11. [x] **M11 · Olie uitgevoerd** (2026-07-15): `data/oil.js` van "basis" (18/15) → "uitgewerkt" (45 nodes/46 flows/6 tensions) + `design/olie.md` + 4 olie-checks in `build-standalone.py`. Het **knelpunten-netwerk dat tegelijk oplicht** (Hormuz #1 met 15 stromen, Malakka, Suez/Bab, Bosporus, Panama, Kaap) → **géén nieuw chokepoint** (eigen aha), wel 3 olie-only vaarpunten (`wp-golf-mexico`/`wp-florida`/`wp-caribisch`) in `_chokepoints.js`. Drie verhalen: Hormuz-bypass-pijpleidingen (Yanbu/Fujairah) + Rusland-omleiding 2022→ (India/China) + VS-schalie-ommekeer. Keten 3 stages (erts/raffinaat/petrochemie), schip+pijpleiding, géén nieuwe render-modus. Headless: **olie 210 legs / 0 kapot / 0 straight**, regressievrij (baseline 5 = lithium 4 + goud 1). Commit `1d4ece5` (lokaal-only, Claude-trailer). **SPR-voorraden-toggle (`layer:"reserve"`) daarna alsnog gebouwd** (LAR-432 Done, commit `86c8c1f`) = het vierde optionele-laag-patroon; toggle uit=45/46, aan=50/51, chip "voorraden" alleen bij olie. **Linear M11 · LAR-428..432 Done, 433 In Progress**. Overige op basis: grafiet, PGM.
 
 ## I - Runbook: "werk grondstof X uit" (self-serve)
 

@@ -1,6 +1,12 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-15 (sessie 9, vervolg) — M11 · Olie compleet: SPR-voorraden-toggle gebouwd
+- **Trigger (Lars):** "nikkel is klaar dus jij kan hem afmaken … en de voorraden bij olie is een goed idee" → de bewust uitgestelde SPR-toggle (LAR-432) alsnog gebouwd nu de gedeelde engine-bestanden vrij zijn.
+- **Gebouwd:** het **vierde** optionele-laag-patroon (`layer:"reserve"` / `type:"reserve"`, `filters.showReserves`), exact het koper-`exchange`-patroon op 5 plekken (config/main/flows/markers/ui) + een olie-amber tank-marker. `data/oil.js`: 5 SPR-nodes (US Gulf ~350 / China Dalian ~300 / Japan Kiire ~130 / India Mangalore ~40 / IEA-EU Le Havre ~90 mln vaten) + 5 vul-flows + tension `oil-t-spr`.
+- **Geverifieerd (headless, poort 8734):** olie **232 legs (incl. reserve) / 0 kapot / 0 straight**; toggle uit=45 nodes/46 flows, aan=50/51 (exact +5/+5); chip "voorraden" verschijnt alleen bij olie en toggelt schoon (uit→aan→uit, 0 console-errors); `hasReserves()` alleen true voor olie; regressie ongewijzigd. `atlas-standalone.html` geregenereerd (+ 2 reserve-checks, groen) + zelf geverifieerd.
+- **Afgerond:** commit `86c8c1f` (Claude-trailer, alleen eigen 7 bestanden). **Linear LAR-432 → Done.** Olie is nu volledig compleet (data + optionele laag), gelijk aan goud/koper/REE. Rest = visuele bevestiging Netlify/mobiel (LAR-433, Lars).
+
 ## 2026-07-15 (sessie 9) — M11 · Olie uitgevoerd (data/oil.js, het knelpunten-netwerk licht op)
 - **Taak (Lars):** "begin met het uitwerken van olie voor de grondstoffen atlas zoals we de rest ook gedaan hebben" → runbook sectie I gevolgd (uranium/koper = dichtstbijzijnde modellen). In één sessie gebouwd + geverifieerd + wrapup.
 - **Gebouwd:** `data/oil.js` van "basis" (18 nodes/15 flows) → **uitgewerkt** (45 nodes / 46 flows / 6 tensions) + brief `design/olie.md` + 4 olie-sanity-checks in `build-standalone.py`. 14 mijnen + 14 export-terminals + 9 raffinaderijen + 8 markten (4 verbruik + 4 petrochemie). Stages: 35 erts (crude) / 6 raffinaat (product-trade) / 5 product (petrochemie). Modi: 41 tanker + 5 pijpleiding.

@@ -29,15 +29,18 @@
   (`flat:false` + `arcStyle`-lift, hoogte ∝ afstand) — óók in de `routes`-weergave. Korte hops blijven
   `road`/`rail` (land-A\*). `makeRouteCurve` schaalde de booghoogte al met de routelengte. Voyages pusht nu
   ship+air; de tijdlijn-teller is resource-bewust ("✈ vluchten" ↔ "⚓ schepen", via `UI.setVoyageNoun`).
-- **Optionele lagen via filter (herbruikbaar patroon, nu 3×):** `layer:"cb"`-flows + `type:"cb"`-nodes op
+- **Optionele lagen via filter (herbruikbaar patroon, nu 4×):** `layer:"cb"`-flows + `type:"cb"`-nodes op
   `filters.showCentralBanks` (goud); `layer:"exchange"` + `type:"exchange"` op `filters.showExchangeStocks` (koper —
-  beursvoorraden); sinds M8 `layer:"recycle"` op `filters.showRecycle` (REE — recycling). Alle default uit, in
+  beursvoorraden); sinds M8 `layer:"recycle"` op `filters.showRecycle` (REE — recycling); sinds M11 `layer:"reserve"` +
+  `type:"reserve"` op `filters.showReserves` (olie — strategische voorraden/SPR). Alle default uit, in
   `flows.js`/`markers.js`/`main.js` + `ui.js`-chip + `config.js`-marker; de chip verschijnt alleen als een actieve grondstof
   die data heeft. **Nuance bij recycling (M8):** de node-gate zit op `node.layer==="recycle"` (niet op `type==="recycler"`)
   en `hasRecycle()` detecteert op `f.layer==="recycle"` — zo blijft **koper's always-on recycling** (recyclers zónder `layer`)
-  ongemoeid en krijgt alleen REE de toggle/chip. Kopieer de vier filterplekken + config + ui-chip + marker-vorm voor elke nieuwe laag.
+  ongemoeid en krijgt alleen REE de toggle/chip. De **olie-reserve-laag (M11)** volgt daarentegen exact het `exchange`-patroon
+  (eigen `type:"reserve"`, `hasReserves()` op `n.type==="reserve"`) — een dedicated type dat geen andere grondstof gebruikt.
+  Kopieer de vier filterplekken + config + ui-chip + marker-vorm voor elke nieuwe laag.
 - **Marker-types:** `mine`/`refinery`/`port`/`market` + (M6) `airport`/`hub`/`cb`/`recycler` + (M7) `exchange`
-  (koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`) in `markers.js`.
+  (koperkleurige CylinderGeometry-spoel, grootte ∝ √`stock`) + (M11) `reserve` (olie-amber tank-cilinder, grootte ∝ √`stock`) in `markers.js`.
 - **Single-file build:** `build-standalone.py` genereert `atlas-standalone.html` uit `index.html` (lijnt CSS +
   lokale scripts inline, houdt three.js-CDN extern). Modulair = bron van waarheid; draai het script na wijzigingen.
 
@@ -81,9 +84,12 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
   0 straight**; regressie schoon (globale baseline 5 = lithium 4 + goud 1, olie voegt 0 toe). `atlas-standalone.html`
   geregenereerd (4 olie-checks OK) + zelf geverifieerd (210/0/0). **Code-commit `1d4ece5`** (repo lokaal-only, Claude-trailer;
   alleen eigen bestanden gestaged). **Linear M11 · LAR-428..433 (4 Done, 432 Backlog, 433 In Progress).**
-- **Bewust uitgesteld:** de optionele **SPR-voorraden-toggle** (`layer:"reserve"`, LAR-432 Backlog) — raakt de gedeelde
-  engine-bestanden terwijl de nikkel-sessie parallel liep (net als uranium's LAR-414). Oppakken zodra de tree schoon is;
-  exact het koper-`exchange`-patroon.
+- **Toegevoegd (na de nikkel-sessie):** de optionele **SPR-voorraden-toggle** (`layer:"reserve"`, LAR-432 **Done**, commit
+  `86c8c1f`) — gebouwd zodra de engine-bestanden vrij waren. Het **vierde** optionele-laag-patroon (goud-CB/koper-beurs/
+  REE-recycling/olie-reserve), exact het koper-`exchange`-patroon + olie-amber tank-marker. 5 SPR-nodes (US Gulf/China Dalian/
+  Japan Kiire/India Mangalore/IEA-EU Le Havre, `stock` in mln vaten) + 5 vul-flows + tension `oil-t-spr`. Headless: olie 232 legs
+  / 0 kapot / 0 straight; toggle uit=45/46, aan=50/51; chip "voorraden" alleen bij olie; regressievrij. **Olie is nu volledig
+  compleet** (data + optionele laag), gelijk aan goud/koper/REE.
 - **Rest:** **visuele bevestiging op Netlify/mobiel** (WebGL-screenshot lukt niet headless — LAR-433, Lars).
 - **Volgende grondstof:** grafiet, PGM — zelfde brief→bouw-flow.
 
