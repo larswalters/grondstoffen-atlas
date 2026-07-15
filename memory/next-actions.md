@@ -59,9 +59,8 @@ op de 3 bestaande stages, met de **verrijking (~44% Rusland) als `raffinaat`-fle
 **Ontwerp-skelet ligt in `design/zeldzame-aardmetalen.md`** (2026-07-14, herzien 2026-07-15 → **optie 2:
 scherpe magneet-REE-framing**, NdPr + Dy/Tb i.p.v. alle 17 elementen) → data-doel `data/rare-earths.js` van
 "basis" → "uitgewerkt" (metadata sharpenen: `name`/`symbol=NdPr`/`unit=kt magneet-REO/blurb`, id blijft
-`rare-earths`). **Linear-milestone `M8 · Zeldzame aardmetalen` + issues nog aan te maken** (spiegelt M6/M7:
-research × 2 → NdPr/Dy-onderscheid + Myanmar-grenscorridor → data-file → recycling-toggle → verificatie).
-LAR-nummers volgen bij aanmaken.
+`rare-earths`). **Linear-milestone `M8 · Zeldzame aardmetalen` + issues LAR-416 t/m 421 aangemaakt** (Backlog;
+spiegelt M6/M7/M9: research × 2 → Myanmar-grenscorridor → data-file → recycling-toggle → verificatie).
 
 **Kern-"aha" (distinct van lithium/koper):** winning breed verspreid, maar scheiding van NdPr/Dy uit het
 gemengde erts ~85–90% in Zuid-China (Ganzhou) én NdFeB-magneten ~90%+ China. Drie nieuwe elementen voor de

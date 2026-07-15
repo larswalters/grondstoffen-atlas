@@ -60,7 +60,7 @@ op het node/flow-schema (`lithium.md` = het volledig ingevulde voorbeeld).
   operators/capaciteiten/route-detail.
 - **Voorbereid (ontwerp-skelet, nog niet gebouwd):** **zeldzame aardmetalen** (M8, `design/zeldzame-aardmetalen.md` —
   magneet-REE-framing NdPr+Dy/Tb, optie 2). Volgens het brief→bouw-sjabloon; bouwen ná koper's visuele bevestiging.
-  Linear-milestone M8 nog aan te maken. Overige kandidaten op basis: nikkel (runner-up), grafiet, PGM, olie.
+  Linear-milestone M8 + LAR-416 t/m 421 aangemaakt (Backlog). Overige kandidaten op basis: nikkel (runner-up), grafiet, PGM, olie.
 
 ## Nu (2026-07-15 — M9 · Uranium uitgevoerd)
 

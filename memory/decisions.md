@@ -146,7 +146,9 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   Recycling (magneetschroot → scheiding) = optionele toggle `layer:"recycle"` (default uit), het CB/beursvoorraden-patroon.
 - **Nieuw knelpunt bij de bouw:** grensovergang **Myanmar→China** (Kachin/Ruili) als `grens-*`-punt in `_chokepoints.js`,
   analoog aan `grens-kasumbalesa` (`kind:"grensovergang"`). Draagt de Dy/Tb-landstroom; enige nieuwe chokepoint.
-- **Linear M8 niet aangemaakt** (MCP-auth ontbrak): geen valse LAR-nummers verzonnen, milestone/issues "aan te maken".
+- **Linear M8 aangemaakt** — milestone `M8 · Zeldzame aardmetalen` + **LAR-416 t/m 421** (Backlog), gespiegeld op M9. NB:
+  de `331d1eb1`-Linear-MCP bleek wél bereikbaar (dat is een andere server dan de auth-vereiste `plugin:engineering:linear`
+  die ik eerst aannam) — eerdere sessie-notitie "MCP-auth ontbrak" was dus onterecht.
 
 ## Uranium — bouwbesluiten (M9, 2026-07-15) — ✅ GEBOUWD + geverifieerd
 - **Grondstofkeuze: uranium** als volgende uitwerking (niet nikkel, de runner-up). Reden: de meest *distinctieve nieuwe

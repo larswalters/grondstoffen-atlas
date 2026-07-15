@@ -1,7 +1,7 @@
 # Zeldzame aardmetalen — magneet-REE (NdPr + Dy/Tb) — ontwerp (op papier)
 *Aangemaakt 2026-07-14 · herzien 2026-07-15 (optie 2: scherpe magneet-REE-framing i.p.v. "alle 17 elementen").*
 *Status: ontwerp-skelet. Exacte coördinaten, volumes en operators = research (M8-issues).*
-*Milestone (aan te maken in Linear): `M8 · Zeldzame aardmetalen`. Data-doel: `data/rare-earths.js` van "basis" → "uitgewerkt". Vul dit skelet aan tot een volledige brief volgens `design/_brief-template.md`, waarna het data-issue het 1-op-1 omzet.*
+*Milestone `M8 · Zeldzame aardmetalen` (Linear: **LAR-416 t/m 421**, Backlog). Data-doel: `data/rare-earths.js` van "basis" → "uitgewerkt" (LAR-419). Vul dit skelet aan tot een volledige brief volgens `design/_brief-template.md` (research LAR-416/417), waarna LAR-419 het 1-op-1 omzet.*
 
 > **Framing-keuze (optie 2).** Niet "alle 17 zeldzame aarden" (dan wordt het een vage blob incl. de
 > bulk-cerium/lanthaan voor glas en katalysatoren), maar de **magneet-REE**: het handjevol dat de
