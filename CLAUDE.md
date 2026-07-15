@@ -125,7 +125,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
   weg zodra de repo visueel op Netlify/mobiel bevestigd is.
 - **✅ Beslist + uitgevoerd (2026-07-14): modulair = bron van waarheid** (single-file = gegenereerde build). Code
   verplaatst + `git init`; M5-fixes geport (214 legs, 0 kapotte routes geverifieerd).
-- **Deploy:** Netlify, drag-and-drop (single-file build daarvoor handig).
+- **Deploy:** ✅ **live op GitHub Pages** — https://larswalters.github.io/grondstoffen-atlas/ (repo `larswalters/grondstoffen-atlas`, public, branch `main` root, met een `.nojekyll` zodat `data/_registry.js`/`data/_chokepoints.js` geserveerd worden). **Elke `git push origin main` werkt de live site bij** (~1-2 min rebuild) — dit is nu de "bekijk-op-elk-apparaat"-deploy (2026-07-15). Netlify (drag-and-drop van de single-file) blijft als alternatief bestaan. NB: directe Google-API-egress is op deze machine geblokkeerd (Drive-upload via SA lukt niet vanaf hier; GitHub werkt wél).
 - **Bestandsindeling (modulaire opzet — in deze map):**
   - `config.js` — alle instellingen op één plek
   - `geo-data.js` — landpolygonen (`LAND_POLYS`)
@@ -288,7 +288,7 @@ De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\Gen
 1. [x] M5 door aparte CC-sessie klaar + geverifieerd (2026-07-14); LAR-393/394/395/396 Done.
 2. [x] Wiki-pagina + `now.md`-regel + Pinecone-gist (eerste wrapup, 2026-07-14).
 3. [x] Beslist: **modulair = bron van waarheid** (single-file = gegenereerde build).
-4. [x] Modulaire code **verplaatst** naar deze map + `git init` (2 commits `b9d69fa`, `177bc6b`) = werkbasis. GitHub-remote nog optioneel.
+4. [x] Modulaire code **verplaatst** naar deze map + `git init` = werkbasis. ✅ **GitHub-remote live (2026-07-15):** `larswalters/grondstoffen-atlas` (public) + **GitHub Pages** → https://larswalters.github.io/grondstoffen-atlas/ (elke `git push origin main` deployt).
 5. [x] **M5-fixes geport** uit de single-file naar de modulaire code + geverifieerd (214 legs, 0 kapotte routes). Visuele check op Netlify/mobiel rest nog (WebGL-screenshot lukte niet).
 6. [x] **M6 · Goud uitgevoerd** (2026-07-14): research LAR-397/398 → `data/goud.js` LAR-401 + luchtroute-modus LAR-399 + voyages-lucht LAR-400 + CB-toggle LAR-402. Headless geverifieerd (371 legs/0 kapot). LAR-403 rest = visuele bevestiging Netlify/mobiel.
 7. [x] **M7 · Koper uitgevoerd** (2026-07-14): `data/copper.js` "uitgewerkt" (69 nodes/50 flows/5 tensions) — Andes-concentraat-trechter + Copperbelt-kathode over land (Kasumbalesa) + beursvoorraden-laag (LAR-408, `layer:"exchange"`). Headless geverifieerd: koper 145 legs / 0 kapot, regressie 388/0. Rest = visuele bevestiging Netlify/mobiel + code-commit (Lars' seintje) + Linear LAR-404..409 → Done (MCP-auth ontbrak).
