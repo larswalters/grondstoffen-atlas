@@ -3,6 +3,38 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## Backlog leeggewerkt — optionele-laag-cleanup (2026-07-16)
+
+- **2026-07-16 · LAR-471 lab-grown-toggle = het 6e optionele-laag-patroon, via `layer` (niet dedicated type).** De
+  uitgestelde diamant-toggle gebouwd nu de engine-tree schoon was. Gekozen voor het **recycle-stijl `layer`-patroon**
+  (`type:"labgrown"` voor de marker + `layer:"labgrown"` voor de gate op nodes én flows), niet het reserve/military-
+  dedicated-type-patroon — want lab-grown is een schaduw-*aanbod* dat de bestaande product-arcs ondergraaft, geen aparte
+  voorraadsoort. `hasLabGrown()` vuurt op `f.layer==="labgrown"` (zoals `hasRecycle`). 3 productie-nodes (China/Henan HPHT
+  34.75/113.63, India/Surat CVD 21.24/72.95 = náást de natuurlijke slijperij, VS/Washington premium-CVD Diamond Foundry
+  47.42/-120.31) + 6 flows die vooral de **VS-verlovingsringmarkt** voeden. Marker = **violette octaëder** (`0xB98BE0`) —
+  een fabrieksgemaakte steen, visueel onderscheiden van de natuurlijke mijn/slijperij. 5 engine-plekken (config/main/flows/
+  markers/ui), default uit, chip alleen bij diamant. In v1 bleef lab-grown een `tension`; die tension wijst nu naar de
+  echte lab-grown nodes/flows.
+- **2026-07-16 · LAR-447 recycle-tooltip per-grondstof via een `recycleHint`-resourceveld.** De gedeelde chip-tooltip in
+  `ui.js` was hard-coded REE-bewoord ("magneetschroot, <5%") — feitelijk onjuist voor PGM (~25% autokat = katalysatorschroot)
+  en grafiet. Fix zonder de engine te vervuilen: een optioneel `recycleHint`-veld op de resource-metadata + een
+  `main.recycleHint()` die de hint van de actieve recycle-grondstof doorgeeft in `opts`; `ui.js` valt terug op een generieke
+  tekst als er geen hint is. Hints op REE/PGM/grafiet (de 3 met `layer:"recycle"`). Koper (recyclers always-on, géén layer)
+  krijgt geen chip → ongemoeid.
+- **2026-07-16 · LAR-448 PGM krijgt een TWEEDE optionele toggle (beursvoorraden) — conventie bewust doorbroken.** De issue
+  pleitte er zelf tegen ("één toggle per grondstof is de conventie; recycling is voor PGM dominanter"), maar Lars gaf akkoord
+  om 'm toch te bouwen. Pt/Pd zíjn beursverhandeld (NYMEX/CME + TOCOM-futures, LPPM-kluizen) → feitelijk valide. Pure data,
+  **0 engine-wijziging**: hergebruik van de bestaande koper/nikkel/zilver-`exchange`-toggle (`type:"exchange"` + `layer:
+  "exchange"`, `hasExchangeStocks()` is generiek). 3 kluis-nodes (LPPM Londen/NYMEX New York/TOCOM Tokio, `stock` in t 3E) +
+  3 `layer:"exchange"`-bufferflows naar de autokat-markten. **PGM is nu de eerste grondstof met twee toggles naast elkaar**
+  (recycling + beursvoorraden) — technisch prima want elke laag is onafhankelijk gegate; recycling blijft het dominantere
+  verhaal. Precedent: een grondstof mag meerdere optionele lagen dragen.
+- **2026-07-16 · verificatie-gotcha: de Browser-pane cachet script-tag-files hardnekkig** (python `http.server` stuurt geen
+  no-cache headers → `navigate`/`location.reload()` herladen `data/*.js`/`src/*.js` niet vers). Bevestigd met een
+  cache-buster-`fetch` (server hád de nieuwe inhoud). Oplossing: engine-logica gevalideerd via in-memory injectie in
+  `RESOURCES`, en een **tweede server-instance op een andere poort** (8733) = schone origin voor de definitieve verse-load-
+  verificatie. Les voor volgende sessies: start desnoods een `-2`/`-3`-server voor een gegarandeerd verse load.
+
 ## M15 · Gas — uitgevoerd (2026-07-16)
 
 - **2026-07-16 · gas = de natuurkunde: gas is nauwelijks te verplaatsen.** De vorm is bewust anders dan alle eerdere:

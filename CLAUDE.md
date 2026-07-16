@@ -1,6 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (M15 · Gas + M16 · Diamant + M17 · Kolen uitgevoerd — drie nieuwe grondstoffen; atlas nu 14/14)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (BACKLOG LEEGGEWERKT — LAR-471 lab-grown-toggle + LAR-447 recycle-tooltip + LAR-448 PGM-beursvoorraden; atlas 14/14, backlog leeg)*
+
+> **BACKLOG LEEGGEWERKT (2026-07-16) — LAR-471 + LAR-447 + LAR-448, gepusht → live op Pages.** De 3 resterende
+> backlog-issues afgerond. **LAR-471 · lab-grown-toggle (diamant)** = het **6e optionele-laag-patroon** (na goud-CB/koper-
+> beurs/REE-recycle/olie-reserve/uranium-military): het `layer:"labgrown"`-patroon (zoals recycle, niet dedicated type) —
+> 3 productie-nodes `type:"labgrown"` (China/Henan HPHT, India/Surat CVD, VS/Washington premium-CVD) + 6 flows die vooral de
+> **VS-verlovingsringmarkt** ondergraven; 5 engine-plekken (config marker-size `labgrown:{size:0.030}` / main `showLabGrown`+
+> `hasLabGrown()`+usedNodeIds-gate / flows-gate / markers-gate + **violette octaëder-marker** 0xB98BE0 / ui-chip "lab-grown"
+> + TYPE_LABEL); default uit, chip alleen bij diamant; `dia-t-labgrown`-tension wijst nu naar de echte lab-grown nodes/flows.
+> **LAR-447 · recycle-tooltip per-grondstof** = de gedeelde chip-tooltip was hard-coded REE-bewoord ("magneetschroot, <5%"),
+> fout voor PGM (~25% autokat)/grafiet → nu via een `recycleHint`-veld op de resource + `main.recycleHint()` + generieke
+> fallback in `ui.js` (hints op REE/PGM/grafiet). **LAR-448 · PGM-beursvoorraden-laag** (Lars akkoord ondanks de "één toggle
+> per grondstof"-conventie) = PGM's **tweede** optionele toggle naast recycling; pure data, 0 engine-wijziging (hergebruik
+> koper/nikkel/zilver-exchange-toggle): 3 kluis-nodes (LPPM/NYMEX/TOCOM) + 3 `layer:"exchange"`-bufferflows naar de autokat-
+> markten → **PGM = eerste grondstof met twee toggles naast elkaar**. Headless (poort 8732 + verse load 8733): diamant **41
+> legs (31 air+10 road) / 0 kapot / 0 straight / 0 degen** (toggle uit=35/25 aan=41/28, +34 scene-meshes); PGM **52 legs /
+> 0 kapot** (exchange-toggle +3/+3; beide chips alleen bij PGM); regressievrij (`totalBroken=0`), 0 console-errors.
+> **Cache-gotcha:** de Browser-pane cachet script-tag-files hardnekkig (geen no-cache op python `http.server`) → engine
+> gevalideerd via in-memory injectie + een **tweede server-instance op 8733** (schone origin). `build-standalone.py` +4
+> checks, `atlas-standalone.html` geregenereerd. Commits `f6c95f6` (feat 471) + `9feb8f2` (fix 447+448), **gepusht**
+> (`5d4d469..9feb8f2`) → live op Pages. **Linear LAR-471/447/448 → Done; de backlog is nu leeg.** Toekomstig werk = alleen
+> nog een nieuwe 15e grondstof of losse verfijningen. (Stale-notitie gecorrigeerd: M17-kolen stond al op origin/main.)
 
 > **M15 · GAS UITGEVOERD (2026-07-16) — DE NIEUWE 12e GRONDSTOF (aardgas/LNG):** net als zilver (M13)/diamant/kolen een
 > échte nieuwe grondstof (niet basis→uitgewerkt): nieuw `data/gas.js` (42 nodes / 51 flows / 6 tensions) + brief
@@ -225,6 +246,19 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-16 · LAR-471 lab-grown-toggle = het 6e optionele-laag-patroon, via `layer` (niet dedicated type)** — de
+  uitgestelde diamant-toggle gebouwd. Recycle-stijl `layer`-patroon (`type:"labgrown"` marker + `layer:"labgrown"` gate op
+  nodes én flows), niet reserve/military-dedicated-type — want lab-grown is schaduw-*aanbod* dat de product-arcs ondergraaft.
+  `hasLabGrown()` op `f.layer==="labgrown"`. 3 productie-nodes (Henan-HPHT/Surat-CVD/VS-CVD) + 6 flows naar vooral de VS-markt;
+  violette octaëder-marker; 5 engine-plekken; default uit, chip alleen bij diamant.
+- **2026-07-16 · LAR-447 recycle-tooltip per-grondstof via `recycleHint`-resourceveld** — de gedeelde `ui.js`-tooltip was
+  hard-coded REE-bewoord ("<5% magneetschroot"), fout voor PGM (~25% autokat)/grafiet. `recycleHint`-veld + `main.recycleHint()`
+  + generieke fallback; hints op REE/PGM/grafiet. Koper (recyclers zonder layer) ongemoeid.
+- **2026-07-16 · LAR-448 PGM krijgt een TWEEDE optionele toggle (beursvoorraden) — conventie bewust doorbroken** — Lars akkoord
+  ondanks "één toggle per grondstof". Pure data, 0 engine-wijziging (hergebruik exchange-toggle): 3 kluis-nodes (LPPM/NYMEX/
+  TOCOM) + 3 `layer:"exchange"`-flows. PGM = eerste grondstof met twee toggles; precedent: een grondstof mag meerdere lagen dragen.
+- **2026-07-16 · verificatie-gotcha: Browser-pane cachet script-tag-files** (geen no-cache op python `http.server`) — valideer
+  via in-memory injectie + een tweede server-instance op een andere poort (schone origin), niet via `reload()`.
 - **2026-07-16 · M17 kolen = de binnenlands-grondstof, géén trechter** — kolen heeft als eerste grondstof **géén enkele
   mondiale flessenhals**: ~85% wordt verbrand waar gedolven (China ~50%, India, VS, Rusland), ~15% zeehandel. Stages als
   ketenpositie: `erts` = mijn→haven/centrale · `raffinaat` = de **internationaal verhandelde bulk** (zeekruisingen +

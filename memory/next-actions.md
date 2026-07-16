@@ -1,5 +1,25 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof)*
+*Last updated: 2026-07-16 (BACKLOG LEEGGEWERKT — LAR-471 lab-grown-toggle + LAR-447 recycle-tooltip + LAR-448 PGM-beursvoorraden)*
+
+## 🎉 Backlog is leeg (2026-07-16)
+Alle 3 resterende backlog-issues afgerond + gepusht → live op Pages. **Niets meer In Progress/Todo/Backlog in Linear.**
+- **LAR-471 · lab-grown-toggle (diamant)** ✅ — het 6e optionele-laag-patroon (`layer:"labgrown"`): 3 productie-nodes
+  (China/Henan HPHT, India/Surat CVD, VS/Washington premium-CVD) + 6 flows die de VS-verlovingsringmarkt ondergraven;
+  5 engine-plekken + violette octaëder-marker + chip "lab-grown"; default uit, alleen bij diamant. Commit `f6c95f6`.
+- **LAR-447 · recycle-tooltip per-grondstof** ✅ — `recycleHint`-veld op de resource + `main.recycleHint()` + generieke
+  fallback in `ui.js`; hints op REE (<5% magneet) / PGM (~25% autokat) / grafiet (nascent). Commit `9feb8f2`.
+- **LAR-448 · PGM-beursvoorraden-laag** ✅ — PGM's tweede optionele toggle naast recycling (LPPM/NYMEX/TOCOM, pure data,
+  0 engine-wijziging, hergebruik exchange-toggle). PGM = eerste grondstof met twee toggles. Commit `9feb8f2`.
+- Headless geverifieerd: diamant 41 legs/0 kapot, PGM 52 legs/0 kapot, beide toggles filteren correct, regressievrij.
+
+**Enige open punt:** visuele eindbevestiging op de live URL/mobiel = Lars (violette lab-grown-arcs op de VS-markt bij
+diamant + de LPPM/NYMEX/TOCOM-kluismarkers bij PGM). WebGL-screenshot hangt headless.
+
+**Toekomstig werk** = alleen nog een nieuwe **15e grondstof** (zilver/kolen-patroon) óf losse verfijningen — geen
+openstaande features meer. Losse hygiëne: bureaublad-originelen (`atlas-lithium-kobalt.html` + `globe-oud`) opruimen.
+
+---
+
 
 ## 🎉 De basis-10 is compleet — nu uitbreiden met nieuwe grondstoffen (14 en groeiend)
 Na M14 (grafiet) stond er geen enkele grondstof van de **basis-10** meer op "basis". Daarna komen de **nieuwe
