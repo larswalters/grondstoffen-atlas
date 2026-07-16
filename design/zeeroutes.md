@@ -254,11 +254,19 @@ Drie redenen:
 zijn géén gewone navigatie-hulpjes — ze forceren een **ingesloten watercorridor** (Saint-Laurent-rivier;
 de Kaspische Zee is een gesloten zee die MARNET mogelijk niet dekt). Die vallen waarschijnlijk buiten
 searoute's netwerk en moeten in de pilot **empirisch** getoetst worden vóór ze sneuvelen. Zelfde geldt
-voor `wp-dardanellen`. **Voorstel: (a) voor de open-oceaan-hulpjes, en de ingesloten-water-ketens
-individueel toetsen** — niet blind slopen.
+voor `wp-dardanellen`.
 
-> **Status: WACHT OP LARS.** Vastleggen in `memory/decisions.md` zodra beslist; LAR-474 (pilot) levert
-> de echte cijfers waarop de knoop doorgehakt wordt.
+> ### ✅ BESLIST (Lars, 2026-07-17): **(a) opruimen — mét de ingesloten-water-nuance**
+>
+> De navigatie-hulpjes op **open water** gaan uit de via-ketens. De **ingesloten-water-ketens**
+> (`wp-st-laurent-1…4` + `-2b`, `wp-kaspisch-n/-m/-z`, en `wp-dardanellen`) worden **individueel
+> empirisch getoetst** vóór ze sneuvelen — eerst door searoute halen, dán pas slopen. Dat is het
+> M13/M17-patroon: kandidaat toetsen, niet gokken.
+>
+> Reden: (1) de ~1.090 km omweg van `wp-pac-zuid` verdwijnt; (2) de **valse flessenhals** verdwijnt —
+> `laneShape` tekent nu een knijppunt op 26°Z/125°W waar niets is (§5); (3) een handgeprikt punt uit
+> het A\*-tijdperk kan MARNET's lane-kennis alleen maar overrulen. Omvang speelde géén rol in de keuze
+> (11%, zie boven) — dit is puur een realisme-besluit.
 
 ## 9. Verificatie-criterium — wat is "goed"?
 
@@ -297,7 +305,7 @@ De check is dus niet "afwijking >15% = fout", maar "**afwijking >15% zonder door
 
 | # | besluit | status |
 |---|---|---|
-| 1 | **Via-punten: (a) opruimen of (b) hint?** (§8) | 🔴 **open** — aanbeveling: (a), met de ingesloten-water-ketens apart getoetst |
+| 1 | **Via-punten: (a) opruimen of (b) hint?** (§8) | ✅ **(a) opruimen** — beslist door Lars 2026-07-17; ingesloten-water-ketens individueel empirisch getoetst |
 | 2 | Sleutelformaat: coördinaat-paar | ✅ voorstel vastgelegd (§3) |
 | 3 | Precisie/decimatie: 3 decimalen, geen extra decimatie | ✅ voorstel vastgelegd (§3) |
 | 4 | Fallback: hard falen | ✅ voorstel vastgelegd (§4) |

@@ -21,7 +21,45 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
   we voortaan maken: **echte fysieke doorgangen** (Hormuz/Malakka/Suez/Panama/Bosporus/Lombok/Kaap) = houden, want
   searoute volgt ze by-design én ze zijn `tension`-ankers; **navigatie-hulpjes** (`wp-pac-zuid`/`-west`/`-noord`,
   `wp-golf-mexico`/`-florida`/`-caribisch`) = bestonden alleen om het kale A\* te sturen → kandidaat om te sneuvelen.
-  `grens-*` blijft (landkaart). **Open besluit (Lars, bij de pilot):** opruimen (a) of behouden als hint (b).
+  `grens-*` blijft (landkaart). ~~**Open besluit (Lars, bij de pilot):** opruimen (a) of behouden als hint (b).~~
+  → **BESLIST 2026-07-17, zie hieronder: (a) opruimen.**
+- **2026-07-17 · BESLIST (Lars): via-punten (a) OPRUIMEN — mét ingesloten-water-nuance.** De navigatie-hulpjes op
+  **open water** gaan uit de via-ketens van zee-legs; searoute doet de rest. De **ingesloten-water-ketens**
+  (`wp-st-laurent-1…4`/`-2b`, `wp-kaspisch-n/-m/-z`, `wp-dardanellen`) worden **individueel empirisch getoetst**
+  vóór ze sneuvelen — die forceren een corridor die MARNET mogelijk niet dekt (Saint-Laurent-rivier; Kaspische Zee
+  = gesloten zee). Eerst door searoute halen, dán slopen (M13/M17-patroon: toetsen, niet gokken).
+  **Redenen:** (1) `wp-pac-zuid` kost ~1.090 km omweg; (2) **valse flessenhals** — `flows.js` zet een anker op elke
+  tussenstop (`if (i < stops.length-2) anchors.push(...)`) en `laneShape` maakt de verschuiving nul bij elk anker,
+  dus alle Chili/Peru→China-koperstromen knijpen samen op **26°Z/125°W** = open oceaan waar níets is → de kaart
+  tekent een knelpunt dat niet bestaat; (3) een handgeprikt A\*-duwtje overrulet MARNET's lane-kennis.
+  **Omvang speelde géén rol:** gemeten is (b) 987 legs→381 corridors vs (a) 698 legs→340 corridors = **11% verschil**
+  → de dedup vangt het meeste al weg; dit is puur een realisme-besluit. Spec: `design/zeeroutes.md` §8.
+- **2026-07-17 · searoute's `restrictions` = de M21-machinerie, empirisch bevestigd.** Golf (Ras Tanura)→Rotterdam:
+  normaal **12.066 km** (via Suez) · `restrictions=['suez']` → **20.924 km** om de Kaap (**+73%**, herrouteert zelf) ·
+  `restrictions=['ormuz']` → **`length: 0` + UserWarning "No path found"**. Beschikbaar: suez/panama/ormuz/malacca/
+  bosporus/babalmandab/gibraltar/sunda/bering/northwest/chili/south_africa.
+  ⚠️ **"Geen route" is een geldige én de interessantste uitkomst** (Ras Tanura ligt bínnen de Golf → Hormuz dicht =
+  geen alternatief, niet een langere route). Het meldt zich als **0 + warning, geen exception** → moet als
+  *isolatie* gerenderd/geteld worden, **nooit als "0 km"** in een impact-teller (M19/M21). Dit is exact het soort
+  stille fallback dat de spec verbiedt. Verhaal in één regel: *Suez dicht is duur, Hormuz dicht is: het houdt op.*
+- **2026-07-17 · `traversed_passages` bewaart M21's query én controleert onszelf.** `return_passages=True` geeft per
+  route de gepasseerde doorgangen (Golf→Rotterdam: `['suez','babalmandab','gibraltar','ormuz']`). → "welke stromen
+  raakt knelpunt X?" wordt een **query op de cache** i.p.v. handmatige annotatie, én het is een gratis
+  **kruiscontrole** op onze eigen `via`-ketens/`tensions`. Wordt per corridor meegeschreven in `_searoutes.js`
+  (kost een paar bytes). Let op de sleutel: het veld heet **`traversed_passages`**, niet `passages`.
+- **2026-07-17 · Datamodel `_searoutes.js` vastgelegd** (spec §3–§4): sleutel = **coördinaat-paar** (3 decimalen,
+  gesorteerd → richtingsonafhankelijk, robuust bij hernoemde nodes zoals Roberts Bank→Ridley); **precisie 3
+  decimalen** (~110 m) → gemeten raming **357 KB** voor 381 corridors (steekproef 12 corridors: 2 dec=319 KB,
+  3=357, 4=397, 5=429), **geen extra decimatie** in M18; **fallback = hard falen zichtbaar** (console.warn +
+  leg níet renderen → telt als kapot in de legs-check), nooit stil terugvallen op de oude A\*.
+  **Verificatie-drempel:** niet "afwijking >15% = fout" maar **">15% zonder doorgang in `traversed_passages` = fout"**
+  — Golf→Rotterdam via Suez is +73% en volstrekt correct (grote cirkel gaat dwars over Arabië); de
+  `wp-pac-zuid`-signatuur is juist: veel afwijking, géén doorgang.
+- **2026-07-17 · M21-netwerk: nu niet bouwen, wél openhouden.** Twee wegen — (a) scenario's vooraf bakken
+  (~12 restricties × 381 corridors; runtime blijft dom, maar combinaties exploderen) of (b) MARNET meesturen
+  (729 KB geojson + Dijkstra in JS; élke edge live weghaalbaar). **Keuze valt bij M21 zelf**, met de dan gemeten
+  omvang. M18 houdt (b) mogelijk door `traversed_passages` mee te schrijven + de generator parametriseerbaar te
+  houden op `restrictions`. Niet vooruitbouwen aan iets dat drie milestones verderop ligt.
 - **2026-07-17 · Architectuur: precompute at build-time, gededupliceerd per haven-paar.** Eén gedeelde corridor-cache
   over alle 14 grondstoffen (Lars: *"voor veel grondstoffen zijn de routes vrijwel hetzelfde"* → je routeert unieke
   corridors, niet elke flow apart) → polylines in `data/_searoutes.js`, atlas rendert direct. **Netwerk bewaren** voor
