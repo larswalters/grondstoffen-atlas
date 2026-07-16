@@ -1,7 +1,56 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (BACKLOG LEEGGEWERKT — LAR-471 lab-grown-toggle + LAR-447 recycle-tooltip + LAR-448 PGM-beursvoorraden)*
+*Last updated: 2026-07-17 (M18 · Realistische zeeroutes vastgelegd — de nieuwe koers; feature-trio hernummerd M19/M20/M21)*
 
-## 🎉 Backlog is leeg (2026-07-16)
+## 🧭 NU: M18 · Realistische zeeroutes (searoute) — LAR-473..478
+
+**De koers na "inhoudelijk compleet": niet een 15e grondstof, maar route-kwaliteit.** Lars: *"een boot zou daar
+nooit zo varen."* De drie feature-milestones **staan** op route-nauwkeurigheid → M18 eerst.
+
+**Waarom (bewezen 2026-07-17):** Antofagasta→Shanghai = grote-cirkel **18.526 km** · searoute (echte lanen)
+**18.880 km (+2%)** · **onze bol 19.970 km (+8%)**. Het handgeplaatste vaarpunt **`wp-pac-zuid`** (26°Z) dwingt
+**~1.090 km omweg** af. De `via`-ketens zijn grotendeels handmatige compensatie voor een slechte router.
+Diagnose in `searoute.js`: `openRadiusDeg: 1.2` (~130 km geforceerd water rond élk knelpunt) + 8-richtingen-A\*
+(trapjes; Golf→Rotterdam 33 richtingswissels) + grof raster/gretige heuristiek/**géén echte vaarlanen**.
+
+- [ ] **LAR-473 — spec `design/zeeroutes.md`** (design-first): datamodel corridor-cache, hoe `flows.js` 'm gebruikt,
+      fallback-gedrag, netwerk bewaren voor M21, verificatie-criterium (routelengte ÷ grote-cirkel), en **het open
+      besluit**: via-punten op zee-legs **(a) opruimen** of **(b) behouden als hint** — **Lars beslist**.
+- [ ] **LAR-474 — PILOT: koper volledig op searoute** ⬅️ **START VAN DE VOLGENDE SESSIE.** Baseline → corridors
+      extraheren (**mét** `via`-keten!) → searoute draaien → vergelijken → renderen → **go/no-go Lars** vóór de andere 13.
+      Koper = beste testcase (bewezen-foute Antofagasta-corridor + Andes-trechter + Copperbelt-**land**routes die
+      ongemoeid moeten blijven).
+- [ ] **LAR-475 — corridor-cache generator** (Python, build-time): unieke zee-corridors **gededupliceerd per haven-paar**
+      over alle 14 → `data/_searoutes.js`. Fouten hard maken, determinisme, bestandsgrootte bewaken.
+- [ ] **LAR-476 — engine**: `flows.js` rendert gebakken polylines i.p.v. live A\*; land/lucht ongemoeid; **`laneShape`
+      (vaarbanen-waaier) expliciet checken** = de subtielste regressie-val; **netwerk bewaren voor M21**.
+- [ ] **LAR-477 — uitrol 13 + via-punten opruimen** (ná pilot-go). Let op: uranium's Kaspische oversteek (ingesloten
+      zee) heeft searoute waarschijnlijk niet → expliciet checken, niet stil laten wegvallen. Goud/PGM/diamant = `air`, niet aanraken.
+- [ ] **LAR-478 — verificatie + build + visueel** (Lars). IJkpunt: Antofagasta→Shanghai 19.970 → ~18.880 km.
+
+> ⚠️ **Harde regel:** vergelijk **nooit** tegen een kale origin→dest A\*-run. De pilot van 16 juli deed dat →
+> "route A", een pad dat de bol nergens tekent (Lars zag het meteen: *"ik zie op onze wereldbol niets dat route A
+> neemt"*). Vergelijk altijd tegen wat `flows.js` werkelijk rendert.
+
+**Status:** `searoute` 1.6.0 geïnstalleerd. Pilot-artefacten (`astar_paths.json`, `zeeroutes_vergelijking.html`) in
+`…/Temp/claude/C--automation/ec6b9a39-…/scratchpad/`.
+
+**Volgorde daarna:** M19 (knelpunt-stress) → M20 (China-meta-view) → M21 (disruptie-simulator). ⚠️ M21's aanpak is
+**herijkt**: knelpunt blokkeren = *edge uit het netwerk halen*, niet een raster-cel-masker.
+⚠️ M18 staat in Linear ónder M21 gesorteerd (`sortOrder` niet zetbaar via MCP) — even slepen in de UI.
+
+## 🐛 Losse issues (buiten M18)
+
+- [ ] **LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen.** Bewezen: `updateDetail` (`tiles.js`) breekt af
+      zodra `maxTiles: 40` op is → onderste rijen krijgen alleen de grove shell (`shellMaxZ: 3`, ~20 km/px) = de
+      kaarsrechte rand. camZ 4,0/5,6/6,5 willen 64–80 tegels → gekapt (**5,6 = de startzoom!**); 2,75/3,0/3,5/4,5/
+      5,0/7,5/8,5 niet → dát zijn Lars' "sweetspots". Bijvangst in hetzelfde bestand: een **mislukte tegel wordt nooit
+      opnieuw geprobeerd** (`ensureTile` early-return + alleen `console.warn`) → permanent opacity 0.
+- [ ] **LAR-480 (Low) — markers-contrast bij inzoomen.** Het is contrast, niet schaal. Richting: halo/outline.
+      Bewust ná M18 + LAR-479 (die veranderen de ondergrond).
+
+---
+
+## 🎉 Backlog was leeg (2026-07-16) — afgerond
 Alle 3 resterende backlog-issues afgerond + gepusht → live op Pages. **Niets meer In Progress/Todo/Backlog in Linear.**
 - **LAR-471 · lab-grown-toggle (diamant)** ✅ — het 6e optionele-laag-patroon (`layer:"labgrown"`): 3 productie-nodes
   (China/Henan HPHT, India/Surat CVD, VS/Washington premium-CVD) + 6 flows die de VS-verlovingsringmarkt ondergraven;

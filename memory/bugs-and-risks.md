@@ -1,5 +1,40 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-16 (na M17 · Kolen — de nieuwe 14e grondstof)*
+*Last updated: 2026-07-17 (route-engine-audit + tegel-afkap-bug bewezen)*
+
+## 🐛 LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen (2026-07-17, OORZAAK BEWEZEN)
+- **Symptoom (Lars):** *"als ik inzoem laadt die bol meestal niet … de routes laden wel maar de wereldkaart niet echt"*
+  / *"de wazige rand beweegt mee, ik moet echt naar een sweetspot inzoomen."* Screenshot: scherpe rechthoek bovenin,
+  **kaarsrechte horizontale rand**, daaronder pap.
+- **Oorzaak:** `updateDetail` (`src/tiles.js`) telt `y` van boven naar beneden en **breekt af zodra
+  `CONFIG.tiles.maxTiles` (40) op is** → onderste rijen krijgen geen detailtegel → alleen de shell (`shellMaxZ: 3`,
+  ~20 km/px). De rand **beweegt mee** omdat de bbox elke update rond `viewCentre()` wordt gelegd.
+- **Uitgerekend:** camZ 4,0 → 64 tegels gevraagd · **5,6 → 64** · 6,5 → 80 = **gekapt**; 2,75/3,0/3,5/4,5/5,0/7,5/8,5
+  → 36 = niet gekapt. Dát zijn Lars' "sweetspots" — deterministisch. **camZ 5,6 is de startzoom** → je landt meteen
+  in een kapotte stand.
+- **Uitgesloten (belangrijk, om niet het verkeerde te fixen):** géén laadprobleem (diep ingezoomd op Lombok: 36/36
+  detail + 64/64 shell, allemaal met textuur, opacity 1) · géén verkeerd gecentreerde patch (`viewCentre()` = exacte
+  inverse van `latLonToVec3`) · de "stilstaande tick-loop" was een **artefact van de verborgen Browser-pane**
+  (`document.hidden` → rAF pauzeert).
+- **Bijvangst-defect (zelfde bestand, andere oorzaak):** een **mislukte tegel wordt nooit opnieuw geprobeerd** —
+  `ensureTile` doet `if (liveMap.has(id)) return;` en de error-callback (`src/tiles.js:151`) alleen `console.warn`
+  → mesh blijft permanent op opacity 0, herstelt nooit. Op trage/geknepen verbindingen (mobiel, Esri-throttling bij
+  64 gelijktijdige requests) een echte kwaal. **Niet** de oorzaak van bovenstaand symptoom.
+- **Fix-richting:** budget moet de gevraagde patch aankunnen óf de patch moet zich naar het budget schikken (bv.
+  detail-zoom een niveau omlaag) — nooit halverwege afbreken. En `shellMaxZ: 3` is te grof. Afweging: meer tegels =
+  meer requests = zwaarder op mobiel (de oude LAR-394-afweging).
+
+## ⚠️ Route-engine: aantoonbaar onrealistisch (2026-07-17) → M18
+- **`openRadiusDeg: 1.2`** = ~130 km geforceerd water rond élk knelpunt → A\* vaart dwars over land/eilandjes.
+  Hoofdboosdoener achter *"een boot zou daar nooit zo varen"*.
+- **8-richtingen-A\*** → trapjes (Golf→Rotterdam = 33 richtingswissels). **Grof raster + gretige heuristiek + géén
+  echte vaarlanen** → kaarsrechte runs langs een breedtegraad/meridiaan.
+- **`wp-pac-zuid` dwingt een omweg van ~1.090 km af** (Antofagasta→Shanghai +8% vs. grote-cirkel; searoute +2%).
+  De `via`-ketens zijn grotendeels handmatige compensatie voor een slechte router.
+- **Risico bij M18:** de **vaarbanen-waaier** (`laneShape`, `util.js`) die bij een knelpunt samenknijpt is een
+  kernbeeld — die moet ook op gebakken polylines nog kloppen. Subtielste regressie-val. Verder: uranium's Kaspische
+  oversteek (ingesloten zee) heeft searoute's netwerk waarschijnlijk niet → expliciet checken.
+- **Verificatie-val (kostte de vorige pilot z'n geldigheid):** vergelijk nooit tegen een kale origin→dest A\*-run;
+  de atlas routeert altijd langs de `via`-keten.
 
 ## M17 · Kolen — geverifieerd headless (2026-07-16)
 - Volledig gebouwd + geverifieerd (eigen server poort 8735 = `grondstoffen-atlas-4`): **kolen 111 legs / 0 kapot /

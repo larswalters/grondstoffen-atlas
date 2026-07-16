@@ -1,6 +1,43 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-16 (BACKLOG LEEGGEWERKT — LAR-471 lab-grown-toggle + LAR-447 recycle-tooltip + LAR-448 PGM-beursvoorraden; atlas 14/14, backlog leeg)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (KOERSWIJZIGING — M18 · Realistische zeeroutes = de fundering; features hernummerd M19/M20/M21)*
+
+> **🧭 KOERSWIJZIGING (2026-07-17) — EERST DE ROUTES, DAN DE FEATURES.** De atlas is inhoudelijk compleet
+> (14 grondstoffen, backlog leeg), maar de volgende stap is bewust **géén 15e grondstof**: de routing is
+> **aantoonbaar onrealistisch** en de drie geplande features **staan erop**. Lars: *"een boot zou daar nooit zo
+> varen."*
+>
+> **Diagnose (`searoute.js`, 3 samenwerkende oorzaken):** (1) **`openRadiusDeg: 1.2`** = een schijf van ~130 km
+> **geforceerd water** rond élk knelpunt — bedoeld om smalle straten (~35 km) open te houden in het grove raster,
+> maar het zet óók land op "water" → A\* vaart vlak bij een knelpunt dwars over schiereilanden/eilandjes
+> (**hoofdboosdoener**); (2) **8-richtingen-A\*** → trapjes (Golf→Rotterdam = **33 richtingswissels**); (3) **grof
+> 0,25°-raster + `heuristicWeight: 1.35` + géén echte vaarlanen** → het vindt het kortste *watertraject*, niet de
+> lane die schepen varen → kaarsrechte runs langs een breedtegraad.
+>
+> **Hard bewijs — Antofagasta→Shanghai:** grote-cirkel **18.526 km** · **searoute** (echte lanen, noordelijk tot
+> 50,7°N) **18.880 km (+2%)** · **onze bol** (zuidelijk via `wp-pac-zuid` op 26°Z) **19.970 km (+8%)** → het
+> **handgeplaatste vaarpunt dwingt ~1.090 km omweg af**. De `via`-ketens blijken grotendeels **handmatige
+> compensatie voor een slechte router**.
+>
+> **→ M18 · Realistische zeeroutes (searoute):** routeren over een **echt scheepvaart-lanen-netwerk** (Eurostat
+> MARNET, Python-pakket `searoute` 1.6.0 — al geïnstalleerd). **Precompute at build-time, gededupliceerd per
+> haven-paar** (één gedeelde corridor-cache over alle 14 — *"routes zijn vaak hetzelfde"* → unieke corridors, niet
+> elke flow); polylines in `data/_searoutes.js`, atlas rendert direct; **netwerk bewaren** zodat M21 een knelpunt
+> blokkeert als *edge eruit → herrouteren*; **raakt alleen zee-legs** (land/lucht ongemoeid); runtime blijft pure
+> JS, `searoute` = **build-dependency**. Bonus: A\* uit de runtime = lichter op mobiel.
+>
+> **Feature-trio hernummerd:** M18→**M19** (knelpunt-stress) / M19→**M20** (China-meta-view) / M20→**M21**
+> (disruptie-simulator). **M21's aanpak is herijkt**: knelpunt blokkeren = *edge uit het netwerk*, niet een
+> raster-cel-masker. **Pilot-first: koper** (LAR-474) → go/no-go Lars → dan de andere 13.
+>
+> **⚠️ Harde regel:** vergelijk **nooit** tegen een kale origin→dest A\*-run. De pilot van 2026-07-16 deed dat →
+> "route A", een pad dat de bol **nergens tekent** (Lars: *"ik zie op onze wereldbol niets dat route A neemt"*).
+> Vergelijk altijd tegen wat `flows.js` werkelijk rendert.
+>
+> **Open besluit (Lars, bij de pilot):** via-punten op zee-legs **opruimen** of **behouden als hint**.
+> **Linear:** M18 · LAR-473..478 + **LAR-479** (High — tegel-patch wordt bij inzoomen afgekapt door `maxTiles: 40`;
+> oorzaak bewezen) + **LAR-480** (Low — markers-contrast). Géén code gewijzigd in deze sessie.
+> Zie `memory/decisions.md` + `memory/bugs-and-risks.md`.
 
 > **BACKLOG LEEGGEWERKT (2026-07-16) — LAR-471 + LAR-447 + LAR-448, gepusht → live op Pages.** De 3 resterende
 > backlog-issues afgerond. **LAR-471 · lab-grown-toggle (diamant)** = het **6e optionele-laag-patroon** (na goud-CB/koper-
@@ -246,6 +283,15 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-17 · De zee-A\* wordt vervangen door een echt vaarlanen-netwerk (M18)** — de routing is aantoonbaar
+  onrealistisch (`wp-pac-zuid` dwingt ~1.090 km omweg af op Antofagasta→Shanghai: onze bol +8% vs. grote-cirkel,
+  searoute +2%) en de features M19/M20/M21 stáán erop. Precompute at build-time, **gededupliceerd per haven-paar**;
+  netwerk bewaren voor M21 (*edge eruit → herrouteren*); **alleen zee-legs**; `searoute` = build-dependency.
+  Pilot-first met koper. **Feature-trio hernummerd** M19/M20/M21. Open besluit (Lars): via-punten opruimen of als hint houden.
+- **2026-07-17 · Verificatie-regel: vergelijk nooit tegen een kale origin→dest A\*-run** — de atlas routeert altijd
+  langs de `via`-keten; een kale run produceert paden die de bol nergens tekent ("route A", 16 juli). Vergelijk tegen
+  wat `flows.js` werkelijk rendert. Idem methodisch: meet niet in een verborgen Browser-pane (`document.hidden` →
+  rAF pauzeert; `GLOBE.start()` draait z'n body synchroon als workaround).
 - **2026-07-16 · LAR-471 lab-grown-toggle = het 6e optionele-laag-patroon, via `layer` (niet dedicated type)** — de
   uitgestelde diamant-toggle gebouwd. Recycle-stijl `layer`-patroon (`type:"labgrown"` marker + `layer:"labgrown"` gate op
   nodes én flows), niet reserve/military-dedicated-type — want lab-grown is schaduw-*aanbod* dat de product-arcs ondergraaft.

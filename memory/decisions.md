@@ -1,7 +1,47 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M15 · Gas + M16 · Diamant + M17 · Kolen uitgevoerd — drie nieuwe grondstoffen, atlas nu 14)*
+*Last updated: 2026-07-17 (M18 · Realistische zeeroutes = de nieuwe koers; feature-trio hernummerd M19/M20/M21)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## Koerswijziging — eerst de routes, dan de features (2026-07-17)
+
+- **2026-07-17 · De zee-A\* wordt vervangen door een echt scheepvaart-lanen-netwerk (M18).** Reden: de routing is
+  aantoonbaar onrealistisch, en de drie geplande features **staan erop** — een impact-teller op verkeerde routes is
+  erger dan geen teller. **Bewijs:** Antofagasta→Shanghai = grote-cirkel 18.526 km · searoute (echte lanen, MARNET)
+  18.880 km (+2%) · **onze bol 19.970 km (+8%)** → het handgeplaatste vaarpunt **`wp-pac-zuid`** (lat −26,00 /
+  lon −125,00) dwingt **~1.090 km omweg** af (~een week varen). Conservatief gemeten (via-keten als kale
+  grote-cirkels; het echte A\*-pad met trapjes is langer).
+- **2026-07-17 · Diagnose: drie samenwerkende oorzaken in `searoute.js`** — (1) **`openRadiusDeg: 1.2`** = een schijf
+  van ~130 km geforceerd water rond élk knelpunt; bedoeld om smalle straten (~35 km) open te houden in het grove
+  raster, maar het zet óók land op "water" → A\* vaart vlak bij een knelpunt dwars over schiereilanden/eilandjes.
+  Hoofdboosdoener. (2) **8-richtingen-A\*** → trapjes (Golf→Rotterdam = 33 richtingswissels). (3) **Grof 0,25°-raster
+  + `heuristicWeight: 1.35` + géén echte vaarlanen** → het vindt het kortste *watertraject*, niet de lane die schepen
+  varen → kaarsrechte runs langs een breedtegraad/meridiaan.
+- **2026-07-17 · De `via`-ketens zijn grotendeels handmatige compensatie voor een slechte router.** Onderscheid dat
+  we voortaan maken: **echte fysieke doorgangen** (Hormuz/Malakka/Suez/Panama/Bosporus/Lombok/Kaap) = houden, want
+  searoute volgt ze by-design én ze zijn `tension`-ankers; **navigatie-hulpjes** (`wp-pac-zuid`/`-west`/`-noord`,
+  `wp-golf-mexico`/`-florida`/`-caribisch`) = bestonden alleen om het kale A\* te sturen → kandidaat om te sneuvelen.
+  `grens-*` blijft (landkaart). **Open besluit (Lars, bij de pilot):** opruimen (a) of behouden als hint (b).
+- **2026-07-17 · Architectuur: precompute at build-time, gededupliceerd per haven-paar.** Eén gedeelde corridor-cache
+  over alle 14 grondstoffen (Lars: *"voor veel grondstoffen zijn de routes vrijwel hetzelfde"* → je routeert unieke
+  corridors, niet elke flow apart) → polylines in `data/_searoutes.js`, atlas rendert direct. **Netwerk bewaren** voor
+  M21 (knelpunt blokkeren = *edge eruit → herrouteren*; een zeestraat ís een edge, geen verzameling rastercellen →
+  M21's oude raster-masker-aanpak is hiermee **herijkt**). **Raakt alleen zee-legs**; land/lucht ongemoeid. Runtime
+  blijft pure JS; `searoute` wordt een **build-dependency** (`build-standalone.py` is al Python). Bonus: A\* uit de
+  runtime = lichter op mobiel.
+- **2026-07-17 · Feature-trio hernummerd** — M18→**M19** (knelpunt-stress), M19→**M20** (China-meta-view),
+  M20→**M21** (disruptie-simulator), incl. alle kruisverwijzingen. M18 = de fundering.
+- **2026-07-17 · Pilot-first met koper.** Bevat de bewezen-foute Antofagasta-corridor + de Andes-trechter + de
+  Copperbelt-**land**routes (die ongemoeid moeten blijven → bewijst dat we alleen zee-legs raken). Go/no-go door Lars
+  vóór de andere 13.
+- **2026-07-17 · Verificatie-regel (nieuw): vergelijk NOOIT tegen een kale origin→dest A\*-run.** De pilot van
+  2026-07-16 deed dat en produceerde "route A" (noordelijk over 43°N) — een pad dat de bol **nergens tekent**, want
+  de atlas routeert altijd langs de `via`-keten. Lars zag het onmiddellijk (*"ik zie op onze wereldbol niets dat
+  route A neemt"*). Vergelijk altijd tegen het pad dat `flows.js` werkelijk rendert.
+- **2026-07-17 · Diagnose-les (methodisch): meet niet in een verborgen Browser-pane.** Een "stilstaande tick-loop"
+  bleek een artefact van `document.hidden` (rAF pauzeert), geen bug. Workaround: `GLOBE.start()` handmatig aanroepen
+  — `animate()` draait z'n body synchroon. Ook uitgesloten: de tegel-patch-centrering klopt wél (`viewCentre()` is de
+  exacte inverse van `latLonToVec3`: `atan2(z,-x)` ↔ `theta=(lon+180)`).
 
 ## Backlog leeggewerkt — optionele-laag-cleanup (2026-07-16)
 

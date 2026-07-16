@@ -1,5 +1,34 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-16 (M17 · Kolen uitgevoerd — de nieuwe 14e grondstof; richting 14 uitgewerkt, gas M15/diamant M16 parallel)*
+*Last updated: 2026-07-17 (koerswijziging: M18 · Realistische zeeroutes = de fundering; features hernummerd M19/M20/M21)*
+
+## 🧭 Nu (2026-07-17) — eerst de routes, dan de features
+
+De atlas is **inhoudelijk compleet** (14 grondstoffen, backlog leeg). De volgende stap is bewust **géén 15e
+grondstof** maar **route-kwaliteit** — want de drie geplande features **staan erop**: M19-stress telt verkeerd als een
+boot "toevallig" langs Hormuz scheert, en M21-simulator liegt als de routes niet écht door Malakka gaan. *Een
+impact-teller op verkeerde routes is erger dan geen teller.*
+
+**De routing is aantoonbaar onrealistisch** (audit 2026-07-17). Antofagasta→Shanghai: grote-cirkel 18.526 km ·
+searoute (echte lanen) 18.880 km (+2%) · **onze bol 19.970 km (+8%)** — het handgeplaatste vaarpunt **`wp-pac-zuid`**
+(26°Z) dwingt **~1.090 km omweg** af. Drie oorzaken in `searoute.js`: **`openRadiusDeg: 1.2`** (~130 km geforceerd
+water rond élk knelpunt → A\* vaart dwars over land) · **8-richtingen-A\*** (trapjes) · **grof raster + gretige
+heuristiek + géén echte vaarlanen**. De `via`-ketens blijken grotendeels **handmatige compensatie voor een slechte
+router**.
+
+**→ M18 · Realistische zeeroutes (searoute)** = routeren over een **echt scheepvaart-lanen-netwerk** (Eurostat
+MARNET via het Python-pakket `searoute` 1.6.0): **precompute at build-time, gededupliceerd per haven-paar** (één
+gedeelde corridor-cache over alle 14 → je routeert unieke corridors, niet elke flow), polylines in
+`data/_searoutes.js`, atlas rendert direct; **netwerk bewaren** zodat M21 een knelpunt blokkeert als *edge eruit →
+herrouteren*; **raakt alleen zee-legs** (land/lucht ongemoeid); runtime blijft pure JS, `searoute` = build-dependency.
+Bonus: A\* uit de runtime = lichter op mobiel. **Pilot-first: koper** (LAR-474) → go/no-go Lars → dan de andere 13.
+
+**Volgorde:** M18 → M19 (knelpunt-stress) → M20 (China-meta-view) → M21 (disruptie-simulator).
+**Open besluit (Lars, bij de pilot):** via-punten op zee-legs opruimen of behouden als hint.
+**Harde regel:** vergelijk nooit tegen een kale origin→dest A\*-run — altijd tegen wat `flows.js` werkelijk rendert.
+
+---
+
+*Eerder (2026-07-16 — M17 · Kolen uitgevoerd; richting 14 uitgewerkt, gas M15/diamant M16 parallel):*
 
 ## Architectuur (hoe we bouwen)
 
