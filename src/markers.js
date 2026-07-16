@@ -128,6 +128,8 @@ const MarkerLayer = (function () {
         // recycling-nodes met een recycle-laag (REE) alleen tonen met de toggle aan.
         // (Koper-recyclers hebben géén `layer` en blijven dus altijd zichtbaar.)
         if (node.layer === "recycle" && !(filters && filters.showRecycle)) return;
+        // lab-grown-fabrieken (diamant) alleen tonen als de lab-grown-laag aanstaat
+        if (node.layer === "labgrown" && !(filters && filters.showLabGrown)) return;
 
         const pos = latLonToVec3(node.lat, node.lon, R + C.lift);
         let mesh, ring = null;
@@ -214,6 +216,13 @@ const MarkerLayer = (function () {
           mesh = new THREE.Mesh(
             new THREE.OctahedronGeometry(s, 0),
             new THREE.MeshBasicMaterial({ color: 0xE0554F, transparent: true, opacity: baseOpacity })
+          );
+        } else if (node.type === "labgrown") {
+          // lab-grown / synthetisch (diamant): violette octaëder — een fabrieks-
+          // gemaakte steen die de natuurlijke keten ondergraaft. Vaste maat.
+          mesh = new THREE.Mesh(
+            new THREE.OctahedronGeometry(C.labgrown.size, 0),
+            new THREE.MeshBasicMaterial({ color: 0xB98BE0, transparent: true, opacity: baseOpacity })
           );
         } else if (node.type === "recycler") {
           // recycling: gedempte groene ring (schroot terug de keten in)

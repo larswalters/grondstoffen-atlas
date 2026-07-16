@@ -112,6 +112,7 @@ const CONFIG = {
     reserve:  { minSize: 0.032, maxSize: 0.085 }, // strategische reserves (olie/SPR); grootte = voorraad
     military: { minSize: 0.026, maxSize: 0.062 }, // militaire kringloop (uranium); grootte = voorraad
     recycler: { size: 0.026 },   // schroot terug naar raffinage
+    labgrown: { size: 0.030 },   // kweekdiamant-fabrieken (diamant); vaste maat
     waypoint: { size: 0.020 },   // zeestraten/kanalen (knelpunten op de route)
     lift: 0.015,             // hoe ver boven het oppervlak markers zweven
 

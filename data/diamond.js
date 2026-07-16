@@ -24,8 +24,10 @@
 //   - Onderliggend: het DE BEERS + ALROSA-DUOPOLIE (kartel-verleden, single-
 //     channel ~80-90%, "A Diamond is Forever"; De Beers-sights nu via Gaborone) en
 //     de LAB-GROWN-ONTWRICHTING (China/Henan HPHT + India CVD ondergraven vooral
-//     de VS-verlovingsring-markt) — die laatste zit in v1 alleen als `tension`
-//     (de optionele lab-grown-toggle is een aparte, uitgestelde issue: LAR-471).
+//     de VS-verlovingsring-markt). Lab-grown zit óók als `tension` (dia-t-labgrown)
+//     én als optionele toggle-laag (`layer:"labgrown"`, default uit; LAR-471) — 3
+//     productie-nodes (Henan-HPHT, Surat-CVD, VS-premium-CVD) die vooral de VS-markt
+//     ondergraven; chip "lab-grown" verschijnt alleen bij diamant.
 //
 // STAGES (via `stage`):
 //   erts       = ruwe diamant (rough): mijn -> sorteer-/handelshub -> slijperij.
@@ -162,6 +164,26 @@ REGISTER({
     { id: "dia-mkt-japan", type: "market", name: "Japan — sieraden", country: "Japan",
       lat: 35.68, lon: 139.76, tier: 3,
       note: "Een stabiele, koopkrachtige high-end markt." },
+
+    // ================================== LAB-GROWN / SYNTHETISCH (optionele laag)
+    // Kweekdiamant — chemisch identiek, uit de FABRIEK i.p.v. de grond. Optionele
+    // toggle-laag (`layer:"labgrown"`, default uit): een schaduwaanbod dat de
+    // natuurlijke keten — en vooral de VS-verlovingsringmarkt — ondergraaft. Twee
+    // technologieën: HPHT (hoge druk/temperatuur, China/Henan) + CVD (chemische
+    // dampdepositie, India/Surat + een westerse premium-tak). Marker = violette
+    // octaëder (fabrieksgemaakte steen); GEEN nieuw chokepoint, GEEN nieuwe render-modus.
+    { id: "dia-lg-henan", type: "labgrown", layer: "labgrown",
+      name: "Henan / Zhengzhou (HPHT-persen)", country: "China",
+      lat: 34.75, lon: 113.63, tier: 1, operator: "Henan-cluster (Zhongnan/Huanghe e.a.)",
+      note: "Het wereldcentrum van HPHT-kweekdiamant: duizenden kubuspersen in Henan draaien zowel industriële korrel als gem-kwaliteit. Goedkoop en schaalbaar — het gros van het synthetische aanbod." },
+    { id: "dia-lg-surat", type: "labgrown", layer: "labgrown",
+      name: "Surat (CVD-reactoren)", country: "India",
+      lat: 21.24, lon: 72.95, tier: 1, operator: "Gujaraatse CVD-groeiers",
+      note: "India groeit diamant via CVD (chemische dampdepositie), deels in Surat zelf — náást de slijperij die natuurlijke stenen bewerkt. Dezelfde stad is zo tegelijk werkbank én concurrent." },
+    { id: "dia-lg-us", type: "labgrown", layer: "labgrown",
+      name: "Washington (premium-CVD)", country: "VS",
+      lat: 47.42, lon: -120.31, tier: 3, operator: "Diamond Foundry e.a.",
+      note: "Een westerse premium-tak (o.a. Diamond Foundry): 'made in USA', hernieuwbare stroom, direct-to-consumer — mikt met een herkomstverhaal op het VS-verlovingssegment." },
   ],
 
   // ==========================================================================
@@ -254,6 +276,24 @@ REGISTER({
       note: "Dubai polished -> de bredere Golf-retail (beveiligde koerier; diamant vliegt, ook regionaal)." },
     { from: "dia-ny", to: "dia-mkt-us", value: 2, mode: "road", stage: "product",
       note: "Het New York-topsegment -> de Amerikaanse eindklant." },
+
+    // === E. LAB-GROWN -> MARKT (optionele laag `layer:"labgrown"`, default uit) ==
+    // Het schaduwaanbod dat de natuurlijke product-arcs ondergraaft — vooral naar de
+    // VS. Chemisch identieke stenen uit de fabriek, zichtbaar náást (en over) de
+    // natuurlijke stromen zodra de toggle aanstaat. stage `product`, per lucht (net
+    // als de rest van diamant), behalve de binnenlandse hops (`road`).
+    { from: "dia-lg-henan", to: "dia-mkt-us", value: 14, mode: "air", stage: "product", layer: "labgrown",
+      note: "Chinese HPHT-kweekdiamant -> de VS: de scherpste ondergraving, precies op het verlovingsring-segment waar de prijs van natuurlijke stenen is ingestort." },
+    { from: "dia-lg-henan", to: "dia-mkt-china", value: 8, mode: "air", stage: "product", layer: "labgrown",
+      note: "Henan-kweekdiamant -> de eigen Chinese markt." },
+    { from: "dia-lg-henan", to: "dia-mkt-eu", value: 4, mode: "air", stage: "product", layer: "labgrown",
+      note: "Chinese kweekdiamant -> de Europese markt (het betaalbare/mode-segment)." },
+    { from: "dia-lg-surat", to: "dia-mkt-us", value: 9, mode: "air", stage: "product", layer: "labgrown",
+      note: "Indiase CVD-kweekdiamant -> de VS: Surat levert zowel geslepen natuurlijke stenen als gekweekte concurrentie op dezelfde markt." },
+    { from: "dia-lg-surat", to: "dia-mkt-india", value: 5, mode: "road", stage: "product", layer: "labgrown",
+      note: "CVD-kweekdiamant -> de groeiende Indiase binnenlandse markt, over land." },
+    { from: "dia-lg-us", to: "dia-mkt-us", value: 4, mode: "road", stage: "product", layer: "labgrown",
+      note: "Westerse premium-CVD -> de VS-eindklant, direct-to-consumer met een 'made in USA'-herkomstverhaal." },
   ],
 
   // ==========================================================================
@@ -293,10 +333,10 @@ REGISTER({
 
     { id: "dia-t-labgrown", type: "structureel", title: "Lab-grown: de synthetische ontwrichting",
       lat: 40.00, lon: -83.00,
-      nodes: ["dia-mkt-us", "dia-surat", "dia-mumbai"],
-      flows: ["dia-mumbai>dia-mkt-us"],
+      nodes: ["dia-mkt-us", "dia-lg-henan", "dia-lg-surat", "dia-lg-us"],
+      flows: ["dia-lg-henan>dia-mkt-us", "dia-lg-surat>dia-mkt-us", "dia-mumbai>dia-mkt-us"],
       metric: "China (Henan/HPHT) + India (CVD) · prijs natuurlijke steen in het VS-verlovingssegment sterk gedaald",
-      note: "De grootste bedreiging komt niet uit de grond maar uit de fabriek. Kweekdiamant — chemisch identiek — wordt massaal geproduceerd in China (Henan, HPHT-persen) en India (CVD, deels in Surat zelf) en heeft de prijs van natuurlijke stenen in het Amerikaanse verlovingsring-segment onderuitgehaald. De hele duopolie-schaarstelogica staat onder druk. In deze atlas is lab-grown v1 een spanning; de aparte, optionele toggle-laag (schaduwaanbod dat de VS-markt ondergraaft) is uitgesteld naar een eigen issue." },
+      note: "De grootste bedreiging komt niet uit de grond maar uit de fabriek. Kweekdiamant — chemisch identiek — wordt massaal geproduceerd in China (Henan, HPHT-persen) en India (CVD, deels in Surat zelf) en heeft de prijs van natuurlijke stenen in het Amerikaanse verlovingsring-segment onderuitgehaald. De hele duopolie-schaarstelogica staat onder druk. In deze atlas is lab-grown zowel deze spanning als een optionele toggle-laag (`layer:\"labgrown\"`, default uit): zet 'm aan en het schaduwaanbod uit China (Henan/HPHT), India (Surat/CVD) en de VS verschijnt bovenop de natuurlijke arcs, met de dikste draad recht op de VS-verlovingsringmarkt." },
 
     { id: "dia-t-beneficiation", type: "concentratie", title: "Waarde vs. volume: Botswana wil de slijpwaarde terug",
       lat: -21.31, lon: 25.37,

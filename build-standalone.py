@@ -92,6 +92,8 @@ def main():
         "diamant Surat-slijptrechter": "dia-surat" in html and "Surat" in html,
         "diamant Antwerpen-certificering + Alrosa/G7": "Antwerpen" in html and "Alrosa" in html and "G7" in html,
         "diamant luchtvracht (air-mode) + duopolie": 'mode: "air"' in html and "dia-antwerp" in html and "Debswana" in html,
+        "diamant lab-grown-toggle (Henan/Surat/VS-CVD)": 'layer: "labgrown"' in html and "dia-lg-henan" in html and "dia-lg-surat" in html and "dia-lg-us" in html,
+        "diamant lab-grown engine-bedrading (chip + gate)": "showLabGrown" in html and "hasLabGrown" in html,
         "grafiet geregistreerd": 'id: "graphite"' in html,
         "grafiet uitgewerkt (Balama/Vidalia)": "Balama" in html and "Vidalia" in html,
         "grafiet twee feedstocks (naaldcokes)": "naaldcokes" in html and "gr-nc-china" in html,

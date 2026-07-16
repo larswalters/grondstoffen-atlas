@@ -158,6 +158,16 @@ const UI = (function () {
       ml.onclick = () => { filters.showMilitary = !filters.showMilitary; onChange(); };
       filterRow.appendChild(ml);
     }
+
+    // Lab-grown-laag: alleen aanbieden als een actieve grondstof een lab-grown-laag heeft (diamant).
+    if (opts && opts.hasLabGrown) {
+      const lg = document.createElement("button");
+      lg.className = "chip" + (filters.showLabGrown ? " on" : "");
+      lg.textContent = "lab-grown";
+      lg.title = "Synthetische kweekdiamant (China HPHT + India/VS CVD) tonen — schaduwaanbod dat de natuurlijke markt, vooral de VS-verlovingsring, ondergraaft";
+      lg.onclick = () => { filters.showLabGrown = !filters.showLabGrown; onChange(); };
+      filterRow.appendChild(lg);
+    }
   }
 
   // --------------------------------------------------------------- KAARTSTIJL
@@ -301,6 +311,7 @@ const UI = (function () {
     airport: "Luchthaven / gateway", hub: "Handels- & kluishub",
     cb: "Centrale bank", recycler: "Recycling", exchange: "Beursmagazijn",
     reserve: "Strategische reserve", military: "Militaire kringloop",
+    labgrown: "Lab-grown / synthetisch",
   };
   const WP_KIND_LABEL = { zeestraat: "Zeestraat", kanaal: "Kanaal", kaap: "Kaap",
     vaarpunt: "Vaarpunt", grensovergang: "Grenspost" };

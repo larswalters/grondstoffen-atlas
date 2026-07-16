@@ -129,6 +129,8 @@ const FlowLayer = (function () {
         if (flow.layer === "reserve" && !(filters && filters.showReserves)) return;
         // Militaire-kringloop-laag (uranium): alleen tonen als de toggle aanstaat.
         if (flow.layer === "secondary" && !(filters && filters.showMilitary)) return;
+        // Lab-grown-laag (diamant): alleen tonen als de toggle aanstaat.
+        if (flow.layer === "labgrown" && !(filters && filters.showLabGrown)) return;
 
         const from = getNode(res, flow.from);
         const to = getNode(res, flow.to);
