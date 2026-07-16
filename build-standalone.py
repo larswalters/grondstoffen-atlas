@@ -88,6 +88,8 @@ def main():
         "pgm uitgewerkt (Bushveld/Norilsk)": "Mogalakwena" in html and "Rustenburg PMR" in html and "Norilsk" in html,
         "pgm luchtvracht + recycling (JNB/rec)": "pgm-air-jnb" in html and "pgm-rec-eu" in html,
         "pgm waterstof-hedge (PEM)": "PEM-elektrolysers" in html,
+        "pgm beursvoorraden-laag (LPPM/NYMEX/TOCOM, LAR-448)": "pgm-ex-lppm" in html and "pgm-ex-nymex" in html and "TOCOM" in html,
+        "recycle-tooltip per-grondstof (recycleHint, LAR-447)": "recycleHint" in html and "opts.recycleHint" in html,
         "diamant geregistreerd": 'id: "diamond"' in html,
         "diamant Surat-slijptrechter": "dia-surat" in html and "Surat" in html,
         "diamant Antwerpen-certificering + Alrosa/G7": "Antwerpen" in html and "Alrosa" in html and "G7" in html,

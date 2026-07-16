@@ -35,9 +35,11 @@
 // refined metal via de JNB-gateway de wereld in; concentraat/matte road/rail.
 // De tijdlijn toont automatisch "vluchten" (activeHasAir()) — 0 engine-wijziging.
 //
-// RECYCLING (type "recycler" + node/flow.layer "recycle") = optionele toggle-laag,
-// hergebruik van het REE-patroon met 0 engine-wijziging (de chip verschijnt via
-// hasRecycle()). Beursvoorraden/exchange-laag (Pt/Pd-futures) bewust UITGESTELD.
+// TWEE optionele toggle-lagen (elk 0 engine-wijziging, chip alleen bij PGM):
+//   RECYCLING (type "recycler" + layer "recycle") = het REE-patroon, ~25% autokat.
+//   BEURSVOORRADEN (type "exchange" + layer "exchange", LAR-448) = de koper/nikkel/
+//   zilver-toggle, hergebruikt als pure data: LPPM/NYMEX/TOCOM Pt/Pd-kluizen.
+// PGM is de eerste grondstof met twee toggles naast elkaar (recycling = dominanter).
 // ============================================================================
 
 REGISTER({
@@ -48,6 +50,7 @@ REGISTER({
   flowColor: "#B7C1CE",   // koel zilver-grijs: de stromen (stages splitsen goed uit)
   detail: "uitgewerkt",
   unit: "t 3E/jaar (Pt+Pd+Rh, indicatief)",
+  recycleHint: "Autokat-/katalysatorschroot terug via de westerse raffinagehuizen tonen (~25% van het aanbod)",
   blurb: "Platina, palladium en rodium: katalysatoren, waterstof en sieraden. De scherpste " +
     "twee-landen-concentratie van de atlas — Zuid-Afrika (het Bushveld-complex) levert het gros " +
     "van het platina en rodium, Rusland (Norilsk) domineert het palladium. Geraffineerd metaal " +
@@ -220,6 +223,22 @@ REGISTER({
     { id: "pgm-rec-china", type: "recycler", name: "China (autokat-schroot)", country: "China",
       lat: 30.60, lon: 120.30, tier: 3, layer: "recycle",
       note: "China's snelgroeiende eigen autokat-recycling — dempt een deel van de importbehoefte." },
+
+    // ================================= BEURSVOORRADEN / KLUIZEN (optionele laag)
+    // Pt en Pd zijn óók beursverhandeld: NYMEX/COMEX (futures, New York), TOCOM
+    // (Tokio) + de fysieke LPPM-kluizen in Londen. type "exchange" + node/flow.layer
+    // "exchange": hergebruik van de bestaande koper/nikkel/zilver-toggle (PURE DATA,
+    // 0 engine-wijziging, LAR-448). Náást "recycling" de tweede optionele PGM-laag.
+    // `stock` in t 3E (indicatief); marker ∝ √voorraad. Default UIT.
+    { id: "pgm-ex-lppm", type: "exchange", name: "LPPM (Londen — kluizen)", country: "VK",
+      lat: 51.51, lon: -0.09, stock: 40, tier: 2, coastal: true, exchange: "LPPM",
+      note: "De London Platinum & Palladium Market: de fysieke benchmark-/kluislaag voor Pt/Pd (good-delivery baren). De bovengrondse buffer die leegloopt wanneer de industriële vraag het mijnaanbod overtreft." },
+    { id: "pgm-ex-nymex", type: "exchange", name: "NYMEX/COMEX (New York)", country: "VS",
+      lat: 40.71, lon: -74.01, stock: 18, tier: 2, coastal: true, exchange: "NYMEX",
+      note: "De CME-futures-benchmark voor platina en palladium; leverbare 'registered' voorraden in de aangesloten kluizen." },
+    { id: "pgm-ex-tocom", type: "exchange", name: "TOCOM (Tokio)", country: "Japan",
+      lat: 35.68, lon: 139.76, stock: 8, tier: 3, coastal: true, exchange: "TOCOM",
+      note: "De Japanse platina-futuresmarkt — Japan is van oudsher een grote Pt-vraagmarkt (autokat + sieraad), met een eigen prijsbenchmark en kluisvoorraad." },
   ],
 
   // ==========================================================================
@@ -329,6 +348,15 @@ REGISTER({
       note: "Japans autokat-/elektronicaschroot -> Tanaka-recycling." },
     { from: "pgm-rec-china", to: "pgm-mkt-autocat-china", value: 15, mode: "road", stage: "erts", layer: "recycle",
       note: "China's groeiende eigen autokat-recycling -> terug de binnenlandse markt in." },
+
+    // === G. BEURSVOORRADEN (layer:"exchange" -> alleen met de toggle) ========
+    // De kluisbuffer die leegloopt richting de industriële (autokat-)vraag.
+    { from: "pgm-ex-lppm", to: "pgm-mkt-autocat-eu", value: 20, mode: "rail", stage: "product", layer: "exchange",
+      note: "LPPM-kluisvoorraad -> de Europese autokat-industrie (over land via de Kanaaltunnel): de bovengrondse buffer dekt het gat tussen mijnaanbod en vraag." },
+    { from: "pgm-ex-nymex", to: "pgm-mkt-autocat-us", value: 12, mode: "road", stage: "product", layer: "exchange",
+      note: "NYMEX 'registered' voorraad -> de Noord-Amerikaanse autokat-vraag." },
+    { from: "pgm-ex-tocom", to: "pgm-mkt-autocat-japan", value: 8, mode: "road", stage: "product", layer: "exchange",
+      note: "De TOCOM-/Japanse kluisvoorraad -> de binnenlandse autokat- en sieraadvraag." },
   ],
 
   // ==========================================================================

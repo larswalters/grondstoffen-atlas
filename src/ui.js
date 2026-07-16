@@ -134,7 +134,7 @@ const UI = (function () {
       const rc = document.createElement("button");
       rc.className = "chip" + (filters.showRecycle ? " on" : "");
       rc.textContent = "recycling";
-      rc.title = "Magneetschroot terug naar scheiding/magneet tonen (nu <5% van het aanbod)";
+      rc.title = opts.recycleHint || "Recyclingstromen (secundair aanbod) terug de keten in tonen";
       rc.onclick = () => { filters.showRecycle = !filters.showRecycle; onChange(); };
       filterRow.appendChild(rc);
     }

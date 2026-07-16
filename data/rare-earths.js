@@ -48,6 +48,7 @@ REGISTER({
   flowColor: "#E4C24A",
   detail: "uitgewerkt",
   unit: "kt magneet-REO/jaar (NdPr + Dy/Tb, indicatief)",
+  recycleHint: "Magneetschroot terug naar scheiding/magneet tonen (nog <5% van het aanbod)",
   blurb: "De magneetmetalen NdPr + Dy/Tb voor EV-motoren, windturbines en defensie. " +
     "Winning is breed verspreid over álle continenten — maar China scheidt ~85-90% " +
     "van het gemengde erts (Ganzhou/Sichuan/Baotou) en maakt ~90%+ van de NdFeB-" +

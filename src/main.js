@@ -29,6 +29,12 @@ const ATLAS = (function () {
   function hasRecycle() { return activeResources().some((r) => (r.flows || []).some((f) => f.layer === "recycle")); }
   // lab-grown-toggle: alleen bij grondstoffen die een `layer:"labgrown"`-schaduwlaag hebben (diamant).
   function hasLabGrown() { return activeResources().some((r) => (r.flows || []).some((f) => f.layer === "labgrown")); }
+  // recycling-tooltip is grondstof-specifiek (REE <5% magneetschroot ≠ PGM ~25% autokat ≠ grafiet nascent):
+  // pak de `recycleHint` van de actieve grondstof met een recycle-laag (fallback = generiek in ui.js).
+  function recycleHint() {
+    const r = activeResources().find((r) => (r.flows || []).some((f) => f.layer === "recycle"));
+    return r && r.recycleHint ? r.recycleHint : null;
+  }
   function activeHasAir() { return activeResources().some((r) => (r.flows || []).some((f) => f.mode === "air")); }
 
   // Chrome die van de ACTIEVE grondstoffen afhangt: de CB-chip (alleen bij goud)
@@ -40,7 +46,7 @@ const ATLAS = (function () {
       : { one: "schip", many: "schepen", btn: "⚓ schepen" });
     UI.renderViewModes(filters, onFilterChange);
     UI.renderFilters(filters, onFilterChange,
-      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks(), hasRecycle: hasRecycle(), hasReserves: hasReserves(), hasMilitary: hasMilitary(), hasLabGrown: hasLabGrown() });
+      { hasCB: hasCentralBanks(), hasExchange: hasExchangeStocks(), hasRecycle: hasRecycle(), hasReserves: hasReserves(), hasMilitary: hasMilitary(), hasLabGrown: hasLabGrown(), recycleHint: recycleHint() });
   }
 
   // focus: null | {type:"node", id} | {type:"flow", key, nodeIds}

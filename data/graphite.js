@@ -50,6 +50,7 @@ REGISTER({
   flowColor: "#B6BEC8",   // lichter grijs: de stromen tegen de donkere bol
   detail: "uitgewerkt",
   unit: "kt/jaar (indicatief)",
+  recycleHint: "Batterij-/anodegrafiet-recycling tonen (nog nascent, klein aandeel)",
   blurb: "Grafiet is het anodemateriaal in vrijwel elke lithium-ionbatterij. Twee " +
     "feedstocks — natuurlijk vlokgrafiet (China #1, Mozambique, Madagascar) en synthetisch " +
     "grafiet uit petroleum-naaldcokes — komen samen op dezelfde knijp: de omzetting tot " +
