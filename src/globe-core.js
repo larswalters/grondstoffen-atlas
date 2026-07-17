@@ -112,12 +112,23 @@ const GLOBE = (function () {
     try { renderer.domElement.setPointerCapture(e.pointerId); } catch (err) {}
   });
 
+  // Radialen bolrotatie per gesleepte pixel, evenredig met de afstand van de
+  // camera tot het booloppervlak: ingezoomd zie je minder wereld, dus moet een
+  // veeg ook minder graden draaien. Zonder dit voelt de bol bij volle zoom alsof
+  // hij onder je vinger wegschiet.
+  function dragRadPerPixel() {
+    const d = Math.max(0.05, camera.position.z - RADIUS);
+    const dRef = Math.max(0.05, C.globe.dragRefZoom - RADIUS);
+    return C.globe.dragSpeed * (d / dRef);
+  }
+
   window.addEventListener("pointermove", (e) => {
     if (isDragging) {
+      const k = dragRadPerPixel();
       const dx = e.clientX - prev.x;
       const dy = e.clientY - prev.y;
-      globeGroup.rotation.y += dx * 0.005;
-      globeGroup.rotation.x = Math.max(-1.15, Math.min(1.15, globeGroup.rotation.x + dy * 0.005));
+      globeGroup.rotation.y += dx * k;
+      globeGroup.rotation.x = Math.max(-1.15, Math.min(1.15, globeGroup.rotation.x + dy * k));
       prev = { x: e.clientX, y: e.clientY };
       return;
     }

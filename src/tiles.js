@@ -193,8 +193,13 @@ const TileLayer = (function () {
   }
 
   // Welk tegel-zoomniveau geeft ongeveer `tilesAcross` scherpe tegels over beeld?
-  function detailZoomFor(spanDeg) {
-    const want = Math.log2((360 * C.tilesAcross) / (2 * spanDeg));
+  // De `cos(lat)` is essentieel: een Mercator-tegel op 60° breedte beslaat maar
+  // de helft van de grond van eentje op de evenaar. Zonder die term vroegen we
+  // hoe noordelijker hoe meer tegels aan voor dezelfde scherpte — verspild werk
+  // dat bovendien het tegelbudget opblies (LAR-479).
+  function detailZoomFor(spanDeg, lat) {
+    const cosLat = Math.max(0.15, Math.cos(lat * D2R));
+    const want = Math.log2((360 * C.tilesAcross * cosLat) / (2 * spanDeg));
     return Math.max(C.minZ, Math.min(C.maxZ, Math.round(want)));
   }
 
@@ -229,14 +234,12 @@ const TileLayer = (function () {
   // ----------------------------------------------------------------- DETAIL
   // Scherpe patch rond het midden van beeld. Alleen zinvol als de detail-zoom
   // écht fijner is dan de shell.
-  function updateDetail(camZ, detailZ, shellZ) {
+  function updateDetail(span, lat, lon, detailZ, shellZ) {
     if (detailZ <= shellZ) {
       if (detailLive.size) { clearMap(detailGroup, detailLive); detailKey = ""; }
       return;
     }
 
-    const span = halfSpanDeg(camZ);
-    const { lat, lon } = viewCentre();
     const n = Math.pow(2, detailZ);
 
     // begrens het zichtbare gebied; bij hoge breedtegraden rekt lengtegraad op
@@ -246,24 +249,36 @@ const TileLayer = (function () {
 
     const x0 = Math.floor(((lon - lonPad + 180) / 360) * n);
     const x1 = Math.floor(((lon + lonPad + 180) / 360) * n);
-    const y0 = Math.floor(mercYOfLat(Math.min(85, lat + latPad)) * n);
-    const y1 = Math.floor(mercYOfLat(Math.max(-85, lat - latPad)) * n);
+    const y0 = Math.max(0, Math.floor(mercYOfLat(Math.min(85, lat + latPad)) * n));
+    const y1 = Math.min(n - 1, Math.floor(mercYOfLat(Math.max(-85, lat - latPad)) * n));
 
     const key = `${source}/${detailZ}/${x0},${x1},${y0},${y1}`;
     if (key === detailKey) return;      // niets veranderd -> niets doen
     detailKey = key;
 
-    const wanted = new Set();
-    let budget = C.maxTiles;
+    // Het midden van beeld in tegelcoördinaten — van daaruit vullen we naar
+    // buiten. Het budget is een noodrem, geen bezuiniging: wie hem raakt moet de
+    // BUITENSTE tegels verliezen, waar je toch al langs de bolrand kijkt.
+    // Vroeger liep de lus rij voor rij van noord naar zuid en sneed het budget
+    // simpelweg de onderste rijen weg: een scherpe band bovenin, grove shell
+    // eronder, en de grens schoof mee met de bol (LAR-479).
+    const cx = ((lon + 180) / 360) * n;
+    const cy = mercYOfLat(lat) * n;
 
-    for (let y = Math.max(0, y0); y <= Math.min(n - 1, y1) && budget > 0; y++) {
-      for (let x = x0; x <= x1 && budget > 0; x++) {
-        const xw = ((x % n) + n) % n;   // over de datumgrens heen blijven werken
-        wanted.add(`${detailZ}/${xw}/${y}`);
-        budget--;
-        ensureTile(detailGroup, detailLive, detailZ, xw, y, C.detailLift, 2, C.meshDetail);
+    const candidates = [];
+    for (let y = y0; y <= y1; y++) {
+      for (let x = x0; x <= x1; x++) {
+        candidates.push({ x, y, d: Math.hypot(x + 0.5 - cx, y + 0.5 - cy) });
       }
     }
+    candidates.sort((a, b) => a.d - b.d);
+
+    const wanted = new Set();
+    candidates.slice(0, C.maxTiles).forEach(({ x, y }) => {
+      const xw = ((x % n) + n) % n;     // over de datumgrens heen blijven werken
+      wanted.add(`${detailZ}/${xw}/${y}`);
+      ensureTile(detailGroup, detailLive, detailZ, xw, y, C.detailLift, 2, C.meshDetail);
+    });
     pruneTiles(detailGroup, detailLive, wanted);
   }
 
@@ -284,10 +299,12 @@ const TileLayer = (function () {
     // tegels aan -> de grove vectorkustlijnen uit (die zouden ernaast liggen)
     if (typeof Basemap !== "undefined") Basemap.setOverlayVisible(false);
 
-    const detailZ = detailZoomFor(halfSpanDeg(camZ));
+    const span = halfSpanDeg(camZ);
+    const { lat, lon } = viewCentre();
+    const detailZ = detailZoomFor(span, lat);
     const shellZ = shellZoomFor(detailZ);
     updateShell(shellZ);
-    updateDetail(camZ, detailZ, shellZ);
+    updateDetail(span, lat, lon, detailZ, shellZ);
   }
 
   // niet elk frame herberekenen — dat is zonde en het flikkert

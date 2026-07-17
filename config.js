@@ -15,6 +15,14 @@ const CONFIG = {
     autoRotateResumeMs: 0,
     minZoom: 2.75,
     maxZoom: 11,
+
+    // Hoe hard draait de bol per gesleepte pixel? De maat is hoeveel wereld je
+    // op dat moment ziet: `dragSpeed` geldt op `dragRefZoom`, en schaalt mee met
+    // de afstand camera->oppervlak. Vroeger was het een vaste factor, dus één
+    // duimveeg draaide bij volle zoom net zoveel graden als uitgezoomd — terwijl
+    // je dan ~9x minder wereld ziet. Dat is de "supergevoelige" bol.
+    dragSpeed: 0.005,       // radialen per pixel op dragRefZoom
+    dragRefZoom: 5.6,       // = de begin-camerastand (het gevoel dat er al was)
   },
 
   // ------------------------------------------------------------- BASISKAART
@@ -63,7 +71,14 @@ const CONFIG = {
     tilesAcross: 4.5,           // hoeveel scherpe detailtegels je ongeveer over het beeld wilt
     minZ: 3,
     maxZ: 9,                    // hoger = scherper, maar ook meer laden
-    maxTiles: 40,               // veiligheidsplafond voor de scherpe detailpatch
+    maxTiles: 96,               // veiligheidsplafond voor de scherpe detailpatch.
+                                // Was 40 — dat is minder dan één patch (~7x7, bij
+                                // ongunstige afronding ~9x9) nodig heeft, dus hij
+                                // liep bij normaal inzoomen ALTIJD leeg en de
+                                // onderste rijen bleven wazig (LAR-479). De patch
+                                // vult nu van het midden naar buiten, dus dit
+                                // plafond is weer wat het hoort te zijn: een
+                                // noodrem tegen ontsporen, geen dagelijkse limiet.
     meshDetail: 8,              // gridfijnheid per detailtegel (Mercator-correctie)
     updateInterval: 0.25,       // seconden tussen herberekeningen
 
