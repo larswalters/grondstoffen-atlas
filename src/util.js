@@ -95,28 +95,33 @@ function makeRouteCurve(latlons, radius, lift, opts) {
 
   const SAMPLES = Math.max(48, Math.min(260, Math.round(totalAngle * 85)));
 
-  // eerst de middellijn bemonsteren (zonder lane), zodat we per punt de
-  // vaarrichting kennen en daar loodrecht op kunnen verschuiven
-  const centre = [];
-  for (let s = 0; s <= SAMPLES; s++) {
-    const tGlobal = s / SAMPLES;
-    let remaining = tGlobal * totalAngle;
-    let seg = 0;
-    while (seg < segAngles.length - 1 && remaining > segAngles[seg]) {
-      remaining -= segAngles[seg];
-      seg++;
+  // ADAPTIEVE bemonstering: zelfde gemiddelde dichtheid als voorheen, maar
+  // élk invoerpunt blijft behouden. De gebakken MARNET-paden (M18) zijn dicht
+  // bij kusten en dun op open zee; de oude uniforme bemonstering (1 punt per
+  // ~75 km bij lange routes) sloeg de dichte kustpunten over, waarna de
+  // spline dwars over schiereilanden sneed. De oude A* maskeerde dat met
+  // ~130 km geforceerd water rond knelpunten — MARNET scheert echt langs de
+  // kust en verdraagt geen overgeslagen punten.
+  const stepRad = totalAngle / SAMPLES;
+  const centre = []; // { v: eenheidsvector, t: 0..1 langs de route }
+  let accAngle = 0;
+  for (let i = 0; i < units.length - 1; i++) {
+    const n = Math.max(1, Math.ceil(segAngles[i] / stepRad));
+    for (let k = 0; k < n; k++) {
+      const v = k === 0 ? units[i] : slerpUnit(units[i], units[i + 1], k / n);
+      centre.push({ v, t: (accAngle + segAngles[i] * (k / n)) / totalAngle });
     }
-    const tLocal = segAngles[seg] > 0 ? remaining / segAngles[seg] : 0;
-    centre.push(slerpUnit(units[seg], units[seg + 1], Math.min(1, tLocal)));
+    accAngle += segAngles[i];
   }
+  centre.push({ v: units[units.length - 1], t: 1 });
 
   const pts = [];
   const tangent = new THREE.Vector3();
   const side = new THREE.Vector3();
 
-  for (let s = 0; s <= SAMPLES; s++) {
-    const tGlobal = s / SAMPLES;
-    const v = centre[s].clone();
+  for (let s = 0; s < centre.length; s++) {
+    const tGlobal = centre[s].t;
+    const v = centre[s].v.clone();
 
     let h;
     if (flat) {
@@ -129,8 +134,8 @@ function makeRouteCurve(latlons, radius, lift, opts) {
     const p = v.clone().multiplyScalar(radius * (1 + h));
 
     if (lane) {
-      const a = centre[Math.max(0, s - 1)];
-      const b = centre[Math.min(SAMPLES, s + 1)];
+      const a = centre[Math.max(0, s - 1)].v;
+      const b = centre[Math.min(centre.length - 1, s + 1)].v;
       tangent.subVectors(b, a).normalize();
       side.crossVectors(v, tangent).normalize();
       p.addScaledVector(side, lane * laneShape(tGlobal));
