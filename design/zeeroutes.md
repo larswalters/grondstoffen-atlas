@@ -33,6 +33,24 @@ Het handgeplaatste vaarpunt `wp-pac-zuid` (−26,00 / −125,00) dwingt **~1.090
 een week varen. Conservatief gemeten (via-keten als kale grote-cirkels; het echte A\*-pad mét trapjes
 is langer).
 
+> ### ⚠️ Correctie na de pilot-baseline (2026-07-17, gemeten in de draaiende atlas)
+>
+> **De 1.090 km-claim hierboven klopt niet** — die kwam uit de vergelijking tegen "route A" (de kale
+> run zonder via-keten, dezelfde fout die §10 verbiedt). Eerlijk gemeten, tegen het werkelijk
+> gerenderde pad: onze bol 20.615 km (zuidom) vs. searoute mét dezelfde keten 20.384 km = **231 km
+> (1,1%)**. Antofagasta↔Shanghai is **93% antipodaal** (grote cirkel 18.559 km; halve aardomtrek
+> 20.015 km) → noordom en zuidom zijn vrijwel even lang; `wp-pac-zuid` was nooit een omweg maar een
+> stabilisator van een wiskundig onbepaalde geodeet (staat letterlijk zo in `_chokepoints.js`).
+>
+> **De échte databug die de pilot vond:** `wp-taiwan` in de trans-Pacific via-ketens kost **1.497 km**
+> per corridor — searoute vaart dan noord tot 50°N, duikt omlaag naar de Straat van Taiwan, en weer
+> omhoog naar Shanghai. Een schip uit Chili nadert Shanghai vanaf de open oceaan.
+>
+> **Herijkte winst van M18** (alle 22 koper-zeereizen, (a)-vorm): lengte **−2,9%** (277.946 →
+> 269.797 km; ratio t.o.v. grote cirkel 1,203 → 1,167) · **trapjes 37 → 25 bochten** op Antofagasta
+> (de zíchtbare winst) · A\* + rasteropbouw uit de runtime · **M21 wordt mogelijk** (knelpunt = edge).
+> Het realisme-argument blijft staan; het lengte-argument is bescheidener dan de milestone aannam.
+
 ## 2. Wat er voor in de plaats komt
 
 Geen beter raster — een **ander soort ding**. De Python-library `searoute` (1.6.0, al geïnstalleerd)
@@ -263,10 +281,28 @@ voor `wp-dardanellen`.
 > empirisch getoetst** vóór ze sneuvelen — eerst door searoute halen, dán pas slopen. Dat is het
 > M13/M17-patroon: kandidaat toetsen, niet gokken.
 >
-> Reden: (1) de ~1.090 km omweg van `wp-pac-zuid` verdwijnt; (2) de **valse flessenhals** verdwijnt —
+> Reden: (1) de omweg-artefacten van de A\*-duwtjes verdwijnen; (2) de **valse flessenhals** verdwijnt —
 > `laneShape` tekent nu een knijppunt op 26°Z/125°W waar niets is (§5); (3) een handgeprikt punt uit
 > het A\*-tijdperk kan MARNET's lane-kennis alleen maar overrulen. Omvang speelde géén rol in de keuze
 > (11%, zie boven) — dit is puur een realisme-besluit.
+
+> ### ✅ AANSCHERPING NA DE PILOT-BASELINE (Lars, 2026-07-17): **MARNET beslist — óók de echte knelpunten worden niet meer afgedwongen**
+>
+> De pilot vond `wp-taiwan` (een écht knelpunt, `marker: true`) in via-ketens waar het niet hoort
+> (Chili→Shanghai: +1.497 km). De (a)/(b)-scheidslijn op *soort punt* volstaat dus niet — de fout zit
+> in *welke keten* een punt staat. Besluit: **zee-corridors worden kaal haven→haven gerouteerd; ook
+> échte knelpunten worden niet meer als via afgedwongen.** searoute vaart er vanzelf doorheen wáár dat
+> hoort (Malakka, Suez, de Kaap — dat is MARNET by-design).
+>
+> Consequenties:
+> - `via` op zee-runs verdwijnt volledig uit de data (havens als echte tussenstop blijven — dat zijn
+>   aanloophavens, geen routering).
+> - **Knelpunt-detectie wordt afgeleid** i.p.v. voorgeschreven: uit `traversed_passages` (build-time)
+>   + geometrische nabijheid van de polyline tot `marker: true`-knelpunten (runtime) → daaruit komen
+>   de `laneShape`-ankers én de gouden ringen. Het samenknijpen gebeurt dan wáár de route echt langs
+>   het knelpunt komt.
+> - De ingesloten-water-nuance blijft: corridors die searoute niet kan routeren (Saint-Laurent,
+>   Kaspisch) vallen build-time hard uit → per geval oplossen.
 
 ## 9. Verificatie-criterium — wat is "goed"?
 

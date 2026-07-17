@@ -5,6 +5,20 @@ Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
 ## Koerswijziging — eerst de routes, dan de features (2026-07-17)
 
+- **2026-07-17 · PILOT-BASELINE corrigeert de milestone-diagnose: de 1.090 km-omweg bestaat niet.** Eerlijk gemeten
+  (in de draaiende atlas, tegen het werkelijk gerenderde pad mét via-keten): onze bol 20.615 km (zuidom) vs. searoute
+  20.384 km = **231 km / 1,1%**. De 1.090 km kwam uit de vergelijking tegen "route A" (kale run zonder via) — exact de
+  fout die de harde regel verbiedt. Oorzaak: Antofagasta↔Shanghai is **93% antipodaal** → noordom en zuidom vrijwel
+  even lang; `wp-pac-zuid` stabiliseerde een wiskundig onbepaalde geodeet (stond al in `_chokepoints.js`).
+  **Herijkte winst M18** (22 koper-zeereizen): lengte **−2,9%** · **trapjes 37→25 bochten** (dé zichtbare winst) ·
+  A\*/rasteropbouw uit de runtime · M21 mogelijk. Lars' go op dit herijkte argument: *"MARNET is het meest realistisch."*
+- **2026-07-17 · BESLIST (Lars): MARNET beslist — zee-corridors kaal haven→haven, óók echte knelpunten niet meer
+  afdwingen.** De pilot vond `wp-taiwan` (marker:true!) in ketens waar het niet hoort: Chili→Shanghai +**1.497 km**
+  (noord tot 50°N → omlaag naar de Straat van Taiwan → weer omhoog). De (a)/(b)-lijn op *soort punt* volstaat niet;
+  de fout zit in *welke keten*. Dus: `via` op zee-runs verdwijnt volledig (aanloophavens blijven als echte stops);
+  knelpunt-passage wordt **afgeleid** uit `traversed_passages` + polyline-nabijheid tot marker:true-punten → daaruit
+  de `laneShape`-ankers en gouden ringen, op de plek waar de route er écht langs komt. Spec: zeeroutes.md §8.
+
 - **2026-07-17 · De zee-A\* wordt vervangen door een echt scheepvaart-lanen-netwerk (M18).** Reden: de routing is
   aantoonbaar onrealistisch, en de drie geplande features **staan erop** — een impact-teller op verkeerde routes is
   erger dan geen teller. **Bewijs:** Antofagasta→Shanghai = grote-cirkel 18.526 km · searoute (echte lanen, MARNET)
