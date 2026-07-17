@@ -99,7 +99,13 @@ const FlowLayer = (function () {
     if (typeof SEAROUTES === "undefined") return null;
     const e = SEAROUTES[seaCacheKey(a, b)];
     if (!e || !e.pts || e.pts.length < 2) return null;
-    const pts = e.pts.map((p) => ({ lat: p[0], lon: p[1] }));
+    // w = gebakken vrije baanbreedte per punt (tools/lane_widths.js); reist als
+    // eigenschap met het punt mee zodat omkeren vanzelf klopt
+    const pts = e.pts.map((p, i) => {
+      const q = { lat: p[0], lon: p[1] };
+      if (e.w && e.w[i] !== undefined) q.w = e.w[i];
+      return q;
+    });
     // de polyline is één richting gebakken; omkeren als deze leg andersom vaart
     const dHead = Math.abs(pts[0].lat - a.lat) + Math.abs(pts[0].lon - a.lon);
     const dTail = Math.abs(pts[pts.length - 1].lat - a.lat) + Math.abs(pts[pts.length - 1].lon - a.lon);
@@ -288,8 +294,10 @@ const FlowLayer = (function () {
         const laneIdx = (flowIdx % L.count) - (L.count - 1) / 2;
         const lane = laneIdx * L.spacing;
 
+        const laneWidths = routePts.some((p) => p.w !== undefined)
+          ? routePts.map((p) => (p.w === undefined ? null : p.w)) : null;
         const { curve, totalAngle } = makeRouteCurve(routePts, R, lift, {
-          flat: routeView && !airMode, lane, anchors,
+          flat: routeView && !airMode, lane, anchors, widths: laneWidths,
         });
 
         const color = stageColorOf(res, stage);

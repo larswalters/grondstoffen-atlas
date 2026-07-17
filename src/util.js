@@ -47,6 +47,9 @@ function makeRouteCurve(latlons, radius, lift, opts) {
   const flat = !!(opts && opts.flat);
   const lane = (opts && opts.lane) || 0;
   const anchorIdx = (opts && opts.anchors) || null;
+  // gebakken baanbreedtes (km vrij water haaks op de route, tools/lane_widths.js):
+  // de lane-offset wordt hierop afgeklemd zodat de waaier in smal water samenknijpt
+  const widths = (opts && opts.widths) || null;
   const units = latlons.map((p) => latLonToVec3(p.lat, p.lon, 1));
 
   // lengte (in radialen) per segment, voor een gelijkmatige parametrisatie
@@ -103,17 +106,19 @@ function makeRouteCurve(latlons, radius, lift, opts) {
   // ~130 km geforceerd water rond knelpunten — MARNET scheert echt langs de
   // kust en verdraagt geen overgeslagen punten.
   const stepRad = totalAngle / SAMPLES;
-  const centre = []; // { v: eenheidsvector, t: 0..1 langs de route }
+  const wOf = (i) => (widths && widths[i] != null ? widths[i] : Infinity);
+  const centre = []; // { v: eenheidsvector, t: 0..1 langs de route, w: km vrij }
   let accAngle = 0;
   for (let i = 0; i < units.length - 1; i++) {
     const n = Math.max(1, Math.ceil(segAngles[i] / stepRad));
+    const w = Math.min(wOf(i), wOf(i + 1)); // conservatief: smalste kant wint
     for (let k = 0; k < n; k++) {
       const v = k === 0 ? units[i] : slerpUnit(units[i], units[i + 1], k / n);
-      centre.push({ v, t: (accAngle + segAngles[i] * (k / n)) / totalAngle });
+      centre.push({ v, t: (accAngle + segAngles[i] * (k / n)) / totalAngle, w });
     }
     accAngle += segAngles[i];
   }
-  centre.push({ v: units[units.length - 1], t: 1 });
+  centre.push({ v: units[units.length - 1], t: 1, w: wOf(units.length - 1) });
 
   const pts = [];
   const tangent = new THREE.Vector3();
@@ -138,7 +143,17 @@ function makeRouteCurve(latlons, radius, lift, opts) {
       const b = centre[Math.min(centre.length - 1, s + 1)].v;
       tangent.subVectors(b, a).normalize();
       side.crossVectors(v, tangent).normalize();
-      p.addScaledVector(side, lane * laneShape(tGlobal));
+      let off = lane * laneShape(tGlobal);
+      // afklemmen op de gebakken vrije breedte (km -> wereldeenheden). De factor
+      // 0.4 is veiligheidsmarge: de CatmullRom-spline bult tussen twee geklemde
+      // punten iets naar buiten, dus houden we ~60% marge op de gemeten ruimte.
+      // Open zee heeft geen w (Infinity) → daar blijft de waaier onaangeroerd.
+      const LANE_SAFETY = 0.4;
+      const maxOff = centre[s].w === Infinity || centre[s].w === undefined
+        ? Infinity : centre[s].w * LANE_SAFETY * radius / 6371;
+      if (off > maxOff) off = maxOff;
+      else if (off < -maxOff) off = -maxOff;
+      p.addScaledVector(side, off);
     }
 
     pts.push(p);
