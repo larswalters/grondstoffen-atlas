@@ -77,40 +77,16 @@ const ATLAS = (function () {
     MarkerLayer.setFocus(involved); // null = niets dimmen
   }
 
-  // Welke locaties hangen aan een ZICHTBARE stroom? Die moeten altijd op de
-  // kaart staan, ongeacht hun tier — anders eindigt een lijn in het niets.
-  // In hemelsbreed-weergave tellen via-punten niet mee (die worden genegeerd).
-  function usedNodeIds(active, filters) {
-    const ids = new Set();
-    const routeView = filters.viewMode === "route";
-    active.forEach((res) => {
-      (res.flows || []).forEach((f) => {
-        if (!filters.stages.has(f.stage || "raffinaat")) return;
-        if (f.layer === "cb" && !filters.showCentralBanks) return;
-        if (f.layer === "exchange" && !filters.showExchangeStocks) return;
-        if (f.layer === "recycle" && !filters.showRecycle) return;
-        if (f.layer === "reserve" && !filters.showReserves) return;
-        if (f.layer === "secondary" && !filters.showMilitary) return;
-        if (f.layer === "labgrown" && !filters.showLabGrown) return;
-        const from = getNode(res, f.from);
-        const to = getNode(res, f.to);
-        if (!from || !to) return;
-        const planned = f.status === "gepland" ||
-          from.status === "project" || from.status === "gepland" ||
-          to.status === "project" || to.status === "gepland";
-        if (planned && !filters.showProjects) return;
-        ids.add(f.from);
-        ids.add(f.to);
-        if (routeView) (f.via || []).forEach((v) => ids.add(v));
-      });
-    });
-    return ids;
-  }
+  // NB (LAR-481): hier stond `usedNodeIds()` — de set locaties aan een zichtbare
+  // stroom, die MarkerLayer gebruikte om ze ondanks hun tier te blijven tonen
+  // ("een lijn mag niet in het niets eindigen"). Nu markers niet meer op tier
+  // verdwijnen is die uitzondering overbodig: het gevaar dat hij afdekte kan
+  // niet meer optreden.
 
   function rebuild() {
     const active = RESOURCES.filter((r) => activeIds.includes(r.id));
     GLOBE.clearPickables();
-    MarkerLayer.build(active, filters, usedNodeIds(active, filters));
+    MarkerLayer.build(active, filters);
     FlowLayer.build(active, filters);
 
     // schepen varen alleen in de route-weergave

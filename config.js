@@ -158,7 +158,9 @@ const CONFIG = {
     //   tier 1 = draagt het verhaal, altijd zichtbaar
     //   tier 2 = havens, middelgrote mijnen — verschijnen onder deze camera-z
     //   tier 3 = detail — pas dichtbij
-    tierZoom: { 2: 6.4, 3: 4.6 },
+    // NB (LAR-481): hier stond `tierZoom` — vanaf welke camerastand markers van
+    // tier 2/3 zichtbaar werden. Markers verdwijnen niet meer op tier; `tier`
+    // stuurt alleen nog de labels hieronder. Zie de kop van src/markers.js.
 
     // Labels per tier (voorheen één drempel voor alles -> labelsoep)
     labelZoomByTier: { 1: 5.4, 2: 4.4, 3: 3.6 },

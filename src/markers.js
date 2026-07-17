@@ -5,8 +5,17 @@
 //   market    -> platte ring/schijf
 // Projecten (status: "project"/"gepland") worden halftransparant getekend.
 //
-// TIERS: node.tier bepaalt vanaf welk zoomniveau een locatie (en zijn label)
-// zichtbaar is. Tier 1 altijd, tier 2/3 pas bij inzoomen — zie CONFIG.markers.
+// TIERS: node.tier bepaalt vanaf welk zoomniveau het LABEL van een locatie
+// zichtbaar is (CONFIG.markers.labelZoomByTier). De markers zelf staan er
+// altijd; het zijn de labels die de kaart druk maken, niet de bolletjes.
+//
+// Tier gold vroeger óók voor de markers, maar dat werkte averechts (LAR-481).
+// Een node die aan een zichtbare stroom hing was `forced` en negeerde z'n tier —
+// en dat gold voor vrijwel álles (57 van de 63 koper-nodes). De tier-regel raakte
+// daardoor alleen nog de handvol CONTEXT-mijnen zónder stroom: Chuquicamata en
+// KGHM ploften in beeld bij het inzoomen terwijl het kleinere Los Pelambres, dat
+// toevallig wél een stroom heeft, gewoon bleef staan. Zichtbaarheid hing dus af
+// van of een mijn een lijntje had, niet van hoe belangrijk hij is.
 // ZOOM: markers schalen mee met de camera zodat ze op het scherm ongeveer
 // even groot blijven in plaats van uit te groeien tot klodders.
 // FOCUS: setFocus(Set(nodeIds)|null) dimt alle niet-betrokken markers.
@@ -90,7 +99,7 @@ const MarkerLayer = (function () {
     return { sprite, labelBase };
   }
 
-  function build(resources, filters, usedIds) {
+  function build(resources, filters) {
     clearGroup(group);
     clearGroup(labelGroup);
     items.length = 0;
@@ -253,9 +262,6 @@ const MarkerLayer = (function () {
         items.push({
           mesh, ring, label: sprite, labelBase, node, res,
           tier: defaultTier(node), baseOpacity,
-          // Een locatie die aan een zichtbare stroom hangt, mag NOOIT door de
-          // tier-regel verdwijnen — anders lopen er lijnen naar een leeg punt.
-          forced: !!(usedIds && usedIds.has(node.id)),
           ringBaseOpacity: ring ? ring.material.opacity : 0,
           pulse: node.type === "mine" && C.mine.pulse && !planned,
           // wie wint er bij botsende labels? lage waarde = belangrijker
@@ -322,22 +328,16 @@ const MarkerLayer = (function () {
     const candidates = [];
 
     items.forEach((it, i) => {
-      const visible = it.forced || it.tier <= 1 || z < (C.tierZoom[it.tier] || Infinity);
-      it.mesh.visible = visible;
-      if (it.ring) it.ring.visible = visible;
-
-      if (visible) {
-        it.mesh.scale.setScalar(zoomK);
-        if (it.ring) {
-          const pulse = it.pulse ? 1 + 0.18 * Math.sin(t * 2 + i * 0.7) : 1;
-          it.ring.scale.setScalar(zoomK * pulse);
-        }
+      it.mesh.scale.setScalar(zoomK);
+      if (it.ring) {
+        const pulse = it.pulse ? 1 + 0.18 * Math.sin(t * 2 + i * 0.7) : 1;
+        it.ring.scale.setScalar(zoomK * pulse);
       }
 
       it.label.visible = false;
 
       const labelZ = C.labelZoomByTier[it.tier] || C.labelZoomByTier[1];
-      if (!visible || z >= labelZ) return;
+      if (z >= labelZ) return;
       if (it.dimmed && CONFIG.focus.labelHideDimmed) return;
 
       it.label.getWorldPosition(wp);
