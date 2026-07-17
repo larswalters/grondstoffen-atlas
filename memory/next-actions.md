@@ -1,7 +1,27 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (M18 · Realistische zeeroutes vastgelegd — de nieuwe koers; feature-trio hernummerd M19/M20/M21)*
+*Last updated: 2026-07-17 (M18 koper-pilot GEBOUWD — in test, morgen verder)*
 
-## 🧭 NU: M18 · Realistische zeeroutes (searoute) — LAR-473..478
+## ⚠️ MORGEN EERST — pilot-test afronden (LAR-474 In Progress)
+
+1. [ ] **Japan-observatie verifiëren.** Lars ziet op mobiel (screenshot 03:15) de trans-Pacific bundel dwars over
+       Honshu. **Hypothese: stale cache** — de curve-fix (`3c801a0`) ging pas minuten vóór de screenshot live
+       (Pages CDN 10 min + mobiele browsercache). Eerst: **incognito/verse cache op mobiel**. Nog steeds fout →
+       de Tsugaru/Japanse Zee-passage per trans-Pacific corridor plotten (scratchpad `plot_corridors.js` als basis)
+       en de polyline + getekende curve daar onderzoeken.
+2. [ ] **Lars' idee bespreken: de wereldbal-weergave aanpassen zodat routes duidelijker worden.** Nog te verkennen
+       wát precies (contrast/dikte/kleur stromen? satelliet- vs vector-ondergrond? bundeling?). **Vóór de uitrol.**
+3. [ ] Pas na visuele go van Lars → **LAR-477 uitrol 13 grondstoffen** (pipeline + checker staan klaar;
+       MARNET dekt óók Saint-Laurent/Kaspisch — empirisch getoetst).
+4. [ ] Klein cosmetisch (mag wachten): haven-uitvaart-bochtjes punt 1 (110–160°, onder de marker) ·
+       Rotterdam→Duitsland laatste-mijl-waaier (4 ship-stromen over land; bestond al vóór de pilot).
+
+## 🧭 M18 · Realistische zeeroutes (searoute) — LAR-473..478 · stand na de pilot-bouwsessie
+
+- [x] **LAR-473 — spec + besluiten** ✅ Done (2026-07-17): `design/zeeroutes.md`, "MARNET beslist", datamodel,
+      hard falen, drempel ">15% zonder doorgang".
+- [~] **LAR-474 — PILOT koper** ⬅️ **gebouwd, in visuele test** (zie boven). 84 legs / 0 kapot / 24 cache-hits,
+      regressie schoon, zeereizen −9,3%.
+- [~] LAR-475/476 — generator + engine de facto gebouwd binnen de pilot (voor koper); blijven open tot de uitrol.
 
 **De koers na "inhoudelijk compleet": niet een 15e grondstof, maar route-kwaliteit.** Lars: *"een boot zou daar
 nooit zo varen."* De drie feature-milestones **staan** op route-nauwkeurigheid → M18 eerst.

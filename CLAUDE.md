@@ -1,6 +1,6 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (KOERSWIJZIGING — M18 · Realistische zeeroutes = de fundering; features hernummerd M19/M20/M21)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (M18 koper-pilot gebouwd — IN TEST; 'MARNET beslist')*
 
 > **🧭 KOERSWIJZIGING (2026-07-17) — EERST DE ROUTES, DAN DE FEATURES.** De atlas is inhoudelijk compleet
 > (14 grondstoffen, backlog leeg), maar de volgende stap is bewust **géén 15e grondstof**: de routing is
@@ -288,6 +288,15 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   searoute +2%) en de features M19/M20/M21 stáán erop. Precompute at build-time, **gededupliceerd per haven-paar**;
   netwerk bewaren voor M21 (*edge eruit → herrouteren*); **alleen zee-legs**; `searoute` = build-dependency.
   Pilot-first met koper. **Feature-trio hernummerd** M19/M20/M21. Open besluit (Lars): via-punten opruimen of als hint houden.
+- **2026-07-17 (pilot) · "MARNET beslist"** — zee-corridors kaal **haven→haven**, óók echte knelpunten niet meer
+  als via afdwingen (de pilot vond `wp-taiwan` in ketens waar het niet hoort: +1.497 km); knelpunt-ringen +
+  `laneShape`-ankers worden **afgeleid uit de geometrie** (≤`chokeAnchorKm` 150). Diagnose-correctie: de 1.090 km
+  was een route-A-meetfout (antipodaal; echt 231 km) — de winst is **−9,3% + gladheid + M21**, zie `design/zeeroutes.md`.
+- **2026-07-17 (pilot) · Corridor-reparaties horen in de baker, verificatie op de gétekende curve** — de-zigzag +
+  lokale A\*-landomleiding met kustbuffer (`tools/bake_searoutes.py`), kwaliteitscheck `tools/check_corridors.js`;
+  én `util.js` bemonstert curves nu **adaptief** (invoerpunten nooit overslaan — uniforme sampling sneed spline over
+  schiereilanden terwijl de data al schoon was). **Pilot-status: gebouwd, in visuele test — Japan-observatie +
+  wereldbal-duidelijkheid open (zie `memory/next-actions.md`).**
 - **2026-07-17 · Verificatie-regel: vergelijk nooit tegen een kale origin→dest A\*-run** — de atlas routeert altijd
   langs de `via`-keten; een kale run produceert paden die de bol nergens tekent ("route A", 16 juli). Vergelijk tegen
   wat `flows.js` werkelijk rendert. Idem methodisch: meet niet in een verborgen Browser-pane (`document.hidden` →

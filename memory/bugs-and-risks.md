@@ -1,5 +1,28 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-17 (route-engine-audit + tegel-afkap-bug bewezen)*
+*Last updated: 2026-07-17 (pilot-test: curve-sampling-bug gefixt; Japan-observatie open)*
+
+## 🔍 OPEN — Lars ziet trans-Pacific bundel over Japan (mobiel, 2026-07-17 03:15)
+- **Symptoom:** screenshot toont de koper-bundel dwars over Honshu richting Korea-straat/China.
+- **Hypothese: stale cache** — de curve-fix (`3c801a0`) ging pas minuten vóór de screenshot live; Pages CDN
+  cachet 10 min + mobiele browsercache. De curve-verificatie (getekende curve → Natural Earth) zegt dat álle 22
+  corridors op water blijven, inclusief het Japan-gebied (route hoort door Tsugaru/Japanse Zee).
+- **Morgen:** incognito/verse cache; nog fout → Tsugaru-passage per corridor plotten (`plot_corridors.js` scratchpad).
+
+## ✅ GEFIXT (2026-07-17) — curve-bemonstering sloeg invoerpunten over (`util.js`)
+- `makeRouteCurve` bemonsterde uniform (cap 260 = 1 punt/~75 km op trans-Pacific) → de dichte kustpunten van
+  MARNET-paden werden overgeslagen → CatmullRom-spline sneed over schiereilanden (Vogelkop), óók toen de data al
+  gerepareerd was. Oude A\* maskeerde dit met ~130 km geforceerd water. **Fix: adaptieve bemonstering, elk
+  invoerpunt behouden.** Les: **verifieer op de gétekende curve, niet alleen op de polyline-data.**
+
+## ✅ GEFIXT (2026-07-17) — ruwe MARNET-paden: zigzags + landkruisingen (baker)
+- Yangtze-monding 140°+105° binnen 50 km (de "rare draai"); Vogelkop-segment 399 km over land; Isla Guadalupe.
+- Fix in `tools/bake_searoutes.py`: de-zigzag (alleen als kortsluiting over water) + lokale A\*-omleiding
+  (0,1° waterraster, kustbuffer 1 cel) + kanaal-uitzondering Panama/Suez. Checker: `tools/check_corridors.js`.
+- Restant (bewust geaccepteerd): haven-uitvaart-bochtjes op punt 1 (110–160°, tientallen km, onder de marker).
+
+## ⚠️ RISICO — GitHub-egress flaky op deze machine (2026-07-17)
+- `git push`/`gh`/`curl` naar github.com vallen periodiek weg (Recv failure/TLS timeout), minuten later weer OK.
+- Workaround die werkt: **achtergrond-retry-loop** (1 poging/min, max 30) — alle 3 deploys kwamen zo door.
 
 ## 🐛 LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen (2026-07-17, OORZAAK BEWEZEN)
 - **Symptoom (Lars):** *"als ik inzoem laadt die bol meestal niet … de routes laden wel maar de wereldkaart niet echt"*

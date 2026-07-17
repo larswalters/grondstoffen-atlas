@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (M18 · Realistische zeeroutes = de nieuwe koers; feature-trio hernummerd M19/M20/M21)*
+*Last updated: 2026-07-17 (M18 koper-pilot — "MARNET beslist" + pilot-besluiten toegevoegd)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 

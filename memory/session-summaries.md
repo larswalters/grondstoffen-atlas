@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-17 (sessie 18) — M18 koper-pilot GEBOUWD + 2 diepe bugs gefixt — IN TEST, morgen verder
+- **Stand: MIDDEN IN DE PILOT** (LAR-474 In Progress). Koper vaart volledig op gebakken MARNET-routes, 3× live op
+  Pages (`5af8fe0`→`3c801a0`), maar **geen go**: Lars ziet op mobiel nog routes over Japan (stale-cache-hypothese,
+  morgen incognito verifiëren) én wil de **wereldbal-weergave duidelijker** vóór de uitrol (open idee, verkennen).
+- **LAR-473 Done:** spec `design/zeeroutes.md`, alles gemeten (987 legs → 381 corridors, dedup 61%; 357 KB @ 3 dec;
+  (a)-vs-(b) scheelt 11% → omvang geen argument). Lars: **(a) opruimen** → aangescherpt tot **"MARNET beslist"**
+  (óók echte knelpunten niet afdwingen; `wp-taiwan` stond in ketens waar het niet hoort, +1.497 km).
+- **Diagnose-correctie:** de "1.090 km-omweg" bestond niet — 93% antipodaal, echte delta 231 km (route-A-fout, die
+  ik eerst zélf reproduceerde). Herijkte winst: zeereizen −9,3% (1,203→1,091), trapjes 37→25, A\* uit runtime, M21.
+- **Gebouwd:** `tools/extract_corridors.js` + `bake_searoutes.py` → `_searoutes.js` (22 corridors, 26 KB,
+  deterministisch, passages, hard falen) · `flows.js` cache-lookup + **geometrische knelpunt-detectie** (Dover-ring
+  verscheen vanzelf; Lombok verdween terecht — Townsville=oostkust) · 61 wp's uit `copper.js` · koper 84 legs /
+  0 kapot / 24 hits · regressie 13 andere 0 kapot/0 hits.
+- **Lars' mobiele feedback → 2 diepe fixes:** (1) baker: de-zigzag (Yangtze-knik) + A\*-landomleiding+kustbuffer
+  (Vogelkop 399 km, Guadalupe) + checker `check_corridors.js`; (2) **curve-sampling `util.js`**: uniform 1/~75 km
+  sloeg kustpunten over → spline over land ("niet alle nodes pakken de paden" — letterlijk). Adaptief gemaakt;
+  geverifieerd op de **gétekende** curve: 22/22 op water.
+- **searoute-empirie:** suez dicht → +73% om de Kaap; ormuz dicht → `length: 0` + warning = *isolatie, nooit 0 km
+  in een teller*; `traversed_passages` = M21-query; MARNET dekt óók Saint-Laurent + Kaspisch (getoetst).
+- **Infra:** GitHub-egress flaky → achtergrond-retry-loops duwden alle 3 pushes erdoor. Correctie: "repo lokaal-only"
+  was verouderd — Pages-deploy bestaat sinds 15-07.
+
 ## 2026-07-17 (sessie 17) — M18 · Realistische zeeroutes vastgelegd + feature-trio hernummerd + zoom-bug bewezen (GEEN code)
 - **Context:** Lars drukte per ongeluk **rewind** → het gesprek was weg uit mijn context (schijf intact). Zijn eerder besproken features stonden wél in Linear, maar als **milestones** (0 issues) — ik zocht alleen op `list_issues` en concludeerde ten onrechte "niets vastgelegd". **Les: milestones ≠ issues.** Oude sessie via telefoon-screenshots gereconstrueerd (claude.ai `/code/session_…`-link = privé app-URL → 403, ook na "public"; alleen een echte `/share/`-link zou werken).
 - **Aanleiding:** de atlas is inhoudelijk compleet (14 grondstoffen, backlog leeg) → de volgende stap werd **niet** een 15e grondstof maar **route-kwaliteit**. Lars: *"er zijn wel een aantal plekken waar routes bewust langs knelpunten gaan terwijl dat niet echt realistisch is … een boot zou nooit er zo doorheen varen."*

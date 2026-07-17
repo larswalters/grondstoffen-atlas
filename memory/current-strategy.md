@@ -1,5 +1,17 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-17 (koerswijziging: M18 · Realistische zeeroutes = de fundering; features hernummerd M19/M20/M21)*
+*Last updated: 2026-07-17 (M18 koper-pilot gebouwd — IN TEST; "MARNET beslist" = het leidende principe)*
+
+## ⚡ Stand van de pilot (2026-07-17, avond) — MIDDEN IN DE TEST
+Koper vaart volledig op gebakken MARNET-corridors (22 stuks, 26 KB, `data/_searoutes.js`), 3× live op Pages
+(t/m `3c801a0`). **Nog geen go:** Lars ziet op mobiel nog routes over Japan (stale-cache-hypothese, morgen
+verifiëren) én wil de wereldbal-weergave duidelijker vóór de uitrol. **Principe aangescherpt: "MARNET beslist"** —
+corridors kaal haven→haven, óók echte knelpunten niet meer afgedwongen; knelpunt-ringen + laneShape-ankers worden
+**afgeleid uit de geometrie** (≤150 km). De milestone-diagnose is onderweg gecorrigeerd: niet "1.090 km omweg"
+(antipodaal → 231 km echt) maar **verkeerd geplaatste via-punten** (`wp-taiwan` +1.497 km) en **trapjes** waren het
+probleem; winst nu gemeten: zeereizen −9,3%, ratio 1,203→1,091. Twee diepe render-lessen: corridor-reparaties horen
+in de **baker** (de-zigzag + landomleiding met kustbuffer, checker `tools/check_corridors.js`) en de **curve-
+bemonstering** mag nooit invoerpunten overslaan (adaptief gemaakt in `util.js` — verifieer op de gétekende curve,
+niet alleen op de data).
 
 ## 🧭 Nu (2026-07-17) — eerst de routes, dan de features
 
