@@ -256,6 +256,11 @@ const CONFIG = {
     coastPenalty: 1.5,    // kust vermijden, maar niet koste wat kost
     simplify: 3,          // elk n-de rasterpunt gebruiken (vloeiender curve)
 
+    // M18 · gebakken MARNET-corridors: vaart een gebakken route binnen deze
+    // afstand langs een écht knelpunt, dan wordt dat punt een laneShape-anker
+    // + gouden ring (knelpunten staan niet meer in de via-ketens).
+    chokeAnchorKm: 150,
+
     // Landroutes: trein, weg en pijpleiding volgen ook een echt pad, zodat ze
     // niet dwars door de Oostzee of over de Egeiïsche Zee snijden.
     landEnabled: true,

@@ -84,6 +84,37 @@ const FlowLayer = (function () {
 
   function flowKey(flow) { return flow.from + ">" + flow.to; }
 
+  // ------------------------------------------------- M18: GEBAKKEN ZEEROUTES
+  // Grondstoffen in SEAROUTES_BAKED halen hun zee-legs uit data/_searoutes.js:
+  // echte MARNET-corridors, at build-time gebakken door tools/bake_searoutes.py.
+  // Sleutel = coördinaat-paar op 3 decimalen, gesorteerd (zelfde formaat als de
+  // baker). Ontbreekt een corridor voor een gebakken grondstof, dan wordt de
+  // stroom NIET gerenderd (hard falen zichtbaar, spec design/zeeroutes.md §4) —
+  // een stille terugval op A* is hoe een kapotte route jaren onzichtbaar blijft.
+  function seaCacheKey(a, b) {
+    const f = (p) => p.lat.toFixed(3) + "," + p.lon.toFixed(3);
+    return [f(a), f(b)].sort().join("|");
+  }
+  function seaCacheLookup(a, b) {
+    if (typeof SEAROUTES === "undefined") return null;
+    const e = SEAROUTES[seaCacheKey(a, b)];
+    if (!e || !e.pts || e.pts.length < 2) return null;
+    const pts = e.pts.map((p) => ({ lat: p[0], lon: p[1] }));
+    // de polyline is één richting gebakken; omkeren als deze leg andersom vaart
+    const dHead = Math.abs(pts[0].lat - a.lat) + Math.abs(pts[0].lon - a.lon);
+    const dTail = Math.abs(pts[pts.length - 1].lat - a.lat) + Math.abs(pts[pts.length - 1].lon - a.lon);
+    if (dTail < dHead) pts.reverse();
+    return pts;
+  }
+  // vlakke-aarde-benadering, ruim genoeg om "vaart de route hier vlak langs?"
+  function quickDistKm(p, q) {
+    const dLat = p.lat - q.lat;
+    let dLon = Math.abs(p.lon - q.lon);
+    if (dLon > 180) dLon = 360 - dLon;
+    const x = dLon * Math.cos(((p.lat + q.lat) / 2) * Math.PI / 180);
+    return Math.sqrt(x * x + dLat * dLat) * 111.2;
+  }
+
   function build(resources, filters) {
     lastResources = resources;
     lastFilters = filters;
@@ -109,6 +140,13 @@ const FlowLayer = (function () {
     const stages = filters && filters.stages;
     const showProjects = !filters || filters.showProjects !== false;
     const usedWaypoints = new Map(); // wp-id -> waypoint
+
+    // M18: bij gebakken routes staan knelpunten niet meer in de via-keten —
+    // we detecteren ze uit de geometrie: vaart de polyline vlak langs een écht
+    // knelpunt (marker !== false), dan is dát een laneShape-anker + gouden ring.
+    const chokeList = typeof WAYPOINTS === "undefined" ? [] :
+      Object.values(WAYPOINTS).filter((w) => w.marker !== false && w.kind !== "grensovergang");
+    const CHOKE_ANCHOR_KM = CONFIG.searoute.chokeAnchorKm || 150;
 
     resources.forEach((res) => {
       const flows = res.flows || [];
@@ -172,6 +210,9 @@ const FlowLayer = (function () {
         const airMode = flow.mode === "air";
         const routePts = [stops[0]];
         const anchors = [];
+        // M18: draait deze grondstof op de corridor-cache?
+        const baked = typeof SEAROUTES_BAKED !== "undefined" && SEAROUTES_BAKED[res.id];
+        let missingCorridor = false;
 
         for (let i = 0; i < stops.length - 1; i++) {
           const a = stops[i];
@@ -179,10 +220,21 @@ const FlowLayer = (function () {
           const seaA = isSeaPoint(a);
           const seaB = isSeaPoint(b);
           let leg = null;
+          let fromCache = false;
 
           if (routeView && useRouting && !airMode) {
             if (shipMode && seaA && seaB) {
-              leg = Routing.sea(a, b);
+              if (baked) {
+                leg = seaCacheLookup(a, b);
+                fromCache = !!leg;
+                if (!leg) {
+                  console.warn(`[${res.id}] ontbrekende zee-corridor in _searoutes.js: ` +
+                    `${a.id || "?"} -> ${b.id || "?"} (${seaCacheKey(a, b)}) — stroom niet gerenderd`);
+                  missingCorridor = true;
+                }
+              } else {
+                leg = Routing.sea(a, b);
+              }
             } else if (useLand && (!shipMode || seaA !== seaB)) {
               leg = Routing.land(a, b);
             }
@@ -190,12 +242,31 @@ const FlowLayer = (function () {
           }
 
           if (leg && leg.length > 2) {
+            const legStart = routePts.length; // index waar leg[1] terechtkomt
             for (let k = 1; k < leg.length - 1; k++) routePts.push(leg[k]);
+            // gebakken leg: knelpunten uit de geometrie afleiden (zie chokeList)
+            if (fromCache) {
+              chokeList.forEach((wp) => {
+                let best = Infinity, bestK = -1;
+                for (let k = 1; k < leg.length - 1; k++) {
+                  const d = quickDistKm(wp, leg[k]);
+                  if (d < best) { best = d; bestK = k; }
+                }
+                if (bestK >= 0 && best < CHOKE_ANCHOR_KM) {
+                  anchors.push(legStart + bestK - 1);
+                  usedWaypoints.set(wp.id, wp);
+                }
+              });
+            }
           }
           routePts.push(b);
           // dit knooppunt is een anker: híer knijpen de vaarbanen samen
           if (i < stops.length - 2) anchors.push(routePts.length - 1);
         }
+
+        // hard falen zichtbaar (spec §4): gebakken grondstof zonder corridor
+        // rendert de stroom niet — de legs-check telt 'm dan als kapot.
+        if (missingCorridor) return;
 
         const k = normalize(flow.value || 1, maxValue);
         const width = (C.minWidth + (C.maxWidth - C.minWidth) * Math.sqrt(k))
