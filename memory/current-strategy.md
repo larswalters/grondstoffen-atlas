@@ -1,5 +1,19 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-17 (M18 koper-pilot gebouwd — IN TEST; "MARNET beslist" = het leidende principe)*
+*Last updated: 2026-07-17 (weergave-fixes bevestigd; "MARNET beslist" blijft het leidende principe voor M18)*
+
+## 🖥️ Weergave-laag (2026-07-17, bevestigd) — de ondergrond staat nu
+Drie fixes live en door Lars bevestigd; hij pauzeerde de pilot er bewust voor. **Wat dit betekent voor de manier
+waarop we verder werken:**
+- **De kaart is scherp op élke zoomstand en breedtegraad** (LAR-479: `cos(lat)` + budget 96 + midden-naar-buiten).
+  Route-beoordeling op mobiel is daardoor betrouwbaarder dan tijdens de vorige pilot-test — een wazige onderhelft
+  kon eerder een routefout maskeren.
+- **De bol is bestuurbaar ingezoomd** (draaien schaalt met de camera-afstand). Van dichtbij een corridor volgen is nu
+  praktisch mogelijk; dat is precies wat de M18-verificatie vraagt.
+- **Markers verdwijnen niet meer op tier; `tier` = alleen labels** (LAR-481). De tier-LOD is dus de facto uit voor
+  markers — hou daar rekening mee bij nieuwe nodes: **een node krijgt geen zichtbaarheid meer "gratis" van een flow**
+  (de `forced`/`usedNodeIds`-uitzondering bestaat niet meer), maar hij verdwijnt ook nooit meer.
+- **Vaste knoppen:** `CONFIG.tiles.maxTiles` (noodrem, 96) · `CONFIG.markers.labelZoomByTier` (het échte declutter-
+  mechanisme) · `CONFIG.globe.dragSpeed`/`dragRefZoom` (draaigevoel, geankerd op de startzoom).
 
 ## ⚡ Stand van de pilot (2026-07-17, avond) — MIDDEN IN DE TEST
 Koper vaart volledig op gebakken MARNET-corridors (22 stuks, 26 KB, `data/_searoutes.js`), 3× live op Pages

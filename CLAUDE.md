@@ -1,6 +1,25 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (M18 koper-pilot gebouwd — IN TEST; 'MARNET beslist')*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (weergave-fixes LAR-479 + LAR-481 bevestigd; M18 koper-pilot nog IN TEST)*
+
+> **✅ WEERGAVE-FIXES BEVESTIGD (2026-07-17) — LAR-479 + LAR-481 Done, live op Pages.** Lars pauzeerde de koper-pilot
+> bewust: *"als we dat eerst fixen voordat we de routes doen lijkt me beter."* Drie bugs, alle drie visueel bevestigd
+> (*"ze werken zoals het hoort nu"*). **(1) Tegel-afkap (LAR-479)** — twee oorzaken: `maxTiles: 40` was **kleiner dan
+> één patch** (42–72 tegels) terwijl `updateDetail` **noord→zuid** vulde → zuidelijke rijen structureel wazig; én
+> `detailZoomFor()` miste **`cos(lat)`** (Mercator-tegel op 60° = halve grond → hoge breedten vroegen méér tegels voor
+> dezelfde scherpte; Noorwegen 33%/0% dekking). Fix: `cos(lat)` + budget **96** + patch vult **van het midden naar
+> buiten**. **(2) Zoom-evenredig draaien** — `dragSpeed`/`dragRefZoom`, geankerd op de startzoom (28,65°/100px
+> onveranderd; volle zoom 3,13°). **(3) Marker-LOD vuurde AVERECHTS (LAR-481)** — `forced` overrulet tier voor **57 van
+> de 63** koper-nodes → de tier-regel raakte **alléén de 6 context-mijnen zónder stroom**; Chuquicamata plofte in beeld,
+> Los Pelambres (zelfde share, wél stroom) niet. **Markers verdwijnen niet meer op tier; `tier` stuurt alleen nog de
+> labels.** Regressie 14 grondstoffen: pop-in 0. Commits `297016f` + `8dda38e`.
+>
+> ⚠️ **Twee engine-feiten die veranderd zijn — voor wie hierna code schrijft:**
+> `CONFIG.markers.tierZoom` **bestaat niet meer** (tier ≠ marker-zichtbaarheid; alleen `labelZoomByTier` leeft nog), en
+> `main.js` heeft **geen `usedNodeIds()`** meer (de `forced`-uitzondering was overbodig zodra markers niet meer op tier
+> verdwijnen). De M16/LAR-471-notitie hieronder noemt de `usedNodeIds`-gate nog als onderdeel van het optionele-laag-
+> patroon — **dat was juist tóén, maar geldt niet meer**; sectie I's stappenplan (5 plekken) was er nooit van afhankelijk
+> en klopt onverkort. Zie `memory/decisions.md`.
 
 > **🧭 KOERSWIJZIGING (2026-07-17) — EERST DE ROUTES, DAN DE FEATURES.** De atlas is inhoudelijk compleet
 > (14 grondstoffen, backlog leeg), maar de volgende stap is bewust **géén 15e grondstof**: de routing is
@@ -283,6 +302,22 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-17 · `tier` stuurt de LABELS, niet de markers (LAR-481)** — de tier-LOD verborg in de praktijk alléén de
+  context-nodes zónder stroom: `forced` (uit `usedNodeIds`) overrulet tier, en dat gold voor **57 van de 63** koper-
+  nodes. Chuquicamata (share 1,6, géén stroom) plofte in beeld terwijl Los Pelambres (1,6, wél stroom) bleef staan →
+  zichtbaarheid hing af van een toevallig lijntje, niet van belang. Markers staan er nu altijd; de **labels**
+  (`labelZoomByTier` + botsingsdetectie) doen het decluttering-werk — dat is ook wat de kaart werkelijk rustig houdt.
+  `tierZoom` + de `forced`/`usedNodeIds`-uitzondering **verwijderd** (het gevaar dat ze afdekten kan niet meer
+  optreden). Alternatief "stromen óók tieren" bewust ná M18 (raakt `flows.js` = pilot-code, en alle 14).
+- **2026-07-17 · Tegelbudget = noodrem, niet dagelijkse limiet + `cos(lat)` in de tegel-zoom (LAR-479)** — `maxTiles: 40`
+  was kleiner dan één patch (42–72) → liep bij normaal inzoomen áltijd leeg, en de noord→zuid-vulling gooide dat verlies
+  op de onderste rijen. Budget → **96**, patch vult **van het midden naar buiten** (bij een hit verlies je de bolrand,
+  niet de halve onderkant). Losse tweede oorzaak: `detailZoomFor()` miste **`cos(lat)`** → hoe noordelijker, hoe méér
+  tegels voor dezelfde scherpte (verspilling én de reden dat hoge breedten veel erger waren). `shellMaxZ: 3` ongemoeid.
+- **2026-07-17 · Draaien schaalt met de camera-afstand, geankerd op de STARTZOOM** — een vaste rad/px maakte de bol op
+  volle zoom ~9× te gevoelig (je ziet dan 9× minder wereld). Bewust niet fysisch 1:1 gemaakt: Lars klaagde alleen over
+  ingezoomd, en 1:1 zou de startzoom 4,4× trager maken. De wet is identiek aan 1:1 (evenredig met camera→oppervlak),
+  alleen de gain komt uit het bestaande gevoel. Knoppen: `CONFIG.globe.dragSpeed` + `dragRefZoom`.
 - **2026-07-17 · De zee-A\* wordt vervangen door een echt vaarlanen-netwerk (M18)** — de routing is aantoonbaar
   onrealistisch (`wp-pac-zuid` dwingt ~1.090 km omweg af op Antofagasta→Shanghai: onze bol +8% vs. grote-cirkel,
   searoute +2%) en de features M19/M20/M21 stáán erop. Precompute at build-time, **gededupliceerd per haven-paar**;

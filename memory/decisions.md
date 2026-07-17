@@ -1,7 +1,35 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (M18 koper-pilot — "MARNET beslist" + pilot-besluiten toegevoegd)*
+*Last updated: 2026-07-17 (weergave-fixes: tier = labels, tegelbudget = noodrem, draaien schaalt met zoom)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## Weergave / interactie (2026-07-17) — LAR-479 + LAR-481
+
+- **2026-07-17 · `tier` stuurt de LABELS, niet de markers (LAR-481).** De tier-LOD verborg in de praktijk alleen de
+  handvol context-nodes zónder stroom: `forced` (uit `usedNodeIds`) overrulet tier, en dat gold voor **57 van de 63**
+  koper-nodes. Gevolg: Chuquicamata (share 1,6, géén stroom) plofte in beeld terwijl Los Pelambres (1,6, wél stroom)
+  bleef staan — zichtbaarheid hing af van of een mijn toevallig een lijntje had, niet van belang. **Waarom deze fix
+  en niet "tier écht laten werken":** de labels (met `labelZoomByTier` + botsingsdetectie) zijn wat de kaart werkelijk
+  rustig houdt, en voor 57/63 nodes wás "altijd zichtbaar" al het feitelijke gedrag — dit maakt het consistent i.p.v.
+  willekeurig. De alternatieve route (stromen óók tieren) is inhoudelijk mooier maar raakt `flows.js` = de M18-pilot-
+  code → bewust ná M18. **Gevolg:** `tierZoom` (config) + de `forced`/`usedNodeIds`-uitzondering zijn verwijderd — het
+  gevaar dat ze afdekten ("een lijn eindigt in het niets") kán niet meer optreden. ⚠️ **Sectie I van `CLAUDE.md`
+  noemde de `usedNodeIds`-gate als vast patroon voor een nieuwe optionele laag — dat klopt niet meer** (gecorrigeerd).
+- **2026-07-17 · Het tegelbudget is een noodrem, geen dagelijkse limiet (LAR-479).** `maxTiles: 40` was **kleiner dan
+  één patch** (42–72 tegels) → hij liep bij normaal inzoomen áltijd leeg. Budget → **96**, en de patch vult **van het
+  midden naar buiten** i.p.v. noord→zuid. *Waarom center-out: bij een budget-hit moet je de tegels langs de bolrand
+  verliezen, niet de halve onderkant; de sortering maakt de degradatie symmetrisch en zoomonafhankelijk, zodat een
+  toekomstige hit nooit meer als "band" leest.* `shellMaxZ: 3` bewust ongemoeid — de shell is nu nergens meer in beeld,
+  dus de oude LAR-394-afweging (meer tegels = zwaarder op mobiel) hoeft niet opnieuw gemaakt.
+- **2026-07-17 · Tegel-zoom is breedtegraad-afhankelijk: `cos(lat)` hoort in `detailZoomFor()`.** Een Mercator-tegel
+  op 60° breedte beslaat de helft van de grond van eentje op de evenaar; zonder die term vroeg de code hoe noordelijker
+  hoe méér tegels aan voor **dezelfde** scherpte. Dat was niet alleen verspilling maar de reden dat hoge breedtegraden
+  veel erger waren (Noorwegen 33%/0% dekking vs. China). Met de term is het tegelaantal breedtegraad-onafhankelijk.
+- **2026-07-17 · Draaien schaalt met de camera-afstand, geankerd op de STANDAARDZOOM.** Een vaste rad/px maakte de bol
+  op volle zoom ~9× te gevoelig (je ziet dan 9× minder wereld). *Waarom geankerd en niet fysisch 1:1: Lars klaagde
+  alleen over ingezoomd; echte 1:1-grab zou de standaardzoom 4,4× trager maken op een 900px-scherm — dat is niet
+  gevraagd (zie [[feedback-no-shotgun-fixes]]). De **wet** is identiek aan 1:1 (evenredig met d), alleen de gain komt
+  uit wat Lars al gewend was.* Knoppen: `dragSpeed` + `dragRefZoom` in `config.js`.
 
 ## Koerswijziging — eerst de routes, dan de features (2026-07-17)
 

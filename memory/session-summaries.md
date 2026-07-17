@@ -1,6 +1,41 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-17 (sessie 19) — Drie weergave-fixes, visueel bevestigd (LAR-479 + LAR-481) — pilot bewust gepauzeerd
+- **Lars' prioritering:** *"we waren bezig met het verbeteren van de zee routes middels een pilot op koper, echter
+  denk ik dat we eerst prioriteit moeten stellen aan het fixen van de globe tegels laadprobleem… als we dat eerst
+  fixen voordat we de routes doen lijkt me beter."* LAR-474 blijft In Progress; deze sessie ging alleen over weergave.
+- **LAR-479 · tegel-afkap — twee oorzaken, niet één.** (1) `maxTiles: 40` was **kleiner dan één patch** (42–72 tegels)
+  terwijl `updateDetail` rij voor rij van **noord naar zuid** vulde → de zuidelijke rijen kregen structureel niets;
+  de grens bewoog mee omdat de bbox rond `viewCentre()` ligt → **er was geen sweet spot**, je zag alleen de bovenkant
+  van de bug. (2) `detailZoomFor()` miste **`cos(lat)`** → hoge breedten vroegen méér tegels voor dezelfde scherpte
+  (Noorwegen 33%/0%, veel erger dan China). *Correctie op de vorige sessie: de "camZ 4,0/5,6/6,5 zijn gekapt, de rest
+  niet"-analyse was te optimistisch — door oorzaak 2 is vrijwel élke view gekapt.* Fix: `cos(lat)` + budget 96 +
+  midden-naar-buiten.
+- **Zoom-evenredig draaien.** `rotation += dx * 0.005` was zoom-onafhankelijk (volle zoom 9× te gevoelig). Schaalt nu
+  met de camera-afstand, **geankerd op de standaardzoom** (28,65°/100px identiek aan oud; volle zoom 3,13°; ratio
+  **0,109** = exact de ratio zichtbare wereld).
+- **LAR-481 · de marker-LOD vuurde AVERECHTS.** Lars zag Norilsk pas bij inzoomen. Dat léék tier-by-design (staat zo
+  in de kop-comment) maar was het omgekeerde: `forced` overrulet tier voor **57/63** koper-nodes → de tier-regel raakte
+  **alléén de 6 context-mijnen zónder stroom**. Chuquicamata (1,6) pop-in vs. Los Pelambres (1,6, wél stroom) altijd
+  zichtbaar. Lars koos uit 3 opties: markers verdwijnen niet meer op tier, **`tier` = alleen labels**; `tierZoom` +
+  `forced`/`usedNodeIds` verwijderd. Bewust ná M18: stromen ook tieren (raakt `flows.js` = pilot-code).
+- **Verificatie (412×915, headless).** Tegels via raycast-grid ("ligt hier een geverfde detailtegel?"), met de **oude
+  code echt teruggezet** (`git stash` + schone origin op 8733): 3 van de 4 oude views **exact op de cap van 40**
+  (maximale zoom 100%/**50%**, Noorwegen **33%/0%**); nieuw **100%/100% op alle 7 views**, piek 72 tegels. Draaien via
+  echte pointer-events. Markers: constant over z 8,0→2,75, labels gefaseerd (0 → 12 → 29), **regressie 14 grondstoffen:
+  pop-in 0**, geen console-errors, build schoon.
+- **Lars' bevestiging (mobiel, Pages):** *"top echt goeie upgrades/fixes ze werken zoals het hoort nu, k zie de mijnen
+  en de kaart is scherp en heen en weer over een ingezoomde bol werkt goed."*
+- **Methodisch:** de tegenproef ís het bewijs — de oude code echt terugzetten i.p.v. redeneren leverde het beslissende
+  getal (3/4 exact op de cap). En: een gemelde bug kan een feature zijn die **omgekeerd in werking** is (LAR-481 had ik
+  als "by design" kunnen afdoen). Gotcha's hielden stand: pane cachet script-tags → tweede server-instance;
+  `document.hidden` → rAF pauzeert → tick pompen via `GLOBE.start()`; WebGL-screenshot hangt headless → Lars bevestigt.
+- **Commits** `297016f` (tegels + draaien) + `8dda38e` (markers), Claude-trailer, alléén eigen bestanden, **gepusht →
+  live**. Linear **LAR-479 + LAR-481 Done** (481 nieuw aangemaakt). `CLAUDE.md` sectie I gecorrigeerd (usedNodeIds-gate
+  bestaat niet meer). **Volgende:** terug naar LAR-474 — de ondergrond is nu scherp, wat de routes makkelijker
+  beoordeelbaar maakt.
+
 ## 2026-07-17 (sessie 18) — M18 koper-pilot GEBOUWD + 2 diepe bugs gefixt — IN TEST, morgen verder
 - **Stand: MIDDEN IN DE PILOT** (LAR-474 In Progress). Koper vaart volledig op gebakken MARNET-routes, 3× live op
   Pages (`5af8fe0`→`3c801a0`), maar **geen go**: Lars ziet op mobiel nog routes over Japan (stale-cache-hypothese,

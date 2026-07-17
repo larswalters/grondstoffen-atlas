@@ -24,27 +24,70 @@
 - `git push`/`gh`/`curl` naar github.com vallen periodiek weg (Recv failure/TLS timeout), minuten later weer OK.
 - Workaround die werkt: **achtergrond-retry-loop** (1 poging/min, max 30) — alle 3 deploys kwamen zo door.
 
-## 🐛 LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen (2026-07-17, OORZAAK BEWEZEN)
-- **Symptoom (Lars):** *"als ik inzoem laadt die bol meestal niet … de routes laden wel maar de wereldkaart niet echt"*
-  / *"de wazige rand beweegt mee, ik moet echt naar een sweetspot inzoomen."* Screenshot: scherpe rechthoek bovenin,
-  **kaarsrechte horizontale rand**, daaronder pap.
-- **Oorzaak:** `updateDetail` (`src/tiles.js`) telt `y` van boven naar beneden en **breekt af zodra
-  `CONFIG.tiles.maxTiles` (40) op is** → onderste rijen krijgen geen detailtegel → alleen de shell (`shellMaxZ: 3`,
-  ~20 km/px). De rand **beweegt mee** omdat de bbox elke update rond `viewCentre()` wordt gelegd.
-- **Uitgerekend:** camZ 4,0 → 64 tegels gevraagd · **5,6 → 64** · 6,5 → 80 = **gekapt**; 2,75/3,0/3,5/4,5/5,0/7,5/8,5
-  → 36 = niet gekapt. Dát zijn Lars' "sweetspots" — deterministisch. **camZ 5,6 is de startzoom** → je landt meteen
-  in een kapotte stand.
-- **Uitgesloten (belangrijk, om niet het verkeerde te fixen):** géén laadprobleem (diep ingezoomd op Lombok: 36/36
-  detail + 64/64 shell, allemaal met textuur, opacity 1) · géén verkeerd gecentreerde patch (`viewCentre()` = exacte
-  inverse van `latLonToVec3`) · de "stilstaande tick-loop" was een **artefact van de verborgen Browser-pane**
-  (`document.hidden` → rAF pauzeert).
-- **Bijvangst-defect (zelfde bestand, andere oorzaak):** een **mislukte tegel wordt nooit opnieuw geprobeerd** —
-  `ensureTile` doet `if (liveMap.has(id)) return;` en de error-callback (`src/tiles.js:151`) alleen `console.warn`
-  → mesh blijft permanent op opacity 0, herstelt nooit. Op trage/geknepen verbindingen (mobiel, Esri-throttling bij
-  64 gelijktijdige requests) een echte kwaal. **Niet** de oorzaak van bovenstaand symptoom.
-- **Fix-richting:** budget moet de gevraagde patch aankunnen óf de patch moet zich naar het budget schikken (bv.
-  detail-zoom een niveau omlaag) — nooit halverwege afbreken. En `shellMaxZ: 3` is te grof. Afweging: meer tegels =
-  meer requests = zwaarder op mobiel (de oude LAR-394-afweging).
+## ✅ GEFIXT (2026-07-17) — LAR-479 tegel-patch werd afgekapt bij inzoomen · commit `297016f`, bevestigd door Lars
+- **Symptoom (Lars):** *"het bovenste gedeelte scherp en de onderste wazig … die grens van wazig en scherp beweegt
+  mee als ik de wereldbol draai, alsof je echt een sweet spot moet hebben."*
+- **Twee samenwerkende oorzaken** (de vorige sessie vond er één; de tweede kwam er bij het fixen bij):
+  1. **Budget < één patch.** `updateDetail` vulde rij voor rij van **noord naar zuid** met `budget--` per tegel,
+     terwijl een normale patch **42–72** tegels vraagt en `maxTiles` op **40** stond → de zuidelijke rijen kregen
+     structureel niets → alleen de shell (`shellMaxZ: 3`, ~20 km/px). De grens bewoog mee omdat de bbox elke update
+     rond `viewCentre()` wordt gelegd. **Er was dus geen sweet spot** — je zat altijd in de bug en zag alleen de
+     bovenkant ervan. *(De eerdere "camZ 4,0/5,6/6,5 zijn gekapt, de rest niet"-analyse was te optimistisch: door
+     oorzaak 2 is vrijwel élke view gekapt.)*
+  2. **`detailZoomFor()` miste `cos(lat)`.** Een Mercator-tegel op 60° breedte beslaat de helft van de grond van
+     eentje op de evenaar → hoe noordelijker, hoe méér tegels voor dezelfde scherpte. Verspild werk dat het budget
+     extra opblies; daarom was Noorwegen **veel** erger dan China.
+- **Fix:** `cos(lat)` in `detailZoomFor()` · `maxTiles` 40 → **96** · de patch vult **van het midden naar buiten**
+  (sortering op afstand tot `viewCentre`) → het plafond is weer een noodrem i.p.v. een dagelijkse limiet, en bij een
+  hit verdwijnen de **buitenste** tegels langs de bolrand i.p.v. de halve onderkant.
+- **Bewijs (raycast-grid, 412×915, oude code echt teruggezet via `git stash` op een schone origin):**
+
+  | view | oud (tegels · boven/onder) | nieuw |
+  |---|---|---|
+  | China camZ 3,6 | 40 (cap) · 100% / 100% | 42 · 100% / 100% |
+  | maximale zoom | 40 (cap) · 100% / **50%** | 49 · 100% / 100% |
+  | evenaar/Andes | 36 · 100% / 100% | 30 · 100% / 100% |
+  | hoge breedte (Noorwegen) | 40 (cap) · **33% / 0%** | 36 · 100% / 100% |
+
+  3 van de 4 oude views zitten **exact op de cap van 40**. Nieuw: 100%/100% op alle 7 views, piek 72 tegels.
+- **`shellMaxZ: 3` bewust níét aangeraakt** — de shell is nu nergens meer zichtbaar in beeld, dus de oude
+  LAR-394-afweging (meer tegels = zwaarder op mobiel) hoeft niet opnieuw gemaakt.
+
+## 🐛 OPEN (Low) — een mislukte tegel wordt nooit opnieuw geprobeerd (`src/tiles.js`)
+- Bijvangst van de LAR-479-analyse, **andere oorzaak, apart defect** — bewust níét meegefixt (scope).
+- `ensureTile` doet `if (liveMap.has(id)) return;` en de error-callback alleen `console.warn` → de mesh blijft
+  permanent op opacity 0 en herstelt nooit. Op trage/geknepen verbindingen (mobiel, Esri-throttling) een echte kwaal.
+- **Nu iets relevanter geworden:** met `maxTiles: 96` kunnen er meer gelijktijdige requests uitstaan dan voorheen.
+  Nog niet waargenomen in de praktijk (Lars' bevestiging was schoon), dus geen issue aangemaakt.
+
+## ✅ GEFIXT (2026-07-17) — LAR-481 marker-LOD vuurde averechts · commit `8dda38e`, bevestigd door Lars
+- **Symptoom (Lars):** de Norilsk-mijn verschijnt pas bij inzoomen.
+- **Dit léék tier-by-design** (staat letterlijk zo in de kop-comment van `markers.js`), maar was het **omgekeerde**:
+  `forced` (node hangt aan een zichtbare stroom, uit `usedNodeIds`) overrulet tier volledig, en dat gold voor
+  **57 van de 63** koper-nodes; **nul** nodes waren tier 1 zónder stroom. De tier-regel raakte dus **alléén nog de
+  6 context-mijnen zónder flows** — mijnen met een eigen smelter ter plekke (Chuquicamata/Calama, KGHM/Głogów,
+  Norilsk binnenlands, Aitik, Julong, Cobre Panamá), zelfde klasse als Argyle/Nickel West/Iran.
+- **De willekeur:** El Teniente (share 2,1 · tier 2 · stroom) altijd zichtbaar · Norilsk (2,0 · tier 2 · géén stroom)
+  pop-in · Los Pelambres (1,6 · tier 2 · stroom) altijd zichtbaar · Chuquicamata (1,6 · tier 2 · géén stroom) pop-in.
+  Identieke share, identieke tier, tegengesteld gedrag — zichtbaarheid hing af van of een mijn tóévallig een lijntje
+  had. De LOD ontdubbelde niet; hij vuurde alleen op de nodes die dat het minst verdienden.
+- **Fix (Lars koos uit 3 opties):** markers verdwijnen niet meer op tier; **`tier` stuurt alleen nog de labels**
+  (`labelZoomByTier` + botsingsdetectie) — die houden de kaart werkelijk rustig, niet de bolletjes. `tierZoom`
+  (config) + de `forced`/`usedNodeIds`-uitzondering **verwijderd**: het gevaar dat ze afdekten ("een lijn eindigt in
+  het niets") kan niet meer optreden. NB-comment op beide plekken.
+- **Geverifieerd:** markers-per-zoomstand constant (z 8,0→2,75) · labels blijven gefaseerd (0 → 12 @ z=4 → 29 @
+  z=2,75) · **regressie 14 grondstoffen: totale pop-in 0**.
+- **Kosten:** uitgezoomd 6 extra bolletjes bij koper. Als dat te druk blijkt → stromen ook tieren, **ná M18**
+  (raakt `flows.js` = de pilot-code).
+
+## ✅ GEFIXT (2026-07-17) — draaien was zoom-onafhankelijk (`src/globe-core.js`) · commit `297016f`
+- **Symptoom (Lars):** *"als je een stuk bent ingezoomd dan is het draaien super gevoelig."*
+- **Oorzaak:** `rotation.y += dx * 0.005` = een vaste hoeveelheid radialen per pixel, ongeacht zoom. Op `minZoom`
+  (2,75) zie je ~9× minder wereld, maar draaide een veeg evenveel graden.
+- **Fix:** schaalt met de afstand camera→oppervlak (`dragSpeed` + `dragRefZoom` in config), **bewust geankerd op de
+  standaardzoom** — Lars klaagde alleen over ingezoomd, en de fysisch "correcte" 1:1-grab zou de standaardzoom 4,4×
+  trager maken. Gemeten: 28,65°/100px @ standaard (identiek aan oud) · 3,13° @ volle zoom · ratio **0,109** = exact
+  de ratio zichtbare wereld.
 
 ## ⚠️ Route-engine: aantoonbaar onrealistisch (2026-07-17) → M18
 - **`openRadiusDeg: 1.2`** = ~130 km geforceerd water rond élk knelpunt → A\* vaart dwars over land/eilandjes.

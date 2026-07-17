@@ -1,7 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (M18 koper-pilot GEBOUWD — in test, morgen verder)*
+*Last updated: 2026-07-17 (weergave-fixes LAR-479 + LAR-481 bevestigd → terug naar de koper-pilot)*
 
-## ⚠️ MORGEN EERST — pilot-test afronden (LAR-474 In Progress)
+> **Tussendoor gedaan en afgerond (2026-07-17):** Lars stelde de pilot bewust uit voor drie weergave-bugs —
+> *"als we dat eerst fixen voordat we de routes doen lijkt me beter."* Alle drie live én visueel bevestigd
+> (*"ze werken zoals het hoort nu"*): **LAR-479** tegel-afkap (`cos(lat)` + budget 96 + midden-naar-buiten),
+> **zoom-evenredig draaien**, **LAR-481** marker-LOD (markers verdwijnen niet meer op tier). Commits `297016f`
+> + `8dda38e`. **Bijvangst voor de pilot: de ondergrond is nu scherp op élke zoomstand — routes zijn daardoor
+> makkelijker te beoordelen dan tijdens de vorige test.**
+
+## ⚠️ NU EERST — pilot-test afronden (LAR-474 In Progress)
 
 1. [ ] **Japan-observatie verifiëren.** Lars ziet op mobiel (screenshot 03:15) de trans-Pacific bundel dwars over
        Honshu. **Hypothese: stale cache** — de curve-fix (`3c801a0`) ging pas minuten vóór de screenshot live
@@ -60,13 +67,23 @@ Diagnose in `searoute.js`: `openRadiusDeg: 1.2` (~130 km geforceerd water rond �
 
 ## 🐛 Losse issues (buiten M18)
 
-- [ ] **LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen.** Bewezen: `updateDetail` (`tiles.js`) breekt af
-      zodra `maxTiles: 40` op is → onderste rijen krijgen alleen de grove shell (`shellMaxZ: 3`, ~20 km/px) = de
-      kaarsrechte rand. camZ 4,0/5,6/6,5 willen 64–80 tegels → gekapt (**5,6 = de startzoom!**); 2,75/3,0/3,5/4,5/
-      5,0/7,5/8,5 niet → dát zijn Lars' "sweetspots". Bijvangst in hetzelfde bestand: een **mislukte tegel wordt nooit
-      opnieuw geprobeerd** (`ensureTile` early-return + alleen `console.warn`) → permanent opacity 0.
+- [x] **LAR-479 (High) — tegel-patch wordt afgekapt bij inzoomen** ✅ **Done (2026-07-17), bevestigd door Lars.**
+      Twee oorzaken: budget < één patch (40 vs 42–72) mét noord→zuid-vulling, én een ontbrekende `cos(lat)` in
+      `detailZoomFor()`. Fix: `cos(lat)` + budget 96 + midden-naar-buiten. Commit `297016f`.
+- [x] **Zoom-evenredig draaien** ✅ **Done (2026-07-17), bevestigd door Lars.** Geen issue-nummer — kwam er tijdens
+      dezelfde sessie bij (Lars: *"als je een stuk bent ingezoomd dan is het draaien super gevoelig"*). Commit `297016f`.
+- [x] **LAR-481 — marker-LOD vuurde averechts** ✅ **Done (2026-07-17), bevestigd door Lars.** `forced` overrulet tier
+      voor 57/63 nodes → de LOD raakte alléén de 6 context-mijnen zónder stroom. Markers verdwijnen niet meer op tier;
+      `tier` = alleen labels. Commit `8dda38e`.
 - [ ] **LAR-480 (Low) — markers-contrast bij inzoomen.** Het is contrast, niet schaal. Richting: halo/outline.
-      Bewust ná M18 + LAR-479 (die veranderen de ondergrond).
+      **Nu relevanter:** de tegels zijn scherper (drukkere ondergrond) én er staan meer markers (LAR-481). Nog steeds
+      ná M18 — de zeeroutes veranderen wat er ópstaat.
+- [ ] **(Low, geen issue) — mislukte tegel wordt nooit opnieuw geprobeerd** (`ensureTile` early-return + alleen
+      `console.warn` → permanent opacity 0). Bijvangst van LAR-479, apart defect. Iets relevanter met `maxTiles: 96`
+      (meer gelijktijdige requests), maar niet waargenomen — zie `bugs-and-risks.md`.
+- [ ] **(Na M18) — stromen ook tieren?** De tier-LOD is nu de facto uit voor markers. Wil je uitgezoomd écht
+      ontdubbelen, dan moeten stromen mee — raakt `flows.js` (= pilot-code) en het beeld van alle 14. Alleen oppakken
+      als Lars uitgezoomd te druk vindt (6 extra bolletjes bij koper).
 
 ---
 
