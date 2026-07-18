@@ -245,11 +245,34 @@ export function createTileLayer(GLOBE) {
     return { lat, lon: ((lon + 540) % 360) - 180 };
   }
 
-  // Halve openingshoek van het zichtbare stuk bol, in graden.
-  function halveSpanDeg() {
+  // Wat zie je? Twee verschillende vragen, twee verschillende maten:
+  //
+  //   scherpte  de boog die het beeld-MIDDEN beslaat (vlakke benadering).
+  //             Hieruit volgt het zoomniveau: hoe klein is een schermpixel op
+  //             de grond, recht onder je.
+  //   dekking   hoe ver de zichtbare bol werkelijk doorloopt, verticaal en
+  //             horizontaal apart — via echte straal-bol-snijding. Schuin naar
+  //             de rand kijk je over VEEL meer graden dan de vlakke benadering
+  //             zegt, en op een breed scherm is de horizontale kijkhoek bijna
+  //             2× de verticale. Wie de patch op "scherpte" dimensioneert (zoals
+  //             eerst) krijgt een vierkante patch die links/rechts en richting
+  //             de bolrand ophoudt — precies de wazige randen die Lars op de pc
+  //             omcirkelde.
+  function zichtSpannen() {
     const d = Math.max(1e-5, GLOBE.getAltitude());
-    const halfFov = (GLOBE.camera.fov / 2) * D2R;
-    return Math.atan((d * Math.tan(halfFov)) / R) * R2D;
+    const D = R + d;
+    const halfV = (GLOBE.camera.fov / 2) * D2R;
+    const halfH = Math.atan(Math.tan(halfV) * GLOBE.camera.aspect);
+    const limb = Math.acos(Math.min(1, R / D)); // verder dan dit bestaat de bol niet
+    const dekking = (half) => {
+      const s = (D / R) * Math.sin(half);
+      return (s >= 1 ? limb : Math.asin(s) - half) * R2D;
+    };
+    return {
+      scherpte: Math.atan((d * Math.tan(halfV)) / R) * R2D,
+      dekkingV: dekking(halfV),
+      dekkingH: dekking(halfH),
+    };
   }
 
   // SCHERMBREEDTE TELT MEE (zelfde fix als v1, commit c714297). `tilesAcross`
@@ -278,7 +301,11 @@ export function createTileLayer(GLOBE) {
   // buiten-vulling kost aftoppen alleen de hoeken, geen band.
   function maxTilesEff() {
     const r = tilesAcrossEff() / C.tilesAcross;
-    return Math.min(600, Math.ceil(C.maxTiles * r * r));
+    // ×aspect: een 2:1-scherm toont ~2× zoveel wereld als een vierkant scherm
+    // op dezelfde zoom — zonder deze factor kapt het budget de patch precies
+    // op de zijkanten af. Telefoon (portret, aspect < 1,35) blijft op 96.
+    const asp = Math.max(1, GLOBE.camera.aspect / 1.35);
+    return Math.min(900, Math.ceil(C.maxTiles * r * r * asp));
   }
 
   function shellZoomVoor(detailZ) {
@@ -306,7 +333,7 @@ export function createTileLayer(GLOBE) {
   }
 
   // ------------------------------------------------------------------ detail
-  function updateDetail(span, lat, lon, detailZ, shellZ) {
+  function updateDetail(sp, lat, lon, detailZ, shellZ) {
     if (detailZ <= shellZ) {
       if (detailLive.size) { leeg(detailGroup, detailLive); detailKey = ""; }
       return;
@@ -316,15 +343,17 @@ export function createTileLayer(GLOBE) {
     const xMid = Math.floor(((lon + 180) / 360) * n);
     const yMid = Math.floor(mercYOfLat(lat) * n);
 
-    // Hoeveel tegels naast het midden hebben we nodig? De radius-kap moet
-    // BOVEN wat het budget aankan liggen (budget 600 midden-naar-buiten is een
-    // schijf met straal ~14): een kap van 12 hield op een groot scherm de
-    // scherpe patch ver vóór de schermrand op — dát was "aan de buitenkant al
-    // helemaal niet scherp". Het échte plafond is het budget, niet de radius.
-    const spanX = Math.max(1, Math.ceil((span / 360) * n / Math.max(0.15, Math.cos(lat * D2R))));
-    const spanY = Math.max(1, Math.ceil((span / 180) * n * 0.5));
-    const rx = Math.min(spanX, 24);
-    const ry = Math.min(spanY, 24);
+    // Hoeveel tegels naast het midden? Uit de DEKKING (hoe ver het zichtbare
+    // beeld werkelijk doorloopt, H en V apart) — niet uit de scherpte-span,
+    // die is in het midden gemeten en veel kleiner: daarmee hield de patch op
+    // een breed scherm links/rechts op en viel de rand op de grove shell terug.
+    // De radius-kap is alleen een noodrem BOVEN wat het budget aankan (budget
+    // 900 midden-naar-buiten = een schijf met straal ~17); het échte plafond
+    // is het budget.
+    const spanX = Math.max(1, Math.ceil((sp.dekkingH / 360) * n / Math.max(0.15, Math.cos(lat * D2R))));
+    const spanY = Math.max(1, Math.ceil((sp.dekkingV / 180) * n * 0.5));
+    const rx = Math.min(spanX, 40);
+    const ry = Math.min(spanY, 40);
 
     const key = `${bron}/${detailZ}/${xMid}/${yMid}/${rx}/${ry}`;
     if (key === detailKey) return;
@@ -379,14 +408,14 @@ export function createTileLayer(GLOBE) {
     if (sinds < C.updateInterval) return;
     sinds = 0;
 
-    const span = halveSpanDeg();
+    const sp = zichtSpannen();
     const { lat, lon } = kijkMidden();
-    const detailZ = detailZoomVoor(span, lat);
+    const detailZ = detailZoomVoor(sp.scherpte, lat);
     const shellZ = shellZoomVoor(detailZ);
     laatsteDetailZ = detailZ;
 
     updateShell(shellZ);
-    updateDetail(span, lat, lon, detailZ, shellZ);
+    updateDetail(sp, lat, lon, detailZ, shellZ);
   }
 
   function zetAan(waarde) {
