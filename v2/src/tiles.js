@@ -158,9 +158,13 @@ export function createTileLayer(GLOBE) {
     const id = `${z}/${x}/${y}`;
     if (live.has(id)) return;
 
+    // BEGINT ONZICHTBAAR (opacity 0) en vaadt pas in zodra de textuur er is.
+    // Anders schildert een nog-lege tegel als dichte vlek over de bol — dat gaf
+    // horizontale banden en een ruitjespatroon boven de pool zolang er tegels
+    // onderweg waren. v1 deed dit goed; bij het overzetten ben ik het kwijtgeraakt.
     const mesh = new THREE.Mesh(
       tegelGeometrie(z, x, y, lift, detail),
-      new THREE.MeshBasicMaterial({ transparent: true, opacity: 1, depthWrite: false })
+      new THREE.MeshBasicMaterial({ transparent: true, opacity: 0, depthWrite: false })
     );
     mesh.renderOrder = order;
     grp.add(mesh);
@@ -170,6 +174,7 @@ export function createTileLayer(GLOBE) {
     if (cache.has(sleutel)) {
       mesh.material.map = cache.get(sleutel);
       mesh.material.needsUpdate = true;
+      mesh.userData.vaadIn = true;
       return;
     }
 
@@ -186,10 +191,21 @@ export function createTileLayer(GLOBE) {
         if (mesh.parent) {
           mesh.material.map = tex;
           mesh.material.needsUpdate = true;
+          mesh.userData.vaadIn = true;
         }
       },
       undefined,
-      () => { mislukt++; }
+      () => {
+        // Mislukt (404 boven open oceaan op hoge zoom, of netwerk). Weghalen,
+        // dan schijnt de laag eronder door in plaats van een gat te tonen.
+        mislukt++;
+        if (mesh.parent) {
+          grp.remove(mesh);
+          mesh.geometry.dispose();
+          mesh.material.dispose();
+          live.delete(id);
+        }
+      }
     );
   }
 
@@ -307,8 +323,23 @@ export function createTileLayer(GLOBE) {
   let sinds = 0;
   let laatsteDetailZ = 0;
 
+  // Laat binnengekomen tegels opkomen. Los van updateInterval: dit moet ELKE
+  // frame, anders zie je de tegels in stapjes van 0,2 s aan/uit knipperen.
+  function vaadTegelsIn(dt) {
+    const stap = dt / 0.25;   // volledig zichtbaar in een kwart seconde
+    for (const live of [shellLive, detailLive]) {
+      live.forEach((mesh) => {
+        if (!mesh.userData.vaadIn) return;
+        const m = mesh.material;
+        m.opacity = Math.min(1, m.opacity + stap);
+        if (m.opacity >= 1) mesh.userData.vaadIn = false;
+      });
+    }
+  }
+
   function tick(dt) {
     if (!aan) return;
+    vaadTegelsIn(dt);
     sinds += dt;
     if (sinds < C.updateInterval) return;
     sinds = 0;
