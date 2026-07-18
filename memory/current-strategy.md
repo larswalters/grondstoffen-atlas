@@ -1,5 +1,21 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-18 (v2 is de actieve bouwplaats; vectorwereld = bron van waarheid)*
+*Last updated: 2026-07-18 (M23: MARNET-graaf verzoend in de baker, router in de browser)*
+
+## ⚓ Sinds M23 (2026-07-18) — het netwerk is de router, de baker is de verzoening
+
+- **`v2/tools/bake_marnet.py`** repareert MARNET **één keer** tegen de 1:10M-vectorwereld (dezelfde bron
+  als wat op het scherm staat) en bakt `v2/data/marnet.bin/json` + `ports.json`. Deterministisch; opnieuw
+  draaien vereist `ne_10m_land/minor_islands/lakes.geojson` in `v2/build-cache/` (gitignored) + shapely/numpy/searoute.
+- **Drie klassen** in de verzoening: *aanloop* (treffer ≤5 km van een knoop — dokbekken/riviermond, ok) ·
+  *binnenwater* (29 zones: kanalen + rivieren die NE-land niet als water kent; als-is bewaard, soort=1) ·
+  *kapot* (koorde snijdt kaap/eiland → lokale A* 0,02°→0,01°, mét én zonder kustbuffer, simplify met
+  land-bewijs, eindtolerantie per uiteinde gemeten op de oorspronkelijke koorde).
+- **`v2/src/marnet.js`** = laag + graaf + router: één LineSegments (vertex colors), CSR-adjacency, A* met
+  grootcirkel-heuristiek (~3 ms), **passage-restricties** (default `northwest` dicht — searoute's eigen
+  default; "Suez dicht" voor M21 = label toevoegen aan `opties.vermijd`).
+- **Cache-discipline geldt óók voor data:** `marnet.bin`/`ports.json` dragen `?v=` mee (nu 011); bump bij
+  elke nieuwe bake, anders test je tegen de vorige.
+- **Valkuil vastgelegd:** MARNET had 15 knopen dubbel op lon ±180 → altijd lon-normaliseren in graafbouw.
 
 ## 🌍 Sinds 2026-07-18 — er zijn TWEE codebases, en `v2/` is de actieve
 

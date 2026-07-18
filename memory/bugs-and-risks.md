@@ -1,5 +1,30 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M22/v2 — vier bugs gevonden+gefixt, incl. de bol die door de tegels prikte)*
+*Last updated: 2026-07-18 (M23 — datumgrens-knip + Noordwest-Passage gevangen; 2 restedges + rivierstubs open)*
+
+## ⚠️ OPEN na M23 (2026-07-18) — bekend, bewust doorgeschoven naar M24
+
+1. **2 onopgeloste edges** (origineel behouden, connectiviteit intact): Södertälje-archipel
+   `(58.57,17.42)→(58.65,16.32)` (Stockholm-scheren te fijn voor het 0,01°-raster) en één Channel
+   Islands-koorde `(33.20,-120.67)→(33.63,-118.12)`. Opruimen bij M24 (zone of fijner raster).
+2. **Rivierhaven-stubs:** havens die ver een rivier op liggen (Yangon, Moulmein, …) krijgen hun laatste
+   ~30 km als rechte lijn over land — de rivier bestaat niet als water in de NE-polygonen en valt binnen de
+   gemeten eindtolerantie. Geen databug; M24 (binnenwater) vervangt stubs door echte riviergeometrie.
+3. **Snap-afstand havens:** mediaan 31 km, maar 1.473 van de 3.962 havens snappen >50 km naar de graaf
+   (kleine havens ver van een lane). Voor de route-test prima (aanloopstuk zichtbaar + km opgeteld); voor
+   M26-flows willen we per grondstof-haven checken of de snap acceptabel is.
+
+## ✅ GEFIXT in M23 (2026-07-18) — twee structurele, gevangen door Lars' eerste route-test
+
+1. **De trans-Pacific was doorgeknipt op de datumgrens.** MARNET heeft **15 knopen dubbel als lon +180 én
+   −180** (58+49 punten op ±180): de graaf bleef formeel één component, maar de hoofdlanes eindigden op een
+   +180-knoop terwijl het vervolg op −180 begon. Symptoom: Yokohama→LA = 32.000 km via Suez+Panama;
+   Antofagasta→Shanghai om Zuid-Afrika. Fix: lon-normalisatie in `bouw_graaf` → 9.111 resp. 18.915 km.
+   **Les: bij élke graaf uit geo-data eerst de datumgrens-topologie controleren.**
+2. **Kortste graafpad koos de Noordwest-Passage** voor Rotterdam→Shanghai (15,5k km) — geometrisch correct,
+   commercieel onzin. Fix: passage-restricties in `zoekRoute`, default `northwest` dicht (= searoute's eigen
+   default `restrictions=[northwest]`). Geen arctis-straf nodig gebleken.
+3. *(klein)* **cp1252-console crashte op een `→` in een print** ná het schrijven van alle data — de bake
+   leek gefaald terwijl alles er stond. `sys.stdout.reconfigure(encoding="utf-8")` in de baker.
 
 ## ✅ GEFIXT in M22/v2 (2026-07-18) — vier die je makkelijk opnieuw maakt
 

@@ -1,7 +1,40 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M22 uitgevoerd — v2 op Three r185, vectorwereld 1:10M = bron van waarheid, Esri-tegels)*
+*Last updated: 2026-07-18 (M23 uitgevoerd — MARNET verzoend met de vectorwereld, router in de browser)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M23 / MARNET-verzoening (2026-07-18) — LAR-483 uitgevoerd
+
+- **Verzoenen tegen de 1:10M-vectorwereld van v2, niet de 1:50M `geo-data.js`.** Het M22-kernbesluit
+  (vector = waarheid) doorgetrokken: routering rekent tegen exact de lijnen die Lars op het scherm ziet.
+  LAR-483 noemde nog geo-data.js — dat was vóór M22 bestond.
+- **Meren tellen als water in de land-toets** (`ne_10m_lakes` naast land + minor islands). MARNET vaart
+  écht over de Grote Meren/Seaway, het IJsselmeer en de Wolga-Don-stuwmeren; zonder meren-als-water leek
+  de halve Seaway "kapot" (508 → 243 verdachte edges door deze ene stap). Null Island (NE-artefact op 0,0)
+  wordt gefilterd.
+- **Drie klassen, drie behandelingen:** *aanloop* (treffer ≤5 km van een knoop: dokbekken/riviermond —
+  niets doen) · *binnenwater* (29 zones voor kanalen + rivieren die NE-land niet als water kent — als-is
+  bewaren met `soort=1`, M24 verfijnt) · *kapot* (koorde snijdt kaap/eiland — omleggen). Rivieren zijn
+  géén bugs; ze verdienen een flag, geen "fix" om het continent heen.
+- **Omleggen in vier trappen: 0,02° gebufferd → 0,01° gebufferd → 0,01° kaal → 0,02° kaal.** De kustbuffer
+  beschermt tegen koorden die de kust scheren, maar knijpt nauwe straten (Dardanellen, Magellaan, Inside
+  Passage, fjorden) dicht — de kale herkansing is verplicht. Resultaat 148/150.
+- **Eindtolerantie per uiteinde, gemeten op de oorspronkelijke koorde** (aaneengesloten landtreffers vanaf
+  de knoop, gaatjes <3 km, plafond 30 km). Sommige MARNET-knopen liggen zelf in een dokbekken/riviermond;
+  een vaste 5 km-tolerantie keurde daar élke correcte omlegging af.
+- **Lon-normalisatie in de graafbouw is verplicht.** MARNET heeft 15 knopen dubbel op lon +180 én −180 —
+  de trans-Pacific lanes eindigen op +180 en vervolgen op −180. Zonder merge is de Stille Oceaan bij de
+  datumgrens doorgeknipt (Yokohama→LA rekende 32.000 km via Suez+Panama).
+- **Passage-restricties in de router; default `northwest` dicht — exact searoute's eigen default.** Kortste
+  graafpad ≠ commerciële route: zonder restrictie koos Rotterdam→Shanghai de Noordwest-Passage (15,5k km).
+  Bewust géén arctis-straf toegevoegd: met alleen deze blokkade wint Suez vanzelf (empirisch). Dit
+  mechanisme is meteen M21: "Suez dicht" = `"suez"` toevoegen aan `opties.vermijd`.
+- **`route.km` = echte kilometers, niet de strafkilometers** — bij een eventuele kostfactor blijft de
+  uitlezing de gevaren afstand.
+- **Cache-discipline geldt ook voor data:** `marnet.bin`/`marnet.json`/`ports.json` dragen `?v=` mee met de
+  assets (nu 011). Een nieuwe bake zonder bump test tegen de vorige data (dit ging in de sessie bijna mis).
+- **Havens gesnapt aan de dichtstbijzijnde knoop bij het bakken** (3.962 stuks, mediaan 31 km) — de route
+  begint/eindigt op de graaf; het stukje haven→knoop wordt als recht aanloopstuk getekend.
 
 ## M22 / v2 (2026-07-18) — het nieuwe fundament
 

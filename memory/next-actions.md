@@ -1,5 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M22 KLAAR — v2 staat; volgende = M23 MARNET over de vectorwereld)*
+*Last updated: 2026-07-18 (M23 UITGEVOERD — MARNET verzoend + haven→haven werkt; rest = visuele go Lars, dan M24)*
+
+## ➡️ NU: visuele go van Lars op M23, dan M24 · binnenwater
+
+M23 is gebouwd, geverifieerd en live (t/m `b6867f7`): https://larswalters.github.io/grondstoffen-atlas/v2/
+(HTML-cache ~10 min; desnoods `?vers=…`). **LAR-483 staat In Progress** met een volledig resultaat-comment —
+**Done na Lars' visuele go** (M22-precedent). Testen: HUD → "Route testen (haven → haven)", typ twee havens.
+
+Openstaand richting M24 (binnenwater):
+1. **Rivierhaven-stubs netjes maken** — havens als Yangon/Moulmein krijgen hun laatste ~30 km als rechte
+   stub over land (de rivier bestaat niet als water in NE-polygonen; binnen de gemeten eindtolerantie).
+   M24 vervangt die stubs door echte riviergeometrie (Rijn/Yangtze/Saint-Laurent/Kaspisch stonden al op de rol).
+2. **De 2 onopgeloste edges opruimen** — Södertälje-archipel `(58.57,17.42)→(58.65,16.32)` en de Channel
+   Islands-koorde `(33.20,-120.67)→(33.63,-118.12)` (allebei origineel behouden; zone of fijner raster).
+3. **Binnenwater-routering beleid** — binnenwater-edges doen nu gewoon mee in A* (Suez/Panama moeten ook);
+   bij M24 beslissen of rivier-edges een aparte modus/kleur/filter krijgen voor zeeschepen vs binnenvaart.
+
+## ✅ M23 AFGEROND op visuele go na (2026-07-18) — LAR-483 uitgevoerd
+
+- `v2/tools/bake_marnet.py`: netwerk **één keer** verzoend met de 1:10M-wereld — 9.686 knopen / 15.933
+  edges, 148/150 landsnijders omgelegd, 93 binnenwater-edges (29 zones), 2 onopgelost. Meren = water.
+- `v2/data/marnet.bin/json` (1,17 MB varint) + `ports.json` (3.962 havens → dichtstbijzijnde knoop).
+- `v2/src/marnet.js`: één LineSegments (blauw=zee, amber=binnenwater) + **A\*-router ~3 ms** met
+  passage-restricties (default `northwest` dicht = searoute's default; meteen het M21-mechanisme) +
+  HUD-toggle + route-test-UI.
+- Gemeten: R'dam→Shanghai **19.610** via gibraltar+suez+babalmandab+malacca · Antofagasta→Shanghai
+  **18.915** op de 50°N-lane (searoute 18.880 = M18-benchmark) · Yokohama→LA **9.111** · Duluth→R'dam
+  **8.031** door Meren+Seaway.
+- Twee structurele bugs gevangen: Noordwest-Passage als kortste pad (→ restrictie) en **15 dubbele
+  ±180-knopen** die de trans-Pacific doorknipten (→ lon-normalisatie).
 
 ## ✅ M22 AFGEROND (2026-07-18) — LAR-484 Done
 
@@ -13,7 +42,7 @@ Wat er ligt om op verder te bouwen:
 - `v2/src/tiles.js` — Esri/OSM-tegels tot z19, shell + detailpatch, invaden
 - `v2/tools/measure_world.py` · `v2/tools/bake_world.py` · `v2/data/world-10m.{bin,json}`
 
-## ➡️ VOLGENDE: M23 · MARNET-zeeroutes over de vectorwereld (LAR-483)
+## 📜 Het M23-plan zoals het vóór de uitvoering stond (uitgevoerd — ter referentie)
 
 De opdracht is onveranderd sinds de diagnose van 18 juli, maar nu pas uitvoerbaar: **verzoen het
 MARNET-netwerk ÉÉN keer met de kustlijn en routeer daarover**, in plaats van per haven-paar corridors te

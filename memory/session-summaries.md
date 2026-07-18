@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-18 (sessie 22) — M23 UITGEVOERD: MARNET verzoend met de vectorwereld, haven→haven werkt (LAR-483)
+- **Lars:** *"kan je beginnen met de marnet routes op de nieuwe kaart zetten… dan kunnen we daarna van zee
+  haven naar zee haven testen"* → LAR-483 exact uitgevoerd, tegen de **1:10M-vectorwereld** (vector = waarheid).
+  Live t/m `b6867f7`; **rest = visuele go van Lars** (LAR-483 In Progress met volledig resultaat-comment).
+- **`v2/tools/bake_marnet.py`:** graaf 9.686 knopen / 15.933 edges (lon genormaliseerd), grootcirkel-verdicht
+  (10 km), getoetst op ~2 km (shapely; **meren = water**), classificatie aanloop / binnenwater (93 edges, 29
+  zones) / kapot (150) → **148/150 omgelegd** (A* 0,02°→0,01°, mét/zonder kustbuffer; eindtolerantie per
+  uiteinde uit de oorspronkelijke koorde), 2 onopgelost. Uitvoer `marnet.bin/json` (1,17 MB varint) +
+  `ports.json` (3.962 havens → knoop).
+- **`v2/src/marnet.js`:** één LineSegments (blauw=zee, amber=binnenwater) + **A\*-router ~3 ms** met
+  passage-restricties (default `northwest` dicht = searoute's default) + HUD-toggle + route-test-UI (datalist).
+- **Twee structurele bugs gevangen door de eerste test:** Noordwest-Passage als kortste pad (→ restrictie,
+  meteen het M21-mechanisme) en **15 dubbele ±180-knopen** die de trans-Pacific doorknipten (Yokohama→LA
+  rekende 32.000 km via Suez+Panama → lon-normalisatie).
+- **Gemeten:** R'dam→Shanghai **19.610** via gibraltar+suez+babalmandab+malacca · Antofagasta→Shanghai
+  **18.915** op de 50°N-lane (searoute 18.880 = M18-benchmark; v1 dwong 19.970 af) · Yokohama→LA **9.111** ·
+  Hamburg→NY 6.480 · Montreal→R'dam 5.852 · Duluth→R'dam **8.031** door Meren+Seaway · Novorossiysk→Shanghai
+  15.792 via bosporus+dardanelles+suez · Valparaíso→Shanghai 19.220 deterministisch. Daarmee bundeling/dedupe/
+  determinisme van LAR-483 structureel binnen.
+- **Open → M24:** rivierhaven-stubs (Yangon ~30 km recht over land — rivier zit niet in de polygonen), de 2
+  restedges, binnenvaart-beleid. Parallelle sessie fixte de root-atlas tegelscherpte (`c714297`, alleen v1).
+
 ## 2026-07-18 (sessie 21) — M22 UITGEVOERD: v2 staat, vectorwereld = bron van waarheid, tegels tot ~1 km
 - **Lars' visuele go:** *"dit is echt goed… nu kunnen we die vectorlijnen als bron van waarheid gebruiken en
   de view opties zijn top zo."* → **LAR-484 Done, M22 af.** Live op `…/grondstoffen-atlas/v2/` t/m `4dd48d5`.

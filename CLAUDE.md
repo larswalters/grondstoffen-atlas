@@ -1,6 +1,45 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M22 UITGEVOERD — v2 staat, vectorwereld = bron van waarheid)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M23 UITGEVOERD — MARNET verzoend met de vectorwereld, haven→haven werkt)*
+
+> **✅ M23 UITGEVOERD (2026-07-18, laatste) — MARNET VERZOEND MET DE VECTORWERELD + HAVEN→HAVEN-ROUTERING (LAR-483; visuele go = Lars).**
+> Live op https://larswalters.github.io/grondstoffen-atlas/v2/ t/m `b6867f7`. **LAR-483 exact uitgevoerd, maar tegen de
+> 1:10M-vectorwereld** (vector = waarheid; het issue noemde nog `geo-data.js` 1:50M — dat was van vóór M22).
+>
+> **De verzoening (`v2/tools/bake_marnet.py`, deterministisch, build-time):** graaf **9.686 knopen / 15.933 edges**
+> (lon genormaliseerd — ⚠️ MARNET heeft **15 knopen dubbel op lon +180 én −180**; zonder merge is de trans-Pacific
+> bij de datumgrens doorgeknipt en rekent Yokohama→LA 32.000 km via Suez+Panama) · edges **grootcirkel-verdicht**
+> (10 km) · getoetst op ~2 km met shapely tegen exact de gerenderde polygonen, **meren = water** (`ne_10m_lakes`;
+> loste Grote Meren/Seaway, IJsselmeer, Wolga-stuwmeren in één klap op — 508→243 verdachte edges) · classificatie
+> **aanloop** (≤5 km van een knoop: dokbekken/riviermond, ok) / **binnenwater** (93 edges in 29 zones: Suez, Panama,
+> Mississippi, Seaway, Wolga-Don, Paraná, Elbe, Delaware, Hooghly, Yangtze, Gironde, Severn, ICW, Maracaibo, Congo,
+> Columbia, Kuskokwim/Kobuk; als-is bewaard met `soort=1`) / **kapot** (150) · **148/150 omgelegd** — lokale A* in
+> **vier trappen** (0,02° gebufferd → 0,01° gebufferd → 0,01° kaal → 0,02° kaal; de kustbuffer knijpt nauwe straten
+> als de Dardanellen/Inside Passage dicht, dus de kale herkansing is verplicht) + simplify met land-bewijs +
+> **eindtolerantie per uiteinde gemeten op de oorspronkelijke koorde** (knopen liggen soms zelf in een dokbekken).
+> **2 onopgelost** (Södertälje-archipel, Channel Islands-koorde — origineel behouden, connectiviteit intact).
+> Benodigd voor een rebake: `ne_10m_{land,minor_islands,lakes}.geojson` in `v2/build-cache/` (gitignored) +
+> shapely/numpy/searoute (build-only).
+>
+> **Naar de browser:** `v2/data/marnet.bin`+`json` (**1,17 MB**, world-10m-varint-patroon) + `ports.json` (3.962
+> searoute-havens gesnapt aan de dichtstbijzijnde knoop, mediaan 31 km). **`v2/src/marnet.js`**: het hele net als
+> **één LineSegments** (vertex colors: blauw=zee, amber=binnenwater) · CSR-adjacency · **A\*-router ~3 ms** met
+> **passage-restricties — default `northwest` dicht, exact searoute's eigen default** (kortste graafpad ≠
+> commerciële route: zonder restrictie koos R'dam→Shanghai de Noordwest-Passage; géén arctis-straf nodig gebleken).
+> **Dit restrictie-mechanisme ís M21**: "Suez dicht" = `"suez"` toevoegen aan `opties.vermijd`. HUD: laag-toggle +
+> **route-test haven→haven** (datalist alle havens, km/ms/passages). ⚠️ Cache-discipline geldt óók voor data:
+> `marnet.bin`/`ports.json` dragen `?v=` mee (nu 011) — bump bij elke bake.
+>
+> **Gemeten (allemaal realistisch):** R'dam→Shanghai **19.610 km** via gibraltar+suez+babalmandab+malacca
+> (searoute ≈ 19,5k) · Antofagasta→Shanghai **18.915** op de 50°N-lane (**searoute 18.880 = de M18-benchmark**;
+> v1 dwong 19.970 af via `wp-pac-zuid` — het netwerk vindt de echte lane nu vanzelf) · Yokohama→LA **9.111** ·
+> Duluth→R'dam **8.031** dwars door Meren+Seaway (17 binnenwater-edges) · Novorossiysk→Shanghai **15.792** via
+> bosporus+dardanelles+suez. **Daarmee zijn LAR-483's drie problemen structureel weg**: bundeling gratis (routes
+> delen edges), één versie per edge, antipodaal deterministisch (Valparaíso→Shanghai 19.220, +1,9%).
+>
+> **Open:** visuele go Lars (dan LAR-483 Done, M22-precedent) · **cosmetisch → M24:** rivierhavens (Yangon e.d.)
+> eindigen als rechte stub over land (rivier bestaat niet in de polygonen; binnen de gemeten eindtolerantie) + de
+> 2 restedges. Zie `memory/decisions.md` + [[2026-07-18-grondstoffen-atlas-m23-marnet-netwerk-verzoend]].
 
 > **✅ M22 KLAAR (2026-07-18) — DE NIEUWE WERELDBOL STAAT IN `v2/`. LAR-484 Done. → VOLGENDE: M23 (LAR-483).**
 > Live op https://larswalters.github.io/grondstoffen-atlas/v2/ (t/m `4dd48d5`). **Buiten `v2/` is niets aangeraakt.**
@@ -411,6 +450,16 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-18 · M23: verzoenen tegen de 1:10M-vectorwereld, meren = water** — routering rekent tegen exact de
+  gerenderde lijnen (vector = waarheid); `ne_10m_lakes` als water maakt de Seaway/Grote Meren/IJsselmeer/Wolga-Don
+  legitiem bevaarbaar in de toets. Binnenwater = flag (`soort=1`, 29 zones), geen "fix".
+- **2026-07-18 · M23: lon-normalisatie verplicht in graafbouw** — MARNET heeft 15 dubbele ±180-knopen; zonder merge
+  is de trans-Pacific doorgeknipt (Yokohama→LA 32.000 km via Suez+Panama).
+- **2026-07-18 · M23: passage-restricties in de router, default `northwest` dicht** (= searoute's eigen default) —
+  kortste graafpad ≠ commerciële route (R'dam→Shanghai koos anders de Noordwest-Passage). Meteen het M21-mechanisme.
+- **2026-07-18 · M23: omleggen in vier trappen (0,02°/0,01° × gebufferd/kaal) + eindtolerantie per uiteinde uit de
+  oorspronkelijke koorde** — buffer beschermt open zee maar knijpt straten dicht; knopen in dokbekkens hebben
+  aanloopruimte nodig. 148/150 omgelegd, 2 onopgelost (origineel behouden).
 - **2026-07-18 · M22: géén globe-library, Three r185 + ES-modules** — globe.gl is een wrapper om wat we al hebben;
   Cesium brengt eigen imagery/terrein mee = een **vierde wereldmodel**; deck.gl = tweede renderstack. Lars koos
   expliciet voor écht upgraden (r128 → r185), met als geaccepteerde prijs dat **M26 deels herbouw** wordt.
