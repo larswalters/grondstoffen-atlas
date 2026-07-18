@@ -44,6 +44,9 @@ geen herbouw. Lars: *"het opzoeken van mijnlocaties en raffinages is peanuts ver
    deployt 'm gratis mee (`…/grondstoffen-atlas/v2/` live bij elke push), gereedschap en data liggen
    ernaast zonder kopiëren, en M26 (samenvoegen) wordt triviaal. **Harde regel: buiten `v2/` wordt
    NIETS aangeraakt** — de oude atlas op de root blijft bevroren; elke overtreding is zichtbaar in de diff.
+   **Lars kijkt mee via https://larswalters.github.io/grondstoffen-atlas/v2/** (bestaat pas na de eerste
+   push van de map; tot die tijd 404). Zet er vanaf dag één een `index.html` + cache-busting in, zodat
+   die link meteen iets toont en zijn feedbackloop werkt.
 2. **De working tree is dirty** (`src/util.js`, `tools/lane_widths.js`, `data/_searoutes.js` = de
    half-afgemaakte asymmetrische klem). **Niet afmaken, niet committen** — terug naar `9444fcb` (of
    stashen) zodat `main` schoon matcht met wat live staat vóór `v2/` begint.
