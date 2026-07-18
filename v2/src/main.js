@@ -1,9 +1,33 @@
 // main.js — start v2 op en koppelt de HUD aan de bol.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe } from "./globe.js?v=001";
+import { createGlobe, CONFIG } from "./globe.js?v=002";
+import { laadVectorWereld } from "./world.js?v=002";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
+
+// --- de vectorwereld -------------------------------------------------------
+// Dit is de waarheid van v2. Laadt asynchroon; de bol is al bruikbaar terwijl
+// dit binnenkomt.
+
+let wereldStats = null;
+
+laadVectorWereld(CONFIG.radius)
+  .then(({ lijnen, stats }) => {
+    GLOBE.globeGroup.add(lijnen);
+    wereldStats = stats;
+    GLOBE.setBasemap("vector");
+    console.log(
+      `[atlas v2] vectorwereld: ${stats.punten.toLocaleString("nl")} punten · ` +
+      `${stats.ringen.toLocaleString("nl")} vormen · ${stats.kbOverdracht} KB · ` +
+      `laden ${stats.msLaden} ms, verwerken ${stats.msVerwerken} ms`
+    );
+  })
+  .catch((e) => {
+    console.error("[atlas v2] vectorwereld niet geladen:", e);
+    // Zonder vectorwereld is de satelliet de enige zinnige weergave.
+    GLOBE.setBasemap("satelliet");
+  });
 
 // --- HUD-knoppen -----------------------------------------------------------
 
@@ -20,6 +44,7 @@ function wireButtons(selector, attr, apply) {
 
 wireButtons(".tmBtn", "tm", (mode) => GLOBE.setToneMapping(mode));
 wireButtons(".sunBtn", "sun", (mode) => GLOBE.setSun(mode));
+wireButtons(".bmBtn", "bm", (mode) => GLOBE.setBasemap(mode));
 
 document.getElementById("zoomIn").addEventListener("click", () => GLOBE.zoomBy(1 / 1.25));
 document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(1.25));
@@ -32,9 +57,13 @@ const statsEl = document.getElementById("stats");
 
 GLOBE.onTick(() => {
   const s = GLOBE.getStats();
-  statsEl.textContent =
+  let tekst =
     `${s.fps} fps · zoom ${s.zoom.toFixed(2)}\n` +
     `${s.calls} draw calls · ${(s.tris / 1000).toFixed(0)}k driehoeken`;
+  if (wereldStats) {
+    tekst += `\n${(wereldStats.punten / 1000).toFixed(0)}k vectorpunten · ${wereldStats.kbOverdracht} KB`;
+  }
+  statsEl.textContent = tekst;
 });
 
 statsEl.style.whiteSpace = "pre-line";

@@ -204,6 +204,21 @@ export function createGlobe(mount) {
     renderer.toneMappingExposure = EXPOSURE;
   }
 
+  // Ondergrond wisselen. De satelliettextuur blijft beschikbaar (Lars: "die
+  // satelliet is prima, maar nu gaat het om het vectormodel"), maar is niet
+  // meer de waarheid — de vectorwereld is dat. Zonder textuur zie je een
+  // egale oceaan waar de vectorkustlijn scherp op afsteekt, op elke zoom.
+  function setBasemap(mode) {
+    if (mode === "satelliet") {
+      globeMat.map = dayMap;
+      globeMat.color.set(0xffffff);
+    } else {
+      globeMat.map = null;
+      globeMat.color.set(0x0e3a63); // diepe oceaan
+    }
+    globeMat.needsUpdate = true;
+  }
+
   function setSun(mode) {
     if (mode === "flat") {
       // Vlak licht: geen schaduwzijde. Handig om de kaart zelf te beoordelen
@@ -265,7 +280,7 @@ export function createGlobe(mount) {
 
   return {
     scene, camera, renderer, globeGroup,
-    onTick, setToneMapping, setSun, zoomBy,
+    onTick, setToneMapping, setSun, setBasemap, zoomBy,
     getStats: () => ({
       fps,
       zoom: camera.position.z,
