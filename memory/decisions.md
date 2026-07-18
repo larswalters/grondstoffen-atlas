@@ -1,7 +1,50 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (ontkoppeling vorm/snelheid/klem; netwerk-aanpak = LAR-483)*
+*Last updated: 2026-07-18 (M22 uitgevoerd — v2 op Three r185, vectorwereld 1:10M = bron van waarheid, Esri-tegels)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M22 / v2 (2026-07-18) — het nieuwe fundament
+
+- **Géén globe-library; Three.js met onze eigen bol.** globe.gl is een wrapper om wat we al hebben; Cesium
+  brengt z'n eigen imagery/terrein mee en dus een **vierde wereldmodel** — precies wat M22 wil wegnemen;
+  deck.gl zou een tweede renderstack naast Three zetten. De library bepaalt de schoonheid niet: shaders en
+  data doen dat.
+- **Three r128 → r185, ES-modules met importmap, geen bundler.** Lars koos expliciet voor écht upgraden
+  ("zodat we niet nog een keer hoeven te upgraden"). Prijs bewust geaccepteerd: **M26 wordt deels herbouw
+  i.p.v. verhuizing**, want `markers.js`/`flows.js`/`voyages.js` draaien op verdwenen r128-API's
+  (`outputEncoding`/`sRGBEncoding`). Three levert sinds r150 geen `three.min.js` meer → het globals-patroon
+  van v1 vervalt binnen `v2/`.
+- **WebGPU bewust NIET.** Koopt doorvoer, geen schoonheid; onze scene is geometrie-/CPU-gebonden. De renderer
+  is wel wisselbaar gehouden.
+- **De vectorwereld is de bron van waarheid** (door Lars bevestigd: *"nu kunnen we die vectorlijnen als bron
+  van waarheid gebruiken"*). Natural Earth **1:10M**; satelliet en tegels zijn een **skin**. Hiermee is de
+  drie-wereldmodellen-kwaal structureel weg: routering rekent straks tegen dezelfde lijnen die Lars ziet.
+- **Formaat van het wereldmodel:** quantiseren op **1e-4 graden** (~11 m, ruim onder de 1,5 km puntafstand)
+  + delta-codering + zigzag-varint = **3,3 byte/punt** → 481.675 punten in **1,64 MB** (was 11,5 MB ruwe
+  GeoJSON). Eén `LineSegments` = één draw call.
+- **Zoom rekent in HOOGTE boven het oppervlak, niet in afstand tot het middelpunt.** Dat laatste was de
+  eigenlijke rem: bij straal 2,4 en `minZoom 2.75` kwam de camera nooit lager dan ~930 km, en de laatste
+  900 km waren een handvol stappen. Nu vermenigvuldigt elke stap de hoogte → gelijk gevoel van 22.000 km tot
+  1 km. Nabij-vlak schuift mee; `logarithmicDepthBuffer` aan (anders flikkeren tegels en lijnen over dat bereik).
+- **Ondergrond en kustlijn zijn losse lagen**, geen of-of-keuze: ondergrond = satelliet | kaart | egaal,
+  kustlijn = aan | uit. Default satelliet + kustlijn (Lars' voorkeur, en meteen de beste visuele controle op
+  de uitlijning).
+- **Esri World Imagery + OpenStreetMap als tegelbronnen, Google uitgesloten.** earth3dmap.com geeft bij
+  straatniveau over aan een ingesloten Google Maps; die tegels mogen niet in een eigen 3D-bol. Esri gaat zelf
+  tot z19 (~30 cm/px in bewoond gebied) met verplichte bronvermelding — die staat nu in beeld.
+- **Belichting en tone mapping horen bij elkaar.** ACES aanzetten zónder de belichting mee te verhogen maakt
+  het beeld juist *donkerder* (ACES drukt middentonen). Ingemeten paar: zon 6,0 + belichting 1,6 → zelfde
+  gemiddelde helderheid als v1 met **0% uitgebrande pixels** (was 0,03%) en méér doortekening in de
+  hooglichten. *Correctie op een eerdere te stellige claim: v1 zette `outputEncoding` wél goed; de winst zit
+  in tone mapping + de fysieke belichting van r155+, niet in een kapot kleurdomein.*
+- **⚠️ lat/lon → 3D moet EXACT v1's `latLonToVec3` volgen:** `x = cos(lat)·cos(lon)`, `y = sin(lat)`,
+  `z = −cos(lat)·sin(lon)`. Het moet tegelijk kloppen met de UV-afbeelding van `THREE.SphereGeometry`
+  (lon 0 op +X) én met de markers/routes die in M26 uit v1 komen. Een 90°-fout hier verschuift straks alles.
+- **Verificatiepatroon dat werkte:** toets tegen een **onafhankelijke scheidsrechter**, niet tegen je eigen
+  aanname. `earth-water.png` als land/water-orakel gaf 80–83% van de kustpunten op een grens vs 4,8% voor
+  willekeurige punten — en met de oude (foute) formule 8%, dus de test zakt ook echt bij de fout.
+- **De landvulling is VERVALLEN.** Met tegels als oppervlak is er niets meer te vullen; polygoon-vulling is
+  alleen nog relevant voor de "egaal"-weergave. Scheelt de triangulatie op een bol (antimeridiaan/Antarctica).
 
 ## Architectuur (2026-07-18) — de patch-spiraal doorbroken
 

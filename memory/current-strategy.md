@@ -1,5 +1,30 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-18 (ontkoppeld ontwerp; netwerk-aanpak LAR-483 is de volgende stap)*
+*Last updated: 2026-07-18 (v2 is de actieve bouwplaats; vectorwereld = bron van waarheid)*
+
+## 🌍 Sinds 2026-07-18 — er zijn TWEE codebases, en `v2/` is de actieve
+
+- **Root van de repo = de bevroren v1-atlas.** Blijft live, wordt niet meer aangeraakt. Vanilla JS + globals
+  + Three **r128** via script-tags.
+- **`v2/` = de nieuwe bouwplaats.** Three **r185**, **ES-modules met importmap**, geen bundler en geen
+  build-stap. Draait mee op Pages onder `…/grondstoffen-atlas/v2/`. **Harde regel: buiten `v2/` niets.**
+
+### De lagenordening in v2 (belangrijker dan de bestandsindeling)
+1. **De vectorwereld is de WAARHEID** — waar land ophoudt en water begint. Natural Earth 1:10M, één
+   `LineSegments`. Hiertegen wordt geverifieerd en straks gerouteerd.
+2. **De tegels zijn een SKIN** — Esri World Imagery (of OSM) op het detailniveau dat bij de kijkhoogte past.
+   Mooi en handig om plekken te herkennen, maar geen bewijs: de shell is ~9,8 km/pixel en de bron verschilt
+   van Natural Earth.
+3. **De weergave staat los van beide** — ondergrond (satelliet/kaart/egaal) en kustlijn (aan/uit) zijn
+   onafhankelijke schakelaars.
+
+Dit is de directe voortzetting van het ontkoppelingsprincipe hieronder: **één ding = één verantwoordelijkheid.**
+Waar v1 één puntenlijst drie taken liet dragen, laat v2 niet één laag tegelijk "mooi" én "waar" zijn.
+
+### Twee dingen die je moet weten vóór je code schrijft in v2
+- **lat/lon → 3D volgt EXACT v1's `latLonToVec3`** (`x = cos(lat)·cos(lon)`, `z = −cos(lat)·sin(lon)`). Het
+  moet tegelijk kloppen met de UV-afbeelding van `THREE.SphereGeometry` én met wat in M26 uit v1 komt.
+- **Zoom rekent in hoogte boven het oppervlak**, niet in afstand tot het middelpunt. Alles wat met zoom
+  schaalt (sleepsnelheid, tegelniveau, de opheffing van de kustlijn) hangt aan `getAltitude()`.
 
 ## 🏗️ Het leidende architectuurprincipe sinds 2026-07-18 — ONTKOPPELEN
 

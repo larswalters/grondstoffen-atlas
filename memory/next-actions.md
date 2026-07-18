@@ -1,5 +1,41 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (patch-spiraal doorbroken → ontkoppeld ontwerp; netwerk-aanpak = LAR-483)*
+*Last updated: 2026-07-18 (M22 KLAAR — v2 staat; volgende = M23 MARNET over de vectorwereld)*
+
+## ✅ M22 AFGEROND (2026-07-18) — LAR-484 Done
+
+`v2/` staat en is live: https://larswalters.github.io/grondstoffen-atlas/v2/ (t/m `4dd48d5`).
+Lars' go: *"dit is echt goed… nu kunnen we die vectorlijnen als bron van waarheid gebruiken en de view
+opties zijn top zo."* **Buiten `v2/` is niets aangeraakt** — de oude atlas op de root staat onveranderd.
+
+Wat er ligt om op verder te bouwen:
+- `v2/src/globe.js` — scene, **hoogte-gebaseerde** zoom/sleep, ACES, `logarithmicDepthBuffer`
+- `v2/src/world.js` — de vectorwereld (één `LineSegments`, 481.675 punten)
+- `v2/src/tiles.js` — Esri/OSM-tegels tot z19, shell + detailpatch, invaden
+- `v2/tools/measure_world.py` · `v2/tools/bake_world.py` · `v2/data/world-10m.{bin,json}`
+
+## ➡️ VOLGENDE: M23 · MARNET-zeeroutes over de vectorwereld (LAR-483)
+
+De opdracht is onveranderd sinds de diagnose van 18 juli, maar nu pas uitvoerbaar: **verzoen het
+MARNET-netwerk ÉÉN keer met de kustlijn en routeer daarover**, in plaats van per haven-paar corridors te
+bakken en elke kapotte edge apart te repareren.
+
+Waarom het nú kan: MARNET is een **grove graaf** (15.840 segmenten, mediaan 83 km maar **max 3.611 km**) —
+kaal over de bol leggen voorkomt landtreffers niet. Tegen 1:50M verzoenen had weinig zin (7,7 km puntafstand,
+gaten tot 628 km). Tegen **1:10M** (1,5 km, grootste gat 55 km) is de verzoening wél betekenisvol.
+
+Concrete eerste stappen:
+1. MARNET in `v2/` laden en tegen de 1:10M-wereld leggen: **hoeveel** knopen/edges liggen op land?
+2. Knopen die op land vallen naar het dichtstbijzijnde water verplaatsen; edges die land kruisen opknippen
+   of herrouteren — **één keer**, in de baker, niet per route.
+3. Het gerepareerde netwerk **meesturen naar de browser** (vastgelegd besluit: anders geen simulator — met
+   kant-en-klare lijnen kun je niet herrouteren als M21 een knelpunt sluit).
+4. Testen **haven→haven** zoals Lars vroeg, met zijn visuele check op realisme; de machine bewaakt de
+   objectieve regels (nul landkruisingen over alle banen, bundeling, geen kaarsrechte stukken).
+
+## 🎨 Uitgesteld, bewust: de schoonheidsslag
+Echte Rayleigh/Mie-verstrooiing, oceaan-specular (zonneglinstering) en dag/nacht-terminator met stadslichten
+(`earth-night.jpg` ligt klaar). Bewust ná de geometrie — deze shaders hangen aan de definitieve wereld.
+**De landvulling is vervallen:** met tegels als oppervlak is er niets te vullen.
 
 > **De belangrijkste les van 2026-07-18, lees dit eerst:** vier visuele klachten van Lars bleken symptomen
 > van **één ontwerpfout**, niet vier bugs. Eén puntenlijst droeg tegelijk de **vorm** van de lijn (wil weinig

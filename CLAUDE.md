@@ -1,8 +1,42 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (BESLUIT: atlas bevroren, kaartlaag opnieuw in fasen M22→M26)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M22 UITGEVOERD — v2 staat, vectorwereld = bron van waarheid)*
 
-> **🛑 BESLUIT 2026-07-18 — DEZE ATLAS IS BEVROREN. Kaartlaag wordt opnieuw opgebouwd in fasen (M22→M26).**
+> **✅ M22 KLAAR (2026-07-18) — DE NIEUWE WERELDBOL STAAT IN `v2/`. LAR-484 Done. → VOLGENDE: M23 (LAR-483).**
+> Live op https://larswalters.github.io/grondstoffen-atlas/v2/ (t/m `4dd48d5`). **Buiten `v2/` is niets aangeraakt.**
+> Lars' visuele go: *"dit is echt goed… nu kunnen we die vectorlijnen als bron van waarheid gebruiken en de view
+> opties zijn top zo."*
+>
+> **Wat er staat:** Three **r185** + **ES-modules met importmap** (geen bundler, geen build-stap — Three levert
+> sinds r150 geen `three.min.js` meer, dus het globals-patroon van v1 vervalt binnen `v2/`) · **ACES-beeldpijplijn**
+> · **vectorwereld Natural Earth 1:10M** (481.675 punten, **1,64 MB**, één draw call) · **Esri-satelliettegels tot
+> z19** met zoom tot **~1 km hoogte** · ondergrond (satelliet/kaart/egaal) en kustlijn (aan/uit) als **losse lagen**.
+>
+> **HET KERNBESLUIT: de vectorwereld is de WAARHEID, satelliet/tegels zijn een SKIN.** Daarmee is de kwaal die M22
+> nodig maakte — drie wereldmodellen die het oneens zijn — structureel weg: routering rekent straks tegen exact
+> dezelfde lijnen die Lars op zijn scherm ziet. Detailwinst t.o.v. het oude 1:50M: puntafstand **7,7 → 1,5 km**,
+> grootste gat **628 → 55 km**, Japan 16× / Hormuz 94× / Baja 11× / Malakka 7× meer punten.
+>
+> **⚠️ VIER DINGEN VOOR WIE HIERNA CODE SCHRIJFT IN `v2/`:**
+> 1. **lat/lon → 3D volgt EXACT v1's `latLonToVec3`** (`x = cos(lat)·cos(lon)`, `y = sin(lat)`,
+>    `z = −cos(lat)·sin(lon)`). Moet tegelijk kloppen met de UV-afbeelding van `THREE.SphereGeometry` (lon 0 op +X)
+>    **én** met de markers/routes die in M26 uit v1 komen. Een 90°-fout hier zag er onderling perfect uit (Sumatra
+>    wás Sumatra) maar lag los van de bol — en had in M26 alles verschoven.
+> 2. **Zoom rekent in HOOGTE boven het oppervlak**, niet in afstand tot het middelpunt. Alles wat met zoom schaalt
+>    (sleepsnelheid, tegelniveau, de opheffing van de kustlijn) hangt aan `getAltitude()`. Dat was de eigenlijke rem:
+>    de camera kwam nooit lager dan ~930 km.
+> 3. **De `index.html` zelf zit in de Pages-cache** (`max-age=600`) en verwijst naar de oude `?v=`-assets →
+>    cache-busting op assets helpt dan **niets**. Verifieer met `?vers=…` op de HTML **en** check
+>    `performance.getEntriesByType('resource')` wélke versie geladen is. Ik trapte hier zelf bijna in.
+> 4. **Tegels moeten onzichtbaar beginnen en invaden** (`opacity: 0`). Ze worden aangemaakt vóór hun textuur binnen
+>    is; op volle dekking schilderen ze als dichte vlek over de bol (banden + ruitjespatroon boven de pool).
+>
+> **M26 is deels HERBOUW geworden, geen verhuizing** — bewuste prijs van de r185-keuze: `markers.js`/`flows.js`/
+> `voyages.js` draaien op verdwenen r128-API's. De **landvulling is vervallen** (met tegels als oppervlak valt er
+> niets te vullen). De schoonheidsslag (Rayleigh/Mie, oceaan-specular, dag/nacht-terminator) staat bewust ná de
+> geometrie. Zie `memory/decisions.md` + [[2026-07-18-grondstoffen-atlas-m22-vectorwereld-en-tegels]].
+
+> **🛑 BESLUIT 2026-07-18 (context) — DE V1-ATLAS OP DE ROOT IS BEVROREN. Kaartlaag opnieuw in fasen (M22→M26).**
 > Lars: *"wat we nu hebben vind ik al wel erg mooi om te zien, alleen zitten er wel veel schoonheidsfoutjes in…
 > als fixes na 2/3× niet lukken worden ze meestal niet beter."* **De huidige atlas blijft precies zoals hij is** —
 > live op Pages, ongemoeid. **Alle M18-issues staan on hold** (LAR-474/475/476/477/478 → Backlog, `[ON HOLD]`).
@@ -371,6 +405,21 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-18 · M22: géén globe-library, Three r185 + ES-modules** — globe.gl is een wrapper om wat we al hebben;
+  Cesium brengt eigen imagery/terrein mee = een **vierde wereldmodel**; deck.gl = tweede renderstack. Lars koos
+  expliciet voor écht upgraden (r128 → r185), met als geaccepteerde prijs dat **M26 deels herbouw** wordt.
+  WebGPU bewust niet: koopt doorvoer, geen schoonheid.
+- **2026-07-18 · De vectorwereld (NE 1:10M) is de bron van waarheid; satelliet/tegels zijn een skin** — door Lars
+  bevestigd. Formaat: quantiseren 1e-4° + delta + zigzag-varint = 3,3 byte/punt (481.675 punten in 1,64 MB).
+- **2026-07-18 · Zoom rekent in hoogte boven het oppervlak** (niet afstand tot het middelpunt) + meeschuivend
+  nabij-vlak + `logarithmicDepthBuffer` → van 22.000 km tot ~1 km met gelijk zoomgevoel.
+- **2026-07-18 · Esri + OSM als tegelbronnen, Google uitgesloten** — earth3dmap geeft bij straatniveau over aan een
+  ingesloten Google Maps; die tegels mogen niet in een eigen 3D-bol. Esri gaat zelf tot z19, mét bronvermelding in beeld.
+- **2026-07-18 · Belichting en tone mapping horen bij elkaar** — ACES zónder hogere belichting maakt het beeld
+  *donkerder*; ingemeten paar zon 6,0 + belichting 1,6 (0% uitgebrande pixels vs 0,03%). Correctie op een eerdere
+  te stellige claim: v1's kleurdomein was niet kapot, de winst zit in tone mapping + fysieke belichting van r155+.
+- **2026-07-18 · Verifieer tegen een onafhankelijke scheidsrechter** — de 90°-uitlijnfout is gevonden/uitgesloten met
+  `earth-water.png` als land/water-orakel (80–83% van de kustpunten op een grens vs 4,8% willekeurig; oude formule 8%).
 - **2026-07-18 · Vorm, vaarsnelheid en baan-klem zijn ONTKOPPELD** — zie de architectuurbanner bovenaan. Eén
   puntenlijst droeg alle drie met tegenstrijdige eisen; elke fix brak de ander. Nu: geometrie = vorm ·
   `getPointAt` (booglengte) = snelheid · apart `wp`-profiel per 20 km = klem. Alles verbeterde tegelijk.

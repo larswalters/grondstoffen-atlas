@@ -1,6 +1,53 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-18 (sessie 21) — M22 UITGEVOERD: v2 staat, vectorwereld = bron van waarheid, tegels tot ~1 km
+- **Lars' visuele go:** *"dit is echt goed… nu kunnen we die vectorlijnen als bron van waarheid gebruiken en
+  de view opties zijn top zo."* → **LAR-484 Done, M22 af.** Live op `…/grondstoffen-atlas/v2/` t/m `4dd48d5`.
+  **Buiten `v2/` is niets aangeraakt.**
+- **Techniekkeuze vooraf besproken:** géén globe-library (globe.gl/Cesium/deck.gl) maar Three met onze eigen
+  bol — de library bepaalt de schoonheid niet, en Cesium zou een **vierde wereldmodel** toevoegen. Lars koos
+  expliciet voor écht upgraden (r128 → **r185**), met als bewuste prijs dat **M26 deels herbouw** wordt:
+  `markers.js`/`flows.js`/`voyages.js` draaien op r128-API's die weg zijn. WebGPU bewust overgeslagen
+  (koopt doorvoer, geen schoonheid; onze scene is geometrie-gebonden).
+- **Volgorde gehanteerd:** kleur → waarheid → schoonheid → routes. De beeldpijplijn eerst omdat die de
+  *kalibratie van het meetinstrument* is (Lars' rol = visuele check); de echte shaders hangen aan de
+  definitieve geometrie, dus eerder bouwen = twee keer bouwen.
+- **Gebouwd in `v2/`:** `src/globe.js` (scene, hoogte-gebaseerde zoom/sleep, ACES, log-diepte) ·
+  `src/world.js` (decoder + opbouw) · `src/tiles.js` (Esri/OSM, shell + detailpatch, invaden) ·
+  `tools/measure_world.py` + `tools/bake_world.py` · `data/world-10m.{bin,json}`.
+- **De vectorwereld:** Natural Earth **1:10M**, 446.175 punten land + 35.512 kleine eilanden. Mediane
+  puntafstand **7,7 → 1,5 km**, grootste gat **628 → 55 km**. Japan 16×, Hormuz 94×, Baja 11×, Malakka 7×
+  meer detail. Gebakken tot **1,64 MB** (was 11,5 MB ruw): quantiseren op 1e-4° (~11 m) + delta-codering +
+  zigzag-varint = **3,3 byte/punt**. Eén draw call voor 472.042 lijnstukken.
+- **Waarom "van dichtbij geen upgrade" geen instelling was:** 4096 px voor de hele aarde = **9,8 km per
+  textuurpixel**; bij 1,3 km/schermpixel wordt één textuurpixel over ~7 schermpixels uitgesmeerd. Gemeten op
+  Malakka bij maximale zoom: vectorwereld contrastsprong **166/255** met 21 harde randen, satelliettextuur
+  **5** en nul randen.
+- **Daarna op Lars' verzoek de tegellaag** (hij wees op earth3dmap.com): de zoom-rem zat in **onze eigen
+  code**, niet in de bron — camerabodem ~930 km (zoom rekende in **afstand tot het middelpunt** i.p.v.
+  hoogte), nabij-vlak vast op 0,1 (= 265 km), kustlijn zwevend op 9,5 km. Alle drie gefixt +
+  `logarithmicDepthBuffer`. Nu tot **~1 km hoogte**, tegels tot **z19**. Gemeten op 1,95 km boven Rotterdam:
+  met tegels 3,74 detail/pixel, zonder tegels **0,00** — de oude textuur bevat daar geen informatie meer.
+- **Bronnen-nuance:** earth3dmap draait bovenin op **Esri** (onze bron) maar geeft het bij straatniveau over
+  aan een **ingesloten Google Maps** (zichtbaar aan de bronregel + Street View-poppetje). Google-tegels mogen
+  niet in een eigen 3D-bol; Esri gaat zelf tot z19 (~30 cm/px bewoond gebied) mét verplichte bronvermelding.
+- **Drie bugs die het waard zijn te onthouden:**
+  1. **Vectorlaag lag 90° verdraaid** — `x = cos(lat)·sin(lon)` i.p.v. v1's `x = cos(lat)·cos(lon)`,
+     `z = −cos(lat)·sin(lon)`. Kustlijnen klopten onderling maar lagen los van de bol (Lars: *"die kustlijnen
+     zijn top, alleen de ligging klopt niks van"*). Moet **tegelijk** kloppen met de UV-afbeelding van
+     `THREE.SphereGeometry` (lon 0 op +X) **én** met de markers/routes die in M26 uit v1 komen.
+     Geverifieerd met `earth-water.png` als **onafhankelijke scheidsrechter**: 80–83% van de kustpunten op
+     een land/water-grens vs 4,8% voor willekeurige punten; met de oude formule 8% (= willekeur-bodem).
+  2. **Lege tegels schilderden over de bol** — bij het overzetten uit v1 ging `opacity: 0` + invaden verloren
+     → horizontale banden en een ruitjespatroon boven de pool zolang tegels onderweg waren.
+  3. **Bijna verkeerd geverifieerd door cache** — na de uitlijn-fix gaf de meting onzin; de browser had
+     `?v=002` geladen omdat **de `index.html` zelf** in de Pages-cache zat.
+- **Beeldpijplijn-correctie op mezelf:** ik beweerde eerst te stellig dat v1 "in het verkeerde kleurdomein"
+  rendert — v1 zette `outputEncoding` wél goed. De winst zit in tone mapping + de fysieke belichting van
+  r155+. En ACES aanzetten zónder de belichting mee te verhogen maakt het beeld juist **donkerder**.
+- **→ Volgende: M23 · MARNET-zeeroutes** over de vectorwereld; kern blijft **LAR-483**.
+
 ## 2026-07-18 (sessie 20b, slotdeel) — Fundament-plan M22→M26 vastgesteld, atlas bevroren, v2/ als locatie
 - **Lars' besluit** na de ontkoppelings-sessie: huidige atlas **bevriezen** (*"wat we nu hebben vind ik al
   wel erg mooi om te zien, alleen zitten er wel veel schoonheidsfoutjes in"*), alle M18-issues on hold, en

@@ -1,5 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-18 (Japan-observatie OPGELOST — bleek de lane-waaier + cache; nieuwe openstaande punten onderaan)*
+*Last updated: 2026-07-18 (M22/v2 — drie bugs gevonden+gefixt; nieuwe risico's voor de tegellaag)*
+
+## ✅ GEFIXT in M22/v2 (2026-07-18) — drie die je makkelijk opnieuw maakt
+
+1. **Vectorwereld lag 90° verdraaid op de bol.** `world.js` gebruikte `x = cos(lat)·sin(lon)` /
+   `z = cos(lat)·cos(lon)` i.p.v. v1's `x = cos(lat)·cos(lon)` / `z = −cos(lat)·sin(lon)`. Kustlijnen klopten
+   **onderling** (Sumatra wás Sumatra) maar lagen los van de bol — dat maakt het verraderlijk: de laag ziet er
+   op zichzelf perfect uit. Het commentaar beweerde bovendien "zelfde afspraak als v1", wat het niet was.
+   **Was dit blijven staan, dan had M26 alle mijnen en routes verkeerd gezet.**
+2. **Lege tegels schilderden over de bol tijdens het laden.** Bij het overzetten van `tiles.js` uit v1 ging
+   `opacity: 0` + invaden verloren → horizontale banden en een ruitjespatroon boven de pool. Tegels worden
+   aangemaakt vóór hun textuur binnen is, dus ze moeten onzichtbaar beginnen. Mislukte tegels worden nu
+   opgeruimd i.p.v. als leeg vlak te blijven staan.
+3. **De `index.html` zelf zit in de Pages-cache.** Na de uitlijn-fix gaf mijn verificatie onzin en leek de
+   fix niet te werken — de browser had `?v=002` geladen, want de gecachete HTML verwijst naar de oude
+   assetversies. **Cache-busting op assets helpt dan niets.** Verifieer met een cache-bustende query op de
+   HTML (`?vers=…`) én check `performance.getEntriesByType('resource')` wélke versie geladen is.
+
+## 🔧 OPEN — risico's van de nieuwe tegellaag (2026-07-18)
+- **Tegelbudget niet getest op mobiel onder 4G.** Op wifi/desktop: 305 tegels op 1 km hoogte, 0 mislukt.
+  Onbekend hoe dat zich houdt op de Honor Magic V5 met een trage verbinding (data + textuurgeheugen).
+- **Esri heeft geen beeld boven open oceaan op hoge zoom** → lege/mislukte tegels. Ze worden nu opgeruimd,
+  maar je ziet dan de grove shell. Acceptabel; opletten bij het beoordelen van routes ver van de kust.
+- **Vector en satelliet zullen het nooit perfect eens zijn** — andere bronnen, en de satelliet is bij de
+  shell ~9,8 km/pixel. Bij diep inzoomen loopt de lijn een eindje naast de satellietkust. **Geen bug:** de
+  vector is per besluit de waarheid, de satelliet een skin.
+- **`v2/build-cache/` staat in `.gitignore`** (ruwe GeoJSON, 11,5 MB). Wie het wereldmodel opnieuw wil bakken
+  moet eerst opnieuw downloaden.
 
 ## 🔧 OPEN — asymmetrische baan-klem staat halverwege in de werkende boom (2026-07-18)
 - **Niet gepusht.** `src/util.js` + `tools/lane_widths.js` + `data/_searoutes.js` zijn dirty.
