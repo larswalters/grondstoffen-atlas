@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=007" />
+<link rel="stylesheet" href="style.css?v=011" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -28,7 +28,7 @@
 
   <div id="hud">
     <div class="hudTitle">Atlas v2 · fundament</div>
-    <div class="hudSub">M22 — de wereldbol opnieuw</div>
+    <div class="hudSub">M23 — MARNET-zeeroutes</div>
 
     <!-- Twee ONAFHANKELIJKE lagen, niet één of-of-keuze: de ondergrond is het
          oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
@@ -43,6 +43,26 @@
     <div class="btnRow">
       <button class="clBtn is-on" data-cl="aan">aan</button>
       <button class="clBtn" data-cl="uit">uit</button>
+    </div>
+
+    <!-- Het verzoende MARNET-netwerk: blauw = zee, amber = binnenwater. -->
+    <div class="hudLabel">Zeeroutes (MARNET)</div>
+    <div class="btnRow">
+      <button class="mnBtn is-on" data-mn="aan">aan</button>
+      <button class="mnBtn" data-mn="uit">uit</button>
+    </div>
+
+    <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
+    <div class="hudLabel">Route testen (haven → haven)</div>
+    <div id="routeTest">
+      <input id="vanHaven" list="havenLijst" placeholder="van — typ een haven" autocomplete="off" />
+      <input id="naarHaven" list="havenLijst" placeholder="naar — typ een haven" autocomplete="off" />
+      <datalist id="havenLijst"></datalist>
+      <div class="btnRow">
+        <button id="routeGo">route</button>
+        <button id="routeWis">wis</button>
+      </div>
+      <div id="routeInfo"></div>
     </div>
 
     <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
@@ -70,6 +90,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=007"></script>
+<script type="module" src="src/main.js?v=011"></script>
 </body>
 </html>

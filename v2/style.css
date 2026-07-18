@@ -85,6 +85,34 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- route testen --------------------------------------------------------- */
+
+#routeTest { display: flex; flex-direction: column; gap: 6px; }
+
+#routeTest input {
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 11px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  outline: none;
+}
+
+#routeTest input:focus { border-color: var(--accent); }
+#routeTest input::placeholder { color: var(--ink-dim); }
+
+#routeInfo {
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+  font-variant-numeric: tabular-nums;
+  min-height: 0;
+}
+
+#routeInfo b { color: var(--ink); }
+
 /* --- bronvermelding (verplicht bij Esri/OSM) ----------------------------- */
 
 #attrib {
