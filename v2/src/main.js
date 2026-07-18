@@ -1,8 +1,8 @@
 // main.js — start v2 op en koppelt de HUD aan de bol.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=002";
-import { laadVectorWereld } from "./world.js?v=002";
+import { createGlobe, CONFIG } from "./globe.js?v=003";
+import { laadVectorWereld } from "./world.js?v=003";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 

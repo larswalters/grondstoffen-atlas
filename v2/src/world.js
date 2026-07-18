@@ -87,11 +87,17 @@ export async function laadVectorWereld(radius) {
       const lat = (y / schaal) * (Math.PI / 180);
       const cosLat = Math.cos(lat);
 
-      // Zelfde afspraak als v1: lon 0 wijst naar +Z, zodat markers en routes
-      // straks zonder omrekenen op dezelfde plek landen.
-      posities[pi * 3 + 0] = r * cosLat * Math.sin(lon);
+      // Exact dezelfde afspraak als v1's latLonToVec3 (src/util.js):
+      //   phi = 90 - lat, theta = lon + 180
+      //   x = -r·sin(phi)·cos(theta)  ->  r·cos(lat)·cos(lon)
+      //   z =  r·sin(phi)·sin(theta)  -> -r·cos(lat)·sin(lon)
+      // Dit MOET kloppen met twee dingen tegelijk: de UV-afbeelding van
+      // THREE.SphereGeometry (lon 0 ligt op +X) en de markers/routes die in
+      // M26 uit v1 komen. Een eerdere versie zette lon 0 op +Z — dat is 90°
+      // verdraaid: de kustlijnen klopten onderling, maar lagen los van de bol.
+      posities[pi * 3 + 0] = r * cosLat * Math.cos(lon);
       posities[pi * 3 + 1] = r * Math.sin(lat);
-      posities[pi * 3 + 2] = r * cosLat * Math.cos(lon);
+      posities[pi * 3 + 2] = -r * cosLat * Math.sin(lon);
 
       if (k > 0) {
         indices[ii++] = eersteIndex + k - 1;
