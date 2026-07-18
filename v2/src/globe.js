@@ -248,6 +248,24 @@ export function createGlobe(mount) {
     globeMat.needsUpdate = true;
   }
 
+  // De bol laten ZAKKEN als er tegels overheen liggen.
+  //
+  // Het probleem dat dit oplost: een tegel is een plat lapje. Zijn koorde duikt
+  // tussen de hoekpunten ONDER het boloppervlak, en dan prikt de bol-textuur
+  // door de tegels heen — horizontale banden langs de breedtegraden en een
+  // ringpatroon op de pool (waar de Mercator-tegels het grootst zijn).
+  // Gemeten voor de fix: 8,5% van de schermpixels veranderde als je de bol
+  // verborg; 7,8% sterk.
+  //
+  // v1 loste dit op door de TEGELS op te tillen (`shellLift: 1.0016` = 3,8 km).
+  // Dat kan hier niet: v2 zoomt tot ~1 km hoogte, dus dan zou de camera ONDER
+  // de tegellaag uitkomen. Andersom werkt wel — de bol is toch alleen nog een
+  // achtergrond terwijl de tegels laden.
+  const SPHERE_SINK = 0.998;   // ~12,7 km onder het oppervlak; koordezakking is ~2 km
+  function setSphereSink(aan) {
+    globeMesh.scale.setScalar(aan ? SPHERE_SINK : 1);
+  }
+
   function setSun(mode) {
     if (mode === "flat") {
       // Vlak licht: geen schaduwzijde. Handig om de kaart zelf te beoordelen
@@ -315,7 +333,7 @@ export function createGlobe(mount) {
   return {
     scene, camera, renderer, globeGroup,
     radius: CONFIG.radius,
-    onTick, setToneMapping, setSun, setBasemap, zoomBy,
+    onTick, setToneMapping, setSun, setBasemap, setSphereSink, zoomBy,
     getAltitude: () => altitude,
     // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km
     getAltitudeKm: () => (altitude / CONFIG.radius) * 6371,

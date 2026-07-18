@@ -57,10 +57,18 @@ export const TILE_CONFIG = {
   // (de detailpatch ligt eroverheen). v1 zat om dezelfde reden op 3.
   shellMaxZ: 3,
   shellZBelowDetail: 3,
-  shellMeshDetail: 16,
+  // Grote shell-tegels hebben een FIJN raster nodig. Een z=3-tegel beslaat 45°
+  // lengte en (rond de evenaar) ~41° breedte; met te weinig onderverdeling zijn
+  // de facetten zo plat dat hun koorde ~2 km onder de bol duikt. v1 zat op 24 en
+  // dat was empirisch bepaald — ik zette 'm bij het overzetten op 16 en dat is
+  // precies het ringpatroon boven de pool dat Lars zag.
+  shellMeshDetail: 24,
 
-  shellLift: 1.0000,
-  detailLift: 1.0002,
+  // Tegels liggen praktisch OP het oppervlak; de bol eronder zakt in plaats
+  // daarvan weg (zie setSphereSink in globe.js). Zo blijft diep inzoomen kloppen:
+  // v1's `shellLift: 1.0016` is 3,8 km en daar zou je op 1 km hoogte onderuit komen.
+  shellLift: 1.0,
+  detailLift: 1.00002,   // haartje boven de shell; de volgorde doet het echte werk
 };
 
 export function createTileLayer(GLOBE) {
@@ -357,6 +365,9 @@ export function createTileLayer(GLOBE) {
   function zetAan(waarde) {
     aan = !!waarde;
     group.visible = aan;
+    // Bol laten zakken zodra er tegels overheen liggen, en weer terug in
+    // "egaal" — daar IS de bol het oppervlak.
+    GLOBE.setSphereSink(aan);
     if (!aan) { leeg(detailGroup, detailLive); detailKey = ""; }
   }
 
@@ -366,6 +377,10 @@ export function createTileLayer(GLOBE) {
     leeg(shellGroup, shellLive); shellKey = "";
     leeg(detailGroup, detailLive); detailKey = "";
   }
+
+  // De laag start aan, dus de bol moet meteen zakken (anders prikt hij door de
+  // eerste tegelronde heen tot iemand voor het eerst een knop indrukt).
+  GLOBE.setSphereSink(true);
 
   return {
     tick,
