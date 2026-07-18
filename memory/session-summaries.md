@@ -2,6 +2,10 @@
 *Newest first.*
 
 ## 2026-07-18 (sessie 22) — M23 KLAAR: MARNET verzoend, haven→haven werkt, go binnen (LAR-483 Done)
+- **Nagekomen: pc-scherpte-reeks** (`990765c`+`61d7388`+`1a724b8`, `?v=014`): tegel-zoom ~1 texel/schermpixel +
+  budget ×breedte²×aspect · dekking via straal-bol-snijding (H/V apart) · **middenring z−2** voor de schermhoeken
+  (LOD: shell z3 → ring → patch). 1080p/portret ~100 tegels goed; ultrawide-restje geaccepteerd ("we laten het
+  zo") — zie bugs-and-risks punt 0.
 - **Afronding zelfde dag — Lars' go:** *"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."*
   → LAR-483 Done. Zijn test-vondst (Amsterdam vaart uit via IJsselmeer/Den Helder i.p.v. het Noordzeekanaal)
   gemeten verklaard: **MARNET heeft geen Noordzeekanaal-edge**; Amsterdam snapt op de Markermeer-knoop (15,1 km).
