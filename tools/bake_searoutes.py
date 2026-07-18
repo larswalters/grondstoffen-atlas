@@ -236,18 +236,78 @@ def gc_km(a, b):
         + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2))
 
 
+# ---------------------------------------------------------- ANTIPODALE STABILISATIE
+# Bij een bijna-antipodaal havenpaar is de grote cirkel wiskundig ONBEPAALD: noordom
+# en zuidom zijn even lang, en MARNET's Dijkstra kiest dan willekeurig. Gevolg vóór
+# deze fix: 7 van de 8 trans-Pacific koper-corridors kruisten de datumgrens op 50°N
+# (de echte, drukke noordelijke lane) maar Valparaíso->Ningbo dook naar 20°Z — dwars
+# door de lege zuidelijke Stille Oceaan, terwijl Valparaíso maar ~1.000 km onder
+# Antofagasta ligt. Geen varensreden, puur een grafiek-artefact.
+#
+# Regel: is het paar bijna-antipodaal ÉN trans-Pacific ÉN koos MARNET het zuidelijk
+# halfrond, dan bakken we in twee hops via wp-pac-noord (44°N/175°O) — dezelfde
+# "stabilisator van een onbepaalde geodeet" die _chokepoints.js al beschrijft, maar
+# consistent noordelijk. Stabiele paren blijven onaangeroerd: MARNET beslist.
+HALF_CIRCUM_KM = 20015.0
+ANTIPODAL_FRAC = 0.85          # >85% van een halve aardomtrek = onbepaald genoeg
+# Stabilisatiepunt op de datumgrens, exact waar de 7 stabiele zustercorridors van
+# nature kruisen (50°N). Gemeten alternatieven waren duurder: 44/175 +10,5%,
+# 45/180 +11,0%, 40/180 +5,0%, 50/-170 +7,4%. Kosten t.o.v. de zuidelijke variant
+# ~430 km (2%) — bewust betaald: de noordelijke Pacific is de werkelijke vaarlane,
+# de zuidelijke is leeg water zonder verkeer.
+PAC_NORTH = {"lat": 50.00, "lon": 180.00}
+
+
+def _crosses_pacific(a, b):
+    """Amerikaanse westkust <-> Oost-Azië (het paar dat de datumgrens moet kruisen)."""
+    return (a["lon"] < -60 and b["lon"] > 100) or (b["lon"] < -60 and a["lon"] > 100)
+
+
+def _lat_at_dateline(pts):
+    """Breedtegraad waar de polyline de datumgrens passeert (None = passeert niet)."""
+    best, lat = 1e9, None
+    for la, lo in pts:
+        d = abs(abs(lo) - 180)
+        if d < best:
+            best, lat = d, la
+    return lat if best < 5 else None
+
+
+def _run(a, b):
+    return sr.searoute([a["lon"], a["lat"]], [b["lon"], b["lat"]], units="km",
+                       append_orig_dest=True, return_passages=True)
+
+
 def bake(corridor):
     """searoute over één corridor -> (polyline, passages, km, zigzagsWeg, landFixes) of None.
 
     Het ruwe MARNET-pad krijgt twee reparaties (zie LANDMASKER hierboven),
     beide gevalideerd tegen de landpolygonen — geen blinde smoothing."""
     a, b = corridor["a"], corridor["b"]
-    r = sr.searoute([a["lon"], a["lat"]], [b["lon"], b["lat"]], units="km",
-                    append_orig_dest=True, return_passages=True)
+    r = _run(a, b)
     km = r["properties"]["length"]
     if not km or km <= 0:
         return None
     raw = [[lat, lon] for lon, lat in r["geometry"]["coordinates"]]
+
+    # antipodale stabilisatie: alleen als MARNET zuidom koos op een onbepaald paar
+    if (_crosses_pacific(a, b)
+            and gc_km(a, b) > ANTIPODAL_FRAC * HALF_CIRCUM_KM):
+        dl = _lat_at_dateline(raw)
+        if dl is not None and dl < 0:
+            r1, r2 = _run(a, PAC_NORTH), _run(PAC_NORTH, b)
+            km1 = r1["properties"]["length"]
+            km2 = r2["properties"]["length"]
+            if km1 and km2 and km1 > 0 and km2 > 0:
+                p1 = [[la, lo] for lo, la in r1["geometry"]["coordinates"]]
+                p2 = [[la, lo] for lo, la in r2["geometry"]["coordinates"]]
+                raw = p1 + p2[1:]          # knooppunt niet dubbel
+                km = km1 + km2
+                r = {"properties": {"traversed_passages":
+                     sorted(set((r1["properties"].get("traversed_passages") or [])
+                                + (r2["properties"].get("traversed_passages") or [])))}}
+                print(f"  noord-gestabiliseerd: {a['id']} -> {b['id']}"
+                      f"  (datumgrens {dl:.0f}° -> noordelijke lane)")
     raw, zigzags = dezigzag(raw)
     raw, landfixes = fix_land_crossings(raw)
     pts, seen = [], None
