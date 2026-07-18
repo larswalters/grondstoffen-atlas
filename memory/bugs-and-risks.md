@@ -1,7 +1,7 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M22/v2 — drie bugs gevonden+gefixt; nieuwe risico's voor de tegellaag)*
+*Last updated: 2026-07-18 (M22/v2 — vier bugs gevonden+gefixt, incl. de bol die door de tegels prikte)*
 
-## ✅ GEFIXT in M22/v2 (2026-07-18) — drie die je makkelijk opnieuw maakt
+## ✅ GEFIXT in M22/v2 (2026-07-18) — vier die je makkelijk opnieuw maakt
 
 1. **Vectorwereld lag 90° verdraaid op de bol.** `world.js` gebruikte `x = cos(lat)·sin(lon)` /
    `z = cos(lat)·cos(lon)` i.p.v. v1's `x = cos(lat)·cos(lon)` / `z = −cos(lat)·sin(lon)`. Kustlijnen klopten
@@ -9,9 +9,26 @@
    op zichzelf perfect uit. Het commentaar beweerde bovendien "zelfde afspraak als v1", wat het niet was.
    **Was dit blijven staan, dan had M26 alle mijnen en routes verkeerd gezet.**
 2. **Lege tegels schilderden over de bol tijdens het laden.** Bij het overzetten van `tiles.js` uit v1 ging
-   `opacity: 0` + invaden verloren → horizontale banden en een ruitjespatroon boven de pool. Tegels worden
-   aangemaakt vóór hun textuur binnen is, dus ze moeten onzichtbaar beginnen. Mislukte tegels worden nu
-   opgeruimd i.p.v. als leeg vlak te blijven staan.
+   `opacity: 0` + invaden verloren. Tegels worden aangemaakt vóór hun textuur binnen is, dus ze moeten
+   onzichtbaar beginnen. Mislukte tegels worden nu opgeruimd i.p.v. als leeg vlak te blijven staan.
+   ⚠️ **Correctie:** ik schreef dit eerst op als de verklaring voor Lars' banden en ruitjespatroon. **Dat was
+   het niet** — hij zag ze daarna nog steeds. Het was een echte bug, maar een ander symptoom. De werkelijke
+   oorzaak staat hieronder onder 4.
+
+4. **De bol prikte door de tegels heen — DIT waren de banden en de poolringen.** Een tegel is een plat
+   lapje; tussen de hoekpunten duikt zijn koorde onder het boloppervlak en prikt de bol-textuur eroverheen.
+   Vandaar perfect horizontale banden langs de breedtegraden en een ringpatroon precies op de pool, waar de
+   Mercator-tegels het grootst zijn. **v1 waarschuwt hier letterlijk voor in `config.js`** en ik heb bij het
+   overzetten alle drie de waarden te laag gezet: `shellLift` **1.0000** (v1: 1.0016 — mijn tegels lagen dus
+   precies ÓP de bol), `detailLift` 1.0002 (v1: 1.0026), `shellMeshDetail` 16 (v1: 24).
+   **v1's oplossing kon niet worden overgenomen:** de tegels optillen naar 1.0016 = 3,8 km, en v2 zoomt tot
+   ~1 km hoogte → de camera zou onder de tegellaag uitkomen. Daarom omgekeerd opgelost: **de bol eronder
+   zakt** (`setSphereSink`, scale 0,998 ≈ 12,7 km) zodra er tegels overheen liggen, en staat op 1 in "egaal"
+   waar de bol zelf het oppervlak is. `shellMeshDetail` wel terug naar v1's 24.
+   **Meetmethode die dit ontrafelde** (herbruikbaar): tel welk aandeel schermpixels verandert als je de bol
+   eronder verbergt — dat is letterlijk "waar prikt hij doorheen". Voor: **8,50%** (7,80% sterk). Na:
+   **0,42%** (0,40% sterk), en die rest zit voorbij 85° breedte waar de tegellaag ophoudt en de bol terecht
+   de achtergrond is.
 3. **De `index.html` zelf zit in de Pages-cache.** Na de uitlijn-fix gaf mijn verificatie onzin en leek de
    fix niet te werken — de browser had `?v=002` geladen, want de gecachete HTML verwijst naar de oude
    assetversies. **Cache-busting op assets helpt dan niets.** Verifieer met een cache-bustende query op de

@@ -28,8 +28,14 @@
 > 3. **De `index.html` zelf zit in de Pages-cache** (`max-age=600`) en verwijst naar de oude `?v=`-assets →
 >    cache-busting op assets helpt dan **niets**. Verifieer met `?vers=…` op de HTML **en** check
 >    `performance.getEntriesByType('resource')` wélke versie geladen is. Ik trapte hier zelf bijna in.
-> 4. **Tegels moeten onzichtbaar beginnen en invaden** (`opacity: 0`). Ze worden aangemaakt vóór hun textuur binnen
->    is; op volle dekking schilderen ze als dichte vlek over de bol (banden + ruitjespatroon boven de pool).
+> 4. **Tegels moeten onzichtbaar beginnen en invaden** (`opacity: 0`) — ze worden aangemaakt vóór hun textuur
+>    binnen is. **En belangrijker: de bol eronder moet ZAKKEN** (`setSphereSink`, scale 0,998). Een tegel is een
+>    plat lapje; zijn koorde duikt tussen de hoekpunten onder het boloppervlak en dan prikt de bol-textuur
+>    eroverheen — horizontale banden langs de breedtegraden en een ringpatroon op de pool. v1 loste dat op door de
+>    tegels op te tillen (`shellLift: 1.0016` = 3,8 km); **dat kan in v2 niet**, want op 1 km hoogte kom je dan
+>    onder de tegellaag uit. `shellMeshDetail` hoort op **24** (v1's empirische waarde), niet lager.
+>    **Meet het zo:** tel welk aandeel schermpixels verandert als je de bol eronder verbergt — 8,50% vóór de fix,
+>    0,42% erna.
 >
 > **M26 is deels HERBOUW geworden, geen verhuizing** — bewuste prijs van de r185-keuze: `markers.js`/`flows.js`/
 > `voyages.js` draaien op verdwenen r128-API's. De **landvulling is vervallen** (met tegels als oppervlak valt er
