@@ -1,7 +1,35 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M23 uitgevoerd — MARNET verzoend met de vectorwereld, router in de browser)*
+*Last updated: 2026-07-19 (M24-bronnenplan besloten — bake-off OSM vs UNECE, pilots per regio, labels bij de bake)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M24 / bronnenplan binnenwater (2026-07-19) — plansessie, pilots vastgelegd (LAR-486/487/488)
+
+- **De corridor-toets vervangt de vlak-toets.** Rivieren/kanalen bestaan niet als water in de NE-polygonen
+  (dáárom waren de 29 `WATERWEG_ZONES` vrijstellingen en eindigt Yangon als stub). M24-controle: elk ~2 km-monster
+  van een binnenwater-edge ligt ≤ ε van een bevaarbare-vaarweg-middellijn (procesintegriteit tegen de eigen bron
+  + kruis-vergelijking waar een tweede bron bestaat); de polygoon-toets blijft alleen op de zee-overgang gelden
+  (mondings-knoop moet op een MARNET-knoop in NE-water landen).
+- **Bake-off beslist de bron (Lars).** Kandidaat-model = het M23-model doorgetrokken (MARNET=geometrie,
+  kustlijn=scheidsrechter): OSM als geometrie overal (enige wereldwijde bron mét kanálen + CEMT-klassen in de EU;
+  voor China/Myanmar bestaat toch niets officieels), officiële netten als onafhankelijke meetlat — UNECE
+  E-waterway-shapefile (EU, Blue Book) en USACE National Waterway Network (VS, public domain). Niet blind gekozen:
+  LAR-486 bouwt NZK + Waal twee keer (uit OSM én uit UNECE) en vergelijkt kwaliteit/moeite/beeld op de bol.
+  Afgevallen: Natural Earth rivers (géén kanalen — het Noordzeekanaal ontbreekt er letterlijk in) en HydroRIVERS
+  (DEM-afgeleid: geen kanalen, geen bevaarbaarheid). Een wereldwijde kant-en-klare bevaarbare-vaarwegen-dataset
+  bestaat niet (geverifieerd via websearch; het bekende GIS-gat).
+- **Pilot per regio vóór de uitrol** (Lars: *"het maken van de binnenvaartroutes lijkt me veel werk… wel eerst
+  pilot per systeem"*): NL/EU (LAR-486) → VS (LAR-487, Mississippi × USACE) → China (LAR-488, Yangtze), elk
+  bewijst één controle-situatie (twee onafhankelijke bronnen / USACE-meetlat / géén scheidsrechter). China is
+  bewust de zwaarste test en valideert de aanpak voor Paraná/Irrawaddy/Wolga/Mekong/Congo.
+- **Einddoel: het complete commercieel bevaarbare net** (Lars: *"ik wil ze wel alvast allemaal mappen zodat als
+  we een nieuwe grondstof toevoegen dat we die wegen gewoon kunnen gebruiken"*) — EU CEMT ≥ IV (de vrachtrelevante
+  grens; dekt Hengelo/Born), VS het USACE-net (inland gefilterd), elders de bekende commerciële systemen;
+  recreatief klasse I–III bewust niet (ruis). Omvang ≈ orde marnet.bin → past ruim in het budget.
+- **Beleid binnenvaart-vs-zeeschip: labels nú meebakken** — passage-label per systeem (zoals `suez`/`northwest`)
+  + zeevaart-vlag waar zeeschepen echt komen (NZK, Yangtze t/m Nanjing, Seaway). Router blijft permissief;
+  filteren is aan M26/M21 via het bestaande `vermijd`-mechanisme. Rebake is de dure stap, labels nu bijna gratis.
+- **OSM = ODbL** → "© OpenStreetMap contributors" bij de HUD-credits (naast de Esri-vermelding).
 
 ## M23 / MARNET-verzoening (2026-07-18) — LAR-483 uitgevoerd
 

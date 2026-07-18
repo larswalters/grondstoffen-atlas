@@ -1,21 +1,30 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M23 KLAAR — go van Lars binnen, LAR-483 Done; volgende = M24 · binnenwater, LAR-485)*
+*Last updated: 2026-07-19 (M24-bronnenplan staat — bake-off + pilots vastgelegd; volgende = NL-pilot LAR-486)*
 
-## ➡️ NU: M24 · binnenwater — start bij [LAR-485] (Todo, zelfstandig leesbaar)
+## ➡️ NU: M24 · binnenwater — start met de NL-pilot [LAR-486] (bake-off, verse sessie)
 
-**M23 is af.** Lars' go: *"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."* Zijn test-vondst
-(Amsterdam vaart uit via het IJsselmeer i.p.v. het Noordzeekanaal — **MARNET heeft geen Noordzeekanaal-edge**,
-Amsterdam snapt op de Markermeer-knoop 15,1 km) is het bewijsstuk in LAR-485. Milestone **M24 · Fundament 3 —
-binnenwater** staat in Linear.
+**Het bronnenplan is besloten (2026-07-19, plansessie zonder code).** Kerninzicht: de **corridor-toets vervangt
+de vlak-toets** — rivieren/kanalen bestaan niet als water in de NE-polygonen, dus elke binnenwater-edge wordt
+getoetst als "elk ~2 km-monster ≤ ε van een bevaarbare-vaarweg-middellijn"; de polygoon-toets blijft alleen op
+de zee-overgang gelden (mondings-knoop op een MARNET-knoop in NE-water). Besluiten + context in LAR-485.
 
-De LAR-485-scope (details in het issue):
-1. **Rivierhaven-stubs netjes maken** — havens als Yangon/Moulmein krijgen hun laatste ~30 km als rechte
-   stub over land (de rivier bestaat niet als water in NE-polygonen; binnen de gemeten eindtolerantie).
-   M24 vervangt die stubs door echte riviergeometrie (Rijn/Yangtze/Saint-Laurent/Kaspisch stonden al op de rol).
-2. **De 2 onopgeloste edges opruimen** — Södertälje-archipel `(58.57,17.42)→(58.65,16.32)` en de Channel
-   Islands-koorde `(33.20,-120.67)→(33.63,-118.12)` (allebei origineel behouden; zone of fijner raster).
-3. **Binnenwater-routering beleid** — binnenwater-edges doen nu gewoon mee in A* (Suez/Panama moeten ook);
-   bij M24 beslissen of rivier-edges een aparte modus/kleur/filter krijgen voor zeeschepen vs binnenvaart.
+1. **[LAR-486] NL-pilot (High)** — NZK + Waal (R'dam→Nijmegen) **twee keer** bouwen: uit **OSM** (Overpass,
+   `waterway=canal|river` + CEMT-tags) én uit de **UNECE E-waterway-shapefile** (Blue Book) → het
+   vergelijkingsrapport beslist de definitieve bron-rolverdeling. Bouwt meteen de hele pipeline:
+   `v2/tools/fetch_waterways.py` (cache in `v2/build-cache/`) → `EXTRA_VAARWEGEN`-stap in `bake_marnet.py`
+   (edges `soort=1` + systeemlabel + zeevaart-vlag, lon-normalisatie) → `ports.json` her-snappen
+   (Amsterdam→NZK-knoop, Nijmegen→Waal-knoop). **Acceptatie: Amsterdam vaart via IJmuiden uit** (het
+   screenshot-bewijsstuk), Nijmegen-snap 79 km → <5 km, regressie Duluth→R'dam 8.031 / R'dam→Shanghai
+   19.610 onveranderd. ODbL-attributie ("© OpenStreetMap contributors") in de HUD meenemen.
+2. **[LAR-487] VS-pilot** (blocked by 486) — Mississippi stroomopwaarts (zone → Memphis/St. Louis) × **USACE
+   NWN als onafhankelijke meetlat** (inland filteren); relevant voor kolen-binnenvaart in M26.
+3. **[LAR-488] China-pilot** (blocked by 486) — Yangtze-verdieping (zone → Wuhan, evt. Chongqing); zeevaart-vlag
+   t/m Nanjing; **géén scheidsrechter** = bewust de zwaarste controle-situatie; valideert de wereldwijde uitrol.
+4. **Daarna: uitrol + restpunten uit [LAR-485]** — het complete commercieel bevaarbare net (EU CEMT ≥ IV, VS
+   USACE-net, elders de commerciële systemen: Paraná/Amazon/Wolga incl. Kaspische dekking-check/Mekong/
+   Irrawaddy/Congo/Grand Canal), Yangon/Moulmein-stubs → echte riviergeometrie, en de 2 restedges
+   (Södertälje-archipel, Channel Islands-koorde). Beleid is al besloten: **labels bij de bake** (passage-label
+   per systeem + zeevaart-vlag); router blijft permissief, filteren = M26/M21 via `vermijd`.
 
 ## ✅ M23 AFGEROND op visuele go na (2026-07-18) — LAR-483 uitgevoerd
 

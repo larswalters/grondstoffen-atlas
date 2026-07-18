@@ -1,5 +1,19 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M23: MARNET-graaf verzoend in de baker, router in de browser)*
+*Last updated: 2026-07-19 (M24-bronnenplan vastgelegd — bake-off + pilots per regio; bouw start met LAR-486)*
+
+## 🧭 M24-aanpak (2026-07-19) — besloten, nog niet gebouwd
+
+- **Pipeline:** `v2/tools/fetch_waterways.py` (middellijnen per systeem, cache in `v2/build-cache/` naast
+  `ne_10m_*`) → `EXTRA_VAARWEGEN`-stap in `bake_marnet.py` (edges `soort=1` + systeemlabel + zeevaart-vlag,
+  zeezijde gesnapt aan een MARNET-knoop in NE-water, lon-normalisatie zoals de M23-les) → `ports.json`
+  her-snappen → **corridor-toets** (elk ~2 km-monster ≤ ε van de bron-middellijn; kruis-vergelijking met
+  UNECE/USACE waar die bestaan) → acceptatie-routes als regressietests (Amsterdam via IJmuiden;
+  Duluth→R'dam 8.031 / R'dam→Shanghai 19.610 onveranderd).
+- **Bron:** de bake-off in LAR-486 (OSM vs UNECE op NZK + Waal) beslist de definitieve rolverdeling;
+  kandidaat = OSM-geometrie overal + officiële netten als meetlat (het M23-model doorgetrokken).
+- **Volgorde:** NL-pilot (LAR-486) → VS-pilot (LAR-487, USACE-meetlat) → China-pilot (LAR-488, zónder
+  scheidsrechter) → wereldwijde uitrol (EU CEMT ≥ IV, VS USACE-net, elders de commerciële systemen) +
+  restpunten uit LAR-485 (Yangon-stubs, 2 restedges, Wolga-Don-dekking).
 
 ## ⚓ Sinds M23 (2026-07-18) — het netwerk is de router, de baker is de verzoening
 

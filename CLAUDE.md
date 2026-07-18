@@ -1,8 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M23 KLAAR — go van Lars binnen; volgende = M24 · binnenwater, LAR-485)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24-bronnenplan staat — bake-off OSM vs UNECE in de NL-pilot; volgende = LAR-486)*
 
-> **✅ M23 KLAAR (2026-07-18, laatste) — MARNET VERZOEND + HAVEN→HAVEN-ROUTERING. LAR-483 Done na Lars' go:**
+> **🧭 M24 GEPLAND (2026-07-19, laatste) — BRONNENPLAN STAAT. → VOLGENDE: NL-pilot [LAR-486] (bake-off OSM vs UNECE) in een verse sessie.**
+> Plansessie, géén code. **De corridor-toets vervangt de vlak-toets:** rivieren/kanalen bestaan niet als water in de
+> NE-polygonen (dáárom waren de 29 `WATERWEG_ZONES` vrijstellingen en eindigt Yangon als stub) → elke binnenwater-edge
+> wordt getoetst als "elk ~2 km-monster ≤ ε van een **bevaarbare-vaarweg-middellijn**"; de polygoon-toets blijft
+> alleen op de zee-overgang gelden (mondings-knoop op een MARNET-knoop in NE-water). Een wereldwijde kant-en-klare
+> bevaarbare-vaarwegen-dataset **bestaat niet** (geverifieerd) → **bake-off beslist de bron**: LAR-486 bouwt NZK +
+> Waal (R'dam→Nijmegen) **twee keer** — uit **OSM** (enige wereldwijde bron mét kanálen + CEMT-tags; Overpass) én
+> uit de **UNECE E-waterway-shapefile** (Blue Book) — en vergelijkt kwaliteit/moeite/beeld. **USACE NWN** = de
+> VS-meetlat (LAR-487, Mississippi stroomopwaarts); China-pilot (LAR-488, Yangtze→Wuhan) bewust **zónder**
+> scheidsrechter = de zwaarste controle-situatie, valideert de wereldwijde uitrol. NE-rivers (géén kanalen: geen
+> NZK!) en HydroRIVERS (DEM-afgeleid) afgevallen. **Besluiten Lars:** pilots per regio vóór de uitrol · einddoel =
+> **het complete commercieel bevaarbare net** (EU CEMT ≥ IV, VS USACE-net, elders de commerciële systemen — *"zodat
+> een nieuwe grondstof de wegen gewoon kan gebruiken"*) · **labels nú meebakken** (passage-label per systeem +
+> zeevaart-vlag NZK/Yangtze-t/m-Nanjing/Seaway; router permissief, filteren via `vermijd` = meteen M26/M21-klaar).
+> OSM = ODbL → "© OpenStreetMap contributors" in de HUD. LAR-487/488 blocked by 486; de volledige besluiten-sectie
+> staat in LAR-485. Acceptatie NL-pilot: **Amsterdam vaart via IJmuiden uit**, Nijmegen-snap 79 km → <5 km,
+> regressie Duluth→R'dam 8.031 / R'dam→Shanghai 19.610 onveranderd. Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-m24-bronnenplan]].
+
+> **✅ M23 KLAAR (2026-07-18, eerder) — MARNET VERZOEND + HAVEN→HAVEN-ROUTERING. LAR-483 Done na Lars' go:**
 > ***"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."*** **→ VOLGENDE: M24 · binnenwater ([LAR-485], Todo).**
 > Lars' eigen test-vondst: Amsterdam vaart uit via IJsselmeer→Afsluitdijk→Den Helder i.p.v. het Noordzeekanaal —
 > gemeten verklaard: **MARNET hééft geen Noordzeekanaal-edge** (Amsterdam snapt op de Markermeer-knoop, 15,1 km;
@@ -456,6 +475,12 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-19 · M24: corridor-toets vervangt vlak-toets + bake-off beslist de bron** — rivieren/kanalen bestaan
+  niet als water in de NE-polygonen → binnenwater-toets = afstand tot een bevaarbare-vaarweg-middellijn (~2 km-
+  monsters, ≤ ε); NL-pilot (LAR-486) bouwt NZK + Waal uit OSM én UNECE en beslist de bron-rolverdeling; pilots
+  NL→VS→China (elk één controle-situatie), daarna het complete commercieel bevaarbare net (EU CEMT ≥ IV / VS
+  USACE-net / elders commerciële systemen); binnenwater-edges krijgen bij de bake passage-labels + zeevaart-vlag
+  (filteren = M26/M21 via `vermijd`); OSM = ODbL → HUD-attributie.
 - **2026-07-18 · M23: verzoenen tegen de 1:10M-vectorwereld, meren = water** — routering rekent tegen exact de
   gerenderde lijnen (vector = waarheid); `ne_10m_lakes` als water maakt de Seaway/Grote Meren/IJsselmeer/Wolga-Don
   legitiem bevaarbaar in de toets. Binnenwater = flag (`soort=1`, 29 zones), geen "fix".

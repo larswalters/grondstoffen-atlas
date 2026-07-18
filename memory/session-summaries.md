@@ -1,6 +1,23 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 23) — M24-bronnenplan: bake-off OSM vs UNECE, pilots per regio (planning, géén code)
+- Lars wilde vóór de M24-bouw eerst de **bron** bespreken (zee had de vector-kustlijn als controlepunt; voor
+  binnenwater bestaat zoiets niet vanzelf).
+- **Kerninzicht:** de **corridor-toets vervangt de vlak-toets** — rivieren/kanalen bestaan niet als water in de
+  NE-polygonen; controle wordt "elk ~2 km-monster ≤ ε van een bevaarbare-vaarweg-middellijn"; de polygoon-toets
+  blijft op de zee-overgang (mondings-knoop op een MARNET-knoop in NE-water).
+- **Bronnenveld (websearch):** een wereldwijde kant-en-klare dataset bestaat niet. OSM = enige wereldwijde bron
+  mét kanálen (+ CEMT-tags EU); UNECE E-waterway-shapefile = officieel EU-net; USACE NWN = officieel VS-net;
+  NE-rivers (géén kanalen — geen NZK) en HydroRIVERS (DEM-afgeleid) afgevallen.
+- **Besluiten Lars:** bake-off in de NL-pilot beslist de bron (NZK + Waal uit OSM én UNECE) · pilots per regio
+  NL→VS→China (elk één controle-situatie; China zónder scheidsrechter = zwaarste test) · einddoel = het complete
+  commercieel bevaarbare net (EU CEMT ≥ IV / VS USACE / elders commerciële systemen) · labels nú meebakken
+  (passage-label + zeevaart-vlag; router permissief, filteren = M26/M21 via `vermijd`).
+- **Linear:** LAR-486 (NL-pilot, High) + LAR-487 (Mississippi × USACE) + LAR-488 (Yangtze) aangemaakt, 487/488
+  blocked by 486; besluiten-sectie toegevoegd aan LAR-485. Geen issue naar Done (milestone loopt).
+- **Volgende:** LAR-486 in een verse sessie. Vault: [[2026-07-19-grondstoffen-atlas-m24-bronnenplan]].
+
 ## 2026-07-18 (sessie 22) — M23 KLAAR: MARNET verzoend, haven→haven werkt, go binnen (LAR-483 Done)
 - **Nagekomen: pc-scherpte-reeks** (`990765c`+`61d7388`+`1a724b8`, `?v=014`): tegel-zoom ~1 texel/schermpixel +
   budget ×breedte²×aspect · dekking via straal-bol-snijding (H/V apart) · **middenring z−2** voor de schermhoeken
