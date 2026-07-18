@@ -252,10 +252,33 @@ export function createTileLayer(GLOBE) {
     return Math.atan((d * Math.tan(halfFov)) / R) * R2D;
   }
 
+  // SCHERMBREEDTE TELT MEE (zelfde fix als v1, commit c714297). `tilesAcross`
+  // was een vaste 4,5 — dat is ~1.150 px brontextuur over de hele beeldbreedte,
+  // ongeacht het scherm. Op een telefoon scherp, maar uitgesmeerd over een
+  // monitor van 1920+ px wazig (Lars: "op de pc is het niet scherp"). Doel is
+  // ~1 textuurpixel per schermpixel: beeldbreedte in device-pixels ÷ 256. De
+  // vaste waarde blijft de ondergrens (en de terugval bij een verborgen canvas
+  // met breedte 0); de cap 14 (≈ 3.584 px bron) dekt een ultrawide 2K op volle
+  // scherpte en houdt 4K beschaafd.
+  function tilesAcrossEff() {
+    const px = GLOBE.renderer.domElement.width; // device-pixels (incl. pixelRatio)
+    return Math.max(C.tilesAcross, Math.min(14, px / 256));
+  }
+
   function detailZoomVoor(spanDeg, lat) {
     const cosLat = Math.max(0.15, Math.cos(lat * D2R));   // VALKUIL 1
-    const wil = Math.log2((360 * C.tilesAcross * cosLat) / (2 * spanDeg));
+    const wil = Math.log2((360 * tilesAcrossEff() * cosLat) / (2 * spanDeg));
     return Math.max(C.minZ, Math.min(C.bronnen[bron].maxZ, Math.round(wil)));
+  }
+
+  // Het budget schaalt MEE met de fijnere zoom (kwadratisch: 2× zo fijn = 4×
+  // zoveel tegels in dezelfde patch) — anders is het budget op een groot scherm
+  // opnieuw kleiner dan één patch en kapt de patch af: exact de LAR-479-val.
+  // Op 4,5 blijft dit gewoon C.maxTiles (96); plafond 600 — met de midden-naar-
+  // buiten-vulling kost aftoppen alleen de hoeken, geen band.
+  function maxTilesEff() {
+    const r = tilesAcrossEff() / C.tilesAcross;
+    return Math.min(600, Math.ceil(C.maxTiles * r * r));
   }
 
   function shellZoomVoor(detailZ) {
@@ -293,11 +316,15 @@ export function createTileLayer(GLOBE) {
     const xMid = Math.floor(((lon + 180) / 360) * n);
     const yMid = Math.floor(mercYOfLat(lat) * n);
 
-    // Hoeveel tegels naast het midden hebben we nodig?
+    // Hoeveel tegels naast het midden hebben we nodig? De radius-kap moet
+    // BOVEN wat het budget aankan liggen (budget 600 midden-naar-buiten is een
+    // schijf met straal ~14): een kap van 12 hield op een groot scherm de
+    // scherpe patch ver vóór de schermrand op — dát was "aan de buitenkant al
+    // helemaal niet scherp". Het échte plafond is het budget, niet de radius.
     const spanX = Math.max(1, Math.ceil((span / 360) * n / Math.max(0.15, Math.cos(lat * D2R))));
     const spanY = Math.max(1, Math.ceil((span / 180) * n * 0.5));
-    const rx = Math.min(spanX, 12);
-    const ry = Math.min(spanY, 12);
+    const rx = Math.min(spanX, 24);
+    const ry = Math.min(spanY, 24);
 
     const key = `${bron}/${detailZ}/${xMid}/${yMid}/${rx}/${ry}`;
     if (key === detailKey) return;
@@ -314,7 +341,7 @@ export function createTileLayer(GLOBE) {
     kandidaten.sort((a, b) => a[2] - b[2]);
 
     const gewenst = new Set();
-    let budget = C.maxTiles;
+    let budget = maxTilesEff();
     for (const [dx, dy] of kandidaten) {
       if (budget <= 0) break;
       const y = yMid + dy;
