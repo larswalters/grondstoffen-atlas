@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
+<link rel="stylesheet" href="style.css?v=001" />
+
+<!-- ==========================================================================
+     v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
+     De importmap vertelt de browser waar "three" vandaan komt; daardoor kunnen
+     onze eigen modules gewoon `import * as THREE from "three"` schrijven.
+     Let op: sinds r150 levert Three GEEN three.min.js meer — ESM is de enige weg.
+     ========================================================================== -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.185.1/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.185.1/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div id="app">
+  <div id="canvasWrap"></div>
+
+  <div id="hud">
+    <div class="hudTitle">Atlas v2 · fundament</div>
+    <div class="hudSub">M22 — de wereldbol opnieuw</div>
+
+    <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
+    <div class="hudLabel">Beeldverwerking</div>
+    <div class="btnRow">
+      <button class="tmBtn" data-tm="legacy">r128-stijl</button>
+      <button class="tmBtn is-on" data-tm="modern">r185 · ACES</button>
+    </div>
+
+    <div class="hudLabel">Belichting</div>
+    <div class="btnRow">
+      <button class="sunBtn is-on" data-sun="live">zon aan</button>
+      <button class="sunBtn" data-sun="flat">vlak licht</button>
+    </div>
+
+    <div id="stats"></div>
+  </div>
+
+  <div id="zoomControls">
+    <button id="zoomIn" aria-label="Inzoomen">+</button>
+    <button id="zoomOut" aria-label="Uitzoomen">−</button>
+  </div>
+</div>
+
+<script type="module" src="src/main.js?v=001"></script>
+</body>
+</html>
