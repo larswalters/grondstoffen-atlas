@@ -1,6 +1,26 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-18 (sessie 20b, slotdeel) — Fundament-plan M22→M26 vastgesteld, atlas bevroren, v2/ als locatie
+- **Lars' besluit** na de ontkoppelings-sessie: huidige atlas **bevriezen** (*"wat we nu hebben vind ik al
+  wel erg mooi om te zien, alleen zitten er wel veel schoonheidsfoutjes in"*), alle M18-issues on hold, en
+  de kaartlaag opnieuw opbouwen in fasen — met zijn heuristiek als drijfveer: *"fixes die na 2/3× niet
+  lukken worden meestal niet beter."*
+- **Vijf milestones aangemaakt:** M22 vector-wereldmodel (start **LAR-484**, Urgent) → M23 MARNET-zee
+  haven→haven (kern LAR-483) → M24 binnenwater → M25 land/spoor → M26 grondstoffen terugzetten.
+- **Kerndiagnose achter M22:** drie botsende wereldmodellen (satelliet · LAND_POLYS 1:50M · MARNET-kustlijn)
+  → Lars en ik zagen verschillende waarheden. Zijn oplossing: een gegenereerde **vectorwereld** wordt de
+  waarheid (scherp op elke zoom, ondubbelzinnig), satelliet wordt een skin.
+- **Budget doorgerekend op zijn scepsis** ("alle routes in 300 KB?"): we slaan de **kaart** op, niet de
+  routes. MARNET ~310 KB tekst; 5 km-hersampling → ~260k knopen ~1,2 MB, zoeken ~0,1 s. Dichtheid is geen
+  beperking — maar **dichtheid ≠ gladheid** (trapjes-les).
+- **Locatie besloten: `v2/` in deze repo** — Pages deployt mee (`…/grondstoffen-atlas/v2/`), gereedschap
+  ernaast, M26 triviaal. **Harde regel: buiten `v2/` niets aanraken.** Lars kijkt mee via die URL; v2
+  krijgt vanaf dag één `index.html` + cache-busting.
+- **Overdracht geverifieerd** alsof een verse sessie start (now.md → Linear → CLAUDE.md → next-actions);
+  twee gaten gedicht (code-locatie + dirty-tree-instructie: terug naar `9444fcb`, klem niet afmaken).
+- **Startzin nieuwe sessie:** *"we gaan verder aan de nieuwe 3D-wereldbol met routes voor de grondstoffen atlas."*
+
 ## 2026-07-18 (sessie 20) — Patch-spiraal doorbroken: vorm/snelheid/klem ontkoppeld + netwerk-diagnose (LAR-483)
 - **Startpunt:** besluit dat **MARNET de router blijft** (Lars overwoog 3 maanden AIS-data; AIS toont schepen,
   geen lading, en gratis wereldwijde historie bestaat praktisch niet). Zijn idee "echte schepen op de bol met
