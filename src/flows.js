@@ -99,18 +99,49 @@ const FlowLayer = (function () {
     if (typeof SEAROUTES === "undefined") return null;
     const e = SEAROUTES[seaCacheKey(a, b)];
     if (!e || !e.pts || e.pts.length < 2) return null;
-    // w = gebakken vrije baanbreedte per punt (tools/lane_widths.js); reist als
-    // eigenschap met het punt mee zodat omkeren vanzelf klopt
-    const pts = e.pts.map((p, i) => {
-      const q = { lat: p[0], lon: p[1] };
-      if (e.w && e.w[i] !== undefined) q.w = e.w[i];
-      return q;
-    });
+    const pts = e.pts.map((p) => ({ lat: p[0], lon: p[1] }));
     // de polyline is één richting gebakken; omkeren als deze leg andersom vaart
     const dHead = Math.abs(pts[0].lat - a.lat) + Math.abs(pts[0].lon - a.lon);
     const dTail = Math.abs(pts[pts.length - 1].lat - a.lat) + Math.abs(pts[pts.length - 1].lon - a.lon);
-    if (dTail < dHead) pts.reverse();
+    const flip = dTail < dHead;
+    if (flip) pts.reverse();
+    // klem-profiel meeliften (monsters op booglengte, zie lane_widths.js). Bij
+    // omkeren spiegelen de monster-indices mee, anders klemt de route op de
+    // verkeerde plek.
+    pts.profile = e.wp || null;
+    pts.profileFlip = flip;
     return pts;
+  }
+
+  // Voegt de per-leg klem-profielen samen tot één profiel over de HELE route.
+  // Nodig omdat een stroom meerdere zee-legs kan hebben (via tussenhavens),
+  // terwijl makeRouteCurve één curve over alles legt.
+  const PROFILE_KM = 20; // zelfde raster als tools/lane_widths.js
+  function mergeProfiles(routePts, legRanges) {
+    if (!legRanges.length) return null;
+    const acc = [0];
+    for (let i = 1; i < routePts.length; i++) {
+      acc.push(acc[i - 1] + quickDistKm(routePts[i - 1], routePts[i]));
+    }
+    const total = acc[acc.length - 1];
+    if (!(total > 0)) return null;
+    const K = Math.max(2, Math.ceil(total / PROFILE_KM) + 1);
+    const out = {};
+    for (const lr of legRanges) {
+      if (!lr.profile) continue;
+      const legKm = acc[lr.end] - acc[lr.start];
+      if (!(legKm > 0)) continue;
+      const legK = Math.max(2, Math.ceil(legKm / PROFILE_KM) + 1);
+      for (let k = 0; k < K; k++) {
+        const d = (k / (K - 1)) * total;
+        if (d < acc[lr.start] || d > acc[lr.end]) continue;
+        let lt = (d - acc[lr.start]) / legKm;
+        if (lr.flip) lt = 1 - lt;
+        const v = lr.profile[Math.round(lt * (legK - 1))];
+        if (v != null && (out[k] == null || v < out[k])) out[k] = v;
+      }
+    }
+    return Object.keys(out).length ? out : null;
   }
   // vlakke-aarde-benadering, ruim genoeg om "vaart de route hier vlak langs?"
   function quickDistKm(p, q) {
@@ -216,6 +247,7 @@ const FlowLayer = (function () {
         const airMode = flow.mode === "air";
         const routePts = [stops[0]];
         const anchors = [];
+        const legRanges = []; // per zee-leg: welk stuk van routePts + welk klem-profiel
         // M18: draait deze grondstof op de corridor-cache?
         const baked = typeof SEAROUTES_BAKED !== "undefined" && SEAROUTES_BAKED[res.id];
         let missingCorridor = false;
@@ -249,7 +281,14 @@ const FlowLayer = (function () {
 
           if (leg && leg.length > 2) {
             const legStart = routePts.length; // index waar leg[1] terechtkomt
+            const rangeStart = Math.max(0, legStart - 1); // inclusief punt a
             for (let k = 1; k < leg.length - 1; k++) routePts.push(leg[k]);
+            if (fromCache && leg.profile) {
+              legRanges.push({
+                start: rangeStart, end: routePts.length, // b komt hieronder
+                profile: leg.profile, flip: leg.profileFlip,
+              });
+            }
             // gebakken leg: knelpunten uit de geometrie afleiden (zie chokeList)
             if (fromCache) {
               chokeList.forEach((wp) => {
@@ -294,10 +333,9 @@ const FlowLayer = (function () {
         const laneIdx = (flowIdx % L.count) - (L.count - 1) / 2;
         const lane = laneIdx * L.spacing;
 
-        const laneWidths = routePts.some((p) => p.w !== undefined)
-          ? routePts.map((p) => (p.w === undefined ? null : p.w)) : null;
+        const widthProfile = mergeProfiles(routePts, legRanges);
         const { curve, totalAngle } = makeRouteCurve(routePts, R, lift, {
-          flat: routeView && !airMode, lane, anchors, widths: laneWidths,
+          flat: routeView && !airMode, lane, anchors, widthProfile,
         });
 
         const color = stageColorOf(res, stage);

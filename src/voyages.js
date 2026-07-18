@@ -134,8 +134,15 @@ const Voyages = (function () {
 
       const u = Math.min(1, elapsed / durationDays);
 
-      // schip
-      route.curve.getPoint(u, tmp);
+      // schip — getPointAt (BOOGLENGTE), niet getPoint (curve-parameter).
+      // getPoint verdeelt u over de controlepunten, niet over de afgelegde
+      // afstand: waar punten dicht opeen staan kroop het schip, waar ze ver uit
+      // elkaar lagen schoot het weg. Gemeten op Antofagasta->Ningbo was de
+      // snelste stap 7,3x de traagste — precies het "soms heel snel en dan
+      // ineens afremmen" dat Lars zag. getPointAt gebruikt de booglengte-tabel
+      // en loopt dus constant, ONGEACHT hoe dicht de punten liggen. Daarmee is
+      // de vaarsnelheid losgekoppeld van de geometrie-resolutie.
+      route.curve.getPointAt(u, tmp);
       ship.light.position.copy(tmp);
       ship.light.visible = true;
       ship.light.material.opacity = dimmed ? 0.10 : 0.95;
@@ -147,7 +154,7 @@ const Voyages = (function () {
       for (let i = 0; i < n; i++) {
         const back = (i / (n - 1)) * T.trailSpan;
         const uu = Math.max(0, u - back);
-        route.curve.getPoint(uu, tmp);
+        route.curve.getPointAt(uu, tmp);
         pos.setXYZ(i, tmp.x, tmp.y, tmp.z);
 
         // helder vlak achter het schip, zwart (= onzichtbaar) aan het eind

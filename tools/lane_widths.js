@@ -1,6 +1,7 @@
 // lane_widths.js — bake-stap ná bake_searoutes.py: berekent per corridorpunt
 // hoeveel zijwaartse ruimte (km) er tot land is en schrijft dat als sparse
-// `w: {puntindex: km}` terug in data/_searoutes.js.
+// `wp: {monsterindex: km}` terug in data/_searoutes.js — een APART profiel op
+// booglengte, los van de getekende punten (zie de ontkoppeling hieronder).
 //
 // Waarom: flows.js waaiert elke stroom uit over 7 parallelle vaarbanen
 // (config.lanes: spacing 0.012 × ±3 = tot ~95 km uit het midden). De oude A*
@@ -66,6 +67,8 @@ function isLand(lat, lon) {
 const CAP_KM = 96;
 const STEP_KM = 2;  // meetstap; clearance = laatste stap die nog water was
 const DIRS = 16;    // stralen rondom (elke 22,5°) — vangt eilandjes uit élke hoek
+const SAMPLE_KM = 20;  // rasterafstand van het klem-profiel (los van de geometrie)
+const PIN_KM = 40;     // een pinch pint z'n buren binnen deze afstand
 
 // vrije ruimte = afstand tot het dichtstbijzijnde land in WELKE richting dan ook.
 // Loodrecht meten miste eilanden die schuin voor de baan liggen (Seto-binnenzee);
@@ -87,68 +90,70 @@ function clearanceKm(pts, i) {
   return best;
 }
 
-// VERDICHTEN vóór het meten. bake_searoutes.py vereenvoudigt agressief (trapjes
-// uit de land-omleiding weg — dat is puur een VORM-kwestie), maar de baan-klem
-// leest de vrije ruimte PER PUNT: in de Seto-binnenzee waren juist die punten de
-// rem op de waaier, en na het opruimen bolden de banen weer over Japan
-// (8 -> 195 landtreffers). Daarom zetten we hier punten terug — maar alléén waar
-// het water nauw is, en exact op de bestaande lijn (het midden van een segment),
-// zodat er GEEN nieuwe knik bijkomt. Vorm blijft dus glad, klem krijgt resolutie.
-function densifyNarrow(pts, depth = 0) {
-  if (depth > 6) return pts;
-  const out = [pts[0]];
-  let added = false;
-  for (let i = 1; i < pts.length; i++) {
-    const a = pts[i - 1], b = pts[i];
-    const len = segKm(a, b);
-    const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
-    if (len > 20 && clearanceKm([a, mid, b], 1) < CAP_KM) {
-      out.push([+mid[0].toFixed(3), +mid[1].toFixed(3)]);
-      added = true;
-    }
-    out.push(b);
-  }
-  return added ? densifyNarrow(out, depth + 1) : out;
+// Grote-cirkelafstand — zelfde formule als util.js gebruikt voor totalAngle,
+// zodat de monster-index aan beide kanten op hetzelfde raster valt.
+function segKm(a, b) {
+  const toR = (x) => x * Math.PI / 180;
+  const dLa = toR(b[0] - a[0]), dLo = toR(b[1] - a[1]);
+  const h = Math.sin(dLa / 2) ** 2 +
+    Math.cos(toR(a[0])) * Math.cos(toR(b[0])) * Math.sin(dLo / 2) ** 2;
+  return 2 * 6371 * Math.asin(Math.min(1, Math.sqrt(h)));
 }
 
-function segKm(a, b) {
-  const cosLat = Math.cos((a[0] + b[0]) / 2 * Math.PI / 180);
-  const dLat = b[0] - a[0], dLon = (b[1] - a[1]) * cosLat;
-  return Math.sqrt(dLat * dLat + dLon * dLon) * 111.2;
+// Punt op booglengte-fractie t langs de polyline (lineair binnen een segment).
+function pointAtFraction(pts, acc, t) {
+  const total = acc[acc.length - 1];
+  const d = t * total;
+  let lo = 0, hi = acc.length - 1;
+  while (lo < hi - 1) {
+    const mid = (lo + hi) >> 1;
+    if (acc[mid] <= d) lo = mid; else hi = mid;
+  }
+  const span = acc[hi] - acc[lo] || 1;
+  const f = (d - acc[lo]) / span;
+  return [pts[lo][0] + (pts[hi][0] - pts[lo][0]) * f,
+          pts[lo][1] + (pts[hi][1] - pts[lo][1]) * f];
 }
 
 const src = fs.readFileSync(SR_PATH, "utf8").split("\n");
-const LINE_RE = /^(\s*)"([^"]+)": \{ pts: (\[.*?\]), (?:w: \{[^}]*\}, )?passages: (\[[^\]]*\]) \},(.*)$/;
+const LINE_RE = /^(\s*)"([^"]+)": \{ pts: (\[.*?\]), (?:wp?: \{[^}]*\}, )?passages: (\[[^\]]*\]) \},(.*)$/;
 
-let corridors = 0, constrained = 0, points = 0, densified = 0;
+let corridors = 0, constrained = 0, points = 0, samples = 0;
 const out = src.map((line) => {
   const m = line.match(LINE_RE);
   if (!m) return line;
   corridors++;
-  const pts = densifyNarrow(JSON.parse(m[3]));
-  // per-punt vrije ruimte
-  const clr = pts.map((_, i) => clearanceKm(pts, i));
-  // running-min: een pinch pint z'n buren binnen ~PIN_KM langs de route, zodat
-  // de CatmullRom-spline niet tússen een smal en een ruim punt over land bult.
-  const PIN_KM = 40;
+  const pts = JSON.parse(m[3]);   // geometrie ONGEMOEID — dit is puur meten
   const acc = [0];
   for (let i = 1; i < pts.length; i++) acc.push(acc[i - 1] + segKm(pts[i - 1], pts[i]));
+  const totalKm = acc[acc.length - 1];
+
+  // UNIFORM langs de booglengte bemonsteren, elke SAMPLE_KM. Los van waar de
+  // getekende punten toevallig liggen: de klem heeft z'n eigen raster.
+  const K = Math.max(2, Math.ceil(totalKm / SAMPLE_KM) + 1);
+  const probe = [];
+  for (let k = 0; k < K; k++) probe.push(pointAtFraction(pts, acc, k / (K - 1)));
+  const clr = probe.map((_, i) => clearanceKm(probe, i));
+
+  // running-min: een pinch pint z'n buren binnen ~PIN_KM, zodat de spline niet
+  // tússen een smal en een ruim monster over land bult.
+  const pinSteps = Math.max(1, Math.round(PIN_KM / SAMPLE_KM));
   const pinned = clr.map((v, i) => {
     let mn = v;
-    for (let j = i - 1; j >= 0 && acc[i] - acc[j] <= PIN_KM; j--) if (clr[j] < mn) mn = clr[j];
-    for (let j = i + 1; j < pts.length && acc[j] - acc[i] <= PIN_KM; j++) if (clr[j] < mn) mn = clr[j];
+    for (let j = Math.max(0, i - pinSteps); j <= Math.min(K - 1, i + pinSteps); j++) {
+      if (clr[j] < mn) mn = clr[j];
+    }
     return mn;
   });
-  const w = {};
-  for (let i = 0; i < pts.length; i++) {
-    if (pinned[i] < CAP_KM) { w[i] = pinned[i]; points++; }
-  }
-  const hasW = Object.keys(w).length > 0;
+
+  const wp = {};
+  for (let i = 0; i < K; i++) if (pinned[i] < CAP_KM) { wp[i] = pinned[i]; points++; }
+  const hasW = Object.keys(wp).length > 0;
   if (hasW) constrained++;
-  densified += pts.length - JSON.parse(m[3]).length;
-  const wPart = hasW ? `w: ${JSON.stringify(w)}, ` : "";
-  // de verdichte polyline gaat MEE terug: de w-indices verwijzen ernaar
-  return `${m[1]}"${m[2]}": { pts: ${JSON.stringify(pts)}, ${wPart}passages: ${m[4]} },${m[5]}`;
+  samples += K;
+  const wPart = hasW ? `wp: ${JSON.stringify(wp)}, ` : "";
+  // pts blijft exact zoals gebakken; wp is een APART profiel op booglengte
+  return `${m[1]}"${m[2]}": { pts: ${m[3]}, ${wPart}passages: ${m[4]} },${m[5]}`;
 });
 
 // pipeline-notitie in de header, één keer
@@ -160,4 +165,4 @@ if (hdrIdx >= 0 && !out.some((l) => l.startsWith("// Baanbreedtes"))) {
 }
 
 fs.writeFileSync(SR_PATH, out.join("\n"));
-console.log(`${corridors} corridors, ${constrained} met begrensde punten (${points} punten < ${CAP_KM} km vrij, ${densified} verdicht in nauw water).`);
+console.log(`${corridors} corridors, ${constrained} met een klem-profiel — ${samples} monsters op ${SAMPLE_KM} km, waarvan ${points} < ${CAP_KM} km vrij.`);

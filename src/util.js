@@ -47,9 +47,13 @@ function makeRouteCurve(latlons, radius, lift, opts) {
   const flat = !!(opts && opts.flat);
   const lane = (opts && opts.lane) || 0;
   const anchorIdx = (opts && opts.anchors) || null;
-  // gebakken baanbreedtes (km vrij water haaks op de route, tools/lane_widths.js):
-  // de lane-offset wordt hierop afgeklemd zodat de waaier in smal water samenknijpt
-  const widths = (opts && opts.widths) || null;
+  // KLEM-PROFIEL (tools/lane_widths.js): vrije ruimte in km, bemonsterd elke
+  // PROFILE_KM langs de BOOGLENGTE — bewust los van de getekende punten.
+  // Eerder hing dit aan de punt-indices, waardoor drie dingen aan één lijst
+  // vastzaten: de vorm van de lijn, de snelheid van de schepen (getPointAt) en
+  // de resolutie van deze klem. Elke fix voor de één brak de ander. Nu heeft de
+  // klem z'n eigen raster: de geometrie mag zo dun en glad zijn als mooi is.
+  const profile = (opts && opts.widthProfile) || null;
   const units = latlons.map((p) => latLonToVec3(p.lat, p.lon, 1));
 
   // lengte (in radialen) per segment, voor een gelijkmatige parametrisatie
@@ -106,19 +110,25 @@ function makeRouteCurve(latlons, radius, lift, opts) {
   // ~130 km geforceerd water rond knelpunten — MARNET scheert echt langs de
   // kust en verdraagt geen overgeslagen punten.
   const stepRad = totalAngle / SAMPLES;
-  const wOf = (i) => (widths && widths[i] != null ? widths[i] : Infinity);
-  const centre = []; // { v: eenheidsvector, t: 0..1 langs de route, w: km vrij }
+  // hetzelfde raster als lane_widths.js: monsters elke PROFILE_KM langs de boog
+  const PROFILE_KM = 20;
+  const profileK = Math.max(2, Math.ceil((totalAngle * 6371) / PROFILE_KM) + 1);
+  const widthAt = (t) => {
+    if (!profile) return Infinity;
+    const v = profile[Math.round(t * (profileK - 1))];
+    return v == null ? Infinity : v;
+  };
+  const centre = []; // { v: eenheidsvector, t: 0..1 langs de route }
   let accAngle = 0;
   for (let i = 0; i < units.length - 1; i++) {
     const n = Math.max(1, Math.ceil(segAngles[i] / stepRad));
-    const w = Math.min(wOf(i), wOf(i + 1)); // conservatief: smalste kant wint
     for (let k = 0; k < n; k++) {
       const v = k === 0 ? units[i] : slerpUnit(units[i], units[i + 1], k / n);
-      centre.push({ v, t: (accAngle + segAngles[i] * (k / n)) / totalAngle, w });
+      centre.push({ v, t: (accAngle + segAngles[i] * (k / n)) / totalAngle });
     }
     accAngle += segAngles[i];
   }
-  centre.push({ v: units[units.length - 1], t: 1, w: wOf(units.length - 1) });
+  centre.push({ v: units[units.length - 1], t: 1 });
 
   const pts = [];
   const tangent = new THREE.Vector3();
@@ -144,13 +154,12 @@ function makeRouteCurve(latlons, radius, lift, opts) {
       tangent.subVectors(b, a).normalize();
       side.crossVectors(v, tangent).normalize();
       let off = lane * laneShape(tGlobal);
-      // afklemmen op de gebakken vrije breedte (km -> wereldeenheden). De factor
+      // afklemmen op de gemeten vrije breedte (km -> wereldeenheden). De factor
       // 0.4 is veiligheidsmarge: de CatmullRom-spline bult tussen twee geklemde
-      // punten iets naar buiten, dus houden we ~60% marge op de gemeten ruimte.
-      // Open zee heeft geen w (Infinity) → daar blijft de waaier onaangeroerd.
+      // monsters iets naar buiten. Open zee levert Infinity → waaier onaangeroerd.
       const LANE_SAFETY = 0.4;
-      const maxOff = centre[s].w === Infinity || centre[s].w === undefined
-        ? Infinity : centre[s].w * LANE_SAFETY * radius / 6371;
+      const wKm = widthAt(tGlobal);
+      const maxOff = wKm === Infinity ? Infinity : wKm * LANE_SAFETY * radius / 6371;
       if (off > maxOff) off = maxOff;
       else if (off < -maxOff) off = -maxOff;
       p.addScaledVector(side, off);
@@ -159,7 +168,13 @@ function makeRouteCurve(latlons, radius, lift, opts) {
     pts.push(p);
   }
 
-  return { curve: new THREE.CatmullRomCurve3(pts), totalAngle };
+  const curve = new THREE.CatmullRomCurve3(pts);
+  // Booglengte-tabel fijn genoeg voor constante vaarsnelheid (voyages.js gebruikt
+  // getPointAt). Three.js staat standaard op 200 verdelingen; bij een route met
+  // honderden controlepunten is dat te grof — de tabel mist dan juist de dichte
+  // stukken en het schip schokt daar alsnog. Vier monsters per controlepunt.
+  curve.arcLengthDivisions = Math.max(200, Math.min(2000, pts.length * 4));
+  return { curve, totalAngle };
 }
 
 // Ruimt een THREE.Group volledig op (geometrie + materialen vrijgeven).

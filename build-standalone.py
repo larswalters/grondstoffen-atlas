@@ -120,8 +120,9 @@ def main():
         "gas opslag hergebruikt reserve-toggle": "gas-store-eu" in html and 'type: "reserve"' in html,
         "M18 koper gebakken zeeroutes (SEAROUTES_BAKED)": 'SEAROUTES_BAKED = { "copper": true }' in html,
         "M18 corridor-cache ingelijnd (SEAROUTES)": "const SEAROUTES = {" in html,
-        "M18 baanbreedtes gebakken (w:, lane_widths.js)": '], w: {' in html,
-        "M18 baan-klem bedraad (LANE_SAFETY)": "LANE_SAFETY" in html and "opts.widths" in html,
+        "M18 klem-profiel gebakken (wp:, lane_widths.js)": "], wp: {" in html,
+        "M18 baan-klem bedraad (LANE_SAFETY + profiel)": "LANE_SAFETY" in html and "opts.widthProfile" in html,
+        "M18 schepen op booglengte (getPointAt)": "getPointAt(u, tmp)" in html,
         "geen lokale <script src> meer": not remaining_local,
         "three.js CDN behouden": "three.min.js" in html,
     }
