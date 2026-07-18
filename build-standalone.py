@@ -24,9 +24,15 @@ def read(p: Path) -> str:
     return p.read_text(encoding="utf-8")
 
 
+def strip_version(url: str) -> str:
+    """'src/util.js?v=a1b2c3d4' -> 'src/util.js' (tools/stamp_assets.js stempelt
+    cache-busting-hashes in index.html; de inliner leest het bestand van schijf)."""
+    return url.split("?", 1)[0]
+
+
 def inline_css(html: str) -> str:
     def repl(m):
-        href = m.group(1)
+        href = strip_version(m.group(1))
         path = ROOT / href
         if not path.exists():
             return m.group(0)  # extern of ontbrekend: laat staan
@@ -39,6 +45,7 @@ def inline_scripts(html: str) -> str:
         src = m.group(1)
         if src.startswith("http://") or src.startswith("https://") or src.startswith("//"):
             return m.group(0)  # CDN (three.js): extern laten
+        src = strip_version(src)
         path = ROOT / src
         if not path.exists():
             print(f"  ! script niet gevonden, overgeslagen: {src}", file=sys.stderr)

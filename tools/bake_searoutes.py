@@ -250,12 +250,21 @@ def gc_km(a, b):
 # consistent noordelijk. Stabiele paren blijven onaangeroerd: MARNET beslist.
 HALF_CIRCUM_KM = 20015.0
 ANTIPODAL_FRAC = 0.85          # >85% van een halve aardomtrek = onbepaald genoeg
-# Stabilisatiepunt op de datumgrens, exact waar de 7 stabiele zustercorridors van
-# nature kruisen (50°N). Gemeten alternatieven waren duurder: 44/175 +10,5%,
-# 45/180 +11,0%, 40/180 +5,0%, 50/-170 +7,4%. Kosten t.o.v. de zuidelijke variant
-# ~430 km (2%) — bewust betaald: de noordelijke Pacific is de werkelijke vaarlane,
-# de zuidelijke is leeg water zonder verkeer.
-PAC_NORTH = {"lat": 50.00, "lon": 180.00}
+# Het stabilisatiepunt moet op een DICHT stuk MARNET liggen, niet in leeg water.
+# Eerste poging was 50°N/180° (datumgrens): dat leverde een kaarsrechte diagonaal
+# door de open Stille Oceaan (-80/-30, -85/-25, -90/-20, ... exact 5° per stap) —
+# één artefact ingeruild voor een ander. Reden: rond de datumgrens heeft MARNET
+# nauwelijks knopen, dus interpoleert searoute een rechte lijn.
+#
+# Dit punt ligt vóór de Peruaanse kust, midden op de lane die de zustercorridors
+# (Antofagasta/Callao/Matarani -> Azië) werkelijk varen. Daardoor voegt Valparaíso
+# zich ín die lane: vanaf hier zijn de punten identiek aan de zusterroute
+# (-84,7/-4,1 · -87,8/-0,2 · -89,6/2,1 · -93,5/6,4 · -97,5/10,2 ...) — onregelmatig
+# gespatieerd, dus échte netwerkknopen in plaats van interpolatie.
+#
+# Kosten: +5,8% boven de grote cirkel (zuidom was +2,5%). Bewust betaald — vorm
+# gaat hier boven lengte: dit is de route die schepen varen.
+PACIFIC_LANE = {"lat": -10.00, "lon": -80.00}
 
 
 def _crosses_pacific(a, b):
@@ -295,7 +304,7 @@ def bake(corridor):
             and gc_km(a, b) > ANTIPODAL_FRAC * HALF_CIRCUM_KM):
         dl = _lat_at_dateline(raw)
         if dl is not None and dl < 0:
-            r1, r2 = _run(a, PAC_NORTH), _run(PAC_NORTH, b)
+            r1, r2 = _run(a, PACIFIC_LANE), _run(PACIFIC_LANE, b)
             km1 = r1["properties"]["length"]
             km2 = r2["properties"]["length"]
             if km1 and km2 and km1 > 0 and km2 > 0:
@@ -307,7 +316,7 @@ def bake(corridor):
                      sorted(set((r1["properties"].get("traversed_passages") or [])
                                 + (r2["properties"].get("traversed_passages") or [])))}}
                 print(f"  noord-gestabiliseerd: {a['id']} -> {b['id']}"
-                      f"  (datumgrens {dl:.0f}° -> noordelijke lane)")
+                      f"  (datumgrens {dl:.0f}° -> zusterlane via Peru)")
     raw, zigzags = dezigzag(raw)
     raw, landfixes = fix_land_crossings(raw)
     pts, seen = [], None
