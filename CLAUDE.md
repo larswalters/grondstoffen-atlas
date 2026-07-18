@@ -8,6 +8,10 @@
 > live op Pages, ongemoeid. **Alle M18-issues staan on hold** (LAR-474/475/476/477/478 → Backlog, `[ON HOLD]`).
 > **Niet verder patchen aan de huidige routelaag.**
 >
+> **✅ Waar de nieuwe code leeft (besloten 2026-07-18): in `v2/` binnen deze repo.** Pages deployt 'm
+> gratis mee op `…/grondstoffen-atlas/v2/`; gereedschap/data liggen ernaast zonder kopiëren; M26 wordt
+> triviaal. **Harde regel: buiten `v2/` wordt NIETS aangeraakt** — de oude atlas op de root blijft bevroren.
+>
 > **De nieuwe volgorde** (Lars' eigen plan — eerst de kaart, pas als laatste de grondstoffen):
 > **M22** gedetailleerd **vector-wereldmodel** = de waarheid ⬅️ **START: LAR-484 (Urgent)** ·
 > **M23** **MARNET-zeeroutes** erop + testen haven→haven (kern: LAR-483) ·

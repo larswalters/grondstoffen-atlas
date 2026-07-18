@@ -40,11 +40,13 @@ geen herbouw. Lars: *"het opzoeken van mijnlocaties en raffinages is peanuts ver
 
 ### ⚠️ Bij de start van de nieuwe sessie eerst regelen (staat ook in LAR-484)
 
-1. **Beslis met Lars wáár de nieuwe code leeft** — nieuwe map/repo (Lars opperde zelf "een los project
-   maken") óf een branch in deze repo. Niet zelf kiezen.
+1. **✅ BESLOTEN: de nieuwe bol leeft in `v2/` binnen deze repo** (Lars, 2026-07-18). Waarom: Pages
+   deployt 'm gratis mee (`…/grondstoffen-atlas/v2/` live bij elke push), gereedschap en data liggen
+   ernaast zonder kopiëren, en M26 (samenvoegen) wordt triviaal. **Harde regel: buiten `v2/` wordt
+   NIETS aangeraakt** — de oude atlas op de root blijft bevroren; elke overtreding is zichtbaar in de diff.
 2. **De working tree is dirty** (`src/util.js`, `tools/lane_widths.js`, `data/_searoutes.js` = de
-   half-afgemaakte asymmetrische klem). **Niet afmaken, niet committen** — `git stash` of terug naar
-   `9444fcb` zodat `main` schoon matcht met wat live staat.
+   half-afgemaakte asymmetrische klem). **Niet afmaken, niet committen** — terug naar `9444fcb` (of
+   stashen) zodat `main` schoon matcht met wat live staat vóór `v2/` begint.
 
 ### Ontwerpkeuzes die al vastliggen
 
