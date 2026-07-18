@@ -1,7 +1,7 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-07-18 (M23 — datumgrens-knip + Noordwest-Passage gevangen; 2 restedges + rivierstubs open)*
 
-## ⚠️ OPEN na M23 (2026-07-18) — bekend, bewust doorgeschoven naar M24
+## ⚠️ OPEN na M23 (2026-07-18) — bekend, bewust doorgeschoven naar M24 (= [LAR-485], incl. het ontbrekende Noordzeekanaal)
 
 1. **2 onopgeloste edges** (origineel behouden, connectiviteit intact): Södertälje-archipel
    `(58.57,17.42)→(58.65,16.32)` (Stockholm-scheren te fijn voor het 0,01°-raster) en één Channel

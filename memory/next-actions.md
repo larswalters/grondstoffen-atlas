@@ -1,13 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M23 UITGEVOERD — MARNET verzoend + haven→haven werkt; rest = visuele go Lars, dan M24)*
+*Last updated: 2026-07-18 (M23 KLAAR — go van Lars binnen, LAR-483 Done; volgende = M24 · binnenwater, LAR-485)*
 
-## ➡️ NU: visuele go van Lars op M23, dan M24 · binnenwater
+## ➡️ NU: M24 · binnenwater — start bij [LAR-485] (Todo, zelfstandig leesbaar)
 
-M23 is gebouwd, geverifieerd en live (t/m `b6867f7`): https://larswalters.github.io/grondstoffen-atlas/v2/
-(HTML-cache ~10 min; desnoods `?vers=…`). **LAR-483 staat In Progress** met een volledig resultaat-comment —
-**Done na Lars' visuele go** (M22-precedent). Testen: HUD → "Route testen (haven → haven)", typ twee havens.
+**M23 is af.** Lars' go: *"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."* Zijn test-vondst
+(Amsterdam vaart uit via het IJsselmeer i.p.v. het Noordzeekanaal — **MARNET heeft geen Noordzeekanaal-edge**,
+Amsterdam snapt op de Markermeer-knoop 15,1 km) is het bewijsstuk in LAR-485. Milestone **M24 · Fundament 3 —
+binnenwater** staat in Linear.
 
-Openstaand richting M24 (binnenwater):
+De LAR-485-scope (details in het issue):
 1. **Rivierhaven-stubs netjes maken** — havens als Yangon/Moulmein krijgen hun laatste ~30 km als rechte
    stub over land (de rivier bestaat niet als water in NE-polygonen; binnen de gemeten eindtolerantie).
    M24 vervangt die stubs door echte riviergeometrie (Rijn/Yangtze/Saint-Laurent/Kaspisch stonden al op de rol).

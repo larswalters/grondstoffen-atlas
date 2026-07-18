@@ -1,7 +1,12 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
-## 2026-07-18 (sessie 22) — M23 UITGEVOERD: MARNET verzoend met de vectorwereld, haven→haven werkt (LAR-483)
+## 2026-07-18 (sessie 22) — M23 KLAAR: MARNET verzoend, haven→haven werkt, go binnen (LAR-483 Done)
+- **Afronding zelfde dag — Lars' go:** *"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."*
+  → LAR-483 Done. Zijn test-vondst (Amsterdam vaart uit via IJsselmeer/Den Helder i.p.v. het Noordzeekanaal)
+  gemeten verklaard: **MARNET heeft geen Noordzeekanaal-edge**; Amsterdam snapt op de Markermeer-knoop (15,1 km).
+  Besluit: geen quick-fix → **M24-milestone + [LAR-485]** aangemaakt (EXTRA_VAARWEGEN, rivierhaven-stubs,
+  2 restedges, binnenvaart-beleid).
 - **Lars:** *"kan je beginnen met de marnet routes op de nieuwe kaart zetten… dan kunnen we daarna van zee
   haven naar zee haven testen"* → LAR-483 exact uitgevoerd, tegen de **1:10M-vectorwereld** (vector = waarheid).
   Live t/m `b6867f7`; **rest = visuele go van Lars** (LAR-483 In Progress met volledig resultaat-comment).

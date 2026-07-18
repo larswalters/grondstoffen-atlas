@@ -1,8 +1,14 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M23 UITGEVOERD — MARNET verzoend met de vectorwereld, haven→haven werkt)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (M23 KLAAR — go van Lars binnen; volgende = M24 · binnenwater, LAR-485)*
 
-> **✅ M23 UITGEVOERD (2026-07-18, laatste) — MARNET VERZOEND MET DE VECTORWERELD + HAVEN→HAVEN-ROUTERING (LAR-483; visuele go = Lars).**
+> **✅ M23 KLAAR (2026-07-18, laatste) — MARNET VERZOEND + HAVEN→HAVEN-ROUTERING. LAR-483 Done na Lars' go:**
+> ***"het zee gedeelte lijkt klaar te zijn, het ziet er realistisch uit."*** **→ VOLGENDE: M24 · binnenwater ([LAR-485], Todo).**
+> Lars' eigen test-vondst: Amsterdam vaart uit via IJsselmeer→Afsluitdijk→Den Helder i.p.v. het Noordzeekanaal —
+> gemeten verklaard: **MARNET hééft geen Noordzeekanaal-edge** (Amsterdam snapt op de Markermeer-knoop, 15,1 km;
+> zelfde patroon: Nijmegen 79 km / Hengelo 76 km / Born 93 km — geen Rijn/Waal in MARNET). Besluit Lars: geen
+> quick-fix, netjes in M24. LAR-485 is zelfstandig leesbaar (EXTRA_VAARWEGEN-mechanisme, rivierhaven-stubs,
+> de 2 restedges, binnenvaart-beleid).
 > Live op https://larswalters.github.io/grondstoffen-atlas/v2/ t/m `b6867f7`. **LAR-483 exact uitgevoerd, maar tegen de
 > 1:10M-vectorwereld** (vector = waarheid; het issue noemde nog `geo-data.js` 1:50M — dat was van vóór M22).
 >
