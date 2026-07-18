@@ -68,7 +68,16 @@ export const TILE_CONFIG = {
   // daarvan weg (zie setSphereSink in globe.js). Zo blijft diep inzoomen kloppen:
   // v1's `shellLift: 1.0016` is 3,8 km en daar zou je op 1 km hoogte onderuit komen.
   shellLift: 1.0,
+  ringLift: 1.00001,     // middenring tussen shell en detail in
   detailLift: 1.00002,   // haartje boven de shell; de volgorde doet het echte werk
+
+  // MIDDENRING: een tweede, grovere patch (detailZ − 2) die de HELE zichtbare
+  // kap dekt, tot en met de schermhoeken (diagonaal gemeten). De scherpe patch
+  // alles laten dekken zou op een pc 1.000+ tegels per view kosten; de ring
+  // doet het op z−2 voor een fractie (4× grover = 16× minder tegels) en maakt
+  // van de rand-overgang een zachte stap i.p.v. de 8×-sprong naar de z3-shell.
+  ringZBelowDetail: 2,
+  ringMaxTiles: 350,
 };
 
 export function createTileLayer(GLOBE) {
@@ -77,8 +86,10 @@ export function createTileLayer(GLOBE) {
 
   const group = new THREE.Group();
   const shellGroup = new THREE.Group();
+  const ringGroup = new THREE.Group();
   const detailGroup = new THREE.Group();
   group.add(shellGroup);
+  group.add(ringGroup);
   group.add(detailGroup);
   GLOBE.globeGroup.add(group);
 
@@ -87,10 +98,12 @@ export function createTileLayer(GLOBE) {
 
   const cache = new Map();
   const shellLive = new Map();
+  const ringLive = new Map();
   const detailLive = new Map();
 
   let bron = "satelliet";
   let shellKey = "";
+  let ringKey = "";
   let detailKey = "";
   let aan = true;
   let geladen = 0;
@@ -263,6 +276,8 @@ export function createTileLayer(GLOBE) {
     const D = R + d;
     const halfV = (GLOBE.camera.fov / 2) * D2R;
     const halfH = Math.atan(Math.tan(halfV) * GLOBE.camera.aspect);
+    // De schermHOEK kijkt dieper dan beide assen: diagonale kijkhoek.
+    const halfD = Math.atan(Math.hypot(Math.tan(halfV), Math.tan(halfH)));
     const limb = Math.acos(Math.min(1, R / D)); // verder dan dit bestaat de bol niet
     const dekking = (half) => {
       const s = (D / R) * Math.sin(half);
@@ -272,6 +287,7 @@ export function createTileLayer(GLOBE) {
       scherpte: Math.atan((d * Math.tan(halfV)) / R) * R2D,
       dekkingV: dekking(halfV),
       dekkingH: dekking(halfH),
+      dekkingD: dekking(halfD),
     };
   }
 
@@ -332,35 +348,24 @@ export function createTileLayer(GLOBE) {
     snoei(shellGroup, shellLive, gewenst);
   }
 
-  // ------------------------------------------------------------------ detail
-  function updateDetail(sp, lat, lon, detailZ, shellZ) {
-    if (detailZ <= shellZ) {
-      if (detailLive.size) { leeg(detailGroup, detailLive); detailKey = ""; }
-      return;
-    }
-
-    const n = Math.pow(2, detailZ);
+  // ------------------------------------------------------- patches (generiek)
+  // Eén vuller voor de scherpe patch én de middenring. VALKUIL 2 blijft: van
+  // het midden naar buiten vullen — bij een vol budget verlies je de rand van
+  // beeld, niet structureel de onderste rijen.
+  function vulPatch(grp, live, vorigeKey, z, lat, lon, dekH, dekV, budget, lift, order) {
+    const n = Math.pow(2, z);
     const xMid = Math.floor(((lon + 180) / 360) * n);
     const yMid = Math.floor(mercYOfLat(lat) * n);
-
-    // Hoeveel tegels naast het midden? Uit de DEKKING (hoe ver het zichtbare
-    // beeld werkelijk doorloopt, H en V apart) — niet uit de scherpte-span,
-    // die is in het midden gemeten en veel kleiner: daarmee hield de patch op
-    // een breed scherm links/rechts op en viel de rand op de grove shell terug.
-    // De radius-kap is alleen een noodrem BOVEN wat het budget aankan (budget
-    // 900 midden-naar-buiten = een schijf met straal ~17); het échte plafond
-    // is het budget.
-    const spanX = Math.max(1, Math.ceil((sp.dekkingH / 360) * n / Math.max(0.15, Math.cos(lat * D2R))));
-    const spanY = Math.max(1, Math.ceil((sp.dekkingV / 180) * n * 0.5));
+    const spanX = Math.max(1, Math.ceil((dekH / 360) * n / Math.max(0.15, Math.cos(lat * D2R))));
+    const spanY = Math.max(1, Math.ceil((dekV / 180) * n * 0.5));
     const rx = Math.min(spanX, 40);
     const ry = Math.min(spanY, 40);
 
-    const key = `${bron}/${detailZ}/${xMid}/${yMid}/${rx}/${ry}`;
-    if (key === detailKey) return;
-    detailKey = key;
+    // De sleutel hangt aan de tegel-indices: die schalen vanzelf met de zoom
+    // (op straatniveau ververs je per honderden meters, uitgezoomd per graden).
+    const key = `${bron}/${z}/${xMid}/${yMid}/${rx}/${ry}/${budget}`;
+    if (key === vorigeKey) return key;
 
-    // VALKUIL 2: van het midden naar buiten. Bij een vol budget verlies je dan
-    // de rand van beeld, niet structureel de onderste rijen.
     const kandidaten = [];
     for (let dy = -ry; dy <= ry; dy++) {
       for (let dx = -rx; dx <= rx; dx++) {
@@ -370,17 +375,42 @@ export function createTileLayer(GLOBE) {
     kandidaten.sort((a, b) => a[2] - b[2]);
 
     const gewenst = new Set();
-    let budget = maxTilesEff();
     for (const [dx, dy] of kandidaten) {
       if (budget <= 0) break;
       const y = yMid + dy;
       if (y < 0 || y >= n) continue;
       const x = ((xMid + dx) % n + n) % n;   // lengtegraad loopt rond
-      gewenst.add(`${detailZ}/${x}/${y}`);
-      zorgVoorTegel(detailGroup, detailLive, detailZ, x, y, C.detailLift, 2, C.meshDetail);
+      gewenst.add(`${z}/${x}/${y}`);
+      zorgVoorTegel(grp, live, z, x, y, lift, order, C.meshDetail);
       budget--;
     }
-    snoei(detailGroup, detailLive, gewenst);
+    snoei(grp, live, gewenst);
+    return key;
+  }
+
+  // ------------------------------------------------------------------ detail
+  function updateDetail(sp, lat, lon, detailZ, shellZ) {
+    if (detailZ <= shellZ) {
+      if (detailLive.size) { leeg(detailGroup, detailLive); detailKey = ""; }
+      return;
+    }
+    // Scherpe patch: gedimensioneerd op de as-dekking (H en V apart); het
+    // budget (schermbreedte² × aspect) is het échte plafond.
+    detailKey = vulPatch(detailGroup, detailLive, detailKey, detailZ, lat, lon,
+      sp.dekkingH, sp.dekkingV, maxTilesEff(), C.detailLift, 3);
+  }
+
+  // De middenring: z−2, en gedimensioneerd op de DIAGONALE dekking zodat óók
+  // de schermhoeken gedekt zijn — de as-dekking stopt daar te vroeg (Lars'
+  // paarse hoeken). Op z−2 kost de hele zichtbare kap maar tientallen tegels.
+  function updateRing(sp, lat, lon, detailZ, shellZ) {
+    const ringZ = detailZ - C.ringZBelowDetail;
+    if (ringZ <= shellZ) {
+      if (ringLive.size) { leeg(ringGroup, ringLive); ringKey = ""; }
+      return;
+    }
+    ringKey = vulPatch(ringGroup, ringLive, ringKey, ringZ, lat, lon,
+      sp.dekkingD, sp.dekkingD, C.ringMaxTiles, C.ringLift, 2);
   }
 
   // -------------------------------------------------------------------- tick
@@ -391,7 +421,7 @@ export function createTileLayer(GLOBE) {
   // frame, anders zie je de tegels in stapjes van 0,2 s aan/uit knipperen.
   function vaadTegelsIn(dt) {
     const stap = dt / 0.25;   // volledig zichtbaar in een kwart seconde
-    for (const live of [shellLive, detailLive]) {
+    for (const live of [shellLive, ringLive, detailLive]) {
       live.forEach((mesh) => {
         if (!mesh.userData.vaadIn) return;
         const m = mesh.material;
@@ -415,6 +445,7 @@ export function createTileLayer(GLOBE) {
     laatsteDetailZ = detailZ;
 
     updateShell(shellZ);
+    updateRing(sp, lat, lon, detailZ, shellZ);
     updateDetail(sp, lat, lon, detailZ, shellZ);
   }
 
@@ -424,13 +455,17 @@ export function createTileLayer(GLOBE) {
     // Bol laten zakken zodra er tegels overheen liggen, en weer terug in
     // "egaal" — daar IS de bol het oppervlak.
     GLOBE.setSphereSink(aan);
-    if (!aan) { leeg(detailGroup, detailLive); detailKey = ""; }
+    if (!aan) {
+      leeg(detailGroup, detailLive); detailKey = "";
+      leeg(ringGroup, ringLive); ringKey = "";
+    }
   }
 
   function zetBron(naam) {
     if (!C.bronnen[naam] || naam === bron) return;
     bron = naam;
     leeg(shellGroup, shellLive); shellKey = "";
+    leeg(ringGroup, ringLive); ringKey = "";
     leeg(detailGroup, detailLive); detailKey = "";
   }
 
@@ -446,7 +481,7 @@ export function createTileLayer(GLOBE) {
     attributie: () => C.bronnen[bron].attributie,
     stats: () => ({
       detailZ: laatsteDetailZ,
-      tegelsInBeeld: shellLive.size + detailLive.size,
+      tegelsInBeeld: shellLive.size + ringLive.size + detailLive.size,
       geladen,
       mislukt,
       cache: cache.size,
