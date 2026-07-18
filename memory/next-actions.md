@@ -12,7 +12,46 @@
 > **406 → 108** · Japan **8 → 0** · Baja **21 → 0** · Malakka **9 → 0** · geometrie 3.710 → 817 punten.
 > Commits t/m `9444fcb` gepusht.
 
-## ⚠️ NU EERST — LAR-483 in een VERSE sessie (High, Todo)
+## 🛑 BESLUIT 2026-07-18 — huidige atlas BEVROREN, kaartlaag opnieuw in fasen
+
+**De atlas die er nu staat blijft precies zoals hij is.** Live, ongemoeid, mét de schoonheidsfoutjes.
+Lars: *"wat we nu hebben vind ik al wel erg mooi om te zien, alleen zitten er wel veel schoonheidsfoutjes in."*
+**Alle M18-issues staan on hold** (LAR-474/475/476/477/478 → Backlog, `[ON HOLD]` in de titel).
+Niet verder patchen aan de huidige routelaag.
+
+### De nieuwe volgorde (Lars' eigen plan)
+
+| fase | wat | status |
+|---|---|---|
+| **M22** | gedetailleerd **vector-wereldmodel** = de waarheid | ⬅️ **START: LAR-484 (Urgent)** |
+| **M23** | **MARNET-zeeroutes** erop, testen haven→haven | LAR-483 |
+| **M24** | **binnenwater** (Rijn/Yangtze/Saint-Laurent/Kaspisch) | ná go op M23 |
+| **M25** | **land/spoor** — bewust laatst (OSM = gigabytes) | ná M24 |
+| **M26** | **samenvoegen**: de 14 grondstoffen erop terugzetten | slot |
+
+**Waarom M22 eerst:** er bestaan **drie wereldmodellen** die het niet eens zijn — satellietbeeld (wat Lars
+ziet) · `LAND_POLYS` op 1:50M (waar ik tegen valideer) · MARNET's eigen kustlijn. Een route kan mijn test
+doorstaan én er op zijn scherm fout uitzien. **Zolang dat zo is meten we langs elkaar heen** — dat verklaart
+waarom sommige "fouten" bleven terugkomen. Lars' oplossing: een gegenereerde vectorwereld die scherp blijft
+bij inzoomen wordt de waarheid; satelliet wordt een skin.
+
+**Waarom M26 laatst kan:** de grondstoffendata staat **volledig los van routering**. Het is een verhuizing,
+geen herbouw. Lars: *"het opzoeken van mijnlocaties en raffinages is peanuts vergeleken met zo'n kaart maken."*
+
+### Ontwerpkeuzes die al vastliggen
+
+- **Netwerk mee naar de browser** — anders geen echte simulator (nu sturen we kant-en-klare lijnen mee waar
+  je niet mee kunt rekenen; dan wordt M21 een diavoorstelling i.p.v. een berekening).
+- **Dichtheid ≠ gladheid.** Meer punten koopt land-nauwkeurigheid, *niet* schoonheid — een kortste pad over
+  een fijn raster geeft trapjes (precies wat `detour_around_land` deed). Gladheid = aparte opruimstap.
+- **Budget is geen beperking:** MARNET ≈ 310 KB tekst (~100–130 KB gezipt); hersamplen op 5 km → ~260.000
+  knopen ≈ 1,2 MB, route zoeken ≈ tiende seconde. De atlas bouwt nu al een raster van 1440×720 in **45 ms**.
+- **Doel: ruim op PC, werkbaar op mobiel** (Honor Magic V5).
+- **De machine bewaakt de objectieve regels** zodat Lars' visuele check over *realisme* gaat, niet over bugs.
+
+---
+
+## Referentie — de sessie die tot dit besluit leidde (LAR-483 blijft geldig als M23-kern)
 
 De sessie van 18 juli liep op 500k tokens; Lars vroeg expliciet om over te dragen.
 **[LAR-483] is zelfstandig leesbaar geschreven — begin daar, niet hier.**

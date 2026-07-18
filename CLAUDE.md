@@ -1,6 +1,36 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (ontkoppeld ontwerp; netwerk-aanpak = LAR-483; M18 koper-pilot nog IN TEST)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (BESLUIT: atlas bevroren, kaartlaag opnieuw in fasen M22→M26)*
+
+> **🛑 BESLUIT 2026-07-18 — DEZE ATLAS IS BEVROREN. Kaartlaag wordt opnieuw opgebouwd in fasen (M22→M26).**
+> Lars: *"wat we nu hebben vind ik al wel erg mooi om te zien, alleen zitten er wel veel schoonheidsfoutjes in…
+> als fixes na 2/3× niet lukken worden ze meestal niet beter."* **De huidige atlas blijft precies zoals hij is** —
+> live op Pages, ongemoeid. **Alle M18-issues staan on hold** (LAR-474/475/476/477/478 → Backlog, `[ON HOLD]`).
+> **Niet verder patchen aan de huidige routelaag.**
+>
+> **De nieuwe volgorde** (Lars' eigen plan — eerst de kaart, pas als laatste de grondstoffen):
+> **M22** gedetailleerd **vector-wereldmodel** = de waarheid ⬅️ **START: LAR-484 (Urgent)** ·
+> **M23** **MARNET-zeeroutes** erop + testen haven→haven (kern: LAR-483) ·
+> **M24** binnenwater (Rijn/Yangtze/Saint-Laurent/Kaspisch) ·
+> **M25** land/spoor (bewust laatst: OSM = gigabytes) ·
+> **M26** samenvoegen — de 14 grondstoffen erop terugzetten.
+>
+> **Waarom M22 eerst:** er bestaan **drie wereldmodellen** die het niet eens zijn — satellietbeeld (wat Lars
+> ziet) · `LAND_POLYS` op **1:50 miljoen** (waar routes tegen gevalideerd worden) · MARNET's eigen kustlijn.
+> Een route kan de test doorstaan én er op het scherm fout uitzien; **dan meten we langs elkaar heen.** Lars'
+> oplossing: een gegenereerde **vectorwereld die scherp blijft bij inzoomen** wordt de waarheid, satelliet
+> wordt een skin (*"satelliet heeft veel te veel kleuren en stukjes land die mogelijk gewoon een rots zijn
+> die net uit water steekt"*). Bijvangst: lichter op mobiel.
+>
+> **Waarom M26 laatst kan:** `data/*.js` staat **volledig los van routering** — het is een verhuizing, geen
+> herbouw. Lars: *"het opzoeken van mijnlocaties en raffinages is peanuts vergeleken met zo'n kaart maken."*
+>
+> **Vastgelegde ontwerpkeuzes:** netwerk **mee naar de browser** (anders geen echte simulator — met alleen
+> kant-en-klare lijnen kun je niet herrouteren) · **dichtheid ≠ gladheid** (meer punten koopt land-nauwkeurigheid,
+> niet schoonheid: een kortste pad over een fijn raster geeft trapjes) · **budget is geen beperking** (MARNET
+> ≈ 310 KB tekst / ~100–130 KB gezipt; hersamplen op 5 km → ~260.000 knopen ≈ 1,2 MB, zoeken ≈ 0,1 s; de atlas
+> bouwt nu al een raster van 1440×720 in **45 ms**) · doel **ruim op PC, werkbaar op mobiel** (Honor Magic V5) ·
+> de **machine bewaakt de objectieve regels** zodat Lars' visuele check over *realisme* gaat, niet over bugs zoeken.
 
 > **🏗️ ARCHITECTUURPRINCIPE SINDS 2026-07-18 — ONTKOPPELEN (lees dit vóór je aan routes/rendering werkt).**
 > De atlas zat vast in een patch-spiraal: elke fix brak iets anders. Oorzaak: **één puntenlijst bediende drie
