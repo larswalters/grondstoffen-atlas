@@ -229,6 +229,85 @@ def fix_land_crossings(pts):
     return out, fixed
 
 
+def _cross_track_km(p, a, b):
+    """Loodrechte afstand van p tot de lijn a->b (vlakke benadering, lokaal genoeg)."""
+    coslat = math.cos(math.radians(p[0]))
+    ax, ay = (a[1] - p[1]) * coslat, a[0] - p[0]
+    bx, by = (b[1] - p[1]) * coslat, b[0] - p[0]
+    dx, dy = bx - ax, by - ay
+    den = math.hypot(dx, dy)
+    if den < 1e-9:
+        return math.hypot(ax, ay) * 111.2
+    return abs(ax * dy - ay * dx) / den * 111.2
+
+
+def seg_clearance_ok(a, b, min_km, step_km=15.0):
+    """Blijft het segment a->b overal minstens min_km van land? Loodrecht geprobed.
+
+    Nodig omdat vereenvoudigen in SMAL water de baanbreedtes sloopt: de lane-klem
+    (tools/lane_widths.js + util.js) leest de vrije ruimte per punt, en in de
+    Seto-binnenzee waren juist die punten de rem op de waaier. Weghalen liet de
+    banen weer over Japan bollen (8 -> 195 landtreffers). In ruim water is er
+    niets te verliezen; daar mag getrapte rommel wél weg.
+    """
+    seg = gc_km({"lat": a[0], "lon": a[1]}, {"lat": b[0], "lon": b[1]})
+    n = max(1, math.ceil(seg / step_km))
+    for k in range(n + 1):
+        t = k / n
+        lat = a[0] + (b[0] - a[0]) * t
+        lon = a[1] + (b[1] - a[1]) * t
+        coslat = max(0.05, math.cos(math.radians(lat)))
+        for ang in range(0, 360, 45):
+            r = math.radians(ang)
+            dlat = math.cos(r) * (min_km / 111.2)
+            dlon = math.sin(r) * (min_km / 111.2) / coslat
+            if is_land(lat + dlat, lon + dlon) and not near_canal(lat + dlat, lon + dlon):
+                return False
+    return True
+
+
+def simplify_water(pts, tol_km=12.0, max_chord_km=400.0, min_clearance_km=0.0):
+    """Ruim TRAPJES op: punten die nauwelijks van de rechte lijn afwijken en
+    waarvan de kortsluiting over water blijft.
+
+    Waarom: `detour_around_land` legt een A* over een 0,1-graden raster, en zo'n
+    raster-pad bestaat uit korte stapjes met hoekjes van 45 graden. Bij Isla
+    Guadalupe (Baja) deelden ZEVEN corridors hetzelfde trapje — alle zeven
+    wiebelden identiek, de paden liepen door elkaar en de voyage-bolletjes
+    schokten. Idem bij de Vogelkop (Papoea) en de Straat van Malakka.
+
+    Een punt gaat er alleen uit als (1) het < tol_km van de lijn buur->buur ligt
+    (dus géén echte koerswijziging — die blijven staan), (2) de kortsluiting geen
+    land raakt, en (3) de kortsluiting lokaal blijft. Zelfde bewijslast als
+    `dezigzag`: nooit blind gladstrijken, altijd tegen de landpolygonen toetsen.
+    """
+    pts = list(pts)
+    removed = 0
+    changed = True
+    while changed:
+        changed = False
+        i = 1
+        while i < len(pts) - 1:
+            a, p, b = pts[i - 1], pts[i], pts[i + 1]
+            chord = gc_km({"lat": a[0], "lon": a[1]}, {"lat": b[0], "lon": b[1]})
+            # FIJN bemonsteren: de standaard 12 km-stap gaf op een segment van
+            # 15 km maar één monsterpunt, en daar glipten de Channel Islands
+            # (34,01/-119,6) tussendoor — de kortsluiting werd goedgekeurd en
+            # sneed alsnog land. Minstens ~10 monsters per kortsluiting.
+            probe_km = min(3.0, max(0.5, chord / 10.0))
+            if (chord <= max_chord_km
+                    and _cross_track_km(p, a, b) < tol_km
+                    and seg_land_hit(a, b, step_km=probe_km) is None
+                    and (min_clearance_km <= 0
+                         or seg_clearance_ok(a, b, min_clearance_km))):
+                del pts[i]
+                removed += 1
+                changed = True
+            else:
+                i += 1
+    return pts, removed
+
+
 def gc_km(a, b):
     lo1, la1, lo2, la2 = map(math.radians, [a["lon"], a["lat"], b["lon"], b["lat"]])
     return 6371 * 2 * math.asin(math.sqrt(
@@ -319,6 +398,7 @@ def bake(corridor):
                       f"  (datumgrens {dl:.0f}° -> zusterlane via Peru)")
     raw, zigzags = dezigzag(raw)
     raw, landfixes = fix_land_crossings(raw)
+    raw, smoothed = simplify_water(raw)
     pts, seen = [], None
     for lat, lon in raw:
         p = [round(lat, PRECISION), round(lon, PRECISION)]
@@ -326,7 +406,7 @@ def bake(corridor):
             pts.append(p)
             seen = p
     passages = sorted(r["properties"].get("traversed_passages") or [])
-    return pts, passages, km, zigzags, landfixes
+    return pts, passages, km, zigzags, landfixes, smoothed
 
 
 def main():
@@ -339,7 +419,7 @@ def main():
           f" ({', '.join(resources) if resources else 'alle grondstoffen'})")
 
     entries, failures, total_pts = [], [], 0
-    tot_zig, tot_fix = 0, 0
+    tot_zig, tot_fix, tot_smooth = 0, 0, 0
     for c in corridors:
         try:
             res = bake(c)
@@ -349,17 +429,20 @@ def main():
         if res is None:
             failures.append(c)
             continue
-        pts, passages, km, zigzags, landfixes = res
+        pts, passages, km, zigzags, landfixes, smoothed = res
         total_pts += len(pts)
         tot_zig += zigzags
         tot_fix += landfixes
-        if zigzags or landfixes:
+        tot_smooth += smoothed
+        if zigzags or landfixes or smoothed:
             print(f"  gerepareerd: {c['a']['id']} -> {c['b']['id']}"
-                  f"  ({zigzags} zigzag-punten weg, {landfixes} land-omleidingen)")
+                  f"  ({zigzags} zigzag-punten weg, {landfixes} land-omleidingen,"
+                  f" {smoothed} trapjes glad)")
         ratio = km / max(gc_km(c["a"], c["b"]), 1e-9)
         entries.append((c["key"], pts, passages, c, round(km), round(ratio, 3)))
-    if tot_zig or tot_fix:
-        print(f"totaal gerepareerd: {tot_zig} zigzag-punten, {tot_fix} land-omleidingen")
+    if tot_zig or tot_fix or tot_smooth:
+        print(f"totaal gerepareerd: {tot_zig} zigzag-punten, {tot_fix} land-omleidingen,"
+              f" {tot_smooth} trapjes glad")
 
     # FOUTEN HARD (spec §4): niet stil doorgaan.
     if failures:

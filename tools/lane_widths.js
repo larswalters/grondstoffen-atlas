@@ -87,6 +87,30 @@ function clearanceKm(pts, i) {
   return best;
 }
 
+// VERDICHTEN vóór het meten. bake_searoutes.py vereenvoudigt agressief (trapjes
+// uit de land-omleiding weg — dat is puur een VORM-kwestie), maar de baan-klem
+// leest de vrije ruimte PER PUNT: in de Seto-binnenzee waren juist die punten de
+// rem op de waaier, en na het opruimen bolden de banen weer over Japan
+// (8 -> 195 landtreffers). Daarom zetten we hier punten terug — maar alléén waar
+// het water nauw is, en exact op de bestaande lijn (het midden van een segment),
+// zodat er GEEN nieuwe knik bijkomt. Vorm blijft dus glad, klem krijgt resolutie.
+function densifyNarrow(pts, depth = 0) {
+  if (depth > 6) return pts;
+  const out = [pts[0]];
+  let added = false;
+  for (let i = 1; i < pts.length; i++) {
+    const a = pts[i - 1], b = pts[i];
+    const len = segKm(a, b);
+    const mid = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+    if (len > 20 && clearanceKm([a, mid, b], 1) < CAP_KM) {
+      out.push([+mid[0].toFixed(3), +mid[1].toFixed(3)]);
+      added = true;
+    }
+    out.push(b);
+  }
+  return added ? densifyNarrow(out, depth + 1) : out;
+}
+
 function segKm(a, b) {
   const cosLat = Math.cos((a[0] + b[0]) / 2 * Math.PI / 180);
   const dLat = b[0] - a[0], dLon = (b[1] - a[1]) * cosLat;
@@ -96,12 +120,12 @@ function segKm(a, b) {
 const src = fs.readFileSync(SR_PATH, "utf8").split("\n");
 const LINE_RE = /^(\s*)"([^"]+)": \{ pts: (\[.*?\]), (?:w: \{[^}]*\}, )?passages: (\[[^\]]*\]) \},(.*)$/;
 
-let corridors = 0, constrained = 0, points = 0;
+let corridors = 0, constrained = 0, points = 0, densified = 0;
 const out = src.map((line) => {
   const m = line.match(LINE_RE);
   if (!m) return line;
   corridors++;
-  const pts = JSON.parse(m[3]);
+  const pts = densifyNarrow(JSON.parse(m[3]));
   // per-punt vrije ruimte
   const clr = pts.map((_, i) => clearanceKm(pts, i));
   // running-min: een pinch pint z'n buren binnen ~PIN_KM langs de route, zodat
@@ -121,8 +145,10 @@ const out = src.map((line) => {
   }
   const hasW = Object.keys(w).length > 0;
   if (hasW) constrained++;
+  densified += pts.length - JSON.parse(m[3]).length;
   const wPart = hasW ? `w: ${JSON.stringify(w)}, ` : "";
-  return `${m[1]}"${m[2]}": { pts: ${m[3]}, ${wPart}passages: ${m[4]} },${m[5]}`;
+  // de verdichte polyline gaat MEE terug: de w-indices verwijzen ernaar
+  return `${m[1]}"${m[2]}": { pts: ${JSON.stringify(pts)}, ${wPart}passages: ${m[4]} },${m[5]}`;
 });
 
 // pipeline-notitie in de header, één keer
@@ -134,4 +160,4 @@ if (hdrIdx >= 0 && !out.some((l) => l.startsWith("// Baanbreedtes"))) {
 }
 
 fs.writeFileSync(SR_PATH, out.join("\n"));
-console.log(`${corridors} corridors, ${constrained} met begrensde punten (${points} punten < ${CAP_KM} km vrij).`);
+console.log(`${corridors} corridors, ${constrained} met begrensde punten (${points} punten < ${CAP_KM} km vrij, ${densified} verdicht in nauw water).`);
