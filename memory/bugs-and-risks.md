@@ -3,6 +3,12 @@
 
 ## ⚠️ OPEN na M23 (2026-07-18) — bekend, bewust doorgeschoven naar M24 (= [LAR-485], incl. het ontbrekende Noordzeekanaal)
 
+0. **Ultrawide-restje tegels (geaccepteerd, niet fixen):** na de scherpte-reeks (`990765c`+`61d7388`+`1a724b8`)
+   is 1080p/portret helemaal goed (~100 tegels); op een ultrawide 2K zijn de uiterste hoeken nog nét te vinden
+   (ring op z−2 i.p.v. vol-scherp) en laadt een verse view 1.300+ tegels (patch ≤900 + ring ≤350 + shell 64) —
+   merkbaar maar smooth. **Lars (2026-07-18): "dat is voor nu niet erg, we laten het zo."** Knoppen als het ooit
+   tóch moet: `ringMaxTiles`, het budget-plafond (900), de tilesAcross-cap (14), of progressief laden.
+
 1. **2 onopgeloste edges** (origineel behouden, connectiviteit intact): Södertälje-archipel
    `(58.57,17.42)→(58.65,16.32)` (Stockholm-scheren te fijn voor het 0,01°-raster) en één Channel
    Islands-koorde `(33.20,-120.67)→(33.63,-118.12)`. Opruimen bij M24 (zone of fijner raster).
