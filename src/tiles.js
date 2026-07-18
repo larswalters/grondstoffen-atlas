@@ -197,10 +197,32 @@ const TileLayer = (function () {
   // de helft van de grond van eentje op de evenaar. Zonder die term vroegen we
   // hoe noordelijker hoe meer tegels aan voor dezelfde scherpte — verspild werk
   // dat bovendien het tegelbudget opblies (LAR-479).
+  //
+  // SCHERMBREEDTE TELT MEE. `tilesAcross` was een vaste 4,5 — dat is ~1.150 px
+  // brontextuur over de hele beeldbreedte, ongeacht het scherm. Op een telefoon
+  // scherp, maar uitgesmeerd over een monitor van 1920+ px wazig (Lars: "op een
+  // groot scherm juist erg wazig"). Nu is het doel ~1 textuurpixel per
+  // schermpixel: beeldbreedte in device-pixels ÷ 256. De vaste waarde blijft de
+  // ondergrens; de cap (14 ≈ 3.584 px bron) dekt óók een ultrawide 2K (3.440 px)
+  // op volle scherpte en houdt 4K net beschaafd.
+  function tilesAcrossEff() {
+    const px = GLOBE.renderer.domElement.width; // device-pixels (incl. pixelRatio)
+    return Math.max(C.tilesAcross, Math.min(14, px / 256));
+  }
   function detailZoomFor(spanDeg, lat) {
     const cosLat = Math.max(0.15, Math.cos(lat * D2R));
-    const want = Math.log2((360 * C.tilesAcross * cosLat) / (2 * spanDeg));
+    const want = Math.log2((360 * tilesAcrossEff() * cosLat) / (2 * spanDeg));
     return Math.max(C.minZ, Math.min(C.maxZ, Math.round(want)));
+  }
+  // Het tegelbudget schaalt MEE met de fijnere zoom (kwadratisch: 2× zo fijn =
+  // 4× zoveel tegels in dezelfde patch) — anders is het budget op een groot
+  // scherm opnieuw kleiner dan één patch en kapt de patch af: exact de
+  // LAR-479-val. Op 4,5 blijft dit gewoon C.maxTiles (96).
+  function maxTilesEff() {
+    const r = tilesAcrossEff() / C.tilesAcross;
+    // plafond 600: op een ultrawide zou het kwadraat naar ~930 lopen; met de
+    // midden-naar-buiten-vulling kost aftoppen alleen de hoeken, geen band.
+    return Math.min(600, Math.ceil(C.maxTiles * r * r));
   }
 
   // Grove shell-zoom: een paar niveaus onder de detail-zoom, hard begrensd zodat
@@ -274,7 +296,7 @@ const TileLayer = (function () {
     candidates.sort((a, b) => a.d - b.d);
 
     const wanted = new Set();
-    candidates.slice(0, C.maxTiles).forEach(({ x, y }) => {
+    candidates.slice(0, maxTilesEff()).forEach(({ x, y }) => {
       const xw = ((x % n) + n) % n;     // over de datumgrens heen blijven werken
       wanted.add(`${detailZ}/${xw}/${y}`);
       ensureTile(detailGroup, detailLive, detailZ, xw, y, C.detailLift, 2, C.meshDetail);

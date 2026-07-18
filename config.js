@@ -70,7 +70,10 @@ const CONFIG = {
                                 // steeds tussen tegels en blue-marble "oversprong" (LAR-394).
     tilesAcross: 4.5,           // hoeveel scherpe detailtegels je ongeveer over het beeld wilt
     minZ: 3,
-    maxZ: 9,                    // hoger = scherper, maar ook meer laden
+    maxZ: 12,                   // hoger = scherper, maar ook meer laden. Was 9
+                                // (~300 m/px) — op een groot scherm bleef inzoomen
+                                // daardoor wazig (Lars, 2026-07-18): het scherm
+                                // vraagt ~150 m/px of fijner. z=12 ≈ 38 m/px.
     maxTiles: 96,               // veiligheidsplafond voor de scherpe detailpatch.
                                 // Was 40 — dat is minder dan één patch (~7x7, bij
                                 // ongunstige afronding ~9x9) nodig heeft, dus hij
