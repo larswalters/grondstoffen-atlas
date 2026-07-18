@@ -12,14 +12,17 @@ export const CONFIG = {
   radius: 2.4,
   segments: 128,
 
-  minZoom: 2.75,
-  maxZoom: 11,
-  startZoom: 5.6,
+  // ZOOM WERKT IN HOOGTE BOVEN HET OPPERVLAK, niet in afstand tot het
+  // middelpunt. Dat is het verschil tussen "tot 930 km" en "tot straatniveau":
+  // 1 eenheid = 2.655 km (want 2,4 eenheden = 6.371 km aardstraal).
+  minAltitude: 0.00038,   // ~1 km hoogte
+  maxAltitude: 8.6,       // ~22.800 km — de hele bol in beeld
+  startAltitude: 3.2,     // ~8.500 km
 
-  // Slepen schaalt mee met de zoom: ver weg draai je de halve wereld,
-  // ingezoomd wil je fijn kunnen sturen. (Overgenomen uit v1 — LAR-479.)
-  dragSpeed: 28.65,   // graden wereld per 100px bij dragRefZoom
-  dragRefZoom: 5.6,
+  // Slepen schaalt mee met de HOOGTE (niet met de camera-afstand): op 1 km
+  // hoogte wil je meters verschuiven, op 8.500 km halve continenten.
+  dragSpeed: 28.65,   // graden wereld per 100px op dragRefAltitude
+  dragRefAltitude: 3.2,
 
   stars: 1800,
 };
@@ -35,7 +38,14 @@ export function createGlobe(mount) {
   let height = mount.clientHeight || 1;
 
   // --- renderer ------------------------------------------------------------
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  // logarithmicDepthBuffer is VERPLICHT zodra je van 22.000 km tot 1 km hoogte
+  // wilt kunnen zoomen. Met een gewone dieptebuffer moet het nabij-vlak heel
+  // dicht bij de camera liggen om niet weg te knippen, en dan verliest de
+  // buffer zoveel precisie dat tegels en kustlijnen door elkaar heen flikkeren.
+  const renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    logarithmicDepthBuffer: true,
+  });
   renderer.setSize(width, height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
@@ -56,7 +66,19 @@ export function createGlobe(mount) {
   scene.background = new THREE.Color(0x05070c);
 
   const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 400);
-  camera.position.set(0, 0, CONFIG.startZoom);
+  camera.position.set(0, 0, CONFIG.radius + CONFIG.startAltitude);
+
+  // Hoogte boven het oppervlak — de maat waarin alles rekent.
+  let altitude = CONFIG.startAltitude;
+
+  // Het nabij-vlak schuift mee met de hoogte. Vast op 0,1 (= 265 km) zou vanaf
+  // die hoogte alles wegknippen; vast op 1e-6 kost precisie als je ver weg bent.
+  function updateNear() {
+    camera.near = Math.max(1e-6, altitude * 0.05);
+    camera.far = 400;
+    camera.updateProjectionMatrix();
+  }
+  updateNear();
 
   // --- sterren -------------------------------------------------------------
   const starGeo = new THREE.BufferGeometry();
@@ -151,8 +173,11 @@ export function createGlobe(mount) {
     lastX = e.clientX;
     lastY = e.clientY;
 
-    // Draaisnelheid evenredig met de zoom (v1-fix LAR-479).
-    const perPixel = (CONFIG.dragSpeed / 100) * (camera.position.z / CONFIG.dragRefZoom);
+    // Draaisnelheid evenredig met de HOOGTE (v1-fix LAR-479, maar nu op hoogte
+    // i.p.v. camera-afstand — anders sleep je op 1 km hoogte nog steeds met
+    // bijna dezelfde snelheid als op 8.500 km, want de afstand tot het
+    // middelpunt verandert dan nauwelijks nog).
+    const perPixel = (CONFIG.dragSpeed / 100) * (altitude / CONFIG.dragRefAltitude);
     lon -= dx * perPixel;
     lat += dy * perPixel;
     lat = Math.max(-89, Math.min(89, lat));
@@ -172,10 +197,14 @@ export function createGlobe(mount) {
     zoomBy(e.deltaY > 0 ? 1.08 : 1 / 1.08);
   }, { passive: false });
 
+  // Zoomen is VERMENIGVULDIGEN MET DE HOOGTE. Daardoor kost elke stap
+  // hetzelfde gevoel, of je nu van 20.000 naar 18.000 km gaat of van 2 naar
+  // 1,8 km. Zou je (zoals eerst) de afstand tot het middelpunt schalen, dan
+  // staat de laatste 900 km in een handvol stappen en kom je nooit lager.
   function zoomBy(factor) {
-    camera.position.z = Math.max(
-      CONFIG.minZoom, Math.min(CONFIG.maxZoom, camera.position.z * factor)
-    );
+    altitude = Math.max(CONFIG.minAltitude, Math.min(CONFIG.maxAltitude, altitude * factor));
+    camera.position.z = CONFIG.radius + altitude;
+    updateNear();
   }
 
   // --- knijpzoom op mobiel -------------------------------------------------
@@ -237,14 +266,19 @@ export function createGlobe(mount) {
   function onTick(fn) { tickFns.push(fn); }
 
   let frames = 0, fpsLast = performance.now(), fps = 0;
+  let vorigeTijd = performance.now();
 
   function frame() {
     requestAnimationFrame(frame);
 
+    const nu = performance.now();
+    const dt = Math.min(0.25, (nu - vorigeTijd) / 1000);
+    vorigeTijd = nu;
+
     globeGroup.rotation.y = THREE.MathUtils.degToRad(lon);
     globeGroup.rotation.x = THREE.MathUtils.degToRad(lat);
 
-    for (const fn of tickFns) fn();
+    for (const fn of tickFns) fn(dt);
     renderer.render(scene, camera);
 
     frames++;
@@ -280,10 +314,15 @@ export function createGlobe(mount) {
 
   return {
     scene, camera, renderer, globeGroup,
+    radius: CONFIG.radius,
     onTick, setToneMapping, setSun, setBasemap, zoomBy,
+    getAltitude: () => altitude,
+    // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km
+    getAltitudeKm: () => (altitude / CONFIG.radius) * 6371,
     getStats: () => ({
       fps,
       zoom: camera.position.z,
+      altitude,
       calls: renderer.info.render.calls,
       tris: renderer.info.render.triangles,
     }),

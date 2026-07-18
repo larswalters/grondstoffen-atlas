@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=004" />
+<link rel="stylesheet" href="style.css?v=005" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -34,8 +34,9 @@
          oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
     <div class="hudLabel">Ondergrond</div>
     <div class="btnRow">
-      <button class="bmBtn" data-bm="vector">egaal</button>
       <button class="bmBtn is-on" data-bm="satelliet">satelliet</button>
+      <button class="bmBtn" data-bm="kaart">kaart</button>
+      <button class="bmBtn" data-bm="egaal">egaal</button>
     </div>
 
     <div class="hudLabel">Kustlijn (vector)</div>
@@ -60,12 +61,15 @@
     <div id="stats"></div>
   </div>
 
+  <!-- Bronvermelding is verplicht bij Esri World Imagery en OpenStreetMap. -->
+  <div id="attrib"></div>
+
   <div id="zoomControls">
     <button id="zoomIn" aria-label="Inzoomen">+</button>
     <button id="zoomOut" aria-label="Uitzoomen">−</button>
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=004"></script>
+<script type="module" src="src/main.js?v=005"></script>
 </body>
 </html>

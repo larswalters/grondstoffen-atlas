@@ -85,6 +85,22 @@ html, body {
   font-variant-numeric: tabular-nums;
 }
 
+/* --- bronvermelding (verplicht bij Esri/OSM) ----------------------------- */
+
+#attrib {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  padding: 3px 10px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  background: rgba(5, 7, 12, 0.55);
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
 /* --- zoomknoppen --------------------------------------------------------- */
 
 #zoomControls {

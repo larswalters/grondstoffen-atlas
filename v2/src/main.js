@@ -1,14 +1,21 @@
-// main.js — start v2 op en koppelt de HUD aan de bol.
+// main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=004";
-import { laadVectorWereld } from "./world.js?v=004";
+import { createGlobe, CONFIG } from "./globe.js?v=005";
+import { laadVectorWereld } from "./world.js?v=005";
+import { createTileLayer } from "./tiles.js?v=005";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
+// --- satelliettegels -------------------------------------------------------
+// Streamt Esri World Imagery op het detailniveau dat bij je kijkhoogte past —
+// dezelfde bron als earth3dmap.com. Dit is de SKIN.
+const TEGELS = createTileLayer(GLOBE);
+GLOBE.onTick((dt) => TEGELS.tick(dt));
+
 // --- de vectorwereld -------------------------------------------------------
-// Dit is de waarheid van v2. Laadt asynchroon; de bol is al bruikbaar terwijl
-// dit binnenkomt.
+// Dit is de WAARHEID: waar land ophoudt en water begint. De tegels mogen mooi
+// zijn, maar routering rekent straks tegen deze lijnen.
 
 let wereldStats = null;
 let kustlijn = null;
@@ -18,23 +25,26 @@ laadVectorWereld(CONFIG.radius)
     GLOBE.globeGroup.add(lijnen);
     kustlijn = lijnen;
     wereldStats = stats;
-    // Standaard: satelliet ALS ondergrond met de vectorkustlijn eroverheen.
-    // De vectorwereld blijft de waarheid voor routering; de satelliet is puur
-    // een skin. Lars kijkt het liefst naar deze combinatie.
-    GLOBE.setBasemap("satelliet");
     console.log(
       `[atlas v2] vectorwereld: ${stats.punten.toLocaleString("nl")} punten · ` +
       `${stats.ringen.toLocaleString("nl")} vormen · ${stats.kbOverdracht} KB · ` +
       `laden ${stats.msLaden} ms, verwerken ${stats.msVerwerken} ms`
     );
   })
-  .catch((e) => {
-    console.error("[atlas v2] vectorwereld niet geladen:", e);
-    // Zonder vectorwereld is de satelliet de enige zinnige weergave.
-    GLOBE.setBasemap("satelliet");
-  });
+  .catch((e) => console.error("[atlas v2] vectorwereld niet geladen:", e));
 
-// --- HUD-knoppen -----------------------------------------------------------
+// De kustlijn ligt precies OP de bol. Om te voorkomen dat hij half in het
+// oppervlak verdwijnt, tillen we hem elke frame een klein beetje op — evenredig
+// met de kijkhoogte. Vanuit de ruimte mag dat kilometers zijn (je ziet het
+// toch niet), van 1 km hoogte moet het meters zijn, anders loopt de lijn
+// zichtbaar naast de kust.
+GLOBE.onTick(() => {
+  if (!kustlijn) return;
+  const opheffing = Math.max(CONFIG.radius * 2e-6, GLOBE.getAltitude() * 0.004);
+  kustlijn.scale.setScalar(1 + opheffing / CONFIG.radius);
+});
+
+// --- HUD -------------------------------------------------------------------
 
 function wireButtons(selector, attr, apply) {
   const btns = [...document.querySelectorAll(selector)];
@@ -49,36 +59,52 @@ function wireButtons(selector, attr, apply) {
 
 wireButtons(".tmBtn", "tm", (mode) => GLOBE.setToneMapping(mode));
 wireButtons(".sunBtn", "sun", (mode) => GLOBE.setSun(mode));
-wireButtons(".bmBtn", "bm", (mode) => GLOBE.setBasemap(mode));
 wireButtons(".clBtn", "cl", (mode) => {
   if (kustlijn) kustlijn.visible = (mode === "aan");
 });
 
-document.getElementById("zoomIn").addEventListener("click", () => GLOBE.zoomBy(1 / 1.25));
-document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(1.25));
+wireButtons(".bmBtn", "bm", (mode) => {
+  if (mode === "egaal") {
+    TEGELS.zetAan(false);
+    GLOBE.setBasemap("vector");
+  } else {
+    TEGELS.zetAan(true);
+    TEGELS.zetBron(mode);          // "satelliet" of "kaart"
+    GLOBE.setBasemap("satelliet"); // ondergrond onder de tegels
+  }
+  document.getElementById("attrib").textContent = TEGELS.isAan() ? TEGELS.attributie() : "";
+});
+
+document.getElementById("zoomIn").addEventListener("click", () => GLOBE.zoomBy(1 / 1.35));
+document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(1.35));
+
+document.getElementById("attrib").textContent = TEGELS.attributie();
 
 // --- statusregel -----------------------------------------------------------
-// Toont wat de bol kost. Zodra de vectorwereld erop komt is dit de plek waar
-// we zien of we binnen budget blijven — op PC én op de telefoon.
 
 const statsEl = document.getElementById("stats");
+statsEl.style.whiteSpace = "pre-line";
 
 GLOBE.onTick(() => {
   const s = GLOBE.getStats();
+  const t = TEGELS.stats();
+  const km = GLOBE.getAltitudeKm();
+  const hoogte = km >= 10 ? `${Math.round(km).toLocaleString("nl")} km` : `${km.toFixed(1)} km`;
+
   let tekst =
-    `${s.fps} fps · zoom ${s.zoom.toFixed(2)}\n` +
-    `${s.calls} draw calls · ${(s.tris / 1000).toFixed(0)}k driehoeken`;
+    `${s.fps} fps · hoogte ${hoogte}\n` +
+    `${s.calls} draw calls · tegels z${t.detailZ} (${t.tegelsInBeeld})`;
   if (wereldStats) {
     tekst += `\n${(wereldStats.punten / 1000).toFixed(0)}k vectorpunten · ${wereldStats.kbOverdracht} KB`;
   }
+  if (t.mislukt) tekst += `\n${t.mislukt} tegels mislukt`;
   statsEl.textContent = tekst;
 });
-
-statsEl.style.whiteSpace = "pre-line";
 
 // Handvat voor diagnose vanuit de console/devtools. Dit project wordt veel
 // visueel geverifieerd; zonder globals is er anders geen enkele manier om de
 // scene van buitenaf te bevragen (ES-modules hebben geen window-scope).
 window.GLOBE = GLOBE;
+window.TEGELS = TEGELS;
 
-console.log("[atlas v2] three r185 · ACES tone mapping actief");
+console.log("[atlas v2] three r185 · ACES · tegels tot z19 · zoom tot ~1 km");

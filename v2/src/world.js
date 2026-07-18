@@ -60,9 +60,11 @@ export async function laadVectorWereld(radius) {
   const lezer = maakLezer(bytes);
   const schaal = meta.schaal;
 
-  // Iets boven het oppervlak tekenen, anders vecht de lijn met de bol om
-  // dezelfde diepte en krijg je flikkerende stukken ("z-fighting").
-  const r = radius * 1.0015;
+  // Precies OP het oppervlak bouwen. De opheffing boven de bol gebeurt door
+  // het hele object te schalen (zie main.js), want die moet meeschalen met de
+  // kijkhoogte: een vaste 1.0015 is 9,5 km — onzichtbaar vanuit de ruimte,
+  // maar van 1 km hoogte loopt je kustlijn dan een flink eind naast de kust.
+  const r = radius;
 
   const posities = new Float32Array(meta.punten * 3);
   // Elke ring is gesloten: n punten geven n-1 lijnstukken tussen opeenvolgende
