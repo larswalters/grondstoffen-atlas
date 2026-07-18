@@ -1,8 +1,8 @@
 // main.js — start v2 op en koppelt de HUD aan de bol.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=003";
-import { laadVectorWereld } from "./world.js?v=003";
+import { createGlobe, CONFIG } from "./globe.js?v=004";
+import { laadVectorWereld } from "./world.js?v=004";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -11,12 +11,17 @@ const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 // dit binnenkomt.
 
 let wereldStats = null;
+let kustlijn = null;
 
 laadVectorWereld(CONFIG.radius)
   .then(({ lijnen, stats }) => {
     GLOBE.globeGroup.add(lijnen);
+    kustlijn = lijnen;
     wereldStats = stats;
-    GLOBE.setBasemap("vector");
+    // Standaard: satelliet ALS ondergrond met de vectorkustlijn eroverheen.
+    // De vectorwereld blijft de waarheid voor routering; de satelliet is puur
+    // een skin. Lars kijkt het liefst naar deze combinatie.
+    GLOBE.setBasemap("satelliet");
     console.log(
       `[atlas v2] vectorwereld: ${stats.punten.toLocaleString("nl")} punten · ` +
       `${stats.ringen.toLocaleString("nl")} vormen · ${stats.kbOverdracht} KB · ` +
@@ -45,6 +50,9 @@ function wireButtons(selector, attr, apply) {
 wireButtons(".tmBtn", "tm", (mode) => GLOBE.setToneMapping(mode));
 wireButtons(".sunBtn", "sun", (mode) => GLOBE.setSun(mode));
 wireButtons(".bmBtn", "bm", (mode) => GLOBE.setBasemap(mode));
+wireButtons(".clBtn", "cl", (mode) => {
+  if (kustlijn) kustlijn.visible = (mode === "aan");
+});
 
 document.getElementById("zoomIn").addEventListener("click", () => GLOBE.zoomBy(1 / 1.25));
 document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(1.25));

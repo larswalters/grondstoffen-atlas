@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=003" />
+<link rel="stylesheet" href="style.css?v=004" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -30,10 +30,18 @@
     <div class="hudTitle">Atlas v2 · fundament</div>
     <div class="hudSub">M22 — de wereldbol opnieuw</div>
 
+    <!-- Twee ONAFHANKELIJKE lagen, niet één of-of-keuze: de ondergrond is het
+         oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
     <div class="hudLabel">Ondergrond</div>
     <div class="btnRow">
-      <button class="bmBtn is-on" data-bm="vector">vector</button>
-      <button class="bmBtn" data-bm="satelliet">satelliet</button>
+      <button class="bmBtn" data-bm="vector">egaal</button>
+      <button class="bmBtn is-on" data-bm="satelliet">satelliet</button>
+    </div>
+
+    <div class="hudLabel">Kustlijn (vector)</div>
+    <div class="btnRow">
+      <button class="clBtn is-on" data-cl="aan">aan</button>
+      <button class="clBtn" data-cl="uit">uit</button>
     </div>
 
     <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
@@ -58,6 +66,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=003"></script>
+<script type="module" src="src/main.js?v=004"></script>
 </body>
 </html>
