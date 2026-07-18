@@ -1,7 +1,43 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (weergave-fixes: tier = labels, tegelbudget = noodrem, draaien schaalt met zoom)*
+*Last updated: 2026-07-18 (ontkoppeling vorm/snelheid/klem; netwerk-aanpak = LAR-483)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## Architectuur (2026-07-18) — de patch-spiraal doorbroken
+
+- **Vorm, vaarsnelheid en baan-klem zijn ONTKOPPELD.** Eén puntenlijst droeg alle drie, met tegenstrijdige
+  eisen: vorm wil weinig punten · vaarsnelheid wil punten gelijkmatig over afstand · de klem wil juist veel
+  punten in nauw water. Vereenvoudigen voor de vorm sloopte de klem (banen over Japan); verdichten voor de
+  klem liet de schepen schokken en maakte lijnen hoekig. **Elke fix wás een nieuwe bug** — Lars zag dat als
+  eerste: *"anders blijven we heen en weer gaan zonder echt een fix."* Na ontkoppeling verbeterde **alles
+  tegelijk**: snelheidsvariatie 15,9× → 1,27×, landtreffers 406 → 108, Japan 8 → 0, Baja 21 → 0, Malakka 9 → 0.
+  Middelen: `voyages.js` op **`getPointAt`** (booglengte i.p.v. curve-parameter) · `lane_widths.js` schrijft een
+  **apart profiel `wp`** per 20 km langs de boog i.p.v. `w` per punt · `flows.js` voegt per-leg profielen samen
+  (`mergeProfiles`) · `util.js` leest via booglengte-fractie + hogere `arcLengthDivisions`.
+- **Cache-busting hoort in de pipeline** (`tools/stamp_assets.js`, inhouds-hash `?v=<sha1>`). `index.html` laadde
+  assets zónder versie terwijl Pages `max-age=600` stuurt → Lars zag **drie fixes lang "geen verschil"** terwijl
+  alles wél live stond. Dit was de bron van de meeste frustratie van de sessie, niet de routing zelf.
+- **Een antipodale stabilisator moet op een DICHT stuk netwerk liggen.** Bijna-antipodale havenparen hebben een
+  wiskundig onbepaalde geodeet; MARNET kiest dan willekeurig (Valparaíso→Ningbo koos zuid terwijl 7 zusters op
+  50°N kruisten). Eerste poging via 50°N/180° gaf een **kaarsrechte interpolatie door leeg water** — rond de
+  datumgrens heeft MARNET nauwelijks knopen, dus één artefact ingeruild voor een ander. Via **−10°/−80°** (vóór
+  Peru, midden op de zusterlane) deelt Valparaíso nu **95 van z'n 100 punten** met Antofagasta→Ningbo.
+  Kosten bewust betaald: +2,5% → +5,8% boven de grote cirkel — **vorm boven lengte**.
+- **Trapjes horen in de baker opgeruimd, niet in de render.** `detour_around_land()` legt een A\* over een
+  0,1°-raster → trapjes van 45°. `simplify_water()` haalt punten weg die <12 km van de lijn buur→buur liggen
+  **en** waarvan de kortsluiting over water blijft (zelfde bewijslast als `dezigzag`). Validatie **fijn
+  bemonsterd** (≥10 monsters per kortsluiting): met de standaard 12 km-stap glipten de Channel Islands
+  (34,01/−119,6) door een segment van 15 km.
+- **De restfout is structureel → LAR-483, niet doorpatchen.** Corridors worden per haven-paar gebakken; daardoor
+  bundelen routes naar dezelfde bestemming niet en wordt dezelfde kapotte edge steeds opnieuw gerepareerd
+  (7 corridors deelden hetzelfde Baja-trapje). **MARNET gemeten:** 15.840 segmenten / 9.646 knopen, segment
+  mediaan 83 km maar **max 3.611 km** = een grove graaf, geen waterkaart → kaal over de bol leggen voorkomt
+  land-treffers níet; het netwerk moet **één keer** verzoend worden met onze landpolygonen.
+- **MARNET blijft de router; AIS wordt een aparte laag** (LAR-482). AIS toont *schepen*, geen *lading*, en
+  gratis wereldwijde historische AIS bestaat praktisch niet. Lars' "echte schepen op de bol met een knop"
+  is een dichtheidslaag ná M18, geen router-vervanging.
+- **Weergave apart houden van routing.** *"Je kan het water niet echt goed onderscheiden op deze kaart"* is
+  contrast/basemap (LAR-480), geen routing — bewust gescheiden zodat de sporen niet door elkaar lopen.
 
 ## Weergave / interactie (2026-07-17) — LAR-479 + LAR-481
 

@@ -1,12 +1,35 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-17 (pilot-test: curve-sampling-bug gefixt; Japan-observatie open)*
+*Last updated: 2026-07-18 (Japan-observatie OPGELOST — bleek de lane-waaier + cache; nieuwe openstaande punten onderaan)*
 
-## 🔍 OPEN — Lars ziet trans-Pacific bundel over Japan (mobiel, 2026-07-17 03:15)
-- **Symptoom:** screenshot toont de koper-bundel dwars over Honshu richting Korea-straat/China.
-- **Hypothese: stale cache** — de curve-fix (`3c801a0`) ging pas minuten vóór de screenshot live; Pages CDN
-  cachet 10 min + mobiele browsercache. De curve-verificatie (getekende curve → Natural Earth) zegt dat álle 22
-  corridors op water blijven, inclusief het Japan-gebied (route hoort door Tsugaru/Japanse Zee).
-- **Morgen:** incognito/verse cache; nog fout → Tsugaru-passage per corridor plotten (`plot_corridors.js` scratchpad).
+## 🔧 OPEN — asymmetrische baan-klem staat halverwege in de werkende boom (2026-07-18)
+- **Niet gepusht.** `src/util.js` + `tools/lane_widths.js` + `data/_searoutes.js` zijn dirty.
+- **Doel:** links/rechts apart klemmen i.p.v. rondom, zodat één los eiland niet de hele waaier dichtknijpt —
+  Lars: *"voor de westkust van Amerika komen de lijnen samen terwijl dat niet hoeft."* Een echte zeestraat
+  heeft land aan béide kanten; een eiland aan één kant hoort alleen díe kant te beperken.
+- **Stand:** Baja-spreiding hersteld (**143 km**, banen blijven uit elkaar ✅) maar Japan ging **0 → 52**
+  treffers, omdat exact haaks peilen eilanden schuin vóór de baan mist. Laatste wijziging (waaier ±60° per
+  zijde i.p.v. één straal) is **nog ongemeten**.
+- `SIDE_SIGN = 1` is **empirisch bevestigd** (154 vs 1.571 landtreffers bij omdraaien) — niet opnieuw uitzoeken.
+- **Beslis eerst of dit nog nodig is** als LAR-483 (netwerk-aanpak) doorgaat — de klem kan van vorm veranderen.
+
+## 🔍 OPEN — Malakka/Singapore-straat: 6 scherpe knikken over (2026-07-18)
+- Deels **echt**: de Straat van Malakka en de Singapore-straat maken werkelijk scherpe bochten tussen Sumatra
+  en Maleisië. Niet blind gladstrijken — dat zou een wáár detail wegpoetsen.
+- Pas beoordelen **ná** LAR-483; het netwerk kan de geometrie daar alsnog veranderen.
+
+## 🔍 OPEN — Valparaíso→Rotterdam scheert langs de Caribische eilandjes (2026-07-18)
+- Middellijn zelf (41 treffers bij lane 0), rond Panama/Caribisch gebied. Los van de Japan/Baja-problematiek;
+  bestond al vóór de lane-fixes. Kandidaat om mee te nemen in de netwerk-verzoening (LAR-483).
+
+## ✅ OPGELOST (2026-07-18) — trans-Pacific bundel over Japan (stond hier sinds 17 juli)
+- **Twee oorzaken, geen van beide de vermoede "stale cache van de curve-fix".**
+- **(1) De lane-waaier.** Elke stroom wordt als 7 parallelle vaarbanen getekend (±95 km); die waaier wist niets
+  van land, dus bij Tsugaru (~20 km breed) en de Seto-binnenzee gingen de **buitenste** banen over Honshu/Hokkaido.
+  **Mijn eigen verificatiefout:** de eerste controle testte alleen de **middelste** baan en verklaarde het
+  opgelost. → **Regel: meet altijd over alle 7 banen.**
+- **(2) Cache — maar structureel.** `index.html` laadde assets zónder versie terwijl Pages `max-age=600` stuurt;
+  Lars zag daardoor **drie fixes lang** de vorige versie. Opgelost met `tools/stamp_assets.js`.
+- Stand na de fixes: Japan **0** landtreffers (van 8), wereld 406 → 108.
 
 ## ✅ GEFIXT (2026-07-17) — curve-bemonstering sloeg invoerpunten over (`util.js`)
 - `makeRouteCurve` bemonsterde uniform (cap 260 = 1 punt/~75 km op trans-Pacific) → de dichte kustpunten van

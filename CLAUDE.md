@@ -1,6 +1,41 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-17 (weergave-fixes LAR-479 + LAR-481 bevestigd; M18 koper-pilot nog IN TEST)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-18 (ontkoppeld ontwerp; netwerk-aanpak = LAR-483; M18 koper-pilot nog IN TEST)*
+
+> **🏗️ ARCHITECTUURPRINCIPE SINDS 2026-07-18 — ONTKOPPELEN (lees dit vóór je aan routes/rendering werkt).**
+> De atlas zat vast in een patch-spiraal: elke fix brak iets anders. Oorzaak: **één puntenlijst bediende drie
+> taken met tegenstrijdige eisen** — de **vorm** van de lijn (wil weinig punten) · de **vaarsnelheid** van de
+> schepen (wil punten gelijkmatig over afstand) · de **baan-klem** voor de 7 vaarbanen (wil juist véél punten in
+> nauw water). Vereenvoudigen voor de vorm sloopte de klem (banen over Japan); verdichten voor de klem liet de
+> schepen schokken en maakte lijnen hoekig. Lars zag het als eerste: *"anders blijven we heen en weer gaan zonder
+> echt een fix."* **Nu zijn ze los:** `voyages.js` gebruikt **`getPointAt`** (booglengte, niet de curve-parameter),
+> `lane_widths.js` schrijft een **apart profiel `wp`** (vrije ruimte per 20 km langs de boog) i.p.v. `w` per punt,
+> `flows.js` voegt per-leg profielen samen (`mergeProfiles`), en de geometrie is puur vorm.
+> **Toets bij elke wijziging: raakt dit meer dan één van die drie? Ontkoppel dan eerst.**
+> Bewijs dat het klopt: alles verbeterde *tegelijk* — snelheidsvariatie **15,9× → 1,27×** (slechtste 47× → 2,3×),
+> landtreffers **406 → 108**, Japan **8 → 0**, Baja **21 → 0**, Malakka **9 → 0**, geometrie 3.710 → 817 punten.
+>
+> **⚠️ CACHE-BUSTING IS VERPLICHT.** `index.html` laadde assets zónder versie terwijl GitHub Pages
+> `Cache-Control: max-age=600` stuurt → Lars zag **drie fixes lang "geen verschil"** terwijl alles wél live stond.
+> Dat was de grootste tijdvreter van 18 juli, niet de routing. **Draai `node tools/stamp_assets.js` vóór elke
+> commit die assets raakt.** Vaste pipeline: `bake_searoutes.py` → `lane_widths.js` → `check_corridors.js` →
+> `stamp_assets.js` → `build-standalone.py`.
+>
+> **⚠️ VERIFICATIE: meet over ALLE 7 vaarbanen, niet alleen de middellijn.** De eerste Japan-verificatie testte
+> alleen de middelste baan en verklaarde het probleem ten onrechte opgelost — terwijl de klacht juist over de
+> *buitenste* banen ging. Verder: de Browser-pane cachet script-tags zelfs op een nieuwe poort mét querystring
+> (verifieer via `fetch(url,{cache:'no-store'})` → `<script>`-injectie), en `const SEAROUTES` is niet
+> herdeclareerbaar (vervang bij injectie door `window.__SR2 =`).
+>
+> **→ VOLGENDE STAP = [LAR-483] (High, Todo), in een VERSE sessie.** Corridors worden nu per haven-paar gebakken;
+> daardoor bundelen routes naar dezelfde bestemming niet, wordt dezelfde kapotte edge steeds opnieuw gerepareerd
+> (7 corridors deelden hetzelfde Baja-trapje) en kiezen antipodale paren willekeurig een halfrond. **MARNET
+> gemeten:** 15.840 segmenten / 9.646 knopen, segment mediaan 83 km maar **max 3.611 km** = een **grove graaf,
+> geen waterkaart** → kaal over de bol leggen voorkomt land-treffers níet. Aanpak: het netwerk **één keer**
+> verzoenen met `geo-data.js` en daarover routeren. Het issue is zelfstandig leesbaar geschreven.
+> **⚠️ Werkende boom bevat een half-afgemaakte asymmetrische klem** (`src/util.js`, `tools/lane_widths.js`,
+> `data/_searoutes.js` dirty) — `SIDE_SIGN = 1` is empirisch bevestigd; Baja-spreiding hersteld (143 km) maar
+> Japan 0 → 52, waaier ±60° nog ongemeten. **Beslis eerst of dit nog nodig is** als LAR-483 doorgaat.
 
 > **✅ WEERGAVE-FIXES BEVESTIGD (2026-07-17) — LAR-479 + LAR-481 Done, live op Pages.** Lars pauzeerde de koper-pilot
 > bewust: *"als we dat eerst fixen voordat we de routes doen lijkt me beter."* Drie bugs, alle drie visueel bevestigd
@@ -302,6 +337,23 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-18 · Vorm, vaarsnelheid en baan-klem zijn ONTKOPPELD** — zie de architectuurbanner bovenaan. Eén
+  puntenlijst droeg alle drie met tegenstrijdige eisen; elke fix brak de ander. Nu: geometrie = vorm ·
+  `getPointAt` (booglengte) = snelheid · apart `wp`-profiel per 20 km = klem. Alles verbeterde tegelijk.
+- **2026-07-18 · Cache-busting hoort in de pipeline** (`tools/stamp_assets.js`, inhouds-hash `?v=<sha1>`) —
+  ongeversioneerde assets + Pages `max-age=600` lieten Lars drie fixes lang de vorige versie zien.
+- **2026-07-18 · Een antipodale stabilisator moet op een DICHT stuk netwerk liggen** — bijna-antipodale paren
+  hebben een onbepaalde geodeet (MARNET kiest willekeurig). Via 50°N/180° ontstond een kaarsrechte interpolatie
+  door leeg water (één artefact voor een ander ingeruild); via **−10°/−80°** (vóór Peru, op de zusterlane) deelt
+  Valparaíso→Ningbo nu **95 van z'n 100 punten** met Antofagasta→Ningbo. Kosten +2,5% → +5,8% boven de grote
+  cirkel: **vorm boven lengte**.
+- **2026-07-18 · Trapjes horen in de baker opgeruimd** (`simplify_water()`): punt weg alleen als het <12 km van
+  de lijn buur→buur ligt **en** de kortsluiting over water blijft (zelfde bewijslast als `dezigzag`), met **fijne**
+  bemonstering (≥10 monsters) — met de standaard 12 km-stap glipten de Channel Islands door een segment van 15 km.
+- **2026-07-18 · MARNET blijft de router; AIS wordt een aparte laag (LAR-482)** — AIS toont *schepen*, geen
+  *lading*, en gratis wereldwijde historische AIS bestaat praktisch niet.
+- **2026-07-18 · Weergave apart van routing** — *"je kan het water niet goed onderscheiden op deze kaart"* is
+  contrast/basemap (LAR-480), bewust gescheiden gehouden.
 - **2026-07-17 · `tier` stuurt de LABELS, niet de markers (LAR-481)** — de tier-LOD verborg in de praktijk alléén de
   context-nodes zónder stroom: `forced` (uit `usedNodeIds`) overrulet tier, en dat gold voor **57 van de 63** koper-
   nodes. Chuquicamata (share 1,6, géén stroom) plofte in beeld terwijl Los Pelambres (1,6, wél stroom) bleef staan →

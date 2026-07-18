@@ -1,26 +1,77 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-17 (weergave-fixes LAR-479 + LAR-481 bevestigd → terug naar de koper-pilot)*
+*Last updated: 2026-07-18 (patch-spiraal doorbroken → ontkoppeld ontwerp; netwerk-aanpak = LAR-483)*
 
-> **Tussendoor gedaan en afgerond (2026-07-17):** Lars stelde de pilot bewust uit voor drie weergave-bugs —
-> *"als we dat eerst fixen voordat we de routes doen lijkt me beter."* Alle drie live én visueel bevestigd
-> (*"ze werken zoals het hoort nu"*): **LAR-479** tegel-afkap (`cos(lat)` + budget 96 + midden-naar-buiten),
-> **zoom-evenredig draaien**, **LAR-481** marker-LOD (markers verdwijnen niet meer op tier). Commits `297016f`
-> + `8dda38e`. **Bijvangst voor de pilot: de ondergrond is nu scherp op élke zoomstand — routes zijn daardoor
-> makkelijker te beoordelen dan tijdens de vorige test.**
+> **De belangrijkste les van 2026-07-18, lees dit eerst:** vier visuele klachten van Lars bleken symptomen
+> van **één ontwerpfout**, niet vier bugs. Eén puntenlijst droeg tegelijk de **vorm** van de lijn (wil weinig
+> punten), de **vaarsnelheid** (wil gelijkmatige afstand) en de **baan-klem** (wil juist veel punten in nauw
+> water) — elke fix voor de één brak de ander. Na ontkoppeling verbeterde *alles tegelijk*. Merk je dat een
+> fix iets anders breekt: **stop met patchen en zoek de koppeling.** Lars zelf: *"anders blijven we heen en
+> weer gaan zonder echt een fix."*
+>
+> **Cijfers na de ontkoppeling:** snelheidsvariatie **15,9× → 1,27×** (slechtste 47× → 2,3×) · landtreffers
+> **406 → 108** · Japan **8 → 0** · Baja **21 → 0** · Malakka **9 → 0** · geometrie 3.710 → 817 punten.
+> Commits t/m `9444fcb` gepusht.
 
-## ⚠️ NU EERST — pilot-test afronden (LAR-474 In Progress)
+## ⚠️ NU EERST — LAR-483 in een VERSE sessie (High, Todo)
 
-1. [ ] **Japan-observatie verifiëren.** Lars ziet op mobiel (screenshot 03:15) de trans-Pacific bundel dwars over
-       Honshu. **Hypothese: stale cache** — de curve-fix (`3c801a0`) ging pas minuten vóór de screenshot live
-       (Pages CDN 10 min + mobiele browsercache). Eerst: **incognito/verse cache op mobiel**. Nog steeds fout →
-       de Tsugaru/Japanse Zee-passage per trans-Pacific corridor plotten (scratchpad `plot_corridors.js` als basis)
-       en de polyline + getekende curve daar onderzoeken.
-2. [ ] **Lars' idee bespreken: de wereldbal-weergave aanpassen zodat routes duidelijker worden.** Nog te verkennen
-       wát precies (contrast/dikte/kleur stromen? satelliet- vs vector-ondergrond? bundeling?). **Vóór de uitrol.**
-3. [ ] Pas na visuele go van Lars → **LAR-477 uitrol 13 grondstoffen** (pipeline + checker staan klaar;
-       MARNET dekt óók Saint-Laurent/Kaspisch — empirisch getoetst).
-4. [ ] Klein cosmetisch (mag wachten): haven-uitvaart-bochtjes punt 1 (110–160°, onder de marker) ·
+De sessie van 18 juli liep op 500k tokens; Lars vroeg expliciet om over te dragen.
+**[LAR-483] is zelfstandig leesbaar geschreven — begin daar, niet hier.**
+
+1. [ ] **Routeer over één gerepareerd MARNET-netwerk i.p.v. per haven-paar.** Kern: corridors worden nu per
+       paar gebakken → (a) routes naar dezelfde bestemming **bundelen niet** (Lars: *"lijnen gaan uit elkaar
+       terwijl ze dezelfde bestemming hebben naar China"*), (b) dezelfde kapotte edge wordt **steeds opnieuw**
+       gerepareerd (7 corridors deelden hetzelfde Baja-trapje), (c) antipodale paren kiezen willekeurig een
+       halfrond. Fix: netwerk laden → **één keer** verzoenen met `geo-data.js` → daarover routeren.
+       Hergebruik `seg_land_hit()` / `detour_around_land()` / `simplify_water()` uit de baker.
+       **Gemeten:** MARNET = 15.840 segmenten / 9.646 knopen, segment mediaan 83 km maar **max 3.611 km** →
+       een **grove graaf, geen waterkaart**; kaal over de bol leggen voorkomt land-treffers dus níet.
+2. [ ] **Beslis eerst:** build-time bakken vanaf het gerepareerde netwerk (licht, past bij de spec) óf het
+       netwerk naar de runtime (~300 KB, nodig voor M21). Advies: build-time, netwerk bewaren.
+
+## ⚠️ Werkende boom — NIET gepusht
+
+3. [ ] **Asymmetrische baan-klem** (links/rechts apart i.p.v. rondom), zodat één los eiland niet de hele
+       waaier dichtknijpt — Lars: *"voor de westkust van Amerika komen de lijnen samen terwijl dat niet hoeft."*
+       Stand: Baja-spreiding hersteld (**143 km**) maar Japan ging **0 → 52** treffers; laatste wijziging
+       (waaier ±60° per zijde i.p.v. één straal) is **nog ongemeten**. `SIDE_SIGN = 1` is empirisch bevestigd
+       (154 vs 1.571) — niet opnieuw uitzoeken. **Beslis of dit nog nodig is** als LAR-483 doorgaat; de klem
+       kan van vorm veranderen. Ongecommit: `src/util.js`, `tools/lane_widths.js`, `data/_searoutes.js`.
+
+## Daarna
+
+4. [ ] **LAR-474 koper-pilot afronden** — blijft In Progress; de visuele go/no-go van Lars ontbreekt.
+5. [ ] **LAR-477 uitrol 13 grondstoffen** (pipeline + checker staan klaar; MARNET dekt óók Saint-Laurent/Kaspisch).
+6. [ ] **LAR-480 + weergave** — *"het lijkt erop alsof je het water niet echt goed kan onderscheiden op deze
+       kaart"* + het openstaande punt "wereldbal-weergave duidelijker". **Geen routing** — bewust apart
+       gehouden zodat de twee sporen niet weer door elkaar lopen.
+7. [ ] **LAR-482** — AIS-dichtheidslaag ("echte schepen op de bol" met een knop), ná M18. Besloten 18 juli:
+       MARNET blijft de router (AIS toont *schepen*, geen *lading*; geen gratis wereldwijde historie).
+8. [ ] Klein cosmetisch (mag wachten): haven-uitvaart-bochtjes punt 1 (110–160°, onder de marker) ·
        Rotterdam→Duitsland laatste-mijl-waaier (4 ship-stromen over land; bestond al vóór de pilot).
+
+## Vaste pipeline (volgorde telt)
+
+```
+python tools/bake_searoutes.py copper   # geometrie (vorm)
+node tools/lane_widths.js               # klem-profiel wp (los van de geometrie)
+node tools/check_corridors.js           # landkruisingen + scherpe bochten
+node tools/stamp_assets.js              # CACHE-BUSTING — anders ziet Lars niets veranderen
+python build-standalone.py              # 55 checks
+```
+
+## Valkuilen bij verifiëren (kostten 18 juli de meeste tijd)
+
+- **Meet over ALLE 7 vaarbanen**, niet alleen de middellijn. De eerste Japan-verificatie testte alleen de
+  middelste baan en verklaarde het probleem ten onrechte opgelost — terwijl de klacht juist over de
+  **buitenste** banen ging.
+- **Cache-busting is geen luxe.** `index.html` laadde assets zónder versie terwijl Pages `max-age=600` stuurt
+  → Lars zag **drie fixes lang "geen verschil"** terwijl alles wél live stond. Dat was de bron van de meeste
+  frustratie. `tools/stamp_assets.js` lost het op; draai 'm vóór elke commit die assets raakt.
+- **De Browser-pane cachet script-tags** hardnekkig, óók op een nieuwe poort mét querystring. Verifieer via
+  injectie: `fetch(url, {cache:'no-store'})` → `<script>`-element.
+- `const SEAROUTES` kan **niet** opnieuw gedeclareerd worden → bij injectie `const SEAROUTES =` vervangen
+  door `window.__SR2 =`.
+- WebGL-screenshots hangen in een verborgen pane → **visuele bevestiging blijft Lars**.
 
 ## 🧭 M18 · Realistische zeeroutes (searoute) — LAR-473..478 · stand na de pilot-bouwsessie
 

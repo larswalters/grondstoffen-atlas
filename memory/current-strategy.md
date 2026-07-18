@@ -1,5 +1,35 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-17 (weergave-fixes bevestigd; "MARNET beslist" blijft het leidende principe voor M18)*
+*Last updated: 2026-07-18 (ontkoppeld ontwerp; netwerk-aanpak LAR-483 is de volgende stap)*
+
+## 🏗️ Het leidende architectuurprincipe sinds 2026-07-18 — ONTKOPPELEN
+
+De atlas zat vast in een patch-spiraal: elke fix brak iets anders. Oorzaak was geen reeks bugs maar **één
+gekoppelde structuur** — dezelfde puntenlijst bediende drie taken met tegenstrijdige eisen:
+
+| taak | wil | krijgt sinds 18 juli |
+|---|---|---|
+| **vorm** van de lijn | weinig punten, alleen echte bochten | eigen geometrie (817 punten) |
+| **vaarsnelheid** van de schepen | punten gelijkmatig over afstand | `getPointAt` (booglengte) |
+| **baan-klem** (vaarbanen) | juist veel punten in nauw water | eigen profiel `wp`, per 20 km |
+
+**Toets bij elke nieuwe wijziging: raakt dit meer dan één van die drie?** Zo ja, ontkoppel eerst. Het bewijs dat
+dit klopt: na de ontkoppeling verbeterde *alles tegelijk* — snelheidsvariatie 15,9× → 1,27× (slechtste 47× → 2,3×),
+landtreffers 406 → 108, Japan 8 → 0, Baja 21 → 0, Malakka 9 → 0 — terwijl élke eerdere ronde winst op het ene
+inruilde tegen verlies op het andere.
+
+**Vaste pipeline (volgorde telt):**
+`bake_searoutes.py` (vorm) → `lane_widths.js` (klem-profiel) → `check_corridors.js` (validatie) →
+`stamp_assets.js` (**cache-busting — anders ziet Lars niets veranderen**) → `build-standalone.py` (55 checks).
+
+## 🧩 De volgende structurele stap: één gedeeld netwerk (LAR-483)
+
+Corridors worden nu **per haven-paar** gebakken. Daardoor: routes naar dezelfde bestemming bundelen niet
+(Lars: *"lijnen gaan uit elkaar terwijl ze dezelfde bestemming hebben naar China"*), dezelfde kapotte edge wordt
+steeds opnieuw gerepareerd (7 corridors deelden hetzelfde Baja-trapje), en antipodale paren kiezen willekeurig
+een halfrond. **MARNET gemeten:** 15.840 segmenten / 9.646 knopen, segment mediaan 83 km maar **max 3.611 km** →
+een **grove graaf, geen waterkaart**; kaal over de bol leggen voorkomt land-treffers níet. De aanpak is het
+netwerk **één keer** verzoenen met onze landpolygonen en daarover routeren — dan erven alle 14 grondstoffen die
+waterschoonheid, bundelen routes vanzelf, en werkt M21 native (knelpunt = edge eruit).
 
 ## 🖥️ Weergave-laag (2026-07-17, bevestigd) — de ondergrond staat nu
 Drie fixes live en door Lars bevestigd; hij pauzeerde de pilot er bewust voor. **Wat dit betekent voor de manier

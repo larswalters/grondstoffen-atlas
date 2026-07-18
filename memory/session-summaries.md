@@ -1,6 +1,37 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-18 (sessie 20) — Patch-spiraal doorbroken: vorm/snelheid/klem ontkoppeld + netwerk-diagnose (LAR-483)
+- **Startpunt:** besluit dat **MARNET de router blijft** (Lars overwoog 3 maanden AIS-data; AIS toont schepen,
+  geen lading, en gratis wereldwijde historie bestaat praktisch niet). Zijn idee "echte schepen op de bol met
+  een knop" → **LAR-482** als losse dichtheidslaag ná M18.
+- **Vier visuele klachten van Lars**, alle vier terecht: band vaarbanen over Japan · band door de lege zuidelijke
+  Stille Oceaan · *"rare knik naast Amerika waar alle paden over elkaar gaan en de balletjes raar doen"* (Baja,
+  plus Vogelkop en Malakka) · *"soms gaan ze heel snel en dan ineens afremmen"* + lijnen die samenkomen waar dat
+  niet hoeft én uit elkaar gaan terwijl ze dezelfde bestemming hebben.
+- **De grootste tijdvreter was CACHE, niet routing.** `index.html` laadde assets zónder versie terwijl Pages
+  `max-age=600` stuurt → Lars zag **drie fixes lang "geen verschil"** terwijl alles wél live stond. Opgelost met
+  `tools/stamp_assets.js` (inhouds-hash per asset). Pas daarna zag hij verandering: *"nu pas zie ik dat het goed gaat."*
+- **Methodologische fout van mijn kant:** de eerste Japan-verificatie testte **alleen de middelste vaarbaan** en
+  verklaarde het probleem opgelost, terwijl de klacht juist over de **buitenste** banen ging. Les vastgelegd.
+- **Het keerpunt:** Lars concludeerde *"ik krijg steeds meer het idee dat we dat niet echt kunnen fixen want anders
+  blijven we heen en weer gaan zonder echt een fix"* — en had gelijk. Eén puntenlijst droeg tegelijk de vorm van de
+  lijn, de vaarsnelheid en de baan-klem, met tegenstrijdige eisen. Na **ontkoppeling** verbeterde alles tegelijk:
+  snelheidsvariatie **15,9× → 1,27×** (slechtste 47× → 2,3×), landtreffers **406 → 108**, Japan **8 → 0**,
+  Baja-knikken **21 → 0**, Malakka **9 → 0**, geometrie 3.710 → 817 punten.
+- **Onderweg gefixt:** trans-Pacific corridors consistent op 50°N (met de les dat een stabilisator op een *dicht*
+  stuk netwerk moet liggen — via 50°N/180° ontstond een kaarsrechte interpolatie door leeg water; via −10°/−80°
+  deelt Valparaíso nu 95 van 100 punten met de zusterlane) · trapje-opruiming in de baker (694 trapjes) · een
+  nieuwe landkruising bij de Channel Islands die `check_corridors` ving en die door fijner bemonsteren verdween.
+- **MARNET doorgemeten:** 4.109 features / 15.840 segmenten / 9.646 knopen; segmentlengte mediaan 83 km,
+  **max 3.611 km** → een **grove graaf, geen waterkaart**. Lars' idee "netwerk over de bol laden" voorkomt
+  land-treffers dus niet vanzelf; de bruikbare vorm is het netwerk **één keer** verzoenen met onze landpolygonen.
+- **Bewust NIET doorgepatcht** (sessie zat op 500k tokens; Lars: *"leg het duidelijk vast zodat een nieuwe sessie
+  niet weer het wiel hoeft uit te vinden"*) → **LAR-483** (High, Todo), zelfstandig leesbaar.
+- **Commits t/m `9444fcb` gepusht.** Asymmetrische klem (links/rechts, `SIDE_SIGN = 1` empirisch bevestigd) staat
+  **in uitvoering en is niet gepusht**: Baja-spreiding hersteld (143 km) maar Japan 0 → 52; waaier ±60° ongemeten.
+- **LAR-474 blijft In Progress** — visuele go/no-go van Lars ontbreekt.
+
 ## 2026-07-17 (sessie 19) — Drie weergave-fixes, visueel bevestigd (LAR-479 + LAR-481) — pilot bewust gepauzeerd
 - **Lars' prioritering:** *"we waren bezig met het verbeteren van de zee routes middels een pilot op koper, echter
   denk ik dat we eerst prioriteit moeten stellen aan het fixen van de globe tegels laadprobleem… als we dat eerst
