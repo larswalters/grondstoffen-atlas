@@ -2,12 +2,21 @@
 """
 fetch_waterways.py — bevaarbare-vaarweg-middellijnen per systeem (M24, LAR-486).
 
-Twee bronnen; de bake-off van LAR-486 vergelijkt ze op hetzelfde traject:
-  osm    Overpass API — waterway=river|canal|fairway met een CEMT-tag of een
-         naam uit de whitelist, binnen de systeem-bbox.
-         Licentie: ODbL — "© OpenStreetMap contributors" hoort in de HUD.
-  unece  het E-waterway-netwerk uit de UNECE Blue Book database
-         (gis.unece.org, ArcGIS Feature Service / shapefile-export).
+Drie bronnen; de bake-off van LAR-486 vergeleek de eerste twee op hetzelfde traject:
+  osm        Overpass API — waterway=river|canal|fairway met een CEMT-tag of een
+             naam uit de whitelist, binnen de systeem-bbox.
+             Licentie: ODbL — "© OpenStreetMap contributors" hoort in de HUD.
+  geofabrik  DEZELFDE OSM-data, maar uit een lokale regio-extract (.osm.pbf)
+             i.p.v. via de API. Zelfde licentie, zelfde filters, zelfde stitcher.
+  unece      het E-waterway-netwerk uit de UNECE Blue Book database
+             (gis.unece.org, ArcGIS Feature Service / shapefile-export).
+
+Waarom `geofabrik` naast `osm`: de publieke Overpass-mirrors zijn de traagste en
+broosste stap van de hele pijplijn gebleken (~25 min voor 6 systemen tegen ~1 min
+bakken, met 504's op queries die minuten eerder slaagden). Een regio-extract haalt
+~45 MB/s en is daarna offline en herhaalbaar — wat de wereldwijde uitrol met
+tientallen systemen pas praktisch maakt. `osm` blijft bestaan als kruiscontrole:
+beide paden horen dezelfde middellijn op te leveren.
 
 De extractie is bron-agnostisch: uit de ruwe segmenten wordt het KORTSTE
 WATERPAD gestitcht van anker-zee naar anker-binnen (dijkstra over de
@@ -19,6 +28,7 @@ coördinaten beginnen ALTIJD aan de zeezijde. bake_marnet.py leest dit via
 --vaarwegen en hangt de ketens aan het MARNET-netwerk.
 
 Draaien:  python v2/tools/fetch_waterways.py osm
+          python v2/tools/fetch_waterways.py geofabrik [--download]
           python v2/tools/fetch_waterways.py unece --bestand <pad .geojson/.shp>
 """
 
@@ -61,7 +71,7 @@ R_AARDE = 6371.0
 
 # Stitch-tolerantie per bron: OSM-ways delen exacte knopen (kleine marge voor
 # fairway->rivier-overgangen); officiële netten hebben grovere segmentatie.
-STITCH_KM = {"osm": 0.06, "unece": 0.8}
+STITCH_KM = {"osm": 0.06, "geofabrik": 0.06, "unece": 0.8}
 ANKER_TOL_KM = 6.0    # anker moet binnen deze afstand van de geometrie liggen
 SIMPLIFY_KM = 0.025   # Douglas-Peucker ~25 m: bochten blijven, ruis verdwijnt
 
@@ -80,6 +90,7 @@ SYSTEMEN = [
         label="noordzeekanaal",
         zeevaart=True,
         cemt="VIb",
+        extracts=["nederland"],
         bbox=(52.34, 4.50, 52.52, 5.02),
         namen=["Noordzeekanaal", "Het IJ", "Afgesloten IJ", "Buiten-IJ",
                "Voorzaan", "Zijkanaal G", "Buitenhaven", "IJmuiden"],
@@ -90,6 +101,7 @@ SYSTEMEN = [
         label="waal",
         zeevaart=False,
         cemt="VIc",
+        extracts=["nederland"],
         bbox=(51.70, 3.95, 52.05, 6.00),
         namen=["Nieuwe Waterweg", "Het Scheur", "Scheur", "Nieuwe Maas",
                "Noord", "Beneden-Merwede", "Beneden Merwede",
@@ -106,6 +118,7 @@ SYSTEMEN = [
         label="mississippi",
         zeevaart=True,
         cemt="",
+        extracts=["us-louisiana", "us-mississippi"],
         bbox=(29.85, -91.35, 30.60, -89.90),
         namen=["Mississippi River", "Mississippi"],
         anker_zee=(-90.055, 29.935),    # rivier bij New Orleans (Algiers Point)
@@ -116,6 +129,7 @@ SYSTEMEN = [
         zeevaart=False,
         cemt="",
         volgt_op="mississippi",
+        extracts=["us-louisiana", "us-mississippi", "us-arkansas", "us-tennessee"],
         bbox=(30.30, -92.00, 35.35, -89.60),
         namen=["Mississippi River", "Mississippi"],
         anker_zee=(-91.190, 30.445),    # = anker_binnen van 'mississippi'
@@ -128,6 +142,7 @@ SYSTEMEN = [
         label="yangtze",
         zeevaart=True,
         cemt="",
+        extracts=["china"],
         bbox=(31.90, 118.55, 32.45, 119.70),
         namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
         anker_zee=(119.545, 32.195),    # MARNET-uiteinde bij Zhenjiang
@@ -138,10 +153,26 @@ SYSTEMEN = [
         zeevaart=False,
         cemt="",
         volgt_op="yangtze",
+        extracts=["china"],
         bbox=(29.50, 113.90, 32.30, 118.85),
         namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
         anker_zee=(118.735, 32.095),    # = anker_binnen van 'yangtze'
         anker_binnen=(114.300, 30.590),  # haven van Wuhan
+    ),
+    # ---- Myanmar (LAR-485 restpunt) — MARNET eindigt 21 km voor Yangon in een
+    # doodlopende knoop 5358; de haven snapt daardoor 21,8 km weg en de route
+    # eindigt als rechte stub over land. Namen komen uit de extract zelf
+    # (het OSM-hoofdlabel is Birmaans; de Engelse naam staat in name:en).
+    dict(
+        label="yangon",
+        zeevaart=True,
+        cemt="",
+        extracts=["myanmar"],
+        bbox=(16.45, 95.95, 16.90, 96.45),
+        namen=["ရန်ကုန်မြစ်",
+               "လှိုင်မြစ်"],
+        anker_zee=(96.250, 16.595),     # MARNET-uiteinde knoop 5358
+        anker_binnen=(96.168, 16.775),  # haven van Yangon
     ),
 ]
 
@@ -231,6 +262,108 @@ def segmenten_osm(systeem):
         segs.append((pts, naam))
         if tags.get("CEMT"):
             cemt_gezien[naam or f"way/{el.get('id')}"] = tags["CEMT"]
+    return segs, cemt_gezien
+
+
+# ------------------------------------------------------------ bron: Geofabrik
+#
+# Zelfde OSM-data als het Overpass-pad, maar uit een lokale regio-extract. De
+# filters hieronder spiegelen de Overpass-query exact (waterway-type, naam uit de
+# whitelist, CEMT alleen als het systeem een CEMT-klasse draagt), zodat beide
+# bronnen vergelijkbaar blijven — dat is de kruiscontrole.
+
+GEOFABRIK = os.path.join(CACHE, "geofabrik")
+GEOFABRIK_BASIS = "https://download.geofabrik.de/"
+
+# Geofabrik levert géén free-shapefile voor de grootste regio's (Brazilië,
+# Rusland geven 0 bytes), dus .osm.pbf is het enige formaat dat overal bestaat.
+# Rusland staat als federale districten in de lijst: de Wolga heeft er drie
+# nodig (~1,9 GB) i.p.v. het hele land (~3,9 GB).
+GEOFABRIK_REGIOS = {
+    "myanmar": "asia/myanmar",
+    "china": "asia/china",
+    "vietnam": "asia/vietnam",
+    "cambodia": "asia/cambodia",
+    "argentina": "south-america/argentina",
+    "paraguay": "south-america/paraguay",
+    "congo-drc": "africa/congo-democratic-republic",
+    "rusland-centraal": "russia/central-fed-district",
+    "rusland-wolga": "russia/volga-fed-district",
+    "rusland-zuid": "russia/south-fed-district",
+    "nederland": "europe/netherlands",
+    # de Mississippi vormt staatsgrenzen -> beide oevers nodig
+    "us-louisiana": "north-america/us/louisiana",
+    "us-mississippi": "north-america/us/mississippi",
+    "us-arkansas": "north-america/us/arkansas",
+    "us-tennessee": "north-america/us/tennessee",
+}
+
+
+def extract_pad(sleutel):
+    return os.path.join(GEOFABRIK, f"{sleutel}-latest.osm.pbf")
+
+
+def download_extracts(sleutels):
+    """Haalt ontbrekende regio-extracts op (~45 MB/s gemeten)."""
+    os.makedirs(GEOFABRIK, exist_ok=True)
+    for sleutel in sleutels:
+        pad = extract_pad(sleutel)
+        if os.path.exists(pad):
+            print(f"  {sleutel:18s} al aanwezig ({os.path.getsize(pad) / 1048576:,.0f} MB)")
+            continue
+        if sleutel not in GEOFABRIK_REGIOS:
+            raise SystemExit(f"onbekende regio '{sleutel}' — vul GEOFABRIK_REGIOS aan")
+        url = f"{GEOFABRIK_BASIS}{GEOFABRIK_REGIOS[sleutel]}-latest.osm.pbf"
+        t0 = time.time()
+        req = urllib.request.Request(url, headers={
+            "User-Agent": "grondstoffen-atlas/M24 (github.com/larswalters/grondstoffen-atlas)"})
+        tijdelijk = pad + ".deel"
+        with urllib.request.urlopen(req, timeout=180) as r, open(tijdelijk, "wb") as f:
+            while True:
+                blok = r.read(1 << 20)
+                if not blok:
+                    break
+                f.write(blok)
+        os.replace(tijdelijk, pad)   # pas hernoemen als hij compleet is
+        mb = os.path.getsize(pad) / 1048576
+        print(f"  {sleutel:18s} {mb:7,.0f} MB in {time.time() - t0:4.0f}s")
+
+
+def segmenten_geofabrik(systeem):
+    import osmium  # alleen dit pad heeft het nodig; Overpass draait zonder
+
+    la0, lo0, la1, lo1 = systeem["bbox"]
+    marge = 0.15
+    wit = set(systeem["namen"])
+    segs, cemt_gezien = [], {}
+    for sleutel in systeem["extracts"]:
+        pad = extract_pad(sleutel)
+        if not os.path.exists(pad):
+            raise SystemExit(f"ontbreekt: {pad}\n  haal 'm op met: "
+                             f"python v2/tools/fetch_waterways.py geofabrik --download")
+        fp = (osmium.FileProcessor(pad)
+              .with_locations()
+              .with_filter(osmium.filter.EntityFilter(osmium.osm.WAY))
+              .with_filter(osmium.filter.KeyFilter("waterway")))
+        for obj in fp:
+            tags = obj.tags
+            if tags.get("waterway") not in ("river", "canal", "fairway"):
+                continue
+            naam = tags.get("name", "")
+            # spiegelt de twee Overpass-clauses: naam uit de whitelist, of een
+            # CEMT-tag maar alléén bij een systeem dat zelf een CEMT-klasse draagt
+            if naam not in wit and not (systeem.get("cemt") and tags.get("CEMT")):
+                continue
+            pts = [(n.location.lon, n.location.lat) for n in obj.nodes
+                   if n.location.valid()]
+            if len(pts) < 2:
+                continue
+            if not any(lo0 - marge <= lo <= lo1 + marge and la0 - marge <= la <= la1 + marge
+                       for lo, la in pts):
+                continue
+            segs.append((pts, naam))
+            if tags.get("CEMT"):
+                cemt_gezien[naam or f"way/{obj.id}"] = tags["CEMT"]
     return segs, cemt_gezien
 
 
@@ -436,13 +569,22 @@ def simplify(pts, tol_km=SIMPLIFY_KM):
 
 # ---------------------------------------------------------------- hoofdflow
 
-def haal(bron, bestand=None):
+def haal(bron, bestand=None, alleen=None):
     features = []
-    for systeem in SYSTEMEN:
+    systemen = [s for s in SYSTEMEN if not alleen or s["label"] in alleen]
+    if alleen:
+        onbekend = set(alleen) - {s["label"] for s in SYSTEMEN}
+        if onbekend:
+            raise SystemExit(f"onbekende labels: {sorted(onbekend)}")
+    for systeem in systemen:
         label = systeem["label"]
         print(f"\n[{label}] bron={bron}")
         if bron == "osm":
             segs, cemt_gezien = segmenten_osm(systeem)
+        elif bron == "geofabrik":
+            if not systeem.get("extracts"):
+                raise SystemExit(f"{label}: geen 'extracts' opgegeven — vul de regio('s) in")
+            segs, cemt_gezien = segmenten_geofabrik(systeem)
         else:
             if not bestand:
                 raise SystemExit("unece vereist --bestand <pad naar geojson/shapefile>")
@@ -482,9 +624,12 @@ def haal(bron, bestand=None):
         })
 
     os.makedirs(CACHE, exist_ok=True)
-    pad = os.path.join(CACHE, f"vaarwegen_{bron}.geojson")
-    bronvermelding = ("OpenStreetMap contributors (ODbL) via Overpass API" if bron == "osm"
-                      else "UNECE Blue Book database — E-waterway network (gis.unece.org)")
+    achtervoegsel = f"_{'-'.join(sorted(alleen))}" if alleen else ""
+    pad = os.path.join(CACHE, f"vaarwegen_{bron}{achtervoegsel}.geojson")
+    bronvermelding = {
+        "osm": "OpenStreetMap contributors (ODbL) via Overpass API",
+        "geofabrik": "OpenStreetMap contributors (ODbL) via Geofabrik-regio-extract",
+    }.get(bron, "UNECE Blue Book database — E-waterway network (gis.unece.org)")
     with open(pad, "w", encoding="utf-8") as f:
         json.dump({"type": "FeatureCollection",
                    "bron": bronvermelding,
@@ -494,7 +639,17 @@ def haal(bron, bestand=None):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("bron", choices=["osm", "unece"])
+    ap.add_argument("bron", choices=["osm", "geofabrik", "unece"])
     ap.add_argument("--bestand", help="unece: pad naar geojson of shapefile")
+    ap.add_argument("--download", action="store_true",
+                    help="geofabrik: haal ontbrekende regio-extracts eerst op")
+    ap.add_argument("--alleen", help="komma-gescheiden labels i.p.v. alle systemen "
+                                     "(schrijft naar een eigen bestand — handig om te vergelijken)")
     args = ap.parse_args()
-    haal(args.bron, args.bestand)
+    alleen = [s.strip() for s in args.alleen.split(",")] if args.alleen else None
+    if args.download:
+        nodig = sorted({r for s in SYSTEMEN if not alleen or s["label"] in alleen
+                        for r in s.get("extracts", [])})
+        print(f"regio-extracts ophalen ({len(nodig)}):")
+        download_extracts(nodig)
+    haal(args.bron, args.bestand, alleen)
