@@ -1,6 +1,32 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 32) — Main + Main-Donau-Kanaal (LAR-493)
+
+`main` **391,3 km** (Mainz → Bamberg, `aftakking:rijn-boven` op **0,00 km**) ·
+`main-donau-kanaal` **168,4 km** (Bamberg → Kelheim). **Acceptatie: Rotterdam → Kelheim
+1.119 km** over `rijn`+`rijn-boven`+`main`+`main-donau-kanaal`; elk label los schakelbaar.
+
+**Drie vondsten vóór het bouwen.** (a) **`de-hessen` ontbrak als extract** — de Main loopt ~100 km
+door Hessen; de `fr-alsace`-les voor de tweede keer. (b) **`Ludwig-Donau-Main-Kanal`** (1846,
+buiten gebruik sinds 1950) ligt met bijna dezelfde strekking náást het MDK → bewust niet
+gewhitelist. (c) Het MDK viel uiteen in **zeventien componenten**: elke sluis is een eigen
+`Schleuse <plaats>`-way, plus de **naamvariant `Main-Donau-Kanal (RMD)`** bij Kelheim (32 van
+1.763 knopen bleven anders los).
+
+**Kernles — de VORM van een lengte-afwijking is de diagnose, niet de grootte.** De Main komt op
++1,9% uit, maar die afwijking *wandelt* over negen punten (Frankfurt −2,5 · **Würzburg +0,2** ·
+Bamberg +7,3) = meander-vs-sluiskanaal. Spiegelbeeld van LAR-505, waar juist de *constantheid*
+het Julianakanaal bewees. MDK bevestigt zichzelf met `CEMT-tags gezien: Vb`.
+
+**Nieuw gereedschap** `v2/tools/diagnose_keten.py` (commit `2591015`).
+
+Regressie exact (19.610 · 8.031 · Nijmegen 172 · Luik 375 · A'dam→Nijmegen 105 · Shanghai 19.677 ·
+Memphis 10.000 · Wuhan 20.626 · Kehl 757). Netwerk 9.975 → **10.013** knopen, 16.223 → **16.261**
+edges. Commit `c353dfa`, live `?v=026`. **Ook: LAR-505 op Done** na Lars' visuele go.
+
+**Open:** visuele go op LAR-493.
+
 ## 2026-07-19 (sessie 31) — Maas + Benelux-delta (LAR-505) + de eerste ringsluiting
 
 **Vier systemen:** `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op **0,00 km**) ·

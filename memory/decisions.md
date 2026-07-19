@@ -1,7 +1,42 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-505 Maas + delta: ringsluiting `sluitAan`)*
+*Last updated: 2026-07-19 (LAR-493 Main + MDK: de vorm van een lengte-afwijking)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-19 · LAR-493 — de VORM van een lengte-afwijking is de diagnose, de grootte niet
+
+Twee systemen op één dag met een afwijking t.o.v. de officiële kilometrage, en tegengestelde
+conclusies — dat maakt de regel bruikbaar:
+
+* **Maas (LAR-505):** −22 km, maar **constant** vanaf Maasbracht en volledig ontstaan tussen
+  Eijsden en Maasbracht → het **Julianakanaal** snijdt de Grensmaas af. Keten is goed.
+* **Main (LAR-493):** +1,9%, maar de afwijking **wandelt** over negen punten (Frankfurt −2,5 ·
+  Aschaffenburg +3,8 · **Würzburg +0,2** · Schweinfurt +4,5 · Bamberg +7,3) → OSM-middellijn door
+  de Mainschleifen tegen een kilometrage die lussen via sluiskanalen afsnijdt. Keten is ook goed.
+* **Mosel (LAR-506):** −18 km die pas ná Frouard ontstond en daarna **oplopend** bleef → verkeerde
+  vaarweg (Freycinet-kanalen). Keten was fout.
+
+**Werkwijze:** meet nooit alleen de totaallengte. Zet de keten af tegen 6–14 herkenbare punten en
+kijk naar het **verloop** van het verschil: constant = een bekende afsnijding · wandelend = normaal
+bron-vs-kilometrage-verschil · oplopend of springend vanaf één plek = een verkeerd gevolgde tak.
+
+## 2026-07-19 · LAR-493 — historische kanalen zijn een eigen soort "water ≠ vaarweg"
+
+`Ludwig-Donau-Main-Kanal` (74,7 km, 496 ways) loopt vrijwel parallel aan het Main-Donau-Kanaal met
+bijna dezelfde lon/lat-strekking. Het is het **Ludwigskanaal uit 1846**, sinds 1950 buiten gebruik
+en deels gedempt. Bewust niet gewhitelist.
+
+Dit is een **herkenbaar patroon**, geen incident: bij een moderne grootgabarit-vaarweg ligt vaak de
+19e-eeuwse voorganger in hetzelfde dal, met een naam die op de nieuwe lijkt. Verwacht 'm bij de
+Donau, de Rhône en het Canal du Midi-gebied. De survey zet 'm netjes zichtbaar náást de echte
+vaarweg — mits je op **strekking** kijkt en niet alleen op naam.
+
+## 2026-07-19 · LAR-493 — `de-hessen` en de extract-regel, tweede toepassing
+
+De Main loopt tussen Mainz en Aschaffenburg ~100 km door **Hessen**. Die extract stond niet in
+`GEOFABRIK_REGIOS`. Zelfde vorm als `fr-alsace` bij de Rijn: **kijk waar de geul ligt, niet welke
+deelstaat/land de rivier "hoort" te raken.** Controleer bij een nieuwe extract altijd de
+**bestandsgrootte** (326 MB hier) — een niet-bestaande regio geeft 0 bytes, geen 404.
 
 ## 2026-07-19 · LAR-505 — een keten mag aan BEIDE kanten hechten (`sluitAan`)
 

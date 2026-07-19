@@ -1,6 +1,47 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-505 Maas + delta; ringsluiting `sluitAan`)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-493 Main + Main-Donau-Kanaal)*
+
+> **⛓️ MAIN + MAIN-DONAU-KANAAL — DE SCHAKEL NOORDZEE/ZWARTE ZEE (2026-07-19, laatste).**
+> Live t/m `c353dfa` (`?v=026`). **→ VOLGENDE: [LAR-494] Donau** = de as Rotterdam→Zwarte Zee
+> compleet. **Open: Lars' visuele go op [LAR-493]** + zijn gevoelscheck op het slepen.
+>
+> `main` **391,3 km** (Mainz-Kostheim → Bamberg, `aftakking:rijn-boven` op **0,00 km**) ·
+> `main-donau-kanaal` **168,4 km** (Bamberg → Kelheim). **Acceptatie: Rotterdam → Kelheim
+> 1.119 km** over `rijn`+`rijn-boven`+`main`+`main-donau-kanaal`; elk label los schakelbaar, alle
+> drie leggen de route plat (ze liggen in serie). De Main mondt bij rkm 498 uit in de Rijn, dus
+> **middenin `rijn-boven`** (Bingen 528 → Basel 170).
+>
+> **⚠️ DE VORM VAN EEN LENGTE-AFWIJKING IS DE DIAGNOSE, DE GROOTTE ZEGT NIETS.** Drie systemen,
+> drie uitkomsten: de **Maas** week −22 km af maar **constant** vanaf één plek → het Julianakanaal
+> snijdt de Grensmaas af, keten goed. De **Main** wijkt +1,9% af maar die afwijking **wandelt** over
+> negen punten (Frankfurt −2,5 · Aschaffenburg +3,8 · **Würzburg +0,2** op ketenkm 251,3 tegen
+> officieel Main-km 251,5 · Schweinfurt +4,5 · Bamberg +7,3) → meander-vs-sluiskanaal, keten goed.
+> De **Mosel** week −18 km af, ontstaan ná Frouard en daarna **oplopend** → verkeerde vaarweg, keten
+> fout. Meet dus nooit alleen de totaallengte: zet de keten tegen 6–14 punten en kijk naar het
+> **verloop**. Constant = bekende afsnijding · wandelend = normaal bron-verschil · oplopend of
+> springend vanaf één plek = verkeerde tak.
+>
+> **Drie vondsten, alle vóór het bouwen.** (a) **`de-hessen` ontbrak als extract** — de Main loopt
+> tussen Mainz en Aschaffenburg ~100 km door Hessen; de `fr-alsace`-les voor de tweede keer: kijk
+> waar de **geul** ligt, niet welke deelstaat de rivier "hoort" te raken (326 MB, dus ook geen
+> 0-byte-val). (b) **`Ludwig-Donau-Main-Kanal`** (74,7 km, 496 ways) ligt met bijna dezelfde
+> strekking náást het MDK — het Ludwigskanaal uit 1846, buiten gebruik sinds 1950. Bewust niet
+> gewhitelist; **verwacht dit patroon vaker**, want bij een moderne grootgabarit-vaarweg ligt vaak
+> de 19e-eeuwse voorganger in hetzelfde dal met een gelijkende naam. (c) **Het MDK viel uiteen in
+> zeventien componenten**: elke sluis is een eigen `Schleuse <plaats>`-way (Albertkanaal-patroon,
+> maar één kolk per sluis dus geen gabarit-keuze), plus de **naamvariant `Main-Donau-Kanal (RMD)`**
+> op het laatste stuk bij Kelheim — zonder die vorm bleef 32 van de 1.763 knopen los hangen.
+>
+> **NIEUW GEREEDSCHAP `v2/tools/diagnose_keten.py`** (commit `2591015`) — componenten op de **échte**
+> stitcher-graaf plus de kleinste gaten mét de namen aan weerszijden. Draai dit meteen bij een
+> `geen doorlopend waterpad`-fout in plaats van namen te gokken: bij Kelheim wees het direct de
+> naamvariant aan, wat de drie rondes scheelde die het Albertkanaal kostte.
+>
+> **Regressie exact:** 19.610 / 8.031 / Nijmegen 172 / Luik 375 / A'dam→Nijmegen 105 /
+> A'dam→Shanghai 19.677 / Memphis 10.000 / Wuhan 20.626 / Kehl 757 / Duisburg 281. Netwerk
+> 9.975→**10.013** knopen, 16.223→**16.261** edges; havens >50 km 1.424→**1.422**; corridor 0 m.
+> Zie `memory/decisions.md` + [[2026-07-19-grondstoffen-atlas-lar493-main-donau-kanaal]].
 
 > **🌊 DE MAAS EN DE DELTA — EN HET MOMENT DAT LIJNEN EEN NET WORDEN (2026-07-19, laatste).**
 > Live t/m `ba8c287` (`?v=025`). **→ VOLGENDE: [LAR-493] Main + [LAR-494] Donau** (samen

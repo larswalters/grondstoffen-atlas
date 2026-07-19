@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-505 Maas + delta uitgevoerd; NU = LAR-493 Main -> LAR-494 Donau)*
+*Last updated: 2026-07-19 (LAR-505 Done, LAR-493 uitgevoerd; NU = LAR-494 Donau)*
 
 ## 👀 EERST: Lars' gevoelscheck op het slepen
 
@@ -15,7 +15,7 @@ Koblenz → Neuves-Maisons 392,0 km (officieel ~394, −0,5%), aansluiting 0,13 
 Daarmee is LAR-504 end-to-end bewezen. Nieuwe les: **bevaarbaar ≠ bevaarbaar op commercieel
 gabarit** — zie `decisions.md`. Nieuwe extracts `fr-lorraine` + `luxemburg`.
 
-## ✅ AFGEROND (op de visuele go na): [LAR-505] Maas + Benelux-delta (2026-07-19)
+## ✅ AFGEROND: [LAR-505] Maas + Benelux-delta (2026-07-19) — visuele go binnen, **Done**
 
 Vier systemen: `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op 0,00 km) · `maas-boven`
 64,2 (Luik → Namen) · `albertkanaal` 127,5 (`aftakking:maas`) · `amsterdam-rijnkanaal` 73,3.
@@ -24,22 +24,29 @@ loopt dwars *door* een aftakking.
 
 Nieuw mechanisme **`sluitAan`** — een keten hecht aan **beide** kanten. Zie `decisions.md`.
 
-## 👀 OOK OPEN: Lars' visuele go op de Maas
+## ✅ AFGEROND (op de visuele go na): [LAR-493] Main + Main-Donau-Kanaal (2026-07-19)
 
-Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Maas van de Biesbosch tot Luik,
-en **Amsterdam→Nijmegen dat nu binnendoor gaat** (263 → 105 km) in plaats van om via zee.
-Daarna [LAR-505] op Done.
+`main` 391,3 km (Mainz → Bamberg, `aftakking:rijn-boven` op 0,00 km) · `main-donau-kanaal` 168,4 km
+(Bamberg → Kelheim). **Rotterdam → Kelheim 1.119 km.** Live t/m `c353dfa` (`?v=026`).
+Nieuw gereedschap `v2/tools/diagnose_keten.py`.
 
-## ➡️ NU: [LAR-493] Main + Main-Donaukanaal, daarna [LAR-494] Donau
+## 👀 EERST: Lars' visuele go op de Main
 
-Samen maken die de as **Rotterdam → Zwarte Zee** compleet. De Main takt bij Mainz **30 km ín
-`rijn-boven`** aan — dat is precies waar [LAR-504] voor gebouwd is, en het patroon is nu twee keer
-gelopen (Mosel, Maas), dus dit zou een vaste-werkwijze-klus moeten zijn.
+Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Main van Mainz via Würzburg naar
+Bamberg, en het Main-Donau-Kanaal door naar Kelheim. Daarna [LAR-493] op Done.
 
-⚠️ Verwacht bij de Donau de **gecombineerde grensnamen** die de survey al vond: `Dunaj / Duna` en
-`Dunărea - Дунав`. Zonder allebei knipt de keten bij elke grens door.
-⚠️ Verwacht ook de **CEMT-clause-val** opnieuw (Mosel + Maas allebei) — begin met
-`cemt_insluiten=False` tenzij er een reden is om 'm aan te zetten.
+## ➡️ NU: [LAR-494] Donau — de as Rotterdam → Zwarte Zee compleet
+
+Kelheim is nu het kopeinde en wacht op de Donau-aansluiting. Dit is de laatste schakel van de as.
+
+⚠️ Verwacht de **gecombineerde grensnamen** die de survey al vond: `Dunaj / Duna` en
+`Dunărea - Дунав`. Zonder allebei knipt de keten bij **elke** grens door — en de Donau raakt er tien.
+⚠️ Begin met **`cemt_insluiten=False`** (Mosel, Maas én Main gingen alle drie zo).
+⚠️ Verwacht een **historisch parallel kanaal** (zie `decisions.md`) en **sluizen als aparte ways**
+zoals bij het MDK — draai bij een stitch-fout meteen `v2/tools/diagnose_keten.py <label>` in plaats
+van namen te gokken.
+Extracts al binnen: `oostenrijk`, `slowakije`, `hongarije`, `kroatie`, `servie`, `roemenie`,
+`bulgarije`, `de-bayern`.
 
 ## ➡️ DAARNA: [LAR-495] Schelde / Seine / Rhône
 
