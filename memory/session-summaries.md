@@ -1,6 +1,24 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 24) — LAR-486 NL-pilot uitgevoerd: bake-off OSM vs UNECE, alle tests groen, live
+- **Pipeline gebouwd + bewezen** (commit `d9a9e0f`, `?v=016`, live op Pages): `fetch_waterways.py`
+  (bron-agnostische stitcher: kortste waterpad anker→anker; OSM via Overpass, UNECE via de Blue Book
+  ArcGIS-laag — achter Cloudflare, via de Browser-pane; NL-extract in build-cache) →
+  `EXTRA_VAARWEGEN`-stap (ketens `soort=1`, knoop per ~15 km, passage-labels + zeevaart-vlag;
+  **corridor-toets** ≤ 250 m i.p.v. vlak-toets; zee-overgang NE-water óf zone) →
+  **verzoening-cache** (35 min → 1 min) → `?vaarwegbron=unece`-toggle + ODbL/UNECE-attributie.
+- **Tests groen op beide varianten:** zeenet exact onaangetast (19.610/8.031 tussen de óúde
+  knoop-ids — regressie in 2 lagen, aangescherpt door Lars); **Amsterdam via IJmuiden** (−131 km,
+  visueel bevestigd); R'dam→Nijmegen 172 km over `waal`; snaps Amsterdam 0,8 / Nijmegen 2,1 /
+  Dordrecht 3,8 km; netwerk +12 knopen/+12 edges, bin 1.165 KB.
+- **Bake-off:** bronnen mediaal ~80 m eens; OSM gedetailleerder + scriptbaar, UNECE officiële
+  CEMT-klassen maar handwerk + EU-only. Advies: OSM-geometrie + UNECE/USACE-meetlat.
+- **Hobbels:** 2× ~40 min bake gestrand op te strenge zee-overgang-check (Maasmond = NE-land →
+  zone-vrijstelling gebouwd); argparse `--suffix=-unece`; winst-meting via de oude Markermeer-knoop.
+- **Linear:** resultaat-comment op LAR-486 (In Progress tot keuze); LAR-489 (AIS-realisme-check,
+  backlog) vastgelegd. **Open: Lars vergelijkt de twee live-URL's en kiest de bron.**
+
 ## 2026-07-19 (sessie 23) — M24-bronnenplan: bake-off OSM vs UNECE, pilots per regio (planning, géén code)
 - Lars wilde vóór de M24-bouw eerst de **bron** bespreken (zee had de vector-kustlijn als controlepunt; voor
   binnenwater bestaat zoiets niet vanzelf).

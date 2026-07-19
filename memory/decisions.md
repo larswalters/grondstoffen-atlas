@@ -1,7 +1,34 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24-bronnenplan besloten — bake-off OSM vs UNECE, pilots per regio, labels bij de bake)*
+*Last updated: 2026-07-19 (LAR-486 uitgevoerd — corridor-toets + cache + zone-zee-overgang in de baker)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## LAR-486 / NL-pilot-implementatie (2026-07-19) — uitgevoerd, keuze open
+
+- **Zee-overgang: NE-water óf waterweg-zone.** De aansluitknoop van een vaarweg-keten mag NE-"land"
+  zijn als hij in een `WATERWEG_ZONES`-bbox ligt (dokbekken/estuarium — het M23-aanloop-principe).
+  De Maasmond-knoop 6812 is `zone:nl-delta`; een knoop op land buiten élke zone blijft een harde fout.
+  De eerste twee bakes (~40 min elk) strandden op de te strenge water-only-check.
+- **Verzoening-cache in de baker.** De M23-herberekening is deterministisch en duur (~35–40 min);
+  hij wordt nu na de omleg-stap gecached (`build-cache/verzoening_cache.json`, 19 KB, gekeyd op
+  knopen+edges-aantallen) en hergebruikt. Les: bewaarpunt éérst bij dure pijplijnen — M24 bakt
+  herhaaldelijk. Volgende bakes (VS/China-pilots) kosten ~1 min.
+- **Bake-off-varianten als sets.** `--suffix=-unece` bakt `marnet-unece.bin/json` + `ports-unece.json`
+  náást de OSM-set; `marnet.js` kiest per `?vaarwegbron=`. Bin+json+ports horen als set bij elkaar
+  omdat de haven-snap aan de knopenlijst van precies die bake hangt. Tijdelijk — weg na de keuze.
+- **Stitcher is bron-agnostisch.** `fetch_waterways.py` bouwt uit ruwe segmenten het kortste
+  waterpad anker-zee → anker-binnen (dijkstra over de segment-geometrie, uiteinden gestitcht op
+  tolerantie, DP-simplify 25 m). Zelfde ankers + andere bron = vergelijkbaar traject; herbruikbaar
+  voor Mississippi/Yangtze/wereldwijde uitrol.
+- **UNECE-data is niet scriptbaar op te halen** — gis.unece.org zit achter een Cloudflare-challenge;
+  de laag (`Transportobservatory/E_Waterways_ITIO`, mét CEMT + `SEA_VESSEL`) is via de Browser-pane
+  geëxtraheerd naar `build-cache/unece_eww_nl.geojson`. Weegt zwaar in de bron-keuze ("moeite").
+- **Winst-metingen niet vanaf een knoop óp het nieuwe kanaal** (label dicht = knoop geïsoleerd) —
+  meet vanaf de oude snap-knoop (Markermeer 6781): haven-tot-Shanghai 19.809 → 19.678 = −131 km.
+- **Regressie in twee lagen** (aangescherpt door Lars): nieuwe vaarweg-knopen laten NL-havens
+  dichterbij hersnappen, dus totaal-km's mógen verschuiven; het bewijs dat het zeenet niet bewoog
+  loopt via routes tussen de **oude knoop-ids** (stabiel — nieuwe knopen komen achteraan): 19.610 /
+  8.031 exact.
 
 ## M24 / bronnenplan binnenwater (2026-07-19) — plansessie, pilots vastgelegd (LAR-486/487/488)
 

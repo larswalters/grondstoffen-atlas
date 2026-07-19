@@ -1,8 +1,33 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24-bronnenplan staat — bake-off OSM vs UNECE in de NL-pilot; volgende = LAR-486)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-486 NL-pilot uitgevoerd — bake-off live, tests groen; open = Lars' bron-keuze)*
 
-> **🧭 M24 GEPLAND (2026-07-19, laatste) — BRONNENPLAN STAAT. → VOLGENDE: NL-pilot [LAR-486] (bake-off OSM vs UNECE) in een verse sessie.**
+> **⚓ LAR-486 NL-PILOT UITGEVOERD (2026-07-19, laatste) — BAKE-OFF LIVE, ALLE TESTS GROEN. → OPEN: Lars vergelijkt
+> [OSM](https://larswalters.github.io/grondstoffen-atlas/v2/?vers=016) vs
+> [UNECE](https://larswalters.github.io/grondstoffen-atlas/v2/?vaarwegbron=unece&vers=016) en kiest de bron.**
+> Gebouwd (commit `d9a9e0f`, `?v=016`): **`v2/tools/fetch_waterways.py`** — middellijnen per systeem met een
+> bron-agnostische stitcher (dijkstra kortste waterpad anker-zee→anker-binnen over de segment-geometrie, DP-simplify
+> 25 m); OSM via Overpass (scriptbaar), UNECE uit de Blue Book ArcGIS-laag `Transportobservatory/E_Waterways_ITIO`
+> (⚠️ achter Cloudflare — via de Browser-pane; NL-extract mét CEMT + `SEA_VESSEL` in `build-cache/unece_eww_nl.geojson`).
+> **`EXTRA_VAARWEGEN` in `bake_marnet.py`**: ketens `soort=1`, knoop per ~15 km, **passage-label per systeem**
+> (`noordzeekanaal`, `waal` — meteen het `vermijd`/M21-mechanisme) + zeevaart-vlag in `meta.vaarwegen`;
+> **corridor-toets** (elk punt ≤ 250 m van de bron-middellijn, gemeten 0 m) vervangt de vlak-toets; zee-overgang
+> geldig bij NE-water óf `WATERWEG_ZONES` (Maasmond-knoop 6812 = `zone:nl-delta` — de eerste twee 40-min-bakes
+> strandden op een water-only-check). **Verzoening-cache**: de deterministische M23-herberekening (~35–40 min) →
+> `build-cache/verzoening_cache.json` (19 KB) → élke volgende bake ~1 min. **Browser**: `?vaarwegbron=unece` laadt
+> de UNECE-set (bin+json+ports als sét — de haven-snap hangt aan de knopenlijst van die bake); ODbL/UNECE-attributie
+> in de HUD; `window.HAVENS`/`window.zoekRoute` als test-handvat.
+> **Tests (beide varianten groen):** zeenet exact onaangetast — R'dam→Shanghai **19.610** / Duluth→R'dam **8.031**
+> tussen de **oude** knoop-ids (regressie in 2 lagen, aangescherpt door Lars: nieuwe snaps mógen verschuiven) ·
+> **Amsterdam vaart via IJmuiden** (noordzeekanaal→gibraltar→suez→…, haven-tot-haven **−131 km**, visueel bevestigd) ·
+> R'dam→Nijmegen 172 km over `waal` · snaps Amsterdam 15,1→**0,8** / Nijmegen 79→**2,1** / Dordrecht 15,9→**3,8** km ·
+> netwerk 9.698 knopen / 15.945 edges, bin 1.165 KB. **Bake-off:** bronnen onderling mediaal ~80 m; advies =
+> **OSM-geometrie + UNECE/USACE-meetlat** (UNECE: handwerk + EU-only). Ná de keuze: uitslag in LAR-485/486,
+> variantbestanden (`marnet-unece.*`, `ports-unece.json`, toggle) opruimen, dan LAR-487/488 (~1 min per bake).
+> Bijvangst: [LAR-489] AIS-realisme-check (EMODnet, backlog). Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-lar486-nl-pilot-bake-off]].
+
+> **🧭 M24 GEPLAND (2026-07-19, eerder) — BRONNENPLAN STAAT. → VOLGENDE: NL-pilot [LAR-486] (bake-off OSM vs UNECE) in een verse sessie.**
 > Plansessie, géén code. **De corridor-toets vervangt de vlak-toets:** rivieren/kanalen bestaan niet als water in de
 > NE-polygonen (dáárom waren de 29 `WATERWEG_ZONES` vrijstellingen en eindigt Yangon als stub) → elke binnenwater-edge
 > wordt getoetst als "elk ~2 km-monster ≤ ε van een **bevaarbare-vaarweg-middellijn**"; de polygoon-toets blijft
@@ -475,6 +500,12 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-19 · LAR-486: zee-overgang = NE-water óf waterweg-zone; verzoening gecached; varianten als sets** —
+  een aansluitknoop in een dokbekken (Maasmond 6812, `zone:nl-delta`) is geldig (M23-aanloop-principe); de dure
+  M23-herberekening (~35–40 min) staat nu in `build-cache/verzoening_cache.json` (élke volgende bake ~1 min;
+  les: bewaarpunt éérst bij dure pijplijnen); bake-off-varianten bakken als set bin+json+ports (haven-snap hangt
+  aan de knopenlijst), tijdelijk naast elkaar via `?vaarwegbron=`. Winst-metingen niet vanaf een knoop óp het
+  nieuwe kanaal (label dicht = geïsoleerd) maar vanaf de oude snap-knoop. UNECE-data niet scriptbaar (Cloudflare).
 - **2026-07-19 · M24: corridor-toets vervangt vlak-toets + bake-off beslist de bron** — rivieren/kanalen bestaan
   niet als water in de NE-polygonen → binnenwater-toets = afstand tot een bevaarbare-vaarweg-middellijn (~2 km-
   monsters, ≤ ε); NL-pilot (LAR-486) bouwt NZK + Waal uit OSM én UNECE en beslist de bron-rolverdeling; pilots

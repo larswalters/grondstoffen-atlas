@@ -1,7 +1,27 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24-bronnenplan staat — bake-off + pilots vastgelegd; volgende = NL-pilot LAR-486)*
+*Last updated: 2026-07-19 (LAR-486 NL-pilot UITGEVOERD — bake-off live, tests groen; open = Lars' bron-keuze)*
 
-## ➡️ NU: M24 · binnenwater — start met de NL-pilot [LAR-486] (bake-off, verse sessie)
+## ➡️ NU: Lars vergelijkt de bake-off-varianten op de bol en kiest de bron
+
+- **OSM-variant:** https://larswalters.github.io/grondstoffen-atlas/v2/?vers=016
+- **UNECE-variant:** https://larswalters.github.io/grondstoffen-atlas/v2/?vaarwegbron=unece&vers=016
+- Alle acceptatietests groen op beide (zie de resultaat-comment op LAR-486); advies = OSM-geometrie +
+  UNECE/USACE-meetlat (UNECE is niet scriptbaar op te halen en EU-only).
+- **Ná de keuze:** uitslag vastleggen in LAR-485/486 (→ Done) · variant-bestanden opruimen
+  (`marnet-unece.*`, `ports-unece.json`, `?vaarwegbron`-toggle uit `marnet.js`) · dan **LAR-487**
+  (Mississippi × USACE-meetlat) en **LAR-488** (Yangtze zónder scheidsrechter) — beide bakken in
+  ~1 min dankzij de verzoening-cache.
+
+## ✅ LAR-486 NL-pilot uitgevoerd (2026-07-19) — de M24-pipeline staat
+
+`fetch_waterways.py` (bron-agnostische stitcher; OSM via Overpass, UNECE via de Blue Book
+ArcGIS-laag — achter Cloudflare, via de Browser-pane) → `EXTRA_VAARWEGEN` in `bake_marnet.py`
+(ketens `soort=1` + passage-labels `noordzeekanaal`/`waal` + zeevaart-vlag; corridor-toets ≤ 250 m;
+zee-overgang NE-water óf waterweg-zone) → verzoening-cache (35 min → 1 min) → `?vaarwegbron`-toggle
++ ODbL/UNECE-attributie. Tests: zeenet exact (19.610/8.031 op de oude knopen), Amsterdam via
+IJmuiden (−131 km), R'dam→Nijmegen 172 km, snaps 0,8/2,1/3,8 km. Commit `d9a9e0f`, live op Pages.
+
+## 📋 Vorige stand (bronnenplan, 2026-07-19 — uitgevoerd)
 
 **Het bronnenplan is besloten (2026-07-19, plansessie zonder code).** Kerninzicht: de **corridor-toets vervangt
 de vlak-toets** — rivieren/kanalen bestaan niet als water in de NE-polygonen, dus elke binnenwater-edge wordt

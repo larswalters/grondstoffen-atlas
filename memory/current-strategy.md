@@ -1,7 +1,7 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24-bronnenplan vastgelegd — bake-off + pilots per regio; bouw start met LAR-486)*
+*Last updated: 2026-07-19 (LAR-486 uitgevoerd — de M24-pipeline staat en is bewezen; open = bron-keuze Lars)*
 
-## 🧭 M24-aanpak (2026-07-19) — besloten, nog niet gebouwd
+## 🧭 M24-aanpak (2026-07-19) — GEBOUWD in LAR-486; hieronder de architectuur zoals hij nu draait
 
 - **Pipeline:** `v2/tools/fetch_waterways.py` (middellijnen per systeem, cache in `v2/build-cache/` naast
   `ne_10m_*`) → `EXTRA_VAARWEGEN`-stap in `bake_marnet.py` (edges `soort=1` + systeemlabel + zeevaart-vlag,
