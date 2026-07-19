@@ -296,6 +296,37 @@ GEOFABRIK_REGIOS = {
     "us-mississippi": "north-america/us/mississippi",
     "us-arkansas": "north-america/us/arkansas",
     "us-tennessee": "north-america/us/tennessee",
+    # --- uitrol: Ohio (kolen!) + Upper Mississippi/Illinois (graan, naar de Meren)
+    "us-kentucky": "north-america/us/kentucky",
+    "us-ohio": "north-america/us/ohio",
+    "us-pennsylvania": "north-america/us/pennsylvania",
+    "us-west-virginia": "north-america/us/west-virginia",
+    "us-indiana": "north-america/us/indiana",
+    "us-illinois": "north-america/us/illinois",
+    "us-missouri": "north-america/us/missouri",
+    "us-iowa": "north-america/us/iowa",
+    "us-wisconsin": "north-america/us/wisconsin",
+    "us-minnesota": "north-america/us/minnesota",
+    # --- uitrol: Rijn/Main/Donau — de drukste binnenvaartas van Europa,
+    # Rotterdam tot Constanta over de Main-Donau-Kanaal-verbinding
+    "de-nrw": "europe/germany/nordrhein-westfalen",
+    "de-rheinland-pfalz": "europe/germany/rheinland-pfalz",
+    "de-baden-wuerttemberg": "europe/germany/baden-wuerttemberg",
+    "de-bayern": "europe/germany/bayern",
+    "de-niedersachsen": "europe/germany/niedersachsen",
+    "de-hamburg": "europe/germany/hamburg",
+    "zwitserland": "europe/switzerland",
+    "belgie": "europe/belgium",
+    "oostenrijk": "europe/austria",
+    "slowakije": "europe/slovakia",
+    "hongarije": "europe/hungary",
+    "kroatie": "europe/croatia",
+    "servie": "europe/serbia",
+    "roemenie": "europe/romania",
+    "bulgarije": "europe/bulgaria",
+    # --- uitrol: Zuid-Amerika — de Amazone draagt zeeschepen tot Manaus
+    "brazilie": "south-america/brazil",
+    "venezuela": "south-america/venezuela",
 }
 
 

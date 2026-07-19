@@ -1,0 +1,161 @@
+# Binnenvaart — wereldwijde uitrol (M24, ná LAR-486/487/488)
+
+*Opgesteld 2026-07-19, ná de drie pilots. Status: plan, nog niet gebouwd.*
+
+## De regel (Lars)
+
+> *"als er geen commercieel boten kunnen varen dan niet, of als het echt nergens
+> heen leidt, maar het moet wel uitgebreid zijn voor de simulator"*
+
+Drie criteria, in deze volgorde:
+
+1. **Commercieel bevaarbaar.** Recreatievaart en seizoensgebonden lokaal verkeer
+   tellen niet. Dit bevestigt de eerdere M24-keuze (EU CEMT ≥ IV, VS het
+   USACE-net, elders de bekende commerciële systemen; klasse I–III = ruis).
+2. **Het moet ergens heen leiden.** Een vaarweg die niet aan het zeenetwerk
+   hangt is voor de router een **geïsoleerde component**: er kan nooit een route
+   overheen lopen. Dat is de scherpste snoeiregel — zie de uitsluitingen hieronder.
+3. **Verder zo compleet mogelijk**, want M21 (disruptie-simulator) kan alleen
+   knelpunten doorrekenen die ook echt in het netwerk zitten.
+
+## Wat criterium 2 uitsluit — de niet-voor-de-hand-liggende gevallen
+
+Deze rivieren dragen **wél** echt commercieel verkeer, maar hun bevaarbare deel
+is fysiek afgesneden van zee. Ze toevoegen levert knopen op waar geen enkele
+route ooit komt.
+
+| systeem | de blokkade | wat er wél vaart |
+|---|---|---|
+| **Congo boven Kinshasa** | **Livingstone-watervallen** — ~350 km stroomversnellingen tussen Matadi (zeehaven) en Kinshasa, absoluut onbevaarbaar | ~1.700 km druk bevaarbaar Kinshasa↔Kisangani, maar volledig ingesloten |
+| **Paraná boven Itaipú** | Itaipú-dam heeft **geen schutsluis** | bovenstrooms verkeer bestaat, maar komt nooit bij zee |
+| **Mekong boven de Khone-watervallen** | watervallen op de grens Laos/Cambodja | Laos/Thailand hebben lokaal verkeer, geen doorvaart |
+| **Nijl boven de Aswandam** | stuwdam zonder doorvaart | grotendeels toerisme |
+
+> [!note] Dit is een bewuste keuze, geen omissie
+> De Congo is het scherpste geval: het ís een van de drukst bevaren rivieren van
+> Afrika, maar voor een routeernetwerk waardeloos. Als we hem ooit tóch willen
+> tonen (visuele volledigheid), dan als **losse laag**, niet als routeerbare edges.
+
+Verder uitgesloten op criterium 1 (te weinig commercieel verkeer): Missouri boven
+Sioux City (bargeverkeer vrijwel verdwenen), Elbe boven Maagdenburg (chronisch
+laagwater), Irrawaddy boven de delta, Niger.
+
+## Wat er in gaat
+
+Per systeem het natuurlijke **kopeinde van de commerciële vaart** — dáár stopt
+de keten. Exacte ankers + namen worden per systeem geverifieerd tegen de
+Geofabrik-extract én tegen waar MARNET werkelijk ophoudt (zoals bij de pilots
+bleek: de zone-naam zegt niets over het echte uiteinde).
+
+### Europa — de Rijn-Donau-as
+De drukste binnenvaartcorridor ter wereld; met het Main-Donau-Kanaal loopt er
+een doorgaande vaarweg van **Rotterdam tot de Zwarte Zee**.
+
+| systeem | traject | kopeinde omdat |
+|---|---|---|
+| Rijn | Rotterdam → Duisburg → Köln → Mainz → Basel | Basel = kop van de scheepvaart |
+| Main + Main-Donau-Kanaal | Mainz → Bamberg → Kelheim | de verbinding naar de Donau |
+| Donau | Kelheim → Wenen → Boedapest → IJzeren Poort → Sulina | zee |
+| Schelde | Vlissingen → Antwerpen | Europa's #2 haven |
+| Seine | Le Havre → Rouen → Parijs | kop van de vrachtvaart |
+| Rhône | Fos-sur-Mer → Lyon | idem |
+
+### Noord-Amerika — het binnenvaartnet rond de Mississippi
+| systeem | traject | waarom |
+|---|---|---|
+| Ohio | Cairo → Louisville → Cincinnati → Pittsburgh | **kolen** — direct relevant voor M26 |
+| Upper Mississippi | Memphis → St. Louis → Minneapolis | graan |
+| Illinois | Grafton → Chicago | verbindt de Mississippi met de Grote Meren/Seaway |
+
+### Zuid-Amerika
+| systeem | traject | waarom |
+|---|---|---|
+| Amazone | Belém → Manaus | **zeeschepen varen 1.500 km landinwaarts** tot Manaus |
+| Paraná/Paraguay (Hidrovía) | Buenos Aires → Rosario → Asunción → Corumbá | soja/ijzererts |
+| Orinoco | Boca Grande → Puerto Ordaz | ijzererts-export |
+
+### Azië
+| systeem | traject | waarom |
+|---|---|---|
+| Yangtze-verdieping | Wuhan → Chongqing | de Drieklovensluizen wérken; schepen komen tot Chongqing |
+| Grand Canal | Hangzhou → Jining | naar tonnage het drukste kanaal ter wereld (kolen/bulk) |
+| Parelrivier / Xi Jiang | Hongkong → Guangzhou → Wuzhou | containers + bulk |
+| Mekong | Vũng Tàu → Phnom Penh | stopt bij de Khone-watervallen |
+
+### Rusland
+| systeem | traject | waarom |
+|---|---|---|
+| Wolga | Astrachan → Volgograd → Samara → Nizjni Novgorod | de as van het Russische binnenland |
+| Wolga-Don | → Zee van Azov | verbindt Kaspische Zee met de Zwarte Zee |
+| Wolga-Baltisch | → Sint-Petersburg | verbindt met de Oostzee |
+
+## Aanpak
+
+De pijplijn staat en is drie keer bewezen; dit is uitrol, geen nieuw ontwerp.
+
+1. **Bron = Geofabrik** (`fetch_waterways.py geofabrik`). Gevalideerd tegen
+   Overpass: coördinaat voor coördinaat identiek, maar instant en offline.
+   Overpass blijft bestaan als kruiscontrole.
+2. **Namen opzoeken, niet raden.** Met de extract lokaal is de namenlijst uit de
+   data te lezen (51.191 ways in 4 s). Dat is bij niet-Latijnse namen het verschil
+   tussen werken en niets vinden — de Yangon-pilot vond `ရန်ကုန်မြစ်`, wat als
+   blinde query nooit was gelukt. Doe dit vóór elk systeem.
+3. **Ankers verifiëren tegen MARNET**, niet tegen de zone-naam. Alle drie de
+   pilots eindigden ergens anders dan hun zone suggereerde.
+4. **Segmenteren met `volgtOp`** waar de zeevaart-grens binnen een rivier ligt
+   (Rijn: zeeschepen tot ±Keulen; Amazone: tot Manaus; Donau: tot Brăila).
+5. **Meetlat waar die bestaat**: UNECE voor de EU (CEMT-klassen), USACE voor de
+   VS. Elders de haventoets uit LAR-488 — vallen de searoute-havens vanzelf op
+   de keten?
+6. **Lengte tegen de officiële vaarafstand** blijft de beslissende controle.
+
+## Wat de data zei (survey over de 17 GB extracts, 2026-07-19)
+
+De namenlijsten zijn **opgezocht, niet geraden** — stap 2 van de aanpak, meteen
+toegepast op de plan-fase zelf. Dat leverde vier dingen op die stilzwijgend fout
+waren gegaan.
+
+**Eerst een methodefout van mezelf, voor de volgende keer.** Mijn eerste survey
+rangschikte op vertex-aantal. Fout: dat meet detailniveau, niet belang. Een grote
+bevaarbare rivier is vaak als *vlak* gemapt met een spaarzame middellijn, terwijl
+een beek een lange fijn-gemapte enkele lijn is. Resultaat: de Rijn stond 6e, en
+Donau, Wolga, Paraná en Amazone vielen volledig uit de top-6. **Rangschik op
+totale lengte.** Daarmee komen de hoofdstromen bovenaan (Волга 2.668 km, Ohio
+River 2.667, Mississippi 2.665, Río Paraná 1.649, 长江 1.437).
+
+**1 · De Donau heet per land anders én draagt gecombineerde grensnamen.**
+`Donau` (DE/AT) · `Duna` (HU) · `Dunaj` (SK) · `Dunărea` (RO) · `Дунав` (BG/RS)
+— maar op grenstrajecten staat er één samengestelde naam: **`Dunaj / Duna`**
+(288 km, SK/HU) en **`Dunărea - Дунав`** (1.111 km, RO/BG). Zonder die twee
+knipt de keten bij elke grens door. Dit had ik nooit geraden.
+
+**2 · De Wolga-Don draagt een eretitel.** Niet `Волго-Донской судоходный канал`
+maar **`Волго-Донской судоходный канал им. В. И. Ленина`**. Exacte tag-match
+faalt op de korte vorm.
+
+**3 · `扬子江` bestaat niet** in OSM — alleen `长江`. Staat nu als dode
+whitelist-regel in het `yangtze`-systeem; onschadelijk, maar weg ermee.
+
+**4 · De Amazone heeft géén benoemde middellijn** — de echte blokkade.
+`Rio Solimões` dekt 349 km bovenstrooms, `Río Amazonas` is een fragment van
+20 km, en juist het stuk **Manaus → Belém** (waar de zeeschepen varen) heeft
+geen enkele benoemde `waterway=river`-lijn. Oorzaak: die rivier is daar tot
+>10 km breed en als **wátervlak** gemapt, niet als lijn.
+
+> [!warning] De Amazone past niet in de bestaande pijplijn
+> Alle andere systemen komen uit benoemde middellijnen. Voor de Amazone moet er
+> iets anders gebeuren: een middellijn afleiden uit de watervlakken (echt werk,
+> maar herbruikbaar voor elke brede rivier), of dit ene systeem uit een andere
+> bron halen, of hem voorlopig laten liggen. **Besluit nodig vóór de bouw** —
+> niet stilzwijgend overslaan, want zeeschepen tot 1.500 km landinwaarts is een
+> van de sterkste verhalen op de kaart.
+
+## Open punten
+
+- **Frankrijk/India-regio's:** de Geofabrik-paden voor Normandië, Rhône-Alpes en
+  West-Bengalen bestaan niet onder de namen die ik probeerde — uitzoeken hoe die
+  gesplitst zijn vóór Seine/Rhône/Hooghly.
+- **Volgorde:** Rijn-Donau eerst (grootste tonnage, en de EU heeft een meetlat),
+  dan Noord-Amerika (kolen → M26), dan de rest.
+- **Chongqing en St. Louis** stonden als "evt." in LAR-487/488 en vallen nu
+  binnen de regel — meenemen in de uitrol.
