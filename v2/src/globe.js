@@ -19,10 +19,9 @@ export const CONFIG = {
   maxAltitude: 8.6,       // ~22.800 km — de hele bol in beeld
   startAltitude: 3.2,     // ~8.500 km
 
-  // Slepen schaalt mee met de HOOGTE (niet met de camera-afstand): op 1 km
-  // hoogte wil je meters verschuiven, op 8.500 km halve continenten.
-  dragSpeed: 28.65,   // graden wereld per 100px op dragRefAltitude
-  dragRefAltitude: 3.2,
+  // Slepen heeft géén snelheids-instelling meer: het punt dat je vastpakt
+  // blijft onder je cursor, en daarmee volgt de snelheid uit de meetkunde.
+  // Zie het blok "slepen" hieronder voor waarom de oude graden-per-pixel weg is.
 
   stars: 1800,
 };
@@ -159,25 +158,109 @@ export function createGlobe(mount) {
 
   const el = renderer.domElement;
 
+  // Slepen = GRIJPEN EN MEENEMEN: het punt waar je de bol vastpakt blijft onder
+  // de cursor. Dat is de enige variant die natuurlijk aanvoelt, en ze is meteen
+  // zelfcorrigerend — de draaisnelheid volgt uit de meetkunde in plaats van uit
+  // een ingestelde graden-per-pixel.
+  //
+  // Wat hier eerst stond (graden/pixel evenredig met de hoogte) klopte qua VORM
+  // maar was gemeten **3,52x te snel op elke zoom**: 28,65 graden per 100 px
+  // waar de meetkunde er 8,15 vraagt. Bovendien zat de vensterhoogte er niet in,
+  // dus op een ander scherm liep hij verder uit de pas — en zelfs met de juiste
+  // gain glijdt het gegrepen punt weg zodra je niet in het midden grijpt, want
+  // aan de rand van de bol dekt een pixel veel meer graden dan in het midden.
+  //
+  // De wiskunde: gezocht zijn lat/lon zodat  Rx(lat)*Ry(lon)*p = t , met p het
+  // gegrepen punt in bol-eigen coordinaten en t de richting onder de cursor nu.
+  // Ry laat y ongemoeid, dus  p.y = cos(lat)*t.y + sin(lat)*t.z = R*cos(lat-F)
+  // met R = hypot(t.y,t.z) en F = atan2(t.z,t.y) -> lat = F +- acos(p.y/R).
+  // Daarna is lon gewoon het hoekverschil in het xz-vlak.
+  const _straal = new THREE.Raycaster();
+  const _bol = new THREE.Sphere(new THREE.Vector3(0, 0, 0), CONFIG.radius);
+  const _ndc = new THREE.Vector2();
+  const _tref = new THREE.Vector3();
+  let grijpLokaal = null;   // null = naast de bol gepakt -> terugval op stappen
+
+  /** Eenheidsrichting op de bol onder de cursor. */
+  function bolRichting(clientX, clientY) {
+    const r = el.getBoundingClientRect();
+    // Een verborgen of nog niet gemeten mount geeft 0x0; delen daardoor maakt
+    // de NDC NaN en dan verdwijnt de bol. Val dan terug op de stap-modus.
+    if (!(r.width > 0) || !(r.height > 0)) return null;
+    _ndc.x = ((clientX - r.left) / r.width) * 2 - 1;
+    _ndc.y = -(((clientY - r.top) / r.height) * 2 - 1);
+    _straal.setFromCamera(_ndc, camera);
+    if (_straal.ray.intersectSphere(_bol, _tref)) return _tref.clone().normalize();
+    // Naast de bol: pak het punt op de rand dat het dichtst bij de straal ligt.
+    // Zo loopt slepen aan de rand netjes uit i.p.v. abrupt te blokkeren.
+    _straal.ray.closestPointToPoint(_bol.center, _tref);
+    return _tref.lengthSq() > 1e-12 ? _tref.clone().normalize() : null;
+  }
+
+  /** Wereldrichting -> bol-eigen coordinaten, bij de gegeven lat/lon (graden). */
+  function naarLokaal(v, latDeg, lonDeg) {
+    const a = THREE.MathUtils.degToRad(latDeg), b = THREE.MathUtils.degToRad(lonDeg);
+    const ca = Math.cos(a), sa = Math.sin(a);
+    const y1 = ca * v.y + sa * v.z;          // Rx(-lat)
+    const z1 = -sa * v.y + ca * v.z;
+    const cb = Math.cos(b), sb = Math.sin(b);
+    return new THREE.Vector3(cb * v.x - sb * z1, y1, sb * v.x + cb * z1);  // Ry(-lon)
+  }
+
   el.addEventListener("pointerdown", (e) => {
     dragging = true;
     lastX = e.clientX;
     lastY = e.clientY;
+    const t = bolRichting(e.clientX, e.clientY);
+    grijpLokaal = t ? naarLokaal(t, lat, lon) : null;
     el.setPointerCapture(e.pointerId);
   });
 
   el.addEventListener("pointermove", (e) => {
     if (!dragging) return;
+
+    if (grijpLokaal) {
+      const t = bolRichting(e.clientX, e.clientY);
+      if (t) {
+        const p = grijpLokaal;
+        const rho = Math.hypot(t.y, t.z);
+        if (rho > 1e-9) {
+          const phi = Math.atan2(t.z, t.y);
+          // Buiten bereik (de gegrepen breedtegraad kan de cursor niet halen)
+          // klemmen we het argument: dan loopt het zo dicht mogelijk mee i.p.v.
+          // te springen.
+          const d = Math.acos(Math.max(-1, Math.min(1, p.y / rho)));
+          const huidig = THREE.MathUtils.degToRad(lat);
+          // twee oplossingen; neem de tak die het dichtst bij de huidige stand ligt
+          const kandidaten = [phi + d, phi - d];
+          let a = kandidaten[0];
+          if (Math.abs(kandidaten[1] - huidig) < Math.abs(kandidaten[0] - huidig)) a = kandidaten[1];
+          const ca = Math.cos(a), sa = Math.sin(a);
+          const ux = t.x, uz = -sa * t.y + ca * t.z;   // u = Rx(-a)*t
+          const b = Math.atan2(ux, uz) - Math.atan2(p.x, p.z);
+          const nieuweLat = THREE.MathUtils.radToDeg(a);
+          if (Number.isFinite(nieuweLat) && Math.abs(nieuweLat) <= 89.5) {
+            lat = nieuweLat;
+            lon = THREE.MathUtils.radToDeg(b);
+          }
+        }
+      }
+      lastX = e.clientX;
+      lastY = e.clientY;
+      return;
+    }
+
+    // Terugval: naast de bol gepakt, dus er is niets om onder de cursor te
+    // houden. Draai dan met de hoek die op het MIDDEN van het scherm 1:1 zou
+    // zijn — uit fov en vensterhoogte, dus schermonafhankelijk.
     const dx = e.clientX - lastX;
     const dy = e.clientY - lastY;
     lastX = e.clientX;
     lastY = e.clientY;
-
-    // Draaisnelheid evenredig met de HOOGTE (v1-fix LAR-479, maar nu op hoogte
-    // i.p.v. camera-afstand — anders sleep je op 1 km hoogte nog steeds met
-    // bijna dezelfde snelheid als op 8.500 km, want de afstand tot het
-    // middelpunt verandert dan nauwelijks nog).
-    const perPixel = (CONFIG.dragSpeed / 100) * (altitude / CONFIG.dragRefAltitude);
+    const hoogtePx = el.clientHeight || 1;
+    const perPixel = THREE.MathUtils.radToDeg(
+      (2 * altitude * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)) /
+      (CONFIG.radius * hoogtePx));
     lon -= dx * perPixel;
     lat += dy * perPixel;
     lat = Math.max(-89, Math.min(89, lat));
@@ -185,6 +268,7 @@ export function createGlobe(mount) {
 
   const endDrag = (e) => {
     dragging = false;
+    grijpLokaal = null;
     if (e.pointerId !== undefined && el.hasPointerCapture?.(e.pointerId)) {
       el.releasePointerCapture(e.pointerId);
     }
