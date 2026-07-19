@@ -1,5 +1,32 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M25-bronnenplan erbij; NU blijft de M24-uitrol, M25 staat klaar erachter)*
+*Last updated: 2026-07-19 (M24.1 begonnen: Rijn Done + aftakmechanisme Done; NU = LAR-505 Maas/delta)*
+
+## ➡️ NU: [LAR-505] Maas + Benelux-delta
+
+Nieuw issue, uit Lars' observatie na de Rijn: *"we moeten nog wel meer mappen dan alleen de rijn,
+de maas en stukken biesbosch."* De Maas stond in **géén** van de vier oorspronkelijke M24.1-issues.
+Gedeblokkeerd door [LAR-504] (aftakken op elk punt) — de Nieuwe Merwede, de Bergsche Maas en het
+Amsterdam-Rijnkanaal takken alle drie **middenin** een bestaande keten af, dus met het oude
+`volgtOp` waren ze niet te hangen.
+
+Al gemeten met `survey_vaarwegen.py` (namen dus bevestigd, niet geraden):
+`Maas` 302,6 km · `La Meuse` 142,3 (⚠️ naamwissel op de taalgrens) · `Albertkanaal` 140,5 ·
+`Julianakanaal` 61,0 (de échte geul bij Maastricht) · `Amsterdam-Rijnkanaal` 48,5 ·
+`Oude Maas` 33,2 · `Haringvliet` 29,2 · `Hollandsch Diep` 27,9 · `Bergsche Maas` 26,9 ·
+`Hartelkanaal` 23,0 · `Schelde-Rijnkanaal` 22,1 · `Nieuwe Merwede` 20,2 km.
+
+Kopeinde: **Luik/Namen** (Franse Meuse is klasse I–II → eerst meten, dan besluiten onder de
+snoeiregel). Haventoets: `Liege` snapt nu **118,2 km** weg. De eerste échte aftakking is meteen
+het **end-to-end bewijs van [LAR-504]** — dat is bewust nog niet bewezen (zie `bugs-and-risks.md`).
+
+## ✅ AFGEROND: [LAR-492] Rijn + [LAR-504] aftakmechanisme (2026-07-19)
+
+Live t/m `b402fc5` (`?v=022`), visuele go van Lars (*"Rotterdam Kehl ziet er goed uit"*).
+`rijn` Nijmegen→Bingen 355,0 km · `rijn-boven` Bingen→Basel 360,6 km, beide binnen 1% van de
+officiële Rijnkilometers; twaalf searoute-havens vallen op de lijn. Gesplitst bij Bingen op de
+**verstoring** (Kaub-laagwater 2018/2022), niet op de zeevaartgrens — die klopte niet omdat `waal`
+stroomafwaarts al binnenvaart is. Nieuw gereedschap `v2/tools/survey_vaarwegen.py`; nieuwe extract
+`fr-alsace` (zonder die extract een gat van 72,9 km in de Elzas).
 
 ## ✅ AFGEROND: de M24-pilotreeks (2026-07-19)
 
@@ -40,8 +67,8 @@ benodigde extracts (allemaal al binnen), de meetlat en de acceptatie:
 
 | milestone | issues |
 |---|---|
-| M24.0 · fundament + restpunten | [LAR-503] |
-| M24.1 · Europa (Rijn-Donau-as) | [LAR-492] Rijn · [LAR-493] Main+MD-kanaal · [LAR-494] Donau · [LAR-495] Schelde/Seine/Rhône |
+| M24.0 · fundament + restpunten | [LAR-503] · **[LAR-504] aftakken op elk punt ✅ Done** |
+| M24.1 · Europa (Rijn-Donau-as) | **[LAR-492] Rijn ✅ Done** · **[LAR-505] Maas + delta ⬅️ NU** · [LAR-493] Main+MD-kanaal · [LAR-494] Donau · [LAR-495] Schelde/Seine/Rhône |
 | M24.2 · Noord-Amerika | [LAR-496] Ohio (kolen!) · [LAR-497] Upper Mississippi + Illinois |
 | M24.3 · Zuid-Amerika | [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco |
 | M24.4 · Azië | [LAR-500] Grand Canal/Parelrivier/Chongqing · [LAR-501] Mekong + Hooghly |
@@ -54,12 +81,16 @@ de VS) → M24.2 (Ohio = kolen, direct nodig bij M26) → de rest.
 1. **Namen opzoeken in de extract** — niet raden. Zie `decisions.md`.
 2. **Ankers verifiëren tegen waar MARNET wérkelijk ophoudt** — alle drie de pilots eindigden ergens
    anders dan hun zone-naam suggereerde.
-3. Segmenteren met `volgtOp` waar de zeevaart-grens binnen de rivier ligt.
+3. Segmenteren met `volgtOp` — sinds [LAR-504] mag een systeem **overal** op zijn voorganger
+   aanhaken, niet alleen op het uiteinde. Splits waar een échte **verstoring** zit (Kaub), niet
+   op de zeevaart/binnenvaart-grens: die vlag is alleen metadata en zegt niets over routering.
 4. **Lengte tegen de officiële vaarafstand** = de beslissende controle, niet de puntafstand.
 5. Regressie: 6818→9654 **19.610** en 6391→6818 **8.031** moeten exact blijven.
 
-**Geblokkeerd:** [LAR-495] en [LAR-501] deels, op ontbrekende Franse/Indiase Geofabrik-regio-namen
-(zie [LAR-503]).
+**Geblokkeerd:** [LAR-501] deels, op de Indiase Geofabrik-regio-namen (zie [LAR-503]).
+**Niet meer geblokkeerd:** [LAR-495] — Geofabrik gebruikt de **pre-2016** Franse indeling;
+`alsace`, `basse-normandie` en `rhone-alpes` bestaan wél, `normandie` niet (die geeft **0 bytes**
+in plaats van een 404 — controleer dus de bestandsgrootte, niet de HTTP-status).
 
 ## 🔭 Later (ná M25): [LAR-490] LOD-systeem — het M26-startpunt
 

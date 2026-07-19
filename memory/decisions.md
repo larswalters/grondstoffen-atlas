@@ -1,7 +1,65 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M25-bronnenplan: compleet spoornet, bron per modus, GEM zonder formulier)*
+*Last updated: 2026-07-19 (LAR-492 Rijn + LAR-504 aftakken op elk punt)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-19 · LAR-504 — een vaarwegsysteem mag OVERAL op zijn voorganger aanhaken
+
+`volgtOp` hechtte alleen aan het **uiteinde** van de vorige keten. Daarmee bak je lijnen, geen
+netwerk — en een riviernet heeft aftakkingen. Dit bijt op minstens zes plekken: Main bij Mainz
+(30 km ín `rijn-boven`), Ohio bij Cairo, Illinois bij Grafton, Nieuwe Merwede, Bergsche Maas,
+Amsterdam-Rijnkanaal; later Mosel bij Koblenz en Neckar bij Mannheim. [LAR-496] beschrijft het
+probleem zelfs al in zijn eigen tekst.
+
+`hecht_aan_keten()` zoekt nu de dichtstbijzijnde plek op de voorganger en knipt die edge door:
+`(a,b)` → `(a,nieuw)` + `(nieuw,b)`, met hetzelfde passage-label en dezelfde soort, zodat de
+`vermijd`-knop van de moederketen over beide helften blijft gelden.
+
+**De knip valt altijd op een BESTAANDE geometrie-vertex**, nooit op een geïnterpoleerd punt.
+Daardoor verschuift er geen enkele coördinaat en blijft de corridor-toets die de moederketen al
+doorstond **per constructie** geldig — bewezen doordat `marnet.bin`, `marnet.json` én `ports.json`
+byte-identiek uit de bake komen.
+
+Verworpen alternatief: rivieren vooraf opknippen bij elke plek waar later iets aantakt. Werkt
+zonder codewijziging, maar elke nieuwe zijrivier dwingt dan een hersplitsing + rebake van de
+moederketen, en de passage-labels versnipperen (`rijn`, `rijn-boven`, `rijn-zuid`, …) zonder dat
+die knip iets betekent.
+
+## 2026-07-19 · LAR-492 — splits een rivier op de VERSTORING, niet op de zeevaartgrens
+
+Het issue stelde `rijn` (zeevaart=True) → `rijn-boven` (zeevaart=False) voor bij Keulen/Duisburg.
+Dat beschrijft niets: `waal` stroomafwaarts staat al op `zeevaart=False`, dus dat zou zeggen dat
+zeeschepen Duisburg wél halen en Rotterdam niet. Bovendien is de vlag alleen **metadata** —
+`marnet.js` geeft `meta.vaarwegen` door en de browser leest er enkel `bron` uit.
+
+De échte waarde van splitsen zit in het **passage-label = een eigen `vermijd`-knop**. Besluit van
+Lars: knip waar een echte verstoring zit. Bij **Kaub** (Gebirgsstrecke) legde het laagwater van
+2018 en 2022 de as stil; met `rijn-boven` in `vermijd` blijven Duisburg en Keulen bereikbaar en
+vallen Mainz/Karlsruhe/Kehl weg — precies dat scenario.
+
+## 2026-07-19 · LAR-492 — de namen-survey is gereedschap, en rangschikt op lengte MÉT strekking
+
+`v2/tools/survey_vaarwegen.py`. De lon/lat-**strekking** per naam is de tweede helft van het
+antwoord: daaraan zie je of de whitelist een *doorlopend* traject dekt of dat er een gat zit.
+Ving twee stille ketenbreuken die raden nooit had gevonden: **`Boven-Rijn`** (mét koppelteken,
+4,3 km) is de enige schakel tussen `Bijlandsch Kanaal` en `Rhein`, en **`Le Rhin / Rhein`** is de
+gecombineerde grensnaam op het Frans-Duitse traject — de `Dunaj / Duna`-val, nu vóóraf gevangen.
+
+## 2026-07-19 · LAR-492 — kijk waar de GEUL ligt, niet welke landen de rivier raakt
+
+Tussen Basel en Straatsburg loopt de vaargeul niet in de Rijn maar in het **Grand Canal d'Alsace**,
+volledig op Frans grondgebied. Zonder de extract `fr-alsace` knipt de keten met een gat van
+**72,9 km** — en verwarrend genoeg heten beide randen van dat gat óók `Grand Canal d'Alsace`.
+
+Complement: **water ≠ vaarweg.** `Vieux Rhin / Altrhein` (54 km) is bewust niet gewhitelist; de
+Restrhein is wél water maar géén bevaarbare geul en zou een korter, onvaarbaar pad opleveren.
+Zelfde principe als de ≥150 m-klaring bij de Amazone.
+
+## 2026-07-19 · Geofabrik gebruikt de PRE-2016 Franse regio-indeling
+
+`alsace`, `basse-normandie` (136 MB) en `rhone-alpes` (500 MB) bestaan; **`normandie` niet** — en
+die geeft geen 404 maar een bestand van **0 bytes**, dezelfde val als de Brazilië-shapefile.
+Controleer dus de bestandsgrootte, niet de HTTP-status.
 
 ## M25-bronnenplan: landroutes (2026-07-19, [LAR-491])
 

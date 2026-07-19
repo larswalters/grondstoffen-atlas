@@ -1,5 +1,27 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M25-bronnenplan vastgelegd: compleet spoornet + bron per modus)*
+*Last updated: 2026-07-19 (M24.1 in uitvoering; vaarwegen zijn nu een NET, geen losse lijnen)*
+
+## 🚢 M24-uitrol: de vaarwegen vormen een NET (2026-07-19, [LAR-504])
+
+Sinds [LAR-504] is `EXTRA_VAARWEGEN` geen verzameling losse lijnen meer. Een systeem met `volgtOp`
+hecht aan het **dichtstbijzijnde punt** van zijn voorganger; ligt dat middenin een edge, dan wordt
+die daar doorgeknipt — altijd op een **bestaande geometrie-vertex**, zodat er geen coördinaat
+verschuift en de corridor-toets van de moeder per constructie geldig blijft.
+
+Gevolg voor de rest van de uitrol: **rivieren hoeven niet meer vooraf opgeknipt te worden** op
+plekken waar later iets aantakt. Splits alleen waar het iets betekent — bij een **verstoring**, want
+elk segment is een eigen passage-label = een eigen `vermijd`-knop voor M21. De Rijn is daarom bij
+**Bingen** geknipt (Kaub-laagwater), niet bij de zeevaart/binnenvaart-grens: die vlag is puur
+metadata en stuurt geen routering.
+
+**Vaste volgorde per systeem** (nu vier stappen, want stap 1 is gereedschap geworden):
+1. `v2/tools/survey_vaarwegen.py` over de extracts → namen **op lengte, mét lon/lat-strekking**.
+   Aan die strekking zie je of de whitelist een doorlopend traject dekt; een gat = een ontbrekende
+   naam of een ontbrekende extract.
+2. Ankers verifiëren tegen waar MARNET (of de moederketen) wérkelijk ophoudt.
+3. `fetch_waterways.py geofabrik --alleen <labels>` → stitch, dan **lengte tegen de officiële
+   vaarafstand** (de beslissende toets) + de haventoets uit [LAR-488].
+4. Bakken, regressie (6818→9654 **19.610**, 6391→6818 **8.031**), `?v=` bumpen, pushen.
 
 ## 🛤️ M25-aanpak (2026-07-19, [LAR-491]) — bronnenplan staat, nog niet gebouwd
 

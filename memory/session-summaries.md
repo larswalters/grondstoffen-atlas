@@ -1,6 +1,53 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 29) — M24.1 gestart: de Rijn (LAR-492) + aftakken op elk punt (LAR-504)
+
+**Gebouwd.** De Rijn als twee ketens met `volgtOp`: `rijn` Nijmegen→Bingen **355,0 km** (officieel
+rkm 884,6−528 = 356,6 → −0,4%) en `rijn-boven` Bingen→Basel **360,6 km** (358,1 → +0,7%). Aanleiding:
+álle searoute-Rijnhavens snapten op knoop 9697, het binneneinde van `waal`, van Duisburg 75,8 km tot
+Kehl 389,4 — het Nijmegen/Memphis-patroon over een hele as.
+
+**Het splitspunt uit het issue klopte niet.** Voorgesteld was `zeevaart=True`→`False` bij Keulen,
+maar `waal` stroomafwaarts is al binnenvaart, en de vlag blijkt alleen metadata (de browser leest er
+enkel `bron` uit). Lars koos splitsen op de **verstoring**: bij Kaub legde het laagwater van 2018/2022
+de as stil. Reproduceert exact — met `rijn-boven` in `vermijd` blijven Duisburg 281 km en Keulen
+373 km bereikbaar, vallen Mainz/Karlsruhe/Kehl weg.
+
+**Bewijs.** Haventoets (searoute = andere bron dan OSM), snap vóór→na: Duisburg 75,8→**1,5** ·
+Koblenz 207,3→**0,7** · Keulen 130,1→**1,1** · Mainz 266,1→**1,4** · Karlsruhe 360,3→**1,9** ·
+Kehl 389,4→5,6 · Straatsburg 388,0→9,4 km (die laatste twee liggen in een zijbekken). Havens >50 km
+1.449→**1.430**. Corridor-toets 0 m, beide aansluitingen 0,00 km. Regressie exact: 6818→9654
+**19.610**, 6391→6818 **8.031**, R'dam→Nijmegen 172, A'dam→Shanghai 19.677, R'dam→Memphis 10.000,
+R'dam→Wuhan 20.626. Netwerk 9.863→**9.910** knopen, 16.110→**16.157** edges.
+
+**Lars' vervolgvraag legde een ontwerpfout bloot** (*"we moeten nog wel meer mappen dan alleen de
+rijn, de maas en stukken biesbosch"*): M24 bakte **lijnen** — een vervolgsysteem hing aan
+`keten_eind`, dus alleen aan het ketenuiteinde — terwijl een riviernet **aftakkingen** heeft. Bijt op
+zes plekken (Main bij Mainz, Ohio bij Cairo, Illinois bij Grafton, Nieuwe Merwede, Bergsche Maas,
+Amsterdam-Rijnkanaal). **[LAR-504]:** `hecht_aan_keten()` knipt de moederedge door op een **bestaande
+geometrie-vertex**, dus zonder één coördinaat te verplaatsen. Bewijs dat het niets sloopt:
+`marnet.bin`/`marnet.json`/`ports.json` komen **byte-identiek** uit de bake. Positief getest met een
+synthetische zijtak op punt 283 van de 566 in `rijn` (hecht als `aftakking:rijn` op 0,00 km, `rijn`
+23→24 edges, lengte blijft 355,0 km).
+
+**Drie lessen.** (a) De namen-survey is nu gereedschap — `v2/tools/survey_vaarwegen.py` rangschikt op
+**lengte** mét lon/lat-strekking; ving `Boven-Rijn` (mét koppelteken) en `Le Rhin / Rhein` (de
+gecombineerde grensnaam). (b) Een extract kan buiten de oeverlanden liggen — tussen Basel en
+Straatsburg ligt de geul in het **Grand Canal d'Alsace** op Frans grondgebied; zonder `fr-alsace`
+een gat van 72,9 km. (c) Water ≠ vaarweg — `Vieux Rhin / Altrhein` bewust niet gewhitelist.
+
+**Bijvangst.** Geofabrik gebruikt de pre-2016 Franse regionamen (`normandie` bestaat niet en geeft
+0 bytes i.p.v. een 404) → open punt uit de uitrol-brief beantwoord. En de acht bestaande systemen
+zijn coördinaat voor coördinaat identiek via het Geofabrik-pad, dus de bronwissel is herbevestigd.
+Gecorrigeerd in `now.md`: daar stond 9.877/16.124 terwijl `marnet.json` op 9.863/16.110 staat.
+
+**Linear.** LAR-492 + LAR-504 Done; nieuw **LAR-505** (Maas + Benelux-delta, M24.1) omdat de Maas in
+geen van de vier oorspronkelijke M24.1-issues stond. Commits `1d26a24` + `b402fc5`, gepusht, live
+`?v=022`.
+
+**Volgende:** LAR-505 — de eerste échte aftakking is meteen het end-to-end bewijs van LAR-504.
+
 ## 2026-07-19 (sessie 28) — M25-bronnenplan landroutes: compleet spoornet gekozen, bronnen per modus gemeten
 - **Plansessie zonder code, wél gemeten.** Lars wilde vóór de bouw eerst de bron bespreken, net als bij M24.
 - **Context die het gesprek kantelde:** land is de **grootste** groep, niet de kleinste — 275 landstromen

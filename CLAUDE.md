@@ -1,6 +1,67 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M25-bronnenplan vastgelegd: compleet spoornet + bron per modus)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24.1 gestart: Rijn Done + aftakken op elk punt Done)*
+
+> **🚢 M24.1 GESTART (2026-07-19, laatste) — DE RIJN STAAT ([LAR-492] Done) EN VAARWEGEN ZIJN NU EEN NET
+> ([LAR-504] Done).** Live t/m `b402fc5` (`?v=022`), visuele go van Lars: *"Rotterdam Kehl ziet er goed
+> uit."* **→ VOLGENDE: [LAR-505] Maas + Benelux-delta** (nieuw), daarna [LAR-493] Main + [LAR-494] Donau
+> = de as Rotterdam→Zwarte Zee compleet, dan [LAR-495].
+>
+> **De Rijn als twee ketens:** `rijn` Nijmegen→Bingen **355,0 km** (officieel rkm 884,6−528 = 356,6 →
+> **−0,4%**) · `rijn-boven` Bingen→Basel **360,6 km** (358,1 → **+0,7%**). Aanleiding: álle
+> searoute-Rijnhavens snapten op knoop 9697, het binneneinde van `waal`, van Duisburg 75,8 km tot Kehl
+> 389,4 — het Nijmegen/Memphis-patroon over een hele as. **Haventoets** (searoute = andere bron dan OSM),
+> snap vóór→na: Duisburg 75,8→**1,5** · Koblenz 207,3→**0,7** · Keulen 130,1→**1,1** · Mainz 266,1→**1,4**
+> · Karlsruhe 360,3→**1,9** · Kehl 389,4→5,6 · Straatsburg 388,0→9,4 km (die laatste twee liggen in een
+> zijbekken, niet aan de doorgaande geul). Havens >50 km 1.449→**1.430**. Corridor-toets 0 m, beide
+> aansluitingen 0,00 km. **Regressie exact:** 6818→9654 **19.610** · 6391→6818 **8.031** · R'dam→Nijmegen
+> 172 · A'dam→Shanghai 19.677 · R'dam→Memphis 10.000 · R'dam→Wuhan 20.626. Netwerk 9.863→**9.910**
+> knopen, 16.110→**16.157** edges.
+>
+> **⚠️ HET SPLITSPUNT UIT HET ISSUE KLOPTE NIET.** Voorgesteld was `zeevaart=True`→`False` bij
+> Keulen/Duisburg, maar `waal` stroomafwaarts staat al op `zeevaart=False` — dat zou zeggen dat
+> zeeschepen Duisburg wél halen en Rotterdam niet. De vlag is bovendien **alleen metadata**
+> (`marnet.js` geeft `meta.vaarwegen` door; de browser leest er enkel `bron` uit). De échte waarde van
+> splitsen zit in het **passage-label = een eigen `vermijd`-knop**. Besluit van Lars: knip waar een
+> **verstoring** zit. Bij **Kaub** legde het laagwater van 2018/2022 de as stil, en dat reproduceert
+> exact: met `rijn-boven` in `vermijd` blijven Duisburg 281 km en Keulen 373 km bereikbaar en vallen
+> Mainz/Karlsruhe/Kehl weg.
+>
+> **⚠️ LARS' VERVOLGVRAAG LEGDE EEN ONTWERPFOUT BLOOT** (*"we moeten nog wel meer mappen dan alleen de
+> rijn, de maas en stukken biesbosch"*): M24 bakte **lijnen** — een vervolgsysteem hing aan
+> `keten_eind[volgt_op]`, dus uitsluitend aan het **uiteinde** — terwijl een riviernet **aftakkingen**
+> heeft. Bijt op zes plekken: Main bij Mainz (30 km ín `rijn-boven`), Ohio bij Cairo ([LAR-496] zegt het
+> zélf al), Illinois bij Grafton, Nieuwe Merwede, Bergsche Maas, Amsterdam-Rijnkanaal; later Mosel en
+> Neckar. **[LAR-504]:** `hecht_aan_keten()` zoekt de dichtstbijzijnde plek op de voorganger en knipt
+> die edge door — `(a,b)` → `(a,nieuw)` + `(nieuw,b)`, hetzelfde passage-label en dezelfde soort. **De
+> knip valt ALTIJD op een bestaande geometrie-vertex**, dus er verschuift geen enkele coördinaat en de
+> corridor-toets van de moederketen blijft per constructie geldig. Bewijs: `marnet.bin`, `marnet.json`
+> én `ports.json` komen **byte-identiek** uit de bake. ⚠️ Nog **niet** bewezen: een route dwars *door*
+> een aftakking heen — dat is de acceptatie van [LAR-505].
+>
+> **DRIE LESSEN VOOR DE REST VAN DE UITROL.**
+> 1. **De namen-survey is nu gereedschap** — `v2/tools/survey_vaarwegen.py` rangschikt de benoemde
+>    vaarwegen in een venster op **lengte** mét hun lon/lat-**strekking**; aan die strekking zie je of de
+>    whitelist een *doorlopend* traject dekt. Ving twee stille ketenbreuken: **`Boven-Rijn`** (mét
+>    koppelteken, 4,3 km) is de enige schakel tussen `Bijlandsch Kanaal` en `Rhein`, en
+>    **`Le Rhin / Rhein`** is de gecombineerde grensnaam op het Frans-Duitse traject — de
+>    `Dunaj / Duna`-val, nu vóóraf gevangen in plaats van achteraf.
+> 2. **Kijk waar de GEUL ligt, niet welke landen de rivier raakt.** Tussen Basel en Straatsburg loopt de
+>    vaargeul in het **Grand Canal d'Alsace**, volledig op Frans grondgebied; zonder de nieuwe extract
+>    **`fr-alsace`** knipt de keten met een gat van **72,9 km** — en beide randen van dat gat heten óók
+>    `Grand Canal d'Alsace`.
+> 3. **Water ≠ vaarweg.** `Vieux Rhin / Altrhein` (54 km) bewust NIET gewhitelist: de Restrhein is wél
+>    water maar géén bevaarbare geul en zou een korter, onvaarbaar pad geven. Zelfde principe als de
+>    ≥150 m-klaring bij de Amazone.
+>
+> **Bijvangst:** Geofabrik gebruikt nog de **pre-2016 Franse regio-indeling** — `alsace`,
+> `basse-normandie` (136 MB) en `rhone-alpes` (500 MB) bestaan, **`normandie` niet**, en die geeft geen
+> 404 maar een bestand van **0 bytes** (de Brazilië-shapefile-val) → controleer de bestandsgrootte, niet
+> de HTTP-status. Daarmee is het open punt uit de uitrol-brief beantwoord vóór [LAR-495]. Verder draait
+> de hele vaarwegenset nu op het Geofabrik-pad en zijn de acht bestaande systemen **coördinaat voor
+> coördinaat identiek** aan de Overpass-set. Gecorrigeerd: `now.md` noemde 9.877/16.124 waar
+> `marnet.json` op 9.863/16.110 stond. Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-lar492-rijn-aftakmechanisme]].
 
 > **🛤️ M25-BRONNENPLAN VASTGELEGD (2026-07-19, laatste, plansessie zonder code) — COMPLEET SPOORNET
 > GEKOZEN. Startissue [LAR-491] (High, Todo), zelfstandig leesbaar. → VOLGENDE: eerst M24's uitrol
@@ -665,6 +726,23 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-19 · LAR-504: een vaarwegsysteem mag OVERAL op zijn voorganger aanhaken** — `volgtOp`
+  hechtte alleen aan het ketenuiteinde; daarmee bak je lijnen, geen netwerk. `hecht_aan_keten()` knipt
+  nu de moederedge door op een **bestaande geometrie-vertex** (dus zonder één coördinaat te
+  verplaatsen → corridor-toets blijft per constructie geldig), met hetzelfde passage-label op beide
+  helften. Verworpen: rivieren vooraf opknippen bij elke aftakplek — dat dwingt bij elke nieuwe
+  zijrivier een rebake van de moeder en versnippert de labels zonder betekenis.
+- **2026-07-19 · LAR-492: splits een rivier op de VERSTORING, niet op de zeevaartgrens** — de
+  zeevaart-vlag is alleen metadata (de browser leest er enkel `bron` uit) en het voorgestelde
+  splitspunt bij Keulen sprak zichzelf tegen met `waal`. Elk segment is een eigen `vermijd`-knop, dus
+  knip waar M21 iets aan heeft: de Rijn bij **Bingen** (Kaub-laagwater 2018/2022).
+- **2026-07-19 · LAR-492: namen opzoeken is nu gereedschap, en rangschikt op lengte MÉT strekking** —
+  `v2/tools/survey_vaarwegen.py`. De lon/lat-strekking laat zien of de whitelist een *doorlopend*
+  traject dekt; ving `Boven-Rijn` (mét koppelteken) en de grensnaam `Le Rhin / Rhein`.
+- **2026-07-19 · LAR-492: kijk waar de GEUL ligt, niet welke landen de rivier raakt** — de vaargeul
+  Basel–Straatsburg ligt in het Grand Canal d'Alsace op Frans grondgebied (extract `fr-alsace`, anders
+  een gat van 72,9 km). Complement: **water ≠ vaarweg** — `Vieux Rhin / Altrhein` bewust niet
+  gewhitelist, want de Restrhein heeft geen bevaarbare geul.
 - **2026-07-19 · M25: compleet hoofdspoornet i.p.v. corridor-scope** — een netwerk beantwoordt vragen die
   je niet vooraf hebt uitgerekend; met corridor-scope kan M21 alleen verstoringen tonen die we vooraf
   bedachten (blokkeer Kasumbalesa en Lobito/Dar es Salaam moeten dan al gebakken zijn). Gelaagd zoals

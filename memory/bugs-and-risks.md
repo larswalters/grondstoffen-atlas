@@ -1,5 +1,30 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M25-bronnenplan — dubbelspoor-val, GEM-licentie, weg zonder scheidsrechter)*
+*Last updated: 2026-07-19 (LAR-492/504 — aftakking nog niet end-to-end gerouteerd; vault liep 14 uit de pas)*
+
+## ⚠️ OPEN — het aftakmechanisme is nog niet end-to-end gerouteerd (2026-07-19, [LAR-504])
+
+Wat wél bewezen is: de knip zelf (moederedge 23→24 edges, lengte onveranderd, aansluiting 0,00 km,
+uitvoer byte-identiek op de bestaande set). Wat **niet** bewezen is: een route die dwars **door** een
+aftakking heen loopt, met echte havens aan weerszijden. Dat kan pas met een echte zijtak en is de
+acceptatie van [LAR-505] (Nieuwe Merwede en Amsterdam-Rijnkanaal takken allebei middenin `waal` af).
+Ga er dus niet van uit dat het routeerpad al gedekt is.
+
+## ✅ OPGELOST — `now.md` liep 14 knopen/edges uit de pas met de code (2026-07-19)
+
+De vault noemde 9.877 knopen / 16.124 edges voor de bake van `45a21eb`, terwijl `marnet.json` op
+**9.863 / 16.110** stond. Niets kapot, maar het is precies het soort drift dat een volgende sessie
+laat "corrigeren" wat niet stuk is. Gecorrigeerd in `now.md` mét een notitie erbij.
+**Les:** neem netwerkcijfers over uit `marnet.json`, niet uit een vorige samenvatting.
+
+## ⚠️ RISICO — de CEMT-clause haalt méér binnen dan de whitelist (2026-07-19, [LAR-492])
+
+Een systeem mét een `cemt`-waarde laat álle CEMT-getagde ways in de bbox toe, ook zonder naam-match.
+Bij de Rijn was dat nuttig (het vond het Grand Canal d'Alsace), maar het betekent dat de invoer
+groter is dan de namenlijst suggereert: 1.246 segmenten voor de Rijn, waaronder het halve
+Benelux-kanalennet. De stitcher kiest het kórtste waterpad, dus dat kan in principe een sluiproute
+opleveren. Gedekt door de **lengtetoets** (716,1 km tegen 714,7 officieel = +0,2%) en de haventoets,
+niet door de corridor-toets — die vergelijkt de keten met de bron waaruit hij gebakken is.
+Blijf dus per systeem op lengte controleren, niet alleen op corridor-afstand.
 
 ## ⚠️ OPEN / te weten vóór M25 gebouwd wordt (2026-07-19, [LAR-491])
 
