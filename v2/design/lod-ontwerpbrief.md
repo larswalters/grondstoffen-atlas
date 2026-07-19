@@ -37,6 +37,35 @@ sterk); niet één-op-één de mockups nabouwen.
 | dikte flow | volume (in **meters**, zie lijndikte-strategie) |
 | lijnstijl | modaliteit (zee / binnenvaart / spoor / weg / pijpleiding) |
 
+## Glow-gedrag per zoomniveau (Lars, 2026-07-19)
+
+Het glow-systeem past zich aan het zoomniveau aan — geen harde omschakeling maar een vloeiend
+verloop:
+
+- **🌍 Wereldniveau:** geen losse fabrieken, maar **één grote zachte gloed boven een regio** —
+  de Ruhr, de Copperbelt, Pilbara of de Yangtze-delta lijken echt "op te lichten". Dus niet
+  vier losse bollen naast elkaar, maar één mooie diffuse gloed over het hele industriegebied.
+- **🌎 Continentniveau:** de grote gloed **splitst zich langzaam op**; meerdere industriële
+  hotspots worden onderscheidbaar.
+- **🏭 Lokale zoom:** de regionale glow verdwijnt; **iedere fabriek krijgt een kleine, subtiele
+  eigen glow** — eventueel met een **pulserend effect** als de faciliteit actief is in de
+  geselecteerde grondstof.
+
+**Kernprincipe: de glow telt op** (additief). Twintig fabrieken dicht bij elkaar geven
+automatisch één grote heldere hotspot — een heatmap, maar dan in 3D.
+
+**Technische consequentie (belangrijk voor de bouw):** doordat de glow optelt, hoeft de
+wereld-hotspot **geen apart getekend object** te zijn — hij *ontstaat vanzelf* uit de
+individuele site-glows zodra de glow-radius meeschaalt met de kijkafstand. Dat betekent:
+
+- de overgang wereld ↔ continent ↔ lokaal is **continu** (geen pop-in of crossfade-trucs nodig
+  voor de glow zelf);
+- het hiërarchische nodemodel (`level`/`parent`) blijft nodig voor **labels, interactie en
+  flow-aggregatie**, maar niet voor de glow — die is emergent;
+- de glow-radius/-intensiteit per site schaalt met camerahoogte (dichtbij klein en scherp,
+  veraf breed en diffuus zodat buren overlappen tot één hotspot), capaciteit bepaalt het gewicht
+  in de optelling.
+
 ## Besluiten (2026-07-19)
 
 1. **Semantische zoom in ~4–5 niveaus**, banden op `getAltitude()` (richtwaarden, in de pilot
