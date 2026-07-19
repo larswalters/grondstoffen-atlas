@@ -23,11 +23,13 @@ Draaien:  python v2/tools/fetch_waterways.py osm
 """
 
 import argparse
+import hashlib
 import heapq
 import json
 import math
 import os
 import sys
+import time
 import urllib.parse
 import urllib.request
 
@@ -38,9 +40,22 @@ V2 = os.path.dirname(HERE)
 CACHE = os.path.join(V2, "build-cache")
 
 OVERPASS_URLS = [
-    "https://overpass-api.de/api/interpreter",
+    "https://overpass.private.coffee/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
+    "https://overpass-api.de/api/interpreter",
 ]
+# De publieke mirrors geven onder belasting 504's — óók op queries die minuten
+# eerder gewoon slaagden. Eén ronde langs de lijst is dus te weinig; met een
+# pauze ertussen komt hij er wel door. Elke geslaagde query gaat de cache in,
+# dus een herstart begint nooit opnieuw.
+OVERPASS_RONDES = 4
+OVERPASS_PAUZE_S = 30
+# Twee verschillende klokken, bewust uit elkaar gehouden: de server mag lang
+# rekenen, maar wij moeten SNEL kunnen doorschakelen naar een andere mirror.
+# Eén gedeelde waarde van 600 s liet een overbelaste mirror de hele run tien
+# minuten gijzelen; een zware bbox-query duurt gemeten ~75 s.
+OVERPASS_SERVER_S = 300   # [timeout:] in de query zelf
+OVERPASS_CLIENT_S = 180   # urllib — daarna de volgende mirror
 
 R_AARDE = 6371.0
 
@@ -53,6 +68,13 @@ SIMPLIFY_KM = 0.025   # Douglas-Peucker ~25 m: bochten blijven, ruis verdwijnt
 # bbox = (lat_min, lon_min, lat_max, lon_max) — Overpass-volgorde (Z,W,N,O).
 # Ankers als (lon, lat); zeezijde eerst. Havens (searoute): Amsterdam
 # (4.904, 52.375) · Nijmegen (5.867, 51.833) · Rotterdam (4.442, 51.904).
+#
+# `volgt_op` (LAR-487/488): dit systeem hangt niet aan MARNET maar aan het
+# binneneinde van dat eerdere systeem — zo draagt één rivier twee labels met
+# elk een eigen zeevaart-vlag (Mississippi zeevaarbaar t/m Baton Rouge, de
+# Yangtze t/m Nanjing; daarboven binnenvaart). Het vervolgsysteem moet dus
+# LATER in deze lijst staan en zijn anker_zee gelijk hebben aan het
+# anker_binnen van zijn voorganger.
 SYSTEMEN = [
     dict(
         label="noordzeekanaal",
@@ -76,6 +98,51 @@ SYSTEMEN = [
         anker_zee=(4.060, 51.985),      # Maasmond / Hoek van Holland
         anker_binnen=(5.860, 51.852),   # Waal t.h.v. Nijmegen (Waalkade)
     ),
+    # ---- VS (LAR-487) — MARNET's mississippi-tak eindigt bij New Orleans en
+    # loopt daar dood in het Pontchartrainmeer; alles stroomopwaarts ontbreekt.
+    # Baton Rouge is het kopeinde van de diepzeevaart (~370 km binnenland),
+    # daarboven is het duwbakgebied → tweede label zónder zeevaart-vlag.
+    dict(
+        label="mississippi",
+        zeevaart=True,
+        cemt="",
+        bbox=(29.85, -91.35, 30.60, -89.90),
+        namen=["Mississippi River", "Mississippi"],
+        anker_zee=(-90.055, 29.935),    # rivier bij New Orleans (Algiers Point)
+        anker_binnen=(-91.190, 30.445),  # haven van Baton Rouge
+    ),
+    dict(
+        label="mississippi-boven",
+        zeevaart=False,
+        cemt="",
+        volgt_op="mississippi",
+        bbox=(30.30, -92.00, 35.35, -89.60),
+        namen=["Mississippi River", "Mississippi"],
+        anker_zee=(-91.190, 30.445),    # = anker_binnen van 'mississippi'
+        anker_binnen=(-90.125, 35.125),  # rivier bij Memphis
+    ),
+    # ---- China (LAR-488) — géén officiële tweede bron; MARNET houdt op bij
+    # Zhenjiang (knoop 9668), 78 km vóór Nanjing. Zeeschepen varen echt tot
+    # Nanjing (12,5 m-diepwaterkanaal), daarboven binnenvaart.
+    dict(
+        label="yangtze",
+        zeevaart=True,
+        cemt="",
+        bbox=(31.90, 118.55, 32.45, 119.70),
+        namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
+        anker_zee=(119.545, 32.195),    # MARNET-uiteinde bij Zhenjiang
+        anker_binnen=(118.735, 32.095),  # haven van Nanjing
+    ),
+    dict(
+        label="yangtze-boven",
+        zeevaart=False,
+        cemt="",
+        volgt_op="yangtze",
+        bbox=(29.50, 113.90, 32.30, 118.85),
+        namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
+        anker_zee=(118.735, 32.095),    # = anker_binnen van 'yangtze'
+        anker_binnen=(114.300, 30.590),  # haven van Wuhan
+    ),
 ]
 
 
@@ -91,32 +158,66 @@ def km(a, b):
 # ---------------------------------------------------------------- bron: OSM
 
 def overpass(query):
+    """Overpass-antwoord, met een schijf-cache op de query-hash.
+
+    De cache maakt herhalen goedkoop: ankers/simplify aanpassen hoeft niet
+    opnieuw over de lijn (dezelfde les als de verzoening-cache in
+    bake_marnet.py — bewaarpunt éérst bij dure pijplijnen). De bbox en de
+    namen zitten ín de query, dus de sleutel vervalt vanzelf zodra die
+    veranderen.
+    """
+    # Sleutel op de INHOUD van de query (bbox + namen), niet op de
+    # instellingenregel: aan een timeout draaien mag nooit opgehaalde data
+    # weggooien.
+    kern = "\n".join(r for r in query.splitlines() if not r.startswith("[out:"))
+    sleutel = hashlib.sha1(kern.encode()).hexdigest()[:16]
+    cache_map = os.path.join(CACHE, "overpass")
+    cache_pad = os.path.join(cache_map, f"{sleutel}.json")
+    if os.path.exists(cache_pad):
+        print(f"  overpass uit cache ({sleutel})")
+        with open(cache_pad, encoding="utf-8") as f:
+            return json.load(f)
+
     data = urllib.parse.urlencode({"data": query}).encode()
     fout = None
-    for url in OVERPASS_URLS:
-        try:
-            req = urllib.request.Request(url, data=data, headers={
-                "User-Agent": "grondstoffen-atlas/M24 (github.com/larswalters/grondstoffen-atlas)"})
-            with urllib.request.urlopen(req, timeout=240) as r:
-                return json.load(r)
-        except Exception as e:  # noqa: BLE001 — mirror proberen, dan pas falen
-            fout = e
-            print(f"  overpass-mirror faalde ({url.split('/')[2]}): {e}")
-    raise RuntimeError(f"alle Overpass-mirrors faalden: {fout}")
+    for ronde in range(OVERPASS_RONDES):
+        if ronde:
+            print(f"  alle mirrors bezet — ronde {ronde + 1}/{OVERPASS_RONDES} "
+                  f"na {OVERPASS_PAUZE_S}s")
+            time.sleep(OVERPASS_PAUZE_S)
+        for url in OVERPASS_URLS:
+            try:
+                req = urllib.request.Request(url, data=data, headers={
+                    "User-Agent": "grondstoffen-atlas/M24 (github.com/larswalters/grondstoffen-atlas)"})
+                with urllib.request.urlopen(req, timeout=OVERPASS_CLIENT_S) as r:
+                    antwoord = json.load(r)
+                os.makedirs(cache_map, exist_ok=True)
+                with open(cache_pad, "w", encoding="utf-8") as f:
+                    json.dump(antwoord, f)
+                return antwoord
+            except Exception as e:  # noqa: BLE001 — mirror proberen, dan pas falen
+                fout = e
+                print(f"  overpass-mirror faalde ({url.split('/')[2]}): {e}")
+    raise RuntimeError(f"alle Overpass-mirrors faalden na {OVERPASS_RONDES} rondes: {fout}")
 
 
 def segmenten_osm(systeem):
     la0, lo0, la1, lo1 = systeem["bbox"]
     bbox = f"({la0},{lo0},{la1},{lo1})"
-    naam_re = "^(" + "|".join(systeem["namen"]) + ")$"
-    query = f"""
-[out:json][timeout:180];
-(
-  way["waterway"~"^(river|canal|fairway)$"]["CEMT"]{bbox};
-  way["waterway"~"^(river|canal|fairway)$"]["name"~"{naam_re}"]{bbox};
-);
-out geom;
-"""
+    delen = []
+    # De CEMT-clause heeft géén naamfilter en scant dus élke waterway in de
+    # bbox. Buiten Europa bestaat de tag niet, dus daar is dat pure kosten:
+    # de Mississippi-delta (bayous!) liep er op beide mirrors in een timeout.
+    # Alleen meenemen als het systeem zelf een CEMT-klasse draagt.
+    if systeem.get("cemt"):
+        delen.append(f'  way["waterway"~"^(river|canal|fairway)$"]["CEMT"]{bbox};')
+    for naam in systeem["namen"]:
+        # Exacte tag-match i.p.v. één naam-regex: Overpass indexeert key=value,
+        # terwijl een regex een scan over alle waterways in de bbox afdwingt.
+        # De oude regex was ^(...)$-geankerd, dus dit selecteert hetzelfde.
+        delen.append(f'  way["waterway"~"^(river|canal|fairway)$"]["name"="{naam}"]{bbox};')
+    query = ("[out:json][timeout:%d];\n(\n%s\n);\nout geom;\n"
+             % (OVERPASS_SERVER_S, "\n".join(delen)))
     antwoord = overpass(query)
     segs = []
     cemt_gezien = {}
@@ -367,6 +468,7 @@ def haal(bron, bestand=None):
                 "label": label,
                 "zeevaart": systeem["zeevaart"],
                 "cemt": systeem["cemt"],
+                "volgtOp": systeem.get("volgt_op", ""),
                 "bron": bron,
                 "km": round(lengte, 1),
                 "route": " → ".join(namen),

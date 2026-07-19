@@ -623,6 +623,7 @@ def analyse():
 
 KETEN_KM = 15.0         # nieuwe knoop elke ~15 km (havens snappen op knopen)
 AANSLUIT_MAX_KM = 30.0  # zeezijde moet zó dicht bij een MARNET-knoop beginnen
+VERVOLG_MAX_KM = 5.0    # een vervolgsegment moet vlak op zijn voorganger aansluiten
 CORRIDOR_EPS_KM = 0.25  # kwantisering (11 m) + simplify (25 m) blijven hier ruim onder
 
 
@@ -633,10 +634,18 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
     MARNET-knoop, dan nieuwe knopen elke ~KETEN_KM met edges soort=1 en
     passage=systeemlabel (het bestaande vermijd-mechanisme = meteen de
     M26/M21-filterknop). Geeft de meta per systeem terug voor marnet.json.
+
+    Een systeem met `volgtOp` hangt niet aan MARNET maar aan het BINNENEINDE
+    van dat eerdere systeem (LAR-487/488). Zo krijgt één rivier meerdere
+    labels met elk een eigen zeevaart-vlag: de Mississippi is zeevaarbaar tot
+    Baton Rouge en daarboven binnenvaart, de Yangtze tot Nanjing. Volgorde in
+    fetch_waterways.SYSTEMEN bepaalt de bakvolgorde; een vooruitverwijzing
+    faalt luid.
     """
     gj = json.load(open(pad, encoding="utf-8"))
     n_orig = len(nodes)
     orig_xyz = np.array([to3d(lo, la) for lo, la in nodes[:n_orig]])
+    keten_eind = {}   # label -> knoop-id van het binneneinde van die keten
     uit = {}
     print(f"\nextra vaarwegen uit {os.path.basename(pad)}:")
     for f in gj["features"]:
@@ -644,26 +653,42 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
         label = props["label"]
         coords = [(wrap_lon(lo), la) for lo, la in f["geometry"]["coordinates"]]
 
-        # zee-overgang: dichtstbijzijnde originele knoop (3D-dot = grootcirkel-proxy)
-        v = np.array(to3d(*coords[0]))
-        d = orig_xyz @ v
-        zeeknoop = int(np.argmax(d))
-        aansluit_km = R_AARDE * math.acos(max(-1.0, min(1.0, float(d[zeeknoop]))))
-        if aansluit_km > AANSLUIT_MAX_KM:
-            raise RuntimeError(f"{label}: zeezijde ligt {aansluit_km:.1f} km van de "
-                               f"dichtstbijzijnde MARNET-knoop (max {AANSLUIT_MAX_KM})")
-        # Polygoon-toets op de zee-overgang, met de M23-nuance: een knoop in een
-        # dokbekken/estuarium is NE-"land" maar ligt in een WATERWEG_ZONE — daar
-        # vaart MARNET écht (bv. de Maasmond-knoop 6812 in zone nl-delta).
-        overgang = "water"
-        if land.is_land(*nodes[zeeknoop]):
-            zone = in_zone(*nodes[zeeknoop])
-            if not zone:
-                lo, la = nodes[zeeknoop]
-                raise RuntimeError(f"{label}: aansluitknoop {zeeknoop} ({la:.3f},{lo:.3f}) "
-                                   f"ligt op land buiten elke waterweg-zone — "
-                                   f"zee-overgang ongeldig")
-            overgang = f"zone:{zone}"
+        volgt_op = props.get("volgtOp") or ""
+        if volgt_op:
+            # vervolgsegment: aansluiten op het binneneinde van de voorganger.
+            # Geen polygoon-toets — dat punt ligt al op een corridor-getoetste
+            # keten, niet op de zee-overgang.
+            if volgt_op not in keten_eind:
+                raise RuntimeError(f"{label}: volgtOp={volgt_op} is nog niet gebakken — "
+                                   f"zet dat systeem eerder in SYSTEMEN")
+            zeeknoop = keten_eind[volgt_op]
+            aansluit_km = gc_km(nodes[zeeknoop], coords[0])
+            if aansluit_km > VERVOLG_MAX_KM:
+                raise RuntimeError(f"{label}: begint {aansluit_km:.1f} km van het einde "
+                                   f"van {volgt_op} (max {VERVOLG_MAX_KM}) — laat "
+                                   f"anker_zee samenvallen met diens anker_binnen")
+            overgang = f"keten:{volgt_op}"
+        else:
+            # zee-overgang: dichtstbijzijnde originele knoop (3D-dot = grootcirkel-proxy)
+            v = np.array(to3d(*coords[0]))
+            d = orig_xyz @ v
+            zeeknoop = int(np.argmax(d))
+            aansluit_km = R_AARDE * math.acos(max(-1.0, min(1.0, float(d[zeeknoop]))))
+            if aansluit_km > AANSLUIT_MAX_KM:
+                raise RuntimeError(f"{label}: zeezijde ligt {aansluit_km:.1f} km van de "
+                                   f"dichtstbijzijnde MARNET-knoop (max {AANSLUIT_MAX_KM})")
+            # Polygoon-toets op de zee-overgang, met de M23-nuance: een knoop in een
+            # dokbekken/estuarium is NE-"land" maar ligt in een WATERWEG_ZONE — daar
+            # vaart MARNET écht (bv. de Maasmond-knoop 6812 in zone nl-delta).
+            overgang = "water"
+            if land.is_land(*nodes[zeeknoop]):
+                zone = in_zone(*nodes[zeeknoop])
+                if not zone:
+                    lo, la = nodes[zeeknoop]
+                    raise RuntimeError(f"{label}: aansluitknoop {zeeknoop} ({la:.3f},{lo:.3f}) "
+                                       f"ligt op land buiten elke waterweg-zone — "
+                                       f"zee-overgang ongeldig")
+                overgang = f"zone:{zone}"
 
         # keten bouwen: aansluitknoop -> nieuwe knopen elke ~KETEN_KM -> eindknoop
         lijn = [nodes[zeeknoop]] + coords
@@ -685,6 +710,7 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
                 vorige_knoop = nieuw
                 stuk = [lijn[i]]
                 stuk_km = 0.0
+        keten_eind[label] = vorige_knoop
 
         # corridor-toets (lokale vlakke projectie — prima op systeemschaal);
         # het aansluitstukje zeeknoop->bronlijn valt buiten de toets.
@@ -714,6 +740,7 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
             "aansluitKnoop": zeeknoop,
             "aansluitKm": round(aansluit_km, 2),
             "aansluitOvergang": overgang,
+            "volgtOp": volgt_op,
         }
         print(f"  {label:<16} {km_tot:6.1f} km · {len(keten_edges)} edges · aansluiting "
               f"knoop {zeeknoop} ({aansluit_km:.2f} km, {overgang}) · corridor max "
