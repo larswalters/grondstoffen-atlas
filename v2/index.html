@@ -58,14 +58,15 @@
       <input id="vanHaven" list="havenLijst" placeholder="van — typ een haven" autocomplete="off" />
       <input id="naarHaven" list="havenLijst" placeholder="naar — typ een haven" autocomplete="off" />
       <datalist id="havenLijst"></datalist>
-      <!-- Sinds de Donau-ring (LAR-494) loopt er een binnenvaartverbinding
-           tussen Noordzee en Zwarte Zee. Het kortste graafpad stuurt een
-           zeeschip dan dwars door Europa over sluizen van klasse Vb. Deze
-           schakelaar maakt dat voelbaar: "zeeschip" sluit alle niet-zeevaarbare
-           systemen. Welke van de twee de DEFAULT wordt is Lars' keuze. -->
+      <!-- Sinds de Donau-ring (LAR-494) loopt er binnenwater van de Noordzee
+           naar de Zwarte Zee, en dan is het kortste graafpad voor een zeeschip
+           ineens dwars door Europa. "realistisch" (default) probeert eerst een
+           zuivere zeeroute en zet binnenwater alleen open waar een uiteinde
+           écht in het binnenland ligt. "alles toestaan" toont het oude,
+           permissieve gedrag — bruikbaar om de corridor te inspecteren. -->
       <div class="btnRow">
-        <button class="schipBtn is-on" data-schip="alles">alle schepen</button>
-        <button class="schipBtn" data-schip="zee">alleen zeeschip</button>
+        <button class="schipBtn is-on" data-schip="echt">realistisch</button>
+        <button class="schipBtn" data-schip="alles">alles toestaan</button>
       </div>
       <div class="btnRow">
         <button id="routeGo">route</button>

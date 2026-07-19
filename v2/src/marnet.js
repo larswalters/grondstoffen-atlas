@@ -251,6 +251,65 @@ export function dichtstbijzijndeKnoop(net, lon, lat) {
  *   liggen (default 1 = uit; zet bv. 2 om de Noordelijke Zeeroute alleen te
  *   laten winnen als er geen redelijk alternatief is).
  */
+/**
+ * Welke binnenvaartsystemen zijn vanaf `knoop` bereikbaar ZONDER over zee te
+ * gaan? Dat is precies de verzameling die een schip nodig kán hebben om een
+ * binnenhaven te bereiken — al het andere binnenwater is voor die reis een
+ * sluipweg.
+ */
+export function binnenSystemenBij(net, knoop) {
+  const binnen = new Set();
+  for (const [label, v] of Object.entries(net.vaarwegen || {})) {
+    if (!v.zeevaart) binnen.add(label);
+  }
+  const gezien = new Uint8Array(net.knoopLon.length);
+  const gevonden = new Set();
+  const stapel = [knoop];
+  gezien[knoop] = 1;
+  while (stapel.length) {
+    const u = stapel.pop();
+    for (let a = net.adjStart[u]; a < net.adjStart[u + 1]; a++) {
+      const label = net.edgeLabel[net.adjEdge[a]];
+      if (label === null || !binnen.has(label)) continue;
+      gevonden.add(label);
+      const b = net.adjKnoop[a];
+      if (!gezien[b]) { gezien[b] = 1; stapel.push(b); }
+    }
+  }
+  return gevonden;
+}
+
+/**
+ * Routeer zoals een schip echt vaart (LAR-494, op Lars' regel: *"als een route
+ * naar een zeehaven gaat, dan gaat de zeeboot ineens via rivieren of sluizen —
+ * dat is niet natuurlijk"*).
+ *
+ * Twee trappen:
+ *  1. Probeer het als ZEESCHIP: alle binnenvaartsystemen dicht. Lukt dat, dan
+ *     is het een zeereis en is er niets aan de hand — Rotterdam→Shanghai gaat
+ *     dan weer om via Gibraltar i.p.v. door de Rijn.
+ *  2. Lukt het niet, dan ligt minstens één uiteinde in het binnenland. Sta dan
+ *     alleen de systemen toe die vanaf die uiteinden **zonder zee** bereikbaar
+ *     zijn. Dat is de sleutel: de Europese en de Chinese binnenwaternetten zijn
+ *     losse componenten, dus een reis naar Wuhan mag de Yangtze gebruiken maar
+ *     niet de Rijn-Donau-corridor als sluipweg naar de Zwarte Zee.
+ */
+export function zoekRouteRealistisch(net, van, naar, opties = {}) {
+  const basis = opties.vermijd ?? ["northwest"];
+  const zee = zoekRoute(net, van, naar, { ...opties, vermijd: [...basis, "binnenvaart"] });
+  if (zee) return { route: zee, modus: "zeeschip" };
+
+  const toegestaan = new Set([
+    ...binnenSystemenBij(net, van), ...binnenSystemenBij(net, naar),
+  ]);
+  const dicht = [];
+  for (const [label, v] of Object.entries(net.vaarwegen || {})) {
+    if (!v.zeevaart && !toegestaan.has(label)) dicht.push(label);
+  }
+  const binnen = zoekRoute(net, van, naar, { ...opties, vermijd: [...basis, ...dicht] });
+  return binnen ? { route: binnen, modus: "binnenvaart" } : null;
+}
+
 export function zoekRoute(net, van, naar, opties = {}) {
   const vermijd = opties.vermijd ?? ["northwest"];
   const arctisFactor = opties.arctisFactor ?? 1;

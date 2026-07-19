@@ -4,7 +4,8 @@
 import { createGlobe, CONFIG } from "./globe.js?v=027";
 import { laadVectorWereld } from "./world.js?v=027";
 import { createTileLayer } from "./tiles.js?v=027";
-import { laadMarnet, laadHavens, zoekRoute, bouwRouteLijn } from "./marnet.js?v=027";
+import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
+  from "./marnet.js?v=027";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -145,8 +146,14 @@ function toonRoute() {
   wisRoute();
 
   const t0 = performance.now();
-  const route = zoekRoute(NET, van.knoop, naar.knoop,
-    SCHIP === "zee" ? { vermijd: ["northwest", "binnenvaart"] } : {});
+  let route = null;
+  let modus = "";
+  if (SCHIP === "alles") {
+    route = zoekRoute(NET, van.knoop, naar.knoop);
+  } else {
+    const uit = zoekRouteRealistisch(NET, van.knoop, naar.knoop);
+    if (uit) { route = uit.route; modus = uit.modus; }
+  }
   const ms = performance.now() - t0;
   if (!route) {
     infoEl.textContent = `geen pad gevonden (${havenLabel(van)} → ${havenLabel(naar)})`;
@@ -164,6 +171,7 @@ function toonRoute() {
   const passages = [...new Set(route.edges.map((e) => NET.edgeLabel[e]).filter(Boolean))];
   infoEl.innerHTML =
     `<b>${Math.round(totaal).toLocaleString("nl")} km</b> · ` +
+    (modus ? `${modus} · ` : "") +
     `${route.edges.length} edges · ${ms.toFixed(0)} ms` +
     (binnen ? ` · ${binnen} binnenwater` : "") +
     (aanloop > 20 ? ` · aanloop ${Math.round(aanloop)} km` : "") +
@@ -171,11 +179,12 @@ function toonRoute() {
   window.ROUTE = route; // diagnose
 }
 
-// Scheepstype voor de route-test. "alles" = het permissieve gedrag van vóór de
-// Donau-ring; "zee" sluit elk niet-zeevaarbaar systeem via het groepslabel
-// `binnenvaart`. Default bewust ongewijzigd (alles) — welk van de twee de
-// default hóórt te zijn is een ontwerpkeuze, geen implementatiedetail.
-let SCHIP = "alles";
+// Default = "echt" (LAR-494, op Lars' regel): eerst als zeeschip proberen, en
+// alleen als een uiteinde in het binnenland ligt de binnenvaartsystemen
+// openzetten die vanaf dát uiteinde bereikbaar zijn. "alles" laat het oude
+// permissieve gedrag zien — handig om de Rijn-Donau-corridor te inspecteren,
+// maar dan vaart er dus een zeeschip door sluizen van klasse Vb.
+let SCHIP = "echt";
 for (const b of document.querySelectorAll(".schipBtn")) {
   b.addEventListener("click", () => {
     SCHIP = b.dataset.schip;
