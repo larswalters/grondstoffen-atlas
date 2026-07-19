@@ -1,6 +1,34 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 31) — Maas + Benelux-delta (LAR-505) + de eerste ringsluiting
+
+**Vier systemen:** `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op **0,00 km**) ·
+`maas-boven` 64,2 (Luik → Namen) · `albertkanaal` 127,5 (`aftakking:maas`, 0,00 km) ·
+`amsterdam-rijnkanaal` 73,3.
+
+**Nieuw mechanisme `sluitAan` — hechten aan BEIDE kanten.** LAR-504 hecht alleen het *begin* van
+een keten; voor een verbindingskanaal is dat de helft. Het ARK hing wel aan de Waal bij Tiel maar
+bungelde in Amsterdam. **Meetbaar bewijs:** Amsterdam→Nijmegen bleef **263 km mét én zonder** het
+kanaal — 73 km geometrie die nul routes droeg. Met de sluiting op `noordzeekanaal` (3,02 km over
+het IJ, waar OSM geen doorgaande benoemde lijn heeft): **263 → 105 km**.
+
+**Drie stille ketenbreuken gevangen:** `Amer` (12,5 km) overbrugt Hollandsch Diep → Bergsche Maas ·
+`Canal Albert` is de grensnaam bij Luik · **elk sluiscomplex ligt als drie parallelle kolken**
+(`duwvaartsas`/`middensas`/`noordersas`) → alleen de duwvaartsas gewhitelist.
+
+**Twee vallen vermeden:** CEMT-clause uit (de Zuid-Willemsvaart, klasse II, won als kortste pad) en
+de keten kiest uit zichzelf het **Julianakanaal** i.p.v. de Grensmaas — tekort t.o.v. de
+rivierkilometrage is **constant ~22 km vanaf Maasbracht**, dus kanaal-vs-rivier en geen sluipweg.
+
+**LAR-504 nu end-to-end bewezen:** Nijmegen→Luik **353 km** dwars door een aftakking.
+Regressie exact (19.610 · 8.031 · Nijmegen 172 · A'dam→Shanghai 19.677 · Memphis 10.000 ·
+Wuhan 20.626). Snaps `Liege` **102,2→2,7** · `Born` 90,2→10,1 · `Antwerpen` 17,6→5,0 km.
+Netwerk 9.937 → **9.975** knopen, 16.184 → **16.223** edges. Commit `ba8c287`, live `?v=025`.
+
+**Open:** Lars' visuele go. Bewust open: R'dam→Luik 375 km (havenknoop-overhead, niet de ~230 uit
+het issue) en R'dam→Antwerpen 500 km tot het Schelde-Rijnkanaal er is ([LAR-495]).
+
 ## 2026-07-19 (sessie 30) — Mosel als eerste echte aftakking (LAR-506) + slepen gefixt
 
 **Mosel** Koblenz → Neuves-Maisons **392,0 km** (officieel ~394, −0,5%), aansluiting knoop 9745 op

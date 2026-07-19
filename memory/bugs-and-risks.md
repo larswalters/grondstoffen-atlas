@@ -1,13 +1,17 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-492/504 — aftakking nog niet end-to-end gerouteerd; vault liep 14 uit de pas)*
+*Last updated: 2026-07-19 (LAR-505 — aftakking nu WEL end-to-end gerouteerd; nieuwe diagnose-val)*
 
-## ⚠️ OPEN — het aftakmechanisme is nog niet end-to-end gerouteerd (2026-07-19, [LAR-504])
+## ✅ OPGELOST — het aftakmechanisme is nu end-to-end gerouteerd (2026-07-19, [LAR-505])
 
 Wat wél bewezen is: de knip zelf (moederedge 23→24 edges, lengte onveranderd, aansluiting 0,00 km,
 uitvoer byte-identiek op de bestaande set). Wat **niet** bewezen is: een route die dwars **door** een
 aftakking heen loopt, met echte havens aan weerszijden. Dat kan pas met een echte zijtak en is de
 acceptatie van [LAR-505] (Nieuwe Merwede en Amsterdam-Rijnkanaal takken allebei middenin `waal` af).
-Ga er dus niet van uit dat het routeerpad al gedekt is.
+
+**Gedekt sinds [LAR-505]:** `maas` hecht als `aftakking:waal` op 0,00 km bij Werkendam, en
+**Nijmegen→Luik (353 km)** loopt de Waal af om er middenin af te slaan — een echte route dwars
+**door** een aftakking, met searoute-havens aan weerszijden. Ook de `vermijd`-knop werkt per tak:
+`maas` dicht → Luik/Born onbereikbaar terwijl R'dam→Nijmegen exact 172 km blijft.
 
 ## ✅ OPGELOST — `now.md` liep 14 knopen/edges uit de pas met de code (2026-07-19)
 
@@ -15,6 +19,23 @@ De vault noemde 9.877 knopen / 16.124 edges voor de bake van `45a21eb`, terwijl 
 **9.863 / 16.110** stond. Niets kapot, maar het is precies het soort drift dat een volgende sessie
 laat "corrigeren" wat niet stuk is. Gecorrigeerd in `now.md` mét een notitie erbij.
 **Les:** neem netwerkcijfers over uit `marnet.json`, niet uit een vorige samenvatting.
+
+## ⚠️ EEN STITCH-FOUT WIJST NIET ALTIJD NAAR DE KETEN (2026-07-19, [LAR-505])
+
+`RuntimeError: geen doorlopend waterpad tussen de ankers` klinkt als een gat in de ketting, en de
+reflex is namen toevoegen. Bij het Albertkanaal hielp dat twee keer wél (`Canal de Monsin`, de vier
+`duwvaartsas`-kolken) en de derde keer niet — want de keten wás al heel: **136,3 km van Antwerpen
+tot Luik in één component**.
+
+De echte oorzaak zat in het **anker**. `dichtstbij()` pakt de dichtstbijzijnde vertex ongeacht of
+die in het hoofdcomponent zit, en `Canal de Monsin` bestaat uit twee stukjes met 130 m ertussen —
+het anker landde op het losse fragment van 4 punten. **De melding beschreef het symptoom van het
+anker, niet van de ketting.**
+
+**Werkwijze die het uitwees:** de échte stitcher-graaf naspelen (segment-vertices + de
+endpoint-hechting binnen `stitch_km`) en dan vragen *welke knopen zijn vanaf `start` bereikbaar* —
+antwoord: 4 van de 446. Een eigen benadering met alleen endpoint-koppeling was hier misleidend,
+want die verbindt anders dan de stitcher zelf. Bouw de diagnose op de échte graaf.
 
 ## ⚠️ METEN IN DE BROWSER-PANE: twee artefacten die me allebei beetnamen (2026-07-19)
 

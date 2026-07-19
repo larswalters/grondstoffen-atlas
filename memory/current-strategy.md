@@ -1,5 +1,5 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24.1 in uitvoering; vaarwegen zijn nu een NET, geen losse lijnen)*
+*Last updated: 2026-07-19 (M24.1: het net sluit nu ook RINGEN — sluitAan, LAR-505)*
 
 ## 🚢 M24-uitrol: de vaarwegen vormen een NET (2026-07-19, [LAR-504])
 
@@ -13,6 +13,19 @@ plekken waar later iets aantakt. Splits alleen waar het iets betekent — bij ee
 elk segment is een eigen passage-label = een eigen `vermijd`-knop voor M21. De Rijn is daarom bij
 **Bingen** geknipt (Kaub-laagwater), niet bij de zeevaart/binnenvaart-grens: die vlag is puur
 metadata en stuurt geen routering.
+
+### Sinds [LAR-505]: een keten mag aan BEIDE kanten hechten
+
+`volgtOp` hecht het **begin** van een keten, `sluitAan` het **eind**. Dat is het verschil tussen een
+boom en een net: een verbindingskanaal (Amsterdam-Rijnkanaal, straks het Schelde-Rijnkanaal) verbindt
+twee bestaande ketens en is zonder tweede hechting een **doodlopende tak die nul routes draagt** —
+gemeten, niet vermoed: Amsterdam→Nijmegen bleef 263 km mét én zonder het kanaal, en werd 105 km zodra
+de sluiting erin zat.
+
+**Vuistregel voor de rest van de uitrol:** takt een systeem aan één kant aan (zijrivier), dan volstaat
+`volgtOp`. Verbindt het twee bestaande systemen (kanaal), dan **hoort er een `sluit_aan` bij** —
+controleer dat door een route te zoeken die er logisch overheen moet en hem één keer mét en één keer
+zónder het label in `vermijd` te meten. Verandert er niets, dan draagt de keten niets.
 
 **Vaste volgorde per systeem** (nu vier stappen, want stap 1 is gereedschap geworden):
 1. `v2/tools/survey_vaarwegen.py` over de extracts → namen **op lengte, mét lon/lat-strekking**.

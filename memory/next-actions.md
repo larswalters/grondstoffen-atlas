@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (Rijn + Mosel + aftakmechanisme Done, slepen gefixt; NU = LAR-505 Maas/delta)*
+*Last updated: 2026-07-19 (LAR-505 Maas + delta uitgevoerd; NU = LAR-493 Main -> LAR-494 Donau)*
 
 ## 👀 EERST: Lars' gevoelscheck op het slepen
 
@@ -15,23 +15,38 @@ Koblenz → Neuves-Maisons 392,0 km (officieel ~394, −0,5%), aansluiting 0,13 
 Daarmee is LAR-504 end-to-end bewezen. Nieuwe les: **bevaarbaar ≠ bevaarbaar op commercieel
 gabarit** — zie `decisions.md`. Nieuwe extracts `fr-lorraine` + `luxemburg`.
 
-## ➡️ NU: [LAR-505] Maas + Benelux-delta
+## ✅ AFGEROND (op de visuele go na): [LAR-505] Maas + Benelux-delta (2026-07-19)
 
-Nieuw issue, uit Lars' observatie na de Rijn: *"we moeten nog wel meer mappen dan alleen de rijn,
-de maas en stukken biesbosch."* De Maas stond in **géén** van de vier oorspronkelijke M24.1-issues.
-Gedeblokkeerd door [LAR-504] (aftakken op elk punt) — de Nieuwe Merwede, de Bergsche Maas en het
-Amsterdam-Rijnkanaal takken alle drie **middenin** een bestaande keten af, dus met het oude
-`volgtOp` waren ze niet te hangen.
+Vier systemen: `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op 0,00 km) · `maas-boven`
+64,2 (Luik → Namen) · `albertkanaal` 127,5 (`aftakking:maas`) · `amsterdam-rijnkanaal` 73,3.
+Live t/m `ba8c287` (`?v=025`). **[LAR-504] is nu ook end-to-end bewezen**: Nijmegen→Luik 353 km
+loopt dwars *door* een aftakking.
 
-Al gemeten met `survey_vaarwegen.py` (namen dus bevestigd, niet geraden):
-`Maas` 302,6 km · `La Meuse` 142,3 (⚠️ naamwissel op de taalgrens) · `Albertkanaal` 140,5 ·
-`Julianakanaal` 61,0 (de échte geul bij Maastricht) · `Amsterdam-Rijnkanaal` 48,5 ·
-`Oude Maas` 33,2 · `Haringvliet` 29,2 · `Hollandsch Diep` 27,9 · `Bergsche Maas` 26,9 ·
-`Hartelkanaal` 23,0 · `Schelde-Rijnkanaal` 22,1 · `Nieuwe Merwede` 20,2 km.
+Nieuw mechanisme **`sluitAan`** — een keten hecht aan **beide** kanten. Zie `decisions.md`.
 
-Kopeinde: **Luik/Namen** (Franse Meuse is klasse I–II → eerst meten, dan besluiten onder de
-snoeiregel). Haventoets: `Liege` snapt nu **118,2 km** weg. De eerste échte aftakking is meteen
-het **end-to-end bewijs van [LAR-504]** — dat is bewust nog niet bewezen (zie `bugs-and-risks.md`).
+## 👀 OOK OPEN: Lars' visuele go op de Maas
+
+Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Maas van de Biesbosch tot Luik,
+en **Amsterdam→Nijmegen dat nu binnendoor gaat** (263 → 105 km) in plaats van om via zee.
+Daarna [LAR-505] op Done.
+
+## ➡️ NU: [LAR-493] Main + Main-Donaukanaal, daarna [LAR-494] Donau
+
+Samen maken die de as **Rotterdam → Zwarte Zee** compleet. De Main takt bij Mainz **30 km ín
+`rijn-boven`** aan — dat is precies waar [LAR-504] voor gebouwd is, en het patroon is nu twee keer
+gelopen (Mosel, Maas), dus dit zou een vaste-werkwijze-klus moeten zijn.
+
+⚠️ Verwacht bij de Donau de **gecombineerde grensnamen** die de survey al vond: `Dunaj / Duna` en
+`Dunărea - Дунав`. Zonder allebei knipt de keten bij elke grens door.
+⚠️ Verwacht ook de **CEMT-clause-val** opnieuw (Mosel + Maas allebei) — begin met
+`cemt_insluiten=False` tenzij er een reden is om 'm aan te zetten.
+
+## ➡️ DAARNA: [LAR-495] Schelde / Seine / Rhône
+
+Extra reden sinds LAR-505: **Rotterdam→Antwerpen staat nu op 500 km** omdat de route om moet via
+Maas + Albertkanaal. Het **Schelde-Rijnkanaal** (22,1 km, al gemeten) brengt dat terug naar ~110 km.
+Franse regio's: Geofabrik gebruikt de **pre-2016** indeling (`alsace`, `basse-normandie`,
+`rhone-alpes` bestaan; `normandie` niet — die geeft **0 bytes** i.p.v. een 404).
 
 ## ✅ AFGEROND: [LAR-492] Rijn + [LAR-504] aftakmechanisme (2026-07-19)
 

@@ -1,6 +1,67 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (Mosel = eerste aftakking; slepen over de bol vervangen)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-505 Maas + delta; ringsluiting `sluitAan`)*
+
+> **🌊 DE MAAS EN DE DELTA — EN HET MOMENT DAT LIJNEN EEN NET WORDEN (2026-07-19, laatste).**
+> Live t/m `ba8c287` (`?v=025`). **→ VOLGENDE: [LAR-493] Main + [LAR-494] Donau** (samen
+> Rotterdam→Zwarte Zee), daarna [LAR-495]. **Open: Lars' visuele go op [LAR-505]** + zijn
+> gevoelscheck op het slepen.
+>
+> **Vier systemen erbij:** `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op **0,00 km**) ·
+> `maas-boven` 64,2 (Luik → Namen) · `albertkanaal` 127,5 (`aftakking:maas`, 0,00 km) ·
+> `amsterdam-rijnkanaal` 73,3. Aanleiding was Lars' observatie na de Rijn — de Maas stond in **géén**
+> van de vier oorspronkelijke M24.1-issues.
+>
+> **⚠️ NIEUW MECHANISME `sluitAan` — EEN KETEN HECHT NU AAN BEIDE KANTEN.** [LAR-504] leerde
+> middenin een keten aanhaken, maar hecht alleen het **begin**. Voor een verbindings**kanaal** is dat
+> de helft van het werk: het Amsterdam-Rijnkanaal hing wel aan de Waal bij Tiel maar bungelde in
+> Amsterdam. **Het bewijs was meetbaar, niet theoretisch:** Amsterdam→Nijmegen bleef **263 km mét én
+> zonder** het kanaal in `vermijd` — 73 km geometrie die nul routes droeg, terwijl de bake-uitvoer
+> gewoon een geslaagde aansluiting meldde. Nieuw veld `sluit_aan` (fetcher) → `sluitAan` (baker)
+> hecht ook het **eind** via hetzelfde `hecht_aan_keten()`; de sluitedge draagt het systeemlabel dus
+> valt onder dezelfde `vermijd`-knop, en staat bewust **ná** de corridor-toets (een sluitstuk
+> verbindt twee ketens en is geen gebakken bron-geometrie). Resultaat **263 → 105 km**.
+> **Vuistregel:** zijrivier = `volgtOp` volstaat · kanaal tussen twee systemen = er **hoort** een
+> `sluit_aan` bij, en controleer dat door een route één keer mét en één keer zónder het label te
+> meten. Verandert er niets, dan draagt de keten niets.
+>
+> **⚠️ "WELK SCHIP PAST ERDOOR" GELDT NU OOK OP SLUISNIVEAU.** Het Albertkanaal viel uiteen in zes
+> componenten met gaten van ~150 m: bij elk van de vier sluiscomplexen liggen **drie parallelle
+> kolken** als aparte benoemde canal-ways (`<plaats> duwvaartsas` / `middensas` / `noordersas`) en de
+> doorgaande way stopt ervóór. Alleen de **duwvaartsas** is gewhitelist — de kolk voor commerciële
+> duwvaart. Derde verschijning van dezelfde regel: water ≠ vaarweg (Restrhein) · gabarit (Freycinet) ·
+> **sluiskolk**.
+>
+> **⚠️ DE VORM VAN EEN LENGTE-AFWIJKING IS HET BEWIJS, NIET DE GROOTTE.** De Maas komt ~22 km korter
+> uit dan de officiële rivierkilometrage — dat lijkt op de Mosel-fout (18 km te kort = verkeerde
+> vaarweg) maar is het niet. Tegen **veertien** herkenbare punten gemeten is het tekort **constant**
+> en ontstaat het **volledig tussen Eijsden en Maasbracht** (Maasbracht −23, Roermond −21, Venlo −22,
+> Grave −27, Heusden −22) = het **Julianakanaal**, dat de onbevaarbare Grensmaas afsnijdt terwijl de
+> kilometrage de rivier volgt. Een sluipweg elders zou **oplopend of springend** zijn geweest.
+>
+> **⚠️ EEN STITCH-FOUT WIJST NIET ALTIJD NAAR DE KETEN.** *"Geen doorlopend waterpad"* klinkt als een
+> gat in de ketting; de reflex is namen toevoegen. Dat hielp twee keer wél (`Canal de Monsin`, de
+> duwvaartsassen) en de derde keer niet — de keten wás al heel (136,3 km in één component), maar het
+> **anker** landde op een geïsoleerd fragment van 4 punten. Bouw de diagnose op de **échte
+> stitcher-graaf**, niet op een eigen benadering: die verbindt anders.
+>
+> **Derde stille ketenbreuk gevangen:** `Amer` (12,5 km) overbrugt Hollandsch Diep (eindigt lon 4,672)
+> → Bergsche Maas (begint 4,847), na `Boven-Rijn` en `Le Rhin / Rhein`. En `Canal Albert` is de
+> grensnaam bij Luik. **CEMT-clause uit** (Mosel-les, andere dader: de **Zuid-Willemsvaart**,
+> klasse II, loopt kaarsrecht parallel aan de meanderende Maas en won als kortste pad).
+>
+> **Tests:** [LAR-504] nu **end-to-end bewezen** — Nijmegen→Luik **353 km** loopt dwars *door* een
+> aftakking. Regressie exact (19.610 / 8.031 / Nijmegen 172 / A'dam→Shanghai 19.677 / Memphis 10.000 /
+> Wuhan 20.626). Snaps `Liege` **102,2→2,7** · `Born` 90,2→10,1 · `Antwerpen` 17,6→5,0 km; havens
+> >50 km 1.430→**1.424**; corridor 0 m. Netwerk 9.937→**9.975** knopen, 16.184→**16.223** edges.
+> *(Kehl toont 757 i.p.v. 758: waarde 757,4999998, dus tot op 2 mm gelijk — alleen de afronding viel
+> andersom.)*
+>
+> **Bewust open:** R'dam→Luik is **375 km**, niet de ~230 uit het issue — die was een schatting vooraf;
+> de keten zelf is gevalideerd en de rest is de bestaande havenknoop-overhead (dezelfde die Nijmegen
+> op 172 zet i.p.v. ~110). **R'dam→Antwerpen 500 km** omdat het **Schelde-Rijnkanaal** nog ontbreekt →
+> ~110 km na [LAR-495]. Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-lar505-maas-delta-ringsluiting]].
 
 > **🖐️ SLEPEN OVER DE BOL VERVANGEN + MOSEL ALS EERSTE ECHTE AFTAKKING (2026-07-19, laatste).**
 > Live t/m `2ea5f42` (`?v=024`). **→ VOLGENDE: [LAR-505] Maas + Benelux-delta.**

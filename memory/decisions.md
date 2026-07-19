@@ -1,7 +1,53 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-506 Mosel: gabarit-filter + slepen = grijpen-en-meenemen)*
+*Last updated: 2026-07-19 (LAR-505 Maas + delta: ringsluiting `sluitAan`)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-19 · LAR-505 — een keten mag aan BEIDE kanten hechten (`sluitAan`)
+
+[LAR-504] hecht alleen het **begin** van een keten aan een bestaande keten. Voor een
+verbindings**kanaal** is dat de helft van het werk: het Amsterdam-Rijnkanaal hing wel aan de Waal
+bij Tiel, maar zijn Amsterdamse eind bungelde in het niets.
+
+**Het bewijs was meetbaar, niet theoretisch:** Amsterdam→Nijmegen bleef **263 km, mét én zonder**
+het kanaal in `vermijd`. 73 km geometrie die nul routes droeg — precies het soort stille
+nutteloosheid die je niet ziet in de bake-uitvoer, want die meldde gewoon een geslaagde aansluiting.
+
+Nieuw veld `sluit_aan` (fetcher) → `sluitAan` (baker): na het bouwen hecht ook het **eind** via
+hetzelfde `hecht_aan_keten()`. De sluitedge draagt het systeemlabel, dus hij valt onder dezelfde
+`vermijd`-knop. Bewust **ná** de corridor-toets: een sluitstuk verbindt twee ketens en is geen
+gebakken bron-geometrie — net zomin onderdeel van die toets als het aansluitstukje aan de zeezijde.
+Resultaat: **263 → 105 km**.
+
+## 2026-07-19 · LAR-505 — "welk schip past erdoor" geldt ook op SLUISNIVEAU
+
+Het Albertkanaal viel uiteen in zes componenten met gaten van ~150 m. Oorzaak: bij elk van de vier
+sluiscomplexen liggen **drie parallelle kolken** als aparte benoemde canal-ways (`<plaats>
+duwvaartsas` / `middensas` / `noordersas`) en de doorgaande `Albertkanaal`-way stopt ervóór.
+
+Alleen de **duwvaartsas** is gewhitelist: dat is de kolk voor commerciële duwvaart. Daarmee kiest de
+keten per constructie de grootgabarit-doorgang in plaats van de kortste kolk. Derde verschijning van
+dezelfde regel, nu op het kleinste niveau: water ≠ vaarweg (Restrhein) · gabarit (Freycinet) ·
+**sluiskolk**.
+
+## 2026-07-19 · LAR-505 — de VORM van een lengte-afwijking is het bewijs, niet de grootte
+
+De Maas-keten komt ~22 km korter uit dan de officiële rivierkilometrage. Dat lijkt op de Mosel-fout
+(18 km te kort = verkeerde vaarweg), maar is het niet. Gemeten tegen **veertien** herkenbare punten
+is het tekort **constant** en ontstaat het **volledig tussen Eijsden en Maasbracht** (Maasbracht −23,
+Roermond −21, Venlo −22, Grave −27, Heusden −22).
+
+Een constante afwijking die op één plek ontstaat = het **Julianakanaal**, dat de meanderende
+Grensmaas afsnijdt en waar de officiële kilometrage de rivier volgt. Een sluipweg elders zou een
+**oplopend of springend** verschil geven. Conclusie: de keten kiest uit zichzelf de commerciële
+vaargeul, en dat is aantoonbaar in plaats van aangenomen.
+
+## 2026-07-19 · LAR-505 — CEMT-clause uit vanwege de Zuid-Willemsvaart
+
+Zelfde schakelaar als bij de Mosel (`cemt_insluiten=False`), andere dader: de **Zuid-Willemsvaart**
+(klasse II) loopt kaarsrecht parallel aan de meanderende Maas van Den Bosch tot Maastricht en wint
+dus als kortste pad. Ook Wilhelminakanaal en Kanaal Wessem-Nederweert komen via de tag binnen.
+De namenlijst is hier scherper dan de klasse.
 
 ## 2026-07-19 · LAR-506 — bevaarbaar is niet hetzelfde als bevaarbaar op COMMERCIEEL GABARIT
 
