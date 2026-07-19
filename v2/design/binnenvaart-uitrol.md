@@ -173,11 +173,52 @@ geen enkele benoemde `waterway=river`-lijn. Oorzaak: die rivier is daar tot
 > passes over 2 GB om multipolygoon-relaties te reconstrueren) → resultaat gaat
 > in een cache, zelfde les als de verzoening-cache.
 
+## Uitgevoerd: de Rijn (LAR-492, 2026-07-19)
+
+Eerste systeem van de uitrol. Twee ketens, `rijn` (Nijmegen → Bingen, 355,0 km)
+en `rijn-boven` (Bingen → Basel, 360,6 km), beide `volgtOp` de vorige.
+
+**Drie dingen die de volgende systemen ook gaan raken.**
+
+1. **De namen-survey is nu gereedschap:** `v2/tools/survey_vaarwegen.py` geeft
+   per venster de benoemde vaarwegen **op lengte** mét hun lon/lat-strekking —
+   aan die strekking zie je of de whitelist een *doorlopend* traject dekt. Dat
+   ving hier twee stille ketenbreuken: **`Boven-Rijn`** (mét koppelteken, 4,3 km)
+   is de enige schakel tussen `Bijlandsch Kanaal` en `Rhein`, en
+   **`Le Rhin / Rhein`** is de gecombineerde grensnaam op het Frans-Duitse
+   traject — precies de `Dunaj / Duna`-val, nu voorspeld in plaats van geraden.
+2. **Een extract kan buiten de oeverlanden liggen.** Tussen Basel en Straatsburg
+   ligt de vaargeul niet in de Rijn maar in het **Grand Canal d'Alsace**, volledig
+   op Frans grondgebied: zonder `fr-alsace` knipt de keten met een gat van
+   **72,9 km**, en beide randen van dat gat heten verwarrend genoeg allebei
+   `Grand Canal d'Alsace`. Les: kijk niet naar welke landen de rivier *raakt*,
+   maar naar waar de **geul** ligt.
+3. **Bewust uitgesloten: `Vieux Rhin / Altrhein`** (54 km). Dat is de Restrhein —
+   wél water, géén bevaarbare geul. Whitelisten zou een korter, onvaarbaar pad
+   opleveren; hetzelfde principe als de ≥150 m-klaring bij de Amazone.
+
+**Gesplitst bij Bingen, niet bij de zeevaartgrens.** Het issue stelde
+`zeevaart=True` → `False` voor bij Keulen/Duisburg, maar `waal` stroomafwaarts
+staat al op binnenvaart, dus dat splitspunt beschrijft niets. Besluit van Lars:
+splits waar een **echte verstoring** zit. Bij Kaub, in de Gebirgsstrecke, legde
+het laagwater van 2018 en 2022 de as stil; `rijn-boven` in `vermijd` reproduceert
+dat exact — Duisburg en Keulen blijven bereikbaar, Mainz/Karlsruhe/Kehl niet.
+
+> [!warning] Voor LAR-493 (Main + Main-Donau-Kanaal)
+> `volgtOp` hecht aan het **binneneinde** van een keten, en Mainz ligt 30 km
+> ínterne keten van `rijn-boven` (Bingen rkm 528, Mainz rkm 498). De Main kan er
+> dus niet aan hangen zoals hij nu staat. Goedkoopste oplossing: knip
+> `rijn-boven` bij Mainz in tweeën — de middellijn zelf verandert niet, alleen
+> de ankers, en de bake kost ~2 s dankzij de verzoening-cache.
+
 ## Open punten
 
-- **Frankrijk/India-regio's:** de Geofabrik-paden voor Normandië, Rhône-Alpes en
-  West-Bengalen bestaan niet onder de namen die ik probeerde — uitzoeken hoe die
-  gesplitst zijn vóór Seine/Rhône/Hooghly.
+- **Frankrijk-regio's — opgelost:** Geofabrik staat nog op de **pre-2016**
+  indeling. `alsace`, `basse-normandie` (136 MB) en `rhone-alpes` (500 MB)
+  bestaan; **`normandie` bestaat niet** en geeft geen 404 maar een bestand van
+  **0 bytes** — dezelfde val als de Brazilië-shapefile, dus controleer de
+  bestandsgrootte, niet de HTTP-status. India/West-Bengalen nog uitzoeken vóór
+  Hooghly.
 - **Volgorde:** Rijn-Donau eerst (grootste tonnage, en de EU heeft een meetlat),
   dan Noord-Amerika (kolen → M26), dan de rest.
 - **Chongqing en St. Louis** stonden als "evt." in LAR-487/488 en vallen nu

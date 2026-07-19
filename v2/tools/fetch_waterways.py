@@ -110,6 +110,58 @@ SYSTEMEN = [
         anker_zee=(4.060, 51.985),      # Maasmond / Hoek van Holland
         anker_binnen=(5.860, 51.852),   # Waal t.h.v. Nijmegen (Waalkade)
     ),
+    # ---- Rijn (LAR-492) — vervolg op `waal`: Nijmegen -> Basel, het kopeinde
+    # van de scheepvaart. Alle searoute-Rijnhavens snappen nu op knoop 9697 (het
+    # binneneinde van `waal`), van Duisburg 75,8 km tot Kehl 389,4 km — het
+    # Nijmegen/Memphis-patroon over de hele as.
+    # Namen OPGEZOCHT met survey_vaarwegen.py, niet geraden; twee vondsten die
+    # de keten anders stil hadden doorgeknipt:
+    #   `Boven-Rijn` (4,3 km, mét koppelteken) overbrugt Bijlandsch Kanaal ->
+    #   `Rhein`, en `Le Rhin / Rhein` is de GECOMBINEERDE grensnaam op het
+    #   Frans-Duitse traject (Basel-Karlsruhe) — de `Dunaj / Duna`-valkuil.
+    # Bewust NIET in de whitelist: `Pannerdensch Kanaal` (tak naar Nederrijn/
+    # IJssel) en `Vieux Rhin / Altrhein` (de Restrhein — wél water, géén
+    # bevaarbare geul; die zou een korter maar onvaarbaar pad opleveren).
+    # Gesplitst bij BINGEN (rkm 528), het bovenstroomse eind van de
+    # Gebirgsstrecke. Besluit van Lars: het splitspunt moet een echte
+    # verstoring modelleren, niet de zeevaart/binnenvaart-grens (die klopt hier
+    # sowieso niet — `waal` stroomafwaarts is al binnenvaart). Bij Kaub, midden
+    # in die bergstrecke, legde het laagwater van 2018 en 2022 de hele as stil;
+    # `rijn-boven` in `vermijd` zetten reproduceert precies dat: Basel,
+    # Ludwigshafen en Karlsruhe onbereikbaar, Duisburg en Keulen niet.
+    dict(
+        label="rijn",
+        zeevaart=False,         # sluit aan op `waal`, dat ook binnenvaart is
+        cemt="VIb",
+        volgt_op="waal",
+        extracts=["nederland", "de-nrw", "de-rheinland-pfalz"],
+        bbox=(49.85, 5.75, 52.05, 8.10),
+        namen=["Waal", "Bijlandsch Kanaal", "Boven-Rijn", "Rhein"],
+        anker_zee=(5.860, 51.852),      # = anker_binnen van 'waal' (Waalkade)
+        anker_binnen=(7.8868, 49.9729),  # Binger Loch, bovenkant Gebirgsstrecke
+    ),
+    dict(
+        label="rijn-boven",
+        zeevaart=False,
+        cemt="VIb",
+        volgt_op="rijn",
+        # fr-alsace is hier NIET optioneel: tussen Basel en Straatsburg ligt de
+        # vaargeul in het Grand Canal d'Alsace, volledig op Frans grondgebied.
+        # Zonder die extract knipt de keten met een gat van 72,9 km.
+        extracts=["de-rheinland-pfalz", "de-baden-wuerttemberg",
+                  "fr-alsace", "zwitserland"],
+        bbox=(47.40, 7.30, 50.10, 8.70),
+        # `Le Rhin / Rhein` is de GECOMBINEERDE grensnaam op het Frans-Duitse
+        # traject — de `Dunaj / Duna`-valkuil. De Écluse-namen zijn de sluizen
+        # van de Elzas-kanalen; die dragen de keten door de omleidingskanalen.
+        # Bewust NIET: `Vieux Rhin / Altrhein` (de Restrhein) — dat is wél water
+        # maar géén bevaarbare geul, en zou een korter, onvaarbaar pad geven.
+        namen=["Rhein", "Le Rhin / Rhein", "Canal d'Alsace",
+               "Grand Canal d'Alsace", "Écluse de Kembs",
+               "Écluse No", "Écluse No 2", "Écluse No 3"],
+        anker_zee=(7.8868, 49.9729),    # = anker_binnen van 'rijn'
+        anker_binnen=(7.590, 47.575),   # Rijn bij Basel (Kleinhüningen)
+    ),
     # ---- VS (LAR-487) — MARNET's mississippi-tak eindigt bij New Orleans en
     # loopt daar dood in het Pontchartrainmeer; alles stroomopwaarts ontbreekt.
     # Baton Rouge is het kopeinde van de diepzeevaart (~370 km binnenland),
@@ -332,6 +384,12 @@ GEOFABRIK_REGIOS = {
     "de-niedersachsen": "europe/germany/niedersachsen",
     "de-hamburg": "europe/germany/hamburg",
     "zwitserland": "europe/switzerland",
+    # Frankrijk staat bij Geofabrik nog in de PRE-2016 regio-indeling: `alsace`
+    # bestaat, `normandie` niet (dat is basse-/haute-normandie) — die geeft een
+    # bestand van 0 bytes i.p.v. een 404, dezelfde val als de Brazilië-shapefile.
+    # Alsace is niet optioneel voor de Rijn: tussen Basel en Straatsburg loopt de
+    # vaargeul door het Grand Canal d'Alsace, volledig op Frans grondgebied.
+    "fr-alsace": "europe/france/alsace",
     "belgie": "europe/belgium",
     "oostenrijk": "europe/austria",
     "slowakije": "europe/slovakia",
