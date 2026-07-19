@@ -119,7 +119,12 @@ zwevende lijnen. Ultra-lokaal wordt de OSM-weg/spoorlijn zelf de flow-drager.
 
 ## Open punten (beslissen in/na de pilot)
 
+*Status 2026-07-19: ontwerp rust tot M25 af is; in de pilot zelf kijken we of er nog iets moet
+worden aangepast — bijvoorbeeld het onderscheid tussen stromen en nodes.*
+
 - Visuele go op de totale look (combinatie referenties + v1) — **go/no-go bij de koper-pilot**.
+- Onderscheid stromen ↔ nodes verfijnen (leesbaarheid: wat is een gloeiende site, wat een
+  passerende stroom) — beoordelen in de pilot.
 - Night-side als default bij stromen-laag aan: testen met visuele check.
 - Exacte zoom-banden en overgangen (crossfade hotspot ↔ kinderen).
 - Of de M22-schoonheidsslag (Rayleigh/Mie, oceaan-specular, terminator + stadslichten) vóór of
