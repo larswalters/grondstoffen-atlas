@@ -1,5 +1,42 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24-pilotreeks NL→VS→China compleet; wachten op visuele go, dan uitrol)*
+*Last updated: 2026-07-19 (M25-bronnenplan vastgelegd: compleet spoornet + bron per modus)*
+
+## 🛤️ M25-aanpak (2026-07-19, [LAR-491]) — bronnenplan staat, nog niet gebouwd
+
+**Afbakening gekozen: het complete hoofdspoornet, géén corridor-scope** (Lars: *"complete spoor is wel
+beter zeker voor de simulator"*). Zelfde argument als M23: een netwerk beantwoordt vragen die je niet
+vooraf hebt uitgerekend. Blokkeer `grens-kasumbalesa` en met een compleet net **ís** Lobito de uitkomst;
+met corridor-scope kan M21 alleen verstoringen tonen die we vooraf bedachten.
+
+**Gelaagd zoals water:** compleet spoor = de MARNET-rol (mechanisch verzoend, niet edge-voor-edge
+nagelopen) · de verhalende corridors (Kasumbalesa, Lobito, Gashuunsukhait, Ruili) = de
+`EXTRA_VAARWEGEN`-rol — apart gebakken, op lengte gecontroleerd, mét passage-label = de M21-knop.
+
+| modus | geometrie | meetlat |
+|---|---|---|
+| spoor | OSM via Geofabrik-pbf | NARN (VS) · RINF-lengtes (EU) · gepubliceerde lijnlengtes elders |
+| pijpleiding | OSM waar goed + GEM's openbare GitHub-repo | operator-lengtes (CNPC, ADNOC) |
+| weg | Overture of Overpass per corridor | **geen** |
+
+**Wat op land anders is dan op water — drie dingen die de aanpak sturen:**
+1. **De corridor-toets verliest z'n kracht.** "≤250 m van een middellijn" was op water sterk bewijs omdat
+   water schaars is; op land ligt élke verkeerde route ook dicht bij een weg. **Lengte is de enige echte
+   controle** — de LAR-487-les is hier geen verfijning maar het hele fundament.
+2. **Filteren gebeurt door UITSLUITING.** `usage=main` eisen sloopt precies de regio's waar de atlas z'n
+   corridors heeft (40–43% van de spoor-ways draagt geen `usage`-tag). Houden: `railway` in
+   (`rail`, `narrow_gauge`); weg: alles met `service=`, `usage` in (`tourism`, `military`), en
+   abandoned/disused/razed/construction/proposed. Gereedschap: `v2/tools/meet_spoor.py`.
+3. **Vorm ≠ routering.** Bij water deed één `LineSegments` allebei; bij spoor niet meer. Routeergraaf
+   190–240k knopen bij 10 km bemonstering past; ruwe tekengeometrie ~11M punten ≈ 36 MB past niet.
+   Kandidaat-oplossing bestaat al: M24's `strak_trekken()` (simplify mét bewijslast).
+
+**⚠️ De stap die M24 niet had: parallelle sporen samenvouwen.** Dubbelspoor is meestal als twéé losse
+lijnen gemapt (`tracks=2` staat in China op maar 5.406 ways) → de lengtetoets meet er 2,4× te veel én de
+graaf verdubbelt gratis mee. Rivieren komen niet in paren. Bouw dit vóór pilot 1, anders "faalt" een
+bake die klopt.
+
+**Open bij de start:** pilotkeuze · GEM-licentie · dedup vóór/tijdens pilot 1 · knoopafstand 5 of 10 km.
+**Volgorde:** eerst M24's uitrol (M24.0–M24.5), dán M25, dán [LAR-490].
 
 ## ✅ M24-pilotreeks compleet (2026-07-19) — alle drie controle-situaties bewezen
 

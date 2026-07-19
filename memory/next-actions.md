@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (uitrol opgezet in Linear: 6 milestones + 12 issues; NU-lijst = uitvoeren)*
+*Last updated: 2026-07-19 (M25-bronnenplan erbij; NU blijft de M24-uitrol, M25 staat klaar erachter)*
 
 ## ✅ AFGEROND: de M24-pilotreeks (2026-07-19)
 
@@ -7,6 +7,29 @@ Alle drie de pilots zijn Done na Lars' visuele go (*"ik heb even gekeken naar di
 ziet er wel goed uit mooi over de rivier"*). Daarmee zijn de drie controle-situaties bewezen:
 twee onafhankelijke bronnen (NL/LAR-486) · officiële meetlat (VS/LAR-487) · géén scheidsrechter
 (China/LAR-488). Live t/m `919b046` (`?v=018`).
+
+## 🛤️ DAARNA: M25 · landroutes — bronnenplan staat, wachten op de uitrol ([LAR-491])
+
+Bewuste volgorde van Lars: **eerst M24's uitrol afmaken, dán pas wegen en sporen.** Het bronnenplan is
+al vastgelegd zodat een verse sessie meteen kan bouwen; niets ervan hoeft opnieuw onderzocht.
+
+Beslist: **compleet hoofdspoornet** (niet corridor-scope) · spoor = OSM/Geofabrik met NARN als meetlat ·
+pijpleiding = OSM + GEM's openbare GitHub-repo · weg bewust klein (geen scheidsrechter).
+
+**Eerste werk zodra M25 begint, in deze volgorde:**
+1. **Dedup van parallelle sporen** — móét vóór pilot 1, anders meet de lengtetoets 2,4× te veel waar
+   dubbelspoor ligt en jaag je een niet-bestaande bug.
+2. **Connected-components-pass** — M24's snoeiregel transfereert: een spoorcomponent die niet aan een
+   haven of andere component hangt kan nooit een stroom dragen. Goedkoop, en de kandidaat om de
+   1,9–2,4M km-schatting fors te drukken vóór er iets naar de browser gaat.
+3. **Pilotkeuze vastleggen** (nog open) — voorstel: VS (NARN = meetlat én tweede bron in één) · EU (RINF
+   kent alleen de lengte, niet de vorm) · Mongolië/Gashuunsukhait 233,6 km of Copperbelt→Lobito 1.739 km
+   (géén scheidsrechter). Eerste ijkpunt bij voorkeur enkelsporig (Sishen–Saldanha 861 km).
+4. **Knoopafstand 5 of 10 km** beslissen op de dedup-meting.
+5. **GEM-licentie vastzetten** vóór er iets live gaat (repo heeft geen LICENSE-bestand).
+
+Gereedschap staat al: `v2/tools/meet_spoor.py` (filter + budget per regio), het Geofabrik-fetchpad en
+`strak_trekken()` uit M24.
 
 ## ➡️ NU: de uitrol uitvoeren — staat klaar in Linear
 

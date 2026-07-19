@@ -1,6 +1,58 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24-uitrol opgezet: Geofabrik-bron + vlakken-afleiding; 6 milestones + 12 issues)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M25-bronnenplan vastgelegd: compleet spoornet + bron per modus)*
+
+> **🛤️ M25-BRONNENPLAN VASTGELEGD (2026-07-19, laatste, plansessie zonder code) — COMPLEET SPOORNET
+> GEKOZEN. Startissue [LAR-491] (High, Todo), zelfstandig leesbaar. → VOLGENDE: eerst M24's uitrol
+> afmaken (M24.0–M24.5, LAR-492..503); Lars wil wegen en sporen bewust pas daarna.**
+> **Context die het gesprek kantelde:** land is de **grootste** groep, niet de kleinste — geteld in
+> `data/`: **275 landstromen** (134 spoor + 105 weg + 36 pijpleiding) tegen **223 zeestromen**. M22–M24
+> waren drie milestones voor de zeekant; land heeft in `v2/` nog **nul** geometrie.
+> **Besluit van Lars: het complete hoofdspoornet, géén corridor-scope** (*"complete spoor is wel beter
+> zeker voor de simulator"*) — hetzelfde argument dat in M23 al won: een netwerk beantwoordt vragen die
+> je niet vooraf hebt uitgerekend. Blokkeer `grens-kasumbalesa` en met een compleet net **ís** Lobito of
+> Dar es Salaam de uitkomst; met corridor-scope kan M21 alleen verstoringen tonen die we vooraf bedachten.
+> Dat verwerpt de derde afbakening uit de milestone ("vooraf gebakken corridors — land hoeft niet
+> herrouteerbaar te zijn voor de simulator"): die tekst is van vóór de drie **land**knelpunten.
+> **Gelaagd zoals water:** compleet spoor = de MARNET-rol · de verhalende corridors (Kasumbalesa, Lobito,
+> Gashuunsukhait, Ruili) = de `EXTRA_VAARWEGEN`-rol, apart gebakken en op lengte gecontroleerd, mét
+> passage-label = de M21-knop.
+> **Bron per modus** (de drie zijn níet gelijk bedeeld): **spoor** = OSM via Geofabrik-pbf, meetlat NARN
+> (VS) / RINF-lengtes (EU) / gepubliceerde lijnlengtes elders — de enige landmodus mét zowel goede
+> geometrie als een echte scheidsrechter · **pijpleiding** = OSM waar goed (TAPS 0,15 km puntafstand,
+> ADCOP 1% van ADNOC's cijfer) + **GEM's openbare GitHub-repo** voor de rest · **weg** = Overture of
+> Overpass per corridor en **bewust klein**, want weg heeft als enige **géén** scheidsrechter (GRIP4 valt
+> af op vier tegenstrijdige licentieclaims).
+> **⚠️ Op land verliest de corridor-toets z'n kracht** — "≤250 m van een middellijn" was sterk bewijs
+> omdat water schaars is; op land ligt élke verkeerde route ook dicht bij een weg. De LAR-487-les
+> (*lengte beslist, niet puntafstand*) is hier geen verfijning maar **het hele fundament**.
+> **Het filter werkt door UITSLUITING, niet door insluiting** — `usage=main` eisen sloopt precies Afrika
+> en Zuidoost-Azië: **40% (Myanmar) tot 43% (China)** van de spoor-ways draagt géén `usage`-tag, en in
+> Myanmar dragen die 843 km = 13% van het net. Gevalideerd tegen gepubliceerde route-lengtes met de
+> nieuwe tool **`v2/tools/meet_spoor.py`** (`55d6c5a`): Cambodja 652 km (~650) · Myanmar 6.643 (6.207,6
+> volgens het ministerie, **+7%**). Scan **34 s voor 1,56 GB** → wereldwijd een half uur.
+> **⚠️ DE STAP DIE M24 NIET NODIG HAD: parallelle sporen samenvouwen.** China meet **266.146 km tegen
+> 109.767 gepubliceerde route-km (+142%)** — geen meetfout: `tracks=2` staat op maar 5.406 ways, dus
+> vrijwel al het dubbelspoor is als twéé losse lijnen gemapt. Gevolg (a) de lengtetoets meet er 2,4× te
+> veel, (b) de graaf verdubbelt gratis mee met nul routeerwaarde. **Rivieren komen niet in paren.** Bouw
+> dit vóór pilot 1; kies als eerste ijkpunt een expliciet enkelsporige lijn (Sishen–Saldanha 861 km).
+> **Budget:** wereld gefilterd ≈ 1,9–2,4M km → routeergraaf **190–240k knopen bij 10 km** (past, is het
+> niveau dat het fundament-plan al accepteerde), maar ruwe tekengeometrie ~11M punten ≈ **36 MB** (past
+> niet). **Vorm ≠ routering** — bij water droeg één `LineSegments` beide taken, bij spoor niet meer;
+> M24's `strak_trekken()` is de kandidaat-oplossing.
+> **Pijpleidingen zonder formulier.** GEM's downloadformulier vraagt naam/e-mail/organisatie; Lars
+> opperde een verzonnen identiteit — niet gedaan, en overbodig: `GlobalEnergyMonitor/GOIT-GGIT-pipeline-
+> routes` staat openbaar (5.163 routes / 1,92M km). Centraal-Azië–China **1.838,5 km** tegen CNPC's 1.833
+> (**0,3%**) waar OSM er 4,1 km van heeft; Petroline **0 km in OSM** tegen 1.190 bij GEM. ⚠️ De repo
+> draagt **geen LICENSE-bestand** — vastzetten vóór live. Droezjba blijft bewust een benadering.
+> **Afgevallen mét bewijs (niet opnieuw onderzoeken):** NE spoor (926.446 km nagemeten; Noord-Amerika 56%
+> van NARN; Azië dateert van vóór de Chinese uitbouw) · NE wegen (3,89 km puntafstand) · GRIP4 · gROADS ·
+> OGIM (92,9% Noord-Amerika, oostelijk halfrond mediaan 76 km) · HIFLD Open (opgeheven 2025) · ENTSOG
+> (alleen PDF) · HDX railways (2014). **ERA RINF valt níet af maar heeft géén geometrie** — alleen
+> lengtes per baanvak; daarmee de beste EU-meetlat en categorisch onbruikbaar als bron.
+> **Open bij de start van M25:** pilotkeuze (voorstel VS/EU/Mongolië óf Copperbelt–Lobito) · GEM-licentie ·
+> dedup vóór of tijdens pilot 1 · knoopafstand 5 of 10 km. Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-m25-bronnenplan-landroutes]].
 
 > **🚢 M24-UITROL OPGEZET (2026-07-19, laatste) — TWEE NIEUWE CAPABILITIES + YANGON EN AMAZONE ERBIJ.**
 > Live t/m `45a21eb` (`?v=021`). **→ VOLGENDE: de uitrol uitvoeren; die staat klaar als 6 milestones
@@ -612,6 +664,24 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); A\* over een
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
+
+- **2026-07-19 · M25: compleet hoofdspoornet i.p.v. corridor-scope** — een netwerk beantwoordt vragen die
+  je niet vooraf hebt uitgerekend; met corridor-scope kan M21 alleen verstoringen tonen die we vooraf
+  bedachten (blokkeer Kasumbalesa en Lobito/Dar es Salaam moeten dan al gebakken zijn). Gelaagd zoals
+  water: compleet spoor = MARNET-rol, verhalende corridors = `EXTRA_VAARWEGEN`-rol met passage-label.
+  Geaccepteerde prijs: een dedup-stap die corridor-scope niet nodig had.
+- **2026-07-19 · M25: op land is LENGTE de enige echte controle** — de corridor-toets werkte op water
+  omdat water schaars is; op land ligt élke verkeerde route ook dicht bij een weg. En dedupliceer eerst:
+  dubbelspoor is meestal als twéé losse lijnen gemapt, dus China leest +142% (266.146 vs 109.767 route-km).
+- **2026-07-19 · M25: spoor filteren door UITSLUITING** — 40–43% van de spoor-ways draagt geen `usage`-tag,
+  dus `usage=main` eisen sloopt precies Afrika en Zuidoost-Azië. Houden `railway` in (`rail`,
+  `narrow_gauge`); weg alles met `service=`, `usage` in (`tourism`,`military`) en disused/abandoned/razed.
+  Tool: `v2/tools/meet_spoor.py`.
+- **2026-07-19 · M25: bron per modus, want de drie zijn niet gelijk bedeeld** — spoor heeft goede
+  geometrie én een meetlat (NARN); weg heeft geometrie maar géén scheidsrechter (GRIP4 valt af op
+  licentie-onduidelijkheid) → klein houden; pijpleiding heeft een meetlat (operator-lengtes) maar
+  wisselvallige OSM-dekking → aanvullen uit GEM's **openbare** GitHub-repo (formulier onnodig; repo mist
+  wel een LICENSE-bestand). Droezjba blijft bewust een benadering.
 
 - **2026-07-19 · LAR-487/488: `volgtOp`-ketening — één rivier, meerdere labels met eigen zeevaart-vlag** — het
   zeevaart-beleid past niet in één keten met één vlag, dus een vervolgsegment hangt aan het **binneneinde van zijn

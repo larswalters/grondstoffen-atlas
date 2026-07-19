@@ -1,6 +1,27 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 28) — M25-bronnenplan landroutes: compleet spoornet gekozen, bronnen per modus gemeten
+- **Plansessie zonder code, wél gemeten.** Lars wilde vóór de bouw eerst de bron bespreken, net als bij M24.
+- **Context die het gesprek kantelde:** land is de **grootste** groep, niet de kleinste — 275 landstromen
+  (134 spoor + 105 weg + 36 pijpleiding) tegen 223 zeestromen, en nul geometrie in `v2/`.
+- **Besluit: compleet hoofdspoornet, géén corridor-scope** (*"complete spoor is wel beter zeker voor de
+  simulator"*). Gelaagd zoals water: compleet spoor = MARNET-rol, verhalende corridors = `EXTRA_VAARWEGEN`-rol.
+- **Bron per modus:** spoor = OSM/Geofabrik met NARN als meetlat · pijpleiding = OSM waar goed + GEM's
+  **openbare** GitHub-repo · weg = klein houden, want als enige zónder scheidsrechter.
+- **Filter gevalideerd door uitsluiting:** Cambodja 652 km (~650), Myanmar 6.643 (6.207,6 ministerie, +7%).
+  40–43% van de spoor-ways heeft geen `usage`-tag → `usage=main` eisen sloopt Afrika/Zuidoost-Azië.
+- **⚠️ Nieuwe stap die M24 niet had:** parallelle sporen samenvouwen. China +142% (266.146 vs 109.767 route-km)
+  omdat dubbelspoor als twéé lijnen gemapt is. Rivieren komen niet in paren.
+- **Budget:** routeergraaf 190–240k knopen @10 km past; ruwe tekengeometrie ~11M punten ≈ 36 MB niet →
+  vorm ≠ routering, `strak_trekken()` is de kandidaat.
+- **De eerlijke route bleek de betere:** Lars opperde een verzonnen naam voor GEM's downloadformulier; niet
+  gedaan, en overbodig — de geometrie staat openbaar op GitHub. Centraal-Azië–China 0,3% van CNPC's cijfer.
+- **Afgevallen mét bewijs:** NE spoor+wegen, GRIP4, gROADS, OGIM, HIFLD, ENTSOG, HDX. RINF blijft meetlat
+  (géén geometrie).
+- **Vastgelegd:** [LAR-491] (High, Todo) + comment op de M25-milestone + erfenis-comment. Meetscript
+  `v2/tools/meet_spoor.py` (`55d6c5a`). **Volgende: eerst M24's uitrol, dán M25.**
+
 ## 2026-07-19 (sessie 27) — Geofabrik-bron, middellijn uit watervlakken, Yangon + Amazone, uitrol opgezet
 - **Twee capabilities die de uitrol pas praktisch maken** (live t/m `45a21eb`, `?v=021`).
 - **Geofabrik i.p.v. Overpass:** 40 regio's / 17 GB in ~6 min; gevalideerd coördinaat-voor-coördinaat

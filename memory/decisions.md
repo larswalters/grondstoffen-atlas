@@ -1,7 +1,35 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (Geofabrik als bron + middellijn uit watervlakken + uitrol-spelregels)*
+*Last updated: 2026-07-19 (M25-bronnenplan: compleet spoornet, bron per modus, GEM zonder formulier)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M25-bronnenplan: landroutes (2026-07-19, [LAR-491])
+
+- **Compleet hoofdspoornet, géén corridor-scope** (Lars: *"complete spoor is wel beter zeker voor de
+  simulator"*). Een netwerk beantwoordt vragen die je niet vooraf hebt uitgerekend — met corridor-scope
+  kan M21 alleen verstoringen tonen die we vooraf bedachten. Verwerpt tegelijk de derde optie uit de
+  milestone ("vooraf gebakken corridors — land hoeft niet herrouteerbaar te zijn voor de simulator"):
+  die tekst is van vóór de drie **land**knelpunten (Kasumbalesa, Ruili, Gashuunsukhait). Geaccepteerde
+  prijs: een dedup-stap die corridor-scope niet nodig had.
+- **Op land is LENGTE de enige echte controle, niet de puntafstand.** De corridor-toets werkte op water
+  omdat water schaars is; op land ligt élke verkeerde route ook dicht bij een weg. Toets daarom tegen
+  gepubliceerde route-lengtes — en dedupliceer eerst, anders leest dubbelspoor 2×.
+- **Filteren door uitsluiting, niet door insluiting.** 40% (Myanmar) tot 43% (China) van de spoor-ways
+  draagt géén `usage`-tag; `usage=main` eisen sloopt precies Afrika en Zuidoost-Azië. Gevalideerd tegen
+  gepubliceerde lengtes: Cambodja 652 km (~650), Myanmar 6.643 (6.207,6 volgens het ministerie, +7%).
+- **Bron per modus, want de drie zijn niet gelijk bedeeld.** Spoor is de enige landmodus met zowel goede
+  wereldwijde geometrie als een echte meetlat (NARN). Weg heeft geometrie maar géén scheidsrechter →
+  bewust klein houden (alleen lange corridors; een truckhop van 30 km die er naast ligt ziet niemand).
+  Pijpleiding heeft een meetlat (operator-lengtes) maar OSM-dekking die per lijn wild verschilt.
+- **Pijpleidinggeometrie komt van GEM's openbare GitHub-repo, niet van hun downloadformulier.** Het
+  formulier vraagt naam/e-mail/organisatie; Lars opperde een verzonnen identiteit, dat is niet gedaan —
+  en het bleek onnodig, want `GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes` staat gewoon open (5.163
+  routes / 1,92M km). Centraal-Azië–China: 1.838,5 km tegen CNPC's 1.833 (0,3%) waar OSM er 4,1 km van
+  heeft; Petroline 0 km in OSM tegen 1.190 bij GEM. ⚠️ De repo draagt géén LICENSE-bestand — vastzetten
+  vóór het live gaat. **Droezjba blijft bewust een benadering** (vertakt systeem, 4.000–5.500 km).
+- **Vorm ≠ routering op land.** Bij water droeg één `LineSegments` beide taken; bij spoor is de
+  routeergraaf (190–240k knopen @10 km) haalbaar en de ruwe tekengeometrie (~11M punten ≈ 36 MB) niet.
+  Ontkoppelen — het bestaande architectuurprincipe, nu op een nieuwe plek.
 
 ## M24-uitrol: bron en gereedschap (2026-07-19)
 

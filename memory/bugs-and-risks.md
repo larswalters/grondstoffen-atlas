@@ -1,5 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-487/488 — Overpass-broosheid + USACE-datavallen toegevoegd)*
+*Last updated: 2026-07-19 (M25-bronnenplan — dubbelspoor-val, GEM-licentie, weg zonder scheidsrechter)*
+
+## ⚠️ OPEN / te weten vóór M25 gebouwd wordt (2026-07-19, [LAR-491])
+
+- **Dubbelspoor leest 2× — de lengtetoets werkt niet zonder dedup.** OSM mapt dubbelspoor meestal als
+  twéé losse parallelle lijnen (`tracks=2` staat in China op maar 5.406 ways). China meet daardoor
+  266.146 km gefilterd tegen 109.767 gepubliceerde route-km (**+142%**). Dat is geen meetfout maar het
+  gedrag van de data. Op land is lengte onze énige echte controle, dus **dedup moet er zijn vóór de
+  eerste pilot** — anders "faalt" een bake die klopt en jaag je een niet-bestaande bug. Bijkomend: de
+  graaf verdubbelt gratis mee met nul routeerwaarde. Myanmar (+7%) en Cambodja (~0%) verbergen dit,
+  want die zijn enkelspoor; kies daarom een expliciet enkelsporige lijn als eerste ijkpunt
+  (Sishen–Saldanha, 861 km).
+- **Weg heeft géén onafhankelijke scheidsrechter.** GRIP4 was de kandidaat en valt af (vier
+  tegenstrijdige licentieclaims voor dezelfde data + een onopgeloste klacht dat het ODbL-data als CC-0
+  herpubliceert + ~de helft dateert van vóór 2010). Er is niets anders. Gevolg: wegcorridors kunnen
+  alleen op gepubliceerde corridorlengtes getoetst worden, en waar die niet bestaan is er geen bewijs.
+  Daarom bewust klein houden.
+- **De GEM-pijpleidingrepo draagt geen LICENSE-bestand.** `GlobalEnergyMonitor/GOIT-GGIT-pipeline-routes`
+  is openbaar en de README is puur operationeel; GEM's tracker-pagina's noemen CC BY 4.0, maar dat staat
+  niet op de repo. Prototypen prima; **vastzetten vóór het live gaat**, want de atlas voert ODbL, Esri
+  en UNECE wél netjes in de credits.
+- **De router kan een niet-operationele spoorlijn kiezen.** Kortste pad over spoor ≠ de route die de
+  operator rijdt (spoorbreedte-wissels, eigendom, lijnen die fysiek bestaan maar niet rijden). Dat is de
+  geaccepteerde prijs van het complete net; mitigatie is de gelaagdheid (verhalende corridors apart
+  gebakken en op lengte gecontroleerd).
+- **⚠️ FCAB Antofagasta niet als ijkpunt gebruiken** — gepubliceerde lengtes lopen van 700 km (FCAB's
+  eigen duurzaamheidsrapport) via 834 tot 1.152 km voor de doorgaande route. Een spreiding van 65% is
+  geen meetlat. Idem Droezjba (4.000–5.500 km, vertakt systeem).
 
 ## ⚠️ OPEN / te weten na LAR-487+488 (2026-07-19)
 
