@@ -3,6 +3,26 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## LOD-ontwerpbrief / M26 (2026-07-19) — ontwerpsessie, vastgelegd in LAR-490
+
+- **M26 = herontwerp van het datamodel, geen verhuizing** (definitieve bevestiging van de
+  M22-voetnoot). Reden: inzoomen moet nieuwe informatie opleveren → hiërarchisch nodemodel
+  (`level`+`parent`, hotspots build-time geaggregeerd), en de huidige commodity-nodes zijn deels
+  abstracties waar niets uit kan uiteenvallen.
+- **Glow-bollen, géén hoogte-pilaren.** Reden: Lars koos beeld 1 als stijlreferentie (bollen +
+  verbindingen); bollen zijn goedkoper en werken op elke kijkhoek.
+- **Lijndikte hybride: meters (geschaald op volume) + pixel-minimum.** Reden: dichtbij een fysiek
+  lint, maar "de grote stromen moeten natuurlijk wel zichtbaar blijven op wereldniveau" (Lars).
+  Consequentie: ribbon/`Line2` + glow-shader vanaf het begin (Three-lijnen zijn altijd 1 px).
+- **Data-ambitie = optie C.** Koper-pilot krijgt de volledige site-hiërarchie (top-±15–30 échte
+  sites op ~100 m + capaciteit), rest per grondstof daarna. Reden: het bewezen M5–M17-patroon, en
+  de pilot is toch het go/no-go-moment voor de visuals.
+- **Volgorde M24 → M25 → LOD; M25 = harde afhankelijkheid.** Reden (Lars): wegen/spoor zijn
+  "crucial om die regionale en lokale view mooi maar ook vooral kloppend te krijgen" — regionaal/
+  lokaal is bijna alles land-transport; zonder M25 zwevende lijnen.
+- **Stijl = richting, geen eindbesluit; night-side = voorkeur, testen in de pilot.** Reden: Lars
+  wil niet oordelen vóór hij het op de eigen bol ziet (M22-precedent: visuele go op het echte ding).
+
 ## LAR-486 / NL-pilot-implementatie (2026-07-19) — DONE; bron-keuze definitief
 
 - **Bron-rolverdeling definitief (Lars' go: "ik zie geen fouten", varianten visueel identiek):**

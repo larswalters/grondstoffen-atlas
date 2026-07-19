@@ -1,5 +1,16 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-486 uitgevoerd — de M24-pipeline staat en is bewezen; open = bron-keuze Lars)*
+*Last updated: 2026-07-19 (LOD-ontwerpbrief vastgelegd — M26-richting ligt vast in LAR-490; focus blijft M24)*
+
+## 🔭 M26-richting (2026-07-19) — LOD-systeem, spec in `v2/design/lod-ontwerpbrief.md`
+
+- **Semantische zoom:** ~4–5 banden op `getAltitude()`; hotspots vallen build-time-geaggregeerd
+  uiteen in echte sites; flows aggregeren mee (bundeling gratis via het M23-netwerk). Ultra-lokaal
+  = Esri z17–19 + onze markers/labels (coördinaten ~100 m nauwkeurig).
+- **Look:** combinatie referentiebeelden + v1; glow-bollen + selective bloom; lijndikte in meters
+  met pixel-minimum; night-side/stadslichten als kandidaat-default — go/no-go én night-side-test
+  bij de **koper-pilot** (data-ambitie C: koper eerst volledig, rest per grondstof).
+- **Volgorde hard:** M24 (bezig) → M25 (weg/spoor — vereiste voor kloppende regionale/lokale views)
+  → LAR-490. Tot die tijd niets aan bouwen.
 
 ## 🧭 M24-aanpak (2026-07-19) — GEBOUWD in LAR-486; hieronder de architectuur zoals hij nu draait
 

@@ -1,6 +1,21 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-486 NL-pilot uitgevoerd — bake-off live, tests groen; open = Lars' bron-keuze)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LOD-ontwerpbrief vastgelegd → LAR-490 onder M26; werkfocus blijft M24)*
+
+> **🎨 LOD-ONTWERPBRIEF VASTGELEGD (2026-07-19, ontwerpsessie zonder code) — M26 = HERONTWERP MET SEMANTISCHE
+> ZOOM, startpunt [LAR-490] (High, Todo).** Spec = **`v2/design/lod-ontwerpbrief.md`** (commit `08f2341`;
+> 3 referentiebeelden in `v2/design/referenties/` + als bijlage op het issue). Kern: inzoomen levert **nieuwe
+> informatie** i.p.v. grotere pixels — semantische zoom in ~4–5 banden op `getAltitude()`, **hiërarchisch
+> nodemodel** (`level`+`parent`, hotspots build-time geaggregeerd zoals de bakers), flows aggregeren mee
+> (bundeling gratis via het M23-netwerk). Besluiten Lars: **glow-bollen géén hoogte-pilaren** (beeld 1 =
+> stijlreferentie; doelbeeld = combinatie mockups + v1-look, go/no-go op de bol bij de koper-pilot) ·
+> **lijndikte hybride** (meters op volume + pixel-minimum → ribbon/`Line2` + glow-shader vanaf het begin) ·
+> **data-ambitie C** (koper-pilot volledige site-hiërarchie top-±15–30 échte sites op ~100 m + capaciteit;
+> rest per grondstof, M5–M17-patroon) · **night-side** = voorkeur, testen met visuele check in de pilot.
+> **Volgorde hard: M24 (bezig) → M25 → LAR-490** — M25 is een hárde afhankelijkheid (regionaal/lokaal =
+> land-transport; zonder M25 zwevende lijnen). Technische valkuilen staan in de brief (tegel-schil-hoogte,
+> geometrie-LOD <5 km, positionele juistheid uit M24/M25; tegelgrenzen zijn géén probleem — flows zijn eigen
+> 3D-geometrie). Zie `memory/decisions.md` + [[2026-07-19-grondstoffen-atlas-lod-ontwerpbrief]].
 
 > **✅ LAR-486 DONE (2026-07-19, laatste) — NL-PILOT AF; BRON-KEUZE DEFINITIEF: OSM = geometrie overal, UNECE/USACE =
 > meetlat + klasse-bron** (Lars' go: *"ik zie geen fouten"*, varianten visueel identiek; doorslaggevend = OSM

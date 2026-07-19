@@ -457,3 +457,21 @@
   in vault/Pinecone en goud oppakken (ontwerp eerst, dan `data/goud.js`).
 - **Niet gedaan / bewust uitgesteld:** git init, code-migratie, vault-wiki-pagina, Pinecone-gist — allemaal
   na M5 (zie `next-actions.md`).
+
+## 2026-07-19 — LOD-ontwerpbrief vastgelegd (ontwerpsessie, géén code) → LAR-490 onder M26
+
+Lars wilde het "level details systeem" bespreken (details tonen van dichtbij) en leverde drie
+concept-mockups. Kern: inzoomen moet nieuwe informatie opleveren i.p.v. grotere pixels →
+semantische zoom in ~4–5 banden op `getAltitude()`, hiërarchisch nodemodel (`level`+`parent`,
+hotspots build-time geaggregeerd), flows aggregeren mee. Besluiten: beeld 1 = stijlreferentie
+(glow-bollen + verbindingen, night-side; doelbeeld = combinatie mockups + v1-look, go/no-go op de
+bol bij de koper-pilot) · glow-bollen géén pilaren · lijndikte hybride (meters op volume +
+pixel-minimum → ribbon/`Line2`) · data-ambitie C (koper-pilot top-±15–30 échte sites op ~100 m +
+capaciteit, rest per grondstof) · night-side testen in de pilot · volgorde M24 → M25 → LOD met
+M25 als harde afhankelijkheid ("wegen/sporen ook crucial om die regionale en lokale view mooi
+maar ook vooral kloppend te krijgen"). M26 daarmee definitief herontwerp. Lars' tegel-zorg
+ontkracht (flows = eigen 3D-geometrie; echte punten: tegel-schil-hoogte, geometrie-LOD,
+positionele juistheid, leesbaarheid). Vastgelegd: `v2/design/lod-ontwerpbrief.md` + 3 beelden in
+`v2/design/referenties/` (commit `08f2341`, gepusht — alléén design-bestanden, dirty
+M24-werkbestanden ongemoeid) + LAR-490 (High, Todo) onder M26 mét de beelden als bijlage.
+Vault: [[2026-07-19-grondstoffen-atlas-lod-ontwerpbrief]].

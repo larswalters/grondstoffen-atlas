@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-486 DONE — bron-keuze definitief: OSM-geometrie + UNECE/USACE-meetlat)*
+*Last updated: 2026-07-19 (LOD-ontwerpbrief vastgelegd → LAR-490 onder M26; NU-lijst ongewijzigd = M24-pilots)*
 
 ## ➡️ NU: de twee vervolg-pilots (volgorde vrij; bakken in ~1 min door de verzoening-cache)
 
@@ -15,6 +15,15 @@
 
 **Bron-keuze (definitief, 2026-07-19):** OSM = geometrie overal · UNECE (EU)/USACE (VS) = meetlat +
 klasse-bron. Bake-off-varianten zijn opgeruimd (`8458047`, `?v=017`).
+
+## 🔭 Later (ná M25): [LAR-490] LOD-systeem — het M26-startpunt
+
+Spec = **`v2/design/lod-ontwerpbrief.md`** (commit `08f2341`; referentiebeelden in
+`v2/design/referenties/` + als bijlage op het issue). Kern: semantische zoom ~4–5 banden op
+`getAltitude()` · hiërarchisch nodemodel (`level`+`parent`, build-time geaggregeerd) · glow-bollen
+(géén pilaren) · lijndikte hybride (meters op volume + pixel-minimum → ribbon/`Line2`) ·
+data-ambitie C (koper-pilot top-±15–30 échte sites) · night-side testen in de pilot. **M25 is een
+harde afhankelijkheid** (regionaal/lokaal = land-transport). Niet eerder oppakken dan M25-af.
 
 ## ✅ LAR-486 NL-pilot uitgevoerd (2026-07-19) — de M24-pipeline staat
 
