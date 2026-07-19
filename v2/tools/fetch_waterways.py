@@ -190,6 +190,121 @@ SYSTEMEN = [
         anker_zee=(7.6065, 50.3645),    # Moselmonding bij Koblenz (Deutsches Eck)
         anker_binnen=(6.102, 48.617),   # Neuves-Maisons, kopeinde van de vaart
     ),
+    # ---- Maas + Benelux-delta (LAR-505) — Lars: "we moeten nog wel meer mappen
+    # dan alleen de rijn, de maas en stukken biesbosch". De `waal`-keten legt
+    # één lijn door de delta; in werkelijkheid is het een NET, en de Maas
+    # ontbrak volledig.
+    # Dit systeem takt middenin `waal` af, bij Werkendam waar de Nieuwe Merwede
+    # (de Biesbosch-verbinding) van de Boven-Merwede afsplitst — het tweede
+    # bewijs van LAR-504, en de eerste keer dat een route DWARS DOOR een
+    # aftakking heen moet.
+    # Namen opgezocht met survey_vaarwegen.py; `Amer` (12,5 km, lon
+    # 4,672…4,847) is de derde stille ketenbreuk die de survey vóór het stitchen
+    # ving — zonder die naam gaapt er een gat tussen het Hollandsch Diep (eindigt
+    # op 4,672) en de Bergsche Maas (begint op 4,847), net als `Boven-Rijn` en
+    # `Le Rhin / Rhein`. Naamwissel op de taalgrens: `Maas` -> `La Meuse` op
+    # exact lat 50,762 (de Mosel/Moselle-val).
+    # ⚠️ CEMT-clause UIT, om dezelfde reden als bij de Mosel maar met een andere
+    # dader: de Zuid-Willemsvaart (klasse II) loopt kaarsrecht parallel aan de
+    # meanderende Maas van 's-Hertogenbosch tot Maastricht en zou als kortste
+    # pad winnen. Ook de Wilhelminakanaal/Kanaal Wessem-Nederweert-takken komen
+    # via de tag binnen. De namenlijst is hier scherper dan de klasse.
+    dict(
+        label="maas",
+        zeevaart=False,
+        cemt="Vb",
+        cemt_insluiten=False,
+        volgt_op="waal",
+        extracts=["nederland", "belgie"],
+        bbox=(50.55, 4.35, 51.90, 6.10),
+        namen=["Nieuwe Merwede", "Hollandsch Diep", "Amer", "Bergsche Maas",
+               "Maas", "Julianakanaal", "La Meuse"],
+        anker_zee=(4.894, 51.821),      # Werkendam: splitsing Nieuwe Merwede
+        anker_binnen=(5.573, 50.645),   # Maas bij Luik (searoute-haven `Liege`)
+    ),
+    # Kopeinde stroomopwaarts van Luik. Apart label = een eigen `vermijd`-knop
+    # én de plek waar de afbakening uit het issue valt: bóven Namen is de Franse
+    # Meuse klasse I-II en valt hij onder Lars' snoeiregel.
+    dict(
+        label="maas-boven",
+        zeevaart=False,
+        cemt="Va",
+        cemt_insluiten=False,
+        volgt_op="maas",
+        extracts=["belgie"],
+        bbox=(50.35, 4.75, 50.80, 5.65),
+        namen=["La Meuse"],
+        anker_zee=(5.573, 50.645),      # = anker_binnen van 'maas'
+        anker_binnen=(4.867, 50.462),   # Meuse bij Namen
+    ),
+    # Het Albertkanaal is de commerciële hoofdader Luik -> Antwerpen (klasse
+    # VIb) en verbindt het Maas-net met de Schelde uit LAR-495. Draagt ZIJN
+    # EIGEN grensnaam-val: bij Luik heet hij `Canal Albert` (18,7 km, lat
+    # 50,653…50,806), daarboven `Albertkanaal` — zonder allebei knipt de keten
+    # bij Ternaaien door.
+    dict(
+        label="albertkanaal",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        volgt_op="maas",
+        extracts=["belgie"],
+        bbox=(50.58, 4.35, 51.30, 5.75),
+        # `Canal de Monsin` (1,0 km) is de schakel: de Meuse komt bij Luik niet
+        # rechtstreeks op het kanaal uit maar via het Monsin-eiland. Zonder die
+        # naam vindt de stitcher géén doorlopend pad (gemeten, niet gegokt).
+        # ⚠️ DERDE VERSCHIJNING VAN "welk schip past erdoor" — nu op SLUISNIVEAU.
+        # Het Albertkanaal viel uiteen in zes losse componenten met gaten van
+        # ~150 m: bij elk van de vier sluiscomplexen liggen DRIE parallelle
+        # kolken als aparte benoemde canal-ways (`duwvaartsas` / `middensas` /
+        # `noordersas`), en de doorgaande `Albertkanaal`-way stopt ervóór.
+        # Alleen de **duwvaartsas** is de kolk voor commerciële duwvaart; door
+        # uitsluitend die te whitelisten kiest de keten per constructie de
+        # grootgabarit-doorgang in plaats van de kortste kolk.
+        # Bewust NIET `La Dérivation`: dat is de Maas-omleiding dwars door Luik,
+        # die hoort bij `maas`. Hij ligt 841 m van het kanaal en vormde een
+        # eigen eilandje — waar het anker vervolgens op snapte, zodat de
+        # stitcher geen pad vond terwijl de keten zelf al heel was.
+        namen=["Albertkanaal", "Canal Albert", "Canal de Monsin",
+               "Canal de Lanaye",
+               "Diepenbeek duwvaartsas", "Hasselt duwvaartsas",
+               "Kwaadmechelen duwvaartsas", "Olen duwvaartsas"],
+        # Het aftakpunt is het ZUIDEINDE van `Canal Albert` in Luik, niet de
+        # Canal de Monsin: die bestaat uit twee stukjes met 130 m ertussen, en
+        # het anker snapte op het losse fragment terwijl de keten zelf al heel
+        # was — de stitcher meldde dan "geen doorlopend waterpad", wat naar de
+        # ketting wees in plaats van naar het anker. Dit punt ligt MIDDENIN de
+        # `maas`-keten (die van Maastricht naar Luik loopt en hier langskomt),
+        # dus dit is de tweede echte mid-keten-aftakking.
+        anker_zee=(5.6165, 50.6527),    # Canal Albert verlaat de Maas bij Luik
+        anker_binnen=(4.428, 51.238),   # Albertkanaal bij Antwerpen
+    ),
+    # Het Amsterdam-Rijnkanaal takt bij Tiel middenin de Waal af en loopt door
+    # tot het IJ. Dit is het eerste systeem dat aan BEIDE kanten aan een
+    # bestaande keten hangt: `volgt_op` hecht de Tiel-kant aan `waal`,
+    # `sluit_aan` hecht de Amsterdam-kant aan `noordzeekanaal`. Zonder die
+    # tweede hechting is het kanaal een doodlopende tak van 73 km waar nooit
+    # een route overheen kan — gemeten: Amsterdam->Nijmegen bleef 263 km, mét
+    # én zonder het kanaal. Dít is waar een lijnennet een NET wordt: Amsterdam
+    # kan nu de Rijn op zonder eerst naar zee.
+    # ⚠️ De laatste ~3 km over het IJ, tussen het noordeinde van het kanaal
+    # (4,950) en het binneneinde van `noordzeekanaal` (4,904), ligt in OSM niet
+    # als benoemde doorgaande lijn (gecontroleerd: geen `Het IJ` in dat venster).
+    # Die overbrugt `sluit_aan` expliciet als één sluitedge over het IJ — echt
+    # water, en zichtbaar in de bake-uitvoer in plaats van stilzwijgend gladgestreken.
+    dict(
+        label="amsterdam-rijnkanaal",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        volgt_op="waal",
+        sluit_aan="noordzeekanaal",
+        extracts=["nederland"],
+        bbox=(51.85, 4.88, 52.42, 5.52),
+        namen=["Amsterdam-Rijnkanaal"],
+        anker_zee=(5.440, 51.890),      # Waal bij Tiel
+        anker_binnen=(4.950, 52.380),   # noordeinde van het kanaal, in het IJ
+    ),
     # ---- VS (LAR-487) — MARNET's mississippi-tak eindigt bij New Orleans en
     # loopt daar dood in het Pontchartrainmeer; alles stroomopwaarts ontbreekt.
     # Baton Rouge is het kopeinde van de diepzeevaart (~370 km binnenland),
@@ -721,6 +836,7 @@ def _feature(systeem, bron, coords, lengte, route):
             "zeevaart": systeem["zeevaart"],
             "cemt": systeem["cemt"],
             "volgtOp": systeem.get("volgt_op", ""),
+            "sluitAan": systeem.get("sluit_aan", ""),
             "bron": bron,
             "km": round(lengte, 1),
             "route": route,

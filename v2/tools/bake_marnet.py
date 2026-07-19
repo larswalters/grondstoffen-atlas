@@ -770,6 +770,27 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
                                f"ligt {ergste:.2f} km van de bron-middellijn "
                                f"(eps {CORRIDOR_EPS_KM})")
 
+        # RINGSLUITING (LAR-505): een verbindingskanaal hangt aan BEIDE kanten
+        # aan een bestaande keten. `volgtOp` hecht het begin; `sluitAan` hecht
+        # het eind. Zonder dit is zo'n kanaal een doodlopende tak waar nooit een
+        # route overheen kan — het Amsterdam-Rijnkanaal veranderde niets aan
+        # Amsterdam->Nijmegen tot deze hechting erbij kwam.
+        # Bewust ná de corridor-toets: het sluitstukje is een verbinding tussen
+        # twee ketens, geen gebakken bron-geometrie, en hoort dus net zomin bij
+        # die toets als het aansluitstukje aan de zeezijde.
+        sluit_aan = props.get("sluitAan") or ""
+        sluit_km = None
+        if sluit_aan:
+            eindknoop, sluit_km, _geknipt = hecht_aan_keten(
+                f"{label} (sluiting)", sluit_aan, coords[-1],
+                nodes, edge_lijst, status, geometrie, uit)
+            if eindknoop != vorige_knoop:
+                ei = len(edge_lijst)
+                edge_lijst.append(((vorige_knoop, eindknoop), label))
+                status[ei] = "binnen:" + label
+                geometrie[ei] = [nodes[vorige_knoop], nodes[eindknoop]]
+                keten_edges.append(ei)
+
         km_tot = sum(gc_km(a, b) for a, b in zip(lijn, lijn[1:]))
         uit[label] = {
             "zeevaart": bool(props.get("zeevaart")),
@@ -781,10 +802,13 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
             "aansluitKm": round(aansluit_km, 2),
             "aansluitOvergang": overgang,
             "volgtOp": volgt_op,
+            "sluitAan": sluit_aan,
+            "sluitKm": None if sluit_km is None else round(sluit_km, 2),
         }
+        sluit_tekst = "" if sluit_km is None else f" · sluit op {sluit_aan} ({sluit_km:.2f} km)"
         print(f"  {label:<16} {km_tot:6.1f} km · {len(keten_edges)} edges · aansluiting "
               f"knoop {zeeknoop} ({aansluit_km:.2f} km, {overgang}) · corridor max "
-              f"{ergste * 1000:.0f} m · zeevaart={bool(props.get('zeevaart'))}")
+              f"{ergste * 1000:.0f} m · zeevaart={bool(props.get('zeevaart'))}{sluit_tekst}")
     return uit
 
 
