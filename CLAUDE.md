@@ -1,6 +1,44 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LOD-ontwerpbrief vastgelegd → LAR-490 onder M26; werkfocus blijft M24)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-487/488 VS+China-pilot gebouwd + gemeten; open = Lars' visuele go)*
+
+> **✅ LAR-487 + LAR-488 GEBOUWD (2026-07-19, laatste) — DE M24-PILOTREEKS NL→VS→CHINA IS COMPLEET, op Lars' visuele go na.**
+> Live t/m `919b046` (`?v=018`). **Beide zones eindigden ergens anders dan hun naam suggereert:** MARNET's
+> `mississippi`-tak gaat vanaf New Orleans **niet de rivier op maar het Pontchartrainmeer in** en loopt dood
+> (knoop 113) → traject werd New Orleans→Baton Rouge→Memphis; de `yangtze`-zone ("Nanjing–Jiangyin") eindigt bij
+> **Zhenjiang** (knoop 9668), 78 km vóór Nanjing. Vooraf snapte Memphis **532,7 km** weg (fictieve route 303 km) en
+> Wuhan **528,4 km** (240 km) — het Nijmegen-patroon van M23.
+> **Nieuw mechanisme `volgtOp`:** het zeevaart-beleid (zeevaart t/m Baton Rouge resp. Nanjing, daarboven binnenvaart)
+> past niet in één keten met één vlag → een vervolgsegment hangt aan het **binneneinde van zijn voorganger** i.p.v.
+> aan MARNET, **zónder polygoon-toets** (dat punt ligt al op een corridor-getoetste keten). Eén rivier draagt zo twee
+> labels met elk een eigen zeevaart-vlag én een eigen `vermijd`-knop voor M21/M26; beide hechtten op **0,00 km**.
+> Ketens: `mississippi` 218,8 km (zeevaart) · `mississippi-boven` 813,1 · `yangtze` 92,7 (zeevaart) · `yangtze-boven` 683,6.
+> **Nieuwe tool `v2/tools/toets_usace.py`** (USACE National Waterway Network, `GEO_CLASS='I'` + `FUNC_CLASS<>'N'`):
+> mediaan **76 m** / p95 409 m over 760 punten (NL-bake-off ~80 m). De staart (3,8% >500 m, max 1.889 m) is
+> **OSM-vs-USACE kanaalverschil, níet onze simplify** — de rúwe 801-punts lijn heeft dezelfde max (DP-simplify
+> selecteert bestaande vertices); geconcentreerd op de oxbow-stretch lon −91,15…−91,49. **Beslissend is de lengte,
+> niet de puntafstand** (een fout gevolgde oxbow ligt overal dicht bij íets): onze ketens samen **1.028,2 km = 638,9
+> river miles** tegen de officiële span New Orleans (mile 95)→Memphis (mile 736) van **641 mijl** → **0,3%**.
+> Bijvangst: USACE zet deep-draft (`FUNC_CLASS='B'`) t/m **river mile 237**, Baton Rouge ligt op ~229 — de
+> scheidsrechter bevestigt het splitspunt van de zeevaart-vlag zelf. ⚠️ **De corridor-toets bewijst procesintegriteit,
+> geen bronkwaliteit** (hij vergelijkt de keten met de bron waaruit hij gebakken ís → per definitie 0 m).
+> **China zónder scheidsrechter: de havens bevestigen zichzelf** — negen searoute-havens (andere bron dan OSM) vallen
+> vanzelf op de keten (Wuhan **0,7** · Jiangyin 1,2 · Wuhu 1,9 · Nanjing 2,5 · Anqing 2,9 · Zhenjiang 5,2 · Jiujiang 7,1 km);
+> herbruikbare toets voor Paraná/Mekong/Congo.
+> **Tests:** regressie exact tussen de oude knoop-ids (6818→9654 **19.610**, 6391→6818 **8.031**) · Amsterdam→Shanghai
+> 19.677 via `noordzeekanaal` · R'dam→Nijmegen 172 via `waal` · New Orleans→Memphis **1.032 km** (officieel 641 river
+> miles = 1.032) · Shanghai→Wuhan **1.016** · R'dam→Wuhan 20.626 · R'dam→Memphis 10.000 · beide labels in `vermijd` →
+> geen route · snaps Memphis 532,7→**5,9** / Wuhan 528,4→**0,7** / Baton Rouge 87,6→**3,1** / Nanjing 77,9→**2,5** ·
+> netwerk 9.698→**9.812** knopen, 15.945→**16.059** edges, bin 1.165→**1.170 KB**, havens >50 km 1.471→**1.452**.
+> **⚠️ Overpass is nu de traagste + broosste stap** (~25 min voor 6 systemen vs ~1 min bakken): de mirrors gaven
+> massaal 504's. Mijn eerste diagnose was fóút — "query te zwaar" → timeout 600 s, waardoor één overbelaste mirror de
+> run tien minuten gijzelde vóór failover, terwijl de query gemeten **74 s** duurt. Gericht gefixt: client-timeout
+> (180 s) **los van** server-timeout (300 s), **exacte tag-match i.p.v. naam-regex** (Overpass indexeert `key=value`),
+> CEMT-clause alleen voor systemen mét CEMT-klasse (buiten de EU bestaat de tag niet en die clause heeft als enige géén
+> naamfilter), `overpass.osm.jp` eruit (kapot certificaat), retry-rondes, en een **schijf-cache op de query-inhoud**
+> zodat een herstart nooit opnieuw begint. **→ VOLGENDE: Lars' visuele go, daarna go/no-go wereldwijde uitrol**
+> (Paraná, Irrawaddy/Yangon-stubs, Wolga, Mekong, Congo, Grand Canal) + restpunten [LAR-485]. Zie `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-lar487-488-vs-china-pilots]].
 
 > **🎨 LOD-ONTWERPBRIEF VASTGELEGD (2026-07-19, ontwerpsessie zonder code) — M26 = HERONTWERP MET SEMANTISCHE
 > ZOOM, startpunt [LAR-490] (High, Todo).** Spec = **`v2/design/lod-ontwerpbrief.md`** (commit `08f2341`;
@@ -519,6 +557,23 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-19 · LAR-487/488: `volgtOp`-ketening — één rivier, meerdere labels met eigen zeevaart-vlag** — het
+  zeevaart-beleid past niet in één keten met één vlag, dus een vervolgsegment hangt aan het **binneneinde van zijn
+  voorganger** i.p.v. aan MARNET, zónder polygoon-toets (dat punt ligt al op een corridor-getoetste keten).
+  Vervolgsystemen staan later in `SYSTEMEN` en hun `anker_zee` = het `anker_binnen` van hun voorganger
+  (`VERVOLG_MAX_KM` 5 km, gemeten 0,00). Levert per segment meteen een eigen `vermijd`-knop voor M21/M26.
+- **2026-07-19 · LAR-487: de corridor-toets bewijst procesintegriteit, niet bronkwaliteit** — hij vergelijkt de keten
+  met de bron waaruit hij gebakken ís (per definitie ~0 m), dus een onafhankelijke tweede bron blijft nodig. En
+  **lengte is de beslissende controle, niet de puntafstand**: een fout gevolgde oxbow ligt overal dicht bij íets, maar
+  verraadt zich in de totale kilometers (1.028,2 km = 638,9 river miles vs officieel 641 → 0,3%). Meetlat als eigen
+  tool `v2/tools/toets_usace.py` (`GEO_CLASS='I'` + `FUNC_CLASS<>'N'`); `FUNC_CLASS='B'` toetst meteen de zeevaart-vlag.
+- **2026-07-19 · LAR-488: waar geen officieel net bestaat, laten de havens de geometrie bevestigen** — negen
+  searoute-havens (andere bron dan OSM) vallen vanzelf binnen enkele km op de Yangtze-keten. Herbruikbaar voor de
+  wereldwijde uitrol (Paraná, Mekong, Congo).
+- **2026-07-19 · Overpass: exacte tag-match, conditionele CEMT-clause, gescheiden timeouts, cache op query-inhoud** —
+  Overpass indexeert `key=value`; een `^(...)$`-regex selecteert hetzelfde maar dwingt een scan af. De CEMT-clause
+  heeft als enige géén naamfilter en bestaat buiten de EU niet → alleen voor systemen mét CEMT-klasse. Client-timeout
+  (180 s) los van server-timeout (300 s), anders gijzelt één overbelaste mirror de run.
 - **2026-07-19 · LAR-486: zee-overgang = NE-water óf waterweg-zone; verzoening gecached; varianten als sets** —
   een aansluitknoop in een dokbekken (Maasmond 6812, `zone:nl-delta`) is geldig (M23-aanloop-principe); de dure
   M23-herberekening (~35–40 min) staat nu in `build-cache/verzoening_cache.json` (élke volgende bake ~1 min;

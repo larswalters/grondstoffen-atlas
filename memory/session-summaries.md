@@ -1,6 +1,37 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 26) — LAR-487 + LAR-488: de VS- en China-binnenvaartpilot gebouwd + gemeten
+- **Beide resterende M24-pilots staan** (commit `919b046`, `?v=018`, live). De pilotreeks NL→VS→China
+  is compleet op Lars' visuele go na.
+- **Beide zones eindigden anders dan hun naam suggereert.** MARNET's `mississippi`-tak gaat vanaf New
+  Orleans niet de rivier op maar het **Pontchartrainmeer** in en loopt dood (knoop 113); de
+  `yangtze`-zone ("Nanjing-Jiangyin") eindigt bij **Zhenjiang** (knoop 9668), 78 km voor Nanjing.
+  Vooraf snapte Memphis **532,7 km** weg (fictieve route 303 km) en Wuhan **528,4 km** (240 km).
+- **Nieuw `volgtOp`-mechanisme** (zie `decisions.md`): ketens `mississippi` 218,8 km (zeevaart) →
+  `mississippi-boven` 813,1 · `yangtze` 92,7 (zeevaart) → `yangtze-boven` 683,6. Beide
+  vervolgsegmenten hechtten op **0,00 km**, corridor-toets 0 m op alle zes systemen.
+- **USACE-meetlat** (`v2/tools/toets_usace.py`, nieuw): mediaan **76 m** / p95 409 m over 760 punten
+  (NL-bake-off ~80 m). Staart (3,8% >500 m, max 1.889 m) = **OSM-vs-USACE kanaalverschil, niet onze
+  simplify** — de ruwe 801-punts lijn heeft dezelfde max; geconcentreerd op de oxbow-stretch
+  lon -91,15..-91,49. **Lengte 1.028,2 km = 638,9 river miles vs officieel 641 → 0,3%.**
+- **China zonder scheidsrechter:** negen searoute-havens vallen vanzelf op de keten (Wuhan 0,7 ·
+  Jiangyin 1,2 · Wuhu 1,9 · Nanjing 2,5 · Anqing 2,9 · Zhenjiang 5,2 · Jiujiang 7,1 km).
+- **Acceptatie:** New Orleans→Memphis **1.032 km** (officieel 641 river miles = 1.032) · Shanghai→Wuhan
+  **1.016** · R'dam→Wuhan 20.626 · R'dam→Memphis 10.000 · beide labels in `vermijd` → geen route.
+  **Regressie exact:** 6818→9654 **19.610**, 6391→6818 **8.031**; Amsterdam→Shanghai 19.677.
+  Snaps Memphis 532,7→**5,9** · Wuhan 528,4→**0,7** · Baton Rouge 87,6→**3,1** · Nanjing 77,9→**2,5**.
+  Netwerk 9.698→**9.812** knopen / 15.945→**16.059** edges, bin 1.165→**1.170 KB**, >50 km 1.471→**1.452**.
+- **Grootste tijdvreter + eigen fout:** Overpass-mirrors lagen er deels uit (504's). Ik diagnosticeerde
+  eerst verkeerd — "query te zwaar" → timeout op 600 s, waardoor een overbelaste mirror de run tien
+  minuten gijzelde voor failover, terwijl de query gemeten **74 s** duurt. Daarna gericht gefixt:
+  client- los van server-timeout, exacte tag-match, conditionele CEMT-clause, retry-rondes,
+  query-inhoud-cache, `overpass.osm.jp` eruit (kapot certificaat).
+- **Twee stille-data-vallen gevangen:** `AMILE`/`BMILE` zijn niet overal gevuld (twee links op 0.0 zien
+  eruit als een gat van 45 mijl terwijl de geometrie er is), en `exceededTransferLimit` zit bij
+  `f=geojson` genest onder `properties` → op de top-level sleutel checken truncateert stil op 2.000.
+- **Linear:** LAR-487 + LAR-488 op In Progress met uitgebreide meet-comments (Done pas na visuele go).
+
 ## 2026-07-19 (sessie 24) — LAR-486 NL-pilot uitgevoerd: bake-off OSM vs UNECE, alle tests groen, live
 - **Pipeline gebouwd + bewezen** (commit `d9a9e0f`, `?v=016`, live op Pages): `fetch_waterways.py`
   (bron-agnostische stitcher: kortste waterpad anker→anker; OSM via Overpass, UNECE via de Blue Book

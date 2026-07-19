@@ -1,20 +1,33 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LOD-ontwerpbrief vastgelegd → LAR-490 onder M26; NU-lijst ongewijzigd = M24-pilots)*
+*Last updated: 2026-07-19 (LAR-487 + LAR-488 gebouwd + gemeten; NU-lijst = visuele go, dan uitrol)*
 
-## ➡️ NU: de twee vervolg-pilots (volgorde vrij; bakken in ~1 min door de verzoening-cache)
+## ➡️ NU: visuele go op de twee nieuwe pilots
 
-1. **[LAR-487] VS-pilot** — Mississippi stroomopwaarts (zone → Memphis/St. Louis) × **USACE NWN als
-   meetlat** (public domain; inland filteren); systeem toevoegen aan `SYSTEMEN` in
-   `fetch_waterways.py` (OSM-geometrie, ankers benedenstrooms-zone → stroomopwaarts) + kruis-check
-   tegen USACE zoals de UNECE-vergelijking in de NL-pilot.
-2. **[LAR-488] China-pilot** — Yangtze-verdieping (zone → Wuhan, evt. Chongqing); zeevaart-vlag t/m
-   Nanjing; géén scheidsrechter = corridor-toets + acceptatieroutes + visuele check Lars.
-3. **Daarna: wereldwijde uitrol + restpunten [LAR-485]** — EU CEMT ≥ IV, VS USACE-net, elders de
-   commerciële systemen; Yangon/Moulmein-stubs; de 2 restedges (Södertälje, Channel Islands);
+**Beide pilots staan en zijn gemeten** (commit `919b046`, `?v=018`, live op Pages) — zie
+`session-summaries.md`. De enige openstaande stap is Lars' **visuele bevestiging op de bol**
+(WebGL-screenshot hangt headless, vast patroon sinds M22). Daarna [LAR-487] + [LAR-488] → Done.
+
+Te bekijken: vaart de gele route bij **New Orleans→Memphis** netjes over de Mississippi (incl. de
+meanders rond Baton Rouge/Vicksburg), en **Shanghai→Wuhan** over de Yangtze?
+
+## ➡️ DAARNA: go/no-go wereldwijde uitrol
+
+1. **Wereldwijde uitrol** — EU CEMT ≥ IV, VS USACE-net, elders de commerciële systemen: Paraná,
+   Irrawaddy (de Yangon-stubs), Wolga-systeem, Mekong, Congo, Grand Canal. De drie controle-situaties
+   zijn nu alle drie bewezen (twee bronnen / officiële meetlat / géén scheidsrechter).
+2. **Restpunten [LAR-485]** — Yangon/Moulmein-stubs, de 2 restedges (Södertälje, Channel Islands),
    Wolga-Don-dekking-check.
+3. **Verdiepingen** (optioneel) — Chongqing boven Wuhan (Drieklovendam-sluizen), St. Louis boven
+   Memphis.
 
 **Bron-keuze (definitief, 2026-07-19):** OSM = geometrie overal · UNECE (EU)/USACE (VS) = meetlat +
 klasse-bron. Bake-off-varianten zijn opgeruimd (`8458047`, `?v=017`).
+
+**Open experiment (niet unilateraal gedaan):** de CEMT-clause uit de NL-systemen halen. Die haalt
+784 van de 852 ways binnen bij de Waal (havenbekkens als `1e Eemhaven`) en is daarmee de duurste
+query van de zes, terwijl hij vooral een diagnostische print voedt — maar hij levert de stitcher wél
+verbindingsgeometrie, dus weghalen kan het NL-resultaat veranderen. Goedkoop te testen: blijft de
+Waal 142,0 km / 176 punten? Raakt de LAR-486-regressiebasis → eerst afstemmen met Lars.
 
 ## 🔭 Later (ná M25): [LAR-490] LOD-systeem — het M26-startpunt
 

@@ -1,5 +1,25 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LOD-ontwerpbrief vastgelegd — M26-richting ligt vast in LAR-490; focus blijft M24)*
+*Last updated: 2026-07-19 (M24-pilotreeks NL→VS→China compleet; wachten op visuele go, dan uitrol)*
+
+## ✅ M24-pilotreeks compleet (2026-07-19) — alle drie controle-situaties bewezen
+
+De pilots per regio zijn af (op Lars' visuele go na). Elk bewees een manier om te controleren
+zonder de bron zelf te vertrouwen:
+
+| pilot | controle-situatie | uitkomst |
+|---|---|---|
+| NL (LAR-486) | twee onafhankelijke bronnen | OSM vs UNECE mediaal ~80 m → OSM gekozen |
+| VS (LAR-487) | officiele meetlat | USACE mediaan 76 m; **lengte 0,3% van de officiele vaarafstand** |
+| China (LAR-488) | geen scheidsrechter | 9 searoute-havens vallen vanzelf op de keten (Wuhan 0,7 km) |
+
+**De pijplijn zoals hij nu staat:** `fetch_waterways.py` (OSM via Overpass, exacte naam-match,
+schijf-cache) → `bake_marnet.py --vaarwegen` (`EXTRA_VAARWEGEN` + `volgtOp`-ketening, corridor-toets,
+verzoening-cache ~1 min) → `toets_usace.py` (meetlat) → browser-acceptatie via
+`window.MARNET`/`HAVENS`/`zoekRoute`. Zes systemen, 126 vaarweg-edges.
+
+**Werkwijze die zich bewees en die de uitrol moet aanhouden:** meet de **lengte** tegen de officiele
+vaarafstand, niet alleen punt-tot-net-afstanden — een fout gevolgde zijarm of oxbow ligt overal dicht
+bij iets, maar verraadt zich meteen in de totale kilometers.
 
 ## 🔭 M26-richting (2026-07-19) — LOD-systeem, spec in `v2/design/lod-ontwerpbrief.md`
 

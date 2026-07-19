@@ -1,5 +1,27 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-18 (M23 — datumgrens-knip + Noordwest-Passage gevangen; 2 restedges + rivierstubs open)*
+*Last updated: 2026-07-19 (LAR-487/488 — Overpass-broosheid + USACE-datavallen toegevoegd)*
+
+## ⚠️ OPEN / te weten na LAR-487+488 (2026-07-19)
+
+- **De publieke Overpass-mirrors zijn een broos afhankelijkheidspunt.** Tijdens deze sessie gaven ze
+  massaal 504's, ook op queries die minuten eerder gewoon slaagden — de fetch is daardoor de traagste
+  stap van de pijplijn (~25 min voor 6 systemen), niet de bake (~1 min). Gemitigeerd met retry-rondes,
+  snelle failover en een schijf-cache op de query-inhoud (een herstart begint nooit opnieuw), maar bij
+  de **wereldwijde uitrol** met tientallen systemen is dit het schaalrisico. Overwegen: chunken van
+  grote bboxen, of Geofabrik-extracts als de mirrors structureel tekortschieten.
+- **`overpass.osm.jp` heeft een kapot certificaat** (hostname mismatch) — uit de mirrorlijst gehaald.
+- **USACE `AMILE`/`BMILE` zijn niet overal gevuld.** Twee links in de Mississippi-corridor staan op
+  0.0; sorteren op milepost suggereert dan een gat van 45 mijl terwijl hun geometrie gewoon aanwezig
+  is. Wie dat gat gelooft, leest elk OSM-punt in die stretch als uitschieter tegen niets.
+- **`exceededTransferLimit` zit bij `f=geojson` genest onder `properties`** (en `properties` is null
+  als er niets is afgekapt). Op de top-level sleutel checken geeft **stille truncatie op 2.000
+  features**. Native SR van de laag is 4269 (NAD83) → `outSR=4326` expliciet meegeven.
+- **OSM en USACE zijn het lokaal oneens over het kanaal** in de oxbow/cutoff-stretch tussen Baton
+  Rouge en Arkansas City (lon -91,15..-91,49): 3,8% van de punten >500 m, max 1.889 m. Geen fout van
+  ons (de ruwe lijn heeft dezelfde max) en onschadelijk op bolschaal, maar goed om te weten als er
+  ooit op meterniveau tegen de VS-geometrie gemeten wordt.
+- **`taskkill /IM python.exe` sloopt ook de dev-server van de Browser-pane** — daarna `preview_start`
+  opnieuw draaien.
 
 ## ⚠️ OPEN na M23 (2026-07-18) — bekend, bewust doorgeschoven naar M24 (= [LAR-485], incl. het ontbrekende Noordzeekanaal)
 

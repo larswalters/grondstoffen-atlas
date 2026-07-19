@@ -1,7 +1,38 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-486 uitgevoerd — corridor-toets + cache + zone-zee-overgang in de baker)*
+*Last updated: 2026-07-19 (LAR-487/488 — volgtOp-ketening + USACE-meetlat als eigen tool)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M24 VS/China-pilots (2026-07-19) — LAR-487 + LAR-488
+
+- **Een rivier mag meerdere labels dragen: `volgtOp`-ketening.** Het zeevaart-beleid uit de issues
+  (zeevaart t/m Baton Rouge resp. Nanjing, daarboven binnenvaart) past niet in één keten met één
+  vlag. Een systeem met `volgtOp` hangt aan het **binneneinde van zijn voorganger** i.p.v. aan
+  MARNET, **zonder polygoon-toets** — dat punt ligt al op een corridor-getoetste keten, niet op een
+  zee-overgang. Gevolg: per riviersegment een eigen zeevaart-vlag én een eigen `vermijd`-knop voor
+  M21/M26. Vervolgsystemen moeten later in `SYSTEMEN` staan en hun `anker_zee` gelijk hebben aan het
+  `anker_binnen` van hun voorganger (`VERVOLG_MAX_KM` 5 km; gemeten 0,00).
+- **De corridor-toets bewijst procesintegriteit, niet bronkwaliteit.** Hij vergelijkt de gebakken
+  keten met de bron waaruit hij gebakken IS en meet dus per definitie ~0 m. Daarom blijft een
+  onafhankelijke tweede bron nodig — dat was de UNECE bij de NL-pilot en de USACE hier.
+- **Lengte is de beslissende controle, niet de puntafstand.** Een fout gevolgde oxbow ligt overal
+  dicht bij iets, dus punt-tot-net-afstanden kunnen een omweg niet uitsluiten. De totale ketenlengte
+  wel: 1.028,2 km = 638,9 river miles tegen de officiele 641 → 0,3%. Deze toets zit nu in
+  `toets_usace.py` en is het model voor elke volgende regio.
+- **USACE-meetlat als eigen tool** (`v2/tools/toets_usace.py`) i.p.v. ad-hoc zoals de NL-bake-off —
+  de rolverdeling "OSM = geometrie, officieel = meetlat" geldt voor de hele uitrol.
+  Filters: `GEO_CLASS='I'` (inland; de laag bevat ook 1.454 ocean- en 980 Great-Lakes-links) +
+  `FUNC_CLASS<>'N'`. `FUNC_CLASS='B'` (deep-draft) is meteen een onafhankelijke toets op de
+  zeevaart-vlag: hij stopt op river mile 237, Baton Rouge ligt op ~229.
+- **Waar geen officieel net bestaat: laat de havens de geometrie bevestigen.** Bij de Yangtze vallen
+  negen searoute-havens (een andere bron dan OSM) vanzelf binnen enkele km op de keten. Dat is het
+  beste onafhankelijke signaal dat er is en herbruikbaar voor Parana/Mekong/Congo.
+- **Overpass-queries: exacte tag-match, geen naam-regex.** Overpass indexeert `key=value`; een
+  `^(...)$`-regex selecteert hetzelfde maar dwingt een scan over alle waterways in de bbox af. De
+  CEMT-clause draait alleen nog voor systemen met een CEMT-klasse — buiten de EU bestaat de tag niet
+  en die clause heeft als enige geen naamfilter.
+- **Client- en server-timeout horen los** (180 s vs `[timeout:300]`) + retry-rondes + schijf-cache op
+  de **query-inhoud** (niet de hele query, anders gooit sleutelen aan een timeout data weg).
 
 ## LOD-ontwerpbrief / M26 (2026-07-19) — ontwerpsessie, vastgelegd in LAR-490
 
