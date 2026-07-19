@@ -1,16 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-486 NL-pilot UITGEVOERD — bake-off live, tests groen; open = Lars' bron-keuze)*
+*Last updated: 2026-07-19 (LAR-486 DONE — bron-keuze definitief: OSM-geometrie + UNECE/USACE-meetlat)*
 
-## ➡️ NU: Lars vergelijkt de bake-off-varianten op de bol en kiest de bron
+## ➡️ NU: de twee vervolg-pilots (volgorde vrij; bakken in ~1 min door de verzoening-cache)
 
-- **OSM-variant:** https://larswalters.github.io/grondstoffen-atlas/v2/?vers=016
-- **UNECE-variant:** https://larswalters.github.io/grondstoffen-atlas/v2/?vaarwegbron=unece&vers=016
-- Alle acceptatietests groen op beide (zie de resultaat-comment op LAR-486); advies = OSM-geometrie +
-  UNECE/USACE-meetlat (UNECE is niet scriptbaar op te halen en EU-only).
-- **Ná de keuze:** uitslag vastleggen in LAR-485/486 (→ Done) · variant-bestanden opruimen
-  (`marnet-unece.*`, `ports-unece.json`, `?vaarwegbron`-toggle uit `marnet.js`) · dan **LAR-487**
-  (Mississippi × USACE-meetlat) en **LAR-488** (Yangtze zónder scheidsrechter) — beide bakken in
-  ~1 min dankzij de verzoening-cache.
+1. **[LAR-487] VS-pilot** — Mississippi stroomopwaarts (zone → Memphis/St. Louis) × **USACE NWN als
+   meetlat** (public domain; inland filteren); systeem toevoegen aan `SYSTEMEN` in
+   `fetch_waterways.py` (OSM-geometrie, ankers benedenstrooms-zone → stroomopwaarts) + kruis-check
+   tegen USACE zoals de UNECE-vergelijking in de NL-pilot.
+2. **[LAR-488] China-pilot** — Yangtze-verdieping (zone → Wuhan, evt. Chongqing); zeevaart-vlag t/m
+   Nanjing; géén scheidsrechter = corridor-toets + acceptatieroutes + visuele check Lars.
+3. **Daarna: wereldwijde uitrol + restpunten [LAR-485]** — EU CEMT ≥ IV, VS USACE-net, elders de
+   commerciële systemen; Yangon/Moulmein-stubs; de 2 restedges (Södertälje, Channel Islands);
+   Wolga-Don-dekking-check.
+
+**Bron-keuze (definitief, 2026-07-19):** OSM = geometrie overal · UNECE (EU)/USACE (VS) = meetlat +
+klasse-bron. Bake-off-varianten zijn opgeruimd (`8458047`, `?v=017`).
 
 ## ✅ LAR-486 NL-pilot uitgevoerd (2026-07-19) — de M24-pipeline staat
 

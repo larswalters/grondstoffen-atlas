@@ -3,7 +3,13 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
-## LAR-486 / NL-pilot-implementatie (2026-07-19) — uitgevoerd, keuze open
+## LAR-486 / NL-pilot-implementatie (2026-07-19) — DONE; bron-keuze definitief
+
+- **Bron-rolverdeling definitief (Lars' go: "ik zie geen fouten", varianten visueel identiek):**
+  **OSM = geometriebron overal, UNECE (EU) / USACE (VS) = onafhankelijke meetlat + klasse-bron.**
+  Doorslaggevend was "moeite": kwaliteit gelijkwaardig (mediaal ~80 m), maar OSM is scriptbaar en
+  wereldwijd; UNECE zit achter Cloudflare (handwerk per verversing) en dekt alleen de EU.
+  Bake-off-restanten opgeruimd (`8458047`): toggle + `marnet-unece.*`/`ports-unece.json` weg, `?v=017`.
 
 - **Zee-overgang: NE-water óf waterweg-zone.** De aansluitknoop van een vaarweg-keten mag NE-"land"
   zijn als hij in een `WATERWEG_ZONES`-bbox ligt (dokbekken/estuarium — het M23-aanloop-principe).

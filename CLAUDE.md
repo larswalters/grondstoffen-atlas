@@ -2,7 +2,11 @@
 
 *Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-486 NL-pilot uitgevoerd — bake-off live, tests groen; open = Lars' bron-keuze)*
 
-> **⚓ LAR-486 NL-PILOT UITGEVOERD (2026-07-19, laatste) — BAKE-OFF LIVE, ALLE TESTS GROEN. → OPEN: Lars vergelijkt
+> **✅ LAR-486 DONE (2026-07-19, laatste) — NL-PILOT AF; BRON-KEUZE DEFINITIEF: OSM = geometrie overal, UNECE/USACE =
+> meetlat + klasse-bron** (Lars' go: *"ik zie geen fouten"*, varianten visueel identiek; doorslaggevend = OSM
+> scriptbaar/wereldwijd vs UNECE Cloudflare-handwerk + EU-only). Restanten opgeruimd (`8458047`: toggle +
+> `marnet-unece.*` weg, `?v=017`, na opruiming geverifieerd). **→ VOLGENDE: LAR-487 (Mississippi × USACE) /
+> LAR-488 (Yangtze) — ~1 min per bake dankzij de verzoening-cache.** Hieronder de pilot-details: Lars vergelijkt
 > [OSM](https://larswalters.github.io/grondstoffen-atlas/v2/?vers=016) vs
 > [UNECE](https://larswalters.github.io/grondstoffen-atlas/v2/?vaarwegbron=unece&vers=016) en kiest de bron.**
 > Gebouwd (commit `d9a9e0f`, `?v=016`): **`v2/tools/fetch_waterways.py`** — middellijnen per systeem met een
