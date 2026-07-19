@@ -190,6 +190,153 @@ SYSTEMEN = [
         anker_zee=(7.6065, 50.3645),    # Moselmonding bij Koblenz (Deutsches Eck)
         anker_binnen=(6.102, 48.617),   # Neuves-Maisons, kopeinde van de vaart
     ),
+    # ---- Schelde (LAR-495) — Vlissingen -> Antwerpen, Europa's #2 haven.
+    # Naamwissel op de grens: `Westerschelde` (NL) -> `Schelde` (BE), ditmaal
+    # zónder gecombineerde grensnaam. `Wielingen` is de zeegeul westelijk van
+    # Vlissingen. Bewust NIET `Kanaal Gent-Terneuzen` (eigen as) en
+    # `Oosterschelde` (stormvloedkering, geen doorgaande vaarweg).
+    dict(
+        label="schelde",
+        zeevaart=True,
+        cemt="VIb",
+        cemt_insluiten=False,
+        extracts=["nederland", "belgie"],
+        bbox=(51.15, 3.15, 51.50, 4.45),
+        namen=["Wielingen", "Westerschelde", "Schelde"],
+        anker_zee=(3.5800, 51.4200),     # Vlissingen-rede, MARNET-knoop op 5,2 km
+        anker_binnen=(4.3955, 51.2370),  # Antwerpen, t.h.v. de Royerssluis
+    ),
+    # ---- Schelde-Rijnkanaal (LAR-495) — de zwaarstwegende schakel van dat issue:
+    # Rotterdam -> Antwerpen stond op 500 km omdat de route om moest via Maas +
+    # Albertkanaal. Tweede systeem dat aan BEIDE kanten hecht (na het ARK):
+    # `volgt_op` hangt de Antwerpse kant middenin `schelde`, `sluit_aan` de
+    # noordkant aan `waal` bij de Dordtsche Kil.
+    # ⚠️ Het systeem draagt méér dan het kanaal: Volkerak, het westelijke
+    # Hollandsch Diep en de Dordtsche Kil horen bij géén bestaande keten —
+    # `maas` raakt het Hollandsch Diep alleen aan de OOSTkant en slaat daar
+    # meteen af naar de Amer. Zonder die stukken is er geen doorgaand pad.
+    # ⚠️ Twee sluiscomplexen knipten de keten door, allebei opgelost met NAMEN
+    # in plaats van een ruimere naad: bij de Kreekraksluizen (gat 1.988 m) zijn
+    # `Zuidervoorhaven`/`Noordervoorhaven` de schakels, bij de Volkeraksluizen
+    # (805 m) is dat `Hellegat`. Daarmee is stitch_km hier niet nodig.
+    # ⚠️ Bewust NIET `Bathse Spui Kanaal`: loopt kaarsrecht parallel door precies
+    # het Kreekrak-venster maar is een SPUIkanaal (afwatering), geen vaarweg —
+    # de Zuid-Willemsvaart-val met een afwateringskanaal als dader.
+    dict(
+        label="schelde-rijnkanaal",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        volgt_op="schelde",
+        sluit_aan="waal",
+        extracts=["nederland", "belgie"],
+        bbox=(51.30, 4.15, 51.85, 4.75),
+        namen=["Zandvlietsluis", "Kanaaldok B3", "Schelde-Rijnkanaal",
+               "Zuidervoorhaven", "Noordervoorhaven", "Zuid Vlije", "Noord Volkerak",
+               "Hellegat", "Volkerak", "Volkeraksluizen", "Hollandsch Diep",
+               "Dordtsche Kil"],
+        anker_zee=(4.2500, 51.3480),     # Schelde bij Zandvliet (ligt ín `schelde`)
+        anker_binnen=(4.6030, 51.7810),  # Dordtsche Kil (ligt ín `waal`)
+    ),
+    # ---- Seine (LAR-495) — Seinemonding -> Rouen, zeevaart.
+    # Het splitspunt is hier voor het eerst niet beredeneerd maar UIT DE DATA
+    # AFGELEZEN: OSM tagt de Seine benedenstrooms van Rouen als `CEMT=VII` en
+    # bovenstrooms als `Vb` — de bron bevestigt de zeevaartgrens zelf.
+    dict(
+        label="seine",
+        zeevaart=True,
+        cemt="VII",
+        cemt_insluiten=False,
+        extracts=["fr-haute-normandie"],
+        bbox=(49.25, 0.00, 49.55, 1.25),
+        namen=["La Seine"],
+        anker_zee=(0.2500, 49.4300),     # Seinemonding, MARNET-knoop op 1,4 km
+        anker_binnen=(1.0950, 49.4400),  # Rouen
+    ),
+    # ---- Seine-boven (LAR-495) — Rouen -> Parijs, binnenvaart.
+    # ⚠️ DIT SYSTEEM DWONG DE FILTER-WIJZIGING AF. Bij de sluis van Poses/
+    # Amfreville is de doorgaande vaargeul in OSM getagd als `waterway=stream`
+    # (mét `name=La Seine` én `CEMT=Vb`); met een soort-filter vóór de naamtoets
+    # viel die 2 km eruit. Nieuwe foutcategorie naast "naam ontbreekt" en
+    # "gabarit klopt niet": het TYPE is fout gemapt. Zie segmenten_geofabrik().
+    # ⚠️ Bij Rouen splitst de Seine om het Île Lacroix en de doorgaande `La Seine`
+    # stopt ervóór. Welke arm de vaargeul is zegt de TAG: `Bras du Cours la Reine`
+    # draagt `CEMT=Vb` + `maxspeed=12`, `Bras du Pré au Loup` draagt géén CEMT.
+    # Vierde verschijning van "welk schip past erdoor" — na water (Restrhein),
+    # gabarit (Freycinet) en sluiskolk (duwvaartsas) nu op ARMNIVEAU, en voor het
+    # eerst beslecht door een tag in plaats van door redeneren.
+    dict(
+        label="seine-boven",
+        zeevaart=False,
+        cemt="Vb",
+        cemt_insluiten=False,
+        volgt_op="seine",
+        extracts=["fr-haute-normandie", "fr-ile-de-france"],
+        bbox=(48.60, 1.00, 49.50, 2.45),
+        namen=["La Seine", "La Seine - Bras du Cours la Reine"],
+        anker_zee=(1.0950, 49.4400),     # = anker_binnen van 'seine' (Rouen)
+        anker_binnen=(2.3500, 48.8530),  # Parijs
+    ),
+    # ---- Rhône (LAR-495) — Golfe de Fos -> Tournon.
+    # De zee-overgang is NIET de riviermonding: de Grand-Rhônemond bij
+    # Port-Saint-Louis is een ondiepe barre. Het verkeer gaat via het
+    # `Canal Saint-Louis` de Golfe de Fos in — hetzelfde patroon als het
+    # Donau-Zwarte Zeekanaal bij Constanța.
+    # ⚠️ DE RESTRHEIN-VAL, MAAR OMGEKEERD. Alleen `Le Rhône` whitelisten gaf een
+    # keten die dóórliep maar de hele benedenloop over de OUDE bedding volgde en
+    # élke CNR-dérivation oversloeg — wél water, wél de goede naam, verkeerde
+    # geul. Gevonden door te vragen wélke ways in de corridor een CEMT-tag
+    # dragen; die tag wees de namen aan, maar de namenlijst blijft de scherpere
+    # filter (de clause zelf haalt `Canal du Rhône à Sète` met CEMT=0 binnen en
+    # `Canal d'Arles à Bouc`, de 19e-eeuwse voorganger).
+    # ⚠️ GESPLITST BIJ TOURNON OM EEN DATA-GAT, geen verstoring: OSM mist daar
+    # 2.494 m middellijn (gecontroleerd op alle soorten én op naamloze
+    # CEMT-ways). `stitch_km=2,6` zou dat overbruggen maar sneed gemeten 14,6 km
+    # aan meanders af; als `volgt_op` is het gat zichtbaar én binnen de marge.
+    # stitch_km=0,3 dekt alleen het gemeten gat van 279 m bij de Ecluse.
+    dict(
+        label="rhone",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        stitch_km=0.3,
+        extracts=["fr-provence-alpes-cote-d-azur", "fr-languedoc-roussillon",
+                  "fr-rhone-alpes"],
+        bbox=(43.35, 4.40, 45.15, 5.10),
+        namen=["Le Rhône", "Canal Saint-Louis", "Ecluse de Port-Saint-Louis",
+               "Le Rhône - Canal de Beaucaire", "Canal des Papes",
+               "Canal de Donzère-Mondragon",
+               "Le Rhône - Canal de Châteauneuf-du-Rhône",
+               "Rhône Canalisé", "Rhône canalisé", "Écluse de Beauchastel",
+               "Canal de Bourg-lès-Valence", "Le Canal",
+               "Canal de Dérivation du Rhône"],
+        anker_zee=(4.8540, 43.3890),       # oostmond Canal Saint-Louis
+        anker_binnen=(4.86082, 45.05532),  # zuidrand van het OSM-gat bij Tournon
+    ),
+    # ---- Rhône-boven (LAR-495) — Tournon -> Lyon. Een DATA-knip, geen
+    # verstoringsknip zoals Kaub of de IJzeren Poort; het label blijft niettemin
+    # bruikbaar als eigen `vermijd`-knop.
+    # ⚠️ `Rhône Canalisé` én `Rhône canalisé` staan er allebei in: OSM gebruikt
+    # beide kapitalisaties voor AANGRENZENDE stukken — de `Dunav/Dunărea`-val,
+    # nu met alleen een hoofdletter als verschil.
+    dict(
+        label="rhone-boven",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        volgt_op="rhone",
+        extracts=["fr-rhone-alpes"],
+        bbox=(45.00, 4.60, 45.85, 5.10),
+        namen=["Le Rhône", "Canal Saint-Louis", "Ecluse de Port-Saint-Louis",
+               "Le Rhône - Canal de Beaucaire", "Canal des Papes",
+               "Canal de Donzère-Mondragon",
+               "Le Rhône - Canal de Châteauneuf-du-Rhône",
+               "Rhône Canalisé", "Rhône canalisé", "Écluse de Beauchastel",
+               "Canal de Bourg-lès-Valence", "Le Canal",
+               "Canal de Dérivation du Rhône"],
+        anker_zee=(4.83521, 45.06857),   # noordrand van het gat, 2,49 km van `rhone`
+        anker_binnen=(4.8360, 45.7480),  # Lyon
+    ),
     # ---- Main + Main-Donau-Kanaal (LAR-493) — de schakel die de Noordzee aan de
     # Zwarte Zee knoopt. De Main mondt bij Mainz-Kostheim (rkm 498) uit in de
     # Rijn, en dat ligt MIDDENIN `rijn-boven` (Bingen rkm 528 -> Basel 170), dus
@@ -462,6 +609,101 @@ SYSTEMEN = [
         anker_zee=(-91.190, 30.445),    # = anker_binnen van 'mississippi'
         anker_binnen=(-90.125, 35.125),  # rivier bij Memphis
     ),
+    # ---- Upper Mississippi (LAR-497) — vervolg op `mississippi-boven`:
+    # Memphis -> Cairo -> St. Louis -> Minneapolis, de graancorridor. Kopeinde =
+    # Upper St. Anthony Falls, de kop van de 9-voets vaargeul.
+    # ⚠️ `us-kentucky` IS NIET OPTIONEEL — de fr-alsace/de-hessen-les, derde keer.
+    # Bij de KENTUCKY BEND (de hoefijzerlus bij New Madrid) ligt de rivier
+    # volledig op Kentucky's grondgebied; zonder die extract loopt de keten daar
+    # dood, ~33 km vóór Cairo. Gemeten, niet aangenomen.
+    # ⚠️ `Chain of Rocks Canal` is de VAARGEUL bij St. Louis, niet de rivier: de
+    # natuurlijke geul loopt over de Chain of Rocks-rotsdrempel en is onbevaarbaar.
+    # Dit is `water ≠ vaarweg` ONDERSTEBOVEN — hier is het kanaal de vaarweg en
+    # de rivier het water.
+    # ⚠️ De 29 sluizen bleken GÉÉN ketenbreuk, anders dan bij MDK/Albertkanaal:
+    # de doorgaande `Mississippi River`-way loopt door de sluispanden heen. Alle
+    # veertien `Lock Canal`-namen erbij gezet veranderde de lengte geen meter
+    # (1.729,3 km in beide gevallen) — daarom bewust weggelaten.
+    dict(
+        label="mississippi-upper",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="mississippi-boven",
+        extracts=["us-tennessee", "us-arkansas", "us-kentucky", "us-missouri",
+                  "us-illinois", "us-iowa", "us-wisconsin", "us-minnesota"],
+        bbox=(34.90, -93.60, 45.10, -89.00),
+        namen=["Mississippi River", "Chain of Rocks Canal"],
+        anker_zee=(-90.125, 35.125),     # = anker_binnen van 'mississippi-boven'
+        anker_binnen=(-93.250, 44.978),  # Minneapolis, Upper St. Anthony Falls
+    ),
+    # ---- Illinois (LAR-497) — takt bij GRAFTON middenin de Upper Mississippi af
+    # (op 41% van die keten), dus het LAR-504-aftakmechanisme.
+    # ⚠️ `Des Plaines River` is niet optioneel: `Illinois River` houdt in OSM op
+    # bij Channahon; de Illinois Waterway loopt van daar over de Des Plaines door
+    # Joliet naar Lockport. Zonder die naam eindigt de keten 30 km te vroeg.
+    dict(
+        label="illinois",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="mississippi-upper",
+        extracts=["us-illinois"],
+        bbox=(38.80, -90.80, 41.95, -87.55),
+        namen=["Illinois River", "Des Plaines River", "Marseilles Canal",
+               "Dresden Island Lock Canal", "Brandon Road Lock Canal",
+               "Peoria Lock Canal", "La Grange Lock Canal"],
+        anker_zee=(-90.4353, 38.9655),     # Illinois-monding bij Grafton
+        anker_binnen=(-88.0790, 41.5730),  # Lockport L&D, kop van de Illinois Waterway
+    ),
+    # ---- Chicago-kanaal (LAR-497) — Lockport -> het Michiganmeer, als EIGEN
+    # label zodat het bij M21 apart te blokkeren is.
+    # ⚠️ Dit verbindt de Mississippi met de Grote Meren, die al via de Seaway aan
+    # zee hangen — dus opnieuw een binnenvaartverbinding tussen twee zeeën, net
+    # als de Donau-ring. Dat is hier ONSCHADELIJK zolang `zeevaart=False` staat:
+    # `zoekRouteRealistisch()` sluit dan élk niet-zeevaarbaar systeem voor een
+    # zeeschip. CONTROLEER NA DE BAKE: Duluth->Rotterdam moet exact 8.031 blijven.
+    # Het gabarit bevestigt de vlag: Lockport/Brandon Road zijn 600 x 110 voet met
+    # ~19,5 voet doorvaarthoogte onder de vaste bruggen in Chicago.
+    dict(
+        label="chicago-kanaal",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="illinois",
+        extracts=["us-illinois"],
+        bbox=(41.45, -88.15, 42.05, -87.55),
+        namen=["Chicago Sanitary and Ship Canal", "South Branch Chicago River",
+               "Chicago River", "Des Plaines River"],
+        anker_zee=(-88.0790, 41.5730),     # = anker_binnen van 'illinois' (Lockport)
+        anker_binnen=(-87.6070, 41.8880),  # Chicago, monding in het Michiganmeer
+    ),
+    # ---- Ohio (LAR-496) — de kolenas Cairo -> Pittsburgh, in ÉÉN naam.
+    # Hangt met `volgt_op` MIDDENIN `mississippi-upper` bij Cairo. ⚠️ Dat kan pas
+    # sinds LAR-497: `mississippi-boven` eindigde bij Memphis, 224 km te kort, en
+    # het aftakmechanisme zou de Ohio dáár hebben vastgeknoopt.
+    # ⚠️ De NEGENTIEN lock & dams liggen hier NIET als aparte benoemde ways — de
+    # doorgaande way loopt er doorheen. Geen `Schleuse`-patroon, geen naad-override.
+    # Bewust NIET `Louisville and Portland Canal` (de echte geul bij McAlpine):
+    # zijn benedenstroomse uiteinde ligt gemeten 789 m van de Ohio-geometrie, dus
+    # hij blijft bungelen; insluiten zou stitch_km≈0,8 vergen en dat is op een
+    # meanderende rivier precies de naad die twee lussen aan elkaar knoopt.
+    # Prijs: 0,9 km op 1.554 = 0,06%.
+    dict(
+        label="ohio",
+        zeevaart=False,     # USACE zet de HELE Ohio op FUNC_CLASS='S' (shallow
+                            # draft) — geen enkele 'B'-link, dus géén diepzeegrens
+                            # zoals Baton Rouge op de Mississippi.
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="mississippi-upper",
+        extracts=["us-illinois", "us-kentucky", "us-indiana", "us-ohio",
+                  "us-west-virginia", "us-pennsylvania"],
+        bbox=(36.80, -89.40, 40.70, -79.80),
+        namen=["Ohio River"],
+        anker_zee=(-89.155, 37.000),     # monding in de Mississippi bij Cairo IL
+        anker_binnen=(-80.017, 40.443),  # Pittsburgh, The Point = river mile 0
+    ),
     # ---- China (LAR-488) — géén officiële tweede bron; MARNET houdt op bij
     # Zhenjiang (knoop 9668), 78 km vóór Nanjing. Zeeschepen varen echt tot
     # Nanjing (12,5 m-diepwaterkanaal), daarboven binnenvaart.
@@ -471,7 +713,7 @@ SYSTEMEN = [
         cemt="",
         extracts=["china"],
         bbox=(31.90, 118.55, 32.45, 119.70),
-        namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
+        namen=["长江", "Yangtze River", "Yangtze"],
         anker_zee=(119.545, 32.195),    # MARNET-uiteinde bij Zhenjiang
         anker_binnen=(118.735, 32.095),  # haven van Nanjing
     ),
@@ -482,9 +724,97 @@ SYSTEMEN = [
         volgt_op="yangtze",
         extracts=["china"],
         bbox=(29.50, 113.90, 32.30, 118.85),
-        namen=["长江", "扬子江", "Yangtze River", "Yangtze"],
+        namen=["长江", "Yangtze River", "Yangtze"],
         anker_zee=(118.735, 32.095),    # = anker_binnen van 'yangtze'
         anker_binnen=(114.300, 30.590),  # haven van Wuhan
+    ),
+    # ---- Yangtze door naar Chongqing (LAR-500) — verlengt `yangtze-boven`.
+    # ⚠️ DE DRIEKLOVENDAM IS NIET DE VALKUIL — GEZHOUBA IS DAT. De keten loopt
+    # zonder naamtruc door het Drieklovencomplex, maar viel 40 km stroomafwaarts
+    # in tweeën bij de Gezhoubadam: een gat van 142 m met aan BEIDE kanten `长江`.
+    # Het Albertkanaal/MDK-patroon dus — de sluis ligt als aparte benoemde way en
+    # de doorgaande way stopt ervóór. Bewust GEEN `stitch_km` om die 142 m te
+    # overbruggen: op deze meanderende 1.262 km (Jingjiang-bochten) knoopt een
+    # ruime naad twee lussen aan elkaar. Let op de INCONSISTENTE nummering —
+    # `一号` (Chinees cijfer) naast `2号` (Arabisch); beide zijn grootgabarit.
+    dict(
+        label="yangtze-chongqing",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="yangtze-boven",
+        extracts=["china"],
+        bbox=(28.60, 105.60, 31.30, 114.60),
+        namen=["长江", "葛洲坝一号船闸", "葛洲坝2号船闸"],
+        anker_zee=(114.300, 30.590),     # = anker_binnen van 'yangtze-boven' (Wuhan)
+        anker_binnen=(106.539, 29.529),  # haven van Chongqing
+    ),
+    # ---- Grand Canal, ZUIDELIJKE helft (LAR-500) — Zhenjiang -> Hangzhou.
+    # ⚠️ Het kanaal KRUIST de Yangtze: de zuidmond ligt bij Jianbi en de noordmond
+    # 13,2 km verderop bij Guazhou. In OSM zijn dat twee losse componenten, en dat
+    # is geografisch juist — schepen varen dat stuk over de Yangtze zelf, die al
+    # in het netwerk zit. Daarom takt dit systeem middenin `yangtze` aan.
+    # ⚠️ `京杭运河` (zónder 大) is een NAAMVARIANT die middenin de keten een stuk
+    # draagt — de `Main-Donau-Kanal (RMD)`-val. Bewust NIET `江南运河`: een eigen
+    # component náást de vaarweg = de historische voorganger (Ludwigskanaal).
+    # De noordelijke helft (Yangzhou -> Jining) is bewust NIET geleverd: daar
+    # kruist het kanaal het Luoma-meer over 5,9 km open water dat OSM als vlak
+    # mapt. Een ruime naad gaf daar 498 km tegen ~660 officieel én Xuzhou 42 km
+    # van de lijn — de Mosel-signatuur. Liever geen systeem dan een fout systeem.
+    dict(
+        label="grand-canal-zuid",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="yangtze",
+        extracts=["china"],
+        bbox=(30.10, 119.25, 32.40, 120.95),
+        namen=["京杭大运河", "京杭运河",
+               "京杭大运河常州绕城段", "京杭运河常州绕城段"],
+        anker_zee=(119.578, 32.196),     # Jianbi, kanaalmond in de Yangtze
+        anker_binnen=(120.200, 30.250),  # Hangzhou, zuidelijk kopeinde
+    ),
+    # ---- Parelrivier (LAR-500) — Humen -> Guangzhou/Huangpu. Het enige nieuwe
+    # systeem van dat issue met een EIGEN zee-aansluiting; beide voorwaarden zijn
+    # nagemeten: MARNET-knoop 5560 op 8,42 km (< AANSLUIT_MAX_KM) én die knoop
+    # valt in NE-water, dus geen zone-vrijstelling nodig.
+    # ⚠️ `stitch_km` is hier GEMETEN, niet gegokt: bij Haizhu-eiland splitst de
+    # rivier in voor- en achtervaarwater en laat OSM de hereniging onbenoemd (gat
+    # 2.465 m). Wat die ruime naad veilig maakt is de KORTE namenlijst — in de
+    # vertakte delta liggen tientallen parallelle `水道`-armen, maar met drie
+    # namen is er niets om naartoe te springen. Bewijs: op 3,2 én 6,0 km naad
+    # komt dezelfde route eruit.
+    dict(
+        label="parelrivier",
+        zeevaart=True,          # zeeschepen varen tot Huangpu (containerhaven)
+        cemt="",
+        cemt_insluiten=False,
+        stitch_km=3.2,
+        extracts=["china"],
+        bbox=(22.60, 113.10, 23.30, 113.75),
+        namen=["虎门水道", "珠江", "沥滘水道"],
+        anker_zee=(113.630, 22.760),     # Humen, mond van de Lingdingyang
+        anker_binnen=(113.240, 23.100),  # Guangzhou (Huangpu-reach)
+    ),
+    # ---- Xi Jiang (LAR-500) — Guangzhou -> Wuzhou, de bulkas landinwaarts.
+    # ⚠️ TWEE NAMEN DIE IN ÉÉN TEKEN VERSCHILLEN: `潭州水道` en `潭洲水道`
+    # (州 tegen 洲) dekken AANGRENZENDE stukken — exact de `Дунав/Dunărea` vs
+    # `Dunav/Dunărea`-val, nu op één karakter. Zonder allebei gaapt er 15,7 km.
+    # `沥滘水道` is het ACHTERVAARWATER van Guangzhou en draagt de doorgaande
+    # vaart westwaarts; het voorvaarwater `珠江` loopt daar dood.
+    dict(
+        label="xijiang",
+        zeevaart=False,
+        cemt="",
+        cemt_insluiten=False,
+        volgt_op="parelrivier",
+        stitch_km=2.6,
+        extracts=["china"],
+        bbox=(22.85, 111.20, 23.55, 113.30),
+        namen=["珠江", "沥滘水道", "三枝香水道", "平洲水道",
+               "潭州水道", "顺德水道", "东平水道", "西江", "浔江"],
+        anker_zee=(113.240, 23.100),     # = anker_binnen van 'parelrivier'
+        anker_binnen=(111.310, 23.470),  # haven van Wuzhou
     ),
     # ---- Myanmar (LAR-485 restpunt) — MARNET eindigt 21 km voor Yangon in een
     # doodlopende knoop 5358; de haven snapt daardoor 21,8 km weg en de route
@@ -500,6 +830,57 @@ SYSTEMEN = [
                "လှိုင်မြစ်"],
         anker_zee=(96.250, 16.595),     # MARNET-uiteinde knoop 5358
         anker_binnen=(96.168, 16.775),  # haven van Yangon
+    ),
+    # ---- Wolga (LAR-502) — Astrachan -> Rybinsk, de as van het Russische
+    # binnenvaartnet, in ÉÉN doorlopende naam. De vrees dat de STUWMEREN de keten
+    # zouden breken bleek ongegrond: Rybinsk/Kuybyshev/Volgograd zijn wél als
+    # watervlak gemapt, maar OSM tekent er óók een doorlopende `Волга`-middellijn
+    # doorheen. Gemeten: één component, route == ['Волга'].
+    # ⚠️ Bewust NIET `Ахтуба` (487 km): de parallelle Wolga-arm die bij Wolgograd
+    # afsplitst en pas in de delta terugkomt — wél water, géén hoofdgeul, en hij
+    # zou als alternatief pad kunnen winnen.
+    # De CEMT-tag bestáát hier (VIc op 32 van 48 ways) maar de clause blijft uit:
+    # de bbox is 13° x 13° en haalt anders het hele irrigatiekanaal-net binnen.
+    # ⚠️ De zee-overgang is de KASPISCHE ZEE, en MARNET dekt die: 52 knopen, en
+    # de dichtstbijzijnde ligt 0,29 km van de rivier bij Astrachan. Daarmee is het
+    # open punt uit het uraniumwerk beantwoord.
+    dict(
+        label="wolga",
+        zeevaart=False,
+        cemt="VIc",
+        cemt_insluiten=False,
+        extracts=["rusland-centraal", "rusland-wolga", "rusland-zuid"],
+        bbox=(45.50, 37.50, 59.00, 50.50),
+        namen=["Волга"],
+        anker_zee=(48.0394, 46.3921),     # MARNET-knoop bij Astrachan
+        anker_binnen=(38.8400, 58.0500),  # Wolga bij Rybinsk
+    ),
+    # ---- Wolga-Don (LAR-502) — Rostov -> Wolgograd. Draagt de DON én het kanaal
+    # in één label: zonder de Don hangt het kanaal in de lucht, want MARNET's
+    # dichtstbijzijnde zeeknoop ligt 442 km stroomafwaarts bij Rostov.
+    # ⚠️ HET KANAAL DRAAGT TWEE NAMEN, andersom dan verwacht: de lange vorm
+    # `…им. В. И. Ленина` dekt maar 7,1 km (het Wolga-uiteinde bij Sarepta), de
+    # korte vorm de overige 92,4 km. Allebei nodig — het `(RMD)`-patroon.
+    # ⚠️ Twee stille ketenbreuken, allebei gemeten: `рукав Старый Дон` overbrugt
+    # 4,8 km bij Rostov (waar de Don zich om het Groene Eiland splitst; hij draagt
+    # als enige `boat=yes` + `int_name=Don`), en `Карповка` overbrugt 7,2 km waar
+    # het Karpovski-stuwmeer de kanaalgeul verbreedt. Bewust NIET het kale
+    # `Старый Дон`: losse afgesneden oude armen die een sluipweg geven.
+    # ⚠️ Verbindt Kaspische Zee <-> Zee van Azov, dus twee zeeën — maar de
+    # Kaspische Zee is een DOODLOPENDE binnenzee, dus geen zeeroute kan er korter
+    # door worden. De Donau-fout kan zich hier per constructie niet herhalen.
+    dict(
+        label="wolga-don",
+        zeevaart=False,
+        cemt="Va",              # gemeten: élke gewhitelistte way draagt CEMT Va
+        cemt_insluiten=False,
+        sluit_aan="wolga",      # hecht het eind middenin `wolga` bij Wolgograd
+        extracts=["rusland-zuid"],
+        bbox=(46.80, 38.80, 49.30, 45.20),
+        namen=["Дон", "рукав Старый Дон", "Волго-Донской канал", "Карповка",
+               "Волго-Донской судоходный канал им. В. И. Ленина"],
+        anker_zee=(39.6958, 47.1953),     # MARNET-knoop bij Rostov
+        anker_binnen=(44.5618, 48.5307),  # oostmond kanaal, 0,93 km van `wolga`
     ),
     # ---- Amazone (uitrol) — GEEN benoemde middellijn in OSM: tussen Manaus en
     # de monding is de rivier >10 km breed en als watervlak gemapt. Dit systeem
@@ -662,6 +1043,17 @@ GEOFABRIK_REGIOS = {
     # als fr-alsace bij de Rijn: kijk waar de GEUL ligt, niet welke deelstaat
     # de rivier "hoort" te raken.
     "de-hessen": "europe/germany/hessen",
+    # Frankrijk (LAR-495). ⚠️ Geofabrik gebruikt de PRE-2016 indeling, dus
+    # `haute-normandie` bestaat en `normandie` niet. Twee stille vallen bij het
+    # downloaden: een niet-bestaande regio geeft 0 BYTES in plaats van een 404,
+    # en `rhone-alpes` antwoordt met een 302 naar een gedateerde bestandsnaam —
+    # urllib volgt die, maar een curl zonder -L schrijft een HTML-pagina van
+    # 258 bytes weg mét .pbf-naam. Controleer dus altijd de BESTANDSGROOTTE.
+    "fr-haute-normandie": "europe/france/haute-normandie",
+    "fr-ile-de-france": "europe/france/ile-de-france",
+    "fr-provence-alpes-cote-d-azur": "europe/france/provence-alpes-cote-d-azur",
+    "fr-languedoc-roussillon": "europe/france/languedoc-roussillon",
+    "fr-rhone-alpes": "europe/france/rhone-alpes",
     "de-niedersachsen": "europe/germany/niedersachsen",
     "de-hamburg": "europe/germany/hamburg",
     "zwitserland": "europe/switzerland",
@@ -739,16 +1131,28 @@ def segmenten_geofabrik(systeem):
               .with_filter(osmium.filter.KeyFilter("waterway")))
         for obj in fp:
             tags = obj.tags
-            if tags.get("waterway") not in ("river", "canal", "fairway"):
-                continue
             naam = tags.get("name", "")
-            # spiegelt de twee Overpass-clauses: naam uit de whitelist, of een
-            # CEMT-tag maar alléén bij een systeem dat zelf een CEMT-klasse draagt.
-            # `cemt_insluiten=False` houdt de klasse als metadata maar zet de
-            # clause uit — nodig zodra er kleinere vaarwegen in de bbox liggen
-            # die de stitcher als sluiproute kan pakken (de Mosel liep zo bij
-            # Nancy door Freycinet-kanalen van klasse I).
-            if naam not in wit and not (cemt_clause and tags.get("CEMT")):
+            soort = tags.get("waterway")
+            # Twee clauses, spiegel van de Overpass-query:
+            #  * NAAM uit de whitelist — bewust ZONDER soort-filter (LAR-495).
+            #    Bij de sluis van Poses/Amfreville is de doorgaande Seine-geul in
+            #    OSM getagd als `waterway=stream` (mét naam én CEMT=Vb); met een
+            #    soort-filter vóór de naamtoets viel die 2 km eruit en knipte de
+            #    keten door. Nieuwe foutcategorie: niet de naam ontbreekt en niet
+            #    het gabarit klopt niet — het TYPE is fout gemapt. Wie de naam
+            #    expliciet whitelist heeft de bron al beoordeeld; het type mag die
+            #    keuze dan niet stilletjes overrulen.
+            #  * CEMT-tag, alléén bij een systeem dat zelf een klasse draagt én
+            #    hier WEL soort-gefilterd: die clause heeft geen naamfilter, dus
+            #    zonder soort-eis zou hij beken en sloten binnenhalen.
+            #    `cemt_insluiten=False` zet 'm helemaal uit — nodig zodra er
+            #    kleinere vaarwegen in de bbox liggen die de stitcher als
+            #    sluiproute kan pakken (de Mosel liep zo bij Nancy door
+            #    Freycinet-kanalen van klasse I).
+            op_naam = naam in wit
+            op_cemt = (cemt_clause and tags.get("CEMT")
+                       and soort in ("river", "canal", "fairway"))
+            if not op_naam and not op_cemt:
                 continue
             pts = [(n.location.lon, n.location.lat) for n in obj.nodes
                    if n.location.valid()]
