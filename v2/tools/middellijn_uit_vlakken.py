@@ -52,6 +52,7 @@ GEOFABRIK = os.path.join(V2, "build-cache", "geofabrik")
 R_AARDE = 6371.0
 MIN_KLARING_KM = 0.15    # halve geulbreedte: <300 m breed telt niet als vaarweg
 MIDDEN_ALPHA = 0.6       # hoe sterk de route het midden opzoekt (0 = kortste pad)
+ALGO = 2                 # versie van de lijn-afleiding (2 = met strak_trekken)
 
 
 def km(a, b):
@@ -79,6 +80,20 @@ def raster(extracts, bbox, cel_graden, min_cellen=4):
     la0, lo0, la1, lo1 = bbox
     lons = np.arange(lo0, lo1, cel_graden)
     lats = np.arange(la0, la1, cel_graden)
+
+    # Twee cache-lagen, bewust gescheiden: het RASTER hangt alleen aan de
+    # extract + bbox + celmaat (de dure osmium-pass, ~13 min bij Brazilië),
+    # de LIJN ook aan ankers/klaring/gladstrijken (seconden). Zo kost het
+    # bijstellen van de route-parameters geen nieuwe pass over 2 GB.
+    r_sleutel = hashlib.sha1(repr((sorted(extracts), bbox, cel_graden,
+                                   min_cellen)).encode()).hexdigest()[:16]
+    r_map = os.path.join(V2, "build-cache", "rasters")
+    r_pad = os.path.join(r_map, f"{r_sleutel}.npz")
+    if os.path.exists(r_pad):
+        d = np.load(r_pad)
+        print(f"  raster uit cache ({r_sleutel}): {d['masker'].sum():,} watercellen")
+        return lons, lats, d["masker"], d["klaring"]
+
     masker = np.zeros((len(lats), len(lons)), dtype=bool)
     # vlakken die kleiner zijn dan een handvol cellen kunnen nooit vaarweg zijn
     min_opp = (cel_graden ** 2) * min_cellen
@@ -127,6 +142,10 @@ def raster(extracts, bbox, cel_graden, min_cellen=4):
     dy = cel_graden * 111.2
     dx = cel_graden * 111.2 * math.cos(math.radians((la0 + la1) / 2))
     klaring = distance_transform_edt(masker, sampling=(dy, dx))
+    os.makedirs(r_map, exist_ok=True)
+    np.savez_compressed(r_pad, masker=masker, klaring=klaring.astype(np.float32))
+    print(f"  raster gecached: {os.path.basename(r_pad)} "
+          f"({os.path.getsize(r_pad) / 1048576:.1f} MB)")
     return lons, lats, masker, klaring
 
 
@@ -201,6 +220,49 @@ def vaarpad(lons, lats, klaring, anker_zee, anker_binnen,
 
 # ----------------------------------------------------------------- simplify
 
+def strak_trekken(pad, lons, lats, bevaarbaar, max_vooruit=600):
+    """Trapjes weg: sla punten over zolang de KOORDE in bevaarbaar water blijft.
+
+    Een 8-richtingen-Dijkstra kwantiseert elke richtingsverandering op 45°, dus
+    een schuine vaargeul wordt een trap van 445 m-treden. DP-simplify haalt die
+    er niet uit — de treden zijn gróter dan de tolerantie, dus ze zien eruit als
+    echte vorm. Dit is dezelfde oplossing als `simplify_water()` in de baker
+    (besluit 2026-07-18): een punt mag weg als de kortsluiting bewijsbaar over
+    water blijft. Trapjes verdwijnen daardoor (hun koorde ligt in de geul) maar
+    echte bochten blijven staan (hun koorde raakt de oever).
+    """
+    dlo = lons[1] - lons[0]
+    dla = lats[1] - lats[0]
+    ny, nx = bevaarbaar.shape
+
+    def vrij(a, b):
+        """Ligt de rechte lijn a->b volledig in bevaarbaar water?"""
+        n = max(2, int(max(abs(b[0] - a[0]) / dlo, abs(b[1] - a[1]) / dla) * 2))
+        for k in range(n + 1):
+            t = k / n
+            lo = a[0] + (b[0] - a[0]) * t
+            la = a[1] + (b[1] - a[1]) * t
+            j = int(round((lo - lons[0]) / dlo))
+            i = int(round((la - lats[0]) / dla))
+            if not (0 <= i < ny and 0 <= j < nx) or not bevaarbaar[i, j]:
+                return False
+        return True
+
+    uit = [pad[0]]
+    i = 0
+    while i < len(pad) - 1:
+        grens = min(len(pad) - 1, i + max_vooruit)
+        beste = i + 1
+        for j in range(i + 2, grens + 1):
+            if vrij(pad[i], pad[j]):
+                beste = j
+            else:
+                break
+        uit.append(pad[beste])
+        i = beste
+    return uit
+
+
 def simplify(pts, tol_km):
     if len(pts) < 3:
         return list(pts)
@@ -242,9 +304,11 @@ def afleiden(extracts, bbox, anker_zee, anker_binnen, cel_graden=0.004,
     # kost bij Brazilië ~13 min omdat osmium twee passes over 2 GB moet doen om
     # de multipolygoon-relaties te reconstrueren. De sleutel bevat alles wat de
     # uitkomst bepaalt, dus hij vervalt vanzelf als er iets aan verandert.
-    sleutel = hashlib.sha1(repr((sorted(extracts), bbox, anker_zee, anker_binnen,
-                                 cel_graden, min_klaring, simplify_km)).encode()
-                           ).hexdigest()[:16]
+    # ALGO in de sleutel: bij een wijziging aan het gladstrijken vervalt de
+    # cache vanzelf, i.p.v. stilzwijgend een oude lijn terug te geven.
+    sleutel = hashlib.sha1(repr((ALGO, sorted(extracts), bbox, anker_zee,
+                                 anker_binnen, cel_graden, min_klaring,
+                                 simplify_km)).encode()).hexdigest()[:16]
     cache_map = os.path.join(V2, "build-cache", "middellijnen")
     cache_pad = os.path.join(cache_map, f"{sleutel}.json")
     if os.path.exists(cache_pad):
@@ -262,10 +326,15 @@ def afleiden(extracts, bbox, anker_zee, anker_binnen, cel_graden=0.004,
           f"cellen >= {min_klaring} km: {(klaring >= min_klaring).sum():,}")
     pad, klaringen = vaarpad(lons, lats, klaring, anker_zee, anker_binnen,
                              min_klaring=min_klaring)
-    lengte = sum(km(pad[i], pad[i + 1]) for i in range(len(pad) - 1))
-    strak = simplify(pad, simplify_km)
+    ruw_km = sum(km(pad[i], pad[i + 1]) for i in range(len(pad) - 1))
+    getrokken = strak_trekken(pad, lons, lats, klaring >= min_klaring)
+    strak = simplify(getrokken, simplify_km)
+    lengte = sum(km(strak[i], strak[i + 1]) for i in range(len(strak) - 1))
     kl = sorted(klaringen)
-    print(f"  vaarpad: {lengte:.1f} km · {len(pad):,} cellen -> {len(strak)} na simplify")
+    print(f"  vaarpad: {ruw_km:.1f} km rasterpad ({len(pad):,} cellen) -> "
+          f"strak getrokken {len(getrokken)} -> {len(strak)} na simplify "
+          f"({lengte:.1f} km, {100 * (ruw_km - lengte) / ruw_km:.1f}% korter "
+          f"doordat de trapjes eruit zijn)")
     print(f"  klaring langs de route: min {kl[0]:.2f} · mediaan {kl[len(kl) // 2]:.2f} "
           f"· max {kl[-1]:.2f} km")
     os.makedirs(cache_map, exist_ok=True)
