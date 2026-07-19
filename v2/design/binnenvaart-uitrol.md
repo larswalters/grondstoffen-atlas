@@ -142,13 +142,36 @@ whitelist-regel in het `yangtze`-systeem; onschadelijk, maar weg ermee.
 geen enkele benoemde `waterway=river`-lijn. Oorzaak: die rivier is daar tot
 >10 km breed en als **wátervlak** gemapt, niet als lijn.
 
-> [!warning] De Amazone past niet in de bestaande pijplijn
-> Alle andere systemen komen uit benoemde middellijnen. Voor de Amazone moet er
-> iets anders gebeuren: een middellijn afleiden uit de watervlakken (echt werk,
-> maar herbruikbaar voor elke brede rivier), of dit ene systeem uit een andere
-> bron halen, of hem voorlopig laten liggen. **Besluit nodig vóór de bouw** —
-> niet stilzwijgend overslaan, want zeeschepen tot 1.500 km landinwaarts is een
-> van de sterkste verhalen op de kaart.
+> [!done] Opgelost — `v2/tools/middellijn_uit_vlakken.py` (Lars: *"dat moeten we
+> wel eerst fixen"*)
+> Er is nu een tweede manier om aan een middellijn te komen: **afleiden uit de
+> watervlakken** in plaats van stitchen uit lijnen. Herbruikbaar voor élke brede
+> rivier (Rio de la Plata, estuaria, stuwmeren).
+>
+> **Hoe:** watervlakken rasteren → per watercel de **klaring** bepalen (afstand
+> tot de oever, exacte afstandstransformatie, anisotroop want een graad lon is
+> korter dan een graad lat) → alleen cellen met ≥150 m klaring gelden als
+> bevaarbaar (dát encodeert "commercieel bevaarbaar" meteen in de geometrie) →
+> Dijkstra van anker naar anker met een milde voorkeur voor het midden van de
+> geul. Bewust géén medial axis: we willen één vaarbare lijn, geen skelet.
+>
+> **Uitkomst Amazone (Macapá → Manaus):** 1.319,9 km · 312 punten · klaring
+> langs de route min 0,44 / mediaan 1,60 / max 7,61 km. Lengte klopt met de
+> echte riviervaarafstand. Haventoets (searoute, andere bron dan OSM): Manaus
+> 0,55 km (= het anker) en **Óbidos 3,15 km** — een echte rivierhaven halverwege,
+> dus onafhankelijke bevestiging. Santarém 10,8 / Macapá 12,4 / Santana 13,2 km
+> liggen verder, maar dat zijn oeverhavens terwijl de lijn mid-geul loopt en de
+> rivier daar 20+ km breed is (gemeten max klaring 7,61 km ≈ 15 km breed).
+> Consistent, niet apart bewezen.
+>
+> **Twee dingen die dit kostte, voor de volgende keer.** De eerste versie
+> verzamelde álle watervlakken in het venster en deed er één `union_all` overheen
+> → 5,5 GB RAM en na 11 min CPU nog niet klaar, want een venster over het
+> Amazonebekken bevat duizenden meren. Nu wordt elk vlak **direct in het raster
+> gebrand** en weggegooid: 911 MB, vlak. Van de 289.365 watervlakken in Brazilië
+> raken er maar **1.241** het venster. En de osmium-pass zelf kost ~13 min (twee
+> passes over 2 GB om multipolygoon-relaties te reconstrueren) → resultaat gaat
+> in een cache, zelfde les als de verzoening-cache.
 
 ## Open punten
 

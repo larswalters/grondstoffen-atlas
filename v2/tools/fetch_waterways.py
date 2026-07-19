@@ -174,6 +174,22 @@ SYSTEMEN = [
         anker_zee=(96.250, 16.595),     # MARNET-uiteinde knoop 5358
         anker_binnen=(96.168, 16.775),  # haven van Yangon
     ),
+    # ---- Amazone (uitrol) — GEEN benoemde middellijn in OSM: tussen Manaus en
+    # de monding is de rivier >10 km breed en als watervlak gemapt. Dit systeem
+    # wordt daarom AFGELEID uit de vlakken i.p.v. gestitcht uit lijnen.
+    # MARNET loopt dood bij Macapa (knoop 5067); Manaus snapte 1.084 km weg --
+    # het grootste gat van alle systemen tot nu toe.
+    dict(
+        label="amazone",
+        zeevaart=True,          # zeeschepen varen tot Manaus, 1.300 km landinwaarts
+        cemt="",
+        extracts=["brazilie"],
+        vlakken=dict(cel=0.004, min_klaring=0.15),
+        bbox=(-4.0, -60.5, 1.0, -49.8),
+        namen=[],               # niet van toepassing: afgeleid uit vlakken
+        anker_zee=(-50.823, 0.132),     # MARNET-uiteinde bij Macapa
+        anker_binnen=(-60.020, -3.130),  # haven van Manaus
+    ),
 ]
 
 
@@ -600,6 +616,28 @@ def simplify(pts, tol_km=SIMPLIFY_KM):
 
 # ---------------------------------------------------------------- hoofdflow
 
+def _feature(systeem, bron, coords, lengte, route):
+    """Uitvoer-feature; beide paden (lijn-stitch en vlak-afleiding) delen 'm."""
+    return {
+        "type": "Feature",
+        "properties": {
+            "label": systeem["label"],
+            "zeevaart": systeem["zeevaart"],
+            "cemt": systeem["cemt"],
+            "volgtOp": systeem.get("volgt_op", ""),
+            "bron": bron,
+            "km": round(lengte, 1),
+            "route": route,
+            "ankerZee": list(systeem["anker_zee"]),
+            "ankerBinnen": list(systeem["anker_binnen"]),
+        },
+        "geometry": {
+            "type": "LineString",
+            "coordinates": [[round(lo, 6), round(la, 6)] for lo, la in coords],
+        },
+    }
+
+
 def haal(bron, bestand=None, alleen=None):
     features = []
     systemen = [s for s in SYSTEMEN if not alleen or s["label"] in alleen]
@@ -610,6 +648,27 @@ def haal(bron, bestand=None, alleen=None):
     for systeem in systemen:
         label = systeem["label"]
         print(f"\n[{label}] bron={bron}")
+        # Brede rivieren hebben geen benoemde middellijn in OSM (de Amazone is
+        # tussen Manaus en Belém >10 km breed en staat als wátervlak gemapt).
+        # Zo'n systeem wordt niet gestitcht uit lijnen maar AFGELEID uit de
+        # vlakken; de rest van de pijplijn merkt het verschil niet.
+        if systeem.get("vlakken"):
+            from middellijn_uit_vlakken import afleiden
+            v = systeem["vlakken"]
+            strak, lengte, klaringen = afleiden(
+                v.get("extracts") or systeem["extracts"],
+                systeem["bbox"], systeem["anker_zee"], systeem["anker_binnen"],
+                cel_graden=v.get("cel", 0.004),
+                min_klaring=v.get("min_klaring", 0.15),
+                simplify_km=v.get("simplify_km", 0.25))
+            kl = sorted(klaringen)
+            # bron = altijd de extract, ongeacht de gekozen --bron: een
+            # vlakken-systeem komt nooit via Overpass binnen (attributie!)
+            features.append(_feature(systeem, "geofabrik", strak, lengte,
+                                     f"afgeleid uit watervlakken (klaring mediaan "
+                                     f"{kl[len(kl) // 2]:.2f} km, min {kl[0]:.2f})"))
+            continue
+
         if bron == "osm":
             segs, cemt_gezien = segmenten_osm(systeem)
         elif bron == "geofabrik":
@@ -635,24 +694,7 @@ def haal(bron, bestand=None, alleen=None):
             uniek = sorted(set(cemt_gezien.values()))
             print(f"  CEMT-tags gezien: {', '.join(uniek)}")
 
-        features.append({
-            "type": "Feature",
-            "properties": {
-                "label": label,
-                "zeevaart": systeem["zeevaart"],
-                "cemt": systeem["cemt"],
-                "volgtOp": systeem.get("volgt_op", ""),
-                "bron": bron,
-                "km": round(lengte, 1),
-                "route": " → ".join(namen),
-                "ankerZee": list(systeem["anker_zee"]),
-                "ankerBinnen": list(systeem["anker_binnen"]),
-            },
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [[round(lo, 6), round(la, 6)] for lo, la in strak],
-            },
-        })
+        features.append(_feature(systeem, bron, strak, lengte, " → ".join(namen)))
 
     os.makedirs(CACHE, exist_ok=True)
     achtervoegsel = f"_{'-'.join(sorted(alleen))}" if alleen else ""
