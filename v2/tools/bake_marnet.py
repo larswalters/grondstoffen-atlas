@@ -627,6 +627,55 @@ VERVOLG_MAX_KM = 5.0    # een vervolgsegment moet vlak op zijn voorganger aanslu
 CORRIDOR_EPS_KM = 0.25  # kwantisering (11 m) + simplify (25 m) blijven hier ruim onder
 
 
+def hecht_aan_keten(label, volgt_op, punt, nodes, edge_lijst, status, geometrie, uit):
+    """Geeft een knoop op de dichtstbijzijnde plek van een al gebakken keten.
+
+    Een riviernet is geen lijn: de Main mondt 30 km ín `rijn-boven` uit, de
+    Nieuwe Merwede takt middenin de Beneden-Merwede af, de Ohio bij Cairo
+    middenin de Mississippi. Aanhaken kon eerst alleen op het ketenUITEINDE
+    (LAR-487/488); sinds LAR-504 mag het overal.
+
+    Knipt ALTIJD op een BESTAANDE geometrie-vertex, nooit op een geïnterpoleerd
+    punt. Daardoor verschuift er geen enkele coördinaat, en blijft de
+    corridor-toets die de moederketen al doorstond per constructie geldig — de
+    knip voegt een knoop toe, geen geometrie.
+    """
+    if volgt_op not in uit:
+        raise RuntimeError(f"{label}: volgtOp={volgt_op} is nog niet gebakken — "
+                           f"zet dat systeem eerder in SYSTEMEN")
+    beste_d, beste_ei, beste_vi = 1e18, -1, -1
+    for ei in uit[volgt_op]["edges"]:
+        for vi, p in enumerate(geometrie[ei]):
+            d = gc_km(p, punt)
+            if d < beste_d:
+                beste_d, beste_ei, beste_vi = d, ei, vi
+    if beste_d > VERVOLG_MAX_KM:
+        raise RuntimeError(f"{label}: begint {beste_d:.1f} km van keten {volgt_op} "
+                           f"(max {VERVOLG_MAX_KM}) — controleer anker_zee")
+
+    (a, b), passage = edge_lijst[beste_ei]
+    pts = geometrie[beste_ei]
+    if beste_vi == 0:
+        return a, beste_d, False
+    if beste_vi == len(pts) - 1:
+        return b, beste_d, False
+
+    # middenin een edge: knip 'm op deze vertex in tweeën. De eerste helft
+    # hergebruikt de edge-index (a -> nieuw), de tweede wordt aangehangen
+    # (nieuw -> b) met hetzelfde passage-label en dezelfde soort, zodat de
+    # `vermijd`-knop van de moederketen over beide helften blijft gelden.
+    nodes.append((round(pts[beste_vi][0], 6), round(pts[beste_vi][1], 6)))
+    nieuw = len(nodes) - 1
+    edge_lijst[beste_ei] = ((a, nieuw), passage)
+    geometrie[beste_ei] = pts[:beste_vi + 1]
+    ej = len(edge_lijst)
+    edge_lijst.append(((nieuw, b), passage))
+    status[ej] = status.get(beste_ei, "")
+    geometrie[ej] = pts[beste_vi:]
+    uit[volgt_op]["edges"].append(ej)
+    return nieuw, beste_d, True
+
+
 def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
     """Hangt vaarweg-ketens uit fetch_waterways.py aan de graaf (in-place).
 
@@ -645,7 +694,6 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
     gj = json.load(open(pad, encoding="utf-8"))
     n_orig = len(nodes)
     orig_xyz = np.array([to3d(lo, la) for lo, la in nodes[:n_orig]])
-    keten_eind = {}   # label -> knoop-id van het binneneinde van die keten
     uit = {}
     print(f"\nextra vaarwegen uit {os.path.basename(pad)}:")
     for f in gj["features"]:
@@ -655,19 +703,12 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
 
         volgt_op = props.get("volgtOp") or ""
         if volgt_op:
-            # vervolgsegment: aansluiten op het binneneinde van de voorganger.
-            # Geen polygoon-toets — dat punt ligt al op een corridor-getoetste
-            # keten, niet op de zee-overgang.
-            if volgt_op not in keten_eind:
-                raise RuntimeError(f"{label}: volgtOp={volgt_op} is nog niet gebakken — "
-                                   f"zet dat systeem eerder in SYSTEMEN")
-            zeeknoop = keten_eind[volgt_op]
-            aansluit_km = gc_km(nodes[zeeknoop], coords[0])
-            if aansluit_km > VERVOLG_MAX_KM:
-                raise RuntimeError(f"{label}: begint {aansluit_km:.1f} km van het einde "
-                                   f"van {volgt_op} (max {VERVOLG_MAX_KM}) — laat "
-                                   f"anker_zee samenvallen met diens anker_binnen")
-            overgang = f"keten:{volgt_op}"
+            # vervolgsegment of ZIJTAK: aansluiten op de dichtstbijzijnde plek
+            # van de voorganger (LAR-504). Geen polygoon-toets — dat punt ligt
+            # al op een corridor-getoetste keten, niet op de zee-overgang.
+            zeeknoop, aansluit_km, geknipt = hecht_aan_keten(
+                label, volgt_op, coords[0], nodes, edge_lijst, status, geometrie, uit)
+            overgang = f"{'aftakking' if geknipt else 'keten'}:{volgt_op}"
         else:
             # zee-overgang: dichtstbijzijnde originele knoop (3D-dot = grootcirkel-proxy)
             v = np.array(to3d(*coords[0]))
@@ -710,7 +751,6 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
                 vorige_knoop = nieuw
                 stuk = [lijn[i]]
                 stuk_km = 0.0
-        keten_eind[label] = vorige_knoop
 
         # corridor-toets (lokale vlakke projectie — prima op systeemschaal);
         # het aansluitstukje zeeknoop->bronlijn valt buiten de toets.
