@@ -190,6 +190,59 @@ SYSTEMEN = [
         anker_zee=(7.6065, 50.3645),    # Moselmonding bij Koblenz (Deutsches Eck)
         anker_binnen=(6.102, 48.617),   # Neuves-Maisons, kopeinde van de vaart
     ),
+    # ---- Main + Main-Donau-Kanaal (LAR-493) — de schakel die de Noordzee aan de
+    # Zwarte Zee knoopt. De Main mondt bij Mainz-Kostheim (rkm 498) uit in de
+    # Rijn, en dat ligt MIDDENIN `rijn-boven` (Bingen rkm 528 -> Basel 170), dus
+    # opnieuw een aftakking en geen ketenverlenging.
+    # ⚠️ `de-hessen` is hier NIET optioneel: tussen Mainz en Aschaffenburg loopt
+    # de Main ~100 km door Hessen (Frankfurt, Offenbach, Hanau). Zonder die
+    # extract knipt de keten daar door — de fr-alsace-les, tweede toepassing.
+    dict(
+        label="main",
+        zeevaart=False,
+        cemt="Vb",
+        cemt_insluiten=False,
+        volgt_op="rijn-boven",
+        extracts=["de-rheinland-pfalz", "de-hessen", "de-bayern"],
+        bbox=(49.55, 8.15, 50.25, 11.00),
+        namen=["Main"],
+        anker_zee=(8.2890, 49.9945),    # Mainmonding bij Mainz-Kostheim
+        anker_binnen=(10.8597, 49.9072),  # Bamberg, waar het MDK begint
+    ),
+    dict(
+        label="main-donau-kanaal",
+        zeevaart=False,
+        cemt="Vb",
+        cemt_insluiten=False,
+        volgt_op="main",
+        extracts=["de-bayern"],
+        bbox=(48.85, 10.75, 49.95, 12.00),
+        # ⚠️ BEWUST NIET `Ludwig-Donau-Main-Kanal` (74,7 km, 496 ways) — dat is
+        # het Ludwigskanaal uit 1846, dat vrijwel hetzelfde dal volgt maar al
+        # sinds 1950 buiten gebruik is. De survey zette 'm pal naast het MDK met
+        # bijna dezelfde strekking, dus hij zou als alternatief pad kunnen
+        # winnen. Zelfde regel als de Restrhein: wél water, géén vaarweg.
+        # ⚠️ Het kanaal viel uiteen in ZEVENTIEN componenten: elke sluis ligt als
+        # aparte benoemde canal-way (`Schleuse <plaats>`) en de doorgaande way
+        # stopt ervóór — hetzelfde als bij het Albertkanaal, maar hier met één
+        # kolk per sluis, dus zonder gabarit-keuze. Het issue noemde de 16
+        # sluizen al als kenmerk; ze blijken ook de ketenstructuur te bepalen.
+        # `Regnitz` hoort erbij: het MDK gebruikt tussen Bamberg en Neurenberg
+        # de gekanaliseerde Regnitz als vaargeul.
+        # ⚠️ `Main-Donau-Kanal (RMD)` is een NAAMVARIANT met achtervoegsel op de
+        # laatste 1,6 km bij Kelheim (RMD = Rhein-Main-Donau). Zonder die vorm
+        # blijft precies het stuk mét de Schleuse Kelheim los hangen — 32 van de
+        # 1.763 knopen. Het issue meldde terecht dat `Rhein-Main-Donau-Kanal`
+        # niet bestaat; deze tussenvorm bestaat wél.
+        namen=["Main-Donau-Kanal", "Main-Donau-Kanal (RMD)", "Regnitz",
+               "Schleuse Bamberg", "Schleuse Forchheim", "Schleuse Hausen",
+               "Schleuse Erlangen", "Schleuse Kriegenbrunn", "Schleuse Nürnberg",
+               "Schleuse Eibach", "Schleuse Leerstetten", "Schleuse Eckersmühlen",
+               "Schleuse Hilpoltstein", "Schleuse Bachhausen", "Schleuse Berching",
+               "Schleuse Dietfurt", "Schleuse Riedburg", "Schleuse Kelheim"],
+        anker_zee=(10.8597, 49.9072),   # = anker_binnen van 'main' (Bamberg)
+        anker_binnen=(11.8946, 48.9098),  # Kelheim, monding in de Donau
+    ),
     # ---- Maas + Benelux-delta (LAR-505) — Lars: "we moeten nog wel meer mappen
     # dan alleen de rijn, de maas en stukken biesbosch". De `waal`-keten legt
     # één lijn door de delta; in werkelijkheid is het een NET, en de Maas
@@ -524,6 +577,12 @@ GEOFABRIK_REGIOS = {
     "de-rheinland-pfalz": "europe/germany/rheinland-pfalz",
     "de-baden-wuerttemberg": "europe/germany/baden-wuerttemberg",
     "de-bayern": "europe/germany/bayern",
+    # de-hessen is NIET optioneel voor de Main (LAR-493): tussen Mainz en
+    # Aschaffenburg loopt de rivier ~100 km door Hessen (Frankfurt, Offenbach,
+    # Hanau). Zonder deze extract knipt de keten daar door — hetzelfde patroon
+    # als fr-alsace bij de Rijn: kijk waar de GEUL ligt, niet welke deelstaat
+    # de rivier "hoort" te raken.
+    "de-hessen": "europe/germany/hessen",
     "de-niedersachsen": "europe/germany/niedersachsen",
     "de-hamburg": "europe/germany/hamburg",
     "zwitserland": "europe/switzerland",
