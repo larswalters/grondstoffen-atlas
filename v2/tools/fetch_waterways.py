@@ -162,6 +162,34 @@ SYSTEMEN = [
         anker_zee=(7.8868, 49.9729),    # = anker_binnen van 'rijn'
         anker_binnen=(7.590, 47.575),   # Rijn bij Basel (Kleinhüningen)
     ),
+    # ---- Mosel (LAR-504-bewijs) — de eerste ECHTE aftakking: dit systeem hangt
+    # niet aan het einde van `rijn` maar middenin, bij de monding in Koblenz
+    # (Rijn-rkm 592, ruim binnen `rijn` dat van Nijmegen 884,6 tot Bingen 528
+    # loopt). Daarmee is `volgtOp` geen ketting meer maar een boom.
+    # Naam wisselt op de grens: `Mosel` (DE/LU) -> `La Moselle` (FR), met
+    # overlap tussen lat 49,47 en 49,67 — hetzelfde patroon als Maas/La Meuse
+    # en Le Rhin / Rhein. Kopeinde Neuves-Maisons: dáár stopt de Grande
+    # Canalisation, niet bij de landsgrens (vandaar `fr-lorraine` + `luxemburg`).
+    dict(
+        label="mosel",
+        zeevaart=False,
+        cemt="Vb",
+        # ⚠️ CEMT-clause UIT: die haalt élke geklasseerde vaarweg in de bbox
+        # binnen, en bij Nancy liggen Freycinet-kanalen van klasse I (350 t)
+        # die als kortste pad wonnen van de Moezel zelf — 18 km te kort én de
+        # verkeerde vaarweg. Bulkschepen varen daar niet; de namenlijst is hier
+        # dus de scherpere filter dan de tag.
+        cemt_insluiten=False,
+        volgt_op="rijn",
+        extracts=["de-rheinland-pfalz", "luxemburg", "fr-lorraine"],
+        bbox=(48.55, 5.85, 50.45, 7.70),
+        namen=["Mosel", "La Moselle", "La Moselle Canalisée",
+               "Canal de la Moselle", "Canal des Mines de Fer de la Moselle",
+               "Dérivations de Pagny-sur-Moselle", "Dérivation de Custines",
+               "Dérivation de Pompey"],
+        anker_zee=(7.6065, 50.3645),    # Moselmonding bij Koblenz (Deutsches Eck)
+        anker_binnen=(6.102, 48.617),   # Neuves-Maisons, kopeinde van de vaart
+    ),
     # ---- VS (LAR-487) — MARNET's mississippi-tak eindigt bij New Orleans en
     # loopt daar dood in het Pontchartrainmeer; alles stroomopwaarts ontbreekt.
     # Baton Rouge is het kopeinde van de diepzeevaart (~370 km binnenland),
@@ -308,7 +336,7 @@ def segmenten_osm(systeem):
     # bbox. Buiten Europa bestaat de tag niet, dus daar is dat pure kosten:
     # de Mississippi-delta (bayous!) liep er op beide mirrors in een timeout.
     # Alleen meenemen als het systeem zelf een CEMT-klasse draagt.
-    if systeem.get("cemt"):
+    if systeem.get("cemt") and systeem.get("cemt_insluiten", True):
         delen.append(f'  way["waterway"~"^(river|canal|fairway)$"]["CEMT"]{bbox};')
     for naam in systeem["namen"]:
         # Exacte tag-match i.p.v. één naam-regex: Overpass indexeert key=value,
@@ -390,6 +418,11 @@ GEOFABRIK_REGIOS = {
     # Alsace is niet optioneel voor de Rijn: tussen Basel en Straatsburg loopt de
     # vaargeul door het Grand Canal d'Alsace, volledig op Frans grondgebied.
     "fr-alsace": "europe/france/alsace",
+    # de Mosel is boven Apach volledig Frans en vormt daaronder de Duits-
+    # Luxemburgse grens — beide nodig om tot het kopeinde bij Neuves-Maisons
+    # te komen i.p.v. bij de landsgrens af te kappen
+    "fr-lorraine": "europe/france/lorraine",
+    "luxemburg": "europe/luxembourg",
     "belgie": "europe/belgium",
     "oostenrijk": "europe/austria",
     "slowakije": "europe/slovakia",
@@ -440,6 +473,7 @@ def segmenten_geofabrik(systeem):
     la0, lo0, la1, lo1 = systeem["bbox"]
     marge = 0.15
     wit = set(systeem["namen"])
+    cemt_clause = bool(systeem.get("cemt")) and systeem.get("cemt_insluiten", True)
     segs, cemt_gezien = [], {}
     for sleutel in systeem["extracts"]:
         pad = extract_pad(sleutel)
@@ -456,8 +490,12 @@ def segmenten_geofabrik(systeem):
                 continue
             naam = tags.get("name", "")
             # spiegelt de twee Overpass-clauses: naam uit de whitelist, of een
-            # CEMT-tag maar alléén bij een systeem dat zelf een CEMT-klasse draagt
-            if naam not in wit and not (systeem.get("cemt") and tags.get("CEMT")):
+            # CEMT-tag maar alléén bij een systeem dat zelf een CEMT-klasse draagt.
+            # `cemt_insluiten=False` houdt de klasse als metadata maar zet de
+            # clause uit — nodig zodra er kleinere vaarwegen in de bbox liggen
+            # die de stitcher als sluiproute kan pakken (de Mosel liep zo bij
+            # Nancy door Freycinet-kanalen van klasse I).
+            if naam not in wit and not (cemt_clause and tags.get("CEMT")):
                 continue
             pts = [(n.location.lon, n.location.lat) for n in obj.nodes
                    if n.location.valid()]
