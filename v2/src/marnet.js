@@ -19,11 +19,13 @@ import * as THREE from "three";
 
 const KLEUR_ZEE = new THREE.Color(0x2f9bdd);
 const KLEUR_BINNEN = new THREE.Color(0xd9a441);
-// Bulklaag (LAR-515): bewust gedempt — er staat mechanisch gefilterde
-// geometrie (honderdduizenden km) tegenover 1.091 getoetste vaarweg-edges,
-// en op gelijke helderheid verdwijnt de GETOETSTE geometrie in de mechanische.
-const KLEUR_BULK = new THREE.Color(0xa8814a);
-const OPACITEIT_BULK = 0.35;
+// Bulklaag (LAR-515): fel rood, hoge opaciteit. Eerst gedempt amber geprobeerd
+// (0xa8814a @ 0,35) om de getoetste ketens te laten winnen, maar dat bleek
+// in de praktijk vrijwel onzichtbaar — Lars zag de laag niet. Zichtbaarheid
+// gaat voor: de bulklaag moet nú opvallen; ontoetsbaarheid blijft geborgd
+// doordat hij buiten de routeergraaf staat, niet doordat hij onopvallend is.
+const KLEUR_BULK = new THREE.Color(0xff1a1a);
+const OPACITEIT_BULK = 0.85;
 
 /** Zelfde zigzag-varint-idee als world.js (bewust gekopieerd: een import van
  *  world.js?v=… zou de module dubbel laden zodra de versies uiteenlopen).
@@ -70,11 +72,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=030").then((r) => {
+    fetch("data/marnet.json?v=031").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=030").then((r) => {
+    fetch("data/marnet.bin?v=031").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -238,7 +240,7 @@ export async function laadMarnet(radius) {
  */
 export async function laadBulk(radius) {
   const t0 = performance.now();
-  const meta = await fetch("data/marnet-bulk.json?v=030").then((r) => {
+  const meta = await fetch("data/marnet-bulk.json?v=031").then((r) => {
     if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
     return r.json();
   });
@@ -534,7 +536,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=030");
+  const r = await fetch("data/ports.json?v=031");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];
