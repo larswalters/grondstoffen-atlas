@@ -1,7 +1,43 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-487/488 — volgtOp-ketening + USACE-meetlat als eigen tool)*
+*Last updated: 2026-07-19 (Geofabrik als bron + middellijn uit watervlakken + uitrol-spelregels)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## M24-uitrol: bron en gereedschap (2026-07-19)
+
+- **Geofabrik-regio-extracts zijn het hoofdpad, Overpass blijft kruiscontrole.** De publieke
+  Overpass-mirrors waren de traagste én broosste stap van de pijplijn (~25 min voor 6 systemen tegen
+  ~1 min bakken, met 504's op queries die minuten eerder slaagden). Lokale extracts: 40 regio's /
+  17 GB in ~6 min. **Gevalideerd, niet aangenomen:** hetzelfde systeem via beide paden → coördinaat
+  voor coördinaat identiek (0,000 m). De filters in `segmenten_geofabrik()` spiegelen de
+  Overpass-clauses exact, zodat die vergelijking geldig blijft.
+- **`.osm.pbf`, niet shapefile.** Geofabrik genereert geen free-shapefile voor de grootste regio's
+  (Brazilië en Rusland geven 0 bytes). Nieuwe build-dependency: `pyosmium`.
+- **Namen opzoeken, niet raden.** Met de extract lokaal is de namenlijst uit de data te lezen
+  (51.191 ways in 4 s). Bij niet-Latijnse schriften is dat het verschil tussen werken en niets
+  vinden — `ရန်ကုန်မြစ်` (Yangon) was met een blinde query nooit gevonden. **Vaste stap per systeem.**
+- **Rangschik kandidaten op LENGTE, niet op vertex-aantal.** Vertex-dichtheid meet detailniveau, niet
+  belang: een brede bevaarbare rivier is vaak als vlak gemapt met een spaarzame middellijn, terwijl
+  een beek fijn-gemapt is. Op vertices stond de Rijn 6e en vielen Donau, Wolga, Paraná en Amazone
+  helemaal weg.
+- **Middellijn uit watervlakken** (`middellijn_uit_vlakken.py`) voor rivieren die te breed zijn om
+  als lijn gemapt te zijn. Kern: alleen cellen met ≥150 m **klaring** tot de oever gelden als
+  bevaarbaar — dat encodeert "commercieel bevaarbaar" in de geometrie zélf, in plaats van als
+  aanname achteraf. Bewust géén medial axis: we willen één vaarbare lijn, geen skelet.
+- **Trapjes weg met bewijslast, niet met tolerantie.** Een 8-richtingen-Dijkstra kwantiseert op 45°;
+  DP-simplify haalt dat er niet uit omdat de treden (445 m) gróter zijn dan de tolerantie (250 m).
+  `strak_trekken()` slaat een punt over als de koorde aantoonbaar in bevaarbaar water blijft —
+  hetzelfde principe als `simplify_water()` in de baker. Effect: 312 → 83 punten, 4,4% korter (een
+  trap ís langer dan zijn diagonaal, dus het was ook een lengtefout).
+- **Bewaarpunten in twee lagen.** Raster-cache (extract + bbox + celmaat = de osmium-pass, ~13 min
+  bij Brazilië) los van lijn-cache (ankers, klaring, gladstrijken = seconden). Systemen die een bbox
+  delen hergebruiken het raster automatisch. De lijn-sleutel draagt een `ALGO`-versie zodat een
+  algoritmewijziging de cache ongeldig maakt i.p.v. stil een oude lijn terug te geven.
+- **Uitrol-regel (Lars):** *"als er geen commercieel boten kunnen varen dan niet, of als het echt
+  nergens heen leidt, maar het moet wel uitgebreid zijn voor de simulator."* Criterium 2 is de
+  scherpste snoeier — een vaarweg die niet aan het zeenetwerk hangt is een geïsoleerde component.
+  Sluit uit: Congo boven Kinshasa, Paraná boven Itaipú, Mekong boven de Khone-watervallen, Nijl
+  boven Aswan. Optie bewaard om de Congo ooit als *losse visuele laag* te tonen, niet als edges.
 
 ## M24 VS/China-pilots (2026-07-19) — LAR-487 + LAR-488
 

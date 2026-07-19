@@ -1,6 +1,60 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-487/488 Done na visuele go — M24-pilotreeks compleet)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24-uitrol opgezet: Geofabrik-bron + vlakken-afleiding; 6 milestones + 12 issues)*
+
+> **🚢 M24-UITROL OPGEZET (2026-07-19, laatste) — TWEE NIEUWE CAPABILITIES + YANGON EN AMAZONE ERBIJ.**
+> Live t/m `45a21eb` (`?v=021`). **→ VOLGENDE: de uitrol uitvoeren; die staat klaar als 6 milestones
+> M24.0–M24.5 met 12 issues [LAR-492]…[LAR-503]** (per regio een milestone, issues per systeem —
+> Lars' indeling). Aanbevolen volgorde: M24.1 Europa (grootste tonnage + officiële meetlat) → M24.2
+> Noord-Amerika (Ohio = kolen, nodig bij M26) → de rest.
+>
+> **1 · `fetch_waterways.py geofabrik` — lokale regio-extracts i.p.v. de Overpass-API.** Overpass was
+> de traagste én broosste stap van de pijplijn (~25 min voor 6 systemen tegen ~1 min bakken, met 504's
+> op queries die minuten eerder gewoon slaagden). Nu **40 regio's / 17 GB in ~6 min** (44,8 MB/s), en
+> daarna offline en herhaalbaar. **Gevalideerd, niet aangenomen:** hetzelfde systeem via beide paden
+> gehaald → **coördinaat voor coördinaat identiek, 0,000 m afwijking**. Overpass blijft bestaan als
+> kruiscontrole; de filters spiegelen de clauses exact. Shapefile viel af (Geofabrik genereert die
+> niet voor Brazilië/Rusland → 0 bytes). **Nieuwe build-dependency: `pyosmium`** (osmium 4.3.1).
+>
+> **2 · `v2/tools/middellijn_uit_vlakken.py` — middellijn AFLEIDEN uit watervlakken.** Nodig omdat de
+> Amazone tussen Manaus en de monding géén benoemde middellijn heeft: >10 km breed, dus als wátervlak
+> gemapt. Herbruikbaar voor Rio de la Plata, estuaria en stuwmeren. Aanpak: watervlakken rasteren →
+> per watercel de **klaring** (afstand tot de oever; exacte afstandstransformatie, anisotroop) →
+> alleen cellen met **≥150 m klaring** gelden als bevaarbaar — *dat encodeert "commercieel bevaarbaar"
+> in de geometrie zélf* → Dijkstra met milde voorkeur voor het midden → `strak_trekken()` + simplify.
+> Bewust géén medial axis. Een systeem met een `vlakken`-blok gaat door dit pad; de rest van de
+> pijplijn (baker, corridor-toets, `volgtOp`) merkt het verschil niet.
+>
+> **Twee systemen erbij:** `yangon` 23,2 km — de M23-stub uit [LAR-485] is weg (snap 21,8 → **1,3 km**;
+> Rotterdam→Yangon 14.989 km) · `amazone` **1.261,9 km** Macapá→Manaus — snap **1.084 → 0,9 km**, het
+> grootste gat in het hele netwerk (Rotterdam→Manaus 9.268 km; klaring min 0,44 / mediaan 1,60 / max
+> 7,61 km; haventoets Óbidos 3,15 km van de lijn). **Regressie exact:** 6818→9654 **19.610**,
+> 6391→6818 **8.031**; Mississippi 1.032 / Yangtze 1.016 onveranderd. Netwerk **9.877** knopen /
+> **16.124** edges; havens >50 km 1.471 → **1.449**.
+>
+> **⚠️ DRIE REGELS VOOR WIE DE UITROL DOET** (alle drie duur geleerd):
+> 1. **Namen opzoeken, niet raden.** Met de extract lokaal: 51.191 ways in 4 s → `ရန်ကုန်မြစ်`
+>    (Yangon), `လှိုင်မြစ်` (Hlaing). Een blinde query op "Yangon River" geeft nul segmenten.
+> 2. **Rangschik kandidaten op LENGTE, niet op vertex-aantal.** Vertex-dichtheid meet detailniveau,
+>    niet belang — brede rivieren zijn als vlak gemapt met spaarzame middellijn. Op vertices stond de
+>    Rijn 6e en vielen Donau/Wolga/Paraná/Amazone weg. Dat ving vier fouten: de Donau draagt
+>    **gecombineerde grensnamen** (`Dunaj / Duna`, `Dunărea - Дунав` — zonder die twee knipt de keten
+>    bij elke grens door), de Wolga-Don heet voluit `…им. В. И. Ленина`, `扬子江` bestaat niet, en de
+>    Amazone heeft géén benoemde middellijn.
+> 3. **Trapjes weg met bewijslast, niet met tolerantie.** De 8-richtingen-Dijkstra kwantiseert op 45°;
+>    DP-simplify haalt dat er niet uit want de treden (445 m) zijn **groter** dan de tolerantie
+>    (250 m). `strak_trekken()` = het `simplify_water()`-principe. Effect 312 → **83 punten en 4,4%
+>    korter** — het was dus ook een lengtefout, geen cosmetica.
+>
+> **Uitrol-regel (Lars):** *"als er geen commercieel boten kunnen varen dan niet, of als het echt
+> nergens heen leidt, maar het moet wel uitgebreid zijn voor de simulator."* Criterium 2 snijdt het
+> scherpst — een vaarweg die niet aan het zeenetwerk hangt is een **geïsoleerde component**: Congo
+> boven Kinshasa, Paraná boven Itaipú, Mekong boven de Khone-watervallen, Nijl boven Aswan vallen af.
+> **Schaal:** ~40–50 systemen (Lars: *"ik dacht dat je meteen veel meer rivier/kanalen zou hebben in
+> Brazilië maar het is er maar 1"* — het eerste plan was te grof). Goedkoper dan het klinkt: de meeste
+> rivieren staan wél als benoemde lijn in OSM en gaan door het snelle pad.
+> Volledige brief: `v2/design/binnenvaart-uitrol.md`. Zie ook `memory/decisions.md` +
+> [[2026-07-19-grondstoffen-atlas-geofabrik-vlakken-uitrolplan]].
 
 > **✅ LAR-487 + LAR-488 DONE (2026-07-19, laatste) — DE M24-PILOTREEKS NL→VS→CHINA IS COMPLEET.**
 > Lars' visuele go: *"ik heb even gekeken naar die test routes dat ziet er wel goed uit mooi over de rivier"* → beide op Done. Alle drie de controle-situaties bewezen: twee onafhankelijke bronnen (NL) ·

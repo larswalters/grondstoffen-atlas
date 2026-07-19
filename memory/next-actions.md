@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-487 + LAR-488 Done na visuele go; NU-lijst = go/no-go wereldwijde uitrol)*
+*Last updated: 2026-07-19 (uitrol opgezet in Linear: 6 milestones + 12 issues; NU-lijst = uitvoeren)*
 
 ## ✅ AFGEROND: de M24-pilotreeks (2026-07-19)
 
@@ -8,24 +8,35 @@ ziet er wel goed uit mooi over de rivier"*). Daarmee zijn de drie controle-situa
 twee onafhankelijke bronnen (NL/LAR-486) · officiële meetlat (VS/LAR-487) · géén scheidsrechter
 (China/LAR-488). Live t/m `919b046` (`?v=018`).
 
-## ➡️ NU: go/no-go wereldwijde uitrol
+## ➡️ NU: de uitrol uitvoeren — staat klaar in Linear
 
-1. **Wereldwijde uitrol** — EU CEMT ≥ IV, VS USACE-net, elders de commerciële systemen: Paraná,
-   Irrawaddy (de Yangon-stubs), Wolga-systeem, Mekong, Congo, Grand Canal. De drie controle-situaties
-   zijn nu alle drie bewezen (twee bronnen / officiële meetlat / géén scheidsrechter).
-2. **Restpunten [LAR-485]** — Yangon/Moulmein-stubs, de 2 restedges (Södertälje, Channel Islands),
-   Wolga-Don-dekking-check.
-3. **Verdiepingen** (optioneel) — Chongqing boven Wuhan (Drieklovendam-sluizen), St. Louis boven
-   Memphis.
+De go/no-go is beslist (Lars: doen, en *"uitgebreid"*). Bron en gereedschap staan; dit is uitvoeren.
 
-**Bron-keuze (definitief, 2026-07-19):** OSM = geometrie overal · UNECE (EU)/USACE (VS) = meetlat +
-klasse-bron. Bake-off-varianten zijn opgeruimd (`8458047`, `?v=017`).
+**6 milestones, 12 issues** — elk issue is zelfstandig leesbaar mét de geverifieerde OSM-namen, de
+benodigde extracts (allemaal al binnen), de meetlat en de acceptatie:
 
-**Open experiment (niet unilateraal gedaan):** de CEMT-clause uit de NL-systemen halen. Die haalt
-784 van de 852 ways binnen bij de Waal (havenbekkens als `1e Eemhaven`) en is daarmee de duurste
-query van de zes, terwijl hij vooral een diagnostische print voedt — maar hij levert de stitcher wél
-verbindingsgeometrie, dus weghalen kan het NL-resultaat veranderen. Goedkoop te testen: blijft de
-Waal 142,0 km / 176 punten? Raakt de LAR-486-regressiebasis → eerst afstemmen met Lars.
+| milestone | issues |
+|---|---|
+| M24.0 · fundament + restpunten | [LAR-503] |
+| M24.1 · Europa (Rijn-Donau-as) | [LAR-492] Rijn · [LAR-493] Main+MD-kanaal · [LAR-494] Donau · [LAR-495] Schelde/Seine/Rhône |
+| M24.2 · Noord-Amerika | [LAR-496] Ohio (kolen!) · [LAR-497] Upper Mississippi + Illinois |
+| M24.3 · Zuid-Amerika | [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco |
+| M24.4 · Azië | [LAR-500] Grand Canal/Parelrivier/Chongqing · [LAR-501] Mekong + Hooghly |
+| M24.5 · Rusland | [LAR-502] Wolga + Wolga-Don + Wolga-Baltisch |
+
+**Aanbevolen volgorde:** M24.1 (grootste tonnage én de enige regio met een officiële meetlat naast
+de VS) → M24.2 (Ohio = kolen, direct nodig bij M26) → de rest.
+
+**Vaste werkwijze per systeem** (drie keer bewezen in de pilots):
+1. **Namen opzoeken in de extract** — niet raden. Zie `decisions.md`.
+2. **Ankers verifiëren tegen waar MARNET wérkelijk ophoudt** — alle drie de pilots eindigden ergens
+   anders dan hun zone-naam suggereerde.
+3. Segmenteren met `volgtOp` waar de zeevaart-grens binnen de rivier ligt.
+4. **Lengte tegen de officiële vaarafstand** = de beslissende controle, niet de puntafstand.
+5. Regressie: 6818→9654 **19.610** en 6391→6818 **8.031** moeten exact blijven.
+
+**Geblokkeerd:** [LAR-495] en [LAR-501] deels, op ontbrekende Franse/Indiase Geofabrik-regio-namen
+(zie [LAR-503]).
 
 ## 🔭 Later (ná M25): [LAR-490] LOD-systeem — het M26-startpunt
 

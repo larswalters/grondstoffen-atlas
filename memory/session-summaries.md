@@ -1,6 +1,24 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 27) — Geofabrik-bron, middellijn uit watervlakken, Yangon + Amazone, uitrol opgezet
+- **Twee capabilities die de uitrol pas praktisch maken** (live t/m `45a21eb`, `?v=021`).
+- **Geofabrik i.p.v. Overpass:** 40 regio's / 17 GB in ~6 min; gevalideerd coördinaat-voor-coördinaat
+  identiek (0,000 m). Overpass blijft kruiscontrole. Shapefile viel af (Brazilië/Rusland = 0 bytes).
+- **`middellijn_uit_vlakken.py`:** klaring-raster + Dijkstra + `strak_trekken()`. Klaring ≥150 m
+  encodeert commerciële bevaarbaarheid in de geometrie zelf.
+- **`yangon`** 23,2 km (LAR-485-stub weg, snap 21,8 → **1,3 km**) · **`amazone`** 1.261,9 km
+  (snap Manaus 1.084 → **0,9 km**, Rotterdam→Manaus 9.268 km; Óbidos 3,15 km van de lijn).
+- **Regressie exact:** 6818→9654 19.610, 6391→6818 8.031; Mississippi 1.032, Yangtze 1.016.
+  Netwerk 9.877 knopen / 16.124 edges; havens >50 km 1.471 → **1.449**.
+- **Lars ving twee dingen die ik miste:** de hoekigheid op de bol (rasterartefact → `strak_trekken()`,
+  ook 4,4% te lang) en dat Brazilië meer draagt dan één rivier (uitrolplan te grof → schaal
+  bijgesteld naar 40–50 systemen).
+- **Twee eigen fouten, gemeten:** Overpass-timeout 600 s liet één mirror de run 10 min gijzelen
+  (query duurt 74 s); vlakken-v1 verzamelde alle polygonen + `union_all` → 5,5 GB (van 289.365
+  watervlakken raken er 1.241 het venster).
+- **Linear:** 6 milestones M24.0–M24.5 + 12 issues LAR-492…LAR-503, per regio met issues per systeem.
+
 ## 2026-07-19 (sessie 26) — LAR-487 + LAR-488: de VS- en China-binnenvaartpilot gebouwd + gemeten
 - **Beide resterende M24-pilots staan** (commit `919b046`, `?v=018`, live). De pilotreeks NL→VS→China
   is compleet op Lars' visuele go na.
