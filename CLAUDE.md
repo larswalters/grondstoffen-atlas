@@ -1,6 +1,49 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (M24.1 gestart: Rijn Done + aftakken op elk punt Done)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (Mosel = eerste aftakking; slepen over de bol vervangen)*
+
+> **🖐️ SLEPEN OVER DE BOL VERVANGEN + MOSEL ALS EERSTE ECHTE AFTAKKING (2026-07-19, laatste).**
+> Live t/m `2ea5f42` (`?v=024`). **→ VOLGENDE: [LAR-505] Maas + Benelux-delta.**
+> **Open: Lars' gevoelscheck op het slepen** — headless niet te beoordelen (venster 1×1, framelus stil).
+>
+> **[LAR-506] Mosel — Koblenz → Trier → Metz → Neuves-Maisons, 392,0 km** tegen officieel ~394
+> (**−0,5%**), aansluiting knoop 9745 op **0,13 km** als `aftakking:rijn`. Eerste systeem dat níet aan
+> een ketenuiteinde hangt maar middenin de Rijn aftakt (rkm 592) → `volgtOp` is in de praktijk een
+> **boom** geworden, en [LAR-504] is daarmee end-to-end bewezen: **R'dam → Neuves-Maisons 856 km** over
+> `waal+rijn+mosel`. `mosel` in `vermijd` → kop weg maar **Kehl blijft 758 km** (los schakelbaar);
+> `rijn` dicht → Mosel valt óók weg (topologisch juist). Regressie exact (19.610 / 8.031 / Nijmegen 172
+> / Kehl 758 / A'dam→Shanghai 19.677); netwerk 9.910 → **9.937** knopen, 16.157 → **16.184** edges.
+>
+> **⚠️ NIEUWE FOUTCATEGORIE: bevaarbaar ≠ bevaarbaar op COMMERCIEEL GABARIT.** De eerste poging kwam
+> **18 km te kort**. Door tegen **zes officiële Moselkilometers** te meten in plaats van alleen de
+> totaallengte wees de fout zichzelf aan: tot Frouard klopte alles op de kilometer, daarna liep de
+> keten via `Canal de la Marne au Rhin` → `Canal de Jonction de Nancy` → `Canal des Vosges` — wél
+> water, wél bevaarbaar, maar **Freycinet-gabarit (klasse I, 350 t)**. Die kwamen binnen via de
+> **CEMT-clause**, niet via de namenlijst. Nieuwe schakelaar **`cemt_insluiten=False`** (default blijft
+> `True`, bestaande systemen ongemoeid): 640 → **310 segmenten**, pad **15,5 km lánger**, en
+> `CEMT-tags gezien: Vb` — élke way is grootgabarit, dus de keten bevestigt zichzelf. Deze regel staat
+> **naast** *water ≠ vaarweg* (de Restrhein) en is subtieler: niet óf er water is, maar **welk schip
+> erdoor past**. Verwacht 'm overal waar een klein-gabarit kanaalnet naast de hoofdvaarweg ligt.
+> **Nog niet gebouwd, wel de betere vorm:** de clause een **minimumklasse ≥ IV** geven i.p.v. aan/uit —
+> raakt de filter van `waal`/`noordzeekanaal`/`rijn` en dus hun bewezen regressie.
+>
+> **🖐️ SLEPEN: gedrag vervangen, niet de constante bijgesteld** (Lars: *"het voelt erg onnatuurlijk"*).
+> Eerst gemeten: de oude wet (`graden/pixel = dragSpeed/100 × hoogte/dragRefAltitude`) klopte qua
+> **vorm** — evenredig met de hoogte — maar de gain was **3,52× te hoog op élke zoom** (28,65°/100px
+> waar de meetkunde er 8,15 vraagt; die verhouding is op zes hoogtes van 40 tot 8.495 km identiek, dus
+> een constante mis-tuning en geen scheve kromme). Twee dingen zaten daaronder: de **vensterhoogte**
+> ontbrak in de formule (ander scherm = verder uit de pas), en ook mét de juiste gain **glijdt het
+> gegrepen punt weg** zodra je niet in het midden grijpt. Nu: **het punt dat je vastpakt blijft onder de
+> cursor** — de snelheid volgt uit de meetkunde, dus `dragSpeed`/`dragRefAltitude` zijn **weg**.
+> Solver gevalideerd op **200.000 willekeurige gevallen** (afwijking **1,6·10⁻¹⁴**); onbereikbare
+> doelen worden geklemd op de dichtstbijzijnde stand i.p.v. te springen. Randgevallen af: naast de bol
+> gepakt → stapmodus met schermonafhankelijke gain · van de bol af slepen → dichtstbijzijnde randpunt ·
+> mount 0×0 → geen deling door nul (anders NaN-rotatie en verdwijnt de bol).
+>
+> **⚠️ Meten in de Browser-pane:** venster **1×1** en `document.hidden` true → rAF staat stil én de
+> cameramatrix blijft stale, dus `project()` liegt tot je `updateMatrixWorld(true)` +
+> `updateProjectionMatrix()` forceert. Ik trapte daar bijna in bij de sleepmeting. **Betrouwbaar is
+> alleen wat niet van een render-tick afhangt.** Zie `memory/bugs-and-risks.md`.
 
 > **🚢 M24.1 GESTART (2026-07-19, laatste) — DE RIJN STAAT ([LAR-492] Done) EN VAARWEGEN ZIJN NU EEN NET
 > ([LAR-504] Done).** Live t/m `b402fc5` (`?v=022`), visuele go van Lars: *"Rotterdam Kehl ziet er goed

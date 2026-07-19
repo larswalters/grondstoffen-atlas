@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 30) — Mosel als eerste echte aftakking (LAR-506) + slepen gefixt
+
+**Mosel** Koblenz → Neuves-Maisons **392,0 km** (officieel ~394, −0,5%), aansluiting knoop 9745 op
+**0,13 km** als `aftakking:rijn`. Eerste systeem dat middenin een keten aanhaakt → `volgtOp` is nu
+een boom, en LAR-504 is end-to-end bewezen: R'dam → Neuves-Maisons **856 km** over `waal+rijn+mosel`.
+`mosel` in `vermijd` → kop weg, **Kehl blijft 758 km**; `rijn` dicht → Mosel valt ook weg.
+
+**Nieuwe foutcategorie: bevaarbaar ≠ bevaarbaar op commercieel gabarit.** Eerste poging 18 km te
+kort; zes officiële Moselkilometers wezen de plek aan (tot Frouard klopte alles, daarna liep de
+keten via Freycinet-kanalen van klasse I bij Nancy, binnengekomen via de CEMT-clause). Fix:
+`cemt_insluiten=False` → 640 → 310 segmenten, pad 15,5 km lánger, alle ways klasse Vb.
+
+**Slepen over de bol** vervangen door grijpen-en-meenemen. Gemeten vóór het aanpassen: de oude wet
+was **3,52× te snel op elke zoom** en negeerde de vensterhoogte; ook met de juiste gain glijdt het
+gegrepen punt weg als je niet in het midden grijpt. Solver op 200.000 gevallen gevalideerd
+(1,6·10⁻¹⁴). `dragSpeed`/`dragRefAltitude` verwijderd.
+
+**Regressie exact:** 19.610 · 8.031 · Nijmegen 172 · Kehl 758 · A'dam→Shanghai 19.677. Netwerk
+9.910 → 9.937 knopen, 16.157 → 16.184 edges. Commits `2ef7601` + `2ea5f42`, live `?v=024`.
+
+**Open:** Lars' gevoelscheck op het slepen (headless niet te meten: venster 1×1, framelus stil).
+
 ## 2026-07-19 (sessie 29) — M24.1 gestart: de Rijn (LAR-492) + aftakken op elk punt (LAR-504)
 
 **Gebouwd.** De Rijn als twee ketens met `volgtOp`: `rijn` Nijmegen→Bingen **355,0 km** (officieel

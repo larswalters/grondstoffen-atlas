@@ -1,5 +1,19 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24.1 begonnen: Rijn Done + aftakmechanisme Done; NU = LAR-505 Maas/delta)*
+*Last updated: 2026-07-19 (Rijn + Mosel + aftakmechanisme Done, slepen gefixt; NU = LAR-505 Maas/delta)*
+
+## 👀 EERST: Lars' gevoelscheck op het slepen
+
+Het slepen over de bol is vervangen door **grijpen-en-meenemen** (het punt dat je vastpakt blijft
+onder de cursor). De oude wet was gemeten 3,52× te snel op élke zoom. Live op `?v=024`.
+**Headless niet te beoordelen** — in de Browser-pane is het venster 1×1 en staat de framelus stil,
+dus alleen Lars kan zeggen of het nu goed voelt. Voelt het nog steeds mis, kijk dan eerst naar het
+tempo van `zoomBy` (factor 1,08 per wheel-tik) — dat is nooit tegen de meetkunde geijkt.
+
+## ✅ AFGEROND: [LAR-506] Mosel — de eerste echte aftakking (2026-07-19)
+
+Koblenz → Neuves-Maisons 392,0 km (officieel ~394, −0,5%), aansluiting 0,13 km `aftakking:rijn`.
+Daarmee is LAR-504 end-to-end bewezen. Nieuwe les: **bevaarbaar ≠ bevaarbaar op commercieel
+gabarit** — zie `decisions.md`. Nieuwe extracts `fr-lorraine` + `luxemburg`.
 
 ## ➡️ NU: [LAR-505] Maas + Benelux-delta
 

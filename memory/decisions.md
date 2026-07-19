@@ -1,7 +1,46 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-492 Rijn + LAR-504 aftakken op elk punt)*
+*Last updated: 2026-07-19 (LAR-506 Mosel: gabarit-filter + slepen = grijpen-en-meenemen)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-19 · LAR-506 — bevaarbaar is niet hetzelfde als bevaarbaar op COMMERCIEEL GABARIT
+
+De Mosel-keten kwam 18 km te kort omdat de stitcher bij Nancy de Freycinet-kanalen pakte
+(`Canal de la Marne au Rhin` → `Canal de Jonction de Nancy` → `Canal des Vosges`): wél water,
+wél bevaarbaar, maar **klasse I, 350 t**. De stitcher neemt het kortste waterpad, en die kanalen
+kwamen binnen via de **CEMT-clause**, niet via de namenlijst.
+
+Nieuwe schakelaar `cemt_insluiten=False`: houdt de CEMT-klasse als metadata maar zet de "élke
+geklasseerde vaarweg in de bbox"-clause uit. Default blijft `True`, dus bestaande systemen zijn
+niet geraakt. Na de fix 640 → 310 segmenten, pad 15,5 km **langer**, en `CEMT-tags gezien: Vb`.
+
+Deze regel staat **naast** *water ≠ vaarweg* (de Restrhein) en is subtieler: niet óf er water is,
+maar **welk schip erdoor past**. Verwacht 'm overal waar een klein-gabarit kanaalnet naast de
+hoofdvaarweg ligt — Frankrijk, België, Duitsland.
+
+Nog niet gebouwd, wel de betere vorm: de clause een **minimumklasse (≥ IV)** geven i.p.v. aan/uit.
+Dat encodeert "commercieel bevaarbaar" in de filter zoals de ≥150 m-klaring bij de Amazone. Niet
+gedaan omdat het de filter van `waal`/`noordzeekanaal`/`rijn` raakt en dus hun bewezen regressie.
+
+## 2026-07-19 · LAR-506 — toets een keten op TUSSENLIGGENDE ijkpunten, niet alleen op de totaallengte
+
+Een totaal-alleen-toets had hier "4% eraf" opgeleverd en niets verklaard. Door tegen zes officiële
+Moselkilometers te meten wees de fout zichzelf aan: tot Frouard klopte alles op de kilometer,
+daarna liep het weg. Zo weet je meteen *waar* je moet kijken.
+
+## 2026-07-19 · Slepen over de bol = GRIJPEN EN MEENEMEN, geen graden-per-pixel
+
+Lars: *"het voelt erg onnatuurlijk."* Eerst gemeten: de oude wet
+(`graden/pixel = dragSpeed/100 × hoogte/dragRefAltitude`) klopte qua **vorm** — evenredig met de
+hoogte — maar de gain was **3,52× te hoog op élke zoom** (28,65°/100px waar de meetkunde 8,15°
+vraagt; die verhouding is op zes hoogtes van 40 tot 8.495 km identiek). Twee dingen zaten daaronder:
+de **vensterhoogte** ontbrak in de formule, en zelfs met de juiste gain glijdt het gegrepen punt weg
+zodra je niet in het midden grijpt.
+
+Daarom niet de constante bijgesteld maar het gedrag vervangen: **het punt dat je vastpakt blijft
+onder de cursor.** De snelheid volgt daarmee uit de meetkunde; `dragSpeed` en `dragRefAltitude` zijn
+weg. Solver gevalideerd op 200.000 willekeurige gevallen (afwijking 1,6·10⁻¹⁴); onbereikbare doelen
+worden geklemd op de dichtstbijzijnde stand i.p.v. te springen.
 
 ## 2026-07-19 · LAR-504 — een vaarwegsysteem mag OVERAL op zijn voorganger aanhaken
 

@@ -16,7 +16,30 @@ De vault noemde 9.877 knopen / 16.124 edges voor de bake van `45a21eb`, terwijl 
 laat "corrigeren" wat niet stuk is. Gecorrigeerd in `now.md` mét een notitie erbij.
 **Les:** neem netwerkcijfers over uit `marnet.json`, niet uit een vorige samenvatting.
 
-## ⚠️ RISICO — de CEMT-clause haalt méér binnen dan de whitelist (2026-07-19, [LAR-492])
+## ⚠️ METEN IN DE BROWSER-PANE: twee artefacten die me allebei beetnamen (2026-07-19)
+
+Het venster is daar **1×1** en `document.hidden` is true. Gevolg:
+1. **rAF staat stil** → `globeGroup.rotation` wordt nooit ververst, dus alles wat de framelus
+   schrijft lijkt bevroren. Ook WebGL-screenshots hangen daardoor (bekend sinds M22).
+2. **De cameramatrix blijft stale** → `Vector3.project(camera)` geeft onzin tot je expliciet
+   `camera.updateMatrixWorld(true)` + `updateProjectionMatrix()` aanroept.
+
+Ik heb op grond van artefact 2 bijna een verkeerde conclusie getrokken over de sleepwet (de
+pixelmeting varieerde 309 → 2 terwijl hij constant had moeten zijn). **Betrouwbaar was alleen de
+pure rekenkunde** — graden-nu tegen graden-ideaal — en die gaf een schone constante 3,52×.
+Les: in deze omgeving alleen dingen meten die niet van een render-tick of matrix-update afhangen.
+
+## ⚠️ RISICO — de CEMT-clause haalt méér binnen dan de whitelist (2026-07-19, [LAR-492] / [LAR-506])
+
+**Bij de Mosel ging dit echt mis** (zie `decisions.md`): de clause haalde de Freycinet-kanalen bij
+Nancy binnen (klasse I, 350 t) en die wonnen als kortste pad van de Moezel zelf — 18 km te kort én
+de verkeerde vaarweg. Opgelost met `cemt_insluiten=False` op dat systeem.
+
+**Verwacht dit opnieuw** overal waar een klein-gabarit kanaalnet naast de hoofdvaarweg ligt
+(Frankrijk, België, Duitsland). De toets die het vangt is **lengte tegen tussenliggende ijkpunten**,
+niet de corridor-toets — die vergelijkt de keten met de bron waaruit hij gebakken is.
+
+
 
 Een systeem mét een `cemt`-waarde laat álle CEMT-getagde ways in de bbox toe, ook zonder naam-match.
 Bij de Rijn was dat nuttig (het vond het Grand Canal d'Alsace), maar het betekent dat de invoer
