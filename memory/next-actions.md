@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-493 Done, LAR-494 uitgevoerd; NU = default-keuze + LAR-495)*
+*Last updated: 2026-07-19 (LAR-494 uitgevoerd + default beslist; NU = visuele go, dan LAR-495)*
 
 ## 👀 EERST: Lars' gevoelscheck op het slepen
 
@@ -36,17 +36,14 @@ De as **Rotterdam → Zwarte Zee** is compleet: R'dam → Constanța **3.291 km*
 `donau-zeekanaal` 73,0 · `donau` 632,6 · `donau-boven` 1.466,6 km met ringsluiting op het
 Main-Donau-Kanaal. Live t/m `ac86d98` (`?v=027`).
 
-## 🔴 EERST BESLISSEN: welke routeer-default? (LAR-494, ligt bij Lars)
+## ✅ BESLIST: een zeeschip vaart niet door sluizen (LAR-494)
 
-Sinds de Donau-ring zijn Noordzee en Zwarte Zee over binnenwater verbonden, dus het kortste pad
-stuurt een **zeeschip** dwars door Europa (18.627 i.p.v. 19.610 km). Er is een groepslabel
-`binnenvaart` dat dat sluit, maar **geen enkele default voldoet aan alle invarianten** — zie
-`bugs-and-risks.md`. Er staat een HUD-knop "alle schepen / alleen zeeschip" om beide te voelen.
+Lars' regel — *"als een route naar een zeehaven gaat, dan gaat de zeeboot ineens via rivieren of
+sluizen, dat is niet natuurlijk"*. Gefixt met `zoekRouteRealistisch()` (default): eerst als
+zeeschip, en pas bij een binnenlands uiteinde de systemen openzetten die vanaf dát uiteinde zónder
+zee bereikbaar zijn. Alle invarianten kloppen weer onder één default. Zie `decisions.md`.
 
-Voorstel bij geen sterke voorkeur: **scheepstype op de stroom zelf**, met "zeeschip" als default
-voor de route-test. Deze keuze bepaalt hoe M26 zijn flows routeert, dus hij komt sowieso terug.
-
-## 👀 OOK: Lars' visuele go op de Donau
+## 👀 EERST: Lars' visuele go op de Donau
 
 Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Donau van Kelheim via Wenen,
 Boedapest en de IJzeren Poort naar Constanța, en of Rotterdam → Constanța er goed uitziet.

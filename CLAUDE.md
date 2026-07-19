@@ -1,6 +1,6 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-494 Donau — de eerste zee-zee-ring)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-494 Donau + realistisch routeren)*
 
 > **🌍 DE DONAU — ROTTERDAM→ZWARTE ZEE COMPLEET, EN DE EERSTE ZEE-ZEE-RING (2026-07-19, laatste).**
 > Live t/m `ac86d98` (`?v=027`). **→ VOLGENDE: eerst een BESLISSING van Lars over de
@@ -24,14 +24,20 @@
 > zeevaart-vlag voor het eerst iets** in plaats van metadata te zijn (zie [LAR-492]).
 > **Vraag die vanaf nu bij elk nieuw systeem hoort:** *kan dit een zeeroute bekorten?*
 >
-> **🔴 OPEN BESLUIT — DE DEFAULT LIGT BIJ LARS.** Géén enkele default voldoet aan alle vastgelegde
-> invarianten: permissief breekt R'dam→Shanghai (18.627), `binnenvaart`-dicht breekt R'dam→Nijmegen
-> (geen route, want `waal` is zeevaart=false). Daarom **niet unilateraal gewijzigd**; in plaats
-> daarvan een HUD-knop **"alle schepen / alleen zeeschip"** zodat hij beide kan voelen. Voorstel bij
-> geen sterke voorkeur: een **scheepstype op de stroom zelf** (M26 weet of een flow zee- of
-> binnenvaart is), met "zeeschip" als default voor de route-test. ⚠️ **Noem bij oude
-> regressiecijfers voortaan het profiel erbij** — onder de permissieve default zijn R'dam→Wuhan
-> (20.626 → 19.643) en R'dam→Constanța veranderd.
+> **✅ BESLIST DOOR LARS — EEN ZEESCHIP VAART NIET DOOR SLUIZEN.** *"Als een route naar een zeehaven
+> gaat, dan gaat de zeeboot ineens via rivieren of sluizen — dat is niet natuurlijk."* Gefixt met
+> **`zoekRouteRealistisch()`** (nu de default), in twee trappen: (1) probeer het als **zeeschip**,
+> alle binnenvaartsystemen dicht; (2) lukt dat niet, dan ligt een uiteinde in het binnenland → sta
+> **alleen de systemen toe die vanaf dát uiteinde ZONDER ZEE bereikbaar zijn**. Trap 2 maakt het
+> sluitend: de Europese en Chinese binnenwaternetten zijn **losse componenten**, dus een reis naar
+> Wuhan mag de Yangtze gebruiken maar de Rijn-Donau-corridor níet als sluipweg. Daarmee kloppen
+> **alle** vastgelegde invarianten onder één default (19.610 · 8.031 · 19.677 · Memphis 10.000 ·
+> **Wuhan 20.626** · Kehl 757 · Nijmegen 172 · A'dam→Nijmegen 105 · Luik 375 · Constanța **6.285
+> over zee**, want dat is een zeehaven). ⚠️ **De knop "alles toestaan" geeft bewust andere getallen**
+> (R'dam→Constanța 3.291) — noem bij regressiecijfers dus het profiel erbij.
+> **Les:** toen één schakelaar niet aan alle invarianten kon voldoen, was dat niet het moment om er
+> één op te offeren maar het signaal dat de *regel* nog niet klopte. De juiste regel bleek niet
+> "welk schip" maar "welk binnenwater is vanaf dit uiteinde überhaupt bereikbaar".
 >
 > **De zee-overgang hoeft niet de riviermonding te zijn.** MARNET reikt niet tot de delta — Sulina
 > ligt **123 km** van de dichtstbijzijnde zeeknoop — dus komt de Donau binnen via het

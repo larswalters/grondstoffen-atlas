@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-494 Donau: de eerste zee-zee-ring)*
+*Last updated: 2026-07-19 (LAR-494: zeeschip vaart niet door sluizen — BESLIST)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -23,19 +23,34 @@ in LAR-492 vastgesteld) puur metadata.
 delen van het net verbindt de vraag stellen *of het een zeeroute kan bekorten*. Het
 Schelde-Rijnkanaal ([LAR-495]) is de volgende kandidaat.
 
-## 2026-07-19 · LAR-494 — de default is een ONTWERPKEUZE en ligt bij Lars (OPEN)
+## 2026-07-19 · LAR-494 — BESLIST: een zeeschip vaart niet door sluizen (realistisch routeren)
 
-Géén enkele default voldoet aan alle vastgelegde invarianten:
+Lars, na het zien van de Donau: *"als een route naar een zeehaven gaat, dan gaat de zeeboot ineens
+via rivieren of sluizen — dat is niet natuurlijk, dus dat moet er niet in komen. Het is wel logisch
+dat hij nu dan een iets kortere route heeft gevonden, dat moeten we dan fixen."*
 
-| default | R'dam→Shanghai | R'dam→Nijmegen |
-|---|---|---|
-| permissief (huidig) | ❌ 18.627 via de Rijn | ✅ 172 km |
-| `binnenvaart` dicht | ✅ 19.610 | ❌ geen route |
+Daarmee is de openstaande default-keuze beslist — en het bleek beter oplosbaar dan de aan/uit-knop
+die ik had voorgelegd. **`zoekRouteRealistisch()`, nu de default, werkt in twee trappen:**
 
-Daarom **niet** unilateraal gewijzigd. In plaats daarvan een HUD-knop "alle schepen / alleen
-zeeschip" zodat Lars beide kan voelen. Voorstel bij geen sterke voorkeur: een **scheepstype op
-de stroom zelf** (M26 weet of een flow zee- of binnenvaart is), met "zeeschip" als default voor
-de route-test. **Deze keuze staat nog open.**
+1. **Probeer het als zeeschip:** alle binnenvaartsystemen dicht.
+2. **Lukt dat niet**, dan ligt minstens één uiteinde in het binnenland → sta **alleen de systemen
+   toe die vanaf dát uiteinde ZONDER ZEE bereikbaar zijn.**
+
+**Trap 2 is wat de zaak sluitend maakt.** De Europese en Chinese binnenwaternetten zijn *losse
+componenten*, dus een reis naar Wuhan mag de Yangtze gebruiken maar kan de Rijn-Donau-corridor niet
+als sluipweg naar de Zwarte Zee pakken. Dat was onder de permissieve default nog stuk (19.643
+i.p.v. 20.626) en met een simpele aan/uit-schakelaar niet te repareren — daar hadden Shanghai en
+Nijmegen elkaar uitgesloten.
+
+**Alle vastgelegde invarianten kloppen nu onder één default:** 19.610 · 8.031 · A'dam→Shanghai
+19.677 · Memphis 10.000 · Wuhan 20.626 · Kehl 757 · Nijmegen 172 · A'dam→Nijmegen 105 (ARK wint
+nog steeds) · Luik 375 · Constanța **6.285 over zee** (het is een zeehaven, dus omvaren via
+Gibraltar en de Bosporus). De riviercorridor blijft inspecteerbaar via de knop "alles toestaan"
+(3.291 km). De HUD toont welke modus gekozen is.
+
+**Les die generaliseert:** toen één schakelaar niet aan alle invarianten kon voldoen, was dat geen
+reden om er één op te offeren maar het signaal dat de *regel* nog niet klopte. De juiste regel bleek
+niet "welk schip" maar "welk binnenwater is vanaf dit uiteinde überhaupt bereikbaar".
 
 ## 2026-07-19 · LAR-494 — de zee-overgang hoeft niet de riviermonding te zijn
 
