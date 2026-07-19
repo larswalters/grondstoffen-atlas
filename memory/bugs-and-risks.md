@@ -1,5 +1,5 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-505 — aftakking nu WEL end-to-end gerouteerd; nieuwe diagnose-val)*
+*Last updated: 2026-07-19 (LAR-494 — OPEN: welke routeer-default na de zee-zee-ring?)*
 
 ## ✅ OPGELOST — het aftakmechanisme is nu end-to-end gerouteerd (2026-07-19, [LAR-505])
 
@@ -19,6 +19,35 @@ De vault noemde 9.877 knopen / 16.124 edges voor de bake van `45a21eb`, terwijl 
 **9.863 / 16.110** stond. Niets kapot, maar het is precies het soort drift dat een volgende sessie
 laat "corrigeren" wat niet stuk is. Gecorrigeerd in `now.md` mét een notitie erbij.
 **Les:** neem netwerkcijfers over uit `marnet.json`, niet uit een vorige samenvatting.
+
+## ⚠️ OPEN — welke routeer-default na de Donau-ring? (2026-07-19, [LAR-494])
+
+Sinds de Donau-ring zijn Noordzee en Zwarte Zee over binnenwater verbonden. Het kortste
+graafpad stuurt daardoor een **zeeschip** van Rotterdam naar Shanghai dwars door Europa over
+sluizen van klasse Vb: **18.627 i.p.v. 19.610 km**.
+
+Er is een groepslabel **`binnenvaart`** dat elk niet-zeevaarbaar systeem sluit en de regressie
+exact herstelt. Maar **géén enkele default voldoet aan alle vastgelegde invarianten**:
+
+| default | R'dam→Shanghai | R'dam→Nijmegen |
+|---|---|---|
+| permissief (huidig) | ❌ 18.627 via de Rijn | ✅ 172 km |
+| `binnenvaart` dicht | ✅ 19.610 | ❌ geen route |
+
+**Stand:** default ongewijzigd (permissief), HUD-knop "alle schepen / alleen zeeschip"
+toegevoegd zodat Lars beide kan voelen. **Wacht op zijn keuze.**
+
+⚠️ **Let op bij het lezen van oude regressiecijfers:** onder de permissieve default zijn
+R'dam→Wuhan (20.626 → 19.643) en R'dam→Constanța veranderd omdat de corridor nu een echte
+sluipweg is. Onder `binnenvaart`-dicht kloppen 19.610 / 8.031 / 19.677 exact. Noem dus altijd
+het profiel erbij.
+
+## ⚠️ De deltahavens van de Donau snappen nog >100 km weg (2026-07-19, [LAR-494])
+
+Sulina **124,8** · Brăila **100,8** · Tulcea **110,9** km. Oorzaak: we komen via het
+Donau-Zwarte Zeekanaal binnen (Constanța), niet via de Sulina-arm — MARNET reikt niet tot de
+delta. Bewust geaccepteerd binnen LAR-494. Oplossing = de **maritieme Donau** (Cernavodă →
+Brăila → Sulina) als aparte tak; kandidaat voor een vervolgissue.
 
 ## ⚠️ EEN STITCH-FOUT WIJST NIET ALTIJD NAAR DE KETEN (2026-07-19, [LAR-505])
 

@@ -1,6 +1,34 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 33) — de Donau (LAR-494): Rotterdam→Zwarte Zee compleet
+
+`donau-zeekanaal` **73,0 km** (Constanța → Cernavodă, zee-overgang) · `donau` **632,6**
+(→ IJzeren Poort) · `donau-boven` **1.466,6** (→ Kelheim, **ringsluiting op
+`main-donau-kanaal`** op 0,24 km). Geknipt bij de **IJzeren Poort** — twee sluiscomplexen,
+dus splits op de verstoring (Kaub-redenering).
+
+**Acceptatie: R'dam → Constanța 3.291 km over de rivieren tegen 6.285 over zee.** De stub uit
+LAR-493 is weg: `Regensburg` **19,0 → 3,0 km**; Wenen 5,4 · Boedapest 3,7 · Neurenberg 6,2.
+
+**De Donau komt niet via zijn eigen monding binnen** — MARNET reikt niet tot de delta (Sulina
+123 km van een zeeknoop), dus werd het **Donau-Zwarte Zeekanaal** de zee-overgang. Bewust
+geaccepteerd: deltahavens blijven slecht snappen (Sulina 124,8 · Brăila 100,8 · Tulcea 110,9).
+
+**Zes naamvormen**, twee die het issue niet had: `Дунав/Dunărea` (Cyrillisch eerst) en
+`Dunav/Dunărea` (Latijn eerst) dekken *aangrenzende* stukken; `Donau / Dunaj` overbrugt 6,8 km
+bij Bratislava. Nieuw: **per-systeem `stitch_km`** (1,5 km op alleen het kanaal, waar OSM bij
+de sluis van Cernavodă en de havenmond van Agigea onbenoemd laat; hiaat 1.192 m gemeten).
+
+**Validatie, de scherpste tot nu toe:** elke stad binnen **±4 km** van haar officiële
+Donau-kilometer over 1.467 km; totaal 2.099 tegen 2.114 (−0,7%); kanaal 64,3 tegen 64,4.
+
+**⚠️ Kerninzicht:** dit is de **eerste binnenvaartverbinding die twee zeeën koppelt**. Zie
+`decisions.md` en `bugs-and-risks.md` — de default is een openstaande keuze voor Lars.
+
+Commit `ac86d98`, live `?v=027`. Netwerk 10.013 → **10.152** knopen, 16.261 → **16.401** edges.
+**Ook: LAR-493 op Done** na Lars' visuele go.
+
 ## 2026-07-19 (sessie 32) — Main + Main-Donau-Kanaal (LAR-493)
 
 `main` **391,3 km** (Mainz → Bamberg, `aftakking:rijn-boven` op **0,00 km**) ·

@@ -1,6 +1,56 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-493 Main + Main-Donau-Kanaal)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-494 Donau — de eerste zee-zee-ring)*
+
+> **🌍 DE DONAU — ROTTERDAM→ZWARTE ZEE COMPLEET, EN DE EERSTE ZEE-ZEE-RING (2026-07-19, laatste).**
+> Live t/m `ac86d98` (`?v=027`). **→ VOLGENDE: eerst een BESLISSING van Lars over de
+> routeer-default (zie onder), daarna [LAR-495]** Schelde/Seine/Rhône.
+>
+> `donau-zeekanaal` **73,0 km** (Constanța → Cernavodă, zee-overgang op MARNET-knoop 9444) ·
+> `donau` **632,6** (→ IJzeren Poort) · `donau-boven` **1.466,6** (→ Kelheim, **ringsluiting op
+> `main-donau-kanaal`** op 0,24 km). Geknipt bij de **IJzeren Poort**: twee sluiscomplexen die bij
+> stremming de as in tweeën leggen — splits op de **verstoring**, net als Kaub.
+> **Acceptatie: R'dam → Constanța 3.291 km over de rivieren** tegen 6.285 over zee. De stub die
+> Lars bij [LAR-493] zag is weg: `Regensburg` **19,0 → 3,0 km**; Wenen 5,4 · Boedapest 3,7.
+>
+> **⚠️ HET INZICHT: EEN RIVIERKETEN WAS ALTIJD EEN DOODLOPENDE TAK — DAT IS NU VOORBIJ.** Het hele
+> netwerk leunde stilzwijgend op die eigenschap: omdat elke keten doodliep, kon een **zeeroute er
+> per constructie nooit korter door worden**, en dát is de werkelijke reden dat de regressie
+> 6818→9654 = 19.610 al die milestones lang vanzelf bleef kloppen. De Donau-ring verbindt Noordzee
+> en Zwarte Zee over binnenwater, en het kortste graafpad stuurt nu een **zeeschip** van Rotterdam
+> naar Shanghai **dwars door Europa over sluizen van klasse Vb** (18.627 i.p.v. 19.610 km) —
+> dezelfde soort fout als de Noordwest-Passage in M23. Gebouwd: groepslabel **`binnenvaart`** in
+> `zoekRoute`, dat élk systeem met `zeevaart=false` in één keer sluit; daarmee **doet de
+> zeevaart-vlag voor het eerst iets** in plaats van metadata te zijn (zie [LAR-492]).
+> **Vraag die vanaf nu bij elk nieuw systeem hoort:** *kan dit een zeeroute bekorten?*
+>
+> **🔴 OPEN BESLUIT — DE DEFAULT LIGT BIJ LARS.** Géén enkele default voldoet aan alle vastgelegde
+> invarianten: permissief breekt R'dam→Shanghai (18.627), `binnenvaart`-dicht breekt R'dam→Nijmegen
+> (geen route, want `waal` is zeevaart=false). Daarom **niet unilateraal gewijzigd**; in plaats
+> daarvan een HUD-knop **"alle schepen / alleen zeeschip"** zodat hij beide kan voelen. Voorstel bij
+> geen sterke voorkeur: een **scheepstype op de stroom zelf** (M26 weet of een flow zee- of
+> binnenvaart is), met "zeeschip" als default voor de route-test. ⚠️ **Noem bij oude
+> regressiecijfers voortaan het profiel erbij** — onder de permissieve default zijn R'dam→Wuhan
+> (20.626 → 19.643) en R'dam→Constanța veranderd.
+>
+> **De zee-overgang hoeft niet de riviermonding te zijn.** MARNET reikt niet tot de delta — Sulina
+> ligt **123 km** van de dichtstbijzijnde zeeknoop — dus komt de Donau binnen via het
+> **Donau-Zwarte Zeekanaal** bij Constanța (3,4 km), precies waar het echte vrachtverkeer loopt.
+> Prijs die we bewust betalen: de deltahavens snappen nog >100 km weg (Sulina 124,8 · Brăila 100,8 ·
+> Tulcea 110,9) → kandidaat-vervolgissue: de maritieme Donau als aparte tak.
+>
+> **Zes naamvormen voor één rivier**, waarvan twee die het issue niet had: **`Дунав/Dunărea`**
+> (Cyrillisch eerst) en **`Dunav/Dunărea`** (Latijn eerst) verschillen *alleen* in welke taal
+> vooraan staat en dekken **aangrenzende** stukken; **`Donau / Dunaj`** overbrugt het gat van 6,8 km
+> bij Bratislava. **Nieuw: per-systeem `stitch_km`** (1,5 km op alléén het kanaal, waar OSM bij de
+> sluis van Cernavodă en de havenmond van Agigea onbenoemd laat; hiaat 1.192 m gemeten). Bewust niet
+> globaal: op een meanderende rivier knoopt een ruime naad twee lussen aan elkaar.
+>
+> **Validatie, de scherpste van de hele uitrol: elke stad binnen ±4 km van haar officiële
+> Donau-kilometer over 1.467 km** (Belgrado +2 · Boedapest +4 · Wenen +4 · Linz +3 · Regensburg −3);
+> totaal 2.099 tegen 2.114 km (−0,7%), kanaal 64,3 tegen 64,4. Netwerk 10.013 → **10.152** knopen,
+> 16.261 → **16.401** edges; havens >50 km 1.422 → **1.410**; corridor 0 m. Zie
+> `memory/decisions.md` + [[2026-07-19-grondstoffen-atlas-lar494-donau-en-de-zee-zee-ring]].
 
 > **⛓️ MAIN + MAIN-DONAU-KANAAL — DE SCHAKEL NOORDZEE/ZWARTE ZEE (2026-07-19, laatste).**
 > Live t/m `c353dfa` (`?v=026`). **→ VOLGENDE: [LAR-494] Donau** = de as Rotterdam→Zwarte Zee

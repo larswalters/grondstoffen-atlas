@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-505 Done, LAR-493 uitgevoerd; NU = LAR-494 Donau)*
+*Last updated: 2026-07-19 (LAR-493 Done, LAR-494 uitgevoerd; NU = default-keuze + LAR-495)*
 
 ## 👀 EERST: Lars' gevoelscheck op het slepen
 
@@ -24,29 +24,49 @@ loopt dwars *door* een aftakking.
 
 Nieuw mechanisme **`sluitAan`** — een keten hecht aan **beide** kanten. Zie `decisions.md`.
 
-## ✅ AFGEROND (op de visuele go na): [LAR-493] Main + Main-Donau-Kanaal (2026-07-19)
+## ✅ AFGEROND: [LAR-493] Main + Main-Donau-Kanaal (2026-07-19) — visuele go binnen, **Done**
 
 `main` 391,3 km (Mainz → Bamberg, `aftakking:rijn-boven` op 0,00 km) · `main-donau-kanaal` 168,4 km
 (Bamberg → Kelheim). **Rotterdam → Kelheim 1.119 km.** Live t/m `c353dfa` (`?v=026`).
 Nieuw gereedschap `v2/tools/diagnose_keten.py`.
 
-## 👀 EERST: Lars' visuele go op de Main
+## ✅ AFGEROND (op de visuele go na): [LAR-494] Donau (2026-07-19)
 
-Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Main van Mainz via Würzburg naar
-Bamberg, en het Main-Donau-Kanaal door naar Kelheim. Daarna [LAR-493] op Done.
+De as **Rotterdam → Zwarte Zee** is compleet: R'dam → Constanța **3.291 km** over de rivieren.
+`donau-zeekanaal` 73,0 · `donau` 632,6 · `donau-boven` 1.466,6 km met ringsluiting op het
+Main-Donau-Kanaal. Live t/m `ac86d98` (`?v=027`).
 
-## ➡️ NU: [LAR-494] Donau — de as Rotterdam → Zwarte Zee compleet
+## 🔴 EERST BESLISSEN: welke routeer-default? (LAR-494, ligt bij Lars)
 
-Kelheim is nu het kopeinde en wacht op de Donau-aansluiting. Dit is de laatste schakel van de as.
+Sinds de Donau-ring zijn Noordzee en Zwarte Zee over binnenwater verbonden, dus het kortste pad
+stuurt een **zeeschip** dwars door Europa (18.627 i.p.v. 19.610 km). Er is een groepslabel
+`binnenvaart` dat dat sluit, maar **geen enkele default voldoet aan alle invarianten** — zie
+`bugs-and-risks.md`. Er staat een HUD-knop "alle schepen / alleen zeeschip" om beide te voelen.
 
-⚠️ Verwacht de **gecombineerde grensnamen** die de survey al vond: `Dunaj / Duna` en
-`Dunărea - Дунав`. Zonder allebei knipt de keten bij **elke** grens door — en de Donau raakt er tien.
-⚠️ Begin met **`cemt_insluiten=False`** (Mosel, Maas én Main gingen alle drie zo).
-⚠️ Verwacht een **historisch parallel kanaal** (zie `decisions.md`) en **sluizen als aparte ways**
-zoals bij het MDK — draai bij een stitch-fout meteen `v2/tools/diagnose_keten.py <label>` in plaats
-van namen te gokken.
-Extracts al binnen: `oostenrijk`, `slowakije`, `hongarije`, `kroatie`, `servie`, `roemenie`,
-`bulgarije`, `de-bayern`.
+Voorstel bij geen sterke voorkeur: **scheepstype op de stroom zelf**, met "zeeschip" als default
+voor de route-test. Deze keuze bepaalt hoe M26 zijn flows routeert, dus hij komt sowieso terug.
+
+## 👀 OOK: Lars' visuele go op de Donau
+
+Kijken op https://larswalters.github.io/grondstoffen-atlas/v2/ : de Donau van Kelheim via Wenen,
+Boedapest en de IJzeren Poort naar Constanța, en of Rotterdam → Constanța er goed uitziet.
+
+## ➡️ DAARNA: [LAR-495] Schelde / Seine / Rhône
+
+Extra urgentie: **R'dam→Antwerpen staat op 500 km** omdat de route om moet via Maas +
+Albertkanaal. Het **Schelde-Rijnkanaal** (22,1 km, al gemeten) brengt dat naar ~110 km.
+
+⚠️ Het Schelde-Rijnkanaal verbindt twee bestaande systemen → **derde toepassing van `sluit_aan`**,
+en meteen de eerstvolgende kandidaat voor de zee-zee-vraag hierboven.
+⚠️ Franse regio's: Geofabrik gebruikt de **pre-2016** indeling (`alsace`, `basse-normandie`,
+`rhone-alpes` bestaan; `normandie` niet — die geeft **0 bytes** i.p.v. een 404).
+⚠️ Begin met `cemt_insluiten=False`; verwacht een **historisch parallel kanaal** bij de Rhône
+(zie `decisions.md`) en draai bij een stitch-fout meteen `v2/tools/diagnose_keten.py <label>`.
+
+## 💡 Kandidaat-vervolgissue: de maritieme Donau
+
+Sulina 124,8 · Brăila 100,8 · Tulcea 110,9 km snappen nog steeds ver weg omdat we via het
+Donau-Zwarte Zeekanaal binnenkomen. Een tak Cernavodă → Brăila → Sulina lost dat op.
 
 ## ➡️ DAARNA: [LAR-495] Schelde / Seine / Rhône
 

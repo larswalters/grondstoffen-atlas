@@ -1,7 +1,62 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-493 Main + MDK: de vorm van een lengte-afwijking)*
+*Last updated: 2026-07-19 (LAR-494 Donau: de eerste zee-zee-ring)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-19 · LAR-494 — een rivierketen was altijd een DOODLOPENDE TAK; dat is nu voorbij
+
+Het hele netwerk leunde stilzwijgend op één eigenschap: elke `EXTRA_VAARWEGEN`-keten hing als
+tak aan het zeenetwerk en liep dood. Daardoor kon een **zeeroute er per constructie nooit korter
+door worden** — en dát is de werkelijke reden dat de regressie 6818→9654 = 19.610 al die
+milestones lang vanzelf bleef kloppen, zonder dat iemand er iets voor hoefde te doen.
+
+De Donau-ring breekt die eigenschap: Noordzee en Zwarte Zee zijn nu over binnenwater verbonden.
+Het kortste graafpad stuurt daarmee een zeeschip van Rotterdam naar Shanghai **dwars door Europa
+over sluizen van klasse Vb** — 18.627 in plaats van 19.610 km. Geometrisch korter, commercieel
+onmogelijk; exact dezelfde fout als de Noordwest-Passage in M23.
+
+**Gebouwd:** groepslabel **`binnenvaart`** in `zoekRoute`, dat élk systeem met `zeevaart=false`
+in één keer sluit. Daarmee doet de zeevaart-vlag voor het eerst iets — tot nu toe was hij (zoals
+in LAR-492 vastgesteld) puur metadata.
+
+**Gevolg voor de rest van de uitrol:** vanaf nu moet je bij elk nieuw systeem dat twee bestaande
+delen van het net verbindt de vraag stellen *of het een zeeroute kan bekorten*. Het
+Schelde-Rijnkanaal ([LAR-495]) is de volgende kandidaat.
+
+## 2026-07-19 · LAR-494 — de default is een ONTWERPKEUZE en ligt bij Lars (OPEN)
+
+Géén enkele default voldoet aan alle vastgelegde invarianten:
+
+| default | R'dam→Shanghai | R'dam→Nijmegen |
+|---|---|---|
+| permissief (huidig) | ❌ 18.627 via de Rijn | ✅ 172 km |
+| `binnenvaart` dicht | ✅ 19.610 | ❌ geen route |
+
+Daarom **niet** unilateraal gewijzigd. In plaats daarvan een HUD-knop "alle schepen / alleen
+zeeschip" zodat Lars beide kan voelen. Voorstel bij geen sterke voorkeur: een **scheepstype op
+de stroom zelf** (M26 weet of een flow zee- of binnenvaart is), met "zeeschip" als default voor
+de route-test. **Deze keuze staat nog open.**
+
+## 2026-07-19 · LAR-494 — de zee-overgang hoeft niet de riviermonding te zijn
+
+De Donau komt níet via Sulina binnen: MARNET reikt niet tot de delta (Sulina ligt **123 km** van
+de dichtstbijzijnde zeeknoop, ver buiten `AANSLUIT_MAX_KM`). Constanța ligt op 3,4 km, en daar
+loopt in werkelijkheid ook het meeste vrachtverkeer — via het **Donau-Zwarte Zeekanaal**, dat de
+benedenloop afsnijdt.
+
+**Regel:** kies de zee-overgang op waar het verkeer écht binnenkomt én waar MARNET reikt, niet
+op wat de kaart als "de monding" aanwijst. Prijs die we bewust betalen: de deltahavens (Sulina,
+Brăila, Tulcea) snappen nog steeds >100 km weg.
+
+## 2026-07-19 · LAR-494 — `stitch_km` per systeem, en waarom niet globaal
+
+OSM laat het Donau-Zwarte Zeekanaal bij de sluis van Cernavodă en de havenmond van Agigea deels
+**onbenoemd**; het grootste hiaat is 1.192 m (gemeten). Nieuw veld `stitch_km` zet de naad voor
+één systeem ruimer (hier 1,5 km).
+
+**Bewust niet globaal:** op een meanderende rivier knoopt een ruime naad twee lussen aan elkaar
+en maakt zo een sluipweg die de lengtetoets pas achteraf verraadt. Gebruik 'm alleen waar je de
+gaten hébt gemeten én de bbox klein is.
 
 ## 2026-07-19 · LAR-493 — de VORM van een lengte-afwijking is de diagnose, de grootte niet
 
