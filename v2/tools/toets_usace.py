@@ -16,8 +16,16 @@ Bron: services7.arcgis.com/.../Waterway_Networks/FeatureServer/1 (laag
 `Waterway_Network`, 6.859 links). Filters: GEO_CLASS='I' (Inland; de laag bevat
 óók 1.454 ocean- en 980 Great-Lakes-links) en FUNC_CLASS<>'N' (non-navigable).
 
+⚠️ Corridor en riviernaam zijn PARAMETERS, geen constanten (gegeneraliseerd bij
+LAR-496). Ze stonden vast op de Mississippi, waardoor `--labels ohio` de Ohio
+tegen Mississippi-geometrie in een Mississippi-bbox mat — een toets die stilletjes
+onzin geeft in plaats van te falen. Geef bij een ander systeem dus altijd `--bbox`
+én `--rivier` mee.
+
 Draaien:  python v2/tools/toets_usace.py
           python v2/tools/toets_usace.py --labels mississippi,mississippi-boven
+          python v2/tools/toets_usace.py --labels ohio \
+              --bbox -89.4,36.8,-79.8,40.7 --rivier "OHIO RIVER"
 """
 
 import argparse
@@ -124,24 +132,26 @@ def percentiel(gesorteerd, q):
     return gesorteerd[i]
 
 
-def toets(labels):
-    pad = os.path.join(CACHE, "vaarwegen_osm.geojson")
+def toets(labels, bbox=BBOX_MISSISSIPPI, riviernaam="MISSISSIPPI RIVER",
+          bestand="vaarwegen_geofabrik.geojson"):
+    pad = os.path.join(CACHE, bestand)
     if not os.path.exists(pad):
-        raise SystemExit(f"{pad} ontbreekt — draai eerst fetch_waterways.py osm")
+        raise SystemExit(f"{pad} ontbreekt — draai eerst fetch_waterways.py")
     onze = {f["properties"]["label"]: f["geometry"]["coordinates"]
             for f in json.load(open(pad, encoding="utf-8"))["features"]}
     ontbreekt = [la for la in labels if la not in onze]
     if ontbreekt:
-        raise SystemExit(f"labels ontbreken in vaarwegen_osm.geojson: {ontbreekt}")
+        raise SystemExit(f"labels ontbreken in {bestand}: {ontbreekt}\n"
+                         f"  beschikbaar: {', '.join(sorted(onze))}")
 
-    print(f"USACE National Waterway Network ophalen · bbox {BBOX_MISSISSIPPI}")
-    feats = haal_usace(BBOX_MISSISSIPPI,
+    print(f"USACE National Waterway Network ophalen · bbox {bbox} · rivier {riviernaam!r}")
+    feats = haal_usace(bbox,
                        "GEO_CLASS='I' AND FUNC_CLASS<>'N'",
                        "RIVERNAME,FUNC_CLASS,WTWY_TYPE,AMILE,BMILE,LENGTH,GEO_CLASS")
     print(f"  inland-links in de corridor: {len(feats)}")
 
     rivier = [f for f in feats
-              if (f.get("properties") or {}).get("RIVERNAME", "").upper() == "MISSISSIPPI RIVER"]
+              if (f.get("properties") or {}).get("RIVERNAME", "").upper() == riviernaam]
     # AMILE/BMILE zijn niet overal gevuld (twee links in de corridor staan op
     # 0.0). Die nullen als mijlpaal lezen suggereert een gat dat er niet is —
     # de geometrie van die links zit gewoon in de extract.
@@ -150,7 +160,7 @@ def toets(labels):
     zonder = sum(1 for f in rivier
                  if not (f["properties"].get("AMILE") or f["properties"].get("BMILE")))
     klassen = sorted({(f["properties"].get("FUNC_CLASS") or "?") for f in rivier})
-    print(f"  waarvan RIVERNAME='MISSISSIPPI RIVER': {len(rivier)} links · "
+    print(f"  waarvan RIVERNAME={riviernaam!r}: {len(rivier)} links · "
           f"river miles {min(mijlen):.0f}–{max(mijlen):.0f}"
           f"{f' (+{zonder} zonder milepost)' if zonder else ''} · FUNC_CLASS {klassen}")
     print(f"  totale USACE-lengte: {sum(f['properties'].get('LENGTH') or 0 for f in rivier):.1f} mijl")
@@ -160,9 +170,15 @@ def toets(labels):
     if diep:
         grens = max(max(p.get("AMILE") or 0, p.get("BMILE") or 0) for p in diep)
         print(f"  deep-draft (FUNC_CLASS='B') t/m river mile {grens:.0f} "
-              f"— Baton Rouge ligt op ~229")
+              f"— op de Mississippi ligt Baton Rouge op ~229")
+    else:
+        # Geen enkele 'B'-link betekent iets: de scheidsrechter zegt dan zélf dat
+        # deze vaarweg over de volle lengte shallow-draft is en er dus géén
+        # zeevaart/binnenvaart-grens te kiezen valt (gemeten zo op de Ohio).
+        print("  géén deep-draft links (FUNC_CLASS='B') — volledig shallow draft, "
+              "dus geen zeevaart-grens op deze vaarweg")
 
-    lijnen = lijnen_uit(rivier, "MISSISSIPPI RIVER")
+    lijnen = lijnen_uit(rivier, riviernaam)
     if not lijnen:
         raise SystemExit("geen USACE-Mississippi-geometrie — filters/bbox checken")
 
@@ -205,6 +221,22 @@ def toets(labels):
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--labels", default="mississippi,mississippi-boven",
-                    help="komma-gescheiden systeemlabels uit vaarwegen_osm.geojson")
+                    help="komma-gescheiden systeemlabels uit het vaarwegen-bestand")
+    ap.add_argument("--bbox", default=None,
+                    help="lon_min,lat_min,lon_max,lat_max — de USACE-corridor. "
+                         "Ruim nemen: een strakke corridor knipt een meanderende "
+                         "rivier kapot. Default = de Mississippi-corridor.")
+    ap.add_argument("--rivier", default="MISSISSIPPI RIVER",
+                    help="USACE RIVERNAME waartegen gemeten wordt (hoofdletters)")
+    ap.add_argument("--bestand", default="vaarwegen_geofabrik.geojson",
+                    help="welk vaarwegen-bestand uit build-cache/ (geofabrik = het "
+                         "productiepad; osm blijft bestaan als kruiscontrole)")
     args = ap.parse_args()
-    toets([s.strip() for s in args.labels.split(",") if s.strip()])
+    bbox = BBOX_MISSISSIPPI
+    if args.bbox:
+        deel = [float(x) for x in args.bbox.split(",")]
+        if len(deel) != 4:
+            raise SystemExit("--bbox verwacht vier getallen: lon_min,lat_min,lon_max,lat_max")
+        bbox = tuple(deel)
+    toets([s.strip() for s in args.labels.split(",") if s.strip()],
+          bbox, args.rivier.upper(), args.bestand)
