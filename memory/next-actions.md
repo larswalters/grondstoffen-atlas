@@ -1,34 +1,33 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-494 uitgevoerd + default beslist; NU = visuele go, dan LAR-495)*
+*Last updated: 2026-07-19 (16 systemen live, 5 issues Done; NU = LAR-507 → LAR-508 → LAR-509)*
 
-## 👀 EERST: Lars' gevoelscheck op het slepen
+## 🔴 START HIER — in deze volgorde
 
-Het slepen over de bol is vervangen door **grijpen-en-meenemen** (het punt dat je vastpakt blijft
-onder de cursor). De oude wet was gemeten 3,52× te snel op élke zoom. Live op `?v=024`.
-**Headless niet te beoordelen** — in de Browser-pane is het venster 1×1 en staat de framelus stil,
-dus alleen Lars kan zeggen of het nu goed voelt. Voelt het nog steeds mis, kijk dan eerst naar het
-tempo van `zoomBy` (factor 1,08 per wheel-tik) — dat is nooit tegen de meetkunde geijkt.
+**1 · [LAR-507] doodlopende MARNET-binnenwaterstubs.** Eerst, want het raakt `bake_marnet.py` en dus
+álles. 16 ongelabelde binnenwater-edges met graad 1; `Willemstad` hangt aan zo'n stub en is
+onbereikbaar. Belangrijker nog: omdat ze geen label dragen kan het `binnenvaart`-filter ze niet
+sluiten — daar zit de veiligheidsklep uit [LAR-494] nog niet dicht. ⚠️ Toets per zone: Suez, Panama
+en de Seaway moeten open blijven (Duluth→R'dam 8.031).
 
-## ✅ AFGEROND: [LAR-506] Mosel — de eerste echte aftakking (2026-07-19)
+**2 · [LAR-508] Noord-Duitsland** — Elbe, Weser, Mittellandkanaal, Nord-Ostsee-Kanal. `Bremen` snapt
+nu 56,5 km. Het Kielerkanaal wordt het eerste systeem met bewust `zeevaart=True`; meet wat dat met
+R'dam→Oostzee doet. `de-niedersachsen` en `de-hamburg` staan al binnen.
 
-Koblenz → Neuves-Maisons 392,0 km (officieel ~394, −0,5%), aansluiting 0,13 km `aftakking:rijn`.
-Daarmee is LAR-504 end-to-end bewezen. Nieuwe les: **bevaarbaar ≠ bevaarbaar op commercieel
-gabarit** — zie `decisions.md`. Nieuwe extracts `fr-lorraine` + `luxemburg`.
+**3 · [LAR-509] hybride keten** (lijnsegmenten + vlakken-afgeleide brugstukken) — deblokkeert
+`grand-canal-noord` (Luoma-meer) en `wolga-baltisch` (drie meren). ⚠️ Houd het vlakken-venster
+klein: `afleiden()` op het hele Wolga-Baltisch-venster was na 45 min nog niet klaar.
 
-## ✅ AFGEROND: [LAR-505] Maas + Benelux-delta (2026-07-19) — visuele go binnen, **Done**
+**Daarna nog open uit de uitrol:** [LAR-501] Mekong + Hooghly (deels geblokkeerd op de Indiase
+regio-namen, zie [LAR-503]) · [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco.
 
-Vier systemen: `maas` **278,1 km** (Werkendam → Luik, `aftakking:waal` op 0,00 km) · `maas-boven`
-64,2 (Luik → Namen) · `albertkanaal` 127,5 (`aftakking:maas`) · `amsterdam-rijnkanaal` 73,3.
-Live t/m `ba8c287` (`?v=025`). **[LAR-504] is nu ook end-to-end bewezen**: Nijmegen→Luik 353 km
-loopt dwars *door* een aftakking.
+## ✅ AFGEROND 2026-07-19 — de parallelle ronde (5 issues Done)
 
-Nieuw mechanisme **`sluitAan`** — een keten hecht aan **beide** kanten. Zie `decisions.md`.
+16 systemen erbij in één bake, 20 → 36. R'dam→Antwerpen **500 → 210 km**; alle negen regressies
+exact. Live t/m `06384e7` (`?v=029`). Zie `session-summaries.md` en `decisions.md`.
 
-## ✅ AFGEROND: [LAR-493] Main + Main-Donau-Kanaal (2026-07-19) — visuele go binnen, **Done**
-
-`main` 391,3 km (Mainz → Bamberg, `aftakking:rijn-boven` op 0,00 km) · `main-donau-kanaal` 168,4 km
-(Bamberg → Kelheim). **Rotterdam → Kelheim 1.119 km.** Live t/m `c353dfa` (`?v=026`).
-Nieuw gereedschap `v2/tools/diagnose_keten.py`.
+**Werkwijze die werkte** (herbruikbaar): agents doen het onafhankelijke opzoekwerk en raken géén
+gedeelde bestanden aan (verificatie in geheugen via `SYSTEMEN.append`), integratie + één fetch +
+één bake + één testronde blijven centraal.
 
 ## ✅ AFGEROND (op de visuele go na): [LAR-494] Donau (2026-07-19)
 

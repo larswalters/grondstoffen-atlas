@@ -1,5 +1,5 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-494 — routeer-default BESLIST en gefixt)*
+*Last updated: 2026-07-19 (OPEN: doodlopende MARNET-stubs + ontbrekend Noord-Duitsland)*
 
 ## ✅ OPGELOST — het aftakmechanisme is nu end-to-end gerouteerd (2026-07-19, [LAR-505])
 
@@ -19,6 +19,39 @@ De vault noemde 9.877 knopen / 16.124 edges voor de bake van `45a21eb`, terwijl 
 **9.863 / 16.110** stond. Niets kapot, maar het is precies het soort drift dat een volgende sessie
 laat "corrigeren" wat niet stuk is. Gecorrigeerd in `now.md` mét een notitie erbij.
 **Les:** neem netwerkcijfers over uit `marnet.json`, niet uit een vorige samenvatting.
+
+## ⚠️ OPEN — doodlopende MARNET-binnenwaterstubs ([LAR-507], 2026-07-19)
+
+Lars zag het op de bol en omcirkelde het; nagemeten en het klopt. **MARNET-knoop 3947**
+(4,430 / 51,715) in het Hollandsch Diep heeft **graad 1**: één ongelabelde binnenwater-edge van
+16,4 km die nergens op aansluit. Onze `schelde-rijnkanaal`-keten loopt er pal langs maar de
+dichtstbijzijnde ketenknoop ligt **7,84 km** verderop.
+
+**Niet cosmetisch:** de haven `Willemstad` snapt erop (2,5 km) en is dus per constructie
+onbereikbaar. Netwerkbreed **16 zulke stubs** (van 705 knopen met graad 1).
+
+⚠️ **Twee consequenties, en de tweede is de ergste.** Deze edges dragen géén passage-label, dus
+(a) onze nauwkeurige ketens kunnen ernaast liggen zonder routes te dragen (de ARK-situatie — de
+Wolga-agent mat dat: Astrachan→Rostov gaat over MARNET in 870 km terwijl onze keten 1.002 meet), en
+(b) het groepslabel `binnenvaart` uit [LAR-494] kan ze **niet sluiten**. Daar zit de veiligheidsklep
+dus nog niet dicht.
+
+⚠️ Bij een fix voorzichtig zijn met zones waar MARNET de énige geometrie is (Suez, Panama, Seaway):
+die moeten open blijven voor zeeschepen — Duluth→R'dam 8.031 hangt eraan. Toets per zone, niet
+globaal.
+
+## ⚠️ OPEN — Noord-Duitsland ontbreekt volledig ([LAR-508], 2026-07-19)
+
+Lars: *"er zijn boven in Duitsland toch ook grote industriële gebieden die met rivier aan water
+liggen"*. De uitrol dekt de Rijn-Donau-as maar Elbe, Weser, Mittellandkanaal en Nord-Ostsee-Kanal
+zitten in geen enkel issue.
+
+Bewijs in de haventoets: **`Bremen` snapt 56,5 km** (de stad ligt 60 km de Weser op), Lübeck 18,2,
+Kiel 18,9. Magdeburg/Hannover/Emden staan niet eens in de searoute-lijst omdat het binnenhavens zijn.
+
+⚠️ Het **Kielerkanaal** wordt het eerste systeem met bewust `zeevaart=True` — dat ís een echte
+zeevaartroute. Daarmee wordt R'dam→Oostzee terecht korter, maar dat raakt de regressie: bewust
+vaststellen, niet stil laten gebeuren.
 
 ## ✅ OPGELOST — de routeer-default na de Donau-ring (2026-07-19, [LAR-494])
 

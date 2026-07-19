@@ -1,6 +1,26 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-19 (sessie 34) — vijf issues parallel: 16 systemen in één bake (20 → 36)
+
+Op Lars' vraag *"kan je er meerdere tegelijk laten lopen?"* vijf M24-issues tegelijk door
+parallelle agents laten onderzoeken, centraal geïntegreerd en **één keer** gebakken.
+**LAR-495/496/497/500/502 → Done.** Live t/m `06384e7` (`?v=029`).
+
+`schelde` 92,1 · `schelde-rijnkanaal` 79,5 · `seine` 115,9 · `seine-boven` 239,9 · `rhone` 234,9 ·
+`rhone-boven` 95,6 · `mississippi-upper` 1.728,7 · `illinois` 467,3 · `chicago-kanaal` 62,3 ·
+`ohio` 1.555,8 · `yangtze-chongqing` 1.261,4 · `grand-canal-zuid` 321,9 · `parelrivier` 72,7 ·
+`xijiang` 317,6 · `wolga` 2.546,4 · `wolga-don` 541,1 km.
+
+**R'dam→Antwerpen 500 → 210 km.** Netwerk 10.152 → **10.773** knopen, 16.401 → **17.024** edges;
+havens >50 km 1.410 → **1.358**; corridor 0 m; **alle negen regressies exact**.
+
+**Nieuwe foutcategorie:** het `waterway`-TYPE fout gemapt (de Seine als `stream`). Filter aangepast,
+bewezen veilig doordat alle 30 bestaande ketens identiek bleven. Zie `decisions.md`.
+
+**Lars' visuele check leverde twee echte vondsten op** → [LAR-507] (doodlopende MARNET-stubs) en
+[LAR-508] (Noord-Duitsland). Twee systemen bewust niet geleverd → [LAR-509].
+
 ## 2026-07-19 (sessie 33) — de Donau (LAR-494): Rotterdam→Zwarte Zee compleet
 
 `donau-zeekanaal` **73,0 km** (Constanța → Cernavodă, zee-overgang) · `donau` **632,6**

@@ -1,6 +1,54 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-494 Donau + realistisch routeren)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (parallelle uitrol: 16 systemen erbij, 20 → 36)*
+
+> **🌐 PARALLELLE UITROL — 16 SYSTEMEN IN ÉÉN BAKE (2026-07-19, laatste).** Live t/m `06384e7`
+> (`?v=029`). **Vijf issues Done** ([LAR-495] [LAR-496] [LAR-497] [LAR-500] [LAR-502]) na Lars'
+> visuele go. **→ VOLGENDE, in deze volgorde: [LAR-507] → [LAR-508] → [LAR-509]** (zie
+> `memory/next-actions.md`).
+>
+> **Werkwijze die werkte, op Lars' vraag *"kan je er meerdere tegelijk laten lopen?"*:** vijf agents
+> parallel op vijf issues, elk met de opdracht **géén gedeelde bestanden aan te raken** — ze
+> verifiëren in geheugen (`SYSTEMEN.append` + `segmenten_geofabrik` + `kortste_waterpad`) en leveren
+> een kant-en-klaar dict op. **Integratie, één fetch, één bake en één testronde blijven centraal.**
+> Dat is de juiste knip: opzoekwerk per rivier is onafhankelijk, bakken is één globale stap.
+> Geef ze de bekende valkuilen expliciet mee — dat scheelde aantoonbaar rondes.
+>
+> **Erbij:** `schelde` 92,1 · `schelde-rijnkanaal` 79,5 · `seine` 115,9 · `seine-boven` 239,9 ·
+> `rhone` 234,9 · `rhone-boven` 95,6 · `mississippi-upper` 1.728,7 · `illinois` 467,3 ·
+> `chicago-kanaal` 62,3 · `ohio` 1.555,8 · `yangtze-chongqing` 1.261,4 · `grand-canal-zuid` 321,9 ·
+> `parelrivier` 72,7 · `xijiang` 317,6 · `wolga` 2.546,4 · `wolga-don` 541,1 km.
+> **R'dam→Antwerpen 500 → 210 km.** Netwerk 10.152→**10.773** knopen, 16.401→**17.024** edges;
+> havens >50 km 1.410→**1.358**; corridor 0 m; **alle negen regressies exact**, inclusief
+> Duluth→R'dam 8.031 ondanks het Chicago-kanaal.
+>
+> **⚠️ DERDE FOUTCATEGORIE: HET TYPE KAN FOUT GEMAPT ZIJN.** Bij de sluis van Poses staat de
+> doorgaande Seine-vaargeul als `waterway=stream`, mét naam én CEMT. Naast *naam ontbreekt* en
+> *gabarit klopt niet* dus ook dit. De **naam-whitelist matcht nu ongeacht type**; de CEMT-clause
+> blijft soort-gefilterd (die heeft geen naamfilter). **Bewezen veilig doordat alle 30 bestaande
+> ketens tot op de meter identiek uit de fetch komen** — bij zo'n wijziging is redeneren niet genoeg.
+>
+> **Het 19e-eeuwse-voorganger-patroon is nu een VASTE CONTROLE** — het kwam in vijf van de zes
+> regio's terug. Bij de Wolga-Baltisch mét objectieve vingerafdruk: élke echte vaarweg daar draagt
+> een CEMT-klasse, precies die omleidingskanalen niet.
+>
+> **⚠️ LARS' VISUELE CHECK LEVERDE TWEE ECHTE VONDSTEN OP.** (1) De plek die hij omcirkelde was een
+> échte fout: MARNET-knoop 3947 in het Hollandsch Diep heeft **graad 1**, en `Willemstad` snapt op
+> die doodlopende stub. Netwerkbreed 16 gevallen — en omdat ze géén label dragen kan het
+> `binnenvaart`-filter ze niet sluiten, dus daar zit de klep uit [LAR-494] nog niet dicht. De
+> Wolga-agent mat onafhankelijk hetzelfde (58 edges in `wolga-don`): **Lars zag met het oog wat de
+> meting elders al aanwees.** → [LAR-507]. (2) **Noord-Duitsland ontbreekt volledig**; `Bremen`
+> snapt 56,5 km. → [LAR-508].
+>
+> **Bewust NIET geleverd:** `grand-canal-noord` en `wolga-baltisch` — beide agents verwierpen hun
+> eigen tussenoplossing omdat die de **Mosel-signatuur** vertoonde (−24% én een ijkpunt dat 42 km
+> wegsprong). Liever geen systeem dan een fout systeem → [LAR-509].
+>
+> **Ook:** `toets_usace.py` nam de Mississippi-bbox/riviernaam hard, dus `--labels ohio` mat tegen
+> Mississippi-geometrie — **een toets die stil onzin geeft is erger dan geen toets**; nu parameters.
+> Vijf Franse pre-2016 regio's geregistreerd mét de **302-redirect-val** (curl zonder `-L` schrijft
+> 258 bytes HTML wég als `.pbf` — controleer de bestandsgrootte). Dode regel `扬子江` verwijderd.
+> Zie `memory/decisions.md` + [[2026-07-19-grondstoffen-atlas-parallelle-uitrol-16-systemen]].
 
 > **🌍 DE DONAU — ROTTERDAM→ZWARTE ZEE COMPLEET, EN DE EERSTE ZEE-ZEE-RING (2026-07-19, laatste).**
 > Live t/m `ac86d98` (`?v=027`). **→ VOLGENDE: eerst een BESLISSING van Lars over de

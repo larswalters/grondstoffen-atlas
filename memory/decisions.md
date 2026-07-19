@@ -1,5 +1,5 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-494: zeeschip vaart niet door sluizen — BESLIST)*
+*Last updated: 2026-07-19 (parallelle uitrol: 16 systemen, filter op naam i.p.v. type)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
@@ -22,6 +22,64 @@ in LAR-492 vastgesteld) puur metadata.
 **Gevolg voor de rest van de uitrol:** vanaf nu moet je bij elk nieuw systeem dat twee bestaande
 delen van het net verbindt de vraag stellen *of het een zeeroute kan bekorten*. Het
 Schelde-Rijnkanaal ([LAR-495]) is de volgende kandidaat.
+
+## 2026-07-19 · Parallelle agents: laat ze ONDERZOEKEN, integreer CENTRAAL
+
+Op Lars' vraag om meerdere issues tegelijk te draaien. De knip die werkte:
+
+* **Agents doen het onafhankelijke werk** — namen opzoeken, gaten diagnosticeren, ketens meten,
+  ijken tegen officiële kilometers. Dat is per rivier volledig los van elkaar.
+* **Ze raken géén gedeelde bestanden aan.** Verificatie doen ze in geheugen:
+  `SYSTEMEN.append(mijn_dict)` + `segmenten_geofabrik()` + `kortste_waterpad()`. Zo bewijzen ze dat
+  hun keten stitcht zonder dat vijf sessies in `fetch_waterways.py` schrijven.
+* **Integratie, fetch, bake en tests blijven centraal.** Het bakken is één globale stap over álle
+  systemen; dat valt niet te parallelliseren en hoort ook niet.
+
+Geef ze de vaste werkwijze én de bekende valkuilen expliciet mee (namen opzoeken i.p.v. raden,
+`cemt_insluiten=False`, sluizen als aparte ways, historische kanalen, `diagnose_keten.py` bij een
+stitch-fout, en de vorm-van-de-afwijking-regel). Dat scheelde ze aantoonbaar rondes.
+
+**Coördinatie tussen issues is een reëel ding:** LAR-496 (Ohio) bleek geblokkeerd op LAR-497 omdat
+de Mississippi bij Memphis ophield, 224 km vóór Cairo. Dat los je op bij de merge, niet in de agent.
+
+## 2026-07-19 · Het TYPE kan fout gemapt zijn — filter op NAAM, niet op soort
+
+Bij de sluis van Poses/Amfreville staat de doorgaande Seine-vaargeul in OSM als
+`waterway=stream`, mét `name=La Seine` én `CEMT=Vb`. De soort-filter stond vóór de naamtoets, dus
+die 2 km viel eruit en `seine-boven` was niet te bouwen.
+
+**Derde foutcategorie**, naast *naam ontbreekt* (Amer, Canal Albert, RMD) en *gabarit klopt niet*
+(Freycinet, duwvaartsas): **het type is fout gemapt.**
+
+Fix in `segmenten_geofabrik()`: de **naam-whitelist matcht ongeacht `waterway`-type**; de
+CEMT-clause blijft wél soort-gefilterd, want die heeft geen naamfilter en zou anders beken en
+sloten binnenhalen. Redenering: wie een naam expliciet whitelist heeft de bron al beoordeeld — het
+type mag die keuze dan niet stilletjes overrulen.
+
+**De toets die zo'n wijziging verdient:** alle 30 bestaande ketens opnieuw ophalen en vergelijken.
+Uitkomst: **tot op de meter identiek**. Redeneren dat het wel goed zit is hier niet genoeg.
+
+## 2026-07-19 · Het 19e-eeuwse-voorganger-patroon is nu een VASTE CONTROLE
+
+In één ronde kwam het in **vijf van de zes regio's** terug: `Miami and Erie`/`Ohio and Erie` (Ohio) ·
+`Illinois and Michigan` + `Hennepin` (Illinois) · `江南运河` (Grand Canal) · `Canal d'Arles à Bouc`
+(Rhône) · `Новоладожский канал`/`Онежский канал`/`Белозерский` (Wolga-Baltisch).
+
+Bij een moderne grootgabarit-vaarweg ligt de historische voorganger vrijwel altijd in hetzelfde dal,
+met een gelijkende naam en een bijna identieke lon/lat-strekking. **Controleer er standaard op.**
+
+Bij de Wolga-Baltisch kreeg het patroon een **objectieve vingerafdruk**: élke echte vaarweg in die
+corridor draagt een CEMT-klasse, en precies de drie omleidingskanalen dragen er géén. Waar die tag
+bestaat is dat dus een hardere test dan redeneren over de naam.
+
+## 2026-07-19 · Ook een MEETLAT kan stil onzin geven
+
+`toets_usace.py` had de Mississippi-bbox én -riviernaam hard ingebakken. `--labels ohio` mat de Ohio
+daardoor tegen **Mississippi-geometrie in een Mississippi-bbox** — en gaf gewoon getallen terug.
+
+**Een toets die stilletjes onzin geeft in plaats van te falen is erger dan geen toets.** Corridor,
+riviernaam en bronbestand zijn nu parameters. Zelfde klasse fout als een cache die stil een oude
+lijn teruggeeft: het faalt niet, het liegt.
 
 ## 2026-07-19 · LAR-494 — BESLIST: een zeeschip vaart niet door sluizen (realistisch routeren)
 
