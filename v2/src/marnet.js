@@ -19,6 +19,11 @@ import * as THREE from "three";
 
 const KLEUR_ZEE = new THREE.Color(0x2f9bdd);
 const KLEUR_BINNEN = new THREE.Color(0xd9a441);
+// Bulklaag (LAR-515): bewust gedempt — er staat mechanisch gefilterde
+// geometrie (honderdduizenden km) tegenover 1.091 getoetste vaarweg-edges,
+// en op gelijke helderheid verdwijnt de GETOETSTE geometrie in de mechanische.
+const KLEUR_BULK = new THREE.Color(0xa8814a);
+const OPACITEIT_BULK = 0.35;
 
 /** Zelfde zigzag-varint-idee als world.js (bewust gekopieerd: een import van
  *  world.js?v=… zou de module dubbel laden zodra de versies uiteenlopen).
@@ -65,11 +70,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=029").then((r) => {
+    fetch("data/marnet.json?v=030").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=029").then((r) => {
+    fetch("data/marnet.bin?v=030").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -211,6 +216,83 @@ export async function laadMarnet(radius) {
       kbOverdracht: Math.round((buffer.byteLength + JSON.stringify(meta).length) / 1024),
       msLaden: Math.round(tGeladen - t0),
       msVerwerken: Math.round(t1 - tGeladen),
+    },
+  };
+}
+
+/**
+ * Bulklaag (LAR-515): PUUR TEKENGEOMETRIE, volledig los van laadMarnet()/NET.
+ *
+ * Bewust geen onderdeel van de routeergraaf — een eerder ontwerp stitchte de
+ * bulklaag tot een junction-graaf zoals de verhalende ketens, maar dat gaf op
+ * Nederland alleen al 23.189 knopen/edges (méér dan het hele huidige netwerk),
+ * want bulkketens zijn extreem kort. Zonder topologie bestaat dat risico niet:
+ * dit is een aparte fetch, een apart bestand (marnet-bulk.json), en een aparte
+ * THREE.Group per regio. `zoekRoute`/`zoekRouteRealistisch`/`binnenSystemenBij`
+ * raken deze data nooit — een bulk-edge kan dus per constructie geen zeeroute
+ * bekorten, niet toevallig.
+ *
+ * Formaat: { regios: { "bulk-eu": { km, bronKm, weggenomenKm, polylines }, … } }
+ * — polylines is een array van [lon,lat]-punt-arrays, al door bake_marnet.py's
+ * 250 m-uitsluiting gehaald.
+ */
+export async function laadBulk(radius) {
+  const t0 = performance.now();
+  const meta = await fetch("data/marnet-bulk.json?v=030").then((r) => {
+    if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
+    return r.json();
+  });
+
+  const groep = new THREE.Group();
+  groep.name = "marnet-bulk";
+  const regioLijnen = {};
+  let totaalKm = 0, totaalPunten = 0, totaalLijnen = 0;
+
+  for (const [label, v] of Object.entries(meta.regios || {})) {
+    const lijnen = v.polylines || [];
+    let nPunten = 0;
+    for (const p of lijnen) nPunten += p.length;
+    const posities = new Float32Array(nPunten * 3);
+    const indices = new Uint32Array(Math.max(0, nPunten - lijnen.length) * 2);
+    let pi = 0, ii = 0;
+    for (const p of lijnen) {
+      for (let k = 0; k < p.length; k++) {
+        opBol(p[k][0], p[k][1], radius, posities, pi * 3);
+        if (k > 0) { indices[ii++] = pi - 1; indices[ii++] = pi; }
+        pi++;
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(posities, 3));
+    geo.setIndex(new THREE.BufferAttribute(indices, 1));
+    const mat = new THREE.LineBasicMaterial({
+      color: KLEUR_BULK,
+      transparent: true,
+      opacity: OPACITEIT_BULK,
+      depthWrite: false,   // bulk mag een getoetste keten op een kruising nooit overtekenen
+    });
+    const mesh = new THREE.LineSegments(geo, mat);
+    mesh.name = label;
+    mesh.renderOrder = 2.5;  // kustlijn 2 · bulk 2,5 · net 3 · route 4
+    groep.add(mesh);
+    regioLijnen[label] = mesh;
+    totaalKm += v.km || 0;
+    totaalPunten += nPunten;
+    totaalLijnen += lijnen.length;
+  }
+
+  const t1 = performance.now();
+  return {
+    lijnen: groep,
+    regioLijnen,
+    regios: meta.regios || {},
+    stats: {
+      regios: Object.keys(meta.regios || {}).length,
+      km: Math.round(totaalKm),
+      lijnen: totaalLijnen,
+      punten: totaalPunten,
+      msLaden: Math.round(t1 - t0),
     },
   };
 }
@@ -452,7 +534,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=029");
+  const r = await fetch("data/ports.json?v=030");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=029" />
+<link rel="stylesheet" href="style.css?v=030" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -50,6 +50,14 @@
     <div class="btnRow">
       <button class="mnBtn is-on" data-mn="aan">aan</button>
       <button class="mnBtn" data-mn="uit">uit</button>
+    </div>
+
+    <!-- Bulklaag (LAR-515): mechanisch gefilterd binnenwater, puur
+         tekengeometrie — geen onderdeel van de router. Gedempte kleur. -->
+    <div class="hudLabel">Bulklaag (binnenvaart, ongetoetst)</div>
+    <div class="btnRow">
+      <button class="bkBtn is-on" data-bk="aan">aan</button>
+      <button class="bkBtn" data-bk="uit">uit</button>
     </div>
 
     <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
@@ -100,6 +108,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=029"></script>
+<script type="module" src="src/main.js?v=030"></script>
 </body>
 </html>

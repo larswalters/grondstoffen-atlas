@@ -1,11 +1,11 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=029";
-import { laadVectorWereld } from "./world.js?v=029";
-import { createTileLayer } from "./tiles.js?v=029";
-import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=029";
+import { createGlobe, CONFIG } from "./globe.js?v=030";
+import { laadVectorWereld } from "./world.js?v=030";
+import { createTileLayer } from "./tiles.js?v=030";
+import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn, laadBulk }
+  from "./marnet.js?v=030";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -64,6 +64,26 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
   })
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
 
+// --- de bulklaag (LAR-515) --------------------------------------------------
+// Puur tekengeometrie, volledig los van NET/de router — zie marnet.js. Faalt
+// stil (console.warn) als marnet-bulk.json nog niet gebakken is, want de
+// bulklaag is optioneel: de atlas moet zonder haar blijven werken.
+
+let BULK = null;
+
+laadBulk(CONFIG.radius)
+  .then((bulk) => {
+    BULK = bulk;
+    GLOBE.globeGroup.add(bulk.lijnen);
+    console.log(
+      `[atlas v2] bulklaag: ${bulk.stats.regios} regio's · ` +
+      `${bulk.stats.km.toLocaleString("nl")} km · ${bulk.stats.lijnen.toLocaleString("nl")} lijnen · ` +
+      `${bulk.stats.punten.toLocaleString("nl")} punten · laden ${bulk.stats.msLaden} ms`
+    );
+    window.BULK = bulk;   // diagnose-handvat, net als MARNET/HAVENS
+  })
+  .catch((e) => console.warn("[atlas v2] bulklaag niet geladen (optioneel):", e));
+
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
 // met de kijkhoogte. Elke laag z'n eigen plank: kustlijn onder, netwerk erboven,
@@ -77,6 +97,12 @@ GLOBE.onTick(() => {
   if (NET) {
     const op = Math.max(CONFIG.radius * 3e-6, alt * 0.005);
     NET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
+  }
+  if (BULK) {
+    // Iets lager dan NET (renderOrder 2,5 doet de rest): bulk mag nooit een
+    // getoetste keten op een kruising overtekenen.
+    const op = Math.max(CONFIG.radius * 2.5e-6, alt * 0.0045);
+    BULK.lijnen.scale.setScalar(1 + op / CONFIG.radius);
   }
   if (routeLijn) {
     const op = Math.max(CONFIG.radius * 4e-6, alt * 0.006);
@@ -219,6 +245,9 @@ wireButtons(".clBtn", "cl", (mode) => {
 });
 wireButtons(".mnBtn", "mn", (mode) => {
   if (NET) NET.lijnen.visible = (mode === "aan");
+});
+wireButtons(".bkBtn", "bk", (mode) => {
+  if (BULK) BULK.lijnen.visible = (mode === "aan");
 });
 
 wireButtons(".bmBtn", "bm", (mode) => {

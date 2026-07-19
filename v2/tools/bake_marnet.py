@@ -812,6 +812,232 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
     return uit
 
 
+# ---------------------------------------------------------------- bulklaag (LAR-515)
+#
+# De bulklaag is PUUR TEKENGEOMETRIE — geen onderdeel van `nodes`/`edge_lijst`.
+# Reden (gevonden bij de risicoanalyse van 2026-07-20, gemeten op NL): een
+# eerste ontwerp stitchte de bulklaag tot een junction-graaf zoals de
+# verhalende ketens, maar dat gaf op NL alleen al 23.189 knopen/edges — MEER
+# dan het hele huidige netwerk (10.773/17.024) — want bulkketens zijn extreem
+# kort (mediaan 52 m). Zonder topologie bestaat dat risico niet: deze functies
+# MUTEREN nodes/edge_lijst/status NOOIT. marnet.bin/marnet.json/ports.json
+# blijven daardoor byte-identiek, ook met --bulk. Het resultaat gaat naar een
+# apart bestand (marnet-bulk.json) dat de browser los inleest.
+
+BULK_EPS_KM = 0.25   # uitsluiting: bulk binnen 250 m van de verhalende laag vervalt
+BULK_MIN_KM = 1.0    # een overgebleven snipper korter dan dit is geen vaarweg meer
+BULK_DICHT_KM = 0.2  # verdichtingsstap vóór de STRtree-toets — ZIE snij_bulk()
+
+
+def _seg_km(p, a, b):
+    """Afstand van p tot het SEGMENT a-b in km (met klemming op de uiteinden).
+
+    ⚠️ `_kruis_km()` hierboven meet tot de ONEINDIGE lijn en is hier
+    onbruikbaar — die zou willekeurige geometrie wegvagen die toevallig op
+    het verlengde van een kort Rijn-segment ligt.
+    """
+    coslat = math.cos(math.radians(p[1]))
+    ax, ay = (a[0] - p[0]) * coslat, a[1] - p[1]
+    bx, by = (b[0] - p[0]) * coslat, b[1] - p[1]
+    dx, dy = bx - ax, by - ay
+    den = dx * dx + dy * dy
+    if den < 1e-18:
+        return math.hypot(ax, ay) * 111.2
+    t = max(0.0, min(1.0, -(ax * dx + ay * dy) / den))
+    return math.hypot(ax + t * dx, ay + t * dy) * 111.2
+
+
+def _lengte_km(pts):
+    return sum(gc_km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+
+
+def _verdicht_voor_toets(pts, stap_km=BULK_DICHT_KM):
+    """Voegt tussenpunten in zodat geen twee opeenvolgende punten verder dan
+    stap_km uit elkaar liggen — puur voor de exclusietoets, niet voor de
+    uitvoergeometrie.
+
+    Waarom dit moet: `snij_bulk` toetst per PUNT. Gemeten op NL-bulk na DP
+    25 m: mediane vertexafstand 229 m, p99 3.144 m, max 44 km — 84% van de
+    kilometers zit in segmenten LANGER dan de 250 m-uitsluitingsstraal zelf.
+    Zonder verdichting mist de toets dus grotendeels de dubbele geometrie die
+    hij hoort te vinden. Na verdichting op 200 m is elk gat kleiner dan de
+    straal en werkt de puntsgewijze toets wél.
+    """
+    uit = [pts[0]]
+    for i in range(1, len(pts)):
+        a, b = pts[i - 1], pts[i]
+        d = gc_km(a, b)
+        if d > stap_km:
+            n = int(d / stap_km) + 1
+            for k in range(1, n):
+                t = k / n
+                uit.append((a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t))
+        uit.append(b)
+    return uit
+
+
+def _verhalende_lijnen(nodes, edge_lijst, status, geometrie, uit):
+    """Alle polylines waar de bulklaag niet naast mag liggen: de 36 M24-ketens
+    (volle DP-resolutie) plus de M23-edges met status `binnen:<zone>` (Suez,
+    Panama, Mississippi, Seaway, Wolga-Don, ... — 29 zones).
+
+    ⚠️ De M23-zone-edges hebben GEEN eigen geometrie-entry (die bestaat alleen
+    voor omgelegde `kapot`-edges en voor vaarweg-ketens) en vallen dus terug op
+    de KOORDE (MARNET-mediaan 83 km, max 3.611 km). De 250 m-band daarrond is
+    voor zo'n lange koorde een dunne sliver: de bulk-kopie van bijvoorbeeld het
+    Suezkanaal wordt daardoor NIET weggenomen en kan als dubbele lijn
+    verschijnen. Bewust geaccepteerd — uitsluiten tegen álle MARNET-zee-edges
+    zou willekeurige estuarium- en kustgeometrie wegvreten. Gerapporteerd,
+    niet verstopt: zie het `sliver`-aantal in het bakrapport.
+    """
+    wie = {ei for v in uit.values() for ei in v["edges"]}
+    wie |= {ei for ei, s in status.items() if s.startswith("binnen:")}
+    lijnen, slivers = [], 0
+    for ei in sorted(wie):
+        (a, b), _p = edge_lijst[ei]
+        lijn = geometrie.get(ei) or [nodes[a], nodes[b]]
+        if ei not in geometrie:
+            slivers += 1
+        lijnen.append(lijn)
+    return lijnen, slivers
+
+
+def snij_bulk(bulk_lijnen, boom, seg_pts, eps_km=BULK_EPS_KM, min_km=BULK_MIN_KM):
+    """Knipt uit elke (verdichte) bulk-polyline weg wat < eps_km van de
+    verhalende laag ligt. Geeft (runs, rapport) — een run is een aaneen-
+    gesloten stuk dat OVERBLIJFT: een zijrivier die de laatste 300 m in de
+    Rijn ligt verliest zijn kop, niet zijn hele lichaam.
+
+    Precedent voor de aanpak (grof via STRtree, dan exact nagerekend):
+    `middellijn_uit_vlakken.py` liep eerst 5,5 GB en 11+ min met `union_all`
+    terwijl van 289.365 vlakken er 1.241 relevant waren. `STRtree.query(...,
+    predicate="dwithin")` is gevectoriseerd in C en toetst alleen kandidaten.
+    """
+    offsets, alle = [], []
+    for lijn in bulk_lijnen:
+        offsets.append(len(alle))
+        alle.extend(lijn)
+    offsets.append(len(alle))
+    arr = np.array(alle, dtype=float)
+    dicht = np.zeros(len(arr), dtype=bool)
+    beste = np.full(len(arr), np.inf)
+    pts = shp_points(arr)
+    paren = 0
+
+    band = 5.0
+    for band0 in np.arange(-90.0, 90.0, band):
+        wie = np.flatnonzero((arr[:, 1] >= band0) & (arr[:, 1] < band0 + band))
+        if not len(wie):
+            continue
+        cos_min = max(0.1, math.cos(math.radians(max(abs(band0), abs(band0 + band)))))
+        eps_deg = 1.5 * eps_km / 111.2 / cos_min
+        pi, si = boom.query(pts[wie], predicate="dwithin", distance=eps_deg)
+        paren += len(pi)
+        for lokaal, s in zip(pi, si):
+            i = int(wie[lokaal])
+            d = _seg_km(alle[i], *seg_pts[s])
+            if d < beste[i]:
+                beste[i] = d
+            if d <= eps_km:
+                dicht[i] = True
+
+    runs, snippers = [], 0
+    for li in range(len(bulk_lijnen)):
+        loop = []
+        for i in range(offsets[li], offsets[li + 1]):
+            if dicht[i]:
+                if len(loop) > 1:
+                    runs.append((li, loop))
+                loop = []
+            else:
+                loop.append(alle[i])
+        if len(loop) > 1:
+            runs.append((li, loop))
+    houd = []
+    for li, p in runs:
+        if _lengte_km(p) >= min_km:
+            houd.append((li, p))
+        else:
+            snippers += 1
+
+    bewaard = ~dicht
+    dichtbij_bewaard = beste[bewaard & np.isfinite(beste)]
+    rapport = {
+        "vertices": int(len(arr)), "vertices_weg": int(dicht.sum()), "paren": paren,
+        "max_weg_m": float(beste[dicht].max() * 1000) if dicht.any() else 0.0,
+        "dichtste_bewaard_m": (float(dichtbij_bewaard.min() * 1000)
+                               if len(dichtbij_bewaard) else float("inf")),
+        "snippers": snippers, "runs": len(houd),
+    }
+    return houd, rapport
+
+
+def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad):
+    """Leest vaarwegen_bulk.geojson, sluit dubbele geometrie uit, en geeft een
+    losse structuur terug — MUTEERT nodes/edge_lijst/status NIET. Aparte
+    uitvoer (marnet-bulk.json), niet marnet.bin: dat garandeert dat de elf
+    regressie-invarianten per constructie ongemoeid blijven, niet toevallig.
+    """
+    gj = json.load(open(pad, encoding="utf-8"))
+    per_regio = {}
+    for f in gj["features"]:
+        p = f["properties"]
+        regio = p["label"]                    # 'bulk-eu', 'bulk-cn', ...
+        if not regio.startswith("bulk-"):
+            raise RuntimeError(f"bulk-label {regio!r} mist het 'bulk-'-voorvoegsel")
+        if regio in vaarwegen_meta:
+            raise RuntimeError(f"{regio} botst met een verhalend systeemlabel")
+        coords = [(wrap_lon(lo), la) for lo, la in f["geometry"]["coordinates"]]
+        if len(coords) > 1:
+            per_regio.setdefault(regio, []).append((p.get("signaal") or "?", coords))
+
+    verhalend, slivers = _verhalende_lijnen(nodes, edge_lijst, status, geometrie,
+                                            vaarwegen_meta)
+    seg_pts, segs = [], []
+    for lijn in verhalend:
+        for i in range(len(lijn) - 1):
+            seg_pts.append((lijn[i], lijn[i + 1]))
+            segs.append(LineString([lijn[i], lijn[i + 1]]))
+    boom = STRtree(segs)
+    print(f"\nbulklaag uit {os.path.basename(pad)} — uitsluiting tegen "
+          f"{len(verhalend):,} verhalende lijnen / {len(segs):,} segmenten "
+          f"({slivers} zonder eigen geometrie, vallen terug op de koorde) "
+          f"— eps {BULK_EPS_KM * 1000:.0f} m")
+
+    regios = {}
+    for regio in sorted(per_regio):
+        lijnen = per_regio[regio]
+        bron_km = sum(_lengte_km(p) for _s, p in lijnen)
+        verdicht = [_verdicht_voor_toets(p) for _s, p in lijnen]
+        houd, rap = snij_bulk(verdicht, boom, seg_pts)
+        over_km = sum(_lengte_km(p) for _li, p in houd)
+        punten = sum(len(p) for _li, p in houd)
+
+        regios[regio] = {
+            "zeevaart": False,
+            "bulk": True,
+            "cemt": "",
+            "bron": gj.get("bron", "OSM (ODbL) via Geofabrik-regio-extract"),
+            "km": round(over_km, 1),
+            "bronKm": round(bron_km, 1),
+            "weggenomenKm": round(bron_km - over_km, 1),
+            "polylines": [[[round(lo, 5), round(la, 5)] for lo, la in p]
+                          for _li, p in houd],
+        }
+        print(f"  {regio:<10} {bron_km:9,.0f} km bron -> {over_km:9,.0f} km over "
+              f"(weg {bron_km - over_km:7,.0f} km = "
+              f"{100 * (1 - over_km / max(bron_km, 1e-9)):4.1f}%) · "
+              f"{len(houd):6,} lijnen · {punten:8,} punten · "
+              f"{rap['vertices_weg']:,}/{rap['vertices']:,} vertices dicht · "
+              f"{rap['runs']:,} runs (+{rap['snippers']:,} snipper<{BULK_MIN_KM} km weg) · "
+              f"max weg {rap['max_weg_m']:.0f} m · dichtste bewaard "
+              f"{rap['dichtste_bewaard_m']:.0f} m · {rap['paren']:,} paren getoetst")
+
+    return {"regios": regios,
+            "filterVersie": gj.get("filterVersie"),
+            "extracts": gj.get("extracts", [])}
+
+
 # ---------------------------------------------------------------- bakken
 
 def varint(uit, waarde):
@@ -831,7 +1057,7 @@ def varint(uit, waarde):
 SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
-def verzoen_en_bak(vaarwegen_pad=None, suffix=""):
+def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -931,6 +1157,25 @@ def verzoen_en_bak(vaarwegen_pad=None, suffix=""):
     if vaarwegen_pad:
         vaarwegen_meta = extra_vaarwegen(land, nodes, edge_lijst, status,
                                          geometrie, vaarwegen_pad)
+
+    # --- M24.6: bulklaag (LAR-515) — PUUR TEKENGEOMETRIE ---------------------
+    # Bewust HIER: alles hierboven is de verhalende laag waar de 250 m-
+    # uitsluiting tegenaan gedraaid wordt. Deze aanroep muteert nodes/
+    # edge_lijst/status/geometrie NIET — marnet.bin/marnet.json/ports.json
+    # zijn na deze regel nog exact wat ze hiervoor waren.
+    bulk_meta = None
+    if bulk_pad:
+        bulk_meta = bulklaag(nodes, edge_lijst, status, geometrie,
+                             vaarwegen_meta, bulk_pad)
+        bulk_json_pad = os.path.join(DATA, f"marnet-bulk{suffix}.json")
+        with open(bulk_json_pad, "w", encoding="utf-8") as f:
+            json.dump(bulk_meta, f, separators=(",", ":"))
+        km_tot = sum(v["km"] for v in bulk_meta["regios"].values())
+        km_weg = sum(v["weggenomenKm"] for v in bulk_meta["regios"].values())
+        print(f"\n  bulklaag      : {km_tot:,.0f} km over {len(bulk_meta['regios'])} "
+              f"regio's (250 m-uitsluiting nam {km_weg:,.0f} km weg)")
+        print(f"  {os.path.basename(bulk_json_pad):<20}: "
+              f"{os.path.getsize(bulk_json_pad) / 1024:,.0f} KB")
 
     # --- geometrie verdichten + kwantiseren ---------------------------------
     def verdicht(lijn):
@@ -1091,6 +1336,9 @@ if __name__ == "__main__":
     ap.add_argument("--analyse", action="store_true", help="alleen het rapport")
     ap.add_argument("--vaarwegen", help="GeoJSON uit fetch_waterways.py (M24/LAR-486): "
                                         "vaarweg-ketens aan de graaf hangen")
+    ap.add_argument("--bulk", help="vaarwegen_bulk.geojson uit fetch_waterways.py --bulk "
+                                   "(LAR-515): puur tekengeometrie, apart bestand "
+                                   "marnet-bulk<suffix>.json, muteert de graaf niet")
     ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoerbestanden "
                                                  "(marnet<suffix>.bin/json, ports<suffix>.json) "
                                                  "— voor de bake-off-variant")
@@ -1098,4 +1346,4 @@ if __name__ == "__main__":
     if args.analyse:
         analyse()
     else:
-        verzoen_en_bak(vaarwegen_pad=args.vaarwegen, suffix=args.suffix)
+        verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix)

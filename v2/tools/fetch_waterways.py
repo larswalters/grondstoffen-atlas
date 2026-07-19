@@ -75,6 +75,52 @@ STITCH_KM = {"osm": 0.06, "geofabrik": 0.06, "unece": 0.8}
 ANKER_TOL_KM = 6.0    # anker moet binnen deze afstand van de geometrie liggen
 SIMPLIFY_KM = 0.025   # Douglas-Peucker ~25 m: bochten blijven, ruis verdwijnt
 
+# ---------------------------------------------------------------- bulklaag (LAR-515)
+#
+# De bulklaag is GEEN traject: geen namen-whitelist, geen ankers, geen
+# kortste_waterpad, geen lengtetoets, en (na de risicoanalyse van 2026-07-20)
+# ook GEEN junction-graaf. Elke bevaarbare OSM-way wordt zijn eigen
+# gesimplificeerde polyline — puur tekengeometrie, geen routeerbare topologie.
+#
+# Waarom dat laatste een bewuste omkeer is: een eerste ontwerp stitchte de
+# bulklaag tot ketens tussen kruispunten (zoals het systeem-pad), maar gemeten
+# op Nederland alleen al gaf dat 23.189 knopen/edges — MEER dan het hele
+# huidige netwerk (10.773/17.024) — want bulkketens zijn extreem kort
+# (mediaan 52 m, 86% < 500 m) en de baker zet een knoop op elk ketenuiteinde.
+# Zonder topologie bestaat dat risico niet: er zijn geen knopen, geen edges,
+# geen naden, geen Dijkstra. bake_marnet.py mengt de bulklaag dan ook NOOIT
+# in `nodes`/`edge_lijst` — marnet.bin/marnet.json/ports.json blijven
+# byte-identiek, ook met --bulk. Promotie naar routeerbaar gebeurt later, per
+# systeem, via het bestaande SYSTEMEN-pad (de Promotie-milestone).
+BULK_FILTER_VERSIE = 1        # OPHOGEN bij wijziging van bulk_signaal/tolerantie —
+                               # anders geeft de cache stil segmenten terug die met
+                               # een ander filter gemaakt zijn.
+BULK_SIMPLIFY_KM = 0.1         # ruimer dan SIMPLIFY_KM: niemand toetst de exacte
+                               # vorm van bulk tegen een officiële vaarafstand
+                               # (zie LAR-515-comment "aparte simplify-tolerantie").
+BULK_JA = {"yes", "designated", "permissive", "official"}
+# waterway=fairway/safe_water/dock zijn bebakende ZEEvaargeulen (Westerschelde,
+# Wadden, IJsselmeer, Maasgeul), geen binnenvaart — gevonden bij het meten op
+# NL: 2.847 km fairway, 85% oostelijk van lon 4.0. Zonder uitsluiting bakt de
+# bulklaag zeevaartwater als "zeevaart=false binnenvaart" pal voor Rotterdam.
+BULK_UITGESLOTEN_SOORT = {"fairway", "safe_water", "dock"}
+BULK_MIN_KM = 1.0             # snipper korter dan dit is geen zichtbare vaarweg meer
+BULK_CACHE = os.path.join(CACHE, "bulk")
+
+# Regio-afdeling uit het bestaande Geofabrik-pad (GEOFABRIK_REGIOS) — geen
+# tweede handmatige lijst die uit de pas kan lopen. Specifiek vóór algemeen;
+# China apart want dat is in z'n eentje ~45.500 km, bijna een kwart van laag C.
+BULK_REGIO_VAN_PAD = (
+    ("asia/china", "cn"),
+    ("russia/", "ru"),
+    ("europe/", "eu"),
+    ("north-america/", "na"),
+    ("south-america/", "sa"),
+    ("asia/", "as"),
+    ("africa/", "af"),
+    ("australia-oceania/", "oc"),
+)
+
 # bbox = (lat_min, lon_min, lat_max, lon_max) — Overpass-volgorde (Z,W,N,O).
 # Ankers als (lon, lat); zeezijde eerst. Havens (searoute): Amsterdam
 # (4.904, 52.375) · Nijmegen (5.867, 51.833) · Rotterdam (4.442, 51.904).
@@ -910,6 +956,51 @@ def km(a, b):
     return 2 * R_AARDE * math.asin(min(1.0, math.sqrt(h)))
 
 
+def bulk_signaal(tags):
+    """(code, waarde) of (None, "") — een expliciet bevaarbaarheidssignaal.
+
+    Semantisch identiek aan meet_vaarwegen.bevaarbaar_signaal (de meetlat
+    die 428.428 km wereldwijd opleverde) — BEWUST dezelfde volgorde en
+    dezelfde `is not None`-toets op CEMT (een lege CEMT-tag telt óók mee).
+    Wijk hier niet vanaf zonder het ook in meet_vaarwegen.py te wijzigen en
+    BULK_FILTER_VERSIE op te hogen, anders is de meting geen meetlat meer.
+
+    Bewust ONGEACHT `waterway=`: bij de sluis van Poses draagt de doorgaande
+    Seine-vaargeul `waterway=stream` mét naam én CEMT (de Poses-categorie,
+    wereldwijd 5.130 km). De soort-uitsluiting (fairway/safe_water/dock)
+    gebeurt apart, vóór deze functie aangeroepen wordt.
+    """
+    v = tags.get("CEMT")
+    if v is not None:
+        return "CEMT", (v or "").strip()
+    for k in ("ship", "motorboat", "boat"):
+        w = (tags.get(k) or "").strip()
+        if w in BULK_JA:
+            return k, w
+    for k in ("draft", "maxdraft", "maxdraught"):
+        w = (tags.get(k) or "").strip()
+        if w:
+            return "draft", w
+    if (tags.get("usage") or "").strip() == "transportation":
+        return "usage", "transportation"
+    return None, ""
+
+
+def bulk_sig_tekst(code, waarde):
+    """Eén compacte string per way: 'CEMT:Vb' · 'draft:3.5' · 'boat'."""
+    return f"{code}:{waarde}" if code in ("CEMT", "draft") and waarde else code
+
+
+def bulk_regio(sleutel):
+    pad = GEOFABRIK_REGIOS.get(sleutel)
+    if pad is None:
+        raise SystemExit(f"extract '{sleutel}' staat niet in GEOFABRIK_REGIOS")
+    for prefix, regio in BULK_REGIO_VAN_PAD:
+        if pad.startswith(prefix):
+            return regio
+    raise SystemExit(f"geen bulk-regio voor {sleutel} ({pad}) — vul BULK_REGIO_VAN_PAD aan")
+
+
 # ---------------------------------------------------------------- bron: OSM
 
 def overpass(query):
@@ -1079,6 +1170,155 @@ GEOFABRIK_REGIOS = {
     # --- uitrol: Zuid-Amerika — de Amazone draagt zeeschepen tot Manaus
     "brazilie": "south-america/brazil",
     "venezuela": "south-america/venezuela",
+
+    # ========================================================================
+    # SCOPE-VERBREDING 2026-07-20 (zie v2/design/binnenwater-scope.md + LAR-485)
+    # ------------------------------------------------------------------------
+    # Lars koos "alles wat bevaarbaar is" als ondergrens i.p.v. CEMT >= IV, omdat
+    # M25 (spoor/weg) straks uitkomt op plekken waar anders geen water ligt. Het
+    # scope-onderzoek telde 375 ontbrekende systemen; de regio's hieronder zijn
+    # waar die liggen. Ze stonden nog niet geregistreerd, waardoor `--download`
+    # er niet bij kon — bij elk Golf 1-issue was dat de eerste blokkade.
+    #
+    # ⚠️ Controleer na het downloaden de BESTANDSGROOTTE, niet de HTTP-status:
+    # een niet-bestaande Geofabrik-regio levert 0 bytes op i.p.v. een 404.
+    # ========================================================================
+
+    # --- Duitsland: het noordelijke en oostelijke kanaalnet (Golf 1 + LAR-508).
+    # Elbe-Havel en Untere Havel lopen door Sachsen-Anhalt en Brandenburg; de
+    # Nord-Ostsee-Kanal ligt volledig in Schleswig-Holstein.
+    "de-sachsen-anhalt": "europe/germany/sachsen-anhalt",
+    "de-brandenburg": "europe/germany/brandenburg",
+    "de-berlin": "europe/germany/berlin",
+    "de-schleswig-holstein": "europe/germany/schleswig-holstein",
+    "de-bremen": "europe/germany/bremen",
+    "de-mecklenburg-vorpommern": "europe/germany/mecklenburg-vorpommern",
+    "de-saarland": "europe/germany/saarland",
+    "de-sachsen": "europe/germany/sachsen",
+
+    # --- Frankrijk: nog steeds de PRE-2016 indeling (zie de waarschuwing boven).
+    # `nord-pas-de-calais` draagt Dunkerque-Escaut en het Kanaal Pommeroeul-Conde.
+    "fr-nord-pas-de-calais": "europe/france/nord-pas-de-calais",
+    "fr-picardie": "europe/france/picardie",
+    "fr-champagne-ardenne": "europe/france/champagne-ardenne",
+    "fr-bourgogne": "europe/france/bourgogne",
+    "fr-franche-comte": "europe/france/franche-comte",
+    "fr-aquitaine": "europe/france/aquitaine",
+
+    # --- Europa oost + Oostzee: Wisla/Odra, Dnjepr, Saimaa, Gota, Elbe-boven.
+    "polen": "europe/poland",
+    "oekraine": "europe/ukraine",
+    "tsjechie": "europe/czech-republic",
+    "belarus": "europe/belarus",
+    "litouwen": "europe/lithuania",
+    "letland": "europe/latvia",
+    "estland": "europe/estonia",
+    "finland": "europe/finland",
+    "zweden": "europe/sweden",
+    "noorwegen": "europe/norway",
+    "denemarken": "europe/denmark",
+    "slovenie": "europe/slovenia",
+    "bosnie": "europe/bosnia-herzegovina",
+    "moldavie": "europe/moldova",
+
+    # --- Europa west/zuid: Manchester Ship Canal, Humber-Ouse, Guadalquivir, Po.
+    "groot-brittannie": "europe/great-britain",
+    # ⚠️ Geofabrik levert Ierland alleen als GECOMBINEERD extract met Noord-Ierland.
+    "ierland": "europe/ireland-and-northern-ireland",
+    "spanje": "europe/spain",
+    "portugal": "europe/portugal",
+    "italie": "europe/italy",
+
+    # --- Zuid-Azie: de Bengaalse trunkroutes zijn een van de drukst bevaren
+    # binnenvaartnetten ter wereld en ontbraken volledig. Zonder `bangladesh`
+    # (de Jamuna) hangt heel Noordoost-India in de lucht.
+    "india": "asia/india",
+    "bangladesh": "asia/bangladesh",
+    "pakistan": "asia/pakistan",
+    "nepal": "asia/nepal",
+    "sri-lanka": "asia/sri-lanka",
+
+    # --- Zuidoost-Azie: Kalimantan draagt kolen op 8.000 t-bakken.
+    "indonesie": "asia/indonesia",
+    "thailand": "asia/thailand",
+    # ⚠️ Ook gecombineerd: Maleisie/Singapore/Brunei zitten in één extract.
+    "maleisie": "asia/malaysia-singapore-brunei",
+    "laos": "asia/laos",
+    "filipijnen": "asia/philippines",
+
+    # --- Oost-Azie + Kaspisch/Kaukasus (uranium vaart Trans-Kaspisch).
+    "japan": "asia/japan",
+    "zuid-korea": "asia/south-korea",
+    "kazachstan": "asia/kazakhstan",
+    "azerbeidzjan": "asia/azerbaijan",
+    # ⚠️ Georgie staat bij Geofabrik onder EUROPA, niet onder Azie.
+    "georgie": "europe/georgia",
+    "turkije": "europe/turkey",
+    "irak": "asia/iraq",
+    "iran": "asia/iran",
+
+    # --- Rusland: noordwest draagt Wolga-Baltisch + Svir-Ladoga-Neva; de
+    # Siberische toevoerlijnen (Ob, Jenisej, Lena) zitten in Golf 5.
+    "rusland-noordwest": "russia/northwestern-fed-district",
+    "rusland-oeral": "russia/ural-fed-district",
+    "rusland-siberie": "russia/siberian-fed-district",
+    "rusland-verrehoosten": "russia/far-eastern-fed-district",
+
+    # --- Afrika: Congo (Matadi-aanloop + Kinshasa-Kisangani via de
+    # spoorportage), Nijl beneden Aswan, Niger, Rio Nunez (bauxiet).
+    "egypte": "africa/egypt",
+    "nigeria": "africa/nigeria",
+    "congo-brazzaville": "africa/congo-brazzaville",
+    "guinee": "africa/guinea",
+    "senegal-gambia": "africa/senegal-and-gambia",
+    "mozambique": "africa/mozambique",
+    "tanzania": "africa/tanzania",
+    "angola": "africa/angola",
+    "zambia": "africa/zambia",
+    "malawi": "africa/malawi",
+    "kameroen": "africa/cameroon",
+    "ivoorkust": "africa/ivory-coast",
+    "sudan": "africa/sudan",
+
+    # --- Noord-Amerika: Golfkust-geulen, Grote Meren, Columbia/Snake, Hudson.
+    "canada": "north-america/canada",
+    "us-texas": "north-america/us/texas",
+    "us-alabama": "north-america/us/alabama",
+    "us-florida": "north-america/us/florida",
+    "us-georgia": "north-america/us/georgia",
+    "us-south-carolina": "north-america/us/south-carolina",
+    "us-north-carolina": "north-america/us/north-carolina",
+    "us-virginia": "north-america/us/virginia",
+    "us-maryland": "north-america/us/maryland",
+    "us-delaware": "north-america/us/delaware",
+    "us-new-york": "north-america/us/new-york",
+    "us-new-jersey": "north-america/us/new-jersey",
+    "us-michigan": "north-america/us/michigan",
+    "us-oregon": "north-america/us/oregon",
+    "us-washington": "north-america/us/washington",
+    "us-idaho": "north-america/us/idaho",
+    "us-california": "north-america/us/california",
+    "us-oklahoma": "north-america/us/oklahoma",
+    "us-kansas": "north-america/us/kansas",
+    "us-nebraska": "north-america/us/nebraska",
+    "us-south-dakota": "north-america/us/south-dakota",
+    "us-north-dakota": "north-america/us/north-dakota",
+
+    # --- Zuid-Amerika: Magdalena, Maracaibo, Hidrovia-bovenloop, Peruaanse
+    # Hidrovia. Colombia/Bolivia/Uruguay ontbraken en blokkeerden Golf 1.
+    "colombia": "south-america/colombia",
+    "bolivia": "south-america/bolivia",
+    "uruguay": "south-america/uruguay",
+    "peru": "south-america/peru",
+    "ecuador": "south-america/ecuador",
+    "guyana": "south-america/guyana",
+    "suriname": "south-america/suriname",
+    "chili": "south-america/chile",
+
+    # --- Oceanie: alleen om de Murray-Darling definitief te kunnen uitsluiten
+    # met een meting i.p.v. een aanname (hij faalt vermoedelijk op beide regels).
+    "australie": "australia-oceania/australia",
+    "nieuw-zeeland": "australia-oceania/new-zealand",
 }
 
 
@@ -1110,6 +1350,192 @@ def download_extracts(sleutels):
         os.replace(tijdelijk, pad)   # pas hernoemen als hij compleet is
         mb = os.path.getsize(pad) / 1048576
         print(f"  {sleutel:18s} {mb:7,.0f} MB in {time.time() - t0:4.0f}s")
+
+
+# ------------------------------------------------------------- bulk: scannen
+
+def bulk_vingerafdruk(sleutel):
+    """Cachesleutel = filterversie + de extract zelf (grootte + mtime).
+
+    Een verse download of een gewijzigd filter laat de cache vanzelf
+    vervallen — stilzwijgend segmenten teruggeven die met een ander filter
+    gemaakt zijn is de ergst denkbare uitkomst: dan meet je iets anders dan
+    je bakt.
+    """
+    st = os.stat(extract_pad(sleutel))
+    ruw = repr((BULK_FILTER_VERSIE, sleutel, st.st_size, int(st.st_mtime),
+                BULK_SIMPLIFY_KM, sorted(BULK_JA), sorted(BULK_UITGESLOTEN_SOORT)))
+    return hashlib.sha1(ruw.encode()).hexdigest()[:16]
+
+
+def bulk_cache_pad(sleutel):
+    return os.path.join(BULK_CACHE, f"{sleutel}-{bulk_vingerafdruk(sleutel)}.json")
+
+
+def bulk_scan_extract(sleutel):
+    """Worker voor de pool — module-level, dus picklebaar (spawn op Windows).
+
+    GEEN bbox, GEEN namen-whitelist: het filter is puur het signaal, dus
+    deze scan raakt elke waterway in het extract. Daarom moet hij parallel.
+    Elke way wordt zijn EIGEN polyline (geen stitchen tot ketens) — zie de
+    bulklaag-banner hierboven voor waarom.
+    """
+    import osmium  # in de worker, niet in de parent — zelfde patroon als
+                   # segmenten_geofabrik en meet_vaarwegen.py
+
+    cpad = bulk_cache_pad(sleutel)
+    if os.path.exists(cpad):
+        with open(cpad, encoding="utf-8") as f:
+            c = json.load(f)
+        return sleutel, c["km"], len(c["ways"]), True
+
+    fp = (osmium.FileProcessor(extract_pad(sleutel))
+          .with_locations()
+          .with_filter(osmium.filter.EntityFilter(osmium.osm.WAY))
+          .with_filter(osmium.filter.KeyFilter("waterway")))
+    ways, totaal = [], 0.0
+    for obj in fp:
+        soort = obj.tags.get("waterway") or ""
+        if soort in BULK_UITGESLOTEN_SOORT:
+            continue
+        code, waarde = bulk_signaal(obj.tags)
+        if code is None:
+            continue
+        pts = [(n.location.lon, n.location.lat) for n in obj.nodes
+               if n.location.valid()]
+        if len(pts) < 2:
+            continue
+        pts = simplify(pts, BULK_SIMPLIFY_KM)
+        L = sum(km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+        if L <= 0:
+            continue
+        totaal += L
+        ways.append({"id": obj.id, "sig": bulk_sig_tekst(code, waarde),
+                     "km": round(L, 3),
+                     "pts": [[round(lo, 6), round(la, 6)] for lo, la in pts]})
+
+    os.makedirs(BULK_CACHE, exist_ok=True)
+    tijdelijk = cpad + ".deel"
+    with open(tijdelijk, "w", encoding="utf-8") as f:
+        json.dump({"versie": BULK_FILTER_VERSIE, "extract": sleutel,
+                   "km": round(totaal, 1), "ways": ways}, f)
+    os.replace(tijdelijk, cpad)   # pas zichtbaar als hij compleet is
+    return sleutel, totaal, len(ways), False
+
+
+def bulk_scan(sleutels, workers=None):
+    """Parallelle scan over de extracts (meet_vaarwegen.py-patroon: 14/16 cores)."""
+    ontbreekt = [s for s in sleutels if not os.path.exists(extract_pad(s))]
+    if ontbreekt:
+        raise SystemExit("extracts ontbreken: " + ", ".join(ontbreekt) +
+                         "\n  haal ze op met: fetch_waterways.py geofabrik --download")
+    os.makedirs(BULK_CACHE, exist_ok=True)
+    workers = workers or max(1, min(14, (os.cpu_count() or 2) - 2))
+    gb = sum(os.path.getsize(extract_pad(s)) for s in sleutels) / 1e9
+    print(f"bulkscan: {len(sleutels)} extracts, {gb:,.1f} GB, {workers} workers", flush=True)
+
+    t0, totaal, uit_cache = time.time(), 0.0, 0
+    if workers == 1:
+        res = (bulk_scan_extract(s) for s in sleutels)
+    else:
+        import multiprocessing as mp
+        pool = mp.Pool(workers)
+        res = pool.imap_unordered(bulk_scan_extract, sleutels)
+    for i, (sleutel, L, n, gecached) in enumerate(res, 1):
+        totaal += L
+        uit_cache += gecached
+        print(f"  [{i}/{len(sleutels)}] {sleutel:<26} {L:9,.0f} km · {n:6,} ways"
+              f"{' (cache)' if gecached else ''}", flush=True)
+    if workers > 1:
+        pool.close()
+        pool.join()
+    print(f"  {totaal:,.0f} km ruw over {len(sleutels)} extracts "
+          f"({uit_cache} uit cache) in {time.time() - t0:,.0f} s")
+
+
+def bulk_laad(sleutels):
+    """Segmentcaches -> één lijst, ontdubbeld op OSM way-id.
+
+    ⚠️ Geofabrik knipt ways op de extractrand: dezelfde way kan compleet in
+    het ene extract staan en afgeknipt in het andere. Bij een dubbel id wint
+    de versie met de MEESTE punten — anders bepaalt de toevallige scanvolgorde
+    waar een grensrivier (Rijn, Donau, Mosel, Mississippi) doorgeknipt wordt.
+    """
+    op_id, dubbel = {}, 0
+    for sleutel in sleutels:
+        regio = bulk_regio(sleutel)
+        with open(bulk_cache_pad(sleutel), encoding="utf-8") as f:
+            c = json.load(f)
+        for w in c["ways"]:
+            w["regio"] = regio
+            oud = op_id.get(w["id"])
+            if oud is None:
+                op_id[w["id"]] = w
+            else:
+                dubbel += 1
+                if len(w["pts"]) > len(oud["pts"]):
+                    op_id[w["id"]] = w
+    ways = list(op_id.values())
+    print(f"  {len(ways):,} unieke ways ({dubbel:,} dubbels weggevallen — "
+          f"grensrivieren in meerdere extracts)")
+    return ways
+
+
+def haal_bulk(regios=None, workers=None, min_km=BULK_MIN_KM):
+    """Bulklaag: scan (parallel, gecached) -> samenvoegen -> wegschrijven.
+
+    GEEN stitchen tot ketens, GEEN ankers, GEEN routeerbare topologie — zie de
+    banner bij BULK_FILTER_VERSIE. Elke way is zijn eigen Feature.
+    """
+    aanwezig = sorted(s for s in GEOFABRIK_REGIOS if os.path.exists(extract_pad(s)))
+    sleutels = [s for s in aanwezig if not regios or bulk_regio(s) in regios]
+    if not sleutels:
+        raise SystemExit(f"geen extracts gevonden in {GEOFABRIK} "
+                         f"(regiofilter: {regios})")
+
+    bulk_scan(sleutels, workers)
+    ways = bulk_laad(sleutels)
+
+    features, per_regio, weg = [], {}, 0
+    for w in ways:
+        if w["km"] < min_km:
+            weg += 1
+            continue
+        features.append({
+            "type": "Feature",
+            "properties": {
+                "label": f"bulk-{w['regio']}",
+                "regio": w["regio"],
+                "zeevaart": False,   # VERPLICHT — anders sluit het groepslabel
+                                     # "binnenvaart" deze laag niet af
+                "signaal": w["sig"],
+                "km": w["km"],
+                "wayId": w["id"],
+            },
+            "geometry": {"type": "LineString", "coordinates": w["pts"]},
+        })
+        per_regio[w["regio"]] = per_regio.get(w["regio"], 0.0) + w["km"]
+
+    os.makedirs(CACHE, exist_ok=True)
+    pad = os.path.join(CACHE, "vaarwegen_bulk.geojson")
+    with open(pad, "w", encoding="utf-8") as f:
+        json.dump({
+            "type": "FeatureCollection",
+            "bron": "OpenStreetMap contributors (ODbL) via Geofabrik-regio-extract",
+            "laag": "bulk",
+            "filterVersie": BULK_FILTER_VERSIE,
+            # Expliciet vastgelegd zodat het totaal herhaalbaar is — een
+            # meting zonder vaste extractlijst is geen meetlat (LAR-515).
+            "extracts": sleutels,
+            "features": features,
+        }, f, ensure_ascii=False)
+
+    print(f"\nbulklaag per regio:")
+    for regio, L in sorted(per_regio.items(), key=lambda kv: -kv[1]):
+        print(f"  bulk-{regio:<3} {L:10,.0f} km")
+    print(f"  TOTAAL   {sum(per_regio.values()):10,.0f} km · {len(features):,} ways"
+          f" · {weg:,} snippers < {min_km} km weggelaten")
+    print(f"geschreven: {pad} ({os.path.getsize(pad) / 1048576:.1f} MB)")
 
 
 def segmenten_geofabrik(systeem):
@@ -1479,6 +1905,12 @@ if __name__ == "__main__":
                     help="geofabrik: haal ontbrekende regio-extracts eerst op")
     ap.add_argument("--alleen", help="komma-gescheiden labels i.p.v. alle systemen "
                                      "(schrijft naar een eigen bestand — handig om te vergelijken)")
+    ap.add_argument("--bulk", action="store_true",
+                    help="bulklaag i.p.v. de verhalende systemen (LAR-515) — "
+                         "alle GEDOWNLOADE extracts, geen ankers/lengtetoets")
+    ap.add_argument("--bulk-regios", help="komma-gescheiden regiofilter voor --bulk, "
+                                          "bv. cn of eu,cn (default: alle aanwezige)")
+    ap.add_argument("--workers", type=int, help="parallelle scan voor --bulk (default ~14)")
     args = ap.parse_args()
     alleen = [s.strip() for s in args.alleen.split(",")] if args.alleen else None
     if args.download:
@@ -1486,4 +1918,11 @@ if __name__ == "__main__":
                         for r in s.get("extracts", [])})
         print(f"regio-extracts ophalen ({len(nodig)}):")
         download_extracts(nodig)
-    haal(args.bron, args.bestand, alleen)
+    if args.bulk:
+        if args.bron != "geofabrik":
+            raise SystemExit("--bulk werkt alleen op het geofabrik-pad")
+        regios = ([r.strip() for r in args.bulk_regios.split(",")]
+                  if args.bulk_regios else None)
+        haal_bulk(regios, args.workers)
+    else:
+        haal(args.bron, args.bestand, alleen)
