@@ -1,8 +1,10 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-487/488 VS+China-pilot gebouwd + gemeten; open = Lars' visuele go)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (LAR-487/488 Done na visuele go — M24-pilotreeks compleet)*
 
-> **✅ LAR-487 + LAR-488 GEBOUWD (2026-07-19, laatste) — DE M24-PILOTREEKS NL→VS→CHINA IS COMPLEET, op Lars' visuele go na.**
+> **✅ LAR-487 + LAR-488 DONE (2026-07-19, laatste) — DE M24-PILOTREEKS NL→VS→CHINA IS COMPLEET.**
+> Lars' visuele go: *"ik heb even gekeken naar die test routes dat ziet er wel goed uit mooi over de rivier"* → beide op Done. Alle drie de controle-situaties bewezen: twee onafhankelijke bronnen (NL) ·
+> officiële meetlat (VS) · géén scheidsrechter (China).
 > Live t/m `919b046` (`?v=018`). **Beide zones eindigden ergens anders dan hun naam suggereert:** MARNET's
 > `mississippi`-tak gaat vanaf New Orleans **niet de rivier op maar het Pontchartrainmeer in** en loopt dood
 > (knoop 113) → traject werd New Orleans→Baton Rouge→Memphis; de `yangtze`-zone ("Nanjing–Jiangyin") eindigt bij
@@ -36,7 +38,7 @@
 > (180 s) **los van** server-timeout (300 s), **exacte tag-match i.p.v. naam-regex** (Overpass indexeert `key=value`),
 > CEMT-clause alleen voor systemen mét CEMT-klasse (buiten de EU bestaat de tag niet en die clause heeft als enige géén
 > naamfilter), `overpass.osm.jp` eruit (kapot certificaat), retry-rondes, en een **schijf-cache op de query-inhoud**
-> zodat een herstart nooit opnieuw begint. **→ VOLGENDE: Lars' visuele go, daarna go/no-go wereldwijde uitrol**
+> zodat een herstart nooit opnieuw begint. **→ VOLGENDE: go/no-go wereldwijde uitrol**
 > (Paraná, Irrawaddy/Yangon-stubs, Wolga, Mekong, Congo, Grand Canal) + restpunten [LAR-485]. Zie `memory/decisions.md` +
 > [[2026-07-19-grondstoffen-atlas-lar487-488-vs-china-pilots]].
 

@@ -30,7 +30,9 @@
 - **Twee stille-data-vallen gevangen:** `AMILE`/`BMILE` zijn niet overal gevuld (twee links op 0.0 zien
   eruit als een gat van 45 mijl terwijl de geometrie er is), en `exceededTransferLimit` zit bij
   `f=geojson` genest onder `properties` → op de top-level sleutel checken truncateert stil op 2.000.
-- **Linear:** LAR-487 + LAR-488 op In Progress met uitgebreide meet-comments (Done pas na visuele go).
+- **Linear:** LAR-487 + LAR-488 → **Done** na Lars' visuele go (*"ik heb even gekeken naar die test
+  routes dat ziet er wel goed uit mooi over de rivier"*), met uitgebreide meet- en slot-comments.
+  Daarmee is de M24-pilotreeks compleet en zijn alle drie de controle-situaties bewezen.
 
 ## 2026-07-19 (sessie 24) — LAR-486 NL-pilot uitgevoerd: bake-off OSM vs UNECE, alle tests groen, live
 - **Pipeline gebouwd + bewezen** (commit `d9a9e0f`, `?v=016`, live op Pages): `fetch_waterways.py`

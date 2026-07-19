@@ -1,16 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (LAR-487 + LAR-488 gebouwd + gemeten; NU-lijst = visuele go, dan uitrol)*
+*Last updated: 2026-07-19 (LAR-487 + LAR-488 Done na visuele go; NU-lijst = go/no-go wereldwijde uitrol)*
 
-## ➡️ NU: visuele go op de twee nieuwe pilots
+## ✅ AFGEROND: de M24-pilotreeks (2026-07-19)
 
-**Beide pilots staan en zijn gemeten** (commit `919b046`, `?v=018`, live op Pages) — zie
-`session-summaries.md`. De enige openstaande stap is Lars' **visuele bevestiging op de bol**
-(WebGL-screenshot hangt headless, vast patroon sinds M22). Daarna [LAR-487] + [LAR-488] → Done.
+Alle drie de pilots zijn Done na Lars' visuele go (*"ik heb even gekeken naar die test routes dat
+ziet er wel goed uit mooi over de rivier"*). Daarmee zijn de drie controle-situaties bewezen:
+twee onafhankelijke bronnen (NL/LAR-486) · officiële meetlat (VS/LAR-487) · géén scheidsrechter
+(China/LAR-488). Live t/m `919b046` (`?v=018`).
 
-Te bekijken: vaart de gele route bij **New Orleans→Memphis** netjes over de Mississippi (incl. de
-meanders rond Baton Rouge/Vicksburg), en **Shanghai→Wuhan** over de Yangtze?
-
-## ➡️ DAARNA: go/no-go wereldwijde uitrol
+## ➡️ NU: go/no-go wereldwijde uitrol
 
 1. **Wereldwijde uitrol** — EU CEMT ≥ IV, VS USACE-net, elders de commerciële systemen: Paraná,
    Irrawaddy (de Yangon-stubs), Wolga-systeem, Mekong, Congo, Grand Canal. De drie controle-situaties
