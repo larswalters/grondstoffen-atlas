@@ -35,7 +35,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 label = sys.argv[1]
 s = [x for x in SYSTEMEN if x["label"] == label][0]
 segs, _ = segmenten_geofabrik(s)
-stitch = STITCH_KM["geofabrik"]
+stitch = s.get("stitch_km") or STITCH_KM["geofabrik"]
 
 knopen, kid, buren, naam_van = [], {}, [], {}
 

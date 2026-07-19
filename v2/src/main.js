@@ -1,10 +1,10 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=026";
-import { laadVectorWereld } from "./world.js?v=026";
-import { createTileLayer } from "./tiles.js?v=026";
-import { laadMarnet, laadHavens, zoekRoute, bouwRouteLijn } from "./marnet.js?v=026";
+import { createGlobe, CONFIG } from "./globe.js?v=027";
+import { laadVectorWereld } from "./world.js?v=027";
+import { createTileLayer } from "./tiles.js?v=027";
+import { laadMarnet, laadHavens, zoekRoute, bouwRouteLijn } from "./marnet.js?v=027";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -145,7 +145,8 @@ function toonRoute() {
   wisRoute();
 
   const t0 = performance.now();
-  const route = zoekRoute(NET, van.knoop, naar.knoop);
+  const route = zoekRoute(NET, van.knoop, naar.knoop,
+    SCHIP === "zee" ? { vermijd: ["northwest", "binnenvaart"] } : {});
   const ms = performance.now() - t0;
   if (!route) {
     infoEl.textContent = `geen pad gevonden (${havenLabel(van)} → ${havenLabel(naar)})`;
@@ -168,6 +169,19 @@ function toonRoute() {
     (aanloop > 20 ? ` · aanloop ${Math.round(aanloop)} km` : "") +
     (passages.length ? `<br>via ${passages.join(" · ")}` : "");
   window.ROUTE = route; // diagnose
+}
+
+// Scheepstype voor de route-test. "alles" = het permissieve gedrag van vóór de
+// Donau-ring; "zee" sluit elk niet-zeevaarbaar systeem via het groepslabel
+// `binnenvaart`. Default bewust ongewijzigd (alles) — welk van de twee de
+// default hóórt te zijn is een ontwerpkeuze, geen implementatiedetail.
+let SCHIP = "alles";
+for (const b of document.querySelectorAll(".schipBtn")) {
+  b.addEventListener("click", () => {
+    SCHIP = b.dataset.schip;
+    for (const o of document.querySelectorAll(".schipBtn")) o.classList.toggle("is-on", o === b);
+    if (vanEl.value && naarEl.value) toonRoute();
+  });
 }
 
 document.getElementById("routeGo").addEventListener("click", toonRoute);

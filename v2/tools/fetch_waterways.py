@@ -243,6 +243,85 @@ SYSTEMEN = [
         anker_zee=(10.8597, 49.9072),   # = anker_binnen van 'main' (Bamberg)
         anker_binnen=(11.8946, 48.9098),  # Kelheim, monding in de Donau
     ),
+    # ---- Donau (LAR-494) — de laatste schakel: hiermee is Rotterdam -> Zwarte
+    # Zee compleet.
+    #
+    # ⚠️ DE DONAU KOMT NIET VIA ZIJN EIGEN MONDING BINNEN. MARNET reikt niet tot
+    # de delta: Sulina ligt 123 km van de dichtstbijzijnde zeeknoop, ver buiten
+    # AANSLUIT_MAX_KM. Constanța ligt wél op 3,4 km, en daar komt in
+    # werkelijkheid ook het meeste vrachtverkeer binnen — via het
+    # `Canalul Dunăre-Marea Neagră` (62 km, Cernavodă -> Agigea), dat de hele
+    # benedenloop afsnijdt. Dat kanaal is dus de zee-overgang.
+    # Gevolg dat we bewust accepteren: de havens in de delta zelf (Sulina,
+    # Tulcea, Galați, Brăila) blijven op hun oude snap staan; die vragen om de
+    # maritieme Donau als aparte tak.
+    #
+    # ⚠️ ZEVEN NAAMVORMEN VOOR ÉÉN RIVIER. De survey vond niet alleen de per-land
+    # namen maar VIJF samengestelde grensnamen, waarvan er twee alleen verschillen
+    # in wélke taal vooraan staat — en die dekken aangrenzende stukken, dus je hebt
+    # ze allebei nodig:
+    #   Donau (DE/AT) 11,56…16,98 · Dunaj (SK) · Dunaj / Duna (SK/HU) 17,24…18,85
+    #   Duna (HU) 18,68…19,13 · Dunav / Дунав (HR/RS) 18,82…19,42
+    #   Дунав (RS) 19,42…21,36 · Дунав/Dunărea (RS/RO) 21,36…22,21  <- Cyrillisch eerst
+    #   Dunav/Dunărea (RS/RO) 22,21…22,76                            <- Latijn eerst
+    #   Dunărea - Дунав (RO/BG) 22,68…27,28 · Dunărea (RO) 27,28…28,11
+    # Bewust NIET: `Malý Dunaj` en `Mosoni-Duna` (zijarmen), `Brațul *` (delta-armen)
+    # en `Duna-völgyi-főcsatorna` (irrigatiekanaal).
+    #
+    # Geknipt bij de IJZEREN POORT (Đerdap), niet bij de zeevaart/binnenvaart-grens:
+    # daar liggen twee sluiscomplexen die bij stremming de hele as in tweeën leggen —
+    # dezelfde redenering als Kaub bij de Rijn (splits op de VERSTORING).
+    # Het kanaal is een EIGEN systeem met een ruimere naad, en dat is bewust.
+    # OSM laat hier twee stukken onbenoemd: bij de sluis van Cernavodă (na het
+    # whitelisten van `Ecluza Cernavodă` blijven er hiaten van ~430 en ~600 m)
+    # en bij de havenmond van Agigea (~324 m); het grootste hiaat is 1.192 m. Die
+    # gaten zijn gemeten, niet
+    # aangenomen. `stitch_km=1.5` overbrugt ze; door dat te beperken tot deze
+    # 62 km kan de ruimere naad níet elders twee riviermeanders aan elkaar
+    # knopen — op de Donau zelf blijft de normale 60 m gelden.
+    dict(
+        label="donau-zeekanaal",
+        zeevaart=True,
+        cemt="VIb",
+        cemt_insluiten=False,
+        stitch_km=1.5,
+        extracts=["roemenie"],
+        bbox=(44.05, 27.95, 44.40, 28.70),
+        namen=["Canalul Dunăre-Marea Neagră", "Ecluza Cernavodă"],
+        anker_zee=(28.6375, 44.0999),   # havenmond Agigea/Constanța
+        anker_binnen=(28.0200, 44.3512),  # Cernavodă, aftakking uit de Donau
+    ),
+    dict(
+        label="donau",
+        zeevaart=True,
+        cemt="VII",
+        cemt_insluiten=False,
+        volgt_op="donau-zeekanaal",
+        extracts=["roemenie", "bulgarije", "servie"],
+        bbox=(43.50, 22.30, 44.95, 28.30),
+        namen=["Dunărea", "Dunărea - Дунав", "Dunav/Dunărea", "Дунав/Dunărea"],
+        anker_zee=(28.0200, 44.3512),   # = anker_binnen van 'donau-zeekanaal'
+        anker_binnen=(22.5300, 44.6600),  # IJzeren Poort (Đerdap)
+    ),
+    dict(
+        label="donau-boven",
+        zeevaart=False,
+        cemt="VIb",
+        cemt_insluiten=False,
+        volgt_op="donau",
+        # Sluit de RING: het bovenste eind valt samen met het kopeinde van het
+        # Main-Donau-Kanaal bij Kelheim. Daarmee is Rotterdam -> Zwarte Zee een
+        # doorgaande route over het net, én is de Donau vanaf twee kanten
+        # bereikbaar (via de Rijn en via Constanța).
+        sluit_aan="main-donau-kanaal",
+        extracts=["servie", "kroatie", "hongarije", "slowakije",
+                  "oostenrijk", "de-bayern"],
+        bbox=(44.20, 11.70, 48.95, 22.75),
+        namen=["Donau", "Donau / Dunaj", "Dunaj", "Dunaj / Duna", "Duna",
+               "Dunav / Дунав", "Дунав", "Дунав/Dunărea", "Dunav/Dunărea"],
+        anker_zee=(22.5300, 44.6600),   # = anker_binnen van 'donau'
+        anker_binnen=(11.8946, 48.9098),  # Kelheim, waar het MDK uitmondt
+    ),
     # ---- Maas + Benelux-delta (LAR-505) — Lars: "we moeten nog wel meer mappen
     # dan alleen de rijn, de maas en stukken biesbosch". De `waal`-keten legt
     # één lijn door de delta; in werkelijkheid is het een NET, en de Maas
@@ -955,7 +1034,14 @@ def haal(bron, bestand=None, alleen=None):
             raise RuntimeError(f"geen segmenten voor {label} — dekking/filters checken")
 
         coords, lengte, namen, anker_d = kortste_waterpad(
-            segs, systeem["anker_zee"], systeem["anker_binnen"], STITCH_KM[bron])
+            segs, systeem["anker_zee"], systeem["anker_binnen"],
+            # Per systeem op te rekken (LAR-494). Alleen doen waar je de gaten
+            # hébt gemeten en weet dat het sluizen/havenmonden zijn die OSM
+            # onbenoemd laat — en houd de bbox dan klein. Op een meanderende
+            # rivier is een ruime naad gevaarlijk: daar kan hij twee lussen aan
+            # elkaar knopen en zo een sluipweg maken die de lengtetoets pas
+            # achteraf verraadt.
+            systeem.get("stitch_km") or STITCH_KM[bron])
         strak = simplify(coords)
         print(f"  pad: {lengte:.1f} km · {len(coords)} punten → {len(strak)} na simplify"
               f" · anker-afstanden zee {anker_d[0]:.2f} / binnen {anker_d[1]:.2f} km")

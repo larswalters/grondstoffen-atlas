@@ -65,11 +65,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=026").then((r) => {
+    fetch("data/marnet.json?v=027").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=026").then((r) => {
+    fetch("data/marnet.bin?v=027").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -255,6 +255,19 @@ export function zoekRoute(net, van, naar, opties = {}) {
   const vermijd = opties.vermijd ?? ["northwest"];
   const arctisFactor = opties.arctisFactor ?? 1;
   const dichtLabel = new Set(vermijd);
+  // Groepslabel "binnenvaart" (LAR-494): sluit in één keer élk vaarwegsysteem
+  // dat niet zeevaarbaar is. Nodig sinds de Donau-ring, want dat is de EERSTE
+  // binnenvaartverbinding die twee zeeën koppelt — daarvoor was elke rivierketen
+  // een doodlopende tak en kon een zeeroute er dus nooit korter door worden.
+  // Zonder dit filter stuurt het kortste graafpad een zeeschip van Rotterdam
+  // naar Shanghai dwars door Europa over sluizen van klasse Vb (18.627 km
+  // i.p.v. 19.610). Zelfde soort correctie als de default-gesloten
+  // Noordwest-Passage: het kortste pad is niet de commerciële route.
+  if (dichtLabel.has("binnenvaart")) {
+    for (const [label, v] of Object.entries(net.vaarwegen || {})) {
+      if (!v.zeevaart) dichtLabel.add(label);
+    }
+  }
   const n = net.knoopLon.length;
   const g = new Float64Array(n).fill(Infinity);
   const vorigeEdge = new Int32Array(n).fill(-1);
@@ -380,7 +393,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=026");
+  const r = await fetch("data/ports.json?v=027");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];

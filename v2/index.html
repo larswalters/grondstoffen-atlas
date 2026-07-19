@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=026" />
+<link rel="stylesheet" href="style.css?v=027" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -58,6 +58,15 @@
       <input id="vanHaven" list="havenLijst" placeholder="van — typ een haven" autocomplete="off" />
       <input id="naarHaven" list="havenLijst" placeholder="naar — typ een haven" autocomplete="off" />
       <datalist id="havenLijst"></datalist>
+      <!-- Sinds de Donau-ring (LAR-494) loopt er een binnenvaartverbinding
+           tussen Noordzee en Zwarte Zee. Het kortste graafpad stuurt een
+           zeeschip dan dwars door Europa over sluizen van klasse Vb. Deze
+           schakelaar maakt dat voelbaar: "zeeschip" sluit alle niet-zeevaarbare
+           systemen. Welke van de twee de DEFAULT wordt is Lars' keuze. -->
+      <div class="btnRow">
+        <button class="schipBtn is-on" data-schip="alles">alle schepen</button>
+        <button class="schipBtn" data-schip="zee">alleen zeeschip</button>
+      </div>
       <div class="btnRow">
         <button id="routeGo">route</button>
         <button id="routeWis">wis</button>
@@ -90,6 +99,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=026"></script>
+<script type="module" src="src/main.js?v=027"></script>
 </body>
 </html>
