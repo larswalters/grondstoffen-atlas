@@ -1,3 +1,4 @@
 # Ruwe brondata: wordt gedownload door tools/fetch_world.sh en NIET in git bewaard.
 # Alleen de gebakken, compacte uitvoer in data/ gaat mee.
 build-cache/
+__pycache__/

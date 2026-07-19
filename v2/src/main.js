@@ -1,10 +1,10 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=014";
-import { laadVectorWereld } from "./world.js?v=014";
-import { createTileLayer } from "./tiles.js?v=014";
-import { laadMarnet, laadHavens, zoekRoute, bouwRouteLijn } from "./marnet.js?v=014";
+import { createGlobe, CONFIG } from "./globe.js?v=016";
+import { laadVectorWereld } from "./world.js?v=016";
+import { createTileLayer } from "./tiles.js?v=016";
+import { laadMarnet, laadHavens, zoekRoute, bouwRouteLijn } from "./marnet.js?v=016";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -56,7 +56,10 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
       `${net.stats.kbOverdracht} KB · laden ${net.stats.msLaden} ms, verwerken ${net.stats.msVerwerken} ms · ` +
       `${havens.length.toLocaleString("nl")} havens`
     );
-    window.MARNET = net; // diagnose-handvat, net als GLOBE/TEGELS
+    window.MARNET = net;       // diagnose-handvat, net als GLOBE/TEGELS
+    window.HAVENS = havens;    // idem — de acceptatietests van LAR-486 rijden hierop
+    window.zoekRoute = zoekRoute;
+    zetAttrib();               // vaarweg-data draagt een eigen bronvermelding (ODbL)
   })
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
 
@@ -204,13 +207,27 @@ wireButtons(".bmBtn", "bm", (mode) => {
     TEGELS.zetBron(mode);          // "satelliet" of "kaart"
     GLOBE.setBasemap("satelliet"); // ondergrond onder de tegels
   }
-  document.getElementById("attrib").textContent = TEGELS.isAan() ? TEGELS.attributie() : "";
+  zetAttrib();
 });
 
 document.getElementById("zoomIn").addEventListener("click", () => GLOBE.zoomBy(1 / 1.35));
 document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(1.35));
 
-document.getElementById("attrib").textContent = TEGELS.attributie();
+// De tegel-attributie hangt aan de gekozen ondergrond; de vaarweg-attributie
+// aan de gelaadde data (M24: OSM-middellijnen = ODbL, verplicht — óók als de
+// ondergrond op "egaal" staat en er geen tegels in beeld zijn).
+function zetAttrib() {
+  const delen = [];
+  if (TEGELS.isAan()) delen.push(TEGELS.attributie());
+  const bronnen = NET ? Object.values(NET.vaarwegen || {}).map((v) => (v.bron || "").toLowerCase()) : [];
+  if (bronnen.some((b) => b.includes("osm") || b.includes("openstreetmap"))) {
+    delen.push("Vaarwegen: © OpenStreetMap-bijdragers (ODbL)");
+  } else if (bronnen.some((b) => b.includes("unece"))) {
+    delen.push("Vaarwegen: UNECE Blue Book");
+  }
+  document.getElementById("attrib").textContent = delen.join(" · ");
+}
+zetAttrib();
 
 // --- statusregel -----------------------------------------------------------
 

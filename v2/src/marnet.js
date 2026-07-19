@@ -20,6 +20,13 @@ import * as THREE from "three";
 const KLEUR_ZEE = new THREE.Color(0x2f9bdd);
 const KLEUR_BINNEN = new THREE.Color(0xd9a441);
 
+// LAR-486 bake-off: ?vaarwegbron=unece laadt de UNECE-variant van de bake
+// (marnet-unece.* + ports-unece.json — bin/json/ports horen als SET bij elkaar,
+// want de haven-snap hangt aan de knopenlijst van precies die bake). Zonder
+// parameter laadt de OSM-variant. Weg zodra Lars de bron gekozen heeft.
+const BRON_SUFFIX =
+  new URLSearchParams(location.search).get("vaarwegbron") === "unece" ? "-unece" : "";
+
 /** Zelfde zigzag-varint-idee als world.js (bewust gekopieerd: een import van
  *  world.js?v=… zou de module dubbel laden zodra de versies uiteenlopen).
  *  Zonder bit-operatoren: die knippen op 32 bits, terwijl vermenigvuldigen
@@ -65,12 +72,12 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=014").then((r) => {
-      if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
+    fetch(`data/marnet${BRON_SUFFIX}.json?v=016`).then((r) => {
+      if (!r.ok) throw new Error(`marnet${BRON_SUFFIX}.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=014").then((r) => {
-      if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
+    fetch(`data/marnet${BRON_SUFFIX}.bin?v=016`).then((r) => {
+      if (!r.ok) throw new Error(`marnet${BRON_SUFFIX}.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
   ]);
@@ -202,6 +209,7 @@ export async function laadMarnet(radius) {
     geomStart, geomN, posities,
     adjStart: graad, adjEdge, adjKnoop,
     passages: meta.passages || {},
+    vaarwegen: meta.vaarwegen || {},   // M24: {label: {zeevaart, cemt, bron, …}}
     stats: {
       knopen: nKnopen,
       edges: nEdges,
@@ -379,8 +387,8 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=014");
-  if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
+  const r = await fetch(`data/ports${BRON_SUFFIX}.json?v=016`);
+  if (!r.ok) throw new Error(`ports${BRON_SUFFIX}.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];
   for (let i = 0; i < d.aantal; i++) {

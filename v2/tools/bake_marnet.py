@@ -37,7 +37,7 @@ import sys
 
 import numpy as np
 from shapely import STRtree, points as shp_points
-from shapely.geometry import shape
+from shapely.geometry import LineString, Point, shape
 
 # Windows-console is cp1252; zonder dit crasht een print met bv. '→'
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -612,6 +612,115 @@ def analyse():
         print(f"  {'LAND ' if land.is_land(lon, lat) else 'water'} · {naam}")
 
 
+# ------------------------------------------------------- M24: extra vaarwegen
+#
+# Binnenwater bestaat niet als water in de NE-polygonen — dáárom waren de
+# WATERWEG_ZONES hierboven vrijstellingen. Voor de vaarwegen die we zélf
+# toevoegen (LAR-486) geldt daarom de CORRIDOR-TOETS in plaats van de
+# vlak-toets: elk gebakken geometriepunt moet <= CORRIDOR_EPS_KM van de
+# bron-middellijn (fetch_waterways.py) liggen. De polygoon-toets blijft
+# alleen op de zee-overgang gelden: de aansluitknoop moet in NE-water liggen.
+
+KETEN_KM = 15.0         # nieuwe knoop elke ~15 km (havens snappen op knopen)
+AANSLUIT_MAX_KM = 30.0  # zeezijde moet zó dicht bij een MARNET-knoop beginnen
+CORRIDOR_EPS_KM = 0.25  # kwantisering (11 m) + simplify (25 m) blijven hier ruim onder
+
+
+def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
+    """Hangt vaarweg-ketens uit fetch_waterways.py aan de graaf (in-place).
+
+    Per systeem: zeezijde hechten aan de dichtstbijzijnde ORIGINELE
+    MARNET-knoop, dan nieuwe knopen elke ~KETEN_KM met edges soort=1 en
+    passage=systeemlabel (het bestaande vermijd-mechanisme = meteen de
+    M26/M21-filterknop). Geeft de meta per systeem terug voor marnet.json.
+    """
+    gj = json.load(open(pad, encoding="utf-8"))
+    n_orig = len(nodes)
+    orig_xyz = np.array([to3d(lo, la) for lo, la in nodes[:n_orig]])
+    uit = {}
+    print(f"\nextra vaarwegen uit {os.path.basename(pad)}:")
+    for f in gj["features"]:
+        props = f["properties"]
+        label = props["label"]
+        coords = [(wrap_lon(lo), la) for lo, la in f["geometry"]["coordinates"]]
+
+        # zee-overgang: dichtstbijzijnde originele knoop (3D-dot = grootcirkel-proxy)
+        v = np.array(to3d(*coords[0]))
+        d = orig_xyz @ v
+        zeeknoop = int(np.argmax(d))
+        aansluit_km = R_AARDE * math.acos(max(-1.0, min(1.0, float(d[zeeknoop]))))
+        if aansluit_km > AANSLUIT_MAX_KM:
+            raise RuntimeError(f"{label}: zeezijde ligt {aansluit_km:.1f} km van de "
+                               f"dichtstbijzijnde MARNET-knoop (max {AANSLUIT_MAX_KM})")
+        # Polygoon-toets op de zee-overgang, met de M23-nuance: een knoop in een
+        # dokbekken/estuarium is NE-"land" maar ligt in een WATERWEG_ZONE — daar
+        # vaart MARNET écht (bv. de Maasmond-knoop 6812 in zone nl-delta).
+        overgang = "water"
+        if land.is_land(*nodes[zeeknoop]):
+            zone = in_zone(*nodes[zeeknoop])
+            if not zone:
+                lo, la = nodes[zeeknoop]
+                raise RuntimeError(f"{label}: aansluitknoop {zeeknoop} ({la:.3f},{lo:.3f}) "
+                                   f"ligt op land buiten elke waterweg-zone — "
+                                   f"zee-overgang ongeldig")
+            overgang = f"zone:{zone}"
+
+        # keten bouwen: aansluitknoop -> nieuwe knopen elke ~KETEN_KM -> eindknoop
+        lijn = [nodes[zeeknoop]] + coords
+        keten_edges = []
+        vorige_knoop = zeeknoop
+        stuk = [lijn[0]]
+        stuk_km = 0.0
+        for i in range(1, len(lijn)):
+            stuk.append(lijn[i])
+            stuk_km += gc_km(lijn[i - 1], lijn[i])
+            if stuk_km >= KETEN_KM or i == len(lijn) - 1:
+                nodes.append((round(lijn[i][0], 6), round(lijn[i][1], 6)))
+                nieuw = len(nodes) - 1
+                ei = len(edge_lijst)
+                edge_lijst.append(((vorige_knoop, nieuw), label))
+                status[ei] = "binnen:" + label
+                geometrie[ei] = list(stuk)
+                keten_edges.append(ei)
+                vorige_knoop = nieuw
+                stuk = [lijn[i]]
+                stuk_km = 0.0
+
+        # corridor-toets (lokale vlakke projectie — prima op systeemschaal);
+        # het aansluitstukje zeeknoop->bronlijn valt buiten de toets.
+        lat0 = math.radians(sum(la for _lo, la in coords) / len(coords))
+        sx = 111.2 * math.cos(lat0)
+        bron_lijn = LineString([(lo * sx, la * 111.2) for lo, la in coords])
+        ergste = 0.0
+        for ei in keten_edges:
+            for lo, la in geometrie[ei]:
+                if gc_km((lo, la), coords[0]) <= aansluit_km + 1.0:
+                    continue
+                d_km = bron_lijn.distance(Point(lo * sx, la * 111.2))
+                if d_km > ergste:
+                    ergste = d_km
+        if ergste > CORRIDOR_EPS_KM:
+            raise RuntimeError(f"{label}: corridor-toets faalt — gebakken geometrie "
+                               f"ligt {ergste:.2f} km van de bron-middellijn "
+                               f"(eps {CORRIDOR_EPS_KM})")
+
+        km_tot = sum(gc_km(a, b) for a, b in zip(lijn, lijn[1:]))
+        uit[label] = {
+            "zeevaart": bool(props.get("zeevaart")),
+            "cemt": props.get("cemt", ""),
+            "bron": props.get("bron", ""),
+            "km": round(km_tot, 1),
+            "edges": keten_edges,
+            "aansluitKnoop": zeeknoop,
+            "aansluitKm": round(aansluit_km, 2),
+            "aansluitOvergang": overgang,
+        }
+        print(f"  {label:<16} {km_tot:6.1f} km · {len(keten_edges)} edges · aansluiting "
+              f"knoop {zeeknoop} ({aansluit_km:.2f} km, {overgang}) · corridor max "
+              f"{ergste * 1000:.0f} m · zeevaart={bool(props.get('zeevaart'))}")
+    return uit
+
+
 # ---------------------------------------------------------------- bakken
 
 def varint(uit, waarde):
@@ -631,7 +740,7 @@ def varint(uit, waarde):
 SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
-def verzoen_en_bak():
+def verzoen_en_bak(vaarwegen_pad=None, suffix=""):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -640,59 +749,97 @@ def verzoen_en_bak():
     edge_lijst = list(edges.items())
     print(f"netwerk: {len(nodes):,} knopen · {len(edge_lijst):,} edges")
 
-    # --- classificeren ------------------------------------------------------
-    monster_pts, monster_edge, monster_rand = [], [], []
-    for ei, ((a, b), _p) in enumerate(edge_lijst):
-        pts, rand, _lengte = edge_monsters(nodes[a], nodes[b])
-        monster_pts.extend(pts)
-        monster_edge.extend([ei] * len(pts))
-        monster_rand.extend(rand)
-    arr = np.array([[wrap_lon(lo), la] for lo, la in monster_pts])
-    m_edge = np.array(monster_edge)
-    m_rand = np.array(monster_rand)
-    mask = land.hits(arr)
-    echt = mask & (m_rand > PORT_TOL_KM)
+    # --- verzoening: classificeren + omleggen (of uit cache) ----------------
+    # De verzoening hangt alléén aan het MARNET-netwerk + de NE-polygonen en is
+    # deterministisch — maar kost ~35 min (150 omleg-A*'s over fijne rasters).
+    # M24 bakt herhaaldelijk (bake-off-varianten, pilots), dus het resultaat
+    # wordt gecached in build-cache/ en hergebruikt zolang de graaf gelijk is.
+    cache_pad = os.path.join(CACHE, "verzoening_cache.json")
+    herbruik = None
+    if os.path.exists(cache_pad):
+        try:
+            c = json.load(open(cache_pad, encoding="utf-8"))
+            if c.get("knopen") == len(nodes) and c.get("edges") == len(edge_lijst):
+                herbruik = c
+        except (json.JSONDecodeError, OSError):
+            herbruik = None
 
-    status = {}   # ei -> "binnen:<zone>" | "kapot"
-    for ei in sorted({int(e) for e in m_edge[echt]}):
-        eigen = arr[echt & (m_edge == ei)]
-        zones = {in_zone(lo, la) for lo, la in eigen}
-        if None not in zones:
-            status[ei] = "binnen:" + sorted(zones)[0]
-        else:
-            status[ei] = "kapot"
+    if herbruik:
+        status = {int(k): v for k, v in herbruik["status"].items()}
+        geometrie = {int(k): [tuple(p) for p in v] for k, v in herbruik["geometrie"].items()}
+        onopgelost = list(herbruik["onopgelost"])
+        kapot = [ei for ei, s in status.items() if s == "kapot"]
+        binnen = [ei for ei, s in status.items() if s.startswith("binnen:")]
+        print(f"verzoening uit cache: {len(kapot)} kapot · {len(binnen)} binnenwater · "
+              f"{len(kapot) - len(onopgelost)} omgelegd · {len(onopgelost)} onopgelost")
+    else:
+        monster_pts, monster_edge, monster_rand = [], [], []
+        for ei, ((a, b), _p) in enumerate(edge_lijst):
+            pts, rand, _lengte = edge_monsters(nodes[a], nodes[b])
+            monster_pts.extend(pts)
+            monster_edge.extend([ei] * len(pts))
+            monster_rand.extend(rand)
+        arr = np.array([[wrap_lon(lo), la] for lo, la in monster_pts])
+        m_edge = np.array(monster_edge)
+        m_rand = np.array(monster_rand)
+        mask = land.hits(arr)
+        echt = mask & (m_rand > PORT_TOL_KM)
 
-    kapot = [ei for ei, s in status.items() if s == "kapot"]
-    binnen = [ei for ei, s in status.items() if s.startswith("binnen:")]
-    print(f"classificatie: {len(kapot)} kapot · {len(binnen)} binnenwater · "
-          f"{len(edge_lijst) - len(status)} schoon")
+        status = {}   # ei -> "binnen:<zone>" | "kapot"
+        for ei in sorted({int(e) for e in m_edge[echt]}):
+            eigen = arr[echt & (m_edge == ei)]
+            zones = {in_zone(lo, la) for lo, la in eigen}
+            if None not in zones:
+                status[ei] = "binnen:" + sorted(zones)[0]
+            else:
+                status[ei] = "kapot"
 
-    # --- kapotte edges omleggen ---------------------------------------------
-    # Pogingen van grof-met-buffer naar fijn-zonder-buffer: de buffer beschermt
-    # tegen kust-scheren, maar knijpt nauwe straten (Dardanellen, fjorden,
-    # Inside Passage) dicht — daar is fijn en kaal water de enige weg.
-    geometrie = {}   # ei -> polyline [(lon,lat), ...] (alleen afwijkend van de koorde)
-    onopgelost = []
-    for ei in kapot:
-        (a, b), _p = edge_lijst[ei]
-        pa, pb = nodes[a], nodes[b]
-        tol = eind_toleranties(land, pa, pb)
-        gelukt = False
-        for cell, gebufferd in ((0.02, True), (0.01, True), (0.01, False), (0.02, False)):
-            om = detour(pa, pb, land, cell=cell, gebufferd=gebufferd)
-            if om is None:
-                continue
-            lijn = [pa] + om + [pb]
-            lijn, _weg = simplify_water(lijn, land)
-            if polyline_land_ok(land, lijn, tol_eind=tol):
-                geometrie[ei] = lijn
-                gelukt = True
-                break
-        if not gelukt:
-            onopgelost.append(ei)
-            print(f"  ONOPGELOST: edge {ei} ({pa[1]:.2f},{pa[0]:.2f})->({pb[1]:.2f},{pb[0]:.2f})"
-                  f" tol=({tol[0]:.0f},{tol[1]:.0f})")
-    print(f"omgelegd: {len(kapot) - len(onopgelost)} van {len(kapot)} kapotte edges")
+        kapot = [ei for ei, s in status.items() if s == "kapot"]
+        binnen = [ei for ei, s in status.items() if s.startswith("binnen:")]
+        print(f"classificatie: {len(kapot)} kapot · {len(binnen)} binnenwater · "
+              f"{len(edge_lijst) - len(status)} schoon")
+
+        # Kapotte edges omleggen — pogingen van grof-met-buffer naar
+        # fijn-zonder-buffer: de buffer beschermt tegen kust-scheren, maar
+        # knijpt nauwe straten (Dardanellen, fjorden, Inside Passage) dicht —
+        # daar is fijn en kaal water de enige weg.
+        geometrie = {}   # ei -> polyline [(lon,lat), ...] (alleen afwijkend van de koorde)
+        onopgelost = []
+        for ei in kapot:
+            (a, b), _p = edge_lijst[ei]
+            pa, pb = nodes[a], nodes[b]
+            tol = eind_toleranties(land, pa, pb)
+            gelukt = False
+            for cell, gebufferd in ((0.02, True), (0.01, True), (0.01, False), (0.02, False)):
+                om = detour(pa, pb, land, cell=cell, gebufferd=gebufferd)
+                if om is None:
+                    continue
+                lijn = [pa] + om + [pb]
+                lijn, _weg = simplify_water(lijn, land)
+                if polyline_land_ok(land, lijn, tol_eind=tol):
+                    geometrie[ei] = lijn
+                    gelukt = True
+                    break
+            if not gelukt:
+                onopgelost.append(ei)
+                print(f"  ONOPGELOST: edge {ei} ({pa[1]:.2f},{pa[0]:.2f})->({pb[1]:.2f},{pb[0]:.2f})"
+                      f" tol=({tol[0]:.0f},{tol[1]:.0f})")
+        print(f"omgelegd: {len(kapot) - len(onopgelost)} van {len(kapot)} kapotte edges")
+
+        with open(cache_pad, "w", encoding="utf-8") as f:
+            json.dump({"knopen": len(nodes), "edges": len(edge_lijst),
+                       "status": {str(k): v for k, v in status.items()},
+                       "geometrie": {str(k): [[p[0], p[1]] for p in v]
+                                     for k, v in geometrie.items()},
+                       "onopgelost": onopgelost}, f)
+        print(f"verzoening gecached: {os.path.basename(cache_pad)} "
+              f"({os.path.getsize(cache_pad) / 1024:,.0f} KB)")
+
+    # --- M24: vaarweg-ketens aanhangen (LAR-486) ----------------------------
+    vaarwegen_meta = {}
+    if vaarwegen_pad:
+        vaarwegen_meta = extra_vaarwegen(land, nodes, edge_lijst, status,
+                                         geometrie, vaarwegen_pad)
 
     # --- geometrie verdichten + kwantiseren ---------------------------------
     def verdicht(lijn):
@@ -762,11 +909,16 @@ def verzoen_en_bak():
             px, py = x, y
 
     os.makedirs(DATA, exist_ok=True)
-    bin_pad = os.path.join(DATA, "marnet.bin")
+    bin_pad = os.path.join(DATA, f"marnet{suffix}.bin")
     with open(bin_pad, "wb") as f:
         f.write(uit)
 
     passages = {str(ei): p for ei, ((_a, _b), p) in enumerate(edge_lijst) if p}
+    bron = ("Eurostat MARNET via searoute 1.6.0; verzoend met Natural Earth 1:10M "
+            "(land + minor islands, meren als water) — LAR-483")
+    if vaarwegen_meta:
+        bron += ("; vaarwegen (M24/LAR-486): "
+                 + ", ".join(f"{k} [{v['bron']}]" for k, v in vaarwegen_meta.items()))
     meta = {
         "schaal": SCHAAL,
         "knopen": len(nodes),
@@ -775,25 +927,27 @@ def verzoen_en_bak():
         "netwerkKm": round(sum(edge_lengtes)),
         "soorten": {"0": "zee", "1": "binnenwater"},
         "passages": passages,
-        "bron": "Eurostat MARNET via searoute 1.6.0; verzoend met Natural Earth 1:10M "
-                "(land + minor islands, meren als water) — LAR-483",
+        "vaarwegen": vaarwegen_meta,
+        "bron": bron,
     }
-    json_pad = os.path.join(DATA, "marnet.json")
+    json_pad = os.path.join(DATA, f"marnet{suffix}.json")
     with open(json_pad, "w", encoding="utf-8") as f:
         json.dump(meta, f, separators=(",", ":"))
 
+    n_vaarweg = sum(len(v["edges"]) for v in vaarwegen_meta.values())
     print(f"\n  knopen        : {len(nodes):,}")
-    print(f"  edges         : {len(edge_lijst):,}  (binnenwater: {len(binnen)}, omgelegd: {len(kapot) - len(onopgelost)}, onopgelost: {len(onopgelost)})")
+    print(f"  edges         : {len(edge_lijst):,}  (binnenwater: {len(binnen)} + {n_vaarweg} vaarweg-edges, "
+          f"omgelegd: {len(kapot) - len(onopgelost)}, onopgelost: {len(onopgelost)})")
     print(f"  geometrie     : {totaal_punten:,} punten ({DENS_KM:.0f} km-verdichting)")
     print(f"  netwerklengte : {sum(edge_lengtes):,.0f} km")
-    print(f"  marnet.bin    : {os.path.getsize(bin_pad) / 1024:,.0f} KB")
-    print(f"  marnet.json   : {os.path.getsize(json_pad) / 1024:,.0f} KB")
+    print(f"  {os.path.basename(bin_pad):<14}: {os.path.getsize(bin_pad) / 1024:,.0f} KB")
+    print(f"  {os.path.basename(json_pad):<14}: {os.path.getsize(json_pad) / 1024:,.0f} KB")
 
-    bak_havens(nodes, node_q)
+    bak_havens(nodes, node_q, suffix)
     return onopgelost
 
 
-def bak_havens(nodes, node_q):
+def bak_havens(nodes, node_q, suffix=""):
     """searoute's havens, gesnapt aan de dichtstbijzijnde netwerk-knoop."""
     gj = json.load(open(os.path.join(SR_DATA, "ports.geojson"), encoding="utf-8"))
     havens = []
@@ -827,19 +981,30 @@ def bak_havens(nodes, node_q):
         "afstandKm": afstand,
         "bron": "searoute 1.6.0 ports.geojson",
     }
-    pad = os.path.join(DATA, "ports.json")
+    pad = os.path.join(DATA, f"ports{suffix}.json")
     with open(pad, "w", encoding="utf-8") as f:
         json.dump(uit, f, ensure_ascii=False, separators=(",", ":"))
     ver = [a for a in afstand if a > 50]
-    print(f"  havens        : {len(namen):,} -> ports.json ({os.path.getsize(pad) / 1024:,.0f} KB)"
+    print(f"  havens        : {len(namen):,} -> {os.path.basename(pad)} ({os.path.getsize(pad) / 1024:,.0f} KB)"
           f" | snap-afstand mediaan {np.median(afstand):.0f} km, >50 km: {len(ver)}")
+    # de LAR-486-acceptatiehavens expliciet rapporteren
+    for wie in ("Amsterdam", "Nijmegen", "Rotterdam", "Duluth"):
+        for i, naam in enumerate(namen):
+            if naam == wie and landen[i] in ("Netherlands", "United_states"):
+                print(f"    snap {naam:<10} ({landen[i][:2]}): knoop {knoop[i]} · {afstand[i]:.1f} km")
+                break
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--analyse", action="store_true", help="alleen het rapport")
+    ap.add_argument("--vaarwegen", help="GeoJSON uit fetch_waterways.py (M24/LAR-486): "
+                                        "vaarweg-ketens aan de graaf hangen")
+    ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoerbestanden "
+                                                 "(marnet<suffix>.bin/json, ports<suffix>.json) "
+                                                 "— voor de bake-off-variant")
     args = ap.parse_args()
     if args.analyse:
         analyse()
     else:
-        verzoen_en_bak()
+        verzoen_en_bak(vaarwegen_pad=args.vaarwegen, suffix=args.suffix)
