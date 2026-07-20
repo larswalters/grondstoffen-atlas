@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=037" />
+<link rel="stylesheet" href="style.css?v=038" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -60,6 +60,14 @@
     <div class="btnRow">
       <button class="hvBtn is-on" data-hv="aan">aan</button>
       <button class="hvBtn" data-hv="uit">uit</button>
+    </div>
+    <!-- De kleur zegt welke netten de haven raakt. Mintgroen = kandidaat voor
+         de aangewezen overslaghavens; de lijst zelf wijst Lars aan. -->
+    <div id="havenLegenda">
+      <span><i style="background:#4fe3b0"></i>zee + rivier</span>
+      <span><i style="background:#fff4e2"></i>alleen zee</span>
+      <span><i style="background:#d9a441"></i>alleen rivier</span>
+      <span><i style="background:#6a7484"></i>geen net &lt; 25 km</span>
     </div>
 
     <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
@@ -129,6 +137,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=037"></script>
+<script type="module" src="src/main.js?v=038"></script>
 </body>
 </html>

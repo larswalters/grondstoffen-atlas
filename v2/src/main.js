@@ -1,12 +1,12 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=037";
-import { laadVectorWereld } from "./world.js?v=037";
-import { createTileLayer } from "./tiles.js?v=037";
+import { createGlobe, CONFIG } from "./globe.js?v=038";
+import { laadVectorWereld } from "./world.js?v=038";
+import { createTileLayer } from "./tiles.js?v=038";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=037";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=037";
+  from "./marnet.js?v=038";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=038";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -61,6 +61,12 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
     GLOBE.globeGroup.add(HAVENLAAG.punten);
     koppelHavenLabel(GLOBE, HAVENLAAG, havens, document.getElementById("havenLabel"));
     window.HAVENLAAG = HAVENLAAG;   // diagnose-handvat, net als MARNET/HAVENS
+    const hs = HAVENLAAG.stats;
+    console.log(
+      `[atlas v2] havens: ${hs.havens.toLocaleString("nl")} · ` +
+      `zee+rivier ${hs.beide.toLocaleString("nl")} · alleen zee ${hs.zee.toLocaleString("nl")} · ` +
+      `alleen rivier ${hs.rivier.toLocaleString("nl")} · geen net <${hs.raaktKm} km ${hs.los.toLocaleString("nl")}`
+    );
 
     console.log(
       `[atlas v2] marnet: ${net.stats.knopen.toLocaleString("nl")} knopen · ` +

@@ -129,6 +129,27 @@ html, body {
 
 #routeInfo b { color: var(--ink); }
 
+/* --- legenda bij de havenlaag -------------------------------------------- */
+
+#havenLegenda {
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
+#havenLegenda span { display: block; }
+
+#havenLegenda i {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  border: 1px solid rgba(8, 12, 18, 0.9);
+  vertical-align: baseline;
+}
+
 /* --- havennaam onder de cursor ------------------------------------------- */
 
 #havenLabel {

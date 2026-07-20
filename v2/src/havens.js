@@ -20,10 +20,27 @@
 
 import * as THREE from "three";
 
-// Warm wit, bewust naast de bestaande lijnkleuren: zee 0x2f9bdd · binnenwater
-// 0xd9a441 · bulk 0xff1a1a · route 0xffe066. Een haven is géén lijn, dus krijgt
-// hij een kleur die in die reeks niet voorkomt.
-const KLEUR_HAVEN = new THREE.Color(0xfff4e2);
+// Kleur = WELKE NETTEN DEZE HAVEN RAAKT. Bewust naast de bestaande lijnkleuren
+// (zee 0x2f9bdd · binnenwater 0xd9a441 · route 0xffe066), zodat een haven nooit
+// voor een lijn aangezien wordt.
+//
+// De mintgroene punten zijn de KANDIDATEN voor de aangewezen overslaghavens:
+// havens die zowel het zeenet als het riviernet raken. Kandidaten, niet de
+// lijst zelf — Lars' regel bij [LAR-518] is dat "beide netten raken" als
+// criterium de overslag binnenvaart -> spoor/vrachtwagen mist, dus de echte
+// lijst wordt aangewezen. Deze kleur laat alleen zien waar je kúnt aanwijzen.
+const KLEUR_BEIDE  = new THREE.Color(0x4fe3b0);  // zee + rivier — kandidaat
+const KLEUR_ZEE    = new THREE.Color(0xfff4e2);  // alleen zeenet
+const KLEUR_RIVIER = new THREE.Color(0xd9a441);  // alleen riviernet (= binnenhaven)
+const KLEUR_LOS    = new THREE.Color(0x6a7484);  // geen van beide in de buurt
+
+// ⚠️ Wanneer "raakt" een haven een net? MARNET is een GROVE graaf — de mediane
+// zee-snap is 31 km — dus een strakke drempel meet vooral de knoopdichtheid van
+// MARNET en niet of er een haven ligt. Op 5 km raken 100 havens beide netten,
+// op 25 km zijn het er 572; dat verschil is meetresolutie, geen aardrijkskunde.
+// 25 km is hier dus een LEESHULP voor het oog, geen besluit: de echte
+// aanhechtingsafstanden staan ongewijzigd per haven in ports.json.
+const RAAKT_KM = 25;
 
 // Grootte in CSS-pixels, los van de zoom (een haven is een plek, geen gebied —
 // meeschalen met de bol zou hem op wereldniveau onzichtbaar maken en op 1 km
@@ -84,11 +101,26 @@ export function bouwHavenLaag(havens, radius) {
   const posities = new Float32Array(n * 3);
   const kleuren = new Float32Array(n * 3);
 
+  const telling = { beide: 0, zee: 0, rivier: 0, los: 0 };
   for (let i = 0; i < n; i++) {
-    opBol(havens[i].lon, havens[i].lat, radius, posities, i * 3);
-    kleuren[i * 3 + 0] = KLEUR_HAVEN.r;
-    kleuren[i * 3 + 1] = KLEUR_HAVEN.g;
-    kleuren[i * 3 + 2] = KLEUR_HAVEN.b;
+    const h = havens[i];
+    opBol(h.lon, h.lat, radius, posities, i * 3);
+
+    const aanZee = h.afstandKm >= 0 && h.afstandKm <= RAAKT_KM;
+    // -1 = er is geen riviernet in deze bake. Dat is iets ANDERS dan "ver weg",
+    // en het verschil moet zichtbaar blijven: anders leest een bake zonder
+    // binnenwater als een wereld waarin geen enkele haven aan een rivier ligt.
+    const aanRivier = h.afstandRivierKm >= 0 && h.afstandRivierKm <= RAAKT_KM;
+
+    let k;
+    if (aanZee && aanRivier) { k = KLEUR_BEIDE; telling.beide++; }
+    else if (aanZee) { k = KLEUR_ZEE; telling.zee++; }
+    else if (aanRivier) { k = KLEUR_RIVIER; telling.rivier++; }
+    else { k = KLEUR_LOS; telling.los++; }
+
+    kleuren[i * 3 + 0] = k.r;
+    kleuren[i * 3 + 1] = k.g;
+    kleuren[i * 3 + 2] = k.b;
   }
 
   const geo = new THREE.BufferGeometry();
@@ -116,6 +148,8 @@ export function bouwHavenLaag(havens, radius) {
     kleurAttr: geo.getAttribute("color"),
     stats: {
       havens: n,
+      raaktKm: RAAKT_KM,
+      ...telling,
       msBouwen: Math.round(performance.now() - t0),
     },
   };
@@ -181,8 +215,12 @@ export function koppelHavenLabel(globe, laag, havens, labelEl, drempelPx = 9) {
 
     if (i !== vorige) {
       const h = havens[i];
+      // Beide aanhechtingen in het label: dát is waar deze laag over gaat, en
+      // zonder de afstanden is een mintgroene stip niet te controleren.
+      const rv = h.afstandRivierKm >= 0 ? `${h.afstandRivierKm} km` : "geen riviernet";
       labelEl.innerHTML =
-        `${h.naam} <span>· ${h.land}${h.locode ? " · " + h.locode : ""}</span>`;
+        `${h.naam} <span>· ${h.land}${h.locode ? " · " + h.locode : ""}</span>` +
+        `<br><span>zee ${h.afstandKm} km · rivier ${rv}</span>`;
       vorige = i;
     }
     labelEl.hidden = false;

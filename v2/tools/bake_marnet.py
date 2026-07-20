@@ -1595,8 +1595,8 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
             # niets meer weg en sluit het net gewoon aan.
             #
             # Alles t/m hier is het ZEENET (+ de getoetste ketens); alles daarna
-            # is riviernet. Havens mogen voorlopig alleen op het eerste snappen
-            # — zie de waarschuwing bij bak_havens().
+            # is riviernet. Die grens is wat `bak_havens()` gebruikt om elke
+            # haven TWEE keer te snappen — een aanhechting per net (LAR-518).
             zee_knopen = len(nodes)
             print("\nbinnenwaternet -> de graaf (LAR-515 -> één net):")
             per_regio = {
@@ -1746,25 +1746,35 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
     print(f"  {os.path.basename(bin_pad):<14}: {os.path.getsize(bin_pad) / 1024:,.0f} KB")
     print(f"  {os.path.basename(json_pad):<14}: {os.path.getsize(json_pad) / 1024:,.0f} KB")
 
-    bak_havens(nodes, node_q, suffix, max_knoop=zee_knopen)
+    bak_havens(nodes, node_q, suffix, zee_knopen=zee_knopen)
     return onopgelost
 
 
-def bak_havens(nodes, node_q, suffix="", max_knoop=None):
-    """searoute's havens, gesnapt aan de dichtstbijzijnde netwerk-knoop.
+def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
+    """searoute's havens, gesnapt aan BEIDE netten (LAR-518).
 
-    ⚠️ `max_knoop` sluit de knopen van het BINNENWATERNET uit bij het snappen,
-    en dat is voorlopig noodzakelijk. Havens snappen op de dichtstbijzijnde
-    knoop, en zodra het riviernet erin ligt is dat voor een zeehaven vaak een
-    riviernet-knoop: Rotterdam verhuisde van knoop 6818 (0,6 km) naar een
-    riviernet-knoop op 1,1 km en kon daarna NIETS meer bereiken — ook Shanghai
-    niet — want het riviernet is bewust een eigen component.
+    ⚠️ EEN HAVEN HEEFT TWEE AANHECHTINGEN, en dat is de kern van dit issue.
+    Havens snappen op de dichtstbijzijnde knoop, en zodra het riviernet in de
+    graaf ligt is dat voor een zeehaven vaak een riviernet-knoop: Rotterdam
+    verhuisde van knoop 6818 (0,6 km) naar een riviernet-knoop op 1,1 km en kon
+    daarna NIETS meer bereiken — ook Shanghai niet — want het riviernet is
+    bewust een eigen component.
 
-    Dat is geen bug in het net maar het bewijs dat een zeehaven ÉN een
-    binnenhaven is. De echte oplossing is de OVERSLAG: één haven, twee
-    aanhechtingen (een op het zeenet, een op het riviernet), en overstappen
-    kost een overslag. Tot dat mechanisme er is snappen havens alleen op het
-    zeenet, zodat alles blijft werken zoals het werkte."""
+    Dat was geen bug maar het bewijs dat een zeehaven ÉN een binnenhaven is.
+    Eén snap kan die twee rollen niet dragen, dus snappen we nu twee keer:
+    `knoop`/`afstandKm` op het ZEENET (ongewijzigd, alle bestaande zeeroutes
+    rekenen hierop) en `knoopRivier`/`afstandRivierKm` op het RIVIERNET. De
+    overstap ertussen is de overslag.
+
+    `zee_knopen` = het aantal knopen dat tot het zeenet hoort; alles daarboven
+    is riviernet (zie verzoen_en_bak). None = er is geen riviernet gebakken,
+    dan blijft alles bij het oude en is er niets om aan te koppelen.
+
+    ⚠️ De rivier-afstand wordt RUW weggeschreven, ook als hij 800 km is. Een
+    drempel hoort bij wie hem gebruikt, niet bij de meting — anders verdwijnt
+    het verschil tussen "geen binnenwater in de buurt" en "wij vonden het te
+    ver", en dat is precies het soort stille beslissing dat later onvindbaar is.
+    """
     gj = json.load(open(os.path.join(SR_DATA, "ports.geojson"), encoding="utf-8"))
     havens = []
     for f in gj["features"]:
@@ -1774,12 +1784,17 @@ def bak_havens(nodes, node_q, suffix="", max_knoop=None):
     havens.sort(key=lambda h: (h[1], h[0]))
 
     # dichtstbijzijnde knoop in 3D (koorde-afstand = monotone proxy voor grootcirkel)
-    kandidaten = node_q if max_knoop is None else node_q[:max_knoop]
-    knoop_xyz = np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in kandidaten])
-    namen, landen, locodes, ll, knoop, afstand = [], [], [], [], [], []
+    grens = len(node_q) if zee_knopen is None else zee_knopen
+    zee_xyz = np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in node_q[:grens]])
+    riv_xyz = (np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in node_q[grens:]])
+               if grens < len(node_q) else None)
+
+    namen, landen, locodes, ll = [], [], [], []
+    knoop, afstand = [], []            # zeenet
+    knoop_riv, afstand_riv = [], []    # riviernet (-1 = geen riviernet gebakken)
     for naam, cty, code, lon, lat in havens:
         v = np.array(to3d(lon, lat))
-        d = knoop_xyz @ v
+        d = zee_xyz @ v
         beste = int(np.argmax(d))
         km = R_AARDE * math.acos(max(-1.0, min(1.0, float(d[beste]))))
         namen.append(naam)
@@ -1788,6 +1803,15 @@ def bak_havens(nodes, node_q, suffix="", max_knoop=None):
         ll.extend([round(lon, 3), round(lat, 3)])
         knoop.append(beste)
         afstand.append(round(km, 1))
+        if riv_xyz is None:
+            knoop_riv.append(-1)
+            afstand_riv.append(-1)
+        else:
+            dr = riv_xyz @ v
+            besteR = int(np.argmax(dr))
+            kmR = R_AARDE * math.acos(max(-1.0, min(1.0, float(dr[besteR]))))
+            knoop_riv.append(grens + besteR)   # index in de VOLLEDIGE knopenlijst
+            afstand_riv.append(round(kmR, 1))
     uit = {
         "aantal": len(namen),
         "namen": namen,
@@ -1796,6 +1820,9 @@ def bak_havens(nodes, node_q, suffix="", max_knoop=None):
         "ll": ll,
         "knoop": knoop,
         "afstandKm": afstand,
+        "knoopRivier": knoop_riv,
+        "afstandRivierKm": afstand_riv,
+        "zeeKnopen": grens,
         "bron": "searoute 1.6.0 ports.geojson",
     }
     pad = os.path.join(DATA, f"ports{suffix}.json")
@@ -1803,12 +1830,26 @@ def bak_havens(nodes, node_q, suffix="", max_knoop=None):
         json.dump(uit, f, ensure_ascii=False, separators=(",", ":"))
     ver = [a for a in afstand if a > 50]
     print(f"  havens        : {len(namen):,} -> {os.path.basename(pad)} ({os.path.getsize(pad) / 1024:,.0f} KB)"
-          f" | snap-afstand mediaan {np.median(afstand):.0f} km, >50 km: {len(ver)}")
-    # de LAR-486-acceptatiehavens expliciet rapporteren
+          f" | zee-snap mediaan {np.median(afstand):.0f} km, >50 km: {len(ver)}")
+    if riv_xyz is not None:
+        ar = np.array(afstand_riv)
+        print(f"  {'':14}  | rivier-snap mediaan {np.median(ar):.1f} km · "
+              f"≤1 km: {int((ar <= 1).sum()):,} · ≤5 km: {int((ar <= 5).sum()):,} · "
+              f"≤25 km: {int((ar <= 25).sum()):,} · >50 km: {int((ar > 50).sum()):,}")
+        # Hoeveel havens raken BEIDE netten? Dat is de kandidatenvijver waaruit
+        # de aangewezen overslaghavens gekozen worden — niet het criterium zelf
+        # (Lars: dan mis je de overslag binnenvaart -> spoor/vrachtwagen).
+        az = np.array(afstand)
+        print(f"  {'':14}  | raakt BEIDE netten ≤5 km: {int(((az <= 5) & (ar <= 5)).sum()):,} · "
+              f"≤25 km: {int(((az <= 25) & (ar <= 25)).sum()):,}")
+    # de LAR-486/518-acceptatiehavens expliciet rapporteren
     for wie in ("Amsterdam", "Nijmegen", "Rotterdam", "Duluth"):
         for i, naam in enumerate(namen):
             if naam == wie and landen[i] in ("Netherlands", "United_states"):
-                print(f"    snap {naam:<10} ({landen[i][:2]}): knoop {knoop[i]} · {afstand[i]:.1f} km")
+                extra = (f" | rivier {knoop_riv[i]} · {afstand_riv[i]:.1f} km"
+                         if riv_xyz is not None else "")
+                print(f"    snap {naam:<10} ({landen[i][:2]}): zee {knoop[i]} · "
+                      f"{afstand[i]:.1f} km{extra}")
                 break
 
 
