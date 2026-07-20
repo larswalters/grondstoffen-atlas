@@ -37,7 +37,7 @@ import re
 import sys
 
 import numpy as np
-from shapely import STRtree, points as shp_points
+from shapely import STRtree, box, points as shp_points
 from shapely.geometry import LineString, Point, shape
 
 # Windows-console is cp1252; zonder dit crasht een print met bv. '→'
@@ -1326,8 +1326,215 @@ def _gabariet_uit_signaal(sig):
     return {}                    # boat / ship / motorboat / usage: geen maat
 
 
+def _pt_seg_deg(p, a, b):
+    """Punt-tot-segment-afstand in het platte lon/lat-vlak (graden). Alleen om
+    het juiste segment te kiezen bij het invoegen — geen km-maat."""
+    px, py = p
+    ax, ay = a
+    bx, by = b
+    dx, dy = bx - ax, by - ay
+    if dx == 0 and dy == 0:
+        return math.hypot(px - ax, py - ay)
+    t = ((px - ax) * dx + (py - ay) * dy) / (dx * dx + dy * dy)
+    t = max(0.0, min(1.0, t))
+    return math.hypot(px - (ax + t * dx), py - (ay + t * dy))
+
+
+def _voeg_in(pts, npc):
+    """Voeg projectiepunt npc in op het dichtstbijzijnde segment van pts, tenzij
+    het vrijwel op een bestaande vertex valt (dan verandert er niets)."""
+    beste_j, beste_d = 0, 1e18
+    for j in range(len(pts) - 1):
+        d = _pt_seg_deg(npc, pts[j], pts[j + 1])
+        if d < beste_d:
+            beste_d, beste_j = d, j
+    if gc_km(npc, pts[beste_j]) < 1e-3 or gc_km(npc, pts[beste_j + 1]) < 1e-3:
+        return pts                       # valt samen met een uiteinde → geen insert
+    return pts[:beste_j + 1] + [npc] + pts[beste_j + 1:]
+
+
+def _heal_riviernet(lijnen_per_regio, eps_km):
+    """Tier-1 confluentie-heal (LAR-520). Een lijn-UITEINDE dat binnen eps_km OP
+    de lijn van een ANDER component projecteert wordt daar aangehecht: het
+    projectiepunt komt als vertex in de doel-lijn en het uiteinde verschuift
+    ernaartoe. `binnenwaternet()` maakt er vanzelf één gedeelde knoop van.
+
+    CROSS-COMPONENT is de kern: binnen je eigen component hechten doet niets én
+    is precies waar de meander-sluipweg (valkuil 1) zou ontstaan — dat kan hier
+    per constructie niet. Het uiteinde landt bovendien OP echte vaarweggeometrie,
+    dus de naad loopt over water (valkuil: geen hemelsbrede sprong). Greedy op de
+    kleinste gaten, progressieve union zodat een paar niet twee keer hecht. De
+    lengtetoets per corridor blijft de eindcontrole (valkuil 3).
+
+    Muteert lijnen_per_regio in-place. Geeft (n_naden, langste_km, alle_km).
+    """
+    comp, idx = _lijn_componenten(lijnen_per_regio)
+    lines = [lijnen_per_regio[r][l][1] for r, l in idx]
+    geoms = [LineString(p) for p in lines]
+    boom = STRtree(geoms)
+    venster = (eps_km / 111.32) * 1.6      # ruime bbox-marge (lon krapper dan lat)
+
+    kand = []
+    for gi, pts in enumerate(lines):
+        for eind in (0, -1):
+            E = pts[eind]
+            bx = box(E[0] - venster, E[1] - venster, E[0] + venster, E[1] + venster)
+            beste = None
+            for cand in boom.query(bx):
+                if cand == gi or comp[cand] == comp[gi]:
+                    continue
+                ln = geoms[cand]
+                npnt = ln.interpolate(ln.project(Point(E)))
+                d = gc_km(E, (npnt.x, npnt.y))
+                if d <= eps_km and (beste is None or d < beste[0]):
+                    beste = (d, cand, (npnt.x, npnt.y))
+            if beste:
+                kand.append((beste[0], gi, eind, beste[1], beste[2]))
+    kand.sort()
+
+    cmap = list(comp)
+
+    def find2(x):
+        while cmap[x] != x:
+            cmap[x] = cmap[cmap[x]]
+            x = cmap[x]
+        return x
+
+    used, naden = set(), []
+    for d, gi, eind, cand, npc in kand:
+        if (gi, eind) in used or find2(gi) == find2(cand):
+            continue
+        regio, li = idx[gi]
+        sig, pts = lijnen_per_regio[regio][li]
+        pts = list(pts)
+        pts[eind] = npc                      # uiteinde op de doel-lijn
+        lijnen_per_regio[regio][li] = (sig, pts)
+        cregio, cli = idx[cand]              # projectiepunt als vertex in de doel-lijn
+        csig, cpts = lijnen_per_regio[cregio][cli]
+        lijnen_per_regio[cregio][cli] = (csig, _voeg_in(cpts, npc))
+        used.add((gi, eind))
+        cmap[find2(gi)] = find2(cand)
+        naden.append(d)
+
+    return len(naden), (max(naden) if naden else 0.0), naden
+
+
+def _richting(pts, eind, langs_km=1.0):
+    """Eenheidsvector die UIT het uiteinde wijst (van binnen naar buiten),
+    gemeten over ~langs_km langs de lijn — stabieler dan het laatste segment."""
+    seq = pts if eind == 0 else pts[::-1]
+    p0 = seq[0]
+    pk = seq[-1]
+    acc = 0.0
+    for i in range(1, len(seq)):
+        acc += gc_km(seq[i - 1], seq[i])
+        if acc >= langs_km:
+            pk = seq[i]
+            break
+    vx, vy = p0[0] - pk[0], p0[1] - pk[1]
+    n = math.hypot(vx, vy) or 1.0
+    return (vx / n, vy / n)
+
+
+def _lijn_componenten(lijnen_per_regio):
+    """Union-find over de lijnen: verbonden als een endpoint-cel van de één
+    samenvalt met een vertex-cel van de ander — zoals binnenwaternet() knoopt.
+    Geeft (root-per-lijn, idx-lijst)."""
+    q = lambda p: (round(p[0] / BULK_QUANT), round(p[1] / BULK_QUANT))
+    idx, endcells, vcell = [], [], {}
+    for regio in sorted(lijnen_per_regio):
+        for li, (_sig, pts) in enumerate(lijnen_per_regio[regio]):
+            gi = len(idx)
+            idx.append((regio, li))
+            endcells.append((q(pts[0]), q(pts[-1])))
+            for p in pts:
+                vcell.setdefault(q(p), []).append(gi)
+    par = list(range(len(idx)))
+
+    def find(x):
+        while par[x] != x:
+            par[x] = par[par[x]]
+            x = par[x]
+        return x
+
+    for gi, cells in enumerate(endcells):
+        for c in cells:
+            for gj in vcell.get(c, ()):
+                if gj != gi:
+                    ra, rb = find(gi), find(gj)
+                    if ra != rb:
+                        par[rb] = ra
+    return [find(i) for i in range(len(idx))], idx
+
+
+def _heal_corridors(lijnen_per_regio, eps_km, hoek_max=45.0):
+    """Tier-2 corridor-heal (LAR-520). Verbindt twee UITEINDEN van VERSCHILLENDE
+    componenten binnen eps_km, maar alléén als ze in elkaars verlengde liggen:
+    de naadrichting valt binnen hoek_max° van beide uiteinde-richtingen. Dat
+    sluit de meander-sluipweg (valkuil 1: hairpin-uiteinden lopen parallel, niet
+    naar elkaar toe) en de dode voorganger (valkuil 3: naad staat dwars op de
+    richting) uit — zónder handmatige ijkpunten. Cross-component afgedwongen
+    (geen intra-component kortsluiting), greedy op de kleinste gaten.
+    """
+    comp, idx = _lijn_componenten(lijnen_per_regio)
+    lines = [lijnen_per_regio[r][l][1] for r, l in idx]
+    geoms = [LineString(p) for p in lines]
+    boom = STRtree(geoms)
+    venster = (eps_km / 111.32) * 1.6
+
+    def hoek(u, v):
+        d = max(-1.0, min(1.0, u[0] * v[0] + u[1] * v[1]))
+        return math.degrees(math.acos(d))
+
+    kand = []
+    for gi, pts in enumerate(lines):
+        for e in (0, -1):
+            E = pts[e]
+            d1 = _richting(pts, e)
+            bx = box(E[0] - venster, E[1] - venster, E[0] + venster, E[1] + venster)
+            for gj in boom.query(bx):
+                if gj == gi or comp[gj] == comp[gi]:
+                    continue
+                pj = lines[gj]
+                for e2 in (0, -1):
+                    F = pj[e2]
+                    g = gc_km(E, F)
+                    if g > eps_km or g < 1e-6:
+                        continue
+                    dx, dy = F[0] - E[0], F[1] - E[1]
+                    ns = math.hypot(dx, dy) or 1.0
+                    s = (dx / ns, dy / ns)
+                    d2 = _richting(pj, e2)
+                    if hoek(s, d1) <= hoek_max and hoek((-s[0], -s[1]), d2) <= hoek_max:
+                        kand.append((g, gi, e, gj, e2, F))
+    kand.sort()
+
+    cmap = list(comp)
+
+    def find2(x):
+        while cmap[x] != x:
+            cmap[x] = cmap[cmap[x]]
+            x = cmap[x]
+        return x
+
+    used, naden = set(), []
+    for g, gi, e, gj, e2, F in kand:
+        if (gi, e) in used or (gj, e2) in used or find2(gi) == find2(gj):
+            continue
+        regio, li = idx[gi]
+        sig, pts = lijnen_per_regio[regio][li]
+        pts = list(pts)
+        pts[e] = F                          # snap dit uiteinde op het andere
+        lijnen_per_regio[regio][li] = (sig, pts)
+        used.add((gi, e))
+        used.add((gj, e2))
+        cmap[find2(gi)] = find2(gj)
+        naden.append(g)
+    return len(naden), (max(naden) if naden else 0.0), naden
+
+
 def binnenwaternet(nodes, edge_lijst, status, geometrie, vaarwegen_meta,
-                   lijnen_per_regio, edge_gabariet):
+                   lijnen_per_regio, edge_gabariet, heal_km=0.0, corridor_km=0.0):
     """Hangt het gemapte binnenwater als ECHTE knopen en edges in de graaf.
 
     Muteert `nodes`/`edge_lijst`/`status`/`geometrie` — anders dan de oude
@@ -1337,7 +1544,41 @@ def binnenwaternet(nodes, edge_lijst, status, geometrie, vaarwegen_meta,
     Knoopplaatsing: op elk punt waar lijnen elkaar raken (dáár zit de
     topologie) plus een tussenknoop elke BULK_KNOOP_KM op lange stukken. De
     geometrie tussen twee knopen blijft volledig bewaard.
+
+    heal_km > 0 draait eerst de tier-1 confluentie-heal (LAR-520): gemiste
+    confluenties waar een uiteinde binnen heal_km OP een andere lijn valt worden
+    aangehecht, over water per constructie. Zonder heal (=0) blijft het gedrag
+    exact als vóór LAR-520.
     """
+    # Itereren tot convergentie: greedy hecht aan het DICHTSTBIJZIJNDE andere
+    # component, waardoor een hoofdstroom in de eerste ronde in losse stukken kan
+    # mergen die pas een ronde later aan elkaar komen (Cairo-confluentie,
+    # Mississippi-delta, Waal-tak). Elke ronde ziet verse componenten; stoppen
+    # zodra een ronde niets meer toevoegt. Dezelfde guards, herhaald.
+    MAX_RONDES = 6
+    if heal_km > 0 or corridor_km > 0:
+        tot1 = tot2 = 0
+        langste1 = langste2 = 0.0
+        for ronde in range(MAX_RONDES):
+            n1 = n2 = 0
+            if heal_km > 0:
+                n1, l1, _ = _heal_riviernet(lijnen_per_regio, heal_km)
+                tot1 += n1
+                langste1 = max(langste1, l1)
+            if corridor_km > 0:
+                n2, l2, _ = _heal_corridors(lijnen_per_regio, corridor_km)
+                tot2 += n2
+                langste2 = max(langste2, l2)
+            if n1 + n2 == 0:
+                break
+        print(f"  heal geconvergeerd in ≤{ronde + 1} rondes:")
+        if heal_km > 0:
+            print(f"    tier-1 confluentie (≤{heal_km:.2f} km, cross-component): "
+                  f"{tot1:,} naden · langste {langste1 * 1000:.0f} m")
+        if corridor_km > 0:
+            print(f"    tier-2 corridor (≤{corridor_km:.1f} km, collineair): "
+                  f"{tot2:,} naden · langste {langste2:.2f} km")
+
     q = lambda p: (round(p[0] / BULK_QUANT), round(p[1] / BULK_QUANT))
 
     # 1 · welke gekwantiseerde punten zijn een KRUISING of een UITEINDE?
@@ -1507,7 +1748,8 @@ def varint(uit, waarde):
 SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
-def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False):
+def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False,
+                   heal_km=0.0, corridor_km=0.0):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -1640,7 +1882,20 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
             }
             vaarwegen_meta.update(
                 binnenwaternet(nodes, edge_lijst, status, geometrie,
-                               vaarwegen_meta, per_regio, edge_gabariet))
+                               vaarwegen_meta, per_regio, edge_gabariet,
+                               heal_km=heal_km, corridor_km=corridor_km))
+            # Valkuil 2 (LAR-520): de zee-rivier-scheiding is heilig. Het
+            # riviernet krijgt eigen knopen (id >= zee_knopen) en mag NOOIT een
+            # zeeknoop raken — de dragende Donau-ring-verdediging.
+            rivier_edges = [ei for ei, s in status.items()
+                            if s.startswith("binnen:") and vaarwegen_meta.get(
+                                s[len("binnen:"):], {}).get("bulk")]
+            kruis = sum(1 for ei in rivier_edges
+                        if edge_lijst[ei][0][0] < zee_knopen
+                        or edge_lijst[ei][0][1] < zee_knopen)
+            assert kruis == 0, f"zee↔rivier-scheiding geschonden: {kruis} edges"
+            print(f"  zee↔rivier-scheiding OK: 0 van {len(rivier_edges):,} "
+                  f"riviernet-edges raakt een zeeknoop")
         else:
             bulk_json_pad = os.path.join(DATA, f"marnet-bulk{suffix}.json")
             with open(bulk_json_pad, "w", encoding="utf-8") as f:
@@ -1917,9 +2172,18 @@ if __name__ == "__main__":
     ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoerbestanden "
                                                  "(marnet<suffix>.bin/json, ports<suffix>.json) "
                                                  "— voor de bake-off-variant")
+    ap.add_argument("--heal-km", type=float, default=0.0,
+                    help="tier-1 confluentie-heal (LAR-520): hecht een lijn-uiteinde dat "
+                         "binnen deze afstand OP een andere lijn projecteert daar aan "
+                         "(over water per constructie). 0 = uit (huidig gedrag).")
+    ap.add_argument("--corridor-km", type=float, default=0.0,
+                    help="tier-2 corridor-heal (LAR-520): verbind twee UITEINDEN van "
+                         "verschillende componenten binnen deze afstand als ze collineair "
+                         "in elkaars verlengde liggen (richtingstoets). 0 = uit.")
     args = ap.parse_args()
     if args.analyse:
         analyse()
     else:
         verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix,
-                       binnenwater=args.binnenwater)
+                       binnenwater=args.binnenwater, heal_km=args.heal_km,
+                       corridor_km=args.corridor_km)
