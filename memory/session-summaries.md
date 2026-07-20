@@ -869,3 +869,14 @@ positionele juistheid, leesbaarheid). Vastgelegd: `v2/design/lod-ontwerpbrief.md
 `v2/design/referenties/` (commit `08f2341`, gepusht — alléén design-bestanden, dirty
 M24-werkbestanden ongemoeid) + LAR-490 (High, Todo) onder M26 mét de beelden als bijlage.
 Vault: [[2026-07-19-grondstoffen-atlas-lod-ontwerpbrief]].
+
+## 2026-07-21 — Havens op de kaart + dubbele aanhechting + havenpoort + overslag-ontwerpbesluit
+LAR-518 stap 1+2 live (?v=039): havenlaag (1 draw call, hover met beide aanhechtafstanden),
+bak_havens snapt zee+rivier (Nijmegen 79,1->2,0; havens >50 km 1.473->934; marnet.bin
+byte-identiek). Lars' visuele check ontmaskerde de bron als UN/LOCODE-locatielijst -> havenpoort
+(630 punten weggefilterd, meren tellen mee, toets_havens.py). Besluiten Lars: aangewezen
+overslaglijst + zeehavens-met-spoor erbij. Vierpanel (4 architecturen x 3 aanvallers; panels
+strandden op sessielimiet, synthese zelf uit de journals): riviernet = 10.670 fragmenten ->
+STITCHEN EERST (LAR-520, blocks LAR-518), dan gelaagde A* + knooppunten.json + klasse per been.
+Havenbron-weging: WPI/EMODnet/UNECE-rolverdeling. Docs: overslag-ontwerp.md + havenbron-keuze.md.
+Commits 11dbde9 / 97b0ee6 / aacd253 / 7f1c06f / 5b7c3cd. Vault: [[2026-07-21-grondstoffen-atlas-havens-en-overslag-ontwerp]].

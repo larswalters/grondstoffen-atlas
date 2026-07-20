@@ -1364,3 +1364,34 @@ Controleer dus de bestandsgrootte, niet de HTTP-status.
 - `atlas-lithium-kobalt.html` / `globe-oud`-restanten opruimen — pas ná **visuele** bevestiging op Netlify/mobiel
   (routeverificatie is al headless gedaan; screenshot lukte niet door WebGL-time-out).
 - Evt. **GitHub-remote** voor de nieuwe repo (nu lokaal-only).
+
+## 2026-07-21 · LAR-518: overslaghavens = AANGEWEZEN lijst, inclusief zeehavens-met-spoor
+Lars: mechanisch "twee waternetten raken elkaar" mist de overslag binnenvaart->spoor/vrachtwagen,
+en zeehavens zonder binnenwater maar met spoor worden voor sommige stromen de route. Een
+overslagpunt is dus de plek waar MODALITEITEN samenkomen. R'dam->Shanghai-19.677-acceptatie geschrapt.
+
+## 2026-07-21 · Overslag-ontwerpbesluit (vierpanel): STITCHEN EERST, dan gelaagde keten-router
+Het riviernet is 10.670 fragmenten (mediaan 4,8 km): New Orleans/Cincinnati/Baton Rouge raken
+elkaar niet, 54% van de havens kan nooit een route krijgen -> LAR-520 (blocks LAR-518).
+Gekozen: gelaagde A* met toestand (knoop, aantalOverstappen), lexicografisch minste overslagen ->
+minste km (Donau-ring structureel dicht); knooppunten.json als EIGEN entiteit (coordinaat per
+modaliteit, expliciet knopenpaar per overstap -- knoop != haven: 1.854 gedeelde zeeknopen);
+scheepsklasse per been; "geen pad" met reden. VERWORPEN met doodsoorzaak: afstandsdrempels
+(leeg interval: Manaus echte zeehaven op 1.084 km snap, Duisburg geen op 152), lambda/tau-kostmodel
+(vuurde op de echte data nooit), hubs in de bake (rebake + 42% dode knopen), vaste straf (3e
+herbevestiging). M25-notitie: flows dragen al `mode` per been -- de simulator raadt geen modal split.
+Volledig: v2/design/overslag-ontwerp.md.
+
+## 2026-07-21 · Havenpoort: de maat gaat RUW in ports.json, de drempel zit in de browser
+searoute's ports.geojson is een UN/LOCODE-locatielijst (Tecate/Laramie/Denver als "haven").
+afstand_tot_open_water() meet per haven kust/meer-afstand; met de rivier-snap samen = "aan water".
+MEREN TELLEN MEE (anders sneuvelen de Grote-Merenhavens: 709 vs 630 afvallers). 630 punten >10 km
+van water worden niet getekend maar blijven in de data met hun meting -- weggooien in de bake zou
+de maat onvindbaar maken. toets_havens.py hermeet onafhankelijk. NIET opgelost (bewust zichtbaar
+gelaten): posities zijn plaatscentroides, en er is geen vrachthaven/jachthaven-attribuut.
+
+## 2026-07-21 · Havenbron: rolverdeling i.p.v. vervanging (v2/design/havenbron-keuze.md)
+WPI = kandidaat wereldwijde verrijking/filter (verifieren: curl 403, Browser-pane werkt);
+EMODnet CC-BY = EU-positiecorrectie (mediaan 0,60 km van de kust, LOCODE-gekoppeld);
+UNECE Blue Book heeft RAILACCESS maar licentie verbiedt herdistributie -> alleen redactionele
+meetlat bij het aanwijzen; UN/LOCODE alleen als sleutel (hele boogminuten = ~1,85 km resolutie).

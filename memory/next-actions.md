@@ -1,37 +1,30 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (ÉÉN binnenwaternet in de graaf, visuele go binnen; NU = [LAR-518] overslaghavens)*
+*Last updated: 2026-07-21 (havens op de kaart + overslag-ontwerpbesluit; NU = [LAR-520] stitchen)*
 
-## 🔴 START HIER — de overslaghavens ([LAR-518], Urgent)
+## 🔴 START HIER — riviernet stitchen ([LAR-520], Urgent, blocks LAR-518)
 
-**Het binnenwaternet ligt er** (374.342 km, in de graaf, maten per lijn, visuele go van Lars op
-2026-07-20). Het hangt **bewust niet** aan MARNET: zee↔rivier gaat via een overslaghaven. Dus is
-er nu precies één ding dat het net bruikbaar maakt, en dat is dat mechanisme.
+**Het overslag-ontwerpbesluit is genomen** (2026-07-21, `v2/design/overslag-ontwerp.md`) en de
+hoofduitkomst is een volgorde-omkering: **het riviernet is 10.670 losse fragmenten (mediaan
+4,8 km) en daar sterft elke overslag op** — New Orleans (222 km), Cincinnati (16 km) en Baton
+Rouge (1.148 km) raken elkaar niet; 54% van de havens kan nooit een route krijgen.
 
-**Waarom dit nu het enige echte werk is.** Zonder overslag draagt het riviernet nul routes en
-staat `Nijmegen` weer op een snap van 79,1 km. Mét overslag krijgen alle binnenhavens hun
-aansluiting terug én wordt R'dam→Cincinnati eindelijk wat het in werkelijkheid is: zeeschip →
-overslag → duwkonvooi.
+**Dus: eerst [LAR-520]** — de issue-tekst is zelfstandig leesbaar (oorzaakshypothese
+`BULK_QUANT` ≈ 1 m, diagnose vóór fix, valkuilen: meander-sluipweg / 0-edges-zee↔rivier-assert /
+19e-eeuwse voorgangers, meetbare acceptatie). **Geen shotgun-naadradius: eerst de gatverdeling
+tussen component-uiteinden meten** (patroon `diagnose_keten.py`).
 
-**Het bewijs dat het nodig is, staat al in de bake.** Bij de eerste versie mét riviernet kon
-**Rotterdam niets meer bereiken, ook Shanghai niet** — het snapte op een rivierknoop (0,6 km)
-i.p.v. de zeeknoop (1,1 km) en zat vast op een losse component. Dat is geen bug maar het bewijs
-dat een zeehaven **óók** een binnenhaven is: één haven hoort **twee aanhechtingen** te krijgen.
-Tot dat er is beperkt `bak_havens(max_knoop=zee_knopen)` het snappen tot het zeenet.
+**Daarna, in deze volgorde (uit het ontwerpbesluit):**
+1. `v2/tools/toets_routes.py` — de elf invarianten headless narekenbaar + anti-ring-toetsen
+   (eerste uitvoerbare regressietoets van de repo; panel-prototypes bewezen dat het kan).
+2. `v2/data/knooppunten.json` + lader — de aangewezen lijst als eigen entiteit (~20–40 havens
+   eerst), coördinaat per modaliteit, expliciet knopenpaar per overstap.
+3. `zoekKeten` + HUD — gelaagde A* (knoop, overstappen), lexicografisch, klasse per been,
+   geen pad mét reden. Acceptatie: R'dam→Cincinnati = zeeschip → New Orleans → duwkonvooi;
+   R'dam→Nijmegen = binnenschip ~172 zonder verzonnen overslag; zeeroutes exact.
 
-**Te beslissen bij de start:** wijst de router zelf een overslagpunt aan (kortste totaal over beide
-netten) of merken we havens aan als overslaghaven? Kost een overslag niets, of een straf zodat de
-router er niet lichtvaardig doorheen knipt? En hoe toont de HUD een route die uit twee of drie
-schepen bestaat?
-
-⚠️ **Valkuilen.** (a) *Kan dit een zeeroute bekorten?* — overslag toestaan mag geen nieuwe
-Donau-ring worden. (b) De zeeroutes moeten exact blijven: R'dam→Shanghai **19.610**, Duluth→R'dam
-**8.031**. (c) A'dam→Shanghai staat nu op **19.794** en havens >50 km op **1.473**; die horen mét
-de overslag terug te gaan naar 19.677 en ~1.358, want dat waren de waarden die het
-`noordzeekanaal`-systeem opleverde.
-
-⚠️ **Nog niet in Linear** — ~~de workspace zit aan de free-tier issue-limiet~~ **✅ blokkade
-opgeheven 2026-07-20: 203 Done/Canceled-issues gearchiveerd, workspace op 72 actief.** De volledige
-issue-tekst staat hieronder onder punt 4 en kan nu aangemaakt worden.
+**Los daarvan, klein: WPI verifiëren** via de Browser-pane (licentie/velden/download —
+curl krijgt 403). Zie `v2/design/havenbron-keuze.md`. Daarna vrachtfilter + spoorattribuut
+op de kandidaten-kleuring.
 
 ---
 

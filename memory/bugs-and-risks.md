@@ -619,3 +619,17 @@ Referentie-symptomen hieronder:
 - Schaalbug (delen door camerastand i.p.v. afstand tot oppervlak) — opgelost in M2 (`scaleFor()`).
 - Lange oceaanroutes vielen terug op rechte lijnen — opgelost met gewogen A\* (M3).
 - Zeven Australische stromen als één dikke worm over Lombok — opgelost met vaarbanen (`laneShape`, M3).
+
+## 2026-07-21 · Havenlijst-bron (searoute ports.geojson) — twee OPEN gebreken
+De havenpoort filtert alleen "ligt niet aan water" (630 punten). Blijft open: (1) posities zijn
+plaatscentroides, geen kades -- een stip landt naast de haven; (2) geen enkel attribuut scheidt
+vrachthaven van jachthaven. Beide vragen een betere bron (WPI-verificatie = eerste actie).
+Bekend dekkingsgat: Saldanha Bay (ijzererts, ZA) ontbreekt volledig (112 km naar dichtstbijzijnde).
+
+## 2026-07-21 · Uit het vierpanel, geldt netwerkbreed
+- De heap in zoekRoute is n*8 slots ZONDER bounds check; overloop = stille no-op op een typed
+  array = verkeerde routes zonder foutmelding. Assert toevoegen bij LAR-520/zoekKeten-werk.
+- dichtstbijzijndeKnoop() scant lineair zonder netonderscheid -- kaartklik geeft sinds het
+  riviernet vaak een rivierknoop. Netfilter nodig.
+- meta.passages telt 53.989 entries waarvan 52 echte zeestraten; wie erover itereert toont het
+  halve riviernet.

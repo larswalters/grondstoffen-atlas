@@ -1,6 +1,38 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (EEN binnenwaternet in de graaf, amber eruit; volgende = overslaghavens)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (havens op de kaart + overslag-ontwerpbesluit; volgende = [LAR-520] stitchen)*
+
+> **⚓ HAVENS OP DE KAART + HET OVERSLAG-ONTWERPBESLUIT (2026-07-21, laatste).** Live t/m
+> `5b7c3cd` (`?v=039`). **→ VOLGENDE: [LAR-520] riviernet stitchen (blocks LAR-518)** —
+> zie `memory/next-actions.md`.
+>
+> **LAR-518 stap 1+2 staan.** De 3.962 havens als zichtbare laag (`v2/src/havens.js`, één
+> draw call, hover = naam + beide aanhechtafstanden), en `bak_havens()` snapt elke haven
+> **twee keer**: zeenet + riviernet. Nijmegen 79,1→**2,0** km · Cincinnati 304→**1,2** ·
+> Bremen 56,5→**0,7** (het LAR-508-gat gratis mee); havens >50 km 1.473→**934**;
+> `marnet.bin` byte-identiek. Kleuring: mint = raakt beide netten (572 kandidaten ≤25 km —
+> een leeshulp, geen besluit).
+>
+> **⚠️ DE BRON IS EEN UN/LOCODE-LOCATIELIJST, GEEN HAVENLIJST** (Lars zag stippen op
+> zandwegen; Tecate/Fillmore/Laramie/Denver staan erin als "haven"). Havenpoort gebouwd:
+> `afstand_tot_open_water()` (**meren tellen mee** — anders sneuvelen de Grote-Merenhavens),
+> maat ruw in `ports.json`, drempel (10 km) in de browser, `tools/toets_havens.py` hermeet.
+> 630 punten van de kaart; 14/15 grote bulkhavens ≤12 km; gat: **Saldanha Bay ontbreekt**.
+> Open (bewust zichtbaar): posities zijn centroïdes, geen vrachtfilter → WPI verifiëren
+> (`v2/design/havenbron-keuze.md`).
+>
+> **BESLUITEN LARS:** overslaghavens = **aangewezen lijst** (mechanisch criterium mist
+> binnenvaart→spoor/vrachtwagen) · **zeehavens-met-spoor horen erbij** (overslagpunt = waar
+> modaliteiten samenkomen) · de R'dam→Shanghai-19.677-acceptatie is geschrapt.
+>
+> **HET ONTWERPBESLUIT** (vierpanel: 4 architecturen × 3 aanvallers, synthese in
+> `v2/design/overslag-ontwerp.md`): **het riviernet is 10.670 fragmenten (mediaan 4,8 km) —
+> stitchen gaat vóór de overslag** ([LAR-520]). Daarna: gelaagde A* met toestand (knoop,
+> aantalOverstappen), lexicografisch minste overslagen → minste km (Donau-ring structureel
+> dicht); **`knooppunten.json`** als eigen entiteit (knoop ≠ haven: 1.854 gedeelde zeeknopen);
+> scheepsklasse per been; "geen pad" mét reden. **Verworpen mét doodsoorzaak:**
+> afstandsdrempels (leeg interval Manaus 1.084 / Duisburg 152), λ/τ-kostmodel, hubs in de
+> bake, vaste straf. M25-notitie: de flows dragen al `mode` per been — geen modal-split-raden.
 
 > **🌊 ÉÉN BINNENWATERNET — HET RIVIERNET ZIT IN DE GRAAF, DE HANDGEMAAKTE KETENS ZIJN ERUIT
 > (2026-07-20, laatste).** Live t/m `049e5a9` (`?v=036`), **visuele go van Lars binnen**
@@ -1162,6 +1194,14 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-21 · Overslag: stitchen eerst, dan gelaagde keten-router** — zie de banner +
+  `v2/design/overslag-ontwerp.md`; LAR-520 blokkeert LAR-518. Aangewezen `knooppunten.json`
+  (eigen entiteit, knopenpaar per overstap), klasse per been, geen pad mét reden. Verworpen:
+  drempels/λτ/hubs/straf.
+- **2026-07-21 · Havenpoort: maat ruw in de data, drempel bij de gebruiker** — 630
+  niet-aan-water-punten van de kaart; meren tellen mee; `toets_havens.py` hermeet.
+- **2026-07-21 · Havenbron-rolverdeling** — WPI (verifiëren) · EMODnet EU-posities ·
+  UNECE alleen redactionele meetlat (licentie) · LOCODE alleen sleutel.
 - **2026-07-20 · ÉÉN binnenwaternet, geen tweede laag** — het onderscheid getoetst-vs-mechanisch is
   een **veld op de lijn**, niet een aparte laag. Twee lagen door dezelfde rivier gaf een 250 m-gat
   op elke aftakking en dubbel onderhoud. Verworpen: de bulklaag als permanente tekenlaag houden en
