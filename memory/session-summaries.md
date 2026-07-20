@@ -1,6 +1,43 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-20 (sessie 36) — LAR-514 voorbereid: drie ontwerpbesluiten + de CEMT-presettabel
+
+**Korte sessie, géén code** — afgebroken op Lars' verzoek (*"ik wil zo stoppen, sluit anders even
+af, gaan we volgende keer verder"*). Wel is alles vastgelegd in **`v2/design/gabarit-veld.md`**
+zodat de bouwsessie meteen kan starten.
+
+**De drie open vragen uit [LAR-514] zijn beslist door Lars:**
+
+1. **Vorm C — vier maten per edge** (diepgang · breedte · lengte · doorvaarthoogte), niet
+   klasse-enum (A) of tonnage (B). Alleen vier maten vangen álle vijf regimes: Erie faalt op
+   **hoogte** (4,7 m), Seaway op **lengte/breedte**, Poe Lock op **lengte** (366 m), Cape Cod op
+   **konvooivorm** — geen daarvan ís een CEMT-klasse. CEMT blijft een **afgeleid** HUD-label.
+2. **Per edge, geërfd van het systeem** — de Seaway-beperking zit in enkele sluis-edges binnen een
+   systeem van 306 km, en de 16 labelloze graad-1-stubs uit [LAR-507] kunnen niets erven.
+3. **Zee-edges (Panama/Suez/Kiel) apart** — eerst bewijzen op binnenwater, waar de regimes elkaar
+   aantoonbaar tegenspreken (Freycinet 350 t naast CEMT VIb).
+
+**Presettabel gesourcet en geverifieerd:** ECMT Resolution No. 92/2 (12 juni 1992), de officiële
+classificatie — niet geschat. Leesregel: bovenkant van elk lengtebereik (Va 110×11,4 ·
+Vb 185×11,4 · VIb 195×22,8 · VII 285×34,2), consistent met wat het issue zelf voorstelde.
+
+**⚠️ De doorvaarthoogte komt níet uit de klasse.** De tabel geeft *alternatieven* (5,25 óf 7,00 óf
+9,10 m); de beheerder kiest. Een gekozen waarde zou een verzinsel zijn — te laag sluit routes stil
+af, te hoog laat een te hoog schip door. Voorstel: hoogte blijft **onbekend**, alleen gevuld waar
+echt gemeten. Draagprincipe: **bekende maat = harde grens, onbekende maat = géén grens.**
+
+**Nuttige vondst:** `cemt` bestaat al als veld per systeem en reist al door de hele pijplijn tot in
+de browser — het wordt alleen **nergens gelezen**. 22 van de 36 systemen dragen een klasse.
+
+**⚠️ Open blokkade:** de **14 systemen zónder CEMT** zijn niet onderzocht — die ronde strandde op
+een API-sessielimiet, dus er zijn geen resultaten en er mag niets verzonnen worden. Bronnen die het
+project al kent staan in `next-actions.md` en in de designnotitie.
+
+**Volgende sessie:** eerst die 14 maten, dan bouwen (schrijver → lezer + `opties.schip` → HUD) →
+bake. Acceptatie ligt vast: elf regressieroutes exact **én** zonder `schip` gaat geen enkele edge
+dicht (aantoonbaar, niet aangenomen).
+
 ## 2026-07-20 (sessie 35) — de bulklaag: scope verbreed, wereldwijd gebouwd, live bevestigd (LAR-515)
 
 Lars zag het gat in de Yangtze-delta en vroeg om eerst de scope vast te stellen voordat er iets

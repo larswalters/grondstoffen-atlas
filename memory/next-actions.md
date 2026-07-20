@@ -1,14 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (bulklaag wereldwijd live, Lars' visuele go; NU = LAR-514 → LAR-513 → Verbindingen)*
+*Last updated: 2026-07-20 (LAR-514 voorbereid: besluiten + presettabel staan, bouw volgt; NU = LAR-514 bouwen → LAR-513 → Verbindingen)*
 
 ## 🔴 START HIER — in deze volgorde
 
-**1 · [LAR-514] gabarit-veld per edge.** Lars' eigen vervolgstap na "eerst alles mappen, dan kijken
-hoe we de smalle wegen uit de router halen". Op dit moment kan een schip überhaupt niet gefilterd
-worden op grootte — dat veld ontbreekt. Voorstel in het issue: vier maten per edge (diepgang/
-breedte/lengte/doorvaarthoogte) als opslag, CEMT-klasse als afgeleid label. Zonder dit veld stelt de
-router straks routes voor die fysiek niet passen (Seaway-max tegen Poe Lock, Chinese klasse IV =
-feitelijk CEMT III).
+**1 · [LAR-514] gabarit-veld per edge — VOORBEREID, NOG NIET GEBOUWD.**
+Alle ontwerpkeuzes staan vast in **`v2/design/gabarit-veld.md`** (2026-07-20). Lars besliste:
+**vier maten per edge** (diepgang/breedte/lengte/doorvaarthoogte) · **per edge geërfd van het
+systeem** · **zee-edges (Panama/Suez/Kiel) in een apart issue**. De CEMT-presettabel is gesourcet
+bij ECMT Res. 92/2 (1992) en geverifieerd; de 22 systemen mét klasse zijn daarmee gedekt.
+
+**⚠️ EERST DIT, ANDERS KOM JE VAST TE ZITTEN: de 14 systemen ZÓNDER CEMT zijn nog niet
+onderzocht.** (`mississippi` · `mississippi-boven` · `mississippi-upper` · `illinois` ·
+`chicago-kanaal` · `ohio` · `yangtze` · `yangtze-boven` · `yangtze-chongqing` ·
+`grand-canal-zuid` · `parelrivier` · `xijiang` · `yangon` · `amazone`.) De onderzoeksronde
+strandde op een API-sessielimiet → **geen resultaten, en niets verzinnen**. Bronnen die het
+project al kent: VS via `toets_usace.py` (bestaat al, `GEO_CLASS`/`FUNC_CLASS`) · China via de
+nationale klasse **mét de −1-correctie** (klasse IV = 500 t = CEMT **III**) · `amazone` via de
+gemeten klaring uit `middellijn_uit_vlakken.py`. Zolang een maat ontbreekt geldt hij als
+"onbekend = geen grens" — veilig, maar acceptatiepunt 4 vraagt om een gemotiveerde maat mét bron.
+
+**Daarna bouwen**, in deze volgorde: schrijver (`bake_marnet.py:1229-1237`) → lezer + router-filter
+(`marnet.js:105-122` + `:463`, via `opties.schip`) → HUD-knop naast "realistisch / alles toestaan"
+(`index.html:75-78` + `main.js:213-220`) → bake + `?v=`-bump.
+**Acceptatie:** de elf regressieroutes exact onder de default (19.610 · 8.031 · 19.677 ·
+Memphis 10.000 · Wuhan 20.626 · Nijmegen 172 · A'dam→Nijmegen 105 · Luik 375 · Kehl 757 ·
+Duisburg 281 · Antwerpen 210) **én** zonder `schip` gaat geen enkele edge dicht (aantoonbaar,
+niet aangenomen) **én** mét een scheepsklasse minstens één route die wél bestaat voor een klein
+schip en niet voor een groot. ⚠️ Noem bij elk regressiecijfer het **profiel** — "alles toestaan"
+geeft bewust andere getallen. Vaste vraag: *kan dit een zeeroute bekorten?* Het klasse-filter mag
+de klep die het groepslabel `binnenvaart` dichthoudt niet openzetten.
 
 **2 · [LAR-513] fantoomknopen.** Zes plekken waar de atlas een kruispunt tekent dat fysiek niet
 bestaat of waar systemen aanhaken op een ontbrekend knooppunt: Gent (Ringvaart), Nanning (de

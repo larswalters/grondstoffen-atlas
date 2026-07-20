@@ -1,7 +1,42 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (bulklaag: alles bevaarbaar, pure tekengeometrie)*
+*Last updated: 2026-07-20 (LAR-514: vier maten per edge, geërfd; zee-edges apart)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-20 · LAR-514 — het gabarit-veld wordt VIER MATEN per edge, niet een klasse of een tonnage
+
+Drie vormen lagen voor: A klasse-enum (CEMT 0…VII), B tonnage, C vier maten (diepgang · breedte ·
+lengte · doorvaarthoogte). **Lars koos C.** Reden: alleen vier maten vangen álle vijf regimes uit
+§6 van het scope-rapport. Erie faalt op **hoogte** (brughoogte 4,7 m), Seaway op **lengte/breedte**
+(225,6 × 23,8 m), Poe Lock op **lengte** (366 m), Cape Cod op **konvooivorm** (2 bakken per sleep) —
+géén daarvan is uit te drukken als CEMT-klasse of als tonnage. De CEMT-klasse blijft bestaan als
+**afgeleid label** voor de HUD: zo hoeft niemand vier maten te verzinnen voor de Rijn en niemand
+een klasse te verzinnen voor de Poe Lock.
+
+## 2026-07-20 · LAR-514 — het veld staat PER EDGE, geërfd van het systeem (niet per label)
+
+Per label in `marnet.json` zou nul bin-bytes en nul formaatwijziging kosten, maar werkt alleen
+zolang een systeem uniform is — en dat is precies wat bij de poorten niet klopt: de
+Seaway-beperking zit in enkele sluis-edges van een systeem van 306 km. Bovendien kunnen edges
+**zónder** label niets erven (de 16 graad-1-stubs uit [LAR-507]). Dus: veld per edge, gevuld door
+overerving van het systeem, met handmatige overschrijving op de poort-edges. Kosten ~4-8 byte per
+edge = ~120-250 KB op ~30.600 edges, verwaarloosbaar naast 2,15 MB.
+
+## 2026-07-20 · LAR-514 — zee-edges (Panama/Suez/Kiel) worden een APART issue
+
+Panama (neopanamax), Suez en Kiel zijn echte gabarit-poorten, maar de ~15.933 zee-edges komen niet
+in deze ronde. Eerst het mechanisme bewijzen op binnenwater, waar de regimes elkaar **aantoonbaar**
+tegenspreken (Freycinet 350 t pal naast CEMT VIb — de Mosel-fout die 18 km te kort kwam).
+
+## 2026-07-20 · LAR-514 — de doorvaarthoogte komt NIET uit de CEMT-klasse
+
+De CEMT-tabel (ECMT Res. 92/2, 1992) geeft voor de hoogte **alternatieven** — "5,25 of 7,00 of
+9,10 m" — waaruit de waterwegbeheerder kiest. De klasse *bepaalt* de doorvaarthoogte dus niet, en
+een gekozen waarde zou een verzinsel zijn: te laag sluit routes stil af, te hoog laat een te hoog
+schip door. Voorstel (te bevestigen bij de bouw): hoogte blijft **onbekend** voor de presets en
+wordt alleen gevuld waar een échte gemeten beperking bestaat (Erie 4,7 m). Consistent met het
+draagprincipe van het hele veld: **bekende maat = harde grens, onbekende maat = géén grens** — een
+lege maat mag nooit stilzwijgend een route afsluiten, want dat effect is onvindbaar.
 
 ## 2026-07-20 · LAR-515 — de bulklaag is PURE TEKENGEOMETRIE, geen onderdeel van de routeergraaf
 

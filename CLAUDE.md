@@ -1,6 +1,39 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (bulklaag wereldwijd, LAR-515)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (LAR-514 voorbereid: gabarit-besluiten + CEMT-presettabel)*
+
+> **📐 LAR-514 VOORBEREID — DE DRIE ONTWERPBESLUITEN STAAN, BOUW VOLGT (2026-07-20, laatste).**
+> Korte sessie, **géén code**. Alles vastgelegd in **`v2/design/gabarit-veld.md`**.
+> **→ VOLGENDE: eerst de 14 niet-CEMT-maten onderzoeken, dán bouwen** (zie `memory/next-actions.md`).
+>
+> **Lars besliste de drie open vragen uit het issue:** (1) **vorm C — vier maten per edge**
+> (diepgang/breedte/lengte/doorvaarthoogte), niet klasse-enum of tonnage: alleen vier maten vangen
+> álle regimes, want **Erie faalt op hoogte** (4,7 m), **Seaway op lengte/breedte**, **Poe Lock op
+> lengte** (366 m) en **Cape Cod op konvooivorm** — géén daarvan ís een CEMT-klasse. CEMT blijft
+> een **afgeleid** HUD-label, zodat niemand vier maten hoeft te verzinnen voor de Rijn en niemand
+> een klasse voor de Poe Lock. (2) **Per edge, geërfd van het systeem** — de Seaway-beperking zit
+> in enkele sluis-edges van een systeem van 306 km, en de 16 labelloze graad-1-stubs uit [LAR-507]
+> kunnen niets erven. (3) **Zee-edges (Panama/Suez/Kiel) apart** — eerst bewijzen op binnenwater,
+> waar de regimes elkaar aantoonbaar tegenspreken (Freycinet 350 t naast CEMT VIb).
+>
+> **Presettabel gesourcet bij de officiële bron: ECMT Resolution No. 92/2 (1992)** — niet geschat.
+> Leesregel = bovenkant van elk lengtebereik (Va 110×11,4 · Vb 185×11,4 · VIb 195×22,8 ·
+> VII 285×34,2). **22 van de 36 systemen dragen al een klasse**, en die reist al door de hele
+> pijplijn tot in de browser — maar wordt **nergens gelezen**.
+>
+> **⚠️ DE DOORVAARTHOOGTE KOMT NIET UIT DE KLASSE.** De CEMT-tabel geeft *alternatieven* ("5,25 of
+> 7,00 of 9,10 m") waaruit de beheerder kiest; de klasse **bepaalt** de hoogte dus niet. Een
+> gekozen waarde zou een verzinsel zijn — te laag sluit routes stil af, te hoog laat een te hoog
+> schip door. Voorstel: hoogte blijft **onbekend** voor de presets, alleen gevuld waar echt
+> gemeten. Dat volgt uit het draagprincipe van het hele veld: **bekende maat = harde grens,
+> onbekende maat = géén grens** — een lege maat mag nooit stilzwijgend een route afsluiten, want
+> dat effect is onvindbaar.
+>
+> **⚠️ OPEN BLOKKADE: de 14 systemen ZÓNDER CEMT zijn niet onderzocht** (6× Mississippi-net,
+> 5× China, `parelrivier`/`xijiang`, `yangon`, `amazone`). De onderzoeksronde strandde op een
+> API-sessielimiet → **geen resultaten, niets verzinnen**. Bronnen die het project al kent: VS via
+> `toets_usace.py` · China met de **−1-correctie** (klasse IV = 500 t = CEMT **III**) · `amazone`
+> via de klaring uit `middellijn_uit_vlakken.py`.
 
 > **🌍 DE BULKLAAG — SCOPE VERBREED NAAR "ALLES BEVAARBAAR", WERELDWIJD LIVE (2026-07-20, laatste,
 > LAR-515).** Lars zag het gat in de Yangtze-delta, scope-onderzoek vond **375 ontbrekende systemen
@@ -997,6 +1030,19 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-20 · LAR-514: het gabarit-veld wordt VIER MATEN per edge** (diepgang/breedte/lengte/
+  doorvaarthoogte), niet een klasse-enum of een tonnage — alleen vier maten vangen álle regimes
+  (Erie faalt op hoogte 4,7 m, Seaway op lengte/breedte, Poe Lock op lengte 366 m, Cape Cod op
+  konvooivorm; géén daarvan ís een CEMT-klasse). CEMT blijft een **afgeleid** HUD-label.
+- **2026-07-20 · LAR-514: het veld staat PER EDGE, geërfd van het systeem** — per label werkt alleen
+  bij een uniform systeem, en dat klopt niet bij de poorten (Seaway-beperking in enkele sluis-edges
+  van 306 km); labelloze edges (de 16 stubs uit LAR-507) kunnen sowieso niets erven.
+- **2026-07-20 · LAR-514: zee-edges (Panama/Suez/Kiel) gaan naar een apart issue** — eerst het
+  mechanisme bewijzen op binnenwater, waar de regimes elkaar aantoonbaar tegenspreken.
+- **2026-07-20 · LAR-514: de doorvaarthoogte komt NIET uit de CEMT-klasse** — de tabel (ECMT Res.
+  92/2, 1992) geeft alternatieven (5,25/7,00/9,10 m) waaruit de beheerder kiest, dus een gekozen
+  waarde zou een verzinsel zijn. Blijft onbekend, alleen gevuld waar echt gemeten. Volgt uit het
+  draagprincipe: **bekende maat = harde grens, onbekende maat = géén grens**.
 - **2026-07-20 · LAR-515: de bulklaag is PURE TEKENGEOMETRIE, geen onderdeel van de routeergraaf** —
   junction-stitching zoals de 36 verhalende systemen gaf op NL alleen al 23.189 knopen (meer dan het
   hele netwerk). Geen ankers, geen stitchen, geen Dijkstra; `nodes`/`edge_lijst`/`status` blijven
