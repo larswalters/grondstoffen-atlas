@@ -1,7 +1,7 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (ÉÉN binnenwaternet in de graaf, amber eruit, visuele go binnen; NU = OVERSLAGHAVENS)*
+*Last updated: 2026-07-20 (ÉÉN binnenwaternet in de graaf, visuele go binnen; NU = [LAR-518] overslaghavens)*
 
-## 🔴 START HIER — de overslaghavens
+## 🔴 START HIER — de overslaghavens ([LAR-518], Urgent)
 
 **Het binnenwaternet ligt er** (374.342 km, in de graaf, maten per lijn, visuele go van Lars op
 2026-07-20). Het hangt **bewust niet** aan MARNET: zee↔rivier gaat via een overslaghaven. Dus is
