@@ -1279,9 +1279,18 @@ GEOFABRIK_REGIOS = {
     "kameroen": "africa/cameroon",
     "ivoorkust": "africa/ivory-coast",
     "sudan": "africa/sudan",
+    # Toegevoegd 2026-07-20 na Lars' dekkingscheck ("op de plekken waar ze
+    # liggen ziet het er goed uit") — de gaten die voor DEZE atlas echt tellen.
+    "mali": "africa/mali",                    # Niger: Bamako-Gao, ~1.400 km bevaarbaar
+    "niger": "africa/niger",                  # Niger benedenloop, Niamey
+    "gabon": "africa/gabon",                  # Ogooue, mangaan- en houtafvoer
+    "tsjaad": "africa/chad",                  # Chari
+    "centraal-afrikaanse-republiek": "africa/central-african-republic",  # Ubangi = Congo-zijtak
+    "ghana": "africa/ghana",                  # Voltameer
 
     # --- Noord-Amerika: Golfkust-geulen, Grote Meren, Columbia/Snake, Hudson.
     "canada": "north-america/canada",
+    "mexico": "north-america/mexico",         # Grijalva/Usumacinta
     "us-texas": "north-america/us/texas",
     "us-alabama": "north-america/us/alabama",
     "us-florida": "north-america/us/florida",
@@ -1319,6 +1328,7 @@ GEOFABRIK_REGIOS = {
     # met een meting i.p.v. een aanname (hij faalt vermoedelijk op beide regels).
     "australie": "australia-oceania/australia",
     "nieuw-zeeland": "australia-oceania/new-zealand",
+    "papoea-nieuw-guinea": "australia-oceania/papua-new-guinea",  # de Fly: Ok Tedi-koper
 }
 
 
@@ -1908,14 +1918,20 @@ if __name__ == "__main__":
     ap.add_argument("--bulk", action="store_true",
                     help="bulklaag i.p.v. de verhalende systemen (LAR-515) — "
                          "alle GEDOWNLOADE extracts, geen ankers/lengtetoets")
+    ap.add_argument("--extracts", help="komma-gescheiden extract-namen om te downloaden "
+                                       "i.p.v. wat SYSTEMEN nodig heeft — voor de bulklaag, "
+                                       "die geen systeem-definitie heeft (bv. mali,niger)")
     ap.add_argument("--bulk-regios", help="komma-gescheiden regiofilter voor --bulk, "
                                           "bv. cn of eu,cn (default: alle aanwezige)")
     ap.add_argument("--workers", type=int, help="parallelle scan voor --bulk (default ~14)")
     args = ap.parse_args()
     alleen = [s.strip() for s in args.alleen.split(",")] if args.alleen else None
     if args.download:
-        nodig = sorted({r for s in SYSTEMEN if not alleen or s["label"] in alleen
-                        for r in s.get("extracts", [])})
+        if args.extracts:
+            nodig = [e.strip() for e in args.extracts.split(",") if e.strip()]
+        else:
+            nodig = sorted({r for s in SYSTEMEN if not alleen or s["label"] in alleen
+                            for r in s.get("extracts", [])})
         print(f"regio-extracts ophalen ({len(nodig)}):")
         download_extracts(nodig)
     if args.bulk:
