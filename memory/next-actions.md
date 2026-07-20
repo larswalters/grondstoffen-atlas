@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (LAR-514 GEBOUWD + de 14 maten onderzocht; NU = visuele go → edges splitsen/pinnen → LAR-513 → Verbindingen)*
+*Last updated: 2026-07-20 (LAR-514 gebouwd + VS-duwkonvooi; NU = visuele go → edges splitsen/pinnen → overslag → LAR-513 → Verbindingen)*
 
 ## 🔴 START HIER — in deze volgorde
 
@@ -31,11 +31,66 @@ omdat één gabariet het traject niet eerlijk kan beschrijven:
 3. **Xijiang** — staan 旧五斗大桥 (7,6 m) en 旧西樵大桥 (6,9 m) er nog? Beide heten "旧" (oud).
 4. **Yangtze-boven** — de 18 m van de 武汉长江大桥 bevestigen bij 长江海事局 of MOT.
 
-**4 · OVERWEGING VOOR LARS — een Amerikaanse duwbak-klasse in de HUD.**
-De HUD biedt alleen Europese CEMT-klassen, en die sluiten de Ohio **allemaal**: 9 ft = 2,7432 m,
-terwijl zelfs klasse IV 2,80 m steekt. Cincinnati en Louisville zijn daarmee onbereikbaar voor de
-hele Europese vloot — fysiek juist, maar het maakt het Mississippi/Ohio-net onbruikbaar in de
-simulator. Een klasse "US barge tow" (9 ft × 35 ft × 600 ft) lost dat op.
+**4 · ⚠️ NOG NIET IN LINEAR (free-tier limiet bereikt) — OVERSLAG: een route mag van scheepstype
+wisselen op een zeehaven.** Besluit van Lars 2026-07-20: *eigen issue, nu niet bouwen.* Hieronder
+de volledige issue-tekst, klaar om te plakken zodra er ruimte is in Linear.
+
+---
+
+### STRUCTUREEL · Overslag — de router vraagt "welk één schip legt dit hele pad af", en dat is nooit hoe het gaat
+
+**Waarom dit issue bestaat.** Bij [LAR-514] kwam het scheepsklasse-filter erin. Lars' vraag daarop
+(*"dan is eigenlijk de vraag wat er in het echt gebeurt, dan moeten we dat namaken"*) legde bloot
+dat de **VS-duwkonvooi**-klasse het probleem niet oploste maar **omdraaide**:
+
+* vóór die klasse zei het model *"geen enkel schip komt in Cincinnati"* — onwaar;
+* erná zegt het *"een Ohio-duwbak vaart vanuit Rotterdam"* (11.169 km) — even onwaar, want een
+  rivierduwbak steekt de Atlantische Oceaan niet over.
+
+Allebei fout om **dezelfde** reden: de router beantwoordt de vraag *welk één schip legt dit hele
+pad af*, en voor elke intercontinentale route is het echte antwoord **geen enkel**. Wat er gebeurt
+is: zeeschip Rotterdam → New Orleans, **lading over op een duwkonvooi**, konvooi de rivier op.
+Er zit een **overslagpunt** in.
+
+Dit is dezelfde klasse fout die de atlas eerder in een patch-spiraal bracht (M18): een router die
+per constructie iets anders optimaliseert dan de werkelijkheid. Het scheepsklasse-filter maakte hem
+alleen zichtbaar — het veroorzaakte hem niet.
+
+**Wat er al is en niet opnieuw bedacht hoeft.** v1 doet dit patroon al: de Copperbelt-corridor is
+een **landstroom naar de haven + een aparte zeestroom vanaf de haven**, geknipt op de haven (zie
+sectie D van deze `CLAUDE.md`, en de vuistregel *"elke ship-leg moet op een kustpunt landen"*).
+De vorm bestaat dus; hij zit alleen in de v1-datalaag en niet in de v2-router.
+
+**Richting (te beslissen bij de start).** Een route wordt een **keten van legs**, elk met een eigen
+scheepstype, geknipt op een zeehaven waar overslag realistisch is. Open vragen: bepaalt de router
+het knippunt zelf (kortste totaal over de gecombineerde graaf) of wijzen we overslaghavens aan?
+Wat kost een overslag — niets, of een straf zodat de router er niet lichtvaardig doorheen knipt?
+En hoe toont de HUD een route die uit twee schepen bestaat?
+
+**⚠️ Valkuilen die hier gelden.**
+* **Kan dit een zeeroute bekorten?** De vaste vraag. Overslag toestaan mag niet betekenen dat een
+  zeeschip via een binnenwater-shortcut "overslaat" en zo korter uitkomt — dat is de Donau-ring-fout
+  (18.627 i.p.v. 19.610 km) in een nieuwe vorm.
+* **De elf invarianten moeten opnieuw**, en in het default-profiel: 19.610 · 8.031 · 19.677 ·
+  10.000 · 20.626 · 172 · 105 · 375 · 757 · 281 · 210 (knoop→knoop, zónder haven-aanloop).
+* De `zeevaart`-vlag en het groepslabel `binnenvaart` blijven bestaan — die beantwoorden een
+  andere vraag (*mag een zeeschip hier komen*) dan de maten (*past dit schip hier door*) en nu ook
+  een derde (*wisselt de lading hier van schip*). Drie vragen, drie mechanismen, niet één.
+
+**Acceptatie.**
+- [ ] R'dam→Cincinnati leest als **zeeschip tot New Orleans + duwkonvooi stroomopwaarts**, met het
+      overslagpunt zichtbaar in de HUD.
+- [ ] Geen enkele bestaande zeeroute wordt korter; de elf invarianten exact.
+- [ ] Een route zonder overslagmogelijkheid blijft gewoon "geen pad" i.p.v. stilzwijgend een
+      onmogelijke keten te verzinnen.
+
+---
+
+**5 · OVERWEGING (opgelost 2026-07-20, ter info).** De Ohio sloot voor élke scheepsklasse omdat de
+HUD alleen Europese schepen aanbood. Opgelost met de **VS-duwkonvooi**-klasse (3×3 jumbo hoppers,
+178,3 × 32,0 m, 2,7432 m diep — commit `afcabff`). Mooie bijvangst: **de Amerikaanse vloot is
+exact op de sluis ontworpen** (3 × 35 ft = 105 ft in een kolk van 110; 3 × 195 ft = 585 ft in een
+kolk van 600), wat een onafhankelijke bevestiging is van de kolkmaten die uit USACE kwamen.
 
 **2 · [LAR-513] fantoomknopen.** Zes plekken waar de atlas een kruispunt tekent dat fysiek niet
 bestaat of waar systemen aanhaken op een ontbrekend knooppunt: Gent (Ringvaart), Nanning (de
