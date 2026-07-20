@@ -1,5 +1,45 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-20 (het gabariet-veld per edge, LAR-514 — de graaf weet nu welk schip past)*
+*Last updated: 2026-07-20 (EEN binnenwaternet in de graaf; zee en rivier zijn losse componenten)*
+
+## 🌊 De architectuur: drie netten, verbonden door overslag (2026-07-20)
+
+Sinds deze sessie bestaat de kaart uit **losse netten die elkaar niet raken**, en dat is bewust:
+
+| net | wat | verbonden met |
+| -- | -- | -- |
+| **zeenet** (MARNET) | 15.840 edges, verzoend met de vectorwereld | — |
+| **binnenwaternet** | 374.342 km, 53.922 edges, maten per lijn | — |
+| *(later)* landnet | M25, spoor + weg | — |
+
+**De verbinding tussen die netten is een OVERSLAGHAVEN, geen edge.** Lars: *"van binnenvaart naar
+zee naar binnenvaart gebeurt altijd met 3 schepen, niet 1."* Een route is dus een **keten van
+legs** met een overstap, niet één doorlopend pad.
+
+**Dat lost twee dingen op die eerder veel werk kostten.**
+1. Het **ankerwerk vervalt**: elk riviersysteem met de hand aan een zeeknoop hangen kostte ~30 min
+   × 375 systemen, en dát maakte de wereldwijde uitrol onhaalbaar.
+2. **De Donau-ring-fout verdwijnt structureel.** De `zeevaart`-vlag en het groepslabel
+   `binnenvaart` bestaan alleen om te voorkomen dat een zeeschip door sluizen vaart. Zijn zee en
+   rivier losse componenten, dan kán dat niet meer — geen filter nodig, het volgt uit de vorm.
+
+⚠️ **Zolang de overslag er niet is:** havens snappen alleen op het zeenet
+(`bak_havens(max_knoop=...)`), het riviernet draagt nul routes, en binnenhavens snappen slecht
+(Nijmegen 79,1 km). Dat is de verwachte tussenstand, geen defect.
+
+## 🗺️ Eén binnenwaternet, niet twee lagen (2026-07-20)
+
+Het binnenwater wordt **één keer gemapt**, met de eigenschappen op de lijn:
+
+* **de vier maten** (diepgang · breedte · lengte · hoogte, decimeter, 0 = onbekend)
+* **getoetst of mechanisch** — een *veld*, geen aparte laag; de kleur leest het uit
+
+**Knopen en geometrie zijn los van elkaar.** Knopen liggen op kruisingen en uiteinden plus elke
+10 km; daartussen zit de volledige lijn met alle meanders, en `edgeKm` is de echte vaarafstand.
+Een haven wordt met `hecht_aan_keten()` aangehaakt, dat de edge op een bestaande vertex openknipt —
+dus de knoopafstand begrenst de nauwkeurigheid van een haven niet.
+
+De artisanale pijplijn (`extra_vaarwegen()` + `SYSTEMEN`) blijft bestaan als **promotiepad** voor
+een rivier die een eigen `vermijd`-knop of een gevalideerde lengtetoets verdient.
 
 ## 📐 Gabariet: de graaf weet welk schip past (2026-07-20, [LAR-514])
 

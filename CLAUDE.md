@@ -1,8 +1,77 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (LAR-514 GEBOUWD: gabariet-veld per edge + de 14 niet-CEMT-maten)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (EEN binnenwaternet in de graaf, amber eruit; volgende = overslaghavens)*
 
-> **📐 LAR-514 GEBOUWD — DE GRAAF WEET NU WELK SCHIP PAST (2026-07-20, laatste).**
+> **🌊 ÉÉN BINNENWATERNET — HET RIVIERNET ZIT IN DE GRAAF, DE HANDGEMAAKTE KETENS ZIJN ERUIT
+> (2026-07-20, laatste).** Live t/m `049e5a9` (`?v=036`), **visuele go van Lars binnen**
+> (*"ziet er goed uit en ik zie de amber lijnen zijn weg"*).
+> **→ VOLGENDE: DE OVERSLAGHAVENS** — dat is nu het enige dat het riviernet bruikbaar maakt
+> (zie `memory/next-actions.md`).
+>
+> **De bulklaag is hét binnenwaternet geworden.** 374.342 km als **53.922 edges op 64.255 knopen**,
+> ín de routeergraaf, met de maten als **eigenschap van de lijn** — geen tweede laag ernaast.
+> Besluit van Lars: *"twee verschillende systemen door de rivieren is niet wenselijk; het
+> rivierennet en binnenwater moet gewoon gemapt worden en bij die lijnen kun je toch zetten wat de
+> doorvaartdiepte en breedte en evt hoogte is."* **7.333 edges dragen een gabariet** uit het
+> OSM-signaal (CEMT-klasse → lengte+breedte, `draft:` → diepgang); dat signaal wordt nu
+> meegebakken — een acceptatiepunt van [LAR-515] dat de eerste keer werd weggegooid.
+>
+> **⚠️ HET RIVIERNET HANGT BEWUST NIET AAN MARNET, EN DAT IS DE KERN VAN DEZE ARCHITECTUUR.**
+> Zee↔rivier gaat via een **overslaghaven** — Lars: *"van binnenvaart naar zee naar binnenvaart
+> gebeurt altijd met 3 schepen, niet 1."* Losse uiteinden zijn dus de **verwachte toestand**, geen
+> tekortkoming. Dat ruimt twee dingen tegelijk op: (1) het **ankerwerk vervalt** dat de wereldwijde
+> uitrol onhaalbaar maakte — elk systeem met de hand aan een zeeknoop hangen kostte ~30 min × 375
+> systemen; (2) **de Donau-ring-fout verdwijnt structureel** — de `zeevaart`-vlag en het groepslabel
+> `binnenvaart` bestaan alleen om te voorkomen dat een zeeschip door sluizen vaart (R'dam→Shanghai
+> 18.627 i.p.v. 19.610 km), en zijn zee en rivier **losse componenten**, dan kán dat per constructie
+> niet meer. Het probleem verdwijnt door de **vorm**, niet door een filter.
+>
+> **⚠️ DE TEST DIE DE OVERSLAG BEWEES.** Bij de eerste bake mét riviernet kon **Rotterdam ineens
+> niets meer bereiken — ook Shanghai niet**. Havens snappen op de dichtstbijzijnde knoop, en er lag
+> nu een rivierknoop op 0,6 km tegen 1,1 km voor de oude zeeknoop: Rotterdam verhuisde naar het
+> riviernet en zat vast op een component die nergens heen gaat. **Geen bug maar het bewijs dat een
+> zeehaven óók een binnenhaven is** — één haven hoort **twee aanhechtingen** te krijgen. Tot dat
+> mechanisme er is beperkt `bak_havens(max_knoop=zee_knopen)` het snappen tot het zeenet.
+>
+> **⚠️ KNOPEN EN GEOMETRIE ZIJN LOS VAN ELKAAR** (op Lars' vraag *"15 km knopen in een rivier werkt
+> toch niet, daar hebben rivieren veel te veel bochten voor"*). Een knoop is een plek om aan te
+> takken, **geen hoekpunt**: tussen twee knopen ligt de volledige lijn met alle meanders en is
+> `edgeKm` de echte vaarafstand. Bewijs uit het bestaande werk: de Donau lag met knopen op 15 km en
+> haalde tóch elke stad binnen ±4 km van haar officiële rivierkilometer. En de knoopafstand
+> begrenst de nauwkeurigheid van een **haven** niet, want `hecht_aan_keten()` knipt de edge open op
+> een bestaande vertex. Nu: kruisingen en uiteinden + elke 10 km.
+>
+> **DEKKING + OPRUIMING.** Acht extracts erbij, gekozen op wat voor déze atlas telt: Mali+Niger (de
+> Niger, Bamako-Gao), **Papoea-Nieuw-Guinea (de Fly — daar gaat het koper van Ok Tedi overheen;
+> Oceanië 2.354 → 6.562 km)**, Gabon/Tsjaad/CAR (Ogooué, Chari, Ubangi als Congo-zijtak; Afrika
+> +4.128 km), Ghana (Voltameer), Mexico. Bewust NIET: Griekenland, Albanië, Montenegro, Marokko,
+> Zuid-Afrika — nauwelijks binnenvaart. Elke download op **bestandsgrootte** gecontroleerd, niet op
+> HTTP-status (de 0-byte-val). De **36 handgemaakte ketens eruit**; `extra_vaarwegen()` en
+> `SYSTEMEN` blijven staan als **promotiepad** voor een rivier die later een eigen `vermijd`-knop
+> verdient. Zonder die ketens neemt de 250 m-uitsluiting niets meer weg → het riviernet is compleet.
+>
+> **BIJVANGST DIE IK NIET HAD BEDACHT.** De VS-duwkonvooi-maten (3×3 jumbo hoppers = 105 × 585 ft,
+> 9 ft) passen als **sleutel op slot** in de USACE-kolk (110 × 600 ft, 9 ft): **de Amerikaanse
+> vloot is op de sluis ontworpen.** Dat is een gratis onafhankelijke bevestiging van de kolkmaten
+> die het gabariet-onderzoek een sessie eerder opleverde — een controle die volgde uit Lars' vraag
+> *"wat gebeurt er in het echt dan?"*, niet uit mijn plan.
+>
+> **Gemeten:** zeeroutes ongemoeid — R'dam→Shanghai **19.610** en Duluth→R'dam **8.031** exact.
+> Bewust anders: A'dam→Shanghai 19.677 → **19.794** en havens >50 km 1.358 → **1.473**; dat is
+> **geen regressie maar een teruggedraaide verbetering** (beide kwamen van het
+> `noordzeekanaal`-systeem) en hoort terug te komen met de overslag — meteen de acceptatietoets van
+> dat werk. Netwerk 10.773 → **73.941** knopen, `marnet.bin` 1,24 → **5,86 MB**, verwerken 197 ms,
+> geen console-fouten. `marnet-bulk.json` (38,7 MB losse tekenlaag) vervalt.
+>
+> **⚠️ WERKWIJZE-LES, en het is een patroon geen incident.** Lars corrigeerde in deze sessie vier
+> keer, en telkens terecht: ik **loste het verkeerde probleem op** (extra scheepsklasse i.p.v. de
+> overslag), gaf **advies dat bij een doel paste dat hij niet had** (gaten laten staan terwijl hij
+> juist controleert *óf* ze aansluiten), stelde **drie keer een meting voor als poort vóór het
+> bouwen** (de laatste was rekenwerk — 349.312 km ÷ 15 km — en geen meting), en **hield twee lagen
+> in stand waar één net hoorde**. *"Wat ben je anders aan het maken??"* Bij twijfel: bouwen, niet
+> nog een meting voorstellen.
+
+> **📐 LAR-514 GEBOUWD — DE GRAAF WEET NU WELK SCHIP PAST (2026-07-20, eerder).**
 > Live t/m `5cbebc0` (`?v=032`). **→ VOLGENDE: visuele go van Lars**, dan de zes edges splitsen/
 > pinnen, dan [LAR-513] → Verbindingen (zie `memory/next-actions.md`).
 >
@@ -1093,6 +1162,22 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-20 · ÉÉN binnenwaternet, geen tweede laag** — het onderscheid getoetst-vs-mechanisch is
+  een **veld op de lijn**, niet een aparte laag. Twee lagen door dezelfde rivier gaf een 250 m-gat
+  op elke aftakking en dubbel onderhoud. Verworpen: de bulklaag als permanente tekenlaag houden en
+  de gaten cosmetisch dichttrekken — dat suggereert connectiviteit die er niet is.
+- **2026-07-20 · Het riviernet hangt BEWUST niet aan MARNET; zee↔rivier gaat via overslag** — *"met
+  3 schepen, niet 1"*. Ruimt het ankerwerk op (~30 min × 375 systemen) én laat de Donau-ring-fout
+  structureel verdwijnen: losse componenten kunnen per constructie geen sluipweg vormen.
+- **2026-07-20 · Havens snappen voorlopig alleen op het zeenet** (`bak_havens(max_knoop=...)`) —
+  gemeten, niet bedacht: zonder die beperking snapte Rotterdam op een riviernet-knoop en kon niets
+  meer bereiken, ook Shanghai niet. Bewijs dat een zeehaven óók een binnenhaven is.
+- **2026-07-20 · Knopen en geometrie zijn los van elkaar** — knoop = aanhechtpunt, geen hoekpunt;
+  tussen twee knopen blijft de volledige lijn staan, dus meanders gaan niet verloren. Knopen op
+  kruisingen/uiteinden + elke 10 km.
+- **2026-07-20 · De 36 handgemaakte ketens eruit, de machinerie blijft** — `extra_vaarwegen()` en
+  `SYSTEMEN` zijn het **promotiepad** voor een rivier die een eigen `vermijd`-knop of een
+  gevalideerde lengtetoets verdient.
 - **2026-07-20 · LAR-514 GEBOUWD: de CEMT-presets vullen ALLEEN lengte en breedte** — de
   diepgangkolom beschrijft het referentieschip, niet de vaarweg, en dat is meetbaar: lengte en
   breedte lopen monotoon op met de klasse, diepgang niet (VIb 4,50 → VIc 4,00). Mét diepgang erin

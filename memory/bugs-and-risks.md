@@ -1,7 +1,24 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-20 (NIEUW: de Ohio sluit voor élke CEMT-klasse + 6 edges zonder gabariet)*
+*Last updated: 2026-07-20 (NIEUW: binnenhavens snappen slecht tot de overslag er is)*
 
-## ⚠️ OPEN — de Ohio sluit voor élke CEMT-klasse in de HUD (2026-07-20, [LAR-514])
+## ⚠️ OPEN — binnenhavens snappen slecht tot de overslag er is (2026-07-20)
+
+Het riviernet is een eigen component en havens snappen alleen op het zeenet, dus elke haven die
+landinwaarts ligt valt terug op zijn pre-M24-snap: **Nijmegen 79,1 km**, Amsterdam 15,1 km, havens
+>50 km terug van 1.358 naar **1.473**. Ook A'dam→Shanghai staat weer op **19.794** i.p.v. 19.677.
+
+**Dit is geen regressie maar een teruggedraaide verbetering** — die waarden kwamen van het
+`noordzeekanaal`-systeem, dat met de andere artisanale ketens is verwijderd. Ze horen terug te
+komen zodra de overslag er is; dat is meteen de acceptatietoets van dat werk.
+
+## ⚠️ OPGELOST 2026-07-20 — de Ohio sluit voor élke CEMT-klasse (was [LAR-514])
+
+Opgelost met de **VS-duwkonvooi**-klasse (3×3 jumbo hoppers, 178,3 × 32,0 m, 2,7432 m diep,
+commit `afcabff`): op de Ohio vaart geen Europees schip. ⚠️ Maar daarmee is de fout **omgedraaid,
+niet weg**: het model zegt nu dat een Ohio-duwbak vanuit Rotterdam vaart, en dat is even onwaar.
+De echte oplossing is de overslag — zie `next-actions.md`.
+
+
 
 `ohio` draagt diepgang **2,7432 m** (9 ft), en dat is géén geuldiepte maar een echte scheepsmaat:
 USACE HEC schrijft *"navigation by vessels drafting up to nine feet from the downstream sill"* —

@@ -1,6 +1,42 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-20 (sessie 38) — ÉÉN binnenwaternet: riviernet in de graaf, amber eruit
+
+**Visuele go van Lars** (*"ziet er goed uit en ik zie de amber lijnen zijn weg"*). Live `?v=036`.
+
+**De bulklaag is hét binnenwaternet geworden**: 374.342 km als 53.922 edges op 64.255 knopen, ín
+de routeergraaf, met de maten als eigenschap van de lijn. 7.333 edges dragen een gabariet uit het
+OSM-signaal. Acht regio's erbij (Niger, de Fly bij Ok Tedi, Ubangi/Ogooué/Chari, Volta, Mexico) en
+de 36 handgemaakte ketens eruit.
+
+**Het riviernet hangt bewust niet aan MARNET** — zee↔rivier gaat via overslag. Dat ruimt het
+ankerwerk op dat de uitrol onhaalbaar maakte én laat de Donau-ring-fout structureel verdwijnen.
+
+**Bijvangst die ik niet had bedacht:** de VS-duwkonvooi-maten (3×3 jumbo hoppers, 105 × 585 ft,
+9 ft) passen als sleutel op slot in de USACE-kolk (110 × 600 ft, 9 ft) — de Amerikaanse vloot is
+op de sluis ontworpen, en dat bevestigt de kolkmaten van de vorige sessie onafhankelijk.
+
+**⚠️ WERKWIJZE — Lars corrigeerde me vier keer, en telkens terecht.** Dit hoort in het geheugen,
+want het is een patroon en geen incident:
+1. **Ik loste het verkeerde probleem op.** Op de Ohio-blokkade stelde ik een extra scheepsklasse
+   voor; zijn vraag was *"wat gebeurt er in het echt?"* Met die klasse erin zei het model
+   vervolgens dat een Ohio-duwbak vanuit Rotterdam vaart — net zo onwaar. De echte fout zat in de
+   vraag die de router stelt.
+2. **Ik gaf advies dat bij een doel paste dat hij niet had.** Ik adviseerde de 250 m-gaten te laten
+   staan "omdat een dicht net connectiviteit zou suggereren die er niet is" — terwijl hij juist
+   controleert *óf* ze aansluiten. Ik hield het signaal in stand waar hij op kijkt.
+3. **Ik bleef meten in plaats van bouwen.** Drie keer achter elkaar een meting als poort vóór het
+   bouwen; de laatste was zelfs rekenwerk (349.312 km ÷ 15 km) en geen meting.
+4. **Ik hield twee lagen in stand waar één net hoorde.**
+
+*"Wat ben je anders aan het maken??"* — de correctie die de architectuur rechtzette.
+
+**Gemeten:** zeeroutes exact (19.610 / 8.031). Bewust anders: A'dam→Shanghai 19.794, havens >50 km
+1.473 — teruggedraaide verbeteringen die met de overslag terugkomen. Netwerk 10.773 → 73.941
+knopen, `marnet.bin` 1,24 → 5,86 MB, verwerken 197 ms, geen console-fouten.
+Commits `afcabff` · `fde5336` · `049e5a9`. **Volgende: de overslaghavens.**
+
 ## 2026-07-20 (sessie 37) — LAR-514 GEBOUWD: het gabariet-veld + de 14 niet-CEMT-maten
 
 **Het veld staat.** Vier maten per edge in `marnet.bin` (diepgang · breedte · lengte ·

@@ -1,7 +1,40 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (LAR-514 gebouwd + VS-duwkonvooi; NU = visuele go → edges splitsen/pinnen → overslag → LAR-513 → Verbindingen)*
+*Last updated: 2026-07-20 (ÉÉN binnenwaternet in de graaf, amber eruit, visuele go binnen; NU = OVERSLAGHAVENS)*
 
-## 🔴 START HIER — in deze volgorde
+## 🔴 START HIER — de overslaghavens
+
+**Het binnenwaternet ligt er** (374.342 km, in de graaf, maten per lijn, visuele go van Lars op
+2026-07-20). Het hangt **bewust niet** aan MARNET: zee↔rivier gaat via een overslaghaven. Dus is
+er nu precies één ding dat het net bruikbaar maakt, en dat is dat mechanisme.
+
+**Waarom dit nu het enige echte werk is.** Zonder overslag draagt het riviernet nul routes en
+staat `Nijmegen` weer op een snap van 79,1 km. Mét overslag krijgen alle binnenhavens hun
+aansluiting terug én wordt R'dam→Cincinnati eindelijk wat het in werkelijkheid is: zeeschip →
+overslag → duwkonvooi.
+
+**Het bewijs dat het nodig is, staat al in de bake.** Bij de eerste versie mét riviernet kon
+**Rotterdam niets meer bereiken, ook Shanghai niet** — het snapte op een rivierknoop (0,6 km)
+i.p.v. de zeeknoop (1,1 km) en zat vast op een losse component. Dat is geen bug maar het bewijs
+dat een zeehaven **óók** een binnenhaven is: één haven hoort **twee aanhechtingen** te krijgen.
+Tot dat er is beperkt `bak_havens(max_knoop=zee_knopen)` het snappen tot het zeenet.
+
+**Te beslissen bij de start:** wijst de router zelf een overslagpunt aan (kortste totaal over beide
+netten) of merken we havens aan als overslaghaven? Kost een overslag niets, of een straf zodat de
+router er niet lichtvaardig doorheen knipt? En hoe toont de HUD een route die uit twee of drie
+schepen bestaat?
+
+⚠️ **Valkuilen.** (a) *Kan dit een zeeroute bekorten?* — overslag toestaan mag geen nieuwe
+Donau-ring worden. (b) De zeeroutes moeten exact blijven: R'dam→Shanghai **19.610**, Duluth→R'dam
+**8.031**. (c) A'dam→Shanghai staat nu op **19.794** en havens >50 km op **1.473**; die horen mét
+de overslag terug te gaan naar 19.677 en ~1.358, want dat waren de waarden die het
+`noordzeekanaal`-systeem opleverde.
+
+⚠️ **Nog niet in Linear** — de workspace zit aan de free-tier issue-limiet. De volledige
+issue-tekst staat hieronder onder punt 4 en is één copy-paste zodra er ruimte is.
+
+---
+
+## Daarna, in deze volgorde
 
 **1 · VISUELE GO VAN LARS op het gabariet-veld ([LAR-514], gebouwd 2026-07-20).**
 Het veld staat en is groen: vier maten per edge in `marnet.bin` (diepgang · breedte · lengte ·
@@ -107,6 +140,26 @@ LAR-511 (NL/BE), LAR-512 (China), LAR-516 (Rusland/ZA/Azië-zeemonden), LAR-517 
 Mittellandkanaal/Kielerkanaal — de bulklaag dekt dit gebied nu al mechanisch, dit issue gaat over
 promotie naar routeerbaar) · [LAR-509] hybride keten (Grand Canal-noord/Wolga-Baltisch) ·
 [LAR-501] Mekong + Hooghly · [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco.
+
+## ✅ AFGEROND 2026-07-20 — één binnenwaternet in de graaf (visuele go binnen)
+
+**De bulklaag is hét binnenwaternet geworden**, op Lars' architectuurcorrectie: *"twee verschillende
+systemen door de rivieren is niet wenselijk — het rivierennet en binnenwater moet gewoon gemapt
+worden en bij die lijnen kun je toch zetten wat de doorvaartdiepte en breedte en evt hoogte is."*
+
+* **374.342 km** als **53.922 edges** op **64.255 knopen**, ín de routeergraaf
+* knopen op kruisingen/uiteinden + elke 10 km; **de geometrie ertussen blijft volledig**, dus
+  meanders gaan niet verloren (Lars' terechte vraag: *"15 km knopen in een rivier werkt toch niet"*)
+* **7.333 edges dragen een gabariet** uit het OSM-signaal — dat signaal wordt nu meegebakken, wat
+  een acceptatiepunt van [LAR-515] was dat de eerste keer werd weggegooid
+* getoetst-vs-mechanisch is **geen laag meer maar een veld op de lijn**; de kleur leest het uit
+* acht regio's erbij (Niger, **de Fly bij Ok Tedi** → Oceanië 2.354 → 6.562 km, Ubangi/Ogooué/Chari
+  → Afrika +4.128, Volta, Mexico); de 36 handgemaakte ketens eruit
+* `marnet-bulk.json` (38,7 MB losse tekenlaag) vervalt — de geometrie zit nu in de bin
+
+Zeeroutes ongemoeid (19.610 / 8.031 exact). Bewust anders: A'dam→Shanghai 19.794 en havens >50 km
+1.473 — **teruggedraaide verbeteringen**, geen regressie; ze kwamen van het `noordzeekanaal`-systeem
+en komen terug met de overslag. Commits `afcabff` · `fde5336` · `049e5a9`.
 
 ## ✅ AFGEROND 2026-07-20 — het gabariet-veld per edge (LAR-514)
 

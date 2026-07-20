@@ -1,7 +1,55 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (LAR-514 GEBOUWD: CEMT vult alleen lengte+breedte; projectdiepte nooit als maximum)*
+*Last updated: 2026-07-20 (EEN binnenwaternet in de graaf; riviernet hangt bewust niet aan MARNET)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-20 · ÉÉN binnenwaternet — geen tweede laag naast de getoetste ketens
+**Besluit (Lars):** het binnenwater wordt één keer gemapt, mét de maten op de lijn. Het onderscheid
+getoetst-vs-mechanisch is **geen aparte laag** maar een **veld op de lijn**, precies zoals diepgang
+en breedte dat zijn; de kleur leest dat veld uit.
+**Waarom:** *"twee verschillende systemen door de rivieren is niet wenselijk."* Twee lagen door
+dezelfde rivier gaf een 250 m-gat op elke aftakking (de uitsluiting), dwong dubbel onderhoud af, en
+maakte niet zichtbaar wat het wél moest zijn. Verworpen: de bulklaag als permanente tekenlaag
+houden en de gaten cosmetisch dichttrekken — dat suggereert connectiviteit die er niet is, en
+Lars gebruikt het beeld juist als controle-instrument.
+
+## 2026-07-20 · Het riviernet hangt BEWUST niet aan MARNET — zee↔rivier gaat via overslag
+**Besluit:** het binnenwaternet is een eigen component. Losse uiteinden zijn de verwachte toestand,
+geen tekortkoming; havens worden er later op aangesloten via een overslagmechanisme.
+**Waarom:** *"van binnenvaart naar zee naar binnenvaart gebeurt altijd met 3 schepen, niet 1."* Dat
+is niet alleen realistischer, het ruimt twee dingen op. (1) Het handwerk dat de uitrol onhaalbaar
+maakte vervalt: elk systeem met de hand aan een zeeknoop ankeren kostte ~30 min × 375 systemen.
+(2) **De Donau-ring-fout verdwijnt structureel** — de `zeevaart`-vlag en het groepslabel
+`binnenvaart` bestaan alleen om te voorkomen dat een zeeschip door sluizen vaart (R'dam→Shanghai
+18.627 i.p.v. 19.610 km); zijn zee en rivier losse componenten, dan kán dat per constructie niet
+meer. Het probleem verdwijnt door de vorm, niet door een filter.
+
+## 2026-07-20 · Havens snappen voorlopig alleen op het zeenet
+**Besluit:** `bak_havens(max_knoop=zee_knopen)` sluit riviernet-knopen uit bij het snappen, tot het
+overslagmechanisme er is.
+**Waarom:** gemeten, niet bedacht. Zonder die beperking verhuisde **Rotterdam** van knoop 6818
+(1,1 km) naar een riviernet-knoop op 0,6 km en kon daarna **niets** meer bereiken — ook Shanghai
+niet — want het riviernet is een losse component. Dat is het bewijs dat een zeehaven **óók** een
+binnenhaven is: één haven hoort twee aanhechtingen te krijgen.
+
+## 2026-07-20 · Knopen en geometrie zijn los van elkaar (10 km is geen 10 km rechte lijn)
+**Besluit:** knopen op kruisingen en uiteinden plus een tussenknoop elke 10 km; de geometrie tussen
+twee knopen blijft volledig.
+**Waarom:** op Lars' vraag *"15 km knopen in een rivier werkt toch niet, daar hebben rivieren veel
+te veel bochten voor"*. Een knoop is een plek om aan te takken, geen hoekpunt — `edgeKm` is de
+echte vaarafstand en alle meanders zitten in de edge-geometrie. Bewijs uit het bestaande werk: de
+Donau lag met knopen op 15 km en haalde tóch elke stad binnen ±4 km van haar officiële
+rivierkilometer. En de knoopafstand begrenst de nauwkeurigheid van een haven niet, want
+`hecht_aan_keten()` knipt de edge open op een bestaande vertex.
+
+## 2026-07-20 · De 36 handgemaakte ketens eruit, maar de machinerie blijft staan
+**Besluit:** `extra_vaarwegen()` wordt niet meer aangeroepen; `SYSTEMEN` en de hele artisanale
+pijplijn blijven in de code.
+**Waarom:** het riviernet dekt dat gebied nu mechanisch, dus meebakken zou dubbele geometrie geven.
+Maar de artisanale route blijft het **promotiepad**: een rivier die een eigen `vermijd`-knop
+verdient (M21-verstoringen) of een gevalideerde lengtetoets nodig heeft, komt langs die weg terug.
+Prijs die we bewust betalen: A'dam→Shanghai 19.677 → 19.794 en havens >50 km 1.358 → 1.473 —
+teruggedraaide verbeteringen die met de overslag terugkomen.
 
 ## 2026-07-20 · LAR-514 — de CEMT-presets vullen ALLEEN lengte en breedte, niet diepgang
 **Besluit:** `CEMT_PRESETS` in `bake_marnet.py` leidt uit de klasse uitsluitend **lengte** en
