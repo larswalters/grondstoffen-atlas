@@ -92,29 +92,84 @@ onbekend dan verzonnen.
 Deze hebben **geen nieuw onderzoek** nodig — de klasse staat al in `fetch_waterways.py:SYSTEMEN`
 en reist al door de hele pijplijn naar `meta.vaarwegen`; hij wordt alleen nog nergens gelezen.
 
-## 4 · ⚠️ OPEN: de 14 systemen zónder CEMT
+## 4 · De 14 systemen zónder CEMT — onderzocht 2026-07-20
 
-`mississippi` · `mississippi-boven` · `mississippi-upper` · `illinois` · `chicago-kanaal` ·
-`ohio` · `yangtze` · `yangtze-boven` · `yangtze-chongqing` · `grand-canal-zuid` · `parelrivier` ·
-`xijiang` · `yangon` · `amazone`
+Onderzocht met 14 parallelle onderzoekers, elk aangevallen door **twee** onafhankelijke skeptici:
+een algemene weerlegger en een *poort-jager* die specifiek zocht naar gemiste, strengere poorten
+(bruggen, kleine sluiskolken, drempels, kabels). 43 agents, nul fouten, ~2,5 miljoen tokens.
 
-**Nog niet onderzocht.** Een onderzoeksronde hiervoor is op 2026-07-20 gestart maar strandde op
-een API-sessielimiet, dus er zijn géén resultaten. Verzin deze maten niet — bronnen die het
-project al kent:
+### ⚠️ De scheidslijn die het onderzoek zelf als belangrijkste bevinding aanwees
 
-* **VS (6 systemen)** — `v2/tools/toets_usace.py` bestaat al en levert USACE-gegevens
-  (`GEO_CLASS`/`FUNC_CLASS`); `FUNC_CLASS='B'` bevestigde eerder zelfstandig de zeevaartgrens op
-  river mile 237. Nodig: project-diepgang per traject + de standaard sluiskolk-maat.
-* **China (5 systemen)** — nationale klasse I-VII, **mét de −1-correctie uit §2.3 van
-  `binnenwater-scope.md`**: China klasse IV (500 t) = CEMT **III**, niet IV. Zonder die correctie
-  lijkt ±25% van de Chinese systemen aan spelregel 1 te voldoen terwijl dat feitelijk niet zo is.
-* **`amazone`** — geen klasse, wél de gemeten klaring uit `middellijn_uit_vlakken.py`
-  (≥150 m klaring = commercieel bevaarbaar; min 0,44 / mediaan 1,60 / max 7,61 km).
-* **`yangon`** — nog geen bron bekend.
+Niet elke gevonden maat mag de graaf in. De onderzoekers labelden elke waarde met een `soort_maat`,
+en dat label blijkt **beslissend**:
 
-Zolang een maat ontbreekt geldt hij als **onbekend = geen grens**. Dat is veilig (het veld sluit
-dan niets af) maar acceptatiepunt 4 van [LAR-514] vraagt om een gemotiveerde maat mét bron, dus
-dit blijft open werk.
+| soort | in de graaf? | waarom |
+| -- | -- | -- |
+| gepubliceerde **max scheepsdiepgang / LOA** | ✅ | precies wat het veld bedoelt |
+| **sluiskolk-maat** als lengte/breedte | ✅ | een kolk van 600 ft neemt geen schip van 600 ft, maar niets lángers past hoe dan ook — als bovengrens correct, hooguit iets te ruim, en te ruim is de veilige kant |
+| **brugklaring** met bekend referentievlak | ✅ | echte fysieke poort |
+| **vaargeul-projectdiepte / 维护水深** als diepgang | ❌ | **de val waar dit veld aan kapot zou gaan** |
+| alles onder voorbehoud | ❌ | |
+| alles op een edge die eerst gesplitst moet worden | ❌ | |
+
+**Waarom projectdiepte nooit als maximum mag.** Een onderhouden geuldiepte is een *garantie*, geen
+*maximum*. Op de Mississippi is de projectdiepte 9 ft terwijl de USCG in 2023 nog 10–10,5 ft
+toestond: werkelijke schepen steken **dieper** dan het "maximum" dat we zouden invullen. Wie dat
+wegschrijft sluit bestaand verkeer af — stil, want je ziet alleen dat een route niet bestaat.
+Exact dezelfde foutsoort als de CEMT-diepgangkolom uit §2: *een getal dat de vaarweg beschrijft is
+geen getal dat het schip begrenst.*
+
+### Wat er is ingevuld
+
+| systeem | diepgang | breedte | lengte | hoogte | herkomst |
+| -- | -- | -- | -- | -- | -- |
+| `mississippi` | 13,716 | | | | 45 ft, NOAA Coast Pilot 5 + NOBRA-loodsbulletins |
+| `illinois` | | 33,528 | 182,88 | 14,29 | 110×600 ft kolken + I-80 Bridge, USACE Rock Island |
+| `chicago-kanaal` | | | 182,88 | | 600 ft kolk, drie onafhankelijke bronnen |
+| `ohio` | 2,7432 | 33,528 | 182,88 | | USACE HEC: *"vessels drafting up to nine feet"* |
+| `yangtze-chongqing` | | 34,0 | 280,0 | | Drieklovensluis 280×34 m (CTG) |
+| `yangon` | 9,6 | | 200,0 | | Myanma Port Authority, *Yangon Ports* (2024) |
+| `amazone` | 11,5 | | | | Marinha do Brasil, NPCF Anexo 1-G (Passagem do Tabocal) |
+
+**Zeven systemen blijven bewust leeg**, elk met een reden die in de baker staat:
+`mississippi-boven` (alleen projectdiepte) · `mississippi-upper` (56 ft-kolken gelden maar over de
+laatste ~10 km van 1.728,7 km → eerst splitsen bij LD 2) · `yangtze` en `yangtze-boven` (node
+pinnen) · `grand-canal-zuid` (zwakste dossier; route loopt sinds 2023 via een bypass) ·
+`parelrivier` (alles hangt aan het eindpunt) · `xijiang` (eerst splitsen bij Sixianjiao).
+
+### De vier vondsten die CEMT nooit had gevangen
+
+1. **`ohio` 2,7432 m diepgang** — 9 ft is hier écht een scheepsmaat, niet de geul (die is 12 ft).
+   Gevolg: de Ohio sluit voor **élke** CEMT-klasse, want zelfs klasse IV steekt 2,80 m. Zes
+   centimeter, en fysiek juist: een Europees binnenvaartschip is dieper dan een Ohio-duwbak.
+   Cincinnati en Louisville zijn daarmee onbereikbaar voor de hele Europese vloot.
+2. **De 600 ft-kolken** (182,88 m) op Illinois/Chicago sluiten een Vb-duwstel van 185 m — twee
+   meter te lang. Chicago is bereikbaar t/m klasse Va en dicht vanaf Vb.
+3. **Doorvaarthoogte is de maat die geen klasse draagt.** De Nanjing Yangtze River Bridge (1968,
+   24 m) is het fysieke mechanisme waardoor zeeschepen niet boven Nanjing komen — precies wat
+   [LAR-514] als motivatie noemde. Nog niet ingevuld omdat de waarde aan de node hangt (24 m óf
+   18 m), maar de vondst staat.
+4. **Kabels en leidingen zijn stelselmatig lager dan bruggen** en werden in drie van de vier
+   gevallen vergeten: de Harahan-kabels (Mississippi, 145 ft — láger dan elke brug op dat vak,
+   terwijl de bruggen wél waren geïnventariseerd), een hoogspanningsleiding over het 坭洲航道
+   (Parelrivier), en de Linhão de Tucuruí over de Amazone. Neem ze standaard mee.
+
+### Openstaand werk dat hieruit volgt
+
+* **Zes edges splitsen of hun node pinnen** vóór hun gabariet zinvol wordt: `mississippi-upper`
+  (bij LD 2 Hastings) · `xijiang` (bij Sixianjiao) · `grand-canal-zuid` (aan de 运河二通道-bypass) ·
+  `yangtze` (Xinshengwei/Longtan, zuidtak Runyang) · `yangtze-boven` (benedenstrooms van de
+  武汉长江大桥) · `parelrivier` (eindpunt op het 西基调头区).
+* **Vier verificaties**, in volgorde van waarde: Chicago-breedte (80 ft in 33 CFR 207.420 tegen
+  50 ft in de USACE WCM van mei 2024 — die twee liggen aan wéérszijden van CEMT VIb) · Yangon 44 m
+  (bevestiging van ná de brugopening 06-02-2026) · staan 旧五斗大桥 en 旧西樵大桥 er nog · de 18 m
+  van de 武汉长江大桥.
+* **Herbruikbare bron gevonden**: de USACE ArcGIS-host die `toets_usace.py` al aanroept draagt óók
+  `Locks` (kolkmaten + drempeldieptes) en `USACE_IENC_Master_Service` laag 92 `BRIDGE_AREA`
+  (klaring per structuur) en lagen 43/44 (kabels en leidingen). Zo is de Ohio-hoogte gevonden, met
+  97% dekking — veel harder dan gescande kaart-PDF's.
+* **Elk hoogtecijfer is waardeloos zonder referentievlak, en het werkt ómgekeerd aan diepgang:**
+  voor diepgang is laagwater de harde kant, voor hoogte juist hóógwater.
 
 ---
 
@@ -180,8 +235,10 @@ re-fetch bij elke correctie van een brughoogte.
 - [x] Klein-vs-groot bewezen: R'dam→Luik **375 km voor Vb, DICHT voor VIb** — `maas` is
       11,4 m breed, een 2×2-duwstel 22,8 m (acceptatiepunt 3)
 - [x] Zeeroutes onaangetast bij elke klasse (R'dam→Shanghai 19.610), zee-edges dragen geen maten
-- [ ] Maten voor de 14 niet-CEMT-systemen (§4) — **onderzoek loopt**; tot dan staan ze op
-      onbekend en sluiten ze dus niets af
+- [x] Maten voor de 14 niet-CEMT-systemen onderzocht (§4) — 7 ingevuld, 7 bewust leeg
+- [x] Acceptatiepunt 5 gemeten: van de 16.153 edges zónder maat gaat er **0** dicht
+- [ ] Zes edges splitsen / nodes pinnen (§4) — eigen vervolgissue
+- [ ] Vier openstaande bronverificaties (§4)
 - [ ] Visuele go van Lars
 
 ### Gemeten: welke systemen sluiten per scheepsklasse

@@ -695,10 +695,156 @@ CEMT_PRESETS = {
 # Buiten Europa bestaat de CEMT-tag niet, dus deze veertien (6x Mississippi-net,
 # 5x China, yangon, amazone) dragen gepubliceerde nationale maten.
 #
-# Waarden in METER; laat een sleutel WEG als er geen bron voor is — dan blijft
-# hij onbekend en sluit hij niets af. Zie het draagprincipe hierboven.
+# Onderzocht 2026-07-20 met 14 parallelle onderzoekers + 28 skeptici (een
+# algemene weerlegger en een "poort-jager" per systeem). Volledig rapport en
+# alle bronregels: v2/design/gabarit-veld.md §4.
+#
+# ⚠️ WELKE GEVONDEN MAAT WEL EN NIET IN DE GRAAF KOMT — de scheidslijn die het
+# onderzoek zelf als belangrijkste bevinding aanwees:
+#
+#   ✅ SLUISKOLK-MAAT als lengte/breedte. Een kolk van 600 ft neemt geen schip
+#      van 600 ft (manoeuvreermarge), maar niets LANGER dan 182,88 m komt er
+#      hoe dan ook doorheen. Als bovengrens is hij dus correct, hooguit iets te
+#      ruim — en te ruim is de veilige kant.
+#   ✅ GEPUBLICEERDE MAXIMALE SCHEEPSMAAT (diepgang of LOA) — precies wat het
+#      veld bedoelt.
+#   ✅ BRUGKLARING waar hard gemeten, mét bekend referentievlak.
+#
+#   ❌ VAARGEUL-PROJECTDIEPTE / 维护水深 NOOIT als maximale diepgang. Dit is de
+#      val waar dit veld aan kapot zou gaan. Een onderhouden geuldiepte is een
+#      GARANTIE, geen maximum: op de Mississippi is de projectdiepte 9 ft
+#      terwijl de USCG in 2023 nog 10-10,5 ft toestond, dus werkelijke schepen
+#      steken DIEPER dan het "maximum" dat we zouden invullen. Wie dat als
+#      grens wegschrijft sluit echt bestaand verkeer af — stil, want je ziet
+#      alleen dat een route niet bestaat. Zelfde foutsoort als de CEMT-
+#      diepgangkolom hierboven: een getal dat de vaarweg beschrijft is geen
+#      getal dat het schip begrenst.
+#   ❌ ALLES ONDER VOORBEHOUD, en alles op een edge die eerst gesplitst of
+#      vastgepind moet worden (zie de zes gevallen in §4 van de ontwerpnotitie).
+#
+# Gevolg: 7 van de 14 systemen krijgen maten, 7 blijven bewust leeg. Leeg is
+# veilig — die sluiten niets af en wachten op het splits-/pinwerk.
+#
+# Waarden in METER; laat een sleutel WEG als er geen bron voor is.
 GABARIET_PER_SYSTEEM = {
-    # wordt gevuld uit het bronnenonderzoek — zie v2/design/gabarit-veld.md §4
+    # --- Verenigde Staten ---------------------------------------------------
+    # New Orleans -> Baton Rouge, het diepstekende zeevaartvak.
+    "mississippi": dict(
+        # 45 ft. NOAA Coast Pilot 5 hfst. 8 (ed. 12-07-2026) + NOBRA-loodsbulletins
+        # via LAMA. Hier vallen projectdiepte en toegestane scheepsdiepgang
+        # toevallig samen, dus deze mág wel als scheepsmaat.
+        diepgang=13.716,
+        # hoogte NIET: de kabels bij Harahan geven 145 ft (44,2 m) op het
+        # low-water-vlak maar ~128 ft (39,0 m) bij hoogwater, en voor
+        # doorvaarthoogte is juist HOOGwater de harde kant. Twee datums door
+        # elkaar leverde in het onderzoek niet alleen een fout getal maar de
+        # verkeerde constructie op. Bindt sowieso geen enkel binnenvaartschip.
+    ),
+    # mississippi-boven (Baton Rouge -> Memphis): BEWUST LEEG. Enige gevonden
+    # maat is de 9 ft projectdiepte, en dat is precies de waarde die je niet
+    # als maximum mag lezen — zie de waarschuwing hierboven.
+    #
+    # mississippi-upper (Memphis -> Minneapolis): BEWUST LEEG. De kolken van
+    # 56 x 400 ft (USAF/LSAF/LD 1) zijn echt, maar gelden alleen over de
+    # laatste ~10 km van een keten van 1.728,7 km; alle andere kolken zijn
+    # >= 500 ft. Over de hele edge gelegd sluiten ze vrijwel al het
+    # Upper-Mississippi-verkeer af (een duwbak is al ~35 ft breed).
+    # → eerst splitsen bij Lock & Dam 2 (Hastings), dat is aantoonbaar 600x110 ft.
+    "illinois": dict(
+        breedte=33.528,   # 110 ft kolk, alle zeven kolken bevestigd
+        lengte=182.88,    # 600 ft kolk; USACE schut 1.200 ft-konvooien in twee keer
+        hoogte=14.29,     # 46,9 ft, I-80 Bridge mile 286,9 (Brandon Road Pool)
+        # Bron: USACE Rock Island, "Illinois Waterway Locks & Dams" (2018) +
+        # USACE Division Bulletin No. II-2016. De hoogte is onafhankelijk
+        # gereproduceerd uit de onderkant-staalelevaties van 44 bruggen (±0,1 ft).
+        # diepgang NIET: 9 ft is projectdiepte.
+    ),
+    "chicago-kanaal": dict(
+        lengte=182.88,    # 600 ft kolk; drie onafhankelijke bronnen, beide sluizen
+        # breedte NIET: onopgelost bronconflict 80 ft (33 CFR 207.420) tegen
+        # 50 ft (USACE Water Control Manual mei 2024). Die twee liggen aan
+        # weerszijden van CEMT VIb (22,8 m), dus gokken beslist hier de uitkomst.
+        # hoogte NIET: de knellende maat van deze edge, maar het enige getal dat
+        # eruit komt (~4,9 m) is CONSTRUEERD — gepubliceerde klaring bij het
+        # laagst toegestane pand minus de pandbandbreedte uit 33 CFR 207.420.
+        # Zo'n getal staat nergens zo gepubliceerd. Zie de open verificaties.
+    ),
+    "ohio": dict(
+        # 9 ft, en hier is het WEL een scheepsmaat: USACE HEC schrijft
+        # "navigation by vessels drafting up to nine feet from the downstream
+        # sill" — de geul zelf is 12 ft. Let op: dit sluit CEMT-klasse IV
+        # (2,80 m) en alles daarboven af, en dat is fysiek juist.
+        diepgang=2.7432,
+        breedte=33.528,   # 110 ft, LPMS bevestigt WIDTH=CHMBUW=110 bij alle 21 kolken
+        lengte=182.88,    # 600 ft bij Emsworth/Dashields/Montgomery (de rest 1.200 ft)
+        # hoogte NIET: de Wheeling Suspension Bridge (1849) staat in de USACE
+        # IENC op 17,1 m, maar Vertical_Datum is leeg voor alle 727 Ohio-bruggen
+        # en de waarde is uit 2006. Een hoogte zonder referentievlak is geen maat.
+    ),
+
+    # --- China --------------------------------------------------------------
+    # yangtze (Zhenjiang -> Nanjing): BEWUST LEEG. 12,5 m is projectdiepte,
+    # 11,36 m staat onder voorbehoud (okt 2024, Nanjing verhoogt actief), en het
+    # edge-eindpunt moet eerst hard op Xinshengwei/Longtan worden gepind — één
+    # port area verder klapt het gabariet naar 10,5 m en 24 m.
+    #
+    # yangtze-boven (Nanjing -> Wuhan): BEWUST LEEG, en dat is jammer, want hier
+    # zit de mooiste vondst van het onderzoek: de Nanjing Yangtze River Bridge
+    # (1968) met 24 m klaring is het FYSIEKE mechanisme waardoor zeeschepen niet
+    # boven Nanjing komen. Maar de waarde is conditioneel op waar de Wuhan-knoop
+    # ligt: benedenstrooms van de 武汉长江大桥 (1957) is het 24 m, erop of
+    # erboven 18 m. Node pinnen, niet gokken.
+    "yangtze-chongqing": dict(
+        # Kolkmaten van de Drieklovendam: "单个闸室有效尺寸为长280米、宽34米"
+        # (CTG). Als bovengrens correct — niets langer dan 280 m of breder dan
+        # 34 m passeert de sluis — al varen echte schepen er rond 130-150 m.
+        lengte=280.0,
+        breedte=34.0,
+        # diepgang NIET: 3,5 m is 维护水深 (onderhouden geuldiepte) en geldt
+        # bovendien alleen maart t/m juni. De 4,3 m schutdiepgang is een
+        # maandelijks besluit van het 长江三峡通航管理局, geen vaste norm.
+        # ⚠️ Verwar de sluis niet met de SCHEEPSLIFT ernaast (110,0 x 17,2 m,
+        # 2,7 m diep): wie díe maten als trajectgrens invult sluit vrijwel de
+        # hele vloot uit.
+    ),
+    # grand-canal-zuid: BEWUST LEEG — zwakste dossier van de veertien. Alle vier
+    # de maten zijn ontwerpnorm of 代表船型 in plaats van gepubliceerd maximum,
+    # en de enige harde bron is een Hangzhous verkeersbesluit dat nominaal op
+    # 31-05-2026 verliep. Bovendien loopt de doorgaande route sinds 18-07-2023
+    # via de 运河二通道-bypass, niet meer door de stadssectie.
+    #
+    # parelrivier: BEWUST LEEG. 13,0 m is 维护底标高 (geuldiepte), en de harde
+    # brugklaring van 60,0 m hangt volledig aan het eindpunt: voorbij het
+    # 西基调头区 wordt het 55 m en zakt de diepte naar 9 en dan 8 m.
+    #
+    # xijiang: BEWUST LEEG tot de edge bij Sixianjiao is gesplitst. Eén gabariet
+    # kan geen factor anderhalf in doorvaarthoogte dragen: 7,6 m in de delta
+    # (旧五斗大桥, en die heet "旧" = oud, staat mogelijk niet meer) tegen 11,5 m
+    # op de Xijiang zelf.
+
+    # --- Rest ---------------------------------------------------------------
+    "yangon": dict(
+        # Myanma Port Authority, "Yangon Ports" (2024): "the acceptable vessel
+        # size is vessels with Draft 9.6 m, LOA 200 m" — expliciet de Inner
+        # Harbour, niet Thilawa (10,5 m). Tijgebonden: de Inner Bar bij Monkey
+        # Point is ~4,5 m CD en haalt met springtij 9,63 m — vrijwel nul marge.
+        diepgang=9.6,
+        lengte=200.0,
+        # hoogte NIET: de 44 m van de Yangon-Dala-brug komt uit een
+        # bekendmaking van sept 2025 die aan de bouwvoortgang hing; de brug
+        # opende 06-02-2026 en een bevestiging van ná die datum ontbreekt.
+    ),
+    "amazone": dict(
+        # Marinha do Brasil / CFAOC, NPCF Anexo 1-G (REMAN) tabel 3.1:
+        # "CALADO MAX. RECOMENDADO: 11,5 m", beperkt door de Passagem do
+        # Tabocal; identiek in Anexo 1-D en 1-E. Absolute bovengrens, GEEN
+        # jaarrondgarantie — in de droogte van 2024 zakte het vak
+        # Manaus-Itacoatiara naar ~8,5 m.
+        diepgang=11.5,
+        # lengte/breedte NIET: 305 x 43,5 m is een terminal-autorisatie
+        # (Chibatao) die afhangt van de inzet van twee azimutale sleepboten,
+        # geen eigenschap van de vaarweg.
+    ),
 }
 
 
