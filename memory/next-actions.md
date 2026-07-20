@@ -29,8 +29,9 @@ Donau-ring worden. (b) De zeeroutes moeten exact blijven: R'dam→Shanghai **19.
 de overslag terug te gaan naar 19.677 en ~1.358, want dat waren de waarden die het
 `noordzeekanaal`-systeem opleverde.
 
-⚠️ **Nog niet in Linear** — de workspace zit aan de free-tier issue-limiet. De volledige
-issue-tekst staat hieronder onder punt 4 en is één copy-paste zodra er ruimte is.
+⚠️ **Nog niet in Linear** — ~~de workspace zit aan de free-tier issue-limiet~~ **✅ blokkade
+opgeheven 2026-07-20: 203 Done/Canceled-issues gearchiveerd, workspace op 72 actief.** De volledige
+issue-tekst staat hieronder onder punt 4 en kan nu aangemaakt worden.
 
 ---
 
@@ -64,9 +65,9 @@ omdat één gabariet het traject niet eerlijk kan beschrijven:
 3. **Xijiang** — staan 旧五斗大桥 (7,6 m) en 旧西樵大桥 (6,9 m) er nog? Beide heten "旧" (oud).
 4. **Yangtze-boven** — de 18 m van de 武汉长江大桥 bevestigen bij 长江海事局 of MOT.
 
-**4 · ⚠️ NOG NIET IN LINEAR (free-tier limiet bereikt) — OVERSLAG: een route mag van scheepstype
-wisselen op een zeehaven.** Besluit van Lars 2026-07-20: *eigen issue, nu niet bouwen.* Hieronder
-de volledige issue-tekst, klaar om te plakken zodra er ruimte is in Linear.
+**4 · ⚠️ NOG NIET IN LINEAR (~~free-tier limiet bereikt~~ ✅ ruimte vrijgemaakt 2026-07-20) — OVERSLAG:
+een route mag van scheepstype wisselen op een zeehaven.** Besluit van Lars 2026-07-20: *eigen issue,
+nu niet bouwen.* Hieronder de volledige issue-tekst, klaar om te plakken — er is nu ruimte in Linear.
 
 ---
 
