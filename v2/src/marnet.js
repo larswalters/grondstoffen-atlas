@@ -12,7 +12,10 @@
 //   marnet.json  { schaal, knopen, edges, punten, passages, … }
 //   marnet.bin   blok 1: knopen (delta-lon/lat, zigzag-varint)
 //                blok 2: per edge a, b (delta t.o.v. vorige edge), lengte
-//                        (0,1 km), soort (0=zee, 1=binnenwater), aantal punten
+//                        (0,1 km), soort (0=zee, 1=binnenwater), aantal punten,
+//                        gabarietvlag (0 = geen maten; 1 = er volgen vier
+//                        varints: diepgang, breedte, lengte, hoogte in DECIMETER
+//                        met 0 = onbekend — LAR-514)
 //                blok 3: per edge de geometrie als delta's; punt 1 = knoop a
 
 import * as THREE from "three";
@@ -72,11 +75,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=031").then((r) => {
+    fetch("data/marnet.json?v=032").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=031").then((r) => {
+    fetch("data/marnet.bin?v=032").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -108,6 +111,13 @@ export async function laadMarnet(radius) {
   const edgeKm = new Float32Array(nEdges);
   const edgeSoort = new Uint8Array(nEdges);
   const geomN = new Uint32Array(nEdges);
+  // Gabariet per edge (LAR-514), in DECIMETER met 0 = onbekend. Uint16 is ruim:
+  // de grootste maat die hier ooit in komt is de Poe Lock op 366 m = 3.660 dm.
+  // ⚠️ 0 betekent ONBEKEND en dus GEEN GRENS — nooit "past niet".
+  const edgeDiepgang = new Uint16Array(nEdges);
+  const edgeBreedte = new Uint16Array(nEdges);
+  const edgeLengte = new Uint16Array(nEdges);
+  const edgeHoogte = new Uint16Array(nEdges);
   {
     let a = 0, b = 0;
     for (let i = 0; i < nEdges; i++) {
@@ -118,6 +128,12 @@ export async function laadMarnet(radius) {
       edgeKm[i] = lezer.volgende() / 10;
       edgeSoort[i] = lezer.volgende();
       geomN[i] = lezer.volgende();
+      if (lezer.volgende() === 1) {
+        edgeDiepgang[i] = lezer.volgende();
+        edgeBreedte[i] = lezer.volgende();
+        edgeLengte[i] = lezer.volgende();
+        edgeHoogte[i] = lezer.volgende();
+      }
     }
   }
 
@@ -206,6 +222,7 @@ export async function laadMarnet(radius) {
     schaal,
     knoopLon, knoopLat, knoopXYZ,
     edgeA, edgeB, edgeKm, edgeSoort, edgeLabel,
+    edgeDiepgang, edgeBreedte, edgeLengte, edgeHoogte,   // dm, 0 = onbekend
     geomStart, geomN, posities,
     adjStart: graad, adjEdge, adjKnoop,
     passages: meta.passages || {},
@@ -240,7 +257,7 @@ export async function laadMarnet(radius) {
  */
 export async function laadBulk(radius) {
   const t0 = performance.now();
-  const meta = await fetch("data/marnet-bulk.json?v=031").then((r) => {
+  const meta = await fetch("data/marnet-bulk.json?v=032").then((r) => {
     if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
     return r.json();
   });
@@ -377,6 +394,14 @@ export function binnenSystemenBij(net, knoop) {
  *     zijn. Dat is de sleutel: de Europese en de Chinese binnenwaternetten zijn
  *     losse componenten, dus een reis naar Wuhan mag de Yangtze gebruiken maar
  *     niet de Rijn-Donau-corridor als sluipweg naar de Zwarte Zee.
+ *
+ * `opties.schip` (LAR-514) reist via de spread mee naar BEIDE trappen — dat
+ * hoort ook: een te groot schip moet zowel op de zeeroute als op de
+ * binnenvaartroute op dezelfde poorten stuklopen.
+ *
+ * `binnenSystemenBij()` filtert bewust NIET op scheepsmaat: die bepaalt alleen
+ * wélke labels open mogen, en de edges van een systeem waar dit schip niet door
+ * past vallen daarna alsnog per edge weg. Het scheelt een tweede flood-fill.
  */
 export function zoekRouteRealistisch(net, van, naar, opties = {}) {
   const basis = opties.vermijd ?? ["northwest"];
@@ -394,10 +419,47 @@ export function zoekRouteRealistisch(net, van, naar, opties = {}) {
   return binnen ? { route: binnen, modus: "binnenvaart" } : null;
 }
 
+/**
+ * Vertaalt `opties.schip` naar de vier grenzen in DECIMETER waarop de router
+ * filtert. Geeft `null` als er geen schip is opgegeven — en dan gaat er ook
+ * geen enkele edge dicht (LAR-514, acceptatiepunt 2).
+ *
+ * ⚠️ Het draagprincipe zit hier: een edge-maat van 0 betekent ONBEKEND, en
+ * onbekend is GEEN grens. Zou 0 als "past niet" gelden, dan sloot elke
+ * ongemeten edge stilzwijgend af — en dat is onvindbaar, want je ziet alleen
+ * dat een route niet bestaat, niet waaróm.
+ */
+function schipGrenzen(schip) {
+  if (!schip) return null;
+  const dm = (v) => (typeof v === "number" && v > 0 ? Math.round(v * 10) : 0);
+  const g = {
+    diepgang: dm(schip.diepgang),
+    breedte: dm(schip.breedte),
+    lengte: dm(schip.lengte),
+    hoogte: dm(schip.hoogte),
+  };
+  return (g.diepgang || g.breedte || g.lengte || g.hoogte) ? g : null;
+}
+
+/** Past dit schip door deze edge? Onbekende maat aan één van beide kanten = ja. */
+function edgePast(net, e, g) {
+  return !(
+    (g.diepgang && net.edgeDiepgang[e] && net.edgeDiepgang[e] < g.diepgang) ||
+    (g.breedte && net.edgeBreedte[e] && net.edgeBreedte[e] < g.breedte) ||
+    (g.lengte && net.edgeLengte[e] && net.edgeLengte[e] < g.lengte) ||
+    (g.hoogte && net.edgeHoogte[e] && net.edgeHoogte[e] < g.hoogte)
+  );
+}
+
 export function zoekRoute(net, van, naar, opties = {}) {
   const vermijd = opties.vermijd ?? ["northwest"];
   const arctisFactor = opties.arctisFactor ?? 1;
   const dichtLabel = new Set(vermijd);
+  // Scheepsmaten (LAR-514). Zelfde soort filter als `vermijd` en op dezelfde
+  // plek in de lus: een edge valt weg VÓÓR de relaxatie, er komt geen
+  // strafmechanisme bij. Daardoor blijft de grootcirkel-heuristiek toelaatbaar
+  // en is het gevonden pad nog steeds exact het kortste over wat overblijft.
+  const grenzen = schipGrenzen(opties.schip);
   // Groepslabel "binnenvaart" (LAR-494): sluit in één keer élk vaarwegsysteem
   // dat niet zeevaarbaar is. Nodig sinds de Donau-ring, want dat is de EERSTE
   // binnenvaartverbinding die twee zeeën koppelt — daarvoor was elke rivierketen
@@ -461,6 +523,7 @@ export function zoekRoute(net, van, naar, opties = {}) {
       if (dicht[buur]) continue;
       const e = net.adjEdge[a];
       if (net.edgeLabel[e] !== null && dichtLabel.has(net.edgeLabel[e])) continue;
+      if (grenzen && !edgePast(net, e, grenzen)) continue;
       let kost = net.edgeKm[e];
       if (arctisFactor !== 1 &&
           net.knoopLat[net.edgeA[e]] > 66.5 && net.knoopLat[net.edgeB[e]] > 66.5) {
@@ -536,7 +599,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=031");
+  const r = await fetch("data/ports.json?v=032");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];

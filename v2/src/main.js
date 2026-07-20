@@ -1,11 +1,11 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=031";
-import { laadVectorWereld } from "./world.js?v=031";
-import { createTileLayer } from "./tiles.js?v=031";
+import { createGlobe, CONFIG } from "./globe.js?v=032";
+import { laadVectorWereld } from "./world.js?v=032";
+import { createTileLayer } from "./tiles.js?v=032";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn, laadBulk }
-  from "./marnet.js?v=031";
+  from "./marnet.js?v=032";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -60,6 +60,11 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
     window.MARNET = net;       // diagnose-handvat, net als GLOBE/TEGELS
     window.HAVENS = havens;    // idem — de acceptatietests van LAR-486 rijden hierop
     window.zoekRoute = zoekRoute;
+    // De acceptatie van LAR-514 meet in het DEFAULT-profiel, en dat is
+    // zoekRouteRealistisch — niet zoekRoute. Zonder dit handvat kan een
+    // headless test alleen het permissieve profiel meten, en dat geeft bewust
+    // andere getallen (R'dam→Constanța 3.291 i.p.v. 6.285 over zee).
+    window.zoekRouteRealistisch = zoekRouteRealistisch;
     zetAttrib();               // vaarweg-data draagt een eigen bronvermelding (ODbL)
   })
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
@@ -174,15 +179,21 @@ function toonRoute() {
   const t0 = performance.now();
   let route = null;
   let modus = "";
+  const schip = SCHEEPSKLASSEN[klasseEl.value] || null;
+  const opties = schip ? { schip } : {};
   if (SCHIP === "alles") {
-    route = zoekRoute(NET, van.knoop, naar.knoop);
+    route = zoekRoute(NET, van.knoop, naar.knoop, opties);
   } else {
-    const uit = zoekRouteRealistisch(NET, van.knoop, naar.knoop);
+    const uit = zoekRouteRealistisch(NET, van.knoop, naar.knoop, opties);
     if (uit) { route = uit.route; modus = uit.modus; }
   }
   const ms = performance.now() - t0;
   if (!route) {
-    infoEl.textContent = `geen pad gevonden (${havenLabel(van)} → ${havenLabel(naar)})`;
+    // Bij een maatfilter is "geen pad" meestal geen bug maar het antwoord —
+    // zeg er dus bij wélk schip niet paste, anders lijkt het een storing.
+    infoEl.textContent = schip
+      ? `geen pad voor klasse ${klasseEl.value} (${havenLabel(van)} → ${havenLabel(naar)}) — te groot voor een poort onderweg`
+      : `geen pad gevonden (${havenLabel(van)} → ${havenLabel(naar)})`;
     return;
   }
 
@@ -199,6 +210,7 @@ function toonRoute() {
     `<b>${Math.round(totaal).toLocaleString("nl")} km</b> · ` +
     (modus ? `${modus} · ` : "") +
     `${route.edges.length} edges · ${ms.toFixed(0)} ms` +
+    (schip ? ` · klasse ${klasseEl.value}` : "") +
     (binnen ? ` · ${binnen} binnenwater` : "") +
     (aanloop > 20 ? ` · aanloop ${Math.round(aanloop)} km` : "") +
     (passages.length ? `<br>via ${passages.join(" · ")}` : "");
@@ -211,6 +223,24 @@ function toonRoute() {
 // permissieve gedrag zien — handig om de Rijn-Donau-corridor te inspecteren,
 // maar dan vaart er dus een zeeschip door sluizen van klasse Vb.
 let SCHIP = "echt";
+
+// Scheepsklassen voor het maatfilter (LAR-514). Dezelfde CEMT-presets als de
+// baker gebruikt (ECMT Res. 92/2, 1992) — daar staan ze als bron van waarheid,
+// hier alleen om een schip mee te BESCHRIJVEN. Doorvaarthoogte staat er bewust
+// niet in: die volgt niet uit de klasse (de tabel geeft alternatieven waaruit
+// de beheerder kiest), dus een waarde hier zou een verzinsel zijn.
+const SCHEEPSKLASSEN = {
+  IV:  { lengte: 85,  breedte: 9.5,  diepgang: 2.80 },
+  Va:  { lengte: 110, breedte: 11.4, diepgang: 4.50 },
+  Vb:  { lengte: 185, breedte: 11.4, diepgang: 4.50 },
+  VIb: { lengte: 195, breedte: 22.8, diepgang: 4.50 },
+  VII: { lengte: 285, breedte: 34.2, diepgang: 4.50 },
+};
+const klasseEl = document.getElementById("schipKlasse");
+klasseEl.addEventListener("change", () => {
+  if (vanEl.value && naarEl.value) toonRoute();
+});
+
 for (const b of document.querySelectorAll(".schipBtn")) {
   b.addEventListener("click", () => {
     SCHIP = b.dataset.schip;

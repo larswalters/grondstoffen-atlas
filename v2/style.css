@@ -103,6 +103,22 @@ html, body {
 #routeTest input:focus { border-color: var(--accent); }
 #routeTest input::placeholder { color: var(--ink-dim); }
 
+/* Scheepsklasse (LAR-514) — zelfde vorm als de invoervelden erboven, zodat de
+   drie route-instellingen visueel één blok zijn. */
+#routeTest select {
+  padding: 6px 8px;
+  font: inherit;
+  font-size: 11px;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  outline: none;
+}
+
+#routeTest select:focus { border-color: var(--accent); }
+#routeTest select option { color: #000; }
+
 #routeInfo {
   font-size: 10px;
   line-height: 1.5;

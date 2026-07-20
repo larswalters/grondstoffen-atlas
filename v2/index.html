@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=031" />
+<link rel="stylesheet" href="style.css?v=032" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -76,6 +76,18 @@
         <button class="schipBtn is-on" data-schip="echt">realistisch</button>
         <button class="schipBtn" data-schip="alles">alles toestaan</button>
       </div>
+      <!-- Scheepsklasse (LAR-514): filtert edges op vier maten — diepgang,
+           breedte, lengte, doorvaarthoogte. "elk schip" is de DEFAULT en zet
+           geen enkele edge dicht; alle bestaande regressiegetallen gelden bij
+           die stand. Een edge zonder gemeten maat laat elk schip door. -->
+      <select id="schipKlasse" title="filter de route op scheepsmaten">
+        <option value="" selected>elk schip — geen maatfilter</option>
+        <option value="IV">klasse IV · 85 × 9,5 m · 2,80 m diep</option>
+        <option value="Va">klasse Va · 110 × 11,4 m · 4,50 m diep</option>
+        <option value="Vb">klasse Vb · 185 × 11,4 m · 4,50 m diep</option>
+        <option value="VIb">klasse VIb · 195 × 22,8 m · 4,50 m diep</option>
+        <option value="VII">klasse VII · 285 × 34,2 m · 4,50 m diep</option>
+      </select>
       <div class="btnRow">
         <button id="routeGo">route</button>
         <button id="routeWis">wis</button>
@@ -108,6 +120,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=031"></script>
+<script type="module" src="src/main.js?v=032"></script>
 </body>
 </html>

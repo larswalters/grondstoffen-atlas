@@ -627,6 +627,108 @@ VERVOLG_MAX_KM = 5.0    # een vervolgsegment moet vlak op zijn voorganger aanslu
 CORRIDOR_EPS_KM = 0.25  # kwantisering (11 m) + simplify (25 m) blijven hier ruim onder
 
 
+# ------------------------------------------------------ M24: gabariet (LAR-514)
+#
+# VIER MATEN PER EDGE — diepgang · breedte · lengte · doorvaarthoogte, in
+# DECIMETER, waarbij 0 = ONBEKEND.
+#
+# Waarom vier maten en niet een klasse-enum of een tonnage (besluit van Lars,
+# 2026-07-20): alleen vier maten vangen álle regimes. De Erie valt op HOOGTE
+# (4,7 m), de Seaway op LENGTE/BREEDTE, de Poe Lock op LENGTE (366 m), Cape Cod
+# op konvooivorm — géén daarvan ís een CEMT-klasse. CEMT blijft bestaan als
+# AFGELEID label voor de HUD, zodat niemand vier maten hoeft te verzinnen voor
+# de Rijn en niemand een klasse voor de Poe Lock.
+#
+# ⚠️ HET DRAAGPRINCIPE: bekende maat = harde grens, ONBEKENDE MAAT = GEEN GRENS.
+# Een 0 sluit dus niets af. Dat is bewust: een verzonnen maat die te laag staat
+# sluit stilzwijgend echte routes af, en dat effect is onvindbaar — je ziet
+# alleen dat een route "niet bestaat". Vul daarom liever niets in dan iets dat
+# niet uit een noembare bron komt.
+#
+# WAAROM DEZE TABEL IN DE BAKER STAAT EN NIET IN fetch_waterways.py:
+# `cemt` staat wél bij SYSTEMEN, want de fetcher gebruikt die waarde zélf — de
+# CEMT-clause selecteert er OSM-ways mee. De vier maten hebben geen enkele
+# fetcher-rol: ze komen niet uit OSM maar uit gepubliceerde sluis-, brug- en
+# vaargeulgegevens. Ze hier zetten houdt de koppeling eerlijk en scheelt een
+# volledige re-fetch elke keer dat er een brughoogte wordt gecorrigeerd.
+
+# CEMT-klasse -> (lengte m, breedte m).
+# Bron: ECMT Resolution No. 92/2 (12 juni 1992), *New Classification of Inland
+# Waterways* — de officiële tabel (https://www.itf-oecd.org/sites/default/files/
+# docs/wat19922e.pdf). Leesregel: een vaarweg van klasse X laat schepen TÓT deze
+# maten toe, dus we nemen de BOVENKANT van elk lengtebereik.
+#
+# ⚠️ ALLEEN LENGTE EN BREEDTE. Diepgang en doorvaarthoogte staan er bewust NIET
+# in, en om precies dezelfde reden: de klasse bepaalt ze niet.
+#
+#   * HOOGTE — de CEMT-tabel geeft ALTERNATIEVEN ("5,25 of 7,00 of 9,10 m")
+#     waaruit de waterwegbeheerder er één kiest.
+#   * DIEPGANG — de diepgangkolom beschrijft het REFERENTIESCHIP van de klasse,
+#     niet de vaarweg. Dat is geen interpretatie maar meetbaar: lengte en
+#     breedte lopen monotoon op met de klasse (38,5->285 m en 5,05->34,2 m),
+#     diepgang NIET — VIb staat op 4,50 m en VIc op 4,00 m. Een grootheid die
+#     DAALT terwijl de klasse stijgt kan onmogelijk "de grens van de klasse"
+#     zijn; een VIc-duwstel (2x3, breed en lang) is gewoon ondieper geladen.
+#
+# Dit is geen theoretisch punt. Met diepgang erin sloot `waal` (VIc -> 4,00 m)
+# voor een klasse Va-schip (4,50 m) — de drukste binnenvaartweg van Europa dicht
+# voor een gewoon Rijnschip, waardoor R'dam->Nijmegen van 172 km naar 9.405 km
+# sprong (de router ging om via zee). Dezelfde foutsoort die dit project al kent
+# als "vaargeul-projectdiepte is niet de maximale scheepsdiepgang", nu in de
+# vorm "referentieschip is niet de vaarweg".
+#
+# Diepgang komt daarom ALLEEN uit een echte meting — GABARIET_PER_SYSTEEM.
+CEMT_PRESETS = {
+    "I":   (38.5,  5.05),   # péniche / Freycinet (250-400 t)
+    "II":  (55.0,  6.6),    # Kempenaar (400-650 t)
+    "III": (80.0,  8.2),    # Gustav Koenigs (650-1.000 t)
+    "IV":  (85.0,  9.5),    # Johann Welker (1.000-1.500 t)
+    "Va":  (110.0, 11.4),   # groot Rijnschip (1.600-3.000 t)
+    "Vb":  (185.0, 11.4),   # duwstel 1x2 (3.200-6.000 t)
+    "VIa": (110.0, 22.8),   # duwstel 2x1
+    "VIb": (195.0, 22.8),   # duwstel 2x2 (6.400-12.000 t)
+    "VIc": (280.0, 22.8),   # duwstel 2x3 (9.600-18.000 t)
+    "VII": (285.0, 34.2),   # duwstel 3x3 (14.500-27.000 t)
+}
+
+# Systemen ZONDER CEMT-klasse: de maten per systeem, met bron per waarde.
+# Buiten Europa bestaat de CEMT-tag niet, dus deze veertien (6x Mississippi-net,
+# 5x China, yangon, amazone) dragen gepubliceerde nationale maten.
+#
+# Waarden in METER; laat een sleutel WEG als er geen bron voor is — dan blijft
+# hij onbekend en sluit hij niets af. Zie het draagprincipe hierboven.
+GABARIET_PER_SYSTEEM = {
+    # wordt gevuld uit het bronnenonderzoek — zie v2/design/gabarit-veld.md §4
+}
+
+
+def gabariet_voor(label, cemt):
+    """Geeft (diepgang, breedte, lengte, hoogte) in DECIMETER; 0 = onbekend.
+
+    Volgorde van herkomst:
+      1. een expliciete waarde in GABARIET_PER_SYSTEEM (gemeten/gepubliceerd),
+      2. anders de CEMT-preset voor dit systeem (afgeleid),
+      3. anders onbekend.
+    Een expliciete waarde wint dus altijd van de preset — de preset is een
+    generieke klassevertaling, de expliciete waarde is dít traject.
+    """
+    maten = dict(GABARIET_PER_SYSTEEM.get(label, {}))
+    if cemt:
+        preset = CEMT_PRESETS.get(cemt)
+        if preset is None:
+            raise RuntimeError(
+                f"{label}: onbekende CEMT-klasse {cemt!r} — vul CEMT_PRESETS aan "
+                f"of corrigeer de klasse in fetch_waterways.py:SYSTEMEN")
+        lengte, breedte = preset
+        maten.setdefault("lengte", lengte)
+        maten.setdefault("breedte", breedte)
+        # diepgang en hoogte NIET: die volgen niet uit de klasse — zie de
+        # waarschuwing bij CEMT_PRESETS. Ze komen alleen uit een echte meting.
+    return tuple(
+        int(round(maten.get(k, 0) * 10)) for k in ("diepgang", "breedte", "lengte", "hoogte")
+    )
+
+
 def hecht_aan_keten(label, volgt_op, punt, nodes, edge_lijst, status, geometrie, uit):
     """Geeft een knoop op de dichtstbijzijnde plek van een al gebakken keten.
 
@@ -792,9 +894,18 @@ def extra_vaarwegen(land, nodes, edge_lijst, status, geometrie, pad):
                 keten_edges.append(ei)
 
         km_tot = sum(gc_km(a, b) for a, b in zip(lijn, lijn[1:]))
+        # Dezelfde vier maten die per edge de bin in gaan, ook per label in de
+        # meta — puur zodat de HUD ze kan tónen (en zodat ze inspecteerbaar zijn
+        # zonder de bin te decoderen). De ROUTER leest ze niet hier maar per
+        # edge, want een poort zit niet altijd op het hele systeem.
+        gab_dm = gabariet_voor(label, props.get("cemt", ""))
         uit[label] = {
             "zeevaart": bool(props.get("zeevaart")),
             "cemt": props.get("cemt", ""),
+            "gabariet": {
+                k: (v / 10 if v else None)
+                for k, v in zip(("diepgang", "breedte", "lengte", "hoogte"), gab_dm)
+            },
             "bron": props.get("bron", ""),
             "km": round(km_tot, 1),
             "edges": keten_edges,
@@ -1216,15 +1327,36 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
     # Eén sequentieel bestand, drie blokken (de lezer kent alle aantallen):
     #   1. knopen: delta-gecodeerde lon/lat (zigzag-varint), volgorde = knoop-id
     #   2. edges:  per edge a, b (delta t.o.v. vorige edge), lengte (0,1 km),
-    #              soort (0=zee, 1=binnenwater), aantal geometriepunten
+    #              soort (0=zee, 1=binnenwater), aantal geometriepunten,
+    #              gabarietvlag (LAR-514: 0 = geen maten, 1 = er volgen er vier:
+    #              diepgang, breedte, lengte, hoogte — in DECIMETER, 0=onbekend)
     #   3. geometrie: per edge de punten 2..n als delta's t.o.v. het vorige punt
     #              (punt 1 = knoop a, staat er dus niet nog eens in)
+    #
+    # De vlag scheelt drie bytes op elke ongemeten edge (~15.900 zee-edges), en
+    # maakt het formaat zelfbeschrijvend: geen maten is iets anders dan vier
+    # nullen, ook al gedragen ze zich hetzelfde.
     uit = bytearray()
     px = py = 0
     for x, y in node_q:
         varint(uit, x - px)
         varint(uit, y - py)
         px, py = x, y
+
+    # Gabariet per edge (LAR-514): geërfd van het systeem waar de edge bij hoort.
+    # Per edge en niet per label, om twee redenen die allebei echt voorkomen:
+    # een poort zit vaak in een handvol sluis-edges van een systeem van honderden
+    # km (de Seaway-beperking), en labelloze edges — de 16 graad-1-stubs uit
+    # LAR-507 — kunnen per definitie niets erven.
+    gab_per_edge = {}
+    for ei, st in status.items():
+        if not st.startswith("binnen:"):
+            continue
+        label = st[len("binnen:"):]
+        meta_vw = vaarwegen_meta.get(label) or {}
+        maten = gabariet_voor(label, meta_vw.get("cemt", ""))
+        if any(maten):
+            gab_per_edge[ei] = maten
 
     vorige_a = vorige_b = 0
     for ei, ((a, b), _p) in enumerate(edge_lijst):
@@ -1234,6 +1366,11 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
         varint(uit, int(round(edge_lengtes[ei] * 10)))
         varint(uit, soort)
         varint(uit, len(edge_geoms[ei]))
+        maten = gab_per_edge.get(ei)
+        varint(uit, 1 if maten else 0)
+        if maten:
+            for m in maten:
+                varint(uit, m)
         vorige_a, vorige_b = a, b
 
     for ei in range(len(edge_lijst)):
