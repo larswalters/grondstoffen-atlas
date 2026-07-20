@@ -1,11 +1,11 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=032";
-import { laadVectorWereld } from "./world.js?v=032";
-import { createTileLayer } from "./tiles.js?v=032";
+import { createGlobe, CONFIG } from "./globe.js?v=033";
+import { laadVectorWereld } from "./world.js?v=033";
+import { createTileLayer } from "./tiles.js?v=033";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn, laadBulk }
-  from "./marnet.js?v=032";
+  from "./marnet.js?v=033";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -234,7 +234,21 @@ const SCHEEPSKLASSEN = {
   Va:  { lengte: 110, breedte: 11.4, diepgang: 4.50 },
   Vb:  { lengte: 185, breedte: 11.4, diepgang: 4.50 },
   VIb: { lengte: 195, breedte: 22.8, diepgang: 4.50 },
+  VIc: { lengte: 280, breedte: 22.8, diepgang: 4.00 },
   VII: { lengte: 285, breedte: 34.2, diepgang: 4.50 },
+  // VS-duwkonvooi — GEEN CEMT-klasse, en dat is precies het punt: op de Ohio en
+  // de Mississippi vaart geen Europees schip maar een Amerikaanse duwbak.
+  // Standaard jumbo hopper barge = 195 x 35 ft, 9 ft diepgang bij ~1.500 ton.
+  // Een cut van 3 breed x 3 lang is wat één schutting op een 600x110 ft-kolk
+  // neemt: 3 x 35 = 105 ft (32,0 m) en 3 x 195 = 585 ft (178,3 m).
+  //
+  // ⚠️ Let op hoe exact dat past — de Amerikaanse vloot is OP de sluis
+  // ontworpen. Dat is meteen een onafhankelijke bevestiging van de kolkmaten
+  // die uit USACE kwamen: de vaarweg-maten en de scheeps-maten passen als
+  // sleutel op slot. Zonder deze klasse sloot de Ohio voor élk schip in de
+  // HUD, want zelfs CEMT-klasse IV steekt 2,80 m tegen de 2,7432 m die USACE
+  // toestaat — fysiek juist, maar het beschreef een schip dat daar nooit vaart.
+  "VS-tow": { lengte: 178.3, breedte: 32.0, diepgang: 2.7432 },
 };
 const klasseEl = document.getElementById("schipKlasse");
 klasseEl.addEventListener("change", () => {
