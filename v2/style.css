@@ -129,6 +129,24 @@ html, body {
 
 #routeInfo b { color: var(--ink); }
 
+/* --- havennaam onder de cursor ------------------------------------------- */
+
+#havenLabel {
+  position: absolute;
+  z-index: 5;
+  padding: 3px 8px;
+  font-size: 11px;
+  color: var(--ink);
+  background: rgba(5, 7, 12, 0.82);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  pointer-events: none;   /* mag het slepen nooit onderscheppen */
+  white-space: nowrap;
+  transform: translate(12px, -50%);
+}
+
+#havenLabel span { color: var(--ink-dim); }
+
 /* --- bronvermelding (verplicht bij Esri/OSM) ----------------------------- */
 
 #attrib {

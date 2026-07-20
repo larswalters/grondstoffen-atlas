@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=036" />
+<link rel="stylesheet" href="style.css?v=037" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -28,7 +28,7 @@
 
   <div id="hud">
     <div class="hudTitle">Atlas v2 · fundament</div>
-    <div class="hudSub">M24 — binnenwater (NL-pilot)</div>
+    <div class="hudSub">M24 — havens + overslag</div>
 
     <!-- Twee ONAFHANKELIJKE lagen, niet één of-of-keuze: de ondergrond is het
          oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
@@ -52,12 +52,14 @@
       <button class="mnBtn" data-mn="uit">uit</button>
     </div>
 
-    <!-- Bulklaag (LAR-515): mechanisch gefilterd binnenwater, puur
-         tekengeometrie — geen onderdeel van de router. Gedempte kleur. -->
-    <div class="hudLabel">Bulklaag (binnenvaart, ongetoetst)</div>
+    <!-- Havens (LAR-518): bijna 4.000 searoute-havens als losse laag. Ze zijn
+         het onderwerp van de overslag — een haven is de plek waar zee,
+         binnenwater en straks spoor/weg samenkomen, dus moet je ze kunnen zien
+         vóór je aanwijst welke een overslaghaven wordt. -->
+    <div class="hudLabel">Havens</div>
     <div class="btnRow">
-      <button class="bkBtn is-on" data-bk="aan">aan</button>
-      <button class="bkBtn" data-bk="uit">uit</button>
+      <button class="hvBtn is-on" data-hv="aan">aan</button>
+      <button class="hvBtn" data-hv="uit">uit</button>
     </div>
 
     <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
@@ -113,6 +115,11 @@
     <div id="stats"></div>
   </div>
 
+  <!-- Zweeft mee met de cursor zodra die een haven raakt. Zonder naam is een
+       stip op de kaart niet te controleren — en controleren is precies wat er
+       met deze laag moet gebeuren. -->
+  <div id="havenLabel" hidden></div>
+
   <!-- Bronvermelding is verplicht bij Esri World Imagery en OpenStreetMap. -->
   <div id="attrib"></div>
 
@@ -122,6 +129,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=036"></script>
+<script type="module" src="src/main.js?v=037"></script>
 </body>
 </html>
