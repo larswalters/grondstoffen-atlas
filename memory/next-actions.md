@@ -1,24 +1,40 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (16 systemen live, 5 issues Done; NU = LAR-507 → LAR-508 → LAR-509)*
+*Last updated: 2026-07-20 (bulklaag wereldwijd live, Lars' visuele go; NU = LAR-514 → LAR-513 → Verbindingen)*
 
 ## 🔴 START HIER — in deze volgorde
 
-**1 · [LAR-507] doodlopende MARNET-binnenwaterstubs.** Eerst, want het raakt `bake_marnet.py` en dus
-álles. 16 ongelabelde binnenwater-edges met graad 1; `Willemstad` hangt aan zo'n stub en is
-onbereikbaar. Belangrijker nog: omdat ze geen label dragen kan het `binnenvaart`-filter ze niet
-sluiten — daar zit de veiligheidsklep uit [LAR-494] nog niet dicht. ⚠️ Toets per zone: Suez, Panama
-en de Seaway moeten open blijven (Duluth→R'dam 8.031).
+**1 · [LAR-514] gabarit-veld per edge.** Lars' eigen vervolgstap na "eerst alles mappen, dan kijken
+hoe we de smalle wegen uit de router halen". Op dit moment kan een schip überhaupt niet gefilterd
+worden op grootte — dat veld ontbreekt. Voorstel in het issue: vier maten per edge (diepgang/
+breedte/lengte/doorvaarthoogte) als opslag, CEMT-klasse als afgeleid label. Zonder dit veld stelt de
+router straks routes voor die fysiek niet passen (Seaway-max tegen Poe Lock, Chinese klasse IV =
+feitelijk CEMT III).
 
-**2 · [LAR-508] Noord-Duitsland** — Elbe, Weser, Mittellandkanaal, Nord-Ostsee-Kanal. `Bremen` snapt
-nu 56,5 km. Het Kielerkanaal wordt het eerste systeem met bewust `zeevaart=True`; meet wat dat met
-R'dam→Oostzee doet. `de-niedersachsen` en `de-hamburg` staan al binnen.
+**2 · [LAR-513] fantoomknopen.** Zes plekken waar de atlas een kruispunt tekent dat fysiek niet
+bestaat of waar systemen aanhaken op een ontbrekend knooppunt: Gent (Ringvaart), Nanning (de
+Yujiang ontbreekt), Chicago, Azov (Kertsj), de Amazonemond (Barra Norte), Chaohu. Familie van
+[LAR-507] (hieronder, nog steeds open).
 
-**3 · [LAR-509] hybride keten** (lijnsegmenten + vlakken-afgeleide brugstukken) — deblokkeert
-`grand-canal-noord` (Luoma-meer) en `wolga-baltisch` (drie meren). ⚠️ Houd het vlakken-venster
-klein: `afleiden()` op het hele Wolga-Baltisch-venster was na 45 min nog niet klaar.
+**3 · Verbindingen-milestone** (was "Golf 1", ~45 systemen/~4.500 km) — de stitchpunten die de
+bulklaag niet kan leggen omdat OSM er geen doorlopende geometrie voor heeft. Blijft artisanaal
+(naam-whitelist, ankers, lengtetoets, eigen `vermijd`-knop). Issues staan al: LAR-510 (Duitsland),
+LAR-511 (NL/BE), LAR-512 (China), LAR-516 (Rusland/ZA/Azië-zeemonden), LAR-517 (Noord-Amerika).
 
-**Daarna nog open uit de uitrol:** [LAR-501] Mekong + Hooghly (deels geblokkeerd op de Indiase
-regio-namen, zie [LAR-503]) · [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco.
+**Nog open, ouder:** [LAR-507] doodlopende MARNET-binnenwaterstubs (16 ongelabelde graad-1-edges,
+`Willemstad` onbereikbaar) · [LAR-508] Noord-Duitsland als verhalend systeem (Elbe/Weser/
+Mittellandkanaal/Kielerkanaal — de bulklaag dekt dit gebied nu al mechanisch, dit issue gaat over
+promotie naar routeerbaar) · [LAR-509] hybride keten (Grand Canal-noord/Wolga-Baltisch) ·
+[LAR-501] Mekong + Hooghly · [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco.
+
+## ✅ AFGEROND 2026-07-20 — de bulklaag wereldwijd (LAR-515)
+
+**349.312 km over 8 regio's, live, Lars' visuele go ontvangen.** Scope verbreed van CEMT≥IV naar
+"alles wat bevaarbaar is" (428.428 km gemeten wereldwijd) op Lars' verzoek — liever teveel mappen
+dan dat M25 straks vastloopt op ontbrekend water. Bulklaag gebouwd als **pure tekengeometrie**, geen
+onderdeel van de routeergraaf (na een risicoanalyse die junction-stitching afschoot: NL alleen al
+23.189 knopen). `git diff` leeg op `marnet.bin`/`marnet.json`/`ports.json` — bewijs dat de graaf
+onaangeroerd is. Kleur: fel rood (`0xff1a1a` @ 0,85), niet het eerst geprobeerde gedempte amber.
+Zie `session-summaries.md`, `decisions.md` en `v2/design/binnenwater-scope.md`.
 
 ## ✅ AFGEROND 2026-07-19 — de parallelle ronde (5 issues Done)
 

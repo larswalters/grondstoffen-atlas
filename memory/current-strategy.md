@@ -1,5 +1,50 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-19 (M24.1: het net sluit nu ook RINGEN — sluitAan, LAR-505)*
+*Last updated: 2026-07-20 (de bulklaag: alles bevaarbaar, als pure tekengeometrie, LAR-515)*
+
+## 🌍 De bulklaag: twee lagen naast elkaar (2026-07-20, [LAR-515])
+
+Sinds deze sessie bestaan er TWEE soorten binnenwater-geometrie op de bol, met een principieel
+verschil in wat ze mogen kosten en wat ze moeten bewijzen:
+
+| | **verhalend** (`EXTRA_VAARWEGEN`, `fetch_waterways.SYSTEMEN`) | **bulk** (`vaarwegen_bulk.geojson`) |
+|---|---|---|
+| selectie | naam-whitelist per systeem | mechanisch filter (laag C: elk bevaarbaarheidssignaal) |
+| topologie | ankers, `kortste_waterpad`, knopen/edges in de graaf | **geen** — elke OSM-way is zijn eigen polyline |
+| routeerbaar | ja, eigen passage-label = `vermijd`-knop | **nee**, bewust — puur tekengeometrie |
+| lengtetoets | tegen de officiële vaarafstand, 6-14 punten | steekproefsgewijs (nog te doen) |
+| omvang | 36 systemen, ~17.400 km | 349.312 km, 8 regio's |
+| bakt in | `nodes`/`edge_lijst`/`status` (muteert de graaf) | apart bestand `marnet-bulk.json` (muteert niets) |
+
+**Waarom de bulklaag geen topologie heeft — dit is de kernbeslissing van de sessie.** Het voor de
+hand liggende ontwerp (stitch de bulklaag tot een graaf zoals de 36 verhalende systemen) bleek bij
+een risicoanalyse VOOR het bouwen fataal: op Nederland alleen al (5,5% van laag C) gaf dat
+**23.189 knopen — meer dan het hele huidige netwerk (10.773)**, want bulkketens zijn extreem kort
+(mediaan 52 m in NL) en de baker zet een knoop op elk ketenuiteinde. Zonder topologie bestaat dat
+risico niet. Bijkomend voordeel, niet vooraf voorzien: de bouw werd ook **drastisch sneller** —
+wereldwijde scan + bake in ~16 minuten in plaats van de geschatte uren.
+
+**Bewijs dat de graaf onaangeroerd blijft:** `git diff` op `marnet.bin`/`marnet.json`/`ports.json`
+is **leeg**, zowel op de China-proefbake als de wereldwijde run. Dit is het sterkste soort bewijs in
+dit project (zelfde patroon als LAR-504's byte-identieke bake) — geen aanname, een meting.
+
+**Promotie bulk → verhalend gebeurt later, systeem voor systeem** (de Promotie-milestone). Een
+systeem promoveren = het een eigen label geven in `SYSTEMEN`, wat het routeerbaar maakt en een
+`vermijd`-knop oplevert voor M21. Tot die tijd draagt de bulklaag geen enkele route.
+
+**Ondergrens verbreed: "alles wat bevaarbaar is", niet meer CEMT ≥ IV.** Lars: *"liever een kanaal
+mappen dat niet gebruikt wordt dan dat we straks nog extra moeten maken omdat er spoorwegen uitkomen
+op plekken waar nu geen binnenwater aansluit."* Concreet: laag C uit `v2/tools/meet_vaarwegen.py` —
+een expliciet bevaarbaarheidssignaal (`CEMT`, `ship=yes`, `boat=yes`, `motorboat=yes`, `draft`),
+bewust ongeacht `waterway=`-type (de Poses-les veralgemeniseerd). Gemeten: 428.428 km wereldwijd; het
+oude criterium ving daarvan maar 7,7%.
+
+**Kleur: fel rood (`0xff1a1a` @ opaciteit 0,85), niet gedempt amber.** Eerste keuze (`0xa8814a` @
+0,35) was bedoeld om de getoetste ketens visueel te laten winnen, maar bleek in de praktijk vrijwel
+onzichtbaar. Zichtbaarheid gaat voor; niet-routeerbaarheid blijft geborgd doordat de laag buiten de
+graaf staat, niet doordat hij onopvallend is.
+
+Zie `v2/design/binnenwater-scope.md` voor het volledige scope-onderzoek (375 systemen / regio) en
+de LAR-515-comments in Linear voor de gemeten cijfers per stap.
 
 ## 🚢 M24-uitrol: de vaarwegen vormen een NET (2026-07-19, [LAR-504])
 

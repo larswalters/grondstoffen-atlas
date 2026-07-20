@@ -1,6 +1,39 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-20 (sessie 35) — de bulklaag: scope verbreed, wereldwijd gebouwd, live bevestigd (LAR-515)
+
+Lars zag het gat in de Yangtze-delta en vroeg om eerst de scope vast te stellen voordat er iets
+gebouwd werd. Scope-onderzoek (8 regio's, onderzoeker + criticus per regio) vond **375 ontbrekende
+systemen / ~128.600 km** onder het oude CEMT≥IV-criterium — rapport in `v2/design/binnenwater-scope.md`.
+
+Lars verbreedde de criteria tweemaal: (1) ondergrens van CEMT≥IV naar **"alles wat bevaarbaar is"**
+(*"liever een kanaal mappen dat niet gebruikt wordt dan straks extra werk omdat er spoorwegen
+uitkomen op plekken waar geen water ligt"*) — gemeten **428.428 km wereldwijd** met het nieuwe
+`v2/tools/meet_vaarwegen.py`; (2) van gefaseerde golven naar **één bulkbake** (*"als fundament
+gewoon alles mappen lijkt me de beste stap"*).
+
+Een ontwerpronde + onafhankelijke risicoanalyse (workflow, 4 agents) vóór het bouwen vond dat
+junction-stitching zoals de 36 bestaande systemen **fataal** zou zijn: op Nederland alleen al
+23.189 knopen, meer dan het hele netwerk. **Besluit: de bulklaag is pure tekengeometrie, geen
+onderdeel van de routeergraaf** — geen ankers, geen stitchen, geen Dijkstra. Bewezen met `git diff`
+(leeg) op `marnet.bin`/`marnet.json`/`ports.json`. Bleek ook drastisch sneller: wereldwijde
+scan+bake in ~16 minuten, geen VPS nodig.
+
+**Resultaat: 349.312 km over 8 regio's** (bulk-ru 79.302 · bulk-sa 59.965 · bulk-eu 54.164 ·
+bulk-as 48.180 · bulk-cn 42.048 · bulk-na 33.835 · bulk-af 29.464 · bulk-oc 2.354), 16.149 km
+weggenomen door een 250m-STRtree-uitsluiting tegen de verhalende laag. Kleur eerst gedempt amber
+(bleek onzichtbaar), toen **fel rood** (`0xff1a1a` @ 0,85) na Lars' feedback.
+
+**Live gepusht in twee commits** (`f2ede13` China-proefbake, `d848344` wereldwijd, `0e06dda`
+kleurfix), GitHub Pages cache-val herbevestigd (`index.html` cachet zelf 600s). **Lars' visuele go
+ontvangen** op mobiel: dichtheid en positie kloppen op "egaal"-ondergrond; satelliet-zichtbaarheid
+bewust uitgesteld ("daar gaat het niet om als ze we maar in liggen voor het fundament").
+
+Nieuwe Linear-milestones: Fundament / Verbindingen (was Golf 1) / Promotie. Acht nieuwe issues
+(LAR-510 t/m LAR-517). Volgende sessie: LAR-514 (gabarit-veld per edge) → LAR-513 (fantoomknopen) →
+de Verbindingen-milestone.
+
 ## 2026-07-19 (sessie 34) — vijf issues parallel: 16 systemen in één bake (20 → 36)
 
 Op Lars' vraag *"kan je er meerdere tegelijk laten lopen?"* vijf M24-issues tegelijk door

@@ -1,8 +1,30 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-19 (parallelle uitrol: 16 systemen erbij, 20 → 36)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-20 (bulklaag wereldwijd, LAR-515)*
 
-> **🌐 PARALLELLE UITROL — 16 SYSTEMEN IN ÉÉN BAKE (2026-07-19, laatste).** Live t/m `06384e7`
+> **🌍 DE BULKLAAG — SCOPE VERBREED NAAR "ALLES BEVAARBAAR", WERELDWIJD LIVE (2026-07-20, laatste,
+> LAR-515).** Lars zag het gat in de Yangtze-delta, scope-onderzoek vond **375 ontbrekende systemen
+> (~128.600 km)** onder het oude CEMT≥IV-criterium. Lars verbreedde de criteria tweemaal: naar
+> **"alles wat bevaarbaar is"** (gemeten **428.428 km wereldwijd**) en naar **één bulkbake i.p.v.
+> gefaseerde golven**.
+>
+> **Kernbeslissing na een risicoanalyse vóór het bouwen: de bulklaag is PURE TEKENGEOMETRIE, geen
+> onderdeel van de routeergraaf.** Junction-stitching zoals de 36 verhalende systemen gaf op
+> Nederland alleen al **23.189 knopen — meer dan het hele huidige netwerk**. Zonder topologie: geen
+> ankers, geen Dijkstra, `nodes`/`edge_lijst`/`status` blijven bewijsbaar ongemoeid (`git diff` leeg
+> op `marnet.bin`/`marnet.json`/`ports.json`). Wereldwijde scan+bake in **~16 minuten**, geen VPS.
+>
+> **Resultaat: 349.312 km over 8 regio's** (bulk-ru 79.302 · bulk-sa 59.965 · bulk-eu 54.164 ·
+> bulk-as 48.180 · bulk-cn 42.048 · bulk-na 33.835 · bulk-af 29.464 · bulk-oc 2.354). Kleur fel rood
+> (`0xff1a1a` @ 0,85) na Lars' feedback dat gedempt amber onzichtbaar was. **Live gepusht, Lars'
+> visuele go ontvangen.**
+>
+> Nieuwe milestones: **Fundament** (alles bevaarbaar, 1 bulkbake) · **Verbindingen** (was Golf 1,
+> ~45 stitchpunten) · **Promotie** (systemen die een eigen `vermijd`-knop krijgen). **→ VOLGENDE:
+> [LAR-514] gabarit-veld per edge → [LAR-513] fantoomknopen → de Verbindingen-milestone** (zie
+> `memory/next-actions.md`).
+
+> **🌐 PARALLELLE UITROL — 16 SYSTEMEN IN ÉÉN BAKE (2026-07-19, eerder).** Live t/m `06384e7`
 > (`?v=029`). **Vijf issues Done** ([LAR-495] [LAR-496] [LAR-497] [LAR-500] [LAR-502]) na Lars'
 > visuele go. **→ VOLGENDE, in deze volgorde: [LAR-507] → [LAR-508] → [LAR-509]** (zie
 > `memory/next-actions.md`).
@@ -975,6 +997,23 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-20 · LAR-515: de bulklaag is PURE TEKENGEOMETRIE, geen onderdeel van de routeergraaf** —
+  junction-stitching zoals de 36 verhalende systemen gaf op NL alleen al 23.189 knopen (meer dan het
+  hele netwerk). Geen ankers, geen stitchen, geen Dijkstra; `nodes`/`edge_lijst`/`status` blijven
+  ongemoeid (`git diff` leeg op marnet.bin/json/ports.json). Promotie naar routeerbaar gebeurt later,
+  per systeem, via het bestaande `SYSTEMEN`-pad.
+- **2026-07-20 · LAR-515: ondergrens verbreed naar "alles wat bevaarbaar is"** — niet meer CEMT≥IV.
+  Lars: liever een kanaal mappen dat niet gebruikt wordt dan straks extra werk omdat M25 uitkomt op
+  plekken waar geen water ligt. Laag C uit `meet_vaarwegen.py` (bevaarbaarheidssignaal, type-agnostisch);
+  gemeten 428.428 km wereldwijd tegen 33.168 km (7,7%) onder het oude criterium.
+- **2026-07-20 · LAR-515: geen gefaseerde golven meer, één bulkbake** — filteren tijdens de bake is
+  definitief (rebake van alles om terug te draaien), filteren in de router (later, [LAR-514]) is een
+  knop. Golf 2-5 opgegaan in de Fundament-milestone; Golf 1 leeft door als Verbindingen.
+- **2026-07-20 · LAR-515: zeevaargeulen zijn eigen systemen, geen MARNET-edges** — elke geul krijgt zo
+  een eigen `vermijd`-knop; juist die geulen zijn de realistische M21-verstoringen.
+- **2026-07-20 · LAR-515: bulklaag fel rood, niet gedempt amber** — de eerste kleur (0xa8814a @ 0,35)
+  was bedoeld om de getoetste ketens te laten winnen maar bleek onzichtbaar. Zichtbaarheid gaat voor;
+  niet-routeerbaarheid blijft geborgd doordat de laag buiten de graaf staat.
 - **2026-07-19 · LAR-504: een vaarwegsysteem mag OVERAL op zijn voorganger aanhaken** — `volgtOp`
   hechtte alleen aan het ketenuiteinde; daarmee bak je lijnen, geen netwerk. `hecht_aan_keten()` knipt
   nu de moederedge door op een **bestaande geometrie-vertex** (dus zonder één coördinaat te

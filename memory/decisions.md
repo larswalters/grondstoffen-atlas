@@ -1,7 +1,56 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-19 (parallelle uitrol: 16 systemen, filter op naam i.p.v. type)*
+*Last updated: 2026-07-20 (bulklaag: alles bevaarbaar, pure tekengeometrie)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-20 · LAR-515 — de bulklaag is PURE TEKENGEOMETRIE, geen onderdeel van de routeergraaf
+
+Het voor de hand liggende ontwerp — de bulklaag stitchen tot een routeerbare graaf zoals de 36
+verhalende systemen — bleek bij een risicoanalyse VOOR het bouwen fataal: op Nederland alleen al
+(5,5% van laag C) gaf dat **23.189 knopen, meer dan het hele huidige netwerk (10.773)**, want
+bulkketens zijn extreem kort (mediaan 52 m) en de baker zet een knoop op elk ketenuiteinde.
+
+Besluit: geen ankers, geen stitchen, geen Dijkstra. Elke bevaarbare OSM-way wordt zijn eigen
+gesimplificeerde polyline; `nodes`/`edge_lijst`/`status` worden nooit gemuteerd. Bewijs: `git diff`
+leeg op `marnet.bin`/`marnet.json`/`ports.json`, op zowel de China-proefbake als de wereldwijde run.
+Bijkomend voordeel: wereldwijde scan+bake in ~16 minuten in plaats van de geschatte uren voor een
+gestitchte aanpak. Promotie naar routeerbaar gebeurt later, per systeem, via het bestaande
+`SYSTEMEN`-pad in `fetch_waterways.py`.
+
+## 2026-07-20 · LAR-515 — ondergrens verbreed: "alles wat bevaarbaar is", niet meer CEMT ≥ IV
+
+Lars: *"liever een kanaal mappen dat niet gebruikt wordt dan dat we straks nog extra moeten maken
+omdat er spoorwegen uitkomen op plekken waar nu geen binnenwater aansluit."* M25 (spoor/weg) landt
+straks op inlandterminals; een weggefilterd klasse III-kanaal wordt daar een dangling spoorlijn.
+
+Concreet: laag C uit `v2/tools/meet_vaarwegen.py` — een expliciet bevaarbaarheidssignaal (`CEMT`,
+`ship=yes`, `boat=yes`, `motorboat=yes`, `draft`), bewust ONGEACHT `waterway=`-type (de Poses-les
+veralgemeniseerd: bij de sluis van Poses droeg de Seine-vaargeul `waterway=stream` mét CEMT).
+Gemeten: 428.428 km wereldwijd; het oude criterium (CEMT ≥ IV) ving daarvan maar 33.168 km = 7,7%.
+
+## 2026-07-20 · LAR-515 — geen gefaseerde golven meer; één bulkbake
+
+Lars: *"als fundament gewoon alles mappen lijkt me de beste stap."* De oorspronkelijke uitrolvolgorde
+(Golf 1 t/m 5, geordend op netwerkwinst) ging ervan uit dat elk systeem de artisanale behandeling
+kreeg. Voor een mechanische bulkpass (één filter, één verzoening, één bake) bestaat die reden niet —
+de golven waren een artefact van het handwerk. Filteren tijdens de bake is bovendien definitief; wil
+je het terug, dan is het een rebake van alles. Filteren in de router (later, via een gabarit-veld,
+[LAR-514]) is een knop. Golven 2-5 zijn opgegaan in de nieuwe Fundament-milestone; Golf 1 leeft door
+als de Verbindingen-milestone (de ~45 stitchpunten die de bulk niet kan leggen).
+
+## 2026-07-20 · LAR-515 — zeevaargeulen zijn eigen systemen, geen MARNET-edges
+
+Een gebaggerde zeevaargeul (Nieuwe Waterweg, Barra Norte, Kertsj, Mobile, ...) krijgt een eigen
+passage-label i.p.v. onderdeel te zijn van de MARNET-zee-baseline. Dan krijgt elke geul een eigen
+`vermijd`-knop, en juist die geulen zijn de realistische M21-verstoringen (baggerstand, laagwater).
+
+## 2026-07-20 · LAR-515 — kleur fel rood, niet gedempt amber
+
+Eerste keuze (`0xa8814a` @ opaciteit 0,35) was bedoeld om de getoetste verhalende ketens visueel te
+laten winnen van de mechanische bulklaag. In de praktijk bleek de laag daardoor vrijwel onzichtbaar
+— Lars zag hem niet op de live site. Vervangen door `0xff1a1a` @ 0,85. Zichtbaarheid gaat voor;
+niet-routeerbaarheid blijft geborgd doordat de laag buiten de graaf staat, niet doordat hij
+onopvallend is.
 
 ## 2026-07-19 · LAR-494 — een rivierketen was altijd een DOODLOPENDE TAK; dat is nu voorbij
 

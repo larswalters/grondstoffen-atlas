@@ -1,5 +1,22 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-19 (OPEN: doodlopende MARNET-stubs + ontbrekend Noord-Duitsland)*
+*Last updated: 2026-07-20 (OPEN: marnet-bulk.json ongeoptimaliseerd + LAR-515-acceptatie niet compleet)*
+
+## ⚠️ OPEN — marnet-bulk.json is ongeoptimaliseerd (2026-07-20, [LAR-515])
+
+38,7 MB raw / ~12,5 MB gzip — groter dan de eerste schatting (~6,2 MB), omdat de scope wereldwijd
+werd (349.312 km i.p.v. de eerder geschatte 190.034) en de opslag platte JSON is, geen binaire
+varint-codering zoals `marnet.bin`. Werkt nu prima (browser laadt in 624 ms), maar is de voor de
+hand liggende volgende optimalisatie zodra dekking niet meer de prioriteit is. Bewust nu uitgesteld
+("eerst alles mappen, dan optimaliseren").
+
+## ⚠️ OPEN — LAR-515-acceptatiecriteria nog niet compleet (2026-07-20)
+
+Wat wél gedaan is: `git diff` bewijst dat de routeergraaf onaangeroerd blijft, de 250m-exclusie is
+gemeten (max weg ≤250 m, dichtste bewaard ≥250 m — grens klopt), browser laadt foutloos, Lars gaf
+zijn visuele go op dichtheid/positie. Wat **niet** gedaan is: de dubbele-geometrie-toets op de
+bestaande `vermijd`-knoppen (bewijzen dat elk label nog exact doet wat het deed — bv. `rijn-boven`
+dicht moet nog steeds Mainz/Karlsruhe/Kehl onbereikbaar maken), een steekproef van bulksystemen
+tegen officiële vaarafstanden, en `toets_usace.py` op de VS-bulk. Dit is fundament, geen afronding.
 
 ## ✅ OPGELOST — het aftakmechanisme is nu end-to-end gerouteerd (2026-07-19, [LAR-505])
 
