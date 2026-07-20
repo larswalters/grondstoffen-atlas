@@ -613,6 +613,10 @@ Uitbreiding: 128.600 km ÷ 15 km/knoop = **~8.600 nieuwe knopen**. Plus ~500 jun
 1. **Rendering.** 30.600 edges als losse line segments is bij WebGL prima, maar niet als elke edge een eigen draw call krijgt. Batch per continent of per golf.
 2. **Routering.** Dijkstra/A* over 19.400 knopen is triviaal; wat wél nieuw is, zijn de **gabarit-regimes**. Seaway-max (225,6×23,8 m) tegen Poe Lock (366 m), CEMT IV vs. Chinese klasse IV (500 t = feitelijk CEMT III), Erie-brughoogte 4,7 m, Cape Cod 2 bakken per sleep. Zonder een klasse-/capaciteitsveld per edge gaat de router routes voorstellen die fysiek niet passen. Dat is een groter risico dan de bestandsgrootte.
 
+   ✅ **OPGELOST 2026-07-20 ([LAR-514]).** Het veld staat er: **vier maten per edge** — diepgang · breedte · lengte · doorvaarthoogte, in decimeter, met **0 = onbekend = géén grens**. Niet een klasse-enum en niet een tonnage, want geen van de vijf regimes hierboven ís een klasse: Erie faalt op hoogte, Seaway op lengte/breedte, de Poe Lock op lengte, Cape Cod op konvooivorm. De router filtert via `opties.schip`; een edge valt weg vóór de relaxatie, net als `vermijd`. Kosten gemeten: `marnet.bin` +20 KB (+1,6%). Volledige uitwerking in `gabarit-veld.md`.
+
+   ⚠️ **De kalibratie-actie uit §2.3 (Chinese klasse IV = CEMT III, de −1-correctie) is daarmee vervallen, niet afgevinkt.** Het onderzoek van 2026-07-20 heeft voor géén van de vijf Chinese systemen een nationale klasse als bron gebruikt — de maten komen rechtstreeks uit kolkafmetingen (Drieklovensluis 280×34 m) en gepubliceerde vaargeulgegevens. Er valt dus niets meer om te rekenen: het datamodel draagt **maten**, geen klassen, en een vertaaltabel tussen twee klassenstelsels is precies de tussenstap die vorm C overbodig maakt. Zou er ooit tóch een Chinese klasse als bron dienen, dan geldt de −1-correctie onverkort — maar dan als bron-interpretatie, niet als iets dat in de graaf terechtkomt.
+
 **Per golf (cumulatief marnet.bin):**
 
 | Golf | Extra km | Extra knopen | marnet.bin na |
