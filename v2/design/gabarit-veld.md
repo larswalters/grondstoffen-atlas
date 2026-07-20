@@ -48,16 +48,36 @@ Vb = 185 × 11,4 · VIb = 185/195 × 22,8).
 | VIc | 280 | 22,8 | 4,00 | duwstel 2×3 (9.600-18.000 t) · variant 3×2 = 200 × 34,2 |
 | VII | 285 | 34,2 | 4,50 | duwstel 3×3 (14.500-27.000 t) |
 
-### ⚠️ Doorvaarthoogte komt NIET uit de klasse
+### ⚠️ Alleen de LENGTE- en BREEDTE-kolom worden gebruikt
 
-De CEMT-tabel geeft voor de hoogte **alternatieven** ("5,25 of 7,00 of 9,10 m") — de
-waterwegbeheerder kiest er één. De klasse *bepaalt* de doorvaarthoogte dus niet, en een gekozen
-waarde zou een verzinsel zijn: te laag sluit routes stil af, te hoog laat een te hoog schip door.
+Bij de bouw (2026-07-20) bleek dat **twee** van de vier kolommen niet als grens van de klasse
+gelezen mogen worden. Dezelfde reden, twee keer: de klasse *bepaalt* ze niet.
 
-**Voorstel (nog te bevestigen bij de bouw): doorvaarthoogte blijft `onbekend` voor de
-CEMT-presets** en wordt alleen gevuld waar een échte gemeten beperking bestaat — precies de
-gevallen die [LAR-514] noemt (Erie-brughoogte 4,7 m). Dat is consistent met het draagprincipe én
-met het issue zelf: *"Geen van die drie is een CEMT-klasse."*
+**Doorvaarthoogte** — de CEMT-tabel geeft **alternatieven** ("5,25 of 7,00 of 9,10 m") waaruit
+de waterwegbeheerder er één kiest. Dat stond al in deze notitie en is bevestigd.
+
+**Diepgang** — dit is de vondst van de bouwsessie, en hij was niet voorzien. De diepgangkolom
+beschrijft het **referentieschip** van de klasse, niet de vaarweg. Het bewijs is objectief en
+hoeft niet beredeneerd te worden:
+
+| kolom | reeks I → VII | monotoon? |
+| -- | -- | -- |
+| lengte | 38,5 · 55 · 80 · 85 · 110 · 185 · 195 · 280 · 285 | ✅ stijgend |
+| breedte | 5,05 · 6,6 · 8,2 · 9,5 · 11,4 · 11,4 · 22,8 · 22,8 · 34,2 | ✅ stijgend |
+| **diepgang** | 2,2 · 2,5 · 2,5 · 2,8 · 4,5 · 4,5 · 4,5 · **4,0** · 4,5 | ❌ **VIb 4,50 → VIc 4,00** |
+
+Een grootheid die **daalt** terwijl de klasse **stijgt** kan onmogelijk "de grens van die klasse"
+zijn — een VIc-duwstel (2×3, breed en lang) is gewoon ondieper geladen dan een VIb.
+
+**Dit was geen theoretisch punt.** Met diepgang in de presets sloot `waal` (VIc → 4,00 m) voor
+een klasse Va-schip (4,50 m): de drukste binnenvaartweg van Europa dicht voor een gewoon
+Rijnschip, waardoor **R'dam→Nijmegen van 172 km naar 9.405 km sprong** (de router ging om via
+zee). Het is dezelfde foutsoort die dit project al kent als *"vaargeul-projectdiepte is niet de
+maximale scheepsdiepgang"*, nu in de vorm **"referentieschip is niet de vaarweg"**.
+
+→ **`CEMT_PRESETS` vult alleen `lengte` en `breedte`.** Diepgang en doorvaarthoogte komen
+uitsluitend uit een echte meting (§4). Dat volgt rechtstreeks uit het draagprincipe: liever
+onbekend dan verzonnen.
 
 ---
 
@@ -120,14 +140,58 @@ en dat is meteen acceptatiepunt 2.
 
 ---
 
-## 6 · Status
+## 6 · Het formaat zoals gebouwd
+
+Per edge in `marnet.bin`, ná `soort` en `aantalPunten`:
+
+```
+gabarietvlag   0 = geen maten (1 byte)  ·  1 = er volgen er vier
+  diepgang     decimeter, 0 = onbekend
+  breedte      decimeter, 0 = onbekend
+  lengte       decimeter, 0 = onbekend
+  hoogte       decimeter, 0 = onbekend
+```
+
+De vlag scheelt drie bytes op elke ongemeten edge (~15.900 zee-edges) en maakt het formaat
+zelfbeschrijvend: *geen maten* is iets anders dan *vier nullen*, ook al gedragen ze zich hetzelfde.
+Gemeten kosten: `marnet.bin` 1.249.034 → 1.269.532 byte (**+20 KB, +1,6%**).
+
+De router leest ze in `zoekRoute` via `opties.schip = {diepgang, breedte, lengte, hoogte}`; een
+edge valt weg **vóór** de relaxatie, op exact dezelfde plek en van dezelfde soort als `vermijd`.
+Daardoor blijft de grootcirkel-heuristiek toelaatbaar en is het gevonden pad nog steeds precies
+het kortste over wat overblijft.
+
+⚠️ **De tabel staat in `bake_marnet.py`, niet in `fetch_waterways.py`.** `cemt` hoort daar wél
+thuis — de fetcher selecteert er OSM-ways mee. De vier maten hebben géén fetcher-rol: ze komen
+niet uit OSM maar uit gepubliceerde sluis-, brug- en vaargeulgegevens. Dat scheelt een volledige
+re-fetch bij elke correctie van een brughoogte.
+
+## 7 · Status
 
 - [x] Vorm besloten (C: vier maten)
 - [x] Granulariteit besloten (per edge, geërfd)
 - [x] Zee-edges afgebakend (apart issue)
 - [x] CEMT-presettabel gesourcet en geverifieerd (ECMT 92/2)
 - [x] Code-locaties opgezocht
-- [ ] Doorvaarthoogte-voorstel bevestigen (§2)
-- [ ] Maten voor de 14 niet-CEMT-systemen (§4) — **geblokkeerd, onderzoek nog te doen**
-- [ ] Schrijver · lezer · router · HUD
-- [ ] Bake + de elf regressieroutes + de klein-vs-groot-schip-toets
+- [x] Doorvaarthoogte bevestigd als "niet uit de klasse" — **en diepgang idem** (§2)
+- [x] Schrijver · lezer · router · HUD gebouwd (commit `23d993e`)
+- [x] Bake: knopen 10.773 / edges 17.024 ongewijzigd, `ports.json` byte-identiek
+- [x] Elf regressieroutes exact zónder schip (acceptatiepunt 2, knoop→knoop gemeten)
+- [x] Klein-vs-groot bewezen: R'dam→Luik **375 km voor Vb, DICHT voor VIb** — `maas` is
+      11,4 m breed, een 2×2-duwstel 22,8 m (acceptatiepunt 3)
+- [x] Zeeroutes onaangetast bij elke klasse (R'dam→Shanghai 19.610), zee-edges dragen geen maten
+- [ ] Maten voor de 14 niet-CEMT-systemen (§4) — **onderzoek loopt**; tot dan staan ze op
+      onbekend en sluiten ze dus niets af
+- [ ] Visuele go van Lars
+
+### Gemeten: welke systemen sluiten per scheepsklasse
+
+Netjes oplopend, wat het nesten van de klassen bevestigt:
+
+| klasse | dicht | systemen |
+| -- | -- | -- |
+| IV | 0 | — |
+| Va | 0 | — |
+| Vb | 2 | `maas-boven` · `wolga-don` |
+| VIb | 7 | + `mosel` `seine-boven` `main` `main-donau-kanaal` `maas` |
+| VII | 20 | + vrijwel de hele Europese as (alleen `waal` VIc en `donau`/`seine` VII blijven) |
