@@ -1,34 +1,41 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (LAR-514 voorbereid: besluiten + presettabel staan, bouw volgt; NU = LAR-514 bouwen → LAR-513 → Verbindingen)*
+*Last updated: 2026-07-20 (LAR-514 GEBOUWD + de 14 maten onderzocht; NU = visuele go → edges splitsen/pinnen → LAR-513 → Verbindingen)*
 
 ## 🔴 START HIER — in deze volgorde
 
-**1 · [LAR-514] gabarit-veld per edge — VOORBEREID, NOG NIET GEBOUWD.**
-Alle ontwerpkeuzes staan vast in **`v2/design/gabarit-veld.md`** (2026-07-20). Lars besliste:
-**vier maten per edge** (diepgang/breedte/lengte/doorvaarthoogte) · **per edge geërfd van het
-systeem** · **zee-edges (Panama/Suez/Kiel) in een apart issue**. De CEMT-presettabel is gesourcet
-bij ECMT Res. 92/2 (1992) en geverifieerd; de 22 systemen mét klasse zijn daarmee gedekt.
+**1 · VISUELE GO VAN LARS op het gabariet-veld ([LAR-514], gebouwd 2026-07-20).**
+Het veld staat en is groen: vier maten per edge in `marnet.bin` (diepgang · breedte · lengte ·
+doorvaarthoogte, decimeter, **0 = onbekend = géén grens**), router filtert via `opties.schip`,
+HUD kreeg een scheepsklasse-keuze. `?v=032`, commits `23d993e` · `b68f1e3` · `f9a5459` · `5cbebc0`.
+⚠️ De WebGL-screenshot loopt vast in de Browser-pane (bekende beperking), dus de beeldcontrole
+kan alleen Lars doen.
 
-**⚠️ EERST DIT, ANDERS KOM JE VAST TE ZITTEN: de 14 systemen ZÓNDER CEMT zijn nog niet
-onderzocht.** (`mississippi` · `mississippi-boven` · `mississippi-upper` · `illinois` ·
-`chicago-kanaal` · `ohio` · `yangtze` · `yangtze-boven` · `yangtze-chongqing` ·
-`grand-canal-zuid` · `parelrivier` · `xijiang` · `yangon` · `amazone`.) De onderzoeksronde
-strandde op een API-sessielimiet → **geen resultaten, en niets verzinnen**. Bronnen die het
-project al kent: VS via `toets_usace.py` (bestaat al, `GEO_CLASS`/`FUNC_CLASS`) · China via de
-nationale klasse **mét de −1-correctie** (klasse IV = 500 t = CEMT **III**) · `amazone` via de
-gemeten klaring uit `middellijn_uit_vlakken.py`. Zolang een maat ontbreekt geldt hij als
-"onbekend = geen grens" — veilig, maar acceptatiepunt 4 vraagt om een gemotiveerde maat mét bron.
+**2 · ZES EDGES SPLITSEN OF HUN NODE PINNEN — dit blokkeert hun gabariet.**
+Het bronnenonderzoek leverde voor deze zes wél maten op, maar ze zijn **bewust niet ingevuld**
+omdat één gabariet het traject niet eerlijk kan beschrijven:
 
-**Daarna bouwen**, in deze volgorde: schrijver (`bake_marnet.py:1229-1237`) → lezer + router-filter
-(`marnet.js:105-122` + `:463`, via `opties.schip`) → HUD-knop naast "realistisch / alles toestaan"
-(`index.html:75-78` + `main.js:213-220`) → bake + `?v=`-bump.
-**Acceptatie:** de elf regressieroutes exact onder de default (19.610 · 8.031 · 19.677 ·
-Memphis 10.000 · Wuhan 20.626 · Nijmegen 172 · A'dam→Nijmegen 105 · Luik 375 · Kehl 757 ·
-Duisburg 281 · Antwerpen 210) **én** zonder `schip` gaat geen enkele edge dicht (aantoonbaar,
-niet aangenomen) **én** mét een scheepsklasse minstens één route die wél bestaat voor een klein
-schip en niet voor een groot. ⚠️ Noem bij elk regressiecijfer het **profiel** — "alles toestaan"
-geeft bewust andere getallen. Vaste vraag: *kan dit een zeeroute bekorten?* Het klasse-filter mag
-de klep die het groepslabel `binnenvaart` dichthoudt niet openzetten.
+| edge | actie | gevolg bij nalaten |
+| -- | -- | -- |
+| `mississippi-upper` | splitsen bij **Lock & Dam 2 (Hastings)** | de 56 ft-kolken gelden over de laatste ~10 km van 1.728,7 km; over de hele edge gelegd sluiten ze vrijwel al het Upper-Miss-verkeer af |
+| `xijiang` | splitsen bij **Sixianjiao** | 7,6 m in de delta tegen 11,5 m op de Xijiang zelf — een schip loopt fysiek vast |
+| `grand-canal-zuid` | knopen aan de **运河二通道-bypass** (sinds 18-07-2023 de doorgaande route) | klasse-III-maten op een 500 t-stadssectie |
+| `yangtze` | node pinnen op **Xinshengwei/Longtan** + zuidtak Runyang | 12,5 → 10,5 m en 50 → 24 m |
+| `yangtze-boven` | node pinnen **benedenstrooms van de 武汉长江大桥** (1957) | 24 m i.p.v. 18 m |
+| `parelrivier` | eindpunt pinnen op het **西基调头区** | 13 → 9 → 8 m én 60 → 55 m tegelijk |
+
+**3 · VIER BRONVERIFICATIES**, op waarde gesorteerd:
+1. **Chicago-breedte** — 80 ft (33 CFR 207.420) tegen 50 ft (USACE Water Control Manual, mei 2024).
+   Die twee liggen aan **wéérszijden van CEMT VIb (22,8 m)**, dus gokken beslist de uitkomst.
+2. **Yangon 44 m** — de bekendmaking is van sept 2025 en hing aan de bouwvoortgang; de brug opende
+   06-02-2026. Zonder bevestiging van ná die datum: leeg laten.
+3. **Xijiang** — staan 旧五斗大桥 (7,6 m) en 旧西樵大桥 (6,9 m) er nog? Beide heten "旧" (oud).
+4. **Yangtze-boven** — de 18 m van de 武汉长江大桥 bevestigen bij 长江海事局 of MOT.
+
+**4 · OVERWEGING VOOR LARS — een Amerikaanse duwbak-klasse in de HUD.**
+De HUD biedt alleen Europese CEMT-klassen, en die sluiten de Ohio **allemaal**: 9 ft = 2,7432 m,
+terwijl zelfs klasse IV 2,80 m steekt. Cincinnati en Louisville zijn daarmee onbereikbaar voor de
+hele Europese vloot — fysiek juist, maar het maakt het Mississippi/Ohio-net onbruikbaar in de
+simulator. Een klasse "US barge tow" (9 ft × 35 ft × 600 ft) lost dat op.
 
 **2 · [LAR-513] fantoomknopen.** Zes plekken waar de atlas een kruispunt tekent dat fysiek niet
 bestaat of waar systemen aanhaken op een ontbrekend knooppunt: Gent (Ringvaart), Nanning (de
@@ -45,6 +52,27 @@ LAR-511 (NL/BE), LAR-512 (China), LAR-516 (Rusland/ZA/Azië-zeemonden), LAR-517 
 Mittellandkanaal/Kielerkanaal — de bulklaag dekt dit gebied nu al mechanisch, dit issue gaat over
 promotie naar routeerbaar) · [LAR-509] hybride keten (Grand Canal-noord/Wolga-Baltisch) ·
 [LAR-501] Mekong + Hooghly · [LAR-498] Amazonebekken compleet · [LAR-499] Hidrovía + Orinoco.
+
+## ✅ AFGEROND 2026-07-20 — het gabariet-veld per edge (LAR-514)
+
+**Vier maten per edge, gebouwd en gemeten.** Kosten `marnet.bin` 1.249.034 → **1.271.236** byte
+(+20 KB, +1,6%); knopen 10.773 / edges 17.024 **ongewijzigd**, `ports.json` **byte-identiek**;
+**alle elf regressieroutes exact** in het default-profiel; van de **16.153 edges zónder maat gaat
+er 0 dicht** (acceptatiepunt 5, gemeten niet aangenomen). Klein-vs-groot bewezen: R'dam→Luik
+**375 km voor klasse Vb, DICHT voor VIb**.
+
+**⚠️ Dezelfde denkfout dook twee keer op in verschillende vermomming — een getal dat de VAARWEG
+beschrijft is geen getal dat het SCHIP begrenst.** (1) De CEMT-diepgangkolom: met diepgang in de
+presets sloot `waal` (VIc → 4,00 m) voor een gewoon klasse Va-Rijnschip (4,50 m) en sprong
+R'dam→Nijmegen van 172 naar **9.405 km**. Bewijs is meetbaar: lengte en breedte lopen monotoon op
+met de klasse, diepgang **niet** (VIb 4,50 → VIc 4,00). (2) Vaargeul-projectdiepte als maximum:
+op de Mississippi is de projectdiepte 9 ft terwijl de USCG in 2023 nog 10-10,5 ft toestond.
+→ CEMT vult **alleen lengte + breedte**; diepgang en hoogte uitsluitend uit een echte meting.
+
+**Onderzoek 14 niet-CEMT-systemen:** 43 agents (14 onderzoekers + 28 skeptici + synthese), nul
+fouten. **7 ingevuld** (`mississippi` · `illinois` · `chicago-kanaal` · `ohio` ·
+`yangtze-chongqing` · `yangon` · `amazone`), **7 bewust leeg** met reden in de baker.
+Zie `decisions.md`, `session-summaries.md` en `v2/design/gabarit-veld.md` §4.
 
 ## ✅ AFGEROND 2026-07-20 — de bulklaag wereldwijd (LAR-515)
 

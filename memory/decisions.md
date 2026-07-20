@@ -1,7 +1,50 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (LAR-514: vier maten per edge, geërfd; zee-edges apart)*
+*Last updated: 2026-07-20 (LAR-514 GEBOUWD: CEMT vult alleen lengte+breedte; projectdiepte nooit als maximum)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-20 · LAR-514 — de CEMT-presets vullen ALLEEN lengte en breedte, niet diepgang
+**Besluit:** `CEMT_PRESETS` in `bake_marnet.py` leidt uit de klasse uitsluitend **lengte** en
+**breedte** af. Diepgang en doorvaarthoogte komen alleen uit een echte meting.
+**Waarom:** de diepgangkolom van ECMT Res. 92/2 beschrijft het **referentieschip** van de klasse,
+niet de vaarweg. Dat is meetbaar en niet interpretatief: lengte en breedte lopen **monotoon** op
+met de klasse (38,5→285 m en 5,05→34,2 m), diepgang **niet** — VIb 4,50 → **VIc 4,00**. Een
+grootheid die daalt terwijl de klasse stijgt kan onmogelijk de grens van die klasse zijn (een
+VIc-duwstel 2×3 is gewoon ondieper geladen). **Niet theoretisch:** mét diepgang in de presets
+sloot `waal` (VIc → 4,00 m) voor een klasse **Va**-schip (4,50 m) — de drukste binnenvaartweg van
+Europa dicht voor een gewoon Rijnschip — en sprong **R'dam→Nijmegen van 172 km naar 9.405 km**
+doordat de router omging via zee. Doorvaarthoogte viel al af om dezelfde soort reden (de tabel
+geeft alternatieven waaruit de beheerder kiest).
+
+## 2026-07-20 · LAR-514 — vaargeul-projectdiepte komt NOOIT als maximale diepgang in de graaf
+**Besluit:** een onderhouden geuldiepte (USACE *project depth*, Chinees 维护水深) wordt niet als
+scheepsmaat weggeschreven. Wél de graaf in: gepubliceerde max scheepsdiepgang/LOA, **sluiskolkmaten**
+als lengte/breedte, en brugklaring mét bekend referentievlak.
+**Waarom:** een geuldiepte is een **garantie**, geen **maximum**. Op de Mississippi is de
+projectdiepte 9 ft terwijl de USCG in 2023 nog 10–10,5 ft toestond — werkelijke schepen steken dus
+**dieper** dan het "maximum" dat we zouden invullen, en wie dat wegschrijft sluit bestaand verkeer
+**stil** af (je ziet alleen dát een route niet bestaat). Dit is dezelfde fout als de CEMT-
+diepgangkolom hierboven, in een ander jasje: *een getal dat de vaarweg beschrijft is geen getal dat
+het schip begrenst.* Een **sluiskolkmaat** mag wél: een kolk van 600 ft neemt geen schip van 600 ft
+(manoeuvreermarge), maar niets **lángers** past hoe dan ook — als bovengrens correct, hooguit iets
+te ruim, en te ruim is de veilige kant.
+
+## 2026-07-20 · LAR-514 — de maten-tabel staat in de BAKER, niet in fetch_waterways.py
+**Besluit:** `CEMT_PRESETS` en `GABARIET_PER_SYSTEEM` leven in `bake_marnet.py`, terwijl `cemt`
+in `fetch_waterways.py:SYSTEMEN` blijft staan.
+**Waarom:** de fetcher **gebruikt** `cemt` zelf — de CEMT-clause selecteert er OSM-ways mee. De vier
+maten hebben géén fetcher-rol: ze komen niet uit OSM maar uit gepubliceerde sluis-, brug- en
+vaargeulgegevens. Ze bij de fetcher zetten zou een volledige **re-fetch** afdwingen bij elke
+correctie van een brughoogte. Verworpen alternatief: de maten in de geojson-properties meesturen.
+
+## 2026-07-20 · LAR-514 — de kalibratie-actie "Chinese klasse IV = CEMT III" is VERVALLEN
+**Besluit:** de −1-correctie uit `binnenwater-scope.md` §2.3 wordt niet in het datamodel verwerkt.
+**Waarom:** het bronnenonderzoek gebruikte voor géén van de vijf Chinese systemen een nationale
+klasse als bron — de maten komen rechtstreeks uit kolkafmetingen (Drieklovensluis 280×34 m) en
+gepubliceerde vaargeulgegevens. Het datamodel draagt **maten, geen klassen**, en een vertaaltabel
+tussen twee klassenstelsels is precies de tussenstap die vorm C overbodig maakt. Zou een Chinese
+klasse ooit tóch als bron dienen, dan geldt de correctie als **bron-interpretatie** — niet als iets
+dat in de graaf terechtkomt.
 
 ## 2026-07-20 · LAR-514 — het gabarit-veld wordt VIER MATEN per edge, niet een klasse of een tonnage
 

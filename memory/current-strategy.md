@@ -1,5 +1,38 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-20 (de bulklaag: alles bevaarbaar, als pure tekengeometrie, LAR-515)*
+*Last updated: 2026-07-20 (het gabariet-veld per edge, LAR-514 — de graaf weet nu welk schip past)*
+
+## 📐 Gabariet: de graaf weet welk schip past (2026-07-20, [LAR-514])
+
+Elke edge draagt **vier maten** — diepgang · breedte · lengte · doorvaarthoogte — in **decimeter**,
+waarbij **0 = onbekend**. De router filtert erop via `opties.schip = {diepgang, breedte, lengte,
+hoogte}`; een edge valt weg **vóór de relaxatie**, op exact dezelfde plek en van dezelfde soort als
+`vermijd`. Daardoor blijft de A*-heuristiek toelaatbaar en is het gevonden pad nog steeds precies
+het kortste over wat overblijft. Zonder `schip` gaat er **geen enkele** edge dicht.
+
+**Het draagprincipe: bekende maat = harde grens, onbekende maat = géén grens.** Een lege maat mag
+nooit stilzwijgend een route afsluiten — dat effect is onvindbaar, want je ziet alleen dát een
+route niet bestaat, niet waaróm. Liever zeven systemen leeg dan één systeem verzonnen.
+
+**De regel die bepaalt wat een maat mág zijn** (twee keer duur geleerd, zie `decisions.md`):
+*een getal dat de VAARWEG beschrijft is geen getal dat het SCHIP begrenst.*
+
+| soort getal | de graaf in? |
+| -- | -- |
+| gepubliceerde max scheepsdiepgang / LOA | ✅ |
+| sluiskolkmaat als lengte/breedte (bovengrens, hooguit te ruim = veilige kant) | ✅ |
+| brugklaring mét bekend referentievlak | ✅ |
+| vaargeul-projectdiepte / 维护水深 als diepgang | ❌ garantie, geen maximum |
+| CEMT-diepgangkolom | ❌ beschrijft het referentieschip (niet-monotoon: VIb 4,50 → VIc 4,00) |
+| CEMT-hoogtekolom | ❌ de tabel geeft alternatieven, de beheerder kiest |
+
+**Waar de tabellen staan:** `CEMT_PRESETS` (klasse → lengte + breedte) en `GABARIET_PER_SYSTEEM`
+(de gemeten maten) leven in **`bake_marnet.py`**, niet in de fetcher — ze komen niet uit OSM, dus
+een correctie hoeft geen re-fetch af te dwingen. `cemt` blijft wél bij `SYSTEMEN`, want de
+CEMT-clause selecteert er OSM-ways mee.
+
+**Een edge mag pas een gabariet dragen als hij uniform is.** Zes edges wachten daarom op een split
+of een gepinde node (zie `next-actions.md`): één gabariet kan geen factor anderhalf in
+doorvaarthoogte of een kolkmaat die maar over 10 van 1.728 km geldt eerlijk beschrijven.
 
 ## 🌍 De bulklaag: twee lagen naast elkaar (2026-07-20, [LAR-515])
 

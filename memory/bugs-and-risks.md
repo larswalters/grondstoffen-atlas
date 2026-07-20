@@ -1,5 +1,39 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-20 (OPEN: marnet-bulk.json ongeoptimaliseerd + LAR-515-acceptatie niet compleet)*
+*Last updated: 2026-07-20 (NIEUW: de Ohio sluit voor élke CEMT-klasse + 6 edges zonder gabariet)*
+
+## ⚠️ OPEN — de Ohio sluit voor élke CEMT-klasse in de HUD (2026-07-20, [LAR-514])
+
+`ohio` draagt diepgang **2,7432 m** (9 ft), en dat is géén geuldiepte maar een echte scheepsmaat:
+USACE HEC schrijft *"navigation by vessels drafting up to nine feet from the downstream sill"* —
+de geul zelf is 12 ft. Gevolg: **alle vijf** Europese CEMT-klassen in de HUD steken dieper (klasse
+IV al 2,80 m), dus **Cincinnati en Louisville zijn onbereikbaar voor de hele Europese vloot**.
+
+**Dit is fysiek juist, geen bug** — een Europees binnenvaartschip ís dieper dan een Ohio-duwbak.
+Maar het maakt het Mississippi/Ohio-net onbruikbaar zodra je in de simulator een scheepsklasse
+kiest. **Voorstel:** een klasse *"US barge tow"* (9 ft × 35 ft × 600 ft) aan `SCHEEPSKLASSEN` in
+`main.js` toevoegen. Beslissing bij Lars.
+
+## ⚠️ OPEN — zes edges dragen bewust géén gabariet tot ze gesplitst zijn (2026-07-20, [LAR-514])
+
+`mississippi-upper` · `xijiang` · `grand-canal-zuid` · `yangtze` · `yangtze-boven` · `parelrivier`.
+Voor alle zes ís er een gevonden maat, maar één gabariet kan het traject niet eerlijk beschrijven
+(de 56 ft-kolken op de Upper Mississippi gelden over 10 van 1.728 km; de Xijiang loopt van 7,6 m in
+de delta naar 11,5 m). **Risico bij nalaten:** wie de maat tóch invult sluit vrijwel al het verkeer
+op die as af — precies de stille afsluiting die het draagprincipe verbiedt. Split-punten staan in
+`next-actions.md` punt 2.
+
+## ⚠️ OPEN — vier gabariet-waarden zijn niet hard genoeg (2026-07-20, [LAR-514])
+
+Chicago-breedte (80 ft in 33 CFR 207.420 tegen 50 ft in de USACE WCM van mei 2024 — **die twee
+liggen aan wéérszijden van CEMT VIb**, dus de keuze beslist de uitkomst) · Yangon 44 m (bekendmaking
+van vóór de brugopening) · de Xijiang-bruggen 旧五斗大桥/旧西樵大桥 (heten "oud", mogelijk gesloopt)
+· de 18 m van de 武汉长江大桥. Alle vier **leeg gelaten** — veilig, maar het zijn echte poorten.
+
+> **Les die breder geldt:** elk hoogtecijfer is waardeloos zonder referentievlak, en hoogte werkt
+> **ómgekeerd** aan diepgang — voor diepgang is laagwater de harde kant, voor hoogte juist
+> hoogwater. Twee datums door elkaar gaf bij de Mississippi niet alleen een verkeerd getal maar de
+> verkeerde **constructie**. En: **kabels liggen stelselmatig lager dan bruggen** en werden in drie
+> van de vier gevallen vergeten — neem ze standaard mee in een hoogte-inventarisatie.
 
 ## ⚠️ OPEN — marnet-bulk.json is ongeoptimaliseerd (2026-07-20, [LAR-515])
 

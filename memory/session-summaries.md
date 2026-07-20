@@ -1,6 +1,51 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-20 (sessie 37) — LAR-514 GEBOUWD: het gabariet-veld + de 14 niet-CEMT-maten
+
+**Het veld staat.** Vier maten per edge in `marnet.bin` (diepgang · breedte · lengte ·
+doorvaarthoogte, **decimeter, 0 = onbekend = géén grens**) achter een vlagbyte die drie bytes
+scheelt op elke ongemeten edge. De router filtert via `opties.schip` op exact dezelfde plek en van
+dezelfde soort als `vermijd` — vóór de relaxatie, dus de grootcirkel-heuristiek blijft toelaatbaar.
+HUD kreeg een scheepsklasse-keuze. `?v=032`.
+
+**Werkwijze:** het bronnenonderzoek (de blokkade uit de vorige sessie) is als **achtergrond-
+workflow** gestart terwijl ik het mechanisme bouwde. Dat kon omdat de twee onafhankelijk zijn:
+zonder maten staat alles op onbekend en sluit het veld per constructie niets af. 43 agents
+(14 onderzoekers, elk aangevallen door **twee** skeptici met verschillende lens — een algemene
+weerlegger en een *poort-jager* die uitsluitend naar gemiste strengere poorten zocht — plus een
+synthese), nul fouten, ~2,5M tokens.
+
+**⚠️ DEZELFDE DENKFOUT TWEE KEER, IN VERSCHILLENDE VERMOMMING.** Een getal dat de **vaarweg**
+beschrijft is geen getal dat het **schip** begrenst. Eerst bij de CEMT-presets: ik vulde ook
+diepgang, waarna `waal` (VIc → 4,00 m) sloot voor een gewoon klasse Va-Rijnschip (4,50 m) en
+R'dam→Nijmegen van 172 km naar **9.405 km** sprong. Het bewijs bleek **meetbaar** in plaats van
+beredeneerd: lengte en breedte lopen monotoon op met de klasse, diepgang niet (VIb 4,50 → VIc
+4,00). Daarna dook dezelfde fout op in het onderzoek: **vaargeul-projectdiepte is een garantie,
+geen maximum** — Mississippi 9 ft project terwijl de USCG 10-10,5 ft toestond.
+
+**Gemeten:** `marnet.bin` 1.249.034 → 1.271.236 byte (+20 KB, +1,6%) · knopen 10.773 / edges
+17.024 ongewijzigd · `ports.json` byte-identiek · **alle elf regressieroutes exact** · van de
+16.153 edges zónder maat gaat er **0** dicht · R'dam→Luik **375 km voor Vb, DICHT voor VIb** ·
+zeeroutes bij elke klasse onaangetast.
+
+**Eigen meetfout, eerlijk vastgelegd:** mijn eerste regressierun toonde alle elf routes fout met
+een consistente kleine plus (+2 tot +16). Dat was de **meting**, niet de code — de invarianten zijn
+knoop→knoop vastgelegd en ik telde de haven-aanloop mee. De **vorm** van de afwijking wees dat aan:
+een pure zeeroute als R'dam→Shanghai kan onmogelijk door een binnenwater-veld geraakt worden.
+
+**Vier vondsten die geen CEMT-klasse ooit had gevangen:** `ohio` 2,7432 m is écht scheepsdiepgang
+(USACE: *"vessels drafting up to nine feet"*; de geul is 12 ft) → de Ohio sluit voor **élke**
+CEMT-klasse, want zelfs klasse IV steekt 2,80 m, dus **Cincinnati en Louisville zijn onbereikbaar
+voor de hele Europese vloot** · de 600 ft-kolken (182,88 m) sluiten een Vb-duwstel van 185 m ·
+de **Nanjing-brug (1968, 24 m)** is het fysieke mechanisme waardoor zeeschepen niet boven Nanjing
+komen · **kabels liggen stelselmatig lager dan bruggen** en werden 3 van de 4 keer vergeten
+(Harahan 145 ft is lager dan élke brug op dat vak).
+
+7 van de 14 systemen ingevuld, 7 bewust leeg. Commits `23d993e` · `b68f1e3` · `f9a5459` · `5cbebc0`.
+**Open:** visuele go van Lars · zes edges splitsen/pinnen · vier bronverificaties · overweging om
+een Amerikaanse duwbak-klasse aan de HUD toe te voegen.
+
 ## 2026-07-20 (sessie 36) — LAR-514 voorbereid: drie ontwerpbesluiten + de CEMT-presettabel
 
 **Korte sessie, géén code** — afgebroken op Lars' verzoek (*"ik wil zo stoppen, sluit anders even
