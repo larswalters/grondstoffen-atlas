@@ -150,6 +150,40 @@ class LandTester:
     def is_land(self, lon, lat):
         return bool(self.hits(np.array([[lon, lat]]))[0])
 
+    def afstand_tot_open_water(self, lon, lat):
+        """Kilometers tot de dichtstbijzijnde KUSTLIJN of MEEROEVER (LAR-518).
+
+        Nodig omdat de havenlijst uit `searoute` een UN/LOCODE-locatielijst is en
+        dus ook wegterminals, spoorterminals en grensovergangen bevat: Denver,
+        Laramie en Alamogordo staan erin alsof het havens zijn. Die zijn niet met
+        het oog te vinden (Lars: *"er zijn er zoveel dat 1 voor 1 controleren niet
+        werkt"*), maar wel meetbaar: ze liggen honderden km van welk water dan ook.
+
+        ⚠️ MEREN MOETEN MEEDOEN. Natural Earth's landvlakken hebben geen gaten
+        voor meren, dus Chicago ligt 895 km van de "kust" terwijl het aan het
+        Michiganmeer ligt. Zonder de merentoets gooit dit filter precies de
+        Grote-Merenhavens weg — Duluth, Toledo, Milwaukee, Green Bay, Buffalo —
+        en dat zijn er genoeg om de Seaway zinloos te maken.
+
+        Rivieren zitten hier bewust NIET in: die afstand wordt apart gemeten als
+        de rivier-snap, want dat is een afstand tot de ROUTEERGRAAF en niet tot
+        een vlak. Wie wil weten of een haven aan water ligt, neemt de kleinste
+        van de twee — en die keuze hoort bij de gebruiker, niet bij de meting.
+        """
+        p = Point(lon, lat)
+        # lon-graden krimpen met de breedtegraad; de klem voorkomt een deling
+        # door bijna-nul vlak bij de polen.
+        naar_km = 111.0 * max(0.05, math.cos(math.radians(lat)))
+
+        def rand_afstand(vlakken, boom):
+            j = boom.nearest(p)
+            g = vlakken[j]
+            rand = g.exterior if g.geom_type == "Polygon" else g.boundary
+            return rand.distance(p) * naar_km
+
+        return min(rand_afstand(self.polys, self.tree),
+                   rand_afstand(self.meren, self.meer_tree))
+
 
 def load_land_polys():
     polys = _polys_uit("ne_10m_land.geojson")
@@ -1746,11 +1780,11 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
     print(f"  {os.path.basename(bin_pad):<14}: {os.path.getsize(bin_pad) / 1024:,.0f} KB")
     print(f"  {os.path.basename(json_pad):<14}: {os.path.getsize(json_pad) / 1024:,.0f} KB")
 
-    bak_havens(nodes, node_q, suffix, zee_knopen=zee_knopen)
+    bak_havens(nodes, node_q, suffix, zee_knopen=zee_knopen, land=land)
     return onopgelost
 
 
-def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
+def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
     """searoute's havens, gesnapt aan BEIDE netten (LAR-518).
 
     ⚠️ EEN HAVEN HEEFT TWEE AANHECHTINGEN, en dat is de kern van dit issue.
@@ -1792,6 +1826,7 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
     namen, landen, locodes, ll = [], [], [], []
     knoop, afstand = [], []            # zeenet
     knoop_riv, afstand_riv = [], []    # riviernet (-1 = geen riviernet gebakken)
+    afstand_water = []                 # tot kustlijn of meeroever (-1 = niet gemeten)
     for naam, cty, code, lon, lat in havens:
         v = np.array(to3d(lon, lat))
         d = zee_xyz @ v
@@ -1812,6 +1847,8 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
             kmR = R_AARDE * math.acos(max(-1.0, min(1.0, float(dr[besteR]))))
             knoop_riv.append(grens + besteR)   # index in de VOLLEDIGE knopenlijst
             afstand_riv.append(round(kmR, 1))
+        afstand_water.append(round(land.afstand_tot_open_water(lon, lat), 1)
+                             if land is not None else -1)
     uit = {
         "aantal": len(namen),
         "namen": namen,
@@ -1822,8 +1859,9 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
         "afstandKm": afstand,
         "knoopRivier": knoop_riv,
         "afstandRivierKm": afstand_riv,
+        "afstandWaterKm": afstand_water,
         "zeeKnopen": grens,
-        "bron": "searoute 1.6.0 ports.geojson",
+        "bron": "searoute 1.6.0 ports.geojson (= UN/LOCODE-locatielijst, niet gefilterd)",
     }
     pad = os.path.join(DATA, f"ports{suffix}.json")
     with open(pad, "w", encoding="utf-8") as f:
@@ -1842,6 +1880,17 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None):
         az = np.array(afstand)
         print(f"  {'':14}  | raakt BEIDE netten ≤5 km: {int(((az <= 5) & (ar <= 5)).sum()):,} · "
               f"≤25 km: {int(((az <= 25) & (ar <= 25)).sum()):,}")
+    if land is not None:
+        # ⚠️ De havenpoort: ligt dit punt uberhaupt AAN WATER? De bron is een
+        # UN/LOCODE-lijst en bevat dus wegterminals en grensovergangen (Denver,
+        # Laramie, Tecate). Met het oog niet te vinden, wel te meten.
+        aw = np.array(afstand_water, dtype=float)
+        rr = np.array(afstand_riv, dtype=float)
+        rr[rr < 0] = np.inf
+        water = np.minimum(aw, rr)
+        print(f"  {'':14}  | AAN WATER (kust/meer/rivier) ≤10 km: "
+              f"{int((water <= 10).sum()):,} · NIET aan water: {int((water > 10).sum()):,} "
+              f"({(water > 10).sum() / len(namen) * 100:.1f}%) · verst {water.max():,.0f} km")
     # de LAR-486/518-acceptatiehavens expliciet rapporteren
     for wie in ("Amsterdam", "Nijmegen", "Rotterdam", "Duluth"):
         for i, naam in enumerate(namen):

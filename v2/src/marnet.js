@@ -75,11 +75,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=038").then((r) => {
+    fetch("data/marnet.json?v=039").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=038").then((r) => {
+    fetch("data/marnet.bin?v=039").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -269,7 +269,7 @@ export async function laadMarnet(radius) {
  */
 export async function laadBulk(radius) {
   const t0 = performance.now();
-  const meta = await fetch("data/marnet-bulk.json?v=038").then((r) => {
+  const meta = await fetch("data/marnet-bulk.json?v=039").then((r) => {
     if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
     return r.json();
   });
@@ -622,7 +622,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
  * anders dan "ver weg", en die twee moeten uit elkaar te houden blijven.
  */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=038");
+  const r = await fetch("data/ports.json?v=039");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];
@@ -637,6 +637,8 @@ export async function laadHavens() {
       afstandKm: d.afstandKm[i],
       knoopRivier: d.knoopRivier ? d.knoopRivier[i] : -1,
       afstandRivierKm: d.afstandRivierKm ? d.afstandRivierKm[i] : -1,
+      // afstand tot kustlijn of meeroever; -1 = niet gemeten in deze bake
+      afstandWaterKm: d.afstandWaterKm ? d.afstandWaterKm[i] : -1,
     });
   }
   havens.zeeKnopen = d.zeeKnopen ?? null;

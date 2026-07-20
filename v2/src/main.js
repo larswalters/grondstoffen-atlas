@@ -1,12 +1,12 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=038";
-import { laadVectorWereld } from "./world.js?v=038";
-import { createTileLayer } from "./tiles.js?v=038";
+import { createGlobe, CONFIG } from "./globe.js?v=039";
+import { laadVectorWereld } from "./world.js?v=039";
+import { createTileLayer } from "./tiles.js?v=039";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=038";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=038";
+  from "./marnet.js?v=039";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=039";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -52,21 +52,31 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
     HAVENS = havens;
     netStats = net.stats;
     GLOBE.globeGroup.add(net.lijnen);
-    vulHavenLijst(havens);
 
     // --- de havens als zichtbare laag (LAR-518) ---------------------------
     // Bewust hier en niet in een eigen Promise: het is dezelfde array die de
     // route-test gebruikt, dus er is per constructie één bron voor de havens.
     HAVENLAAG = bouwHavenLaag(havens, CONFIG.radius);
     GLOBE.globeGroup.add(HAVENLAAG.punten);
-    koppelHavenLabel(GLOBE, HAVENLAAG, havens, document.getElementById("havenLabel"));
+    // De route-test biedt alleen havens aan die aan water liggen: een punt dat
+    // geen enkel net raakt kan per definitie geen route dragen, en dan is
+    // "geen pad" een verwarrend antwoord op een vraag die niet gesteld had
+    // moeten kunnen worden.
+    vulHavenLijst(HAVENLAAG.getoond);
+    // `HAVENLAAG.getoond` en niet `havens`: de laag tekent alleen wat aan water
+    // ligt, en het label moet per constructie dezelfde lijst gebruiken.
+    koppelHavenLabel(GLOBE, HAVENLAAG, HAVENLAAG.getoond, document.getElementById("havenLabel"));
     window.HAVENLAAG = HAVENLAAG;   // diagnose-handvat, net als MARNET/HAVENS
     const hs = HAVENLAAG.stats;
     console.log(
-      `[atlas v2] havens: ${hs.havens.toLocaleString("nl")} · ` +
+      `[atlas v2] havens: ${hs.havens.toLocaleString("nl")} getoond van ${hs.bron.toLocaleString("nl")} · ` +
+      `${hs.verborgen.toLocaleString("nl")} verborgen (>${hs.aanWaterKm} km van kust/meer/rivier) · ` +
       `zee+rivier ${hs.beide.toLocaleString("nl")} · alleen zee ${hs.zee.toLocaleString("nl")} · ` +
       `alleen rivier ${hs.rivier.toLocaleString("nl")} · geen net <${hs.raaktKm} km ${hs.los.toLocaleString("nl")}`
     );
+    document.getElementById("havenNoot").textContent =
+      `${hs.havens.toLocaleString("nl")} van ${hs.bron.toLocaleString("nl")} getoond — ` +
+      `${hs.verborgen.toLocaleString("nl")} liggen >${hs.aanWaterKm} km van kust, meer of rivier`;
 
     console.log(
       `[atlas v2] marnet: ${net.stats.knopen.toLocaleString("nl")} knopen · ` +

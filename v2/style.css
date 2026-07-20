@@ -140,6 +140,14 @@ html, body {
 
 #havenLegenda span { display: block; }
 
+#havenNoot {
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
 #havenLegenda i {
   display: inline-block;
   width: 7px;

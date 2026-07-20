@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=038" />
+<link rel="stylesheet" href="style.css?v=039" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -67,8 +67,9 @@
       <span><i style="background:#4fe3b0"></i>zee + rivier</span>
       <span><i style="background:#fff4e2"></i>alleen zee</span>
       <span><i style="background:#d9a441"></i>alleen rivier</span>
-      <span><i style="background:#6a7484"></i>geen net &lt; 25 km</span>
+      <span><i style="background:#6a7484"></i>aan water, geen net &lt; 25 km</span>
     </div>
+    <div id="havenNoot"></div>
 
     <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
     <div class="hudLabel">Route testen (haven → haven)</div>
@@ -137,6 +138,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=038"></script>
+<script type="module" src="src/main.js?v=039"></script>
 </body>
 </html>

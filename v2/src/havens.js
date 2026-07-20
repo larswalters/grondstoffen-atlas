@@ -42,6 +42,22 @@ const KLEUR_LOS    = new THREE.Color(0x6a7484);  // geen van beide in de buurt
 // aanhechtingsafstanden staan ongewijzigd per haven in ports.json.
 const RAAKT_KM = 25;
 
+// ⚠️ DE HAVENPOORT. De bron (`searoute`'s ports.geojson) is geen havenlijst maar
+// een UN/LOCODE-locatielijst, en LOCODE dekt ook vliegvelden, wegterminals,
+// spoorterminals en grensovergangen. Gemeten tegen de landvlakken: 709 van de
+// 3.962 punten liggen verder dan 10 km van kust, meer OF riviernet — Denver,
+// Laramie, Alamogordo, Tecate. Die zijn voor deze atlas INERT: er valt niet
+// naartoe en niet vandaan te routeren, want ze raken geen enkel net.
+//
+// Lars zag ze op de bol maar kon ze niet uitputtend aanwijzen: *"er zijn er
+// zoveel dat 1 voor 1 controleren niet werkt dus je moet het iets anders doen"*.
+// Dus bewaakt de machine de regel en tekent hij ze niet.
+//
+// ⚠️ Ze worden WEL gebakken en blijven in ports.json staan, mét hun gemeten
+// afstand. Weggooien in de bake zou de maat onvindbaar maken; nu is elke drempel
+// achteraf nog te verleggen zonder rebake, en blijft het aantal controleerbaar.
+const AAN_WATER_KM = 10;
+
 // Grootte in CSS-pixels, los van de zoom (een haven is een plek, geen gebied —
 // meeschalen met de bol zou hem op wereldniveau onzichtbaar maken en op 1 km
 // hoogte een vlek). Van ver klein zodat de kustlijnen niet dichtslibben.
@@ -97,13 +113,31 @@ function opBol(lonDeg, latDeg, r, uit, o) {
  */
 export function bouwHavenLaag(havens, radius) {
   const t0 = performance.now();
-  const n = havens.length;
+
+  // Eerst de poort: alleen wat aan water ligt komt op de kaart. `getoond` gaat
+  // ook naar het hover-label, zodat de puntindex en de havenindex per
+  // constructie gelijk lopen — een aparte index-vertaling is precies waar zo'n
+  // filter stilzwijgend de verkeerde naam gaat tonen.
+  const afstandWater = (h) => {
+    const kust = h.afstandWaterKm >= 0 ? h.afstandWaterKm : Infinity;
+    const riv = h.afstandRivierKm >= 0 ? h.afstandRivierKm : Infinity;
+    return Math.min(kust, riv);
+  };
+  // Is de maat er niet (oudere bake), dan toont hij alles — een ontbrekende
+  // meting mag nooit stilzwijgend de halve kaart wissen.
+  const gemeten = havens.some((h) => h.afstandWaterKm >= 0);
+  const getoond = gemeten
+    ? havens.filter((h) => afstandWater(h) <= AAN_WATER_KM)
+    : havens.slice();
+  const verborgen = havens.length - getoond.length;
+
+  const n = getoond.length;
   const posities = new Float32Array(n * 3);
   const kleuren = new Float32Array(n * 3);
 
   const telling = { beide: 0, zee: 0, rivier: 0, los: 0 };
   for (let i = 0; i < n; i++) {
-    const h = havens[i];
+    const h = getoond[i];
     opBol(h.lon, h.lat, radius, posities, i * 3);
 
     const aanZee = h.afstandKm >= 0 && h.afstandKm <= RAAKT_KM;
@@ -145,9 +179,13 @@ export function bouwHavenLaag(havens, radius) {
 
   return {
     punten,
+    getoond,
     kleurAttr: geo.getAttribute("color"),
     stats: {
+      bron: havens.length,
       havens: n,
+      verborgen,
+      aanWaterKm: AAN_WATER_KM,
       raaktKm: RAAKT_KM,
       ...telling,
       msBouwen: Math.round(performance.now() - t0),
