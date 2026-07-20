@@ -33,6 +33,7 @@ import heapq
 import json
 import math
 import os
+import re
 import sys
 
 import numpy as np
@@ -1229,6 +1230,159 @@ def snij_bulk(bulk_lijnen, boom, seg_pts, eps_km=BULK_EPS_KM, min_km=BULK_MIN_KM
     return houd, rapport
 
 
+# ---------------------------------------------------------- binnenwaternet
+#
+# ÉÉN binnenwaternet, geen tweede laag ernaast (besluit Lars 2026-07-20:
+# *"het rivierennet en binnenwater moet gewoon gemapt worden en bij die lijnen
+# kun je toch zetten wat de doorvaartdiepte en breedte en evt hoogte is"*).
+#
+# ⚠️ HET NET HOEFT NIET AAN MARNET TE HANGEN, en dat is geen tekortkoming maar
+# het ontwerp. Van rivier naar zee gaat in werkelijkheid via een OVERSLAGHAVEN
+# — drie schepen, niet één. Losse uiteinden zijn dus de verwachte toestand tot
+# de havens erop worden aangesloten.
+#
+# Dat lost bovendien gratis een oud probleem op: de `zeevaart`-vlag en het
+# groepslabel `binnenvaart` bestaan alleen om te voorkomen dat een zeeschip
+# door sluizen vaart (de Donau-ring: R'dam->Shanghai 18.627 i.p.v. 19.610 km).
+# Zijn zee en rivier LOSSE COMPONENTEN, dan kan dat per constructie niet meer —
+# er is geen edge waarover een zeeschip het binnenwater op komt.
+#
+# KNOPEN EN GEOMETRIE ZIJN LOS VAN ELKAAR. Een knoop is een plek om aan te
+# takken of aan te haken, geen hoekpunt: tussen twee knopen ligt de VOLLEDIGE
+# lijn met alle meanders, en `edgeKm` is de echte vaarafstand. Vandaar dat de
+# Donau met knopen op 15 km toch elke stad binnen ±4 km van haar officiële
+# rivierkilometer haalt. Een haven wordt straks met `hecht_aan_keten()`
+# aangehaakt, en die knipt de edge open op een BESTAANDE vertex — dus de
+# knoopafstand begrenst de nauwkeurigheid van een haven niet.
+
+BULK_KNOOP_KM = 10.0    # tussenknoop op lange stukken (topologie zit op de kruisingen)
+BULK_QUANT = 1e-5       # ~1 m: twee vertices hierbinnen zijn hetzelfde punt
+
+
+def _gabariet_uit_signaal(sig):
+    """Vertaalt het OSM-bevaarbaarheidssignaal naar maten in METER.
+
+    Alleen wat ondubbelzinnig is. `CEMT:none`, `CEMT:Ia`, `CEMT:V` (Va of Vb?),
+    `CEMT:(Vb)` (haakjes = niet officieel) en `CEMT:III;I` worden bewust NIET
+    vertaald — bij elkaar een paar tientallen lijnen, en gokken kost meer dan
+    het oplevert. Onbekend = geen grens, dus leeg laten is veilig.
+    """
+    if not sig:
+        return {}
+    if sig.startswith("CEMT:"):
+        klasse = sig[5:].strip()
+        preset = CEMT_PRESETS.get(klasse)
+        if preset is None:
+            return {}
+        lengte, breedte = preset
+        return {"lengte": lengte, "breedte": breedte}
+    if sig.startswith("draft:"):
+        # OSM `draft` op een vaarweg = max diepgang van schepen die er kunnen
+        # varen. Dat is precies de scheepsmaat die we zoeken (anders dan een
+        # vaargeul-projectdiepte, die een garantie is en geen maximum).
+        ruw = sig[6:].strip()
+        m = re.match(r"^(\d+)'\s*(\d+)\"?$", ruw)          # 13'6"
+        if m:
+            return {"diepgang": int(m.group(1)) * 0.3048 + int(m.group(2)) * 0.0254}
+        try:
+            v = float(ruw)
+            return {"diepgang": v} if 0 < v < 30 else {}
+        except ValueError:
+            return {}
+    return {}                    # boat / ship / motorboat / usage: geen maat
+
+
+def binnenwaternet(nodes, edge_lijst, status, geometrie, vaarwegen_meta,
+                   lijnen_per_regio, edge_gabariet):
+    """Hangt het gemapte binnenwater als ECHTE knopen en edges in de graaf.
+
+    Muteert `nodes`/`edge_lijst`/`status`/`geometrie` — anders dan de oude
+    bulklaag, die bewust buiten de graaf bleef. Geeft per regio een meta-blok
+    terug voor `meta.vaarwegen`.
+
+    Knoopplaatsing: op elk punt waar lijnen elkaar raken (dáár zit de
+    topologie) plus een tussenknoop elke BULK_KNOOP_KM op lange stukken. De
+    geometrie tussen twee knopen blijft volledig bewaard.
+    """
+    q = lambda p: (round(p[0] / BULK_QUANT), round(p[1] / BULK_QUANT))
+
+    # 1 · welke gekwantiseerde punten zijn een KRUISING of een UITEINDE?
+    raak = {}
+    for regio, lijnen in lijnen_per_regio.items():
+        for _sig, pts in lijnen:
+            for p in (pts[0], pts[-1]):
+                raak[q(p)] = raak.get(q(p), 0) + 1
+    knooppunt = set(raak)          # elk uiteinde is een knoop; kruisingen vallen samen
+
+    # 2 · knoop-index opbouwen (hergebruik bestaande MARNET-knopen niet: het
+    #     binnenwaternet is bewust een eigen component — zie de kop hierboven)
+    knoop_id = {}
+    def knoop_voor(p):
+        k = q(p)
+        if k not in knoop_id:
+            knoop_id[k] = len(nodes)
+            nodes.append((p[0], p[1]))
+        return knoop_id[k]
+
+    meta, n_edges = {}, 0
+    for regio in sorted(lijnen_per_regio):
+        lijnen = lijnen_per_regio[regio]
+        eigen, km_tot = [], 0.0
+        met_maat = 0
+        for sig, pts in lijnen:
+            maten = _gabariet_uit_signaal(sig)
+            if maten:
+                met_maat += 1
+            # loop de lijn af en knip op knooppunten / elke BULK_KNOOP_KM
+            start = 0
+            sinds = 0.0
+            for i in range(1, len(pts)):
+                sinds += gc_km(pts[i - 1], pts[i])
+                laatste = (i == len(pts) - 1)
+                if not (laatste or q(pts[i]) in knooppunt or sinds >= BULK_KNOOP_KM):
+                    continue
+                stuk = pts[start:i + 1]
+                if len(stuk) < 2:
+                    continue
+                a, b = knoop_voor(stuk[0]), knoop_voor(stuk[-1])
+                if a != b:
+                    ei = len(edge_lijst)
+                    edge_lijst.append(((a, b), regio))
+                    status[ei] = "binnen:" + regio
+                    geometrie[ei] = stuk
+                    eigen.append(ei)
+                    km_tot += sinds
+                    # PER EDGE, niet per label: het riviernet heeft geen
+                    # systeem-klasse — elke lijn draagt zijn eigen signaal.
+                    if maten:
+                        edge_gabariet[ei] = tuple(
+                            int(round(maten.get(k, 0) * 10))
+                            for k in ("diepgang", "breedte", "lengte", "hoogte"))
+                start, sinds = i, 0.0
+
+        meta[regio] = {
+            "zeevaart": False,
+            "bulk": True,
+            "cemt": "",
+            "bron": "OSM (ODbL) via Geofabrik-regio-extract",
+            "km": round(km_tot, 1),
+            "edges": eigen,
+            "aansluitKnoop": None,      # bewust los — overslag komt later
+            "aansluitKm": None,
+            "aansluitOvergang": "geen (overslaghaven volgt)",
+            "volgtOp": "",
+            "sluitAan": "",
+            "sluitKm": None,
+            "gabariet": {k: None for k in ("diepgang", "breedte", "lengte", "hoogte")},
+        }
+        n_edges += len(eigen)
+        print(f"  {regio:<10} {km_tot:9,.0f} km · {len(eigen):7,} edges · "
+              f"{met_maat:6,}/{len(lijnen):,} lijnen met een maat uit het signaal")
+    print(f"  {'samen':<10} {sum(m['km'] for m in meta.values()):9,.0f} km · "
+          f"{n_edges:7,} edges · {len(knoop_id):,} nieuwe knopen")
+    return meta
+
+
 def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad):
     """Leest vaarwegen_bulk.geojson, sluit dubbele geometrie uit, en geeft een
     losse structuur terug — MUTEERT nodes/edge_lijst/status NIET. Aparte
@@ -1280,6 +1434,11 @@ def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad):
             "weggenomenKm": round(bron_km - over_km, 1),
             "polylines": [[[round(lo, 5), round(la, 5)] for lo, la in p]
                           for _li, p in houd],
+            # Het bevaarbaarheidssignaal per overgebleven lijn — dít veld draagt
+            # de CEMT-klasse of de draft-waarde waar de maten uit volgen. Stond
+            # als acceptatiepunt in LAR-515 ("achteraf toevoegen kost een
+            # volledige rebake") maar werd de eerste keer weggegooid.
+            "signalen": [lijnen[li][0] for li, _p in houd],
         }
         print(f"  {regio:<10} {bron_km:9,.0f} km bron -> {over_km:9,.0f} km over "
               f"(weg {bron_km - over_km:7,.0f} km = "
@@ -1314,7 +1473,7 @@ def varint(uit, waarde):
 SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
-def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
+def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -1421,18 +1580,43 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
     # edge_lijst/status/geometrie NIET — marnet.bin/marnet.json/ports.json
     # zijn na deze regel nog exact wat ze hiervoor waren.
     bulk_meta = None
+    zee_knopen = None          # None = geen beperking (er is geen binnenwaternet)
+    # Per-edge gabariet dat NIET uit een systeemlabel volgt: het riviernet
+    # heeft geen klasse per systeem, elke lijn draagt zijn eigen OSM-signaal.
+    edge_gabariet = {}
     if bulk_pad:
         bulk_meta = bulklaag(nodes, edge_lijst, status, geometrie,
                              vaarwegen_meta, bulk_pad)
-        bulk_json_pad = os.path.join(DATA, f"marnet-bulk{suffix}.json")
-        with open(bulk_json_pad, "w", encoding="utf-8") as f:
-            json.dump(bulk_meta, f, separators=(",", ":"))
-        km_tot = sum(v["km"] for v in bulk_meta["regios"].values())
-        km_weg = sum(v["weggenomenKm"] for v in bulk_meta["regios"].values())
-        print(f"\n  bulklaag      : {km_tot:,.0f} km over {len(bulk_meta['regios'])} "
-              f"regio's (250 m-uitsluiting nam {km_weg:,.0f} km weg)")
-        print(f"  {os.path.basename(bulk_json_pad):<20}: "
-              f"{os.path.getsize(bulk_json_pad) / 1024:,.0f} KB")
+        if binnenwater:
+            # ÉÉN NET: hetzelfde binnenwater gaat nu als echte knopen en edges
+            # de graaf in i.p.v. als losse tekenlaag. De 250 m-uitsluiting die
+            # hierboven al gedraaid is blijft gelden zolang de handgemaakte
+            # ketens er nog liggen — zodra die verdwijnen neemt ze vanzelf
+            # niets meer weg en sluit het net gewoon aan.
+            #
+            # Alles t/m hier is het ZEENET (+ de getoetste ketens); alles daarna
+            # is riviernet. Havens mogen voorlopig alleen op het eerste snappen
+            # — zie de waarschuwing bij bak_havens().
+            zee_knopen = len(nodes)
+            print("\nbinnenwaternet -> de graaf (LAR-515 -> één net):")
+            per_regio = {
+                r: [(sig, [tuple(p) for p in pl])
+                    for sig, pl in zip(v["signalen"], v["polylines"])]
+                for r, v in bulk_meta["regios"].items()
+            }
+            vaarwegen_meta.update(
+                binnenwaternet(nodes, edge_lijst, status, geometrie,
+                               vaarwegen_meta, per_regio, edge_gabariet))
+        else:
+            bulk_json_pad = os.path.join(DATA, f"marnet-bulk{suffix}.json")
+            with open(bulk_json_pad, "w", encoding="utf-8") as f:
+                json.dump(bulk_meta, f, separators=(",", ":"))
+            km_tot = sum(v["km"] for v in bulk_meta["regios"].values())
+            km_weg = sum(v["weggenomenKm"] for v in bulk_meta["regios"].values())
+            print(f"\n  bulklaag      : {km_tot:,.0f} km over {len(bulk_meta['regios'])} "
+                  f"regio's (250 m-uitsluiting nam {km_weg:,.0f} km weg)")
+            print(f"  {os.path.basename(bulk_json_pad):<20}: "
+                  f"{os.path.getsize(bulk_json_pad) / 1024:,.0f} KB")
 
     # --- geometrie verdichten + kwantiseren ---------------------------------
     def verdicht(lijn):
@@ -1500,7 +1684,7 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
             continue
         label = st[len("binnen:"):]
         meta_vw = vaarwegen_meta.get(label) or {}
-        maten = gabariet_voor(label, meta_vw.get("cemt", ""))
+        maten = edge_gabariet.get(ei) or gabariet_voor(label, meta_vw.get("cemt", ""))
         if any(maten):
             gab_per_edge[ei] = maten
 
@@ -1562,12 +1746,25 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix=""):
     print(f"  {os.path.basename(bin_pad):<14}: {os.path.getsize(bin_pad) / 1024:,.0f} KB")
     print(f"  {os.path.basename(json_pad):<14}: {os.path.getsize(json_pad) / 1024:,.0f} KB")
 
-    bak_havens(nodes, node_q, suffix)
+    bak_havens(nodes, node_q, suffix, max_knoop=zee_knopen)
     return onopgelost
 
 
-def bak_havens(nodes, node_q, suffix=""):
-    """searoute's havens, gesnapt aan de dichtstbijzijnde netwerk-knoop."""
+def bak_havens(nodes, node_q, suffix="", max_knoop=None):
+    """searoute's havens, gesnapt aan de dichtstbijzijnde netwerk-knoop.
+
+    ⚠️ `max_knoop` sluit de knopen van het BINNENWATERNET uit bij het snappen,
+    en dat is voorlopig noodzakelijk. Havens snappen op de dichtstbijzijnde
+    knoop, en zodra het riviernet erin ligt is dat voor een zeehaven vaak een
+    riviernet-knoop: Rotterdam verhuisde van knoop 6818 (0,6 km) naar een
+    riviernet-knoop op 1,1 km en kon daarna NIETS meer bereiken — ook Shanghai
+    niet — want het riviernet is bewust een eigen component.
+
+    Dat is geen bug in het net maar het bewijs dat een zeehaven ÉN een
+    binnenhaven is. De echte oplossing is de OVERSLAG: één haven, twee
+    aanhechtingen (een op het zeenet, een op het riviernet), en overstappen
+    kost een overslag. Tot dat mechanisme er is snappen havens alleen op het
+    zeenet, zodat alles blijft werken zoals het werkte."""
     gj = json.load(open(os.path.join(SR_DATA, "ports.geojson"), encoding="utf-8"))
     havens = []
     for f in gj["features"]:
@@ -1577,7 +1774,8 @@ def bak_havens(nodes, node_q, suffix=""):
     havens.sort(key=lambda h: (h[1], h[0]))
 
     # dichtstbijzijnde knoop in 3D (koorde-afstand = monotone proxy voor grootcirkel)
-    knoop_xyz = np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in node_q])
+    kandidaten = node_q if max_knoop is None else node_q[:max_knoop]
+    knoop_xyz = np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in kandidaten])
     namen, landen, locodes, ll, knoop, afstand = [], [], [], [], [], []
     for naam, cty, code, lon, lat in havens:
         v = np.array(to3d(lon, lat))
@@ -1622,6 +1820,10 @@ if __name__ == "__main__":
     ap.add_argument("--bulk", help="vaarwegen_bulk.geojson uit fetch_waterways.py --bulk "
                                    "(LAR-515): puur tekengeometrie, apart bestand "
                                    "marnet-bulk<suffix>.json, muteert de graaf niet")
+    ap.add_argument("--binnenwater", action="store_true",
+                    help="hang het gemapte binnenwater als ECHTE knopen/edges in de graaf "
+                         "i.p.v. als losse tekenlaag (één net; losse uiteinden zijn OK, "
+                         "aansluiting op zee gaat later via overslaghavens)")
     ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoerbestanden "
                                                  "(marnet<suffix>.bin/json, ports<suffix>.json) "
                                                  "— voor de bake-off-variant")
@@ -1629,4 +1831,5 @@ if __name__ == "__main__":
     if args.analyse:
         analyse()
     else:
-        verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix)
+        verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix,
+                       binnenwater=args.binnenwater)

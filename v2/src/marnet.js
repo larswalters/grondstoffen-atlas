@@ -75,11 +75,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=033").then((r) => {
+    fetch("data/marnet.json?v=035").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=033").then((r) => {
+    fetch("data/marnet.bin?v=035").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -145,11 +145,23 @@ export async function laadMarnet(radius) {
   for (let i = 0; i < nEdges; i++) nSegmenten += geomN[i] - 1;
   const indices = new Uint32Array(nSegmenten * 2);
 
+  // Welke edges horen bij het mechanisch gefilterde riviernet? Die krijgen een
+  // eigen kleur, want het verschil tussen GETOETST en MECHANISCH moet zichtbaar
+  // blijven nu ze in één net zitten. Het is dus geen aparte laag meer maar een
+  // eigenschap van de lijn — precies zoals diepgang en breedte dat zijn.
+  const isBulk = new Uint8Array(nEdges);
+  for (const v of Object.values(meta.vaarwegen || {})) {
+    if (v && v.bulk && Array.isArray(v.edges)) {
+      for (const ei of v.edges) isBulk[ei] = 1;
+    }
+  }
+
   {
     let pi = 0, ii = 0;
     for (let e = 0; e < nEdges; e++) {
       geomStart[e] = pi;
-      const kleur = edgeSoort[e] === 1 ? KLEUR_BINNEN : KLEUR_ZEE;
+      const kleur = isBulk[e] ? KLEUR_BULK
+        : (edgeSoort[e] === 1 ? KLEUR_BINNEN : KLEUR_ZEE);
       let x = Math.round(knoopLon[edgeA[e]] * schaal);
       let y = Math.round(knoopLat[edgeA[e]] * schaal);
       for (let k = 0; k < geomN[e]; k++) {
@@ -257,7 +269,7 @@ export async function laadMarnet(radius) {
  */
 export async function laadBulk(radius) {
   const t0 = performance.now();
-  const meta = await fetch("data/marnet-bulk.json?v=033").then((r) => {
+  const meta = await fetch("data/marnet-bulk.json?v=035").then((r) => {
     if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
     return r.json();
   });
@@ -599,7 +611,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
 
 /** Laadt de havens (gebakken uit searoute's ports.geojson). */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=033");
+  const r = await fetch("data/ports.json?v=035");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];
