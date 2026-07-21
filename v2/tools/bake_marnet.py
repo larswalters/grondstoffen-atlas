@@ -1749,7 +1749,7 @@ SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
 def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False,
-                   heal_km=0.0, corridor_km=0.0):
+                   heal_km=0.0, corridor_km=0.0, bruggen_pad=None):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -1880,6 +1880,23 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
                     for sig, pl in zip(v["signalen"], v["polylines"])]
                 for r, v in bulk_meta["regios"].items()
             }
+            # LAR-520-vervolg: verbindingsstukken over ongetagd water uit
+            # knoop_riviernet.py. Vóór de heal toegevoegd, zodat tier-1/2 de
+            # laatste meters van een brug-uiteinde gewoon mee-hecht. Signaal
+            # "brug" draagt geen maat → onbekend = géén grens.
+            if bruggen_pad:
+                bgj = json.load(open(bruggen_pad, encoding="utf-8"))
+                nb, kmb = 0, 0.0
+                for f in bgj["features"]:
+                    coords = [(wrap_lon(lo), la)
+                              for lo, la in f["geometry"]["coordinates"]]
+                    if len(coords) > 1:
+                        per_regio.setdefault(f["properties"]["label"],
+                                             []).append(("brug", coords))
+                        nb += 1
+                        kmb += f["properties"].get("km", 0.0)
+                print(f"  bruggen: {nb:,} verbindingsstukken over ongetagd "
+                      f"water ({kmb:,.0f} km) uit {os.path.basename(bruggen_pad)}")
             vaarwegen_meta.update(
                 binnenwaternet(nodes, edge_lijst, status, geometrie,
                                vaarwegen_meta, per_regio, edge_gabariet,
@@ -2165,6 +2182,9 @@ if __name__ == "__main__":
     ap.add_argument("--bulk", help="vaarwegen_bulk.geojson uit fetch_waterways.py --bulk "
                                    "(LAR-515): puur tekengeometrie, apart bestand "
                                    "marnet-bulk<suffix>.json, muteert de graaf niet")
+    ap.add_argument("--bruggen", help="vaarwegen_bruggen.geojson uit knoop_riviernet.py: "
+                                      "verbindingsstukken over ongetagd water (sig 'brug'), "
+                                      "alleen zinvol samen met --binnenwater")
     ap.add_argument("--binnenwater", action="store_true",
                     help="hang het gemapte binnenwater als ECHTE knopen/edges in de graaf "
                          "i.p.v. als losse tekenlaag (één net; losse uiteinden zijn OK, "
@@ -2186,4 +2206,4 @@ if __name__ == "__main__":
     else:
         verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix,
                        binnenwater=args.binnenwater, heal_km=args.heal_km,
-                       corridor_km=args.corridor_km)
+                       corridor_km=args.corridor_km, bruggen_pad=args.bruggen)
