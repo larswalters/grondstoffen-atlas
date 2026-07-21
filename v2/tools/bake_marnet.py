@@ -2058,6 +2058,42 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
     return onopgelost
 
 
+def _laad_wpi():
+    """NGA World Port Index uit de build-cache (fetch_wpi.py), op LOCODE.
+
+    13 LOCODEs dragen meerdere WPI-havens; de grootste wint (L > M > S > V).
+    Geen wpi.json = lege dict — de bake draait dan gewoon zonder verrijking,
+    een ontbrekende bron mag de haven-bake niet breken.
+    """
+    pad = os.path.join(CACHE, "wpi.json")
+    if not os.path.exists(pad):
+        return {}
+    orde = {"L": 3, "M": 2, "S": 1, "V": 0}
+    per = {}
+    for h in json.load(open(pad, encoding="utf-8"))["havens"]:
+        code = (h.get("unloCode") or "").replace(" ", "")
+        if not code:
+            continue
+        oud = per.get(code)
+        if oud is None or orde.get(h.get("harborSize"), -1) > orde.get(oud.get("harborSize"), -1):
+            per[code] = h
+    return per
+
+
+# Havens die in searoute's lijst ontbreken maar aantoonbaar bestaan — uit de
+# WPI (publiek domein), op LOCODE. Saldanha Bay was het enige gat in de vijftien
+# grote bulkhavens (toets_havens.py, 2026-07-21).
+WPI_EXTRA_HAVENS = ["ZASDB"]
+
+# WPI-vrachtfaciliteiten -> één letter voor het compacte veld. ⚠️ Alleen een
+# expliciete "Y" telt: de WPI zet massaal "U" (unknown) — zelfs Rotterdam — en
+# onbekend mag nooit als "geen vracht" gelezen worden (het draagprincipe van
+# het gabariet-veld geldt hier ook).
+WPI_VRACHT = (("loWharves", "W"), ("loContainer", "C"), ("loSolidBulk", "D"),
+              ("loLiquidBulk", "V"), ("loOilTerm", "O"), ("loRoro", "R"),
+              ("loBreakBulk", "S"))
+
+
 def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
     """searoute's havens, gesnapt aan BEIDE netten (LAR-518).
 
@@ -2089,6 +2125,17 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         lon, lat = f["geometry"]["coordinates"]
         p = f["properties"]
         havens.append((p.get("name") or p.get("port"), p.get("cty") or "", p.get("port") or "", lon, lat))
+
+    # WPI-verrijking (LAR-518 stap "havens op de juiste plek"): join op LOCODE.
+    wpi = _laad_wpi()
+    bestaand = {h[2] for h in havens}
+    for code in WPI_EXTRA_HAVENS:
+        w = wpi.get(code)
+        if w is None:
+            print(f"  ⚠️ WPI-extra {code} niet beschikbaar (draai fetch_wpi.py) — overgeslagen")
+        elif code not in bestaand:
+            havens.append((w["portName"], (w.get("countryName") or "").replace(" ", "_"),
+                           code, float(w["xcoord"]), float(w["ycoord"])))
     havens.sort(key=lambda h: (h[1], h[0]))
 
     # dichtstbijzijnde knoop in 3D (koorde-afstand = monotone proxy voor grootcirkel)
@@ -2101,7 +2148,23 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
     knoop, afstand = [], []            # zeenet
     knoop_riv, afstand_riv = [], []    # riviernet (-1 = geen riviernet gebakken)
     afstand_water = []                 # tot kustlijn of meeroever (-1 = niet gemeten)
+    wpi_maat, wpi_spoor, wpi_vracht = [], [], []
+    wpi_afstand = []                   # searoute-punt <-> WPI-punt (-1 = geen match)
     for naam, cty, code, lon, lat in havens:
+        w = wpi.get(code)
+        if w is None:
+            wpi_maat.append("")
+            wpi_spoor.append("")
+            wpi_vracht.append("")
+            wpi_afstand.append(-1)
+        else:
+            wpi_maat.append((w.get("harborSize") or "").strip())
+            sp = (w.get("railway") or "").strip()
+            wpi_spoor.append(sp if sp in ("S", "M", "L") else "")
+            wpi_vracht.append("".join(letter for veld, letter in WPI_VRACHT
+                                      if (w.get(veld) or "").strip() == "Y"))
+            wpi_afstand.append(round(gc_km((lon, lat),
+                                           (float(w["xcoord"]), float(w["ycoord"]))), 1))
         v = np.array(to3d(lon, lat))
         d = zee_xyz @ v
         beste = int(np.argmax(d))
@@ -2134,8 +2197,14 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         "knoopRivier": knoop_riv,
         "afstandRivierKm": afstand_riv,
         "afstandWaterKm": afstand_water,
+        "wpiMaat": wpi_maat,
+        "wpiSpoor": wpi_spoor,
+        "wpiVracht": wpi_vracht,
+        "wpiAfstandKm": wpi_afstand,
         "zeeKnopen": grens,
-        "bron": "searoute 1.6.0 ports.geojson (= UN/LOCODE-locatielijst, niet gefilterd)",
+        "bron": "searoute 1.6.0 ports.geojson (= UN/LOCODE-locatielijst, niet gefilterd)"
+                + (" + NGA World Port Index Pub 150 (publiek domein) op LOCODE"
+                   if wpi else ""),
     }
     pad = os.path.join(DATA, f"ports{suffix}.json")
     with open(pad, "w", encoding="utf-8") as f:
@@ -2165,6 +2234,14 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         print(f"  {'':14}  | AAN WATER (kust/meer/rivier) ≤10 km: "
               f"{int((water <= 10).sum()):,} · NIET aan water: {int((water > 10).sum()):,} "
               f"({(water > 10).sum() / len(namen) * 100:.1f}%) · verst {water.max():,.0f} km")
+    if wpi:
+        wm = sum(1 for m in wpi_maat if m)
+        ws = sum(1 for s in wpi_spoor if s)
+        wv = sum(1 for v in wpi_vracht if v)
+        wa = np.array([a for a in wpi_afstand if a >= 0])
+        print(f"  {'':14}  | WPI-match: {wm:,} van {len(namen):,} · spoor bevestigd: {ws:,} · "
+              f"vracht bevestigd: {wv:,} · positieverschil mediaan {np.median(wa):.1f} km, "
+              f">10 km: {int((wa > 10).sum()):,}")
     # de LAR-486/518-acceptatiehavens expliciet rapporteren
     for wie in ("Amsterdam", "Nijmegen", "Rotterdam", "Duluth"):
         for i, naam in enumerate(namen):

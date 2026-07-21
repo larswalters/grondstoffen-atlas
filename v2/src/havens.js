@@ -33,6 +33,11 @@ const KLEUR_BEIDE  = new THREE.Color(0x4fe3b0);  // zee + rivier — kandidaat
 const KLEUR_ZEE    = new THREE.Color(0xfff4e2);  // alleen zeenet
 const KLEUR_RIVIER = new THREE.Color(0xd9a441);  // alleen riviernet (= binnenhaven)
 const KLEUR_LOS    = new THREE.Color(0x6a7484);  // geen van beide in de buurt
+// Kandidaat mét door de WPI bevestigd spoor (railway S/M/L): dáár komen drie
+// modaliteiten samen — de sterkste overslag-kandidaten. ⚠️ Alleen een
+// AANWEZIG WPI-veld promoveert; een lege waarde is "onbekend" (de WPI zet
+// massaal "U", zelfs bij Rotterdam) en mag een kandidaat nooit degraderen.
+const KLEUR_SPOOR  = new THREE.Color(0xff6ad5);  // zee + rivier + spoor bevestigd
 
 // ⚠️ Wanneer "raakt" een haven een net? MARNET is een GROVE graaf — de mediane
 // zee-snap is 31 km — dus een strakke drempel meet vooral de knoopdichtheid van
@@ -135,7 +140,7 @@ export function bouwHavenLaag(havens, radius) {
   const posities = new Float32Array(n * 3);
   const kleuren = new Float32Array(n * 3);
 
-  const telling = { beide: 0, zee: 0, rivier: 0, los: 0 };
+  const telling = { spoor: 0, beide: 0, zee: 0, rivier: 0, los: 0 };
   for (let i = 0; i < n; i++) {
     const h = getoond[i];
     opBol(h.lon, h.lat, radius, posities, i * 3);
@@ -147,7 +152,8 @@ export function bouwHavenLaag(havens, radius) {
     const aanRivier = h.afstandRivierKm >= 0 && h.afstandRivierKm <= RAAKT_KM;
 
     let k;
-    if (aanZee && aanRivier) { k = KLEUR_BEIDE; telling.beide++; }
+    if (aanZee && aanRivier && h.wpiSpoor) { k = KLEUR_SPOOR; telling.spoor++; }
+    else if (aanZee && aanRivier) { k = KLEUR_BEIDE; telling.beide++; }
     else if (aanZee) { k = KLEUR_ZEE; telling.zee++; }
     else if (aanRivier) { k = KLEUR_RIVIER; telling.rivier++; }
     else { k = KLEUR_LOS; telling.los++; }
@@ -256,9 +262,17 @@ export function koppelHavenLabel(globe, laag, havens, labelEl, drempelPx = 9) {
       // Beide aanhechtingen in het label: dát is waar deze laag over gaat, en
       // zonder de afstanden is een mintgroene stip niet te controleren.
       const rv = h.afstandRivierKm >= 0 ? `${h.afstandRivierKm} km` : "geen riviernet";
+      // WPI-regel alleen als er een match is; W=kade C=container D=droge bulk
+      // V=vloeibare bulk O=olieterminal R=roro S=stukgoed.
+      const wpi = [];
+      if (h.wpiMaat) wpi.push(`maat ${h.wpiMaat}`);
+      if (h.wpiSpoor) wpi.push(`spoor ${h.wpiSpoor}`);
+      if (h.wpiVracht) wpi.push(`vracht ${h.wpiVracht}`);
+      if (h.wpiAfstandKm >= 0) wpi.push(`Δpos ${h.wpiAfstandKm} km`);
       labelEl.innerHTML =
         `${h.naam} <span>· ${h.land}${h.locode ? " · " + h.locode : ""}</span>` +
-        `<br><span>zee ${h.afstandKm} km · rivier ${rv}</span>`;
+        `<br><span>zee ${h.afstandKm} km · rivier ${rv}</span>` +
+        (wpi.length ? `<br><span>WPI: ${wpi.join(" · ")}</span>` : "");
       vorige = i;
     }
     labelEl.hidden = false;

@@ -1,12 +1,12 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=042";
-import { laadVectorWereld } from "./world.js?v=042";
-import { createTileLayer } from "./tiles.js?v=042";
+import { createGlobe, CONFIG } from "./globe.js?v=043";
+import { laadVectorWereld } from "./world.js?v=043";
+import { createTileLayer } from "./tiles.js?v=043";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=042";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=042";
+  from "./marnet.js?v=043";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=043";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -333,6 +333,10 @@ function zetAttrib() {
     delen.push("Vaarwegen: © OpenStreetMap-bijdragers (ODbL)");
   } else if (bronnen.some((b) => b.includes("unece"))) {
     delen.push("Vaarwegen: UNECE Blue Book");
+  }
+  // WPI-verrijking op de havens (LAR-518): publiek domein, bron wel noemen.
+  if (HAVENS && HAVENS.some((h) => h.wpiAfstandKm >= 0)) {
+    delen.push("Havens: NGA World Port Index (publiek domein)");
   }
   document.getElementById("attrib").textContent = delen.join(" · ");
 }

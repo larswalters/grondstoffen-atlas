@@ -75,11 +75,11 @@ export async function laadMarnet(radius) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=042").then((r) => {
+    fetch("data/marnet.json?v=043").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=042").then((r) => {
+    fetch("data/marnet.bin?v=043").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -269,7 +269,7 @@ export async function laadMarnet(radius) {
  */
 export async function laadBulk(radius) {
   const t0 = performance.now();
-  const meta = await fetch("data/marnet-bulk.json?v=042").then((r) => {
+  const meta = await fetch("data/marnet-bulk.json?v=043").then((r) => {
     if (!r.ok) throw new Error(`marnet-bulk.json: HTTP ${r.status}`);
     return r.json();
   });
@@ -622,7 +622,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
  * anders dan "ver weg", en die twee moeten uit elkaar te houden blijven.
  */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=042");
+  const r = await fetch("data/ports.json?v=043");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];
@@ -639,6 +639,13 @@ export async function laadHavens() {
       afstandRivierKm: d.afstandRivierKm ? d.afstandRivierKm[i] : -1,
       // afstand tot kustlijn of meeroever; -1 = niet gemeten in deze bake
       afstandWaterKm: d.afstandWaterKm ? d.afstandWaterKm[i] : -1,
+      // NGA World Port Index-verrijking op LOCODE (LAR-518); "" / -1 = geen
+      // match. ⚠️ WPI zet massaal "U" (unknown): een leeg veld betekent
+      // "onbekend", nooit "geen spoor" of "geen vracht".
+      wpiMaat: d.wpiMaat ? d.wpiMaat[i] : "",
+      wpiSpoor: d.wpiSpoor ? d.wpiSpoor[i] : "",
+      wpiVracht: d.wpiVracht ? d.wpiVracht[i] : "",
+      wpiAfstandKm: d.wpiAfstandKm ? d.wpiAfstandKm[i] : -1,
     });
   }
   havens.zeeKnopen = d.zeeKnopen ?? null;
