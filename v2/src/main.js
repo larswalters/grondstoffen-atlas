@@ -1,12 +1,12 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=041";
-import { laadVectorWereld } from "./world.js?v=041";
-import { createTileLayer } from "./tiles.js?v=041";
+import { createGlobe, CONFIG } from "./globe.js?v=042";
+import { laadVectorWereld } from "./world.js?v=042";
+import { createTileLayer } from "./tiles.js?v=042";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=041";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=041";
+  from "./marnet.js?v=042";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=042";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 

@@ -1749,7 +1749,7 @@ SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
 def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False,
-                   heal_km=0.0, corridor_km=0.0, bruggen_pad=None):
+                   heal_km=0.0, corridor_km=0.0, bruggen_pad=None, meren_pad=None):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -1884,19 +1884,21 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
             # knoop_riviernet.py. Vóór de heal toegevoegd, zodat tier-1/2 de
             # laatste meters van een brug-uiteinde gewoon mee-hecht. Signaal
             # "brug" draagt geen maat → onbekend = géén grens.
-            if bruggen_pad:
-                bgj = json.load(open(bruggen_pad, encoding="utf-8"))
+            for extra_pad in (bruggen_pad, meren_pad):
+                if not extra_pad:
+                    continue
+                bgj = json.load(open(extra_pad, encoding="utf-8"))
                 nb, kmb = 0, 0.0
                 for f in bgj["features"]:
                     coords = [(wrap_lon(lo), la)
                               for lo, la in f["geometry"]["coordinates"]]
                     if len(coords) > 1:
-                        per_regio.setdefault(f["properties"]["label"],
-                                             []).append(("brug", coords))
+                        per_regio.setdefault(f["properties"]["label"], []).append(
+                            (f["properties"].get("signaal", "brug"), coords))
                         nb += 1
                         kmb += f["properties"].get("km", 0.0)
-                print(f"  bruggen: {nb:,} verbindingsstukken over ongetagd "
-                      f"water ({kmb:,.0f} km) uit {os.path.basename(bruggen_pad)}")
+                print(f"  verbindingsstukken: {nb:,} ({kmb:,.0f} km) uit "
+                      f"{os.path.basename(extra_pad)}")
             vaarwegen_meta.update(
                 binnenwaternet(nodes, edge_lijst, status, geometrie,
                                vaarwegen_meta, per_regio, edge_gabariet,
@@ -2185,6 +2187,8 @@ if __name__ == "__main__":
     ap.add_argument("--bruggen", help="vaarwegen_bruggen.geojson uit knoop_riviernet.py: "
                                       "verbindingsstukken over ongetagd water (sig 'brug'), "
                                       "alleen zinvol samen met --binnenwater")
+    ap.add_argument("--meren", help="vaarwegen_meren.geojson uit knoop_riviernet.py --meren: "
+                                    "meer-oversteken over watervlakken (sig 'meer')")
     ap.add_argument("--binnenwater", action="store_true",
                     help="hang het gemapte binnenwater als ECHTE knopen/edges in de graaf "
                          "i.p.v. als losse tekenlaag (één net; losse uiteinden zijn OK, "
@@ -2206,4 +2210,5 @@ if __name__ == "__main__":
     else:
         verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix,
                        binnenwater=args.binnenwater, heal_km=args.heal_km,
-                       corridor_km=args.corridor_km, bruggen_pad=args.bruggen)
+                       corridor_km=args.corridor_km, bruggen_pad=args.bruggen,
+                       meren_pad=args.meren)

@@ -26,6 +26,17 @@ Uitvoer: build-cache/vaarwegen_bruggen.geojson met signaal "brug" per lijn.
 "brug" draagt géén gabariet → onbekende maat = géén grens (het draagprincipe);
 de bake bakt ze mee via --bruggen en de heal hecht daar de laatste meters.
 
+TWEEDE MODUS (--meren): de MEER-OVERSTEEK. OSM tekent een meer/plas als VLAK,
+niet als lijn — dus een kanaal-lijn stopt op de oever terwijl het water gewoon
+doorloopt (Lars' Zuid-Holland-cirkels: Kaag, Braassemermeer, Westeinder; en de
+oude LAR-509-blokkade: Grand Canal-noord, Wolga-Baltisch — zelfde oorzaak).
+Uiteinden van VERSCHILLENDE componenten die op hetzelfde watervlak uitkomen
+worden verbonden met een koorde die aantoonbaar bínnen het vlak blijft
+(shapely `covers`, dus een eiland of landtong ertussen = geen verbinding);
+dam-/watervalpunten langs de koorde blokkeren (Braziliaanse stuwmeren!).
+Uitvoer: build-cache/vaarwegen_meren.geojson met signaal "meer"; bake via
+--meren. Draaien: python v2/tools/knoop_riviernet.py --meren
+
 Guards:
   * ways die een waterway=waterfall|dam-punt raken zijn onbegaanbaar — een
     waterval of dam zónder sluis is een GOEDE reden om los te blijven. (Stuwen
@@ -62,7 +73,9 @@ BRUG_CACHE = os.path.join(CACHE, "bruggen")
 BULK_GEOJSON = os.path.join(CACHE, "vaarwegen_bulk.geojson")
 UIT_GEOJSON = os.path.join(CACHE, "vaarwegen_bruggen.geojson")
 
-KNOOP_VERSIE = 1
+MEER_GEOJSON = os.path.join(CACHE, "vaarwegen_meren.geojson")
+
+KNOOP_VERSIE = 2                   # v2: prep telt bestaande bruggen mee
 BRUG_SOORT = {"river", "canal"}    # stream/ditch/drain bewust niet: een kreek
                                    # is geen "rivier die zichtbaar doorloopt"
 BLOKKEER_SOORT = {"waterfall", "dam"}
@@ -71,6 +84,9 @@ DOEL_CEL = 0.0008                  # ~90 m: raakvlak met het getagde net; de
                                    # sprong naar de exacte vertex blijft daarmee
                                    # in de tier-1-klasse (≤ ~250 m)
 RELAX_CAP = 30_000                 # plafond per zoekpunt (vlechtende delta's)
+MEER_TOL = 0.002                   # ~200 m: uiteinde telt als "op het vlak"
+MEER_CEL = 0.002                   # celmaat van de dam/waterval-blokkade
+MEER_STAP = 0.002                  # koorde-bemonstering voor de blokkade-check
 
 
 def q_fijn(p):
@@ -96,8 +112,13 @@ def _laad_lijnen(pad):
 
 def prep_hash(heal_km, corridor_km):
     st = os.stat(BULK_GEOJSON)
-    ruw = repr((KNOOP_VERSIE, st.st_size, int(st.st_mtime), heal_km, corridor_km,
-                DOEL_CEL, sorted(BRUG_SOORT)))
+    if os.path.exists(UIT_GEOJSON):          # bestaande bruggen tellen mee in
+        sb = os.stat(UIT_GEOJSON)            # het net waarvan we uiteinden zoeken
+        brug = (sb.st_size, int(sb.st_mtime))
+    else:
+        brug = (0, 0)
+    ruw = repr((KNOOP_VERSIE, st.st_size, int(st.st_mtime), brug, heal_km,
+                corridor_km, DOEL_CEL, sorted(BRUG_SOORT)))
     return hashlib.sha1(ruw.encode()).hexdigest()[:16]
 
 
@@ -119,6 +140,12 @@ def prep(heal_km, corridor_km):
     assert bm.BULK_QUANT == FIJN, "FIJN loopt uit de pas met bake_marnet.BULK_QUANT"
 
     per = _laad_lijnen(BULK_GEOJSON)
+    if os.path.exists(UIT_GEOJSON):
+        n_brug = 0
+        for label, lijnen in _laad_lijnen(UIT_GEOJSON).items():
+            per.setdefault(label, []).extend(("brug", pts) for _s, pts in lijnen)
+            n_brug += len(lijnen)
+        print(f"  + {n_brug:,} bestaande bruggen meegerekend in het net")
     n_lijnen = sum(len(v) for v in per.values())
     print(f"geladen: {n_lijnen:,} lijnen uit {os.path.basename(BULK_GEOJSON)}")
 
@@ -349,6 +376,140 @@ def brug_scan_extract(args):
     return sleutel, uit, False
 
 
+def meer_scan_extract(args):
+    """Worker: één extract — uiteinden van verschillende componenten die op
+    hetzelfde watervlak (natural=water) uitkomen verbinden met een koorde die
+    aantoonbaar binnen het vlak blijft."""
+    sleutel, ph, max_km = args
+    st = os.stat(fw.extract_pad(sleutel))
+    ruw = repr(("meer", KNOOP_VERSIE, sleutel, st.st_size, int(st.st_mtime), ph,
+                max_km, MEER_TOL, MEER_STAP))
+    fp_hash = hashlib.sha1(ruw.encode()).hexdigest()[:16]
+    cpad = os.path.join(BRUG_CACHE, f"{sleutel}-meer-{fp_hash}.json")
+    if os.path.exists(cpad):
+        return sleutel, json.load(open(cpad, encoding="utf-8")), True
+
+    import osmium
+    from shapely import from_wkb
+    from shapely.geometry import LineString, Point
+    from shapely.ops import nearest_points
+
+    basis = os.path.join(BRUG_CACHE, f"prep-{ph}")
+    zoekpunten = json.load(open(basis + "-zoekpunten.json", encoding="utf-8"))
+    zp_cel = {}                       # ~1 km-cellen: vlak-bbox → kandidaten
+    for i, (lon, lat, _c, _r) in enumerate(zoekpunten):
+        zp_cel.setdefault((int(lon // 0.01), int(lat // 0.01)), []).append(i)
+
+    def zp_in_bbox(lo0, la0, lo1, la1):
+        uit = []
+        for cx in range(int((lo0 - MEER_TOL) // 0.01), int((lo1 + MEER_TOL) // 0.01) + 1):
+            for cy in range(int((la0 - MEER_TOL) // 0.01), int((la1 + MEER_TOL) // 0.01) + 1):
+                for i in zp_cel.get((cx, cy), ()):
+                    lon, lat = zoekpunten[i][0], zoekpunten[i][1]
+                    if (lo0 - MEER_TOL <= lon <= lo1 + MEER_TOL
+                            and la0 - MEER_TOL <= lat <= la1 + MEER_TOL):
+                        uit.append(i)
+        return uit
+
+    q_blok = lambda p: (round(p[0] / MEER_CEL), round(p[1] / MEER_CEL))
+    wkbfab = osmium.geom.WKBFactory()
+    blok, oversteken = set(), []
+    n_vlakken = 0
+    cmap = {}                          # lokale union-find over comp-ids: niet
+                                       # elk paar oevers apart blijven verbinden
+
+    def vind(x):
+        while cmap.setdefault(x, x) != x:
+            cmap[x] = cmap[cmap[x]]
+            x = cmap[x]
+        return x
+
+    fp = (osmium.FileProcessor(fw.extract_pad(sleutel))
+          .with_areas()
+          .with_filter(osmium.filter.KeyFilter("natural", "waterway")))
+    for obj in fp:
+        if obj.is_node():
+            if (obj.tags.get("waterway") or "") in BLOKKEER_SOORT:
+                blok.add(q_blok((obj.location.lon, obj.location.lat)))
+            continue
+        if obj.is_way():
+            if (obj.tags.get("waterway") or "") in BLOKKEER_SOORT:
+                for n in obj.nodes:
+                    if n.location.valid():
+                        blok.add(q_blok((n.location.lon, n.location.lat)))
+            continue
+        if not obj.is_area() or (obj.tags.get("natural") or "") != "water":
+            continue
+        if (obj.tags.get("intermittent") or "") == "yes":
+            continue
+        # snelle bbox uit de buitenringen, vóór de dure geometrie-bouw
+        lo0 = la0 = 1e9
+        lo1 = la1 = -1e9
+        for ring in obj.outer_rings():
+            for n in ring:
+                lo, la = n.lon, n.lat
+                if lo < lo0: lo0 = lo
+                if lo > lo1: lo1 = lo
+                if la < la0: la0 = la
+                if la > la1: la1 = la
+        kand = zp_in_bbox(lo0, la0, lo1, la1)
+        if len(kand) < 2 or len({zoekpunten[i][2] for i in kand}) < 2:
+            continue
+        try:
+            vlak = from_wkb(bytes.fromhex(wkbfab.create_multipolygon(obj)))
+        except Exception:                # kapotte multipolygon in OSM: overslaan
+            continue
+        n_vlakken += 1
+        op_vlak = []
+        for i in kand:
+            lon, lat, comp, regio = zoekpunten[i]
+            p = Point(lon, lat)
+            if vlak.distance(p) > MEER_TOL:
+                continue                 # bbox-treffer maar niet op dít vlak
+            npunt = nearest_points(vlak, p)[0]
+            op_vlak.append((comp, regio, (lon, lat), (npunt.x, npunt.y)))
+        paren = sorted(
+            (fw.km(op_vlak[a][2], op_vlak[b][2]), a, b)
+            for a in range(len(op_vlak)) for b in range(a + 1, len(op_vlak))
+            if op_vlak[a][0] != op_vlak[b][0])
+        for d, a, b in paren:
+            ca, ra, za, na = op_vlak[a]
+            cb, _rb, zb, nb = op_vlak[b]
+            if d > max_km or vind(ca) == vind(cb):
+                continue
+            if not vlak.covers(LineString([na, nb])):
+                continue                 # eiland/landtong ertussen: geen koorde
+            stappen = max(2, int(max(abs(nb[0] - na[0]),
+                                     abs(nb[1] - na[1])) / MEER_STAP) + 1)
+            if any((cx + dx, cy + dy) in blok
+                   for s in range(stappen + 1)
+                   for cx, cy in (q_blok((na[0] + s / stappen * (nb[0] - na[0]),
+                                          na[1] + s / stappen * (nb[1] - na[1]))),)
+                   for dx in (-1, 0, 1) for dy in (-1, 0, 1)):
+                continue                 # dam of waterval op de koorde
+            pts = [za]
+            for p in (na, nb, zb):
+                if fw.km(pts[-1], p) > 1e-4:
+                    pts.append(p)
+            if len(pts) < 2:
+                continue
+            cmap[vind(ca)] = vind(cb)
+            oversteken.append({
+                "km": round(sum(fw.km(pts[i], pts[i + 1])
+                                for i in range(len(pts) - 1)), 2),
+                "van": ca, "naar": cb, "regio": ra,
+                "pts": [[round(lo, 6), round(la, 6)] for lo, la in pts],
+            })
+
+    uit = {"oversteken": oversteken, "vlakken": n_vlakken,
+           "zoekpunten": len(zoekpunten)}
+    os.makedirs(BRUG_CACHE, exist_ok=True)
+    tijdelijk = cpad + ".deel"
+    json.dump(uit, open(tijdelijk, "w", encoding="utf-8"))
+    os.replace(tijdelijk, cpad)
+    return sleutel, uit, False
+
+
 # ---------------------------------------------------------------- orkestratie
 
 def hoofd():
@@ -356,8 +517,12 @@ def hoofd():
     ap.add_argument("--extracts", help="komma-gescheiden extract-namen "
                                       "(default: alle aanwezige)")
     ap.add_argument("--workers", type=int)
-    ap.add_argument("--max-km", type=float, default=300.0,
-                    help="langste toegestane brug-walk (default 300)")
+    ap.add_argument("--meren", action="store_true",
+                    help="meer-oversteek-modus: verbind uiteinden via watervlakken "
+                         "(natural=water) i.p.v. langs ongetagde rivierlijnen")
+    ap.add_argument("--max-km", type=float,
+                    help="langste toegestane verbinding "
+                         "(default: 300 voor bruggen, 150 voor meren)")
     ap.add_argument("--heal-km", type=float, default=0.25,
                     help="MOET gelijk zijn aan de bake (default 0.25)")
     ap.add_argument("--corridor-km", type=float, default=2.0,
@@ -378,27 +543,35 @@ def hoofd():
     if ontbreekt:
         raise SystemExit("extracts ontbreken: " + ", ".join(ontbreekt))
 
+    werker = meer_scan_extract if a.meren else brug_scan_extract
+    wat = "meer-oversteken" if a.meren else "bruggen"
+    uitpad = MEER_GEOJSON if a.meren else UIT_GEOJSON
+    signaal = "meer" if a.meren else "brug"
+    max_km = a.max_km or (150.0 if a.meren else 300.0)
+
     workers = a.workers or max(1, min(14, (os.cpu_count() or 2) - 2))
     gb = sum(os.path.getsize(fw.extract_pad(s)) for s in sleutels) / 1e9
-    print(f"\nknoopscan: {len(sleutels)} extracts, {gb:,.1f} GB, "
-          f"{workers} workers, max {a.max_km:,.0f} km per brug")
+    print(f"\nknoopscan ({wat}): {len(sleutels)} extracts, {gb:,.1f} GB, "
+          f"{workers} workers, max {max_km:,.0f} km per verbinding")
 
     t0 = time.time()
-    taken = [(s, ph, a.max_km) for s in sleutels]
+    taken = [(s, ph, max_km) for s in sleutels]
     if workers == 1 or len(sleutels) == 1:
-        resultaten = (brug_scan_extract(t) for t in taken)
+        resultaten = (werker(t) for t in taken)
     else:
         import multiprocessing as mp
         pool = mp.Pool(workers)
-        resultaten = pool.imap_unordered(brug_scan_extract, taken)
+        resultaten = pool.imap_unordered(werker, taken)
 
     alle, plafond = [], 0
     for i, (sleutel, uit, cache) in enumerate(resultaten, 1):
-        alle.extend(uit["bruggen"])
-        plafond += uit["geplafonneerd"]
+        stuks = uit.get("bruggen", uit.get("oversteken", []))
+        alle.extend(stuks)
+        plafond += uit.get("geplafonneerd", 0)
+        detail = (f"{uit['vlakken']:6,} vlakken met kandidaten" if a.meren
+                  else f"{uit['ways']:7,} ongetagde ways")
         print(f"  [{i}/{len(sleutels)}] {sleutel:<26} "
-              f"{len(uit['bruggen']):4,} bruggen · {uit['zoekpunten']:5,} zoekpunten"
-              f" · {uit['ways']:7,} ongetagde ways"
+              f"{len(stuks):4,} {wat} · {detail}"
               f"{' (cache)' if cache else ''}", flush=True)
     if workers > 1 and len(sleutels) > 1:
         pool.close()
@@ -427,37 +600,37 @@ def hoofd():
     features = [{
         "type": "Feature",
         "properties": {"label": b["regio"], "regio": b["regio"].replace("bulk-", ""),
-                       "zeevaart": False, "signaal": "brug", "km": b["km"]},
+                       "zeevaart": False, "signaal": signaal, "km": b["km"]},
         "geometry": {"type": "LineString", "coordinates": b["pts"]},
     } for b in houd]
-    with open(UIT_GEOJSON, "w", encoding="utf-8") as f:
+    with open(uitpad, "w", encoding="utf-8") as f:
         json.dump({"type": "FeatureCollection",
                    "bron": "OpenStreetMap contributors (ODbL) via Geofabrik-regio-extract",
-                   "laag": "bruggen", "knoopVersie": KNOOP_VERSIE, "prep": ph,
-                   "maxKm": a.max_km, "healKm": a.heal_km,
+                   "laag": wat, "knoopVersie": KNOOP_VERSIE, "prep": ph,
+                   "maxKm": max_km, "healKm": a.heal_km,
                    "corridorKm": a.corridor_km, "extracts": sleutels,
                    "features": features}, f, ensure_ascii=False)
 
     per_regio = {}
     for b in houd:
         per_regio[b["regio"]] = per_regio.get(b["regio"], 0.0) + b["km"]
-    print(f"\nbruggen per regio (na ontdubbeling, {dubbel:,} dubbelgangers weg"
+    print(f"\n{wat} per regio (na ontdubbeling, {dubbel:,} dubbelgangers weg"
           f"{f' · {plafond} zoekpunten geplafonneerd' if plafond else ''}):")
     for regio, L in sorted(per_regio.items(), key=lambda kv: -kv[1]):
         print(f"  {regio:<10} {L:9,.1f} km")
-    print(f"  TOTAAL     {sum(b['km'] for b in houd):9,.1f} km · {len(houd):,} bruggen")
+    print(f"  TOTAAL     {sum(b['km'] for b in houd):9,.1f} km · {len(houd):,} {wat}")
     langste = sorted(houd, key=lambda b: -b["km"])[:15]
     if langste:
-        print("\nlangste bruggen (kijk deze na op de bol):")
+        print(f"\nlangste {wat} (kijk deze na op de bol):")
         for b in langste:
             mid = b["pts"][len(b["pts"]) // 2]
             print(f"  {b['km']:7,.1f} km · {b['regio']:<8} · rond "
                   f"({mid[1]:.3f}, {mid[0]:.3f})")
-    print(f"\ngeschreven: {UIT_GEOJSON} "
-          f"({os.path.getsize(UIT_GEOJSON) / 1024:,.0f} KB)")
-    print(f"klaar in {time.time() - t0:,.0f} s — bak mee met: "
-          f"bake_marnet.py --bulk ... --binnenwater --bruggen "
-          f"build-cache/vaarwegen_bruggen.geojson")
+    print(f"\ngeschreven: {uitpad} "
+          f"({os.path.getsize(uitpad) / 1024:,.0f} KB)")
+    print(f"klaar in {time.time() - t0:,.0f} s — bak mee met: bake_marnet.py "
+          f"--bulk ... --binnenwater --bruggen build-cache/vaarwegen_bruggen.geojson"
+          f" --meren build-cache/vaarwegen_meren.geojson")
 
 
 if __name__ == "__main__":
