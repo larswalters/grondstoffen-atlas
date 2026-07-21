@@ -268,7 +268,8 @@ export function koppelHavenLabel(globe, laag, havens, labelEl, drempelPx = 9) {
       if (h.wpiMaat) wpi.push(`maat ${h.wpiMaat}`);
       if (h.wpiSpoor) wpi.push(`spoor ${h.wpiSpoor}`);
       if (h.wpiVracht) wpi.push(`vracht ${h.wpiVracht}`);
-      if (h.wpiAfstandKm >= 0) wpi.push(`Δpos ${h.wpiAfstandKm} km`);
+      if (h.posBron === "wpi") wpi.push("positie WPI");
+      else if (h.wpiAfstandKm >= 1) wpi.push(`Δpos ${h.wpiAfstandKm} km`);
       labelEl.innerHTML =
         `${h.naam} <span>· ${h.land}${h.locode ? " · " + h.locode : ""}</span>` +
         `<br><span>zee ${h.afstandKm} km · rivier ${rv}</span>` +

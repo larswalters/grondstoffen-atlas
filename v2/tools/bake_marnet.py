@@ -2150,8 +2150,64 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
     afstand_water = []                 # tot kustlijn of meeroever (-1 = niet gemeten)
     wpi_maat, wpi_spoor, wpi_vracht = [], [], []
     wpi_afstand = []                   # searoute-punt <-> WPI-punt (-1 = geen match)
-    for naam, cty, code, lon, lat in havens:
+    pos_bron = []                      # "locode" | "wpi" — waar de positie vandaan komt
+
+    def waterscore(lo, la):
+        """Hoe ver ligt dit punt van bevaarbaar water (kust/meer of riviernet)?
+        De maat waarop een positie-verplaatsing beoordeeld wordt."""
+        s = land.afstand_tot_open_water(lo, la)
+        if riv_xyz is not None:
+            dr = float(np.max(riv_xyz @ np.array(to3d(lo, la))))
+            s = min(s, R_AARDE * math.acos(max(-1.0, min(1.0, dr))))
+        return s
+
+    # Generieke haven-woorden mogen een >200 km-match niet dragen: "Puerto
+    # Morelos" vs "Puerto Morro Redondo" deelt alleen "puerto" en is een
+    # verkeerde identiteit. Exacte naamgelijkheid blijft altijd geldig, zodat
+    # "Santa Fe" (alleen generieke/korte tokens) wél gewoon matcht.
+    NAAM_GENERIEK = {"puerto", "porto", "port", "harbor", "harbour", "haven",
+                     "bahia", "baie", "saint", "sankt", "nuevo", "nueva", "city"}
+
+    def _naam_matcht(a, w):
+        """Delen twee havennamen hun identiteit? Alleen gebruikt als poort bij
+        verplaatsingen >200 km: daar betekent een naamverschil geen centroïde-
+        vs-kade meer, maar een verkeerde identiteit (dezelfde LOCODE op twee
+        verschillende plaatsen in één van de bronnen)."""
+        norm = lambda s: (s or "").lower().strip()
+        if norm(a) and norm(a) in (norm(w.get("portName")), norm(w.get("alternateName"))):
+            return True
+        woorden = lambda s: {t for t in norm(s).replace("-", " ").split()
+                             if len(t) >= 4} - NAAM_GENERIEK
+        return bool(woorden(a) & (woorden(w.get("portName")) | woorden(w.get("alternateName"))))
+
+    verplaatst, geweigerd_naam = [], []
+    for hi, (naam, cty, code, lon, lat) in enumerate(havens):
         w = wpi.get(code)
+        bron = "wpi" if code in WPI_EXTRA_HAVENS else "locode"
+        if w is not None and land is not None:
+            wlon, wlat = float(w["xcoord"]), float(w["ycoord"])
+            dpos = gc_km((lon, lat), (wlon, wlat))
+            # POSITIE-SCHONING (stap 2, "havens op de juiste plek"): de LOCODE-
+            # positie is een plaatscentroïde, de WPI-positie is haven-
+            # georiënteerd. Onder de kilometer is het verschil resolutieruis
+            # (beide bronnen werken op boogminuten); daarboven verhuist de
+            # haven naar de WPI-plek — MITS die aan water ligt: dichter bij
+            # zee/meer/riviernet dan de oude plek, of hooguit 2 km ervan.
+            # Een verplaatsing die het land in schiet is erger dan een
+            # centroïde, dus de watertoets is de poortwachter. Boven 200 km
+            # komt daar de naamtoets bij: zo repareert USPWM "Portland" wél
+            # (Oregon → Maine, allebei Portland) maar blijft een LOCODE die
+            # in de WPI op een ándere plaats wijst gewoon staan.
+            if (dpos >= 1.0
+                    and waterscore(wlon, wlat) <= max(waterscore(lon, lat), 2.0)):
+                if dpos > 200 and not _naam_matcht(naam, w):
+                    geweigerd_naam.append((dpos, naam, w.get("portName")))
+                else:
+                    verplaatst.append(dpos)
+                    lon, lat = wlon, wlat
+                    havens[hi] = (naam, cty, code, lon, lat)
+                    bron = "wpi"
+        pos_bron.append(bron)
         if w is None:
             wpi_maat.append("")
             wpi_spoor.append("")
@@ -2201,6 +2257,7 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         "wpiSpoor": wpi_spoor,
         "wpiVracht": wpi_vracht,
         "wpiAfstandKm": wpi_afstand,
+        "posBron": pos_bron,
         "zeeKnopen": grens,
         "bron": "searoute 1.6.0 ports.geojson (= UN/LOCODE-locatielijst, niet gefilterd)"
                 + (" + NGA World Port Index Pub 150 (publiek domein) op LOCODE"
@@ -2242,6 +2299,14 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         print(f"  {'':14}  | WPI-match: {wm:,} van {len(namen):,} · spoor bevestigd: {ws:,} · "
               f"vracht bevestigd: {wv:,} · positieverschil mediaan {np.median(wa):.1f} km, "
               f">10 km: {int((wa > 10).sum()):,}")
+        if verplaatst:
+            vp = np.array(verplaatst)
+            print(f"  {'':14}  | posities geschoond: {len(vp):,} havens naar de WPI-plek "
+                  f"(mediaan {np.median(vp):.1f} km, max {vp.max():.0f} km; "
+                  f"watertoets als poortwachter)")
+        for dpos, naam, wnaam in sorted(geweigerd_naam, reverse=True):
+            print(f"  {'':14}  | ⚠️ NIET verplaatst ({dpos:,.0f} km, naam botst): "
+                  f"{naam!r} vs WPI {wnaam!r} — zelfde LOCODE, andere plaats")
     # de LAR-486/518-acceptatiehavens expliciet rapporteren
     for wie in ("Amsterdam", "Nijmegen", "Rotterdam", "Duluth"):
         for i, naam in enumerate(namen):
