@@ -1,9 +1,31 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (havens op de kaart + overslag-ontwerpbesluit; volgende = [LAR-520] stitchen)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (LAR-520 riviernet gestitcht, twee-traps over-water heal live ?v=040; volgende = de router)*
 
-> **⚓ HAVENS OP DE KAART + HET OVERSLAG-ONTWERPBESLUIT (2026-07-21, laatste).** Live t/m
-> `5b7c3cd` (`?v=039`). **→ VOLGENDE: [LAR-520] riviernet stitchen (blocks LAR-518)** —
+> **🪡 LAR-520 RIVIERNET GESTITCHT — twee-traps over-water heal LIVE (2026-07-21, laatste).**
+> Live t/m `f477668` (`?v=040`). LAR-520 blijft **In Progress**. **→ VOLGENDE: de router**
+> (`zoekKeten` + `toets_routes.py`) + de twee angled confluenties — zie `memory/next-actions.md`.
+>
+> Het binnenwaternet was **10.669 losse fragmenten** (mediaan 4,8 km); dáár sterft elke overslag op.
+> **Diagnose eerst** (`v2/tools/diagnose_riviernet.py` reproduceert het overslag-panel onafhankelijk,
+> geen shotgun-naadradius), toen een twee-traps heal in `binnenwaternet()` (achter
+> `--heal-km 0.25 --corridor-km 2.0`, default 0 = oud gedrag, **geïtereerd tot convergentie**):
+> **tier-1** cross-component confluentie-heal (uiteinde → op de lijn van een **ander** component,
+> ≤250 m, **over water per constructie**; cross-component sluit de meander-sluipweg valkuil 1 per
+> constructie uit — 4.837 naden), **tier-2** collineaire corridor-heal (uiteinde↔uiteinde ≤2 km mét
+> **richtingsguard** ≤45° tegen sluipweg/dode-voorganger — 2.922 naden).
+>
+> **Resultaat:** componenten **10.669 → 3.490** · **Mississippi** (New Orleans+Baton Rouge+Memphis,
+> 11.124 km) én **Rijn** (Rotterdam↔Duisburg, 5.220 km) elk één component · **zeenet byte-identiek**
+> (15.840 zee-edges + 9.633 zeeknoop-coörd. ongewijzigd → 19.610 / 8.031 exact) · **0 edges zee↔rivier**
+> (assert). Doel herijkt met Lars (AskUserQuestion): **haven-dragende corridors heel**, niet het ruwe
+> componentgetal (maar 749 van de 10.669 dragen een haven). Veilig gewerkt: naar suffix `-t` gebakken
+> + byte-vergeleken vóór live (deterministisch, rebake ~30 s dankzij de verzoening-cache).
+> **Bewust nog open** (vragen de **lengtetoets**, géén bredere radius): Ohio-Cairo (2,4 km) en de
+> Waal-tak bij Nijmegen (1,4 km) — angled confluenties. `de router werkt nog niet` (Lars) is verwacht.
+
+> **⚓ HAVENS OP DE KAART + HET OVERSLAG-ONTWERPBESLUIT (2026-07-21, eerder).** Live t/m
+> `5b7c3cd` (`?v=039`). **→ [LAR-520] riviernet stitchen (blocks LAR-518)** —
 > zie `memory/next-actions.md`.
 >
 > **LAR-518 stap 1+2 staan.** De 3.962 havens als zichtbare laag (`v2/src/havens.js`, één
@@ -1194,6 +1216,15 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-21 · LAR-520 riviernet gestitcht (live `?v=040`, commit `f477668`)** — twee-traps
+  over-water heal in `binnenwaternet()`: **tier-1** cross-component confluentie-heal (uiteinde → op
+  de lijn van een ander component, ≤250 m, over water per constructie) + **tier-2** collineaire
+  corridor-heal (uiteinde↔uiteinde ≤2 km, richtingsguard), geïtereerd tot convergentie; achter
+  `--heal-km`/`--corridor-km` (default 0 = oud gedrag). Componenten 10.669→3.490, Mississippi+Rijn
+  verenigd, zeenet byte-identiek (19.610/8.031), 0 edges zee↔rivier (assert). Cross-component sluit de
+  meander-sluipweg per constructie uit; angled confluenties (Ohio-Cairo, Waal-tak) via de lengtetoets,
+  **geen bredere radius**. Meetgereedschap `v2/tools/diagnose_riviernet.py`. Doel = haven-dragende
+  corridors heel (749 van de 10.669 componenten dragen een haven).
 - **2026-07-21 · Overslag: stitchen eerst, dan gelaagde keten-router** — zie de banner +
   `v2/design/overslag-ontwerp.md`; LAR-520 blokkeert LAR-518. Aangewezen `knooppunten.json`
   (eigen entiteit, knopenpaar per overstap), klasse per been, geen pad mét reden. Verworpen:

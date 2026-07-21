@@ -1,7 +1,49 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-20 (EEN binnenwaternet in de graaf; riviernet hangt bewust niet aan MARNET)*
+*Last updated: 2026-07-21 (LAR-520 riviernet stitchen: twee-traps over-water heal, cross-component)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-21 · LAR-520 — stitch-doel = haven-dragende corridors heel, niet het ruwe componentgetal
+**Besluit (Lars, AskUserQuestion):** het stitchen stuurt op **haven-dragende corridors heel**
+(de ankers + havendekking), niet op "10.670 → honderden".
+**Waarom:** gemeten dat maar **749 van de 10.669 componenten een haven dragen**; de rest is
+harborloos geïsoleerd water dat terecht los blijft. En een uniforme naadradius haalt "honderden"
+nooit (zelfs bij 10 km blijven 1.413 componenten) én wordt eerst gevaarlijk (meander-sluipweg).
+Het ruwe getal is dus het verkeerde meetlint.
+
+## 2026-07-21 · LAR-520 — tier-1: cross-component confluentie-heal (over water per constructie)
+**Besluit:** een lijn-**uiteinde** dat binnen `--heal-km` (0,25) OP de lijn van een **ander
+component** projecteert wordt daar aangehecht — projectiepunt als vertex in de doel-lijn, uiteinde
+ernaartoe, waarna `binnenwaternet()` er vanzelf één gedeelde knoop van maakt.
+**Waarom:** de dominante breuk-oorzaak is een **gemiste confluentie** (binnenwaternet knoopt alleen
+op lijn-uiteinden + 10 km, dus een T-junctie midden op een lijn breekt; 4.067 uiteinden projecteren
+binnen 100 m op een ander component). Landt op echte vaarweggeometrie = **over water per constructie**.
+**CROSS-COMPONENT is de kern:** binnen je eigen component hechten doet niets én is precies waar de
+meander-sluipweg (valkuil 1) zou ontstaan → per constructie uitgesloten.
+
+## 2026-07-21 · LAR-520 — tier-2: collineaire corridor-heal (richtingsguard)
+**Besluit:** twee **uiteinden** van verschillende componenten binnen `--corridor-km` (2,0) worden
+verbonden, alléén als beide stukken **in elkaars verlengde** liggen (naadrichting ≤45° van beide
+uiteinde-richtingen).
+**Waarom:** de richtingsguard sluit de meander-sluipweg (hairpin-uiteinden lopen parallel, niet naar
+elkaar toe) en de dode voorganger/parallelkanaal (naad staat dwars) uit — zónder handmatige
+ijkpunten. De hele heal wordt **geïtereerd tot convergentie** (≤6 rondes): greedy hecht aan het
+dichtstbijzijnde andere component, dus een hoofdstroom kan in ronde 1 in stukken mergen die pas
+later aaneensluiten.
+
+## 2026-07-21 · LAR-520 — angled confluenties (Ohio-Cairo, Waal-tak) NIET met een bredere radius
+**Besluit:** de resterende ankergaten (Ohio-Cairo 2,4 km, Waal-tak Nijmegen 1,4 km, beide onder een
+hoek) worden **niet** met een grotere blinde radius gesloten, maar met de **lengtetoets** per
+corridor (of een aangewezen naad in `knooppunten.json`), als onderdeel van het router-werk.
+**Waarom:** gemeten dat een bredere endpoint→lijn zonder hoekguard parallelkanalen/dode voorlopers
+aanhaakt (valkuil 3). De lengtetoets (constant/wandelend/springend) is daar de enige echte controle.
+
+## 2026-07-21 · LAR-520 — de heal raakt alleen het riviernet; zeeroutes exact per constructie
+**Besluit + bewijs:** de heal muteert alleen `lijnen_per_regio` (rivierlijnen); het zeenet wordt
+volledig vóór `binnenwaternet()` gebouwd (knoop-id < zee_knopen). Byte-vergelijking baseline vs
+gehealed: **15.840 zee-edges + 9.633 zeeknoop-coördinaten identiek** → R'dam→Shanghai 19.610 /
+Duluth→R'dam 8.031 exact. Assert in de bake: **0 edges zee↔rivier** (valkuil 2, de dragende
+Donau-ring-verdediging). `--heal-km`/`--corridor-km` default 0 = oud gedrag ongewijzigd.
 
 ## 2026-07-20 · ÉÉN binnenwaternet — geen tweede laag naast de getoetste ketens
 **Besluit (Lars):** het binnenwater wordt één keer gemapt, mét de maten op de lijn. Het onderscheid

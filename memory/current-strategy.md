@@ -1,13 +1,21 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-20 (EEN binnenwaternet in de graaf; zee en rivier zijn losse componenten)*
+*Last updated: 2026-07-21 (LAR-520: riviernet gestitcht, twee-traps over-water heal live ?v=040)*
 
 ## Stand 2026-07-21 — de architectuur: drie netten, verbonden door aangewezen overslag
 Zeenet (MARNET, knoop 0–9.685) + riviernet (9.686+, bewust losse component) + straks land (M25).
 Havens dragen sinds LAR-518 twee aanhechtingen (zee + rivier) en een watermaat; de kaart toont
 alleen wat aan water ligt. De overslag wordt een gelaagde keten-router over een aangewezen
-`knooppunten.json` (ontwerp vastgelegd: `v2/design/overslag-ontwerp.md`) — maar **eerst moet het
-riviernet gestitcht** ([LAR-520]): 10.670 fragmenten dragen geen routes. Bronnen: rolverdeling
-per `v2/design/havenbron-keuze.md` (WPI/EMODnet/UNECE/LOCODE).
+`knooppunten.json` (ontwerp: `v2/design/overslag-ontwerp.md`).
+
+**✅ Het riviernet is nu gestitcht** ([LAR-520], live `?v=040`): een twee-traps over-water heal in
+`binnenwaternet()` (achter `--heal-km 0.25 --corridor-km 2.0`, geïtereerd tot convergentie) bracht de
+componenten van **10.669 → 3.490**. **tier-1** cross-component confluentie-heal (uiteinde → op de lijn
+van een ander component, over water per constructie — cross-component sluit de meander-sluipweg per
+constructie uit); **tier-2** collineaire corridor-heal (uiteinde↔uiteinde ≤2 km mét richtingsguard).
+Mississippi en Rijn-mainstem verenigd; zeenet byte-identiek; 0 edges zee↔rivier. Meetgereedschap
+`v2/tools/diagnose_riviernet.py`. **Nog open:** de router (`zoekKeten` + `toets_routes.py`) en twee
+angled confluenties (Ohio-Cairo, Waal-tak) via de lengtetoets. Bronnen-rolverdeling voor de
+overslaghavens: `v2/design/havenbron-keuze.md` (WPI/EMODnet/UNECE/LOCODE).
 
 ## 🌊 De architectuur: drie netten, verbonden door overslag (2026-07-20)
 

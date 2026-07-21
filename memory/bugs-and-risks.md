@@ -1,5 +1,21 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-20 (NIEUW: binnenhavens snappen slecht tot de overslag er is)*
+*Last updated: 2026-07-21 (LAR-520: 2 angled confluenties open; router nog niet gebouwd)*
+
+## ⚠️ OPEN — twee angled confluenties nog niet gestitcht (2026-07-21, LAR-520)
+
+Na de twee-traps heal (`?v=040`) zijn Mississippi en Rijn-mainstem verenigd, maar twee ankergaten
+blijven bewust open: **Ohio-Cairo** (Cincinnati-component 2,4 km van de Mississippi) en de **Waal-tak
+bij Nijmegen** (1,4 km). Beide zijn confluenties/vertakkingen **onder een hoek**, dus de collineaire
+tier-2-guard wijst ze (terecht) af en tier-1 reikt niet zo ver. **Niet met een bredere naadradius
+dichten** — gemeten dat dat parallelkanalen/dode voorlopers aanhaakt (valkuil 3). Ze vragen de
+**lengtetoets** per corridor of een aangewezen naad in `knooppunten.json`; hoort bij het router-werk.
+
+## ⚠️ OPEN — de router geeft nog niet het realistische getal (2026-07-21, LAR-520)
+
+`de router werkt nog niet` (Lars). De huidige `zoekRoute` gaf R'dam→Duisburg **420 km / aanloop 153 km**
+i.p.v. het realistische ~230 km — het stitchen maakt het net routeerbaar, maar `zoekKeten` (gelaagde
+A*/overslag) + `toets_routes.py` (die R'dam→Nijmegen **~172 km over de graaf** narekent) moeten nog
+gebouwd worden vóór de route-acceptatie van LAR-520 hard is.
 
 ## ⚠️ OPEN — binnenhavens snappen slecht tot de overslag er is (2026-07-20)
 

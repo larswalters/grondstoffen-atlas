@@ -1,6 +1,38 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-21 — LAR-520 riviernet stitchen: twee-traps over-water heal (LIVE ?v=040)
+
+**Live t/m `f477668` (`?v=040`); LAR-520 blijft In Progress.** Lars' visuele check op mobiel binnen
+(net staat verbonden, R'dam→Duisburg berekent 420 km / aanloop 153 km — `de router werkt nog niet`,
+verwacht).
+
+**Diagnose eerst** (geen shotgun-naadradius). Nieuw `v2/tools/diagnose_riviernet.py` parset de echte
+bake (`marnet.bin`, varint) en reproduceert het overslag-panel **onafhankelijk**: 10.669 componenten,
+mediaan 4,80 km, naadradius 2 km→2.551 / 5 km→1.666, Cincinnati 16 km/6 knopen, New Orleans 222 km/26.
+De gatverdeling (mediaan uiteinde-gat 0,80 km) toonde dat een uniforme radius het doel niet haalt (10 km
+→ nog 1.413) én eerst gevaarlijk wordt. Doel herijkt met Lars: **haven-dragende corridors heel** (maar
+749 van de 10.669 dragen een haven). Projectie-analyse wees de oorzaak aan: **gemiste confluenties**
+(binnenwaternet knoopt alleen op lijn-uiteinden; 4.067 uiteinden projecteren binnen 100 m op een ander
+component).
+
+**Mechanisme** (in `binnenwaternet()`, achter `--heal-km 0.25 --corridor-km 2.0`, default 0 = oud
+gedrag, geïtereerd tot convergentie ≤6 rondes): **tier-1** cross-component confluentie-heal (uiteinde →
+op de lijn van een ander component, over water per constructie, 4.837 naden ≤250 m; cross-component
+sluit de meander-sluipweg per constructie uit); **tier-2** collineaire corridor-heal (uiteinde↔uiteinde
+≤2 km mét richtingsguard ≤45°, 2.922 naden).
+
+**Resultaat:** componenten **10.669 → 3.490**; **Mississippi** (New Orleans+Baton Rouge+Memphis,
+11.124 km) én **Rijn** (Rotterdam↔Duisburg, 5.220 km) elk één component; **zeenet byte-identiek**
+(15.840 zee-edges + 9.633 zeeknoop-coörd. ongewijzigd → 19.610 / 8.031 exact); **0 edges zee↔rivier**
+(assert). Veilig gewerkt: naar suffix `-t` gebakken + byte-vergeleken vóór live (deterministisch,
+rebake ~30 s dankzij de verzoening-cache). Twee AskUserQuestion-checkpoints (doel + tier-2-guard).
+
+**Nog open (volgende sessie):** de router — `toets_routes.py` (elf invarianten headless, incl.
+R'dam→Nijmegen ~172 km over de graaf, verifieert de route-acceptatie pas écht) + `knooppunten.json` +
+`zoekKeten`. En de twee angled confluenties **Ohio-Cairo** (2,4 km) + **Waal-tak Nijmegen** (1,4 km)
+met de **lengtetoets** (geen bredere radius). Zie `v2/design/overslag-ontwerp.md` §6.
+
 ## 2026-07-20 (sessie 38) — ÉÉN binnenwaternet: riviernet in de graaf, amber eruit
 
 **Visuele go van Lars** (*"ziet er goed uit en ik zie de amber lijnen zijn weg"*). Live `?v=036`.
