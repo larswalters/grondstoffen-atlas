@@ -1,6 +1,24 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-21 (avond) — stap 2 havens: WPI-verrijking + 1.014 posities geschoond (?v=043/?v=044)
+
+**Zelfde sessie als de riviernet-afronding hieronder.** De WPI-blokkade bleek een
+user-agent-kwestie: de officiële NGA-API levert 2.951 havens (publiek domein). Nieuw
+`v2/tools/fetch_wpi.py`; LOCODE-join in `bak_havens` → `wpiMaat`/`wpiSpoor`/`wpiVracht` (alleen
+expliciete Y — WPI zet massaal "U", zelfs Rotterdam; onbekend ≠ geen vracht)/`wpiAfstandKm`/
+`posBron`. **Roze = zee + rivier + spoor bevestigd: 200 kandidaten** (Rosario, Zeebrugge,
+Santos…); **Saldanha Bay toegevoegd** (het gat in de 15 bulkhavens); NGA-attributie in de HUD.
+
+**Posities** (na Lars: *"roze plekken liggen nog niet accuraat"*): **1.014 havens naar de
+haven-georiënteerde WPI-plek** (mediaan 2,6 km) met twee poortwachters — watertoets (nieuwe plek
+aan water, anders blijft de centroïde) en naamtoets >200 km (generieke woorden als "puerto"
+tellen niet). Terechte megareparaties: **Portland Oregon→Maine 4.083 km**, Everett 3.982,
+Crockett 3.415, Yawata 862; **zeven verkeerde LOCODE-identiteiten geweigerd** (Grays
+Harbor↔"Greenwich", Penticton↔"Pangnirtung", Puerto Morelos↔"Puerto Morro Redondo"…).
+Rivier-snap ≤1 km 167→190 · 27 extra havens door de waterpoort · zeenet ongemoeid.
+Commits `d7e5ca4` · `d772477`. **Volgende: stap 3 aansluiten** (knooppunten.json + keten-router).
+
 ## 2026-07-21 — riviernet geknoopt: volg het water (bruggen + meer-oversteken; LAR-520 DONE, ?v=042)
 
 **Werkwijze-correctie van Lars** (*"het viel me op dat je vooral veel ging meten en uitrekenen

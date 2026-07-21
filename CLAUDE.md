@@ -1,6 +1,22 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (riviernet geknoopt: bruggen + meer-oversteken, LAR-520 Done, live ?v=042; volgende = stap 2 havens op de juiste plek)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (stap 2 havens: WPI-verrijking + 1.014 posities geschoond, live ?v=044; volgende = stap 3 aansluiten)*
+
+> **⚓ STAP 2 HAVENS — WPI-VERRIJKING + POSITIES GESCHOOND (2026-07-21, laatste).**
+> Live t/m `d772477` (`?v=044`), [LAR-518] In Progress. **→ VOLGENDE: stap 3 — aansluiten**
+> (`knooppunten.json` + kleine keten-router; zie `memory/next-actions.md`).
+>
+> **WPI:** de 403 was curl's user-agent — de officiële NGA-API levert 2.951 havens (publiek
+> domein). `v2/tools/fetch_wpi.py` → `build-cache/wpi.json`; LOCODE-join in `bak_havens` →
+> `wpiMaat`/`wpiSpoor`/`wpiVracht` (**alleen expliciete Y** — WPI zet massaal "U", zelfs
+> Rotterdam; onbekend ≠ geen vracht)/`wpiAfstandKm`/`posBron`. **Roze = zee+rivier+spoor
+> bevestigd: 200 kandidaten**; Saldanha Bay toegevoegd; NGA-attributie in de HUD.
+>
+> **Posities:** 1.014 havens naar de haven-georiënteerde WPI-plek (mediaan 2,6 km), met
+> **watertoets** (nieuwe plek aan water, anders blijft de centroïde) en **naamtoets >200 km**
+> (generieke woorden tellen niet): Portland ging terecht Oregon→Maine (4.083 km), zeven
+> verkeerde LOCODE-identiteiten (Grays Harbor↔"Greenwich"…) expliciet geweigerd.
+> Rivier-snap ≤1 km 167→190; zeenet ongemoeid — alleen `ports.json` verandert.
 
 > **🧵 RIVIERNET GEKNOOPT — VOLG HET WATER · LAR-520 DONE (2026-07-21, laatste).**
 > Live t/m `aecefa1` (`?v=042`), go van Lars (*"er ligt nu wel veel in — anders kijken we later of

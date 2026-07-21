@@ -1,30 +1,28 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-21 (riviernet geknoopt, LAR-520 Done, live ?v=042; NU = stap 2: havens op de juiste plek)*
+*Last updated: 2026-07-21 (stap 2 havens uitgevoerd: WPI-verrijking + posities, live ?v=044; volgende = stap 3 aansluiten)*
 
-## 🔴 START HIER — stap 2: de havens op de juiste plek ([LAR-518])
+## 🔴 START HIER — stap 3: aansluiten via de aangewezen overslaghavens ([LAR-518])
 
-**Het riviernet is af voor nu** (Lars: *"er ligt nu wel veel in — anders kijken we later of we
-iets missen als we de stromen uitwerken"*). Componenten 10.669 → **1.772** via de heal (`?v=040`),
-de bruggen over ongetagd water (`?v=041`) en de meer-oversteken (`?v=042`); **Ohio-Cairo en de
-Waal-tak zijn dicht via échte watergeometrie** (lengtetoets-naden vervallen). De **route-test is
-geschrapt** als detectiemiddel (kortste-pad maskeert gaten); Lars checkt zelf
-binnenhaven→binnenhaven zodra de keten-router er is (stap 3).
+**Volgorde van Lars: (1) net heel ✅ → (2) havens op de juiste plek ✅ (op Lars' blik en
+optionele EMODnet-verfijning na) → (3) aansluiten via overslag ⬅️ NU → (4) wegen/spoor.**
 
-**Volgorde van Lars: (1) net heel ✅ → (2) havens op de juiste plek ⬅️ NU → (3) aansluiten via
-overslag → (4) wegen/spoor.**
+**Stap 2 staat live** (`?v=044`, commits `d7e5ca4` · `d772477`): WPI-verrijking op LOCODE
+(`fetch_wpi.py` → `wpi.json`; `wpiMaat`/`wpiSpoor`/`wpiVracht`/`posBron` per haven; alleen
+expliciete Y telt — WPI zet massaal "U", onbekend ≠ geen vracht), **roze kaartkleur = zee +
+rivier + spoor bevestigd (200 kandidaten)**, Saldanha Bay toegevoegd, en **1.014 posities
+geschoond** naar de haven-georiënteerde WPI-plek (watertoets + naamtoets >200 km; zeven verkeerde
+LOCODE-identiteiten expliciet geweigerd — staan in de bake-uitvoer).
 
-Stap 2 concreet:
-1. **WPI verifiëren via de Browser-pane** (curl krijgt 403): licentie/velden/download — zie
-   `v2/design/havenbron-keuze.md`. Rolverdeling: WPI kandidaat-verrijking, EMODnet EU-posities
-   (mediaan 0,60 km), UNECE `RAILACCESS` alleen redactionele meetlat, LOCODE alleen sleutel.
-2. **Posities schonen:** UN/LOCODE-centroïdes → echte havenposities waar de bronnen dat kunnen;
-   vrachtfilter + spoorattribuut op de kandidaten-kleuring.
-3. **Ontbrekende echte havens:** Saldanha Bay (het enige gat in de 15 grote bulkhavens).
-4. Daarna — **stap 3, niet nu**: aangewezen overslaghavens als `knooppunten.json` + de (kleine)
-   keten-router; het ontwerp ligt klaar in `v2/design/overslag-ontwerp.md`.
+Stap 3 concreet (ontwerp ligt klaar in `v2/design/overslag-ontwerp.md`):
+1. **`v2/data/knooppunten.json`** — de aangewezen overslaghavens als eigen entiteit (~20–40
+   eerst; de 200 roze kandidaten zijn de vijver, de redacteur — Lars — wijst aan), coördinaat
+   per modaliteit, expliciet knopenpaar zee↔rivier per overstap.
+2. **De keten-router** — klein, want het substraat klopt nu: route = keten van legs met een
+   overstap op een aangewezen knooppunt (lexicografisch minste overslagen → minste km),
+   scheepsklasse per been, "geen pad" mét reden. Lars checkt zelf binnenhaven→binnenhaven.
 
-**Open aanbod aan Lars:** zelfde-component-koordes door plassen (Kaag — realisme/kortere routes,
-voegt geen verbinding toe); bouwen op zijn seintje.
+**Optioneel binnen stap 2 (op Lars' seintje):** EMODnet-verfijning EU-posities (CC-BY, 0,60 km
+vs WPI's boogminuut) · zelfde-component-koordes door plassen (Kaag).
 
 ---
 
