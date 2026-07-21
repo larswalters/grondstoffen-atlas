@@ -1,7 +1,39 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-21 (LAR-520 riviernet stitchen: twee-traps over-water heal, cross-component)*
+*Last updated: 2026-07-21 (riviernet geknoopt: bouwen boven meten, bruggen + meer-oversteken)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-21 · Werkregel — bouwen boven meten; route-test geschrapt als gap-detector
+**Besluit (Lars):** geen meet-/analyserondes meer als poort vóór het bouwen; het werkstuk zelf is
+de toets. De geplande route-test als gap-detector vervalt: *"als de realistische route een
+onderbreking heeft gaat hij gewoon via een andere route — dan zien we niets."* Lars checkt zelf
+binnenhaven→binnenhaven zodra de keten-router er is.
+**Waarom:** een kortste-pad-router maskeert gaten door om te rijden; en de metingen van de
+afgelopen dagen maten proxies (componentgetallen, medianen) i.p.v. het doel (ligt er een
+doorlopende lijn). Meten blijft alleen als diagnose bij iets dat aantoonbaar kapot is, plus het
+bestaande regressie-vangnet. Volgorde voortaan: **net heel → havens → aansluiten via overslag →
+wegen/spoor.**
+
+## 2026-07-21 · Bruggen — volg de ongetagde OSM-riviergeometrie vanaf doodlopende uiteinden
+**Besluit:** `knoop_riviernet.py` walkt vanaf elk doodlopend uiteinde over óngetagde
+`waterway=river|canal`-ways (Dijkstra) tot een ánder component; het pad wordt een lijn met
+signaal `"brug"` (geen maat = géén grens). Eerst dezelfde twee-traps heal als de bake draaien;
+waterval-/dam-punten blokkeren; kortste brug per componentpaar; zelfde-component per constructie
+uitgesloten (meander-sluipweg).
+**Waarom:** OSM knipt een way precies waar de tags veranderen — het bevaarbaarheidssignaal stopt
+halverwege de rivier, het water niet (Lars' screenshots: de Fly). Het water als gids kent het
+zoekradius-sluipwegrisico niet. Bewijs: 1.828 bruggen / 29.961 km, en **Ohio-Cairo én de Waal-tak
+gingen vanzelf dicht** via echte watergeometrie — de geplande lengtetoets-naden vervielen.
+
+## 2026-07-21 · Meer-oversteek — koorde door het watervlak, alleen cross-component
+**Besluit:** uiteinden van verschillende componenten op hetzelfde `natural=water`-vlak worden
+verbonden met een koorde die per shapely-`covers` aantoonbaar binnen het vlak blijft (eiland of
+landtong ertussen = geen verbinding); dam/waterval langs de koorde blokkeert. Zelfde-component
+bewust niet (voegt geen verbinding toe — de ZH-plassen bleken al één component via de boezem);
+staat als open aanbod voor realisme/kortere routes.
+**Waarom:** OSM tekent een meer als vlak, niet als lijn — de brug-walk stopt op de oever. Dit is
+exact de oude LAR-509-blokkade (Grand Canal-noord/Wolga-Baltisch), nu mechanisch opgelost:
+75 oversteken / 744 km, incl. het Hongze-meer (48,6 km).
 
 ## 2026-07-21 · LAR-520 — stitch-doel = haven-dragende corridors heel, niet het ruwe componentgetal
 **Besluit (Lars, AskUserQuestion):** het stitchen stuurt op **haven-dragende corridors heel**

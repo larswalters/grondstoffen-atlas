@@ -1,35 +1,30 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-21 (LAR-520 stitch-mechanisme LIVE ?v=040; NU = de router zoekKeten + toets_routes.py)*
+*Last updated: 2026-07-21 (riviernet geknoopt, LAR-520 Done, live ?v=042; NU = stap 2: havens op de juiste plek)*
 
-## 🔴 START HIER — de router ([LAR-520] blijft In Progress → daarna [LAR-518])
+## 🔴 START HIER — stap 2: de havens op de juiste plek ([LAR-518])
 
-**Het stitchen staat en is live** (`?v=040`, commit `f477668`). De twee-traps over-water heal in
-`binnenwaternet()` (achter `--heal-km 0.25 --corridor-km 2.0`, geïtereerd tot convergentie)
-bracht de componenten van **10.669 → 3.490**: Mississippi (New Orleans+Baton Rouge+Memphis,
-11.124 km) én Rijn (Rotterdam↔Duisburg, 5.220 km) zijn nu één component, zeenet byte-identiek,
-0 edges zee↔rivier. Meetgereedschap: `v2/tools/diagnose_riviernet.py` (draai `--projectie` voor
-de confluentie-analyse). Lars' visuele check binnen. `de router werkt nog niet` (Lars, verwacht).
+**Het riviernet is af voor nu** (Lars: *"er ligt nu wel veel in — anders kijken we later of we
+iets missen als we de stromen uitwerken"*). Componenten 10.669 → **1.772** via de heal (`?v=040`),
+de bruggen over ongetagd water (`?v=041`) en de meer-oversteken (`?v=042`); **Ohio-Cairo en de
+Waal-tak zijn dicht via échte watergeometrie** (lengtetoets-naden vervallen). De **route-test is
+geschrapt** als detectiemiddel (kortste-pad maskeert gaten); Lars checkt zelf
+binnenhaven→binnenhaven zodra de keten-router er is (stap 3).
 
-**Dus nu de router, in deze volgorde:**
-1. **`v2/tools/toets_routes.py`** — de elf invarianten headless narekenbaar + anti-ring-toetsen
-   (eerste uitvoerbare regressietoets van de repo). **Dit verifieert de LAR-520-route-acceptatie
-   pas écht**: R'dam→Nijmegen moet **~172 km over de graaf** meten (de huidige `zoekRoute` gaf
-   R'dam→Duisburg 420 km / aanloop 153 km — nog niet het realistische ~230 km).
-2. **`v2/data/knooppunten.json` + lader** — de aangewezen lijst als eigen entiteit (~20–40 havens
-   eerst), coördinaat per modaliteit, expliciet knopenpaar per overstap.
-3. **`zoekKeten` + HUD** — gelaagde A* (knoop, overstappen), lexicografisch minste overslagen →
-   minste km, klasse per been, geen pad mét reden. Acceptatie: R'dam→Cincinnati = zeeschip →
-   New Orleans → duwkonvooi; R'dam→Nijmegen = binnenschip ~172 zonder verzonnen overslag.
+**Volgorde van Lars: (1) net heel ✅ → (2) havens op de juiste plek ⬅️ NU → (3) aansluiten via
+overslag → (4) wegen/spoor.**
 
-**Twee angled confluenties sluiten met de LENGTETOETS** (valkuil 3, géén bredere naadradius —
-gemeten dat dat parallelkanalen/dode voorlopers aanhaakt): **Ohio-Cairo** (Cincinnati-component
-2,4 km van de Mississippi) en de **Waal-tak bij Nijmegen** (1,4 km). Hoort bij het router-werk,
-waar de lengtetoets tegen ijkpunten de guard is. Kan ook via een aangewezen naad in
-`knooppunten.json`.
+Stap 2 concreet:
+1. **WPI verifiëren via de Browser-pane** (curl krijgt 403): licentie/velden/download — zie
+   `v2/design/havenbron-keuze.md`. Rolverdeling: WPI kandidaat-verrijking, EMODnet EU-posities
+   (mediaan 0,60 km), UNECE `RAILACCESS` alleen redactionele meetlat, LOCODE alleen sleutel.
+2. **Posities schonen:** UN/LOCODE-centroïdes → echte havenposities waar de bronnen dat kunnen;
+   vrachtfilter + spoorattribuut op de kandidaten-kleuring.
+3. **Ontbrekende echte havens:** Saldanha Bay (het enige gat in de 15 grote bulkhavens).
+4. Daarna — **stap 3, niet nu**: aangewezen overslaghavens als `knooppunten.json` + de (kleine)
+   keten-router; het ontwerp ligt klaar in `v2/design/overslag-ontwerp.md`.
 
-**Los daarvan, klein: WPI verifiëren** via de Browser-pane (licentie/velden/download —
-curl krijgt 403). Zie `v2/design/havenbron-keuze.md`. Daarna vrachtfilter + spoorattribuut
-op de kandidaten-kleuring.
+**Open aanbod aan Lars:** zelfde-component-koordes door plassen (Kaag — realisme/kortere routes,
+voegt geen verbinding toe); bouwen op zijn seintje.
 
 ---
 

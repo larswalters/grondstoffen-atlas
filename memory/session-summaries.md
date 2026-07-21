@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-21 — riviernet geknoopt: volg het water (bruggen + meer-oversteken; LAR-520 DONE, ?v=042)
+
+**Werkwijze-correctie van Lars** (*"het viel me op dat je vooral veel ging meten en uitrekenen
+voordat we iets gingen maken… we willen gewoon een lijntje door heel het rivierennet leggen"*) →
+route-test als gap-detector geschrapt (kortste-pad rijdt om een gat heen), en gebouwd:
+`v2/tools/knoop_riviernet.py`. (a) **Bruggen:** Dijkstra over óngetagde `waterway=river|canal`-ways
+vanaf elk doodlopend uiteinde tot een ander component (OSM deelt de knoop exact waar de tags
+knippen); 159 extracts / 70 GB / ~10 min → **1.828 bruggen / 29.961 km** (de Fly 245 km — Lars'
+eigen screenshot-rivier; Congobekken 79; GB-kanalen 553). (b) **Meer-oversteek** (`--meren`):
+koorde door `natural=water`-vlakken met shapely-`covers`-bewijs → **75 oversteken / 744 km**
+(Hongze 48,6 km = het LAR-509-gat, Peipus 67, Mweru 109, Markermeer/IJsselmeer/Zeeland). Guards:
+eerst dezelfde heal als de bake, waterval/dam blokkeert, kortste per componentpaar,
+zelfde-component per constructie uit.
+
+**Resultaat:** componenten **3.490 → 1.772**; **Ohio-Cairo + Waal-tak dicht via écht water** (de
+geplande lengtetoets-naden vervielen); zeenet in elke stap byte-ongemoeid (0 zee↔rivier, -t ==
+live); live `?v=041` → `?v=042` (commits `b4ab8c2` · `aecefa1`). **LAR-520 Done na Lars' go**
+(*"er ligt nu wel veel in — anders kijken we later of we iets missen als we de stromen
+uitwerken"*). Zijn ZH-cirkels (Kaag/Braassem/Westeinder) bleken al één component — de boezem
+verbindt om de plassen heen; open aanbod: zelfde-component-koordes door plassen.
+**Volgende: stap 2 — havens op de juiste plek** (WPI/posities/Saldanha), dan aansluiten, dan wegen.
+
 ## 2026-07-21 — LAR-520 riviernet stitchen: twee-traps over-water heal (LIVE ?v=040)
 
 **Live t/m `f477668` (`?v=040`); LAR-520 blijft In Progress.** Lars' visuele check op mobiel binnen

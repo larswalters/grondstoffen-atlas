@@ -1,21 +1,34 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-21 (LAR-520: 2 angled confluenties open; router nog niet gebouwd)*
+*Last updated: 2026-07-21 (riviernet geknoopt ?v=042; verbindingsstukken toetsen bij de stromen)*
 
-## ⚠️ OPEN — twee angled confluenties nog niet gestitcht (2026-07-21, LAR-520)
+## ✅ OPGELOST 2026-07-21 — de twee angled confluenties zijn dicht via écht water
 
-Na de twee-traps heal (`?v=040`) zijn Mississippi en Rijn-mainstem verenigd, maar twee ankergaten
-blijven bewust open: **Ohio-Cairo** (Cincinnati-component 2,4 km van de Mississippi) en de **Waal-tak
-bij Nijmegen** (1,4 km). Beide zijn confluenties/vertakkingen **onder een hoek**, dus de collineaire
-tier-2-guard wijst ze (terecht) af en tier-1 reikt niet zo ver. **Niet met een bredere naadradius
-dichten** — gemeten dat dat parallelkanalen/dode voorlopers aanhaakt (valkuil 3). Ze vragen de
-**lengtetoets** per corridor of een aangewezen naad in `knooppunten.json`; hoort bij het router-werk.
+De bruggen-walk (`knoop_riviernet.py`) vond bij **Ohio-Cairo** én de **Waal-tak bij Nijmegen**
+gewoon verbindende watergeometrie in de bron: Cincinnati↔New Orleans (19.304 km) en
+Nijmegen↔Rotterdam↔Duisburg (24.517 km) zijn elk één component. De geplande lengtetoets-naad /
+`knooppunten.json`-workaround is vervallen.
 
-## ⚠️ OPEN — de router geeft nog niet het realistische getal (2026-07-21, LAR-520)
+## ⚠️ AANGEPAST — route-test geschrapt; router klein en pas bij stap 3 (2026-07-21)
 
-`de router werkt nog niet` (Lars). De huidige `zoekRoute` gaf R'dam→Duisburg **420 km / aanloop 153 km**
-i.p.v. het realistische ~230 km — het stitchen maakt het net routeerbaar, maar `zoekKeten` (gelaagde
-A*/overslag) + `toets_routes.py` (die R'dam→Nijmegen **~172 km over de graaf** narekent) moeten nog
-gebouwd worden vóór de route-acceptatie van LAR-520 hard is.
+Lars schrapte de route-test als gap-detector (een kortste-pad-router rijdt om een gat heen en
+verbergt het) en checkt zelf binnenhaven→binnenhaven zodra de keten-router er is. R'dam→Duisburg
+toont nu 420 km / aanloop 153 km — blijft indicatief tot de overslag/keten-router (stap 3) de
+haven-aanloop goed afhandelt. Geen `toets_routes.py` bouwen als poort.
+
+## ⚠️ OPEN — 1.903 verbindingsstukken nog visueel te toetsen bij de stromen (2026-07-21)
+
+1.828 bruggen + 75 meer-oversteken liggen erin mét guards, maar de langste (250–300 km: Mamoré,
+Irtysj/Lena-omgeving, Povlakte, Binnen-Mongolië) en het GB-kanalennet (553 kleine bruggen) zijn
+niet stuk voor stuk beoordeeld. Lars' lakmoesproef: bij het uitwerken van de stromen (M26) blijkt
+wat mist of te veel is. Elke brug/oversteek is een eigen lijn met signaal `"brug"`/`"meer"` —
+gericht weghalen kan zonder iets anders te raken. Bekende v1-beperking: een walk stopt op de
+extractrand, dus tagging-gaten die precies over een landsgrens lopen worden gemist.
+
+## ⚠️ OPEN — LAR-519: onderzochte gabariet-maten moeten op het nieuwe net herlanden
+
+De 7 trajectmaten + zes te splitsen edges + vier bronverificaties uit de gabariet-ronde verwijzen
+naar de oude handgemaakte systemen die niet meer als routeerbare entiteit bestaan. Herankeren op
+binnenwaternet-edges of bewust sluiten — niet laten hangen als schijn-backlog.
 
 ## ⚠️ OPEN — binnenhavens snappen slecht tot de overslag er is (2026-07-20)
 

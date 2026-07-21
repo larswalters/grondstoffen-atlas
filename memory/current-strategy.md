@@ -1,5 +1,19 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-21 (LAR-520: riviernet gestitcht, twee-traps over-water heal live ?v=040)*
+*Last updated: 2026-07-21 (riviernet geknoopt: bruggen + meer-oversteken, LAR-520 Done, live ?v=042)*
+
+## Stand 2026-07-21 (avond) — riviernet geknoopt; werkwijze: bouwen boven meten
+
+**Lars' volgorde is nu leidend: (1) net heel ✅ → (2) havens op de juiste plek ⬅️ NU → (3)
+aansluiten via overslag → (4) wegen/spoor.** De route-test als gap-detector is geschrapt (een
+kortste-pad-router rijdt om een gat heen en verbergt het); werkregel: **bij twijfel bouwen, meten
+alleen als diagnose bij iets dat aantoonbaar kapot is** — het bestaande regressie-vangnet blijft.
+
+**Het net:** componenten 10.669 → **1.772** via drie mechanismen die alle drie "het water volgen":
+de twee-traps heal (`?v=040`), **1.828 bruggen** over ongetagde OSM-riviergeometrie (`?v=041`,
+`v2/tools/knoop_riviernet.py`) en **75 meer-oversteken** dwars door `natural=water`-vlakken met
+`covers`-toets (`?v=042`, `--meren`). **Ohio-Cairo en de Waal-tak dicht via échte geometrie**;
+zeenet in élke stap byte-ongemoeid (0 zee↔rivier, -t == live, bake zonder vlaggen byte-identiek).
+Signalen `"brug"`/`"meer"` dragen géén maat (onbekend = geen grens) en zijn gericht verwijderbaar.
 
 ## Stand 2026-07-21 — de architectuur: drie netten, verbonden door aangewezen overslag
 Zeenet (MARNET, knoop 0–9.685) + riviernet (9.686+, bewust losse component) + straks land (M25).

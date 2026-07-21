@@ -1,8 +1,34 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (LAR-520 riviernet gestitcht, twee-traps over-water heal live ?v=040; volgende = de router)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (riviernet geknoopt: bruggen + meer-oversteken, LAR-520 Done, live ?v=042; volgende = stap 2 havens op de juiste plek)*
 
-> **🪡 LAR-520 RIVIERNET GESTITCHT — twee-traps over-water heal LIVE (2026-07-21, laatste).**
+> **🧵 RIVIERNET GEKNOOPT — VOLG HET WATER · LAR-520 DONE (2026-07-21, laatste).**
+> Live t/m `aecefa1` (`?v=042`), go van Lars (*"er ligt nu wel veel in — anders kijken we later of
+> we iets missen als we de stromen uitwerken"*). **→ VOLGENDE: stap 2 — havens op de juiste plek**
+> (WPI/posities/Saldanha; zie `memory/next-actions.md`), daarna aansluiten (overslag), dan wegen.
+>
+> **Werkwijze-correctie van Lars die deze sessie stuurde:** niet meten maar bouwen — *"je ziet
+> vanuit de ruimte de rivier gewoon doorlopen terwijl de graaf ophoudt."* De route-test als
+> gap-detector is geschrapt (een kortste-pad-router rijdt om een gat heen en verbergt het).
+> Werkregel: bij twijfel bouwen; meten alleen als diagnose bij iets dat aantoonbaar kapot is.
+>
+> **Nieuw `v2/tools/knoop_riviernet.py`, twee modi.** (a) **Bruggen:** vanaf elk doodlopend
+> uiteinde de óngetagde `waterway=river|canal`-geometrie volgen (Dijkstra; OSM deelt de
+> knoop-coördinaat exact waar de tags knippen) tot een ander component — 159 extracts / 70 GB /
+> ~10 min → **1.828 bruggen / 29.961 km** (de Fly 245 km, Congobekken 79, GB-kanalennet 553).
+> (b) **Meer-oversteek** (`--meren`): uiteinden van verschillende componenten op hetzelfde
+> `natural=water`-vlak, koorde per shapely-`covers` aantoonbaar binnen het vlak — **75 oversteken /
+> 744 km** (Hongze 48,6 km = het LAR-509-gat mechanisch dicht, Peipus 67, Mweru 109,
+> Markermeer/IJsselmeer/Zeeland). Guards: eerst dezelfde heal als de bake; waterval/dam blokkeert;
+> kortste per componentpaar; zelfde-component per constructie uitgesloten. Bake:
+> `--bruggen` + `--meren`; signaal `"brug"`/`"meer"` = geen maat = géén grens.
+>
+> **Resultaat:** componenten 3.490 → **1.772** · **Ohio-Cairo én Waal-tak dicht via écht water**
+> (de geplande lengtetoets-naden vervallen) · zeenet ongemoeid (0 zee↔rivier; bake zonder vlaggen
+> byte-identiek aan v040; -t == live) · riviernet 407.626 km. Lars' ZH-plassen-cirkels bleken al
+> één component (boezem verbindt eromheen) — meer-als-vlak was wél de nieuwe knoopklasse.
+
+> **🪡 LAR-520 RIVIERNET GESTITCHT — twee-traps over-water heal LIVE (2026-07-21, eerder).**
 > Live t/m `f477668` (`?v=040`). LAR-520 blijft **In Progress**. **→ VOLGENDE: de router**
 > (`zoekKeten` + `toets_routes.py`) + de twee angled confluenties — zie `memory/next-actions.md`.
 >
