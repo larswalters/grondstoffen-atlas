@@ -33,12 +33,53 @@ html, body {
   left: 18px;
   padding: 14px 16px;
   min-width: 190px;
+  width: 300px;
+  max-width: calc(100vw - 36px);
+  /* Nooit langer dan het scherm: de rest scrollt binnen het paneel, zodat de
+     route-knoppen onderaan altijd bereikbaar blijven (op een telefoon liep het
+     menu anders buiten beeld). */
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 12px;
   backdrop-filter: blur(10px);
   user-select: none;
 }
+
+/* dunne, discrete scrollbalk binnen het paneel */
+#hud::-webkit-scrollbar { width: 8px; }
+#hud::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.14); border-radius: 8px; }
+
+#hudKop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+#hudToggle {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  margin: -2px -4px 0 0;
+  font: inherit;
+  font-size: 15px;
+  line-height: 1;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.15s, background 0.15s;
+}
+#hudToggle:hover { background: rgba(255, 255, 255, 0.12); }
+
+/* Ingeklapt: alleen de kop blijft staan, de bol is weer vrij. */
+#hud.is-collapsed { overflow: hidden; }
+#hud.is-collapsed #hudBody { display: none; }
+#hud.is-collapsed #hudToggle { transform: rotate(-90deg); }
 
 .hudTitle { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
 .hudSub { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }

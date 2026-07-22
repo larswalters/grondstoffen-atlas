@@ -2,14 +2,14 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=054";
-import { laadVectorWereld } from "./world.js?v=054";
-import { createTileLayer } from "./tiles.js?v=054";
+import { createGlobe, CONFIG } from "./globe.js?v=055";
+import { laadVectorWereld } from "./world.js?v=055";
+import { createTileLayer } from "./tiles.js?v=055";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=054";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=054";
-import { laadLandnet } from "./landnet.js?v=054";
-import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=054";
+  from "./marnet.js?v=055";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=055";
+import { laadLandnet } from "./landnet.js?v=055";
+import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=055";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -137,7 +137,7 @@ laadLandnet(CONFIG.radius, "054", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=054")
+fetch("data/knooppunten.json?v=055")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
@@ -464,6 +464,14 @@ for (const el of [vanEl, naarEl]) {
 }
 
 // --- HUD -------------------------------------------------------------------
+
+// Menu in-/uitklappen. Op een telefoon dekt het volledige paneel de bol af, dus
+// starten we daar INGEKLAPT — de kop blijft staan, één tik opent de rest. Op een
+// breed scherm staat het gewoon open.
+const hudEl = document.getElementById("hud");
+const hudToggle = document.getElementById("hudToggle");
+if (window.innerWidth <= 640) hudEl.classList.add("is-collapsed");
+hudToggle.addEventListener("click", () => hudEl.classList.toggle("is-collapsed"));
 
 function wireButtons(selector, attr, apply) {
   const btns = [...document.querySelectorAll(selector)];

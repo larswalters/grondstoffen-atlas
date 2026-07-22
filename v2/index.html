@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=054" />
+<link rel="stylesheet" href="style.css?v=055" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -27,8 +27,17 @@
   <div id="canvasWrap"></div>
 
   <div id="hud">
-    <div class="hudTitle">Atlas v2 · fundament</div>
-    <div class="hudSub">M24 — havens + overslag</div>
+    <!-- Kop blijft altijd staan; de ▾-knop vouwt de rest weg zodat op een
+         telefoon de bol zichtbaar is en de knoppen niet buiten beeld vallen. -->
+    <div id="hudKop">
+      <div>
+        <div class="hudTitle">Atlas v2 · fundament</div>
+        <div class="hudSub">M24 — havens + overslag</div>
+      </div>
+      <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
+    </div>
+
+    <div id="hudBody">
 
     <!-- Twee ONAFHANKELIJKE lagen, niet één of-of-keuze: de ondergrond is het
          oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
@@ -141,6 +150,8 @@
     </div>
 
     <div id="stats"></div>
+
+    </div><!-- /#hudBody -->
   </div>
 
   <!-- Zweeft mee met de cursor zodra die een haven raakt. Zonder naam is een
@@ -157,6 +168,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=054"></script>
+<script type="module" src="src/main.js?v=055"></script>
 </body>
 </html>
