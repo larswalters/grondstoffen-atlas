@@ -1,5 +1,37 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-21 (riviernet geknoopt: bruggen + meer-oversteken, LAR-520 Done, live ?v=042)*
+*Last updated: 2026-07-22 (M25 landnet: 1.154.090 km spoor live ?v=045; volgende = wegcorridors, dan koppelen)*
+
+## Stand 2026-07-22 — VIER netten liggen er, koppelen komt als laatste
+
+**Lars' volgorde (omgedraaid op 2026-07-22):** riviernet heel ✅ → havens op de juiste plek ✅ →
+**landnet neerleggen ✅ (spoor; wegcorridors volgen)** → **koppelen in één keer over álle netten**.
+
+| net | omvang | bestand | knoopruimte |
+| -- | -- | -- | -- |
+| zeenet (MARNET) | 15.933 edges | `marnet.bin` | 0 … 9.685 |
+| riviernet | 407.626 km · 60.131 edges | `marnet.bin` | 9.686 … 71.264 |
+| **landnet (spoor)** | **1.154.090 km · 236.728 edges** | **`landnet.bin` (4,4 MB)** | **lokaal 0 … 237.943** |
+| *(volgt)* wegcorridors | ~20-40 verhalende corridors | `landnet.bin` (soort 3) | idem |
+
+⚠️ **Het landnet leeft bewust in een EIGEN bestand met LOKALE knoop-ids.** `bak_havens()` slicet de
+knopenlijst op `zee_knopen` en telt élke knoop daarboven als water; spoor ligt in élke haven
+dichterbij dan de dichtstbijzijnde zeeknoop, dus landknopen in dezelfde lijst = elke haven snapt op
+een spoorknoop en de WPI-positieschoning verplaatst havens naar het spoor. Een gebakken offset zou
+bovendien stil verlopen bij een marnet-rebake (varints lezen altijd "iets" → plausibele onzin i.p.v.
+een exception). De offset wordt pas bij het **laden** berekend uit `marnet.json`.
+
+**De landnet-pijplijn** (`fetch_landnet.py` → `bake_landnet.py`): parallelle osmium-scan met
+per-extract cache → **ketenvouwen** (OSM knipt spoor op elke tagwissel; zonder deze stap bepaalt
+het aantal way-uiteinden het aantal knopen) → **dedup van dubbelspoor** per monster met gauge in de
+sleutel → **heal** (cross-component ≤150 m; anders blijven de snijranden van de dedup los) →
+component-snoei die op land ómgekeerd werkt aan water (houden wat een atlas-plaats raakt óf ≥25 km
+is — Pilbara, Carajás en Sishen–Saldanha zijn geïsoleerd én het onderwerp) → simplify die **knipt
+op aanhechtpunten** (een kale DP sneed juist de aftakkingen weg).
+
+**Landbrug (beslist):** het standaardprofiel sluit `land`; de modus per been komt uit de
+flows-data, niet uit de router. Zonder die regel wint een spoorroute lexicografisch van zee
+(0 overslagen, ~11.000 km) en kantelen 7 van de 11 invarianten naar een trein.
+
 
 ## Stand 2026-07-21 (avond) — riviernet geknoopt; werkwijze: bouwen boven meten
 

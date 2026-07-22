@@ -1,10 +1,60 @@
 # Next actions — Grondstoffen Atlas
 *Last updated: 2026-07-21 (stap 2 havens uitgevoerd: WPI-verrijking + posities, live ?v=044; volgende = stap 3 aansluiten)*
 
-## 🔴 START HIER — stap 3: aansluiten via de aangewezen overslaghavens ([LAR-518])
+## 🔴 START HIER — de SNELWEGCORRIDORS, daarna koppelen
 
-**Volgorde van Lars: (1) net heel ✅ → (2) havens op de juiste plek ✅ (op Lars' blik en
-optionele EMODnet-verfijning na) → (3) aansluiten via overslag ⬅️ NU → (4) wegen/spoor.**
+**Het spoor ligt er** (`?v=045`, visuele go van Lars): 1.154.090 km, `landnet.bin` 4,4 MB,
+237.944 knopen / 236.728 edges, grootste component 356.682 km. Gereedschap staat:
+`fetch_landnet.py` (scan → ketenvouwen → dedup → heal → snoei), `bake_landnet.py`,
+`run_landnet_wereld.py`, `audit_landdekking.py`, `v2/src/landnet.js`.
+
+**1 · Snelwegcorridors** (`fetch_landnet.py --modus weg`, nog te bouwen):
+- **GEEN wereldwijd wegennet.** Weg is de enige modus zónder scheidsrechter, en
+  `highway=motorway` levert gemeten **0 km in Zambia én 0 km in DR Congo** — precies het gebied
+  met elf landstromen en de bekendste grenspost van de atlas. `motorway+trunk+primary` wereldwijd
+  is bovendien 0,88-1,09 knopen/km tegen 0,10-0,16 voor spoor.
+- **Wél: ~20-40 verhalende corridors**, elk één gelabelde polyline tussen twee ankers met een
+  gepubliceerde lengte ernaast. Afleiden uit de 105 `mode:"road"`-legs in `data/*.js`:
+  ontdubbelen op (van, naar), `market`/`exchange`/`hub`-endpoints eruit (centroïdes!), >150 km
+  hemelsbreed. Scanvenster = buffer van 50 km rond de grootcirkel tussen de ankers — **niet** de
+  bbox van de leg (die is voor cu-tenke→Durban 1,38 M km²).
+- Lijst één keer met Lars doorlopen ná dit spoorwerk: dan is zichtbaar welke corridors het spoor
+  al draagt en welke echt over de weg gaan.
+
+**2 · Koppelen — in één keer over álle vier de netten** (`knooppunten.json` + `zoekKeten`):
+ontwerp ligt klaar in `v2/design/overslag-ontwerp.md`. De landbrug-regel is beslist: het
+**standaardprofiel sluit `land`** en de modus per been komt **uit de flows-data**. ⚠️ Bij het
+koppelen geldt: `binnenSystemenBij()` bouwt zijn dichtlijst uitsluitend uit `net.vaarwegen`, dus
+een landlabel kan daar nooit gesloten worden — er hoort een **expliciete groepslabel-tak voor
+`land`/`spoor`/`weg`** naast `binnenvaart`. De offset tussen de knoopruimtes wordt pas bij het
+laden berekend uit `marnet.json`, nooit gebakken.
+
+**Klein en open:** `landnet-aanhecht.json` is de invoer voor de redacteur (per atlas-plaats de
+dichtstbijzijnde landknoop, component-km en graad) · `toets_landnet.py` met vormdiagnose per
+corridor (Sishen–Saldanha 861 · Carajás 892 · TAZARA 1.860 · Gashuunsukhait **233,6** — 267 is
+fout) · gauge-breuken (Małaszewicze, Dostyk) zijn detecteerbaar maar nog niet als verplichte
+overstap gemodelleerd · EMODnet-verfijning EU-havenposities.
+
+## ✅ AFGEROND 2026-07-22 — het landnet (spoor) ([LAR-491], M25)
+
+**⚠️ DE VOLGORDE IS OMGEDRAAID (Lars, 2026-07-21):** *"het is denk ik beter om toch eerst het
+spoor en een aantal snelwegen neer te leggen en dan pas met connecten beginnen."*
+
+**Nieuwe volgorde: (1) riviernet heel ✅ → (2) havens op de juiste plek ✅ → (3) LANDNET
+neerleggen ⬅️ NU → (4) aansluiten via aangewezen knooppunten (in één keer over álle netten).**
+
+Waarom dit beter is: `v2/design/overslag-ontwerp.md` §3a draagt M25 al (`"spoor": [lon,lat]` in
+een knooppunt-entry; Kasumbalesa hoeft geen haven te zijn). Aansluiten ná het landnet = één
+redactieronde over de aangewezen punten i.p.v. twee, en de keten-router wordt meteen op zijn
+eindvorm gebouwd (zee ↔ binnen ↔ spoor/weg).
+
+Uitgangspositie: de **159 Geofabrik-extracts (70 GB) staan lokaal** en bevatten het spoor al —
+niets te downloaden. Bronnenplan ligt vast in [LAR-491] (compleet hoofdspoornet; filter door
+uitsluiting; NARN/RINF als meetlat; dedup van parallelle sporen is de nieuwe stap; knoopafstand
+5 of 10 km). Bouwplan volgt uit de verkennings-/ontwerpronde van 2026-07-21 (4 architecturen ×
+3 aanvallers) — wordt vastgelegd in LAR-491 vóór de code.
+
+## 🔵 DAARNA — stap 4: aansluiten via de aangewezen knooppunten ([LAR-518])
 
 **Stap 2 staat live** (`?v=044`, commits `d7e5ca4` · `d772477`): WPI-verrijking op LOCODE
 (`fetch_wpi.py` → `wpi.json`; `wpiMaat`/`wpiSpoor`/`wpiVracht`/`posBron` per haven; alleen

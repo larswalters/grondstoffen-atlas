@@ -1,6 +1,40 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-22 — M25: het landnet (spoor) op de bol, 1.154.090 km (LIVE ?v=045, visuele go)
+
+**Lars draaide de volgorde om:** *"eerst het spoor en een aantal snelwegen neerleggen en dan pas
+met connecten beginnen."* Verkenning + ontwerp via een multi-agent ronde (5 lezers → 4
+architecturen → 12 aanvallers → synthese); alle vier kozen onafhankelijk een **eigen bestand**
+naast `marnet.bin`.
+
+**Gebouwd:** `audit_landdekking.py` (dekking aan de vraagkant; **79 van 497 plaatsen buiten de
+brondata**, waarvan 43 alleen schijnbaar gedekt — een bbox-treffer bewijst niets over de inhoud:
+Mongolië ligt in China's bbox) · `fetch_landnet.py` (eigen extract-registry, parallelle scan,
+**ketenvouwen**, **dedup**, **heal**, component-snoei) · `bake_landnet.py` · `run_landnet_wereld.py`
+· `v2/src/landnet.js` + HUD.
+
+**Resultaat:** 1.154.090 km · 237.944 knopen · 236.728 edges · `landnet.bin` **4,4 MB** (budget 8)
+· laden 466 ms · grootste component 356.682 km · 359/497 atlas-plaatsen ≤25 km van het spoor.
+Labelverdeling klopt zonder sturing (`na-1435` 264.816 · `ru-1520` 89.677 · `as-1676` 82.755 ·
+`af-1067` 44.160); China conventioneel 125.606 tegen 109.767 Wereldbank (+14,4%).
+
+**Dedup GEIJKT op twee meetlatten, tweezijdig:** NL 3.103 tegen ProRail 3.223 (−3,7%) · Polen
+19.534 tegen PKP-PLK ~19.300 (+1,2%) · enkelspoor blijft (Zambia −0,4% · Cambodja −0,2%) ·
+Sishen–Saldanha 882 tegen 861.
+
+**⚠️ De bake legde zijn eigen fout bloot** doordat hij componenten print: 31.737 componenten met
+de grootste op 3.102 km. Oorzaak 1 — de simplify sneed juist de **aanhechtpunten** weg (die liggen
+per definitie vlak bij de rechte lijn, dus DP verwijdert ze als eerste). Oorzaak 2 — de dedup liet
+**snijranden** achter op ~4 m van de houder. Fix: simplify die knipt op aanhechtpunten + de
+riviernet-heal cross-component ≤150 m.
+
+**Besloten:** landbrug — het standaardprofiel sluit `land`, modus per been uit de flows-data ·
+extracts uitgebreid met 23 stuks (3,6 GB, niet de geschatte 15-20) in een **eigen registry** ·
+eigen bestand met **lokale** knoop-ids (een gebakken offset verloopt stil bij een marnet-rebake).
+Guards: marnet/ports sha256-identiek vóór en ná. Commits `3aae346` · `f2cd1b7` · `f2578ed` ·
+`d3fae84`. **Volgende: snelwegcorridors, dan koppelen over alle vier de netten.**
+
 ## 2026-07-21 (avond) — stap 2 havens: WPI-verrijking + 1.014 posities geschoond (?v=043/?v=044)
 
 **Zelfde sessie als de riviernet-afronding hieronder.** De WPI-blokkade bleek een

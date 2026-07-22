@@ -1,6 +1,54 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-21 (stap 2 havens: WPI-verrijking + 1.014 posities geschoond, live ?v=044; volgende = stap 3 aansluiten)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (M25 landnet: 1.154.090 km spoor live ?v=045; volgende = wegcorridors, dan koppelen)*
+
+> **🚂 M25 — HET LANDNET STAAT OP DE BOL (2026-07-22, laatste).** Live t/m `d3fae84` (`?v=045`),
+> **visuele go van Lars**. [LAR-491] In Progress. **→ VOLGENDE: de snelwegcorridors, daarna
+> koppelen over álle vier de netten** (zie `memory/next-actions.md`).
+>
+> **⚠️ LARS DRAAIDE DE VOLGORDE OM:** *"eerst het spoor en een aantal snelwegen neerleggen en dan
+> pas met connecten beginnen."* Voordeel: `v2/design/overslag-ontwerp.md` §3a draagt M25 al
+> (`"spoor": [lon,lat]` in een knooppunt-entry), dus koppelen ná het landnet = één redactieronde
+> in plaats van twee, en de keten-router wordt meteen op zijn eindvorm gebouwd.
+>
+> **1.154.090 km spoor** · 237.944 knopen · 236.728 edges · `landnet.bin` **4,4 MB** (budget 8) ·
+> laden 466 ms · grootste component **356.682 km** · 359/497 atlas-plaatsen ≤25 km van het spoor.
+> Uit 182 extracts (74 GB), waarvan 23 nieuw (3,6 GB) na een audit die **79 van 497 plaatsen
+> buiten de brondata** vond — **43 daarvan alleen schijnbaar gedekt**, want een bbox-treffer zegt
+> niets over de inhoud (Mongolië ligt volledig in de bbox van China).
+>
+> **⚠️ EIGEN BESTAND MET LOKALE KNOOP-IDS, EN DAT IS GEEN SMAAK.** `bak_havens()` slicet de
+> knopenlijst op `zee_knopen` en telt élke knoop daarboven als water; spoor ligt in élke haven
+> dichterbij dan de dichtstbijzijnde zeeknoop. Landknopen in dezelfde lijst = elke haven snapt op
+> een spoorknoop en de WPI-positieschoning verplaatst havens naar het spoor — stille corruptie van
+> `ports.json`. Een gebakken offset zou bovendien stil verlopen bij een marnet-rebake.
+>
+> **Drie dragende stappen.** (1) **Ketenvouwen** — OSM knipt spoor op elke tagwissel; 45.078 ways
+> → 4.983 ketens, km-invariant op 1e-8. Zonder deze stap bepaalt het aantal way-uiteinden het
+> aantal knopen i.p.v. je knoopinterval. (2) **Dedup van dubbelspoor** per MONSTER (cel 15 m ×
+> richtingsbak × **gauge**), **geijkt op twee gepubliceerde meetlatten, tweezijdig**: NL 3.103 km
+> tegen ProRail 3.223 (−3,7%) én Polen 19.534 tegen PKP-PLK ~19.300 (+1,2%), terwijl enkelspoor
+> blijft staan (Zambia −0,4% · **Sishen–Saldanha 882 tegen 861**). Gauge móét in de sleutel, anders
+> wordt een 1435-lijn de dubbelganger van een parallelle 1520-lijn en verdwijnen de
+> spoorwijdte-breuken. (3) **Heal** — cross-component ≤150 m.
+>
+> **⚠️ DE BAKE LEGDE ZIJN EIGEN FOUT BLOOT, OMDAT HIJ COMPONENTEN PRINT.** Eerste wereldbake:
+> 31.737 componenten met de grootste op 3.102 km — onmogelijk voor een net van een miljoen km.
+> Oorzaak 1: de **simplify sneed juist de aanhechtpunten weg** (waar een zijlijn aantakt is dat een
+> binnenvertex die per definitie vlak bij de rechte lijn ligt, dus Douglas-Peucker verwijdert hem
+> als eerste). Oorzaak 2: de **dedup liet snijranden achter** op ~4 m van de houder — fysiek
+> hetzelfde emplacement, geen gedeelde vertex. Les: een assert die alleen slaagt of faalt had dit
+> niet gevonden; het getal moest geprint worden.
+>
+> **Labelverdeling klopt met de werkelijkheid zónder sturing:** `na-1435` 264.816 · `eu-1435`
+> 175.893 · `cn-1435` 119.459 · `ru-1520` 89.677 · `as-1676` 82.755 · `cn-1435-hs` 60.397 ·
+> `af-1067` 44.160 km. China conventioneel 125.606 tegen 109.767 Wereldbank-routekm (+14,4%).
+>
+> **✅ BESLIST — LANDBRUG:** het standaardprofiel **sluit het landnet af** en de modus per been komt
+> **uit de flows-data**, niet uit de router. Zonder die regel wint een spoorroute lexicografisch van
+> zee (0 overslagen, R'dam→Shanghai ~11.000 km tegen 19.610) en kantelen 7 van de 11 invarianten.
+> Uitvoeren bij het koppelen. **Guards groen:** `marnet.bin`/`marnet.json`/`ports.json`
+> sha256-identiek vóór en ná (assert), determinisme (-t == live).
 
 > **⚓ STAP 2 HAVENS — WPI-VERRIJKING + POSITIES GESCHOOND (2026-07-21, laatste).**
 > Live t/m `d772477` (`?v=044`), [LAR-518] In Progress. **→ VOLGENDE: stap 3 — aansluiten**
