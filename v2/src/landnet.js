@@ -70,7 +70,7 @@ function kleurVoor(label) {
  * Laadt landnet.bin/json en bouwt er één LineSegments van — één draw call voor
  * het hele landnet, kleur per lijn via vertex colors.
  */
-export async function laadLandnet(radius, versie = "045") {
+export async function laadLandnet(radius, versie = "046") {
   const t0 = performance.now();
   const [meta, buffer] = await Promise.all([
     fetch(`data/landnet.json?v=${versie}`).then((r) => {

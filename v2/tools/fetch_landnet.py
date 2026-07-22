@@ -85,6 +85,42 @@ HEAL_KM = 0.15
 MIN_COMPONENT_KM = 25.0
 ANKER_KM = 25.0              # een component "raakt" een atlas-plaats binnen dit
 
+# ⚠️ DE SIMPLIFY BREEKT WAT DE HEAL NET GEDICHT HEEFT. Gemeten op Polen (bake-regel):
+# zónder simplify 77 componenten met de grootste op 15.341 km (79%), mét de simplify
+# 91 componenten met de grootste op 8.673 km (45%) — en de twee helften raken elkaar
+# daarna op 75 plekken, waarvan zes binnen 22 m en één op 0,7 m. Douglas-Peucker gooit
+# 96% van de vertices weg (320.157 → 13.774); waar twee ketens elkaar in een gedeelde
+# vertex raakten, houden ze er daarna een paar meter tussen over — te veel voor de
+# knoopcel van ~1 m, te weinig om als gat te zien. De heal draaide vóór de simplify,
+# dus niemand keek er nog naar.
+# Herstellen doet de bestaande heal, mits hij ná de simplify nog eens loopt: 148 naden
+# (langste 73 m) brengen Polen naar 22 componenten met de grootste op 18.030 km (94%).
+HEAL_NA_SIMPLIFY_KM = 0.15
+HEAL_HOEK_MAX = 30.0         # graden; een naad loopt door, een kruising niet
+
+# ---------------------------------------------------------------- de wegkant
+# ⚠️ WEG KRIJGT BEWUST GEEN WERELDNET. Weg is de enige modus zónder onafhankelijke
+# scheidsrechter (spoor heeft NARN/RINF, water USACE/CEMT), en de tags zijn per land
+# onvergelijkbaar. Daarom: ~20-40 VERHALENDE CORRIDORS, elk één gelabelde lijn tussen
+# twee ankers, met een gepubliceerde weglengte als meetlat. De scope komt van het
+# CORRIDORVENSTER — een buffer om de grootcirkel tussen de twee ankers — en niet van
+# de wegklasse. Bewust niet de bbox van de leg: die is voor cu-tenke→Durban 1,38 M km².
+WEG_HOUD = {"motorway", "trunk", "primary", "secondary",
+            "motorway_link", "trunk_link", "primary_link"}
+WEG_ACCESS_WEG = {"private", "no"}
+WEG_VENSTER_KM = 50.0
+WEG_LENGTE_TOLERANTIE = 0.15   # afwijking van de gepubliceerde lengte die nog telt
+
+# ⚠️ LEEG TOT DE REDACTIERONDE. De kandidatenlijst komt uit de 105 `mode:"road"`-legs
+# in `data/*.js` (centroïde-endpoints eruit, >150 km, ontdubbeld op nabijheid → 24),
+# maar wélke daarvan een echte wegcorridor zijn is een redactiebesluit van Lars —
+# niet iets dat de machine mag afleiden. Vorm per corridor:
+#   {"id": "cu-copperbelt-durban", "naam": "Copperbelt → Durban",
+#    "van": (lon, lat), "naar": (lon, lat), "extracts": [...],
+#    "refs": ["N1", "R571"],            # optioneel: houdt de route op de echte weg
+#    "gepubliceerdKm": 2700, "bron": "…"}
+CORRIDORS = []
+
 R = 6371.0
 
 # De extracts die de atlas-audit als ontbrekend aanwees (audit_landdekking.py:
@@ -213,15 +249,93 @@ def spoor_houden(tags):
     return True, ""
 
 
+def weg_houden(tags):
+    """(houden, reden) voor de WEGKANT. Zelfde vorm als `spoor_houden`, andere sleutel.
+
+    ⚠️ RUIMER DAN JE ZOU DENKEN, EN DAT IS MET REDEN. `highway=motorway` levert
+    gemeten 0 km in Zambia én 0 km in DR Congo — precies het gebied met elf
+    landstromen en de bekendste grenspost van de atlas. Een corridor moet dus ook
+    over `trunk`/`primary`/`secondary` kunnen lopen. Dat mag hier ruim, omdat de
+    wegkant niet wereldwijd wordt gescand maar alleen binnen het CORRIDORVENSTER:
+    de scope komt van de aardrijkskunde, niet van de tag.
+    """
+    soort = (tags.get("highway") or "").strip()
+    if soort not in WEG_HOUD:
+        return False, f"highway={soort or '-'}"
+    if (tags.get("access") or "").strip() in WEG_ACCESS_WEG:
+        return False, "access"
+    return True, ""
+
+
+def _venster_sleutel(modus):
+    """De corridorvensters horen in de cachevingerafdruk. Zonder dit geeft een
+    gewijzigde corridorlijst stilzwijgend het oude scanresultaat terug — dezelfde
+    val als een filterwijziging zonder LAND_FILTER_VERSIE-bump."""
+    if modus != "weg":
+        return ""
+    ruw = repr(sorted((c["id"], tuple(corridor_punten(c)),
+                       c.get("vensterKm", WEG_VENSTER_KM)) for c in CORRIDORS))
+    return hashlib.sha1(ruw.encode()).hexdigest()[:12]
+
+
 def vingerafdruk(modus, sleutel):
     st = os.stat(extract_pad(sleutel))
     ruw = repr((LAND_FILTER_VERSIE, modus, sleutel, st.st_size, int(st.st_mtime),
-                sorted(RAIL_HOUD), sorted(RAIL_USAGE_WEG)))
+                sorted(RAIL_HOUD), sorted(RAIL_USAGE_WEG),
+                sorted(WEG_HOUD), sorted(WEG_ACCESS_WEG), _venster_sleutel(modus)))
     return hashlib.sha1(ruw.encode()).hexdigest()[:16]
 
 
 def cache_pad(modus, sleutel):
     return os.path.join(LAND_CACHE, f"{modus}-{sleutel}-{vingerafdruk(modus, sleutel)}.json")
+
+
+def _dwarsafstand_km(p, a, b):
+    """Afstand van p tot het grootcirkel-SEGMENT a→b (niet tot de volle grootcirkel:
+    voorbij een uiteinde telt de afstand tot dat uiteinde, anders is een corridor van
+    Kolwezi naar Durban ook 'dichtbij' in Marokko)."""
+    k = math.cos(math.radians((a[1] + b[1]) / 2.0)) * 111.320
+    ky = 110.574
+    ax, ay = (a[0] - p[0]) * k, (a[1] - p[1]) * ky
+    bx, by = (b[0] - p[0]) * k, (b[1] - p[1]) * ky
+    dx, dy = bx - ax, by - ay
+    L2 = dx * dx + dy * dy
+    if L2 <= 0:
+        return math.hypot(ax, ay)
+    t = max(0.0, min(1.0, -(ax * dx + ay * dy) / L2))
+    return math.hypot(ax + t * dx, ay + t * dy)
+
+
+def corridor_punten(c):
+    """Anker → tussenpunten → anker. ⚠️ HET VENSTER LIGT OM DEZE LIJN, NIET OM DE
+    GROOTCIRKEL. Gemeten op de bekendste corridor van de atlas: de truckroute
+    Kolwezi→Durban loopt via Lusaka (155 km van de rechte lijn) en Harare (362 km).
+    Een buffer van 50 km om de rechte lijn mist de corridor dus volledig — hij zou
+    dwars door Mozambique zoeken. De tussenpunten (grensposten, tussensteden) komen
+    uit het bronnenonderzoek en zijn wat de corridor tot een corridor maakt."""
+    return [tuple(c["van"])] + [tuple(p) for p in c.get("via", [])] + [tuple(c["naar"])]
+
+
+def _vensters_voor(sleutel):
+    """De corridorvensters die dit extract raken, als (punten, straal_km)."""
+    uit = []
+    for c in CORRIDORS:
+        if c.get("extracts") and sleutel not in c["extracts"]:
+            continue
+        uit.append((corridor_punten(c), float(c.get("vensterKm", WEG_VENSTER_KM))))
+    return uit
+
+
+def _raakt_venster(pts, vensters):
+    """Houd een way zodra ÉÉN vertex binnen een venster valt — een weg die het
+    venster in- of uitloopt hoort er in zijn geheel bij, anders knip je hem midden
+    in de corridor door en valt de routering uit elkaar."""
+    for lo, la in pts:
+        for punten, straal in vensters:
+            for i in range(len(punten) - 1):
+                if _dwarsafstand_km((lo, la), punten[i], punten[i + 1]) <= straal:
+                    return True
+    return False
 
 
 def land_scan_extract(taak):
@@ -235,11 +349,27 @@ def land_scan_extract(taak):
     Simplify gebeurt ná het vouwen, op de hele keten.
     """
     modus, sleutel = taak
+    houd_fn = spoor_houden if modus == "spoor" else weg_houden
+    vensters = _vensters_voor(sleutel) if modus == "weg" else None
     cpad = cache_pad(modus, sleutel)
+    # ⚠️ BIJ EEN CACHE-HIT NIET HET HELE BESTAND PARSEN. We hebben hier twee getallen
+    # nodig, maar `json.load` trok de volledige geometrie het geheugen in — voor China
+    # 238.592 ways — en dat maal veertien workers tegelijk gaf `MemoryError: bad
+    # allocation` halverwege een wereldrun. Vandaar een sidecar met alleen de twee
+    # getallen; ontbreekt die (oude cache), dan één keer alsnog parsen en aanleggen.
+    kort = cpad[:-5] + ".kort.json"
     if os.path.exists(cpad):
+        if os.path.exists(kort):
+            with open(kort, encoding="utf-8") as f:
+                k = json.load(f)
+            return sleutel, k["km"], k["n"], True
         with open(cpad, encoding="utf-8") as f:
             c = json.load(f)
-        return sleutel, c["km"], len(c["ways"]), True
+        km_c, n_c = c["km"], len(c["ways"])
+        del c
+        with open(kort, "w", encoding="utf-8") as f:
+            json.dump({"km": km_c, "n": n_c}, f)
+        return sleutel, km_c, n_c, True
 
     import osmium
 
@@ -252,7 +382,7 @@ def land_scan_extract(taak):
     ways, totaal = [], 0.0
     weg_reden = defaultdict(int)
     for obj in fp:
-        houd, reden = spoor_houden(obj.tags)
+        houd, reden = houd_fn(obj.tags)
         if not houd:
             weg_reden[reden] += 1
             continue
@@ -261,6 +391,9 @@ def land_scan_extract(taak):
             if n.location.valid():
                 refs.append(n.ref)
                 pts.append((n.location.lon, n.location.lat))
+        if vensters is not None and not _raakt_venster(pts, vensters):
+            weg_reden["buiten corridorvenster"] += 1
+            continue
         if len(pts) < 2:
             continue
         L = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
@@ -276,9 +409,18 @@ def land_scan_extract(taak):
                 hs = False
         ways.append({
             "id": obj.id,
-            "gauge": normaliseer_gauge(obj.tags.get("gauge")),
-            "hs": hs,
-            "soort": (obj.tags.get("railway") or "").strip(),
+            # ⚠️ `gauge` draagt op de wegkant de WEGKLASSE. Dat is geen woordspel maar
+            # de reden dat de rest van de pijplijn ongewijzigd blijft: gauge is overal
+            # de sleutel waarop dedup, label en heal onderscheiden, en twee wegen van
+            # verschillende klasse horen net zomin samengevouwen te worden als 1435 en
+            # 1520. `x` = onbekend, precies als bij spoor.
+            "gauge": (normaliseer_gauge(obj.tags.get("gauge")) if modus == "spoor"
+                      else (obj.tags.get("highway") or "x").strip()),
+            "hs": hs if modus == "spoor" else False,
+            "soort": ((obj.tags.get("railway") or "").strip() if modus == "spoor"
+                      else (obj.tags.get("highway") or "").strip()),
+            "ref": (obj.tags.get("ref") or "").strip() if modus == "weg" else "",
+            "naam": (obj.tags.get("name") or "").strip() if modus == "weg" else "",
             "refs": refs,
             "pts": [[round(lo, 7), round(la, 7)] for lo, la in pts],
             "km": round(L, 4),
@@ -291,6 +433,8 @@ def land_scan_extract(taak):
                    "km": round(totaal, 1), "weg": dict(weg_reden),
                    "ways": ways}, f)
     os.replace(tijdelijk, cpad)
+    with open(cpad[:-5] + ".kort.json", "w", encoding="utf-8") as f:
+        json.dump({"km": round(totaal, 1), "n": len(ways)}, f)
     return sleutel, totaal, len(ways), False
 
 
@@ -300,6 +444,15 @@ def land_scan(sleutels, modus="spoor", workers=None):
         raise SystemExit("extracts ontbreken: " + ", ".join(ontbreekt) +
                          "\n  haal ze op met: fetch_landnet.py --download")
     os.makedirs(LAND_CACHE, exist_ok=True)
+    # Ontbrekende sidecars één voor één aanleggen, vóór de pool: het aanleggen zelf
+    # is de dure parse, en veertien daarvan tegelijk is precies wat we vermijden.
+    ouderwets = [s for s in sleutels
+                 if os.path.exists(cache_pad(modus, s))
+                 and not os.path.exists(cache_pad(modus, s)[:-5] + ".kort.json")]
+    if ouderwets:
+        print(f"  cache-index aanleggen voor {len(ouderwets)} extracts…", flush=True)
+        for s in ouderwets:
+            land_scan_extract((modus, s))
     workers = workers or max(1, min(14, (os.cpu_count() or 2) - 2))
     gb = sum(os.path.getsize(extract_pad(s)) for s in sleutels) / 1e9
     print(f"landscan ({modus}): {len(sleutels)} extracts, {gb:,.1f} GB, "
@@ -798,6 +951,179 @@ def _simplify_met_knopen(pts, beschermd, q):
     return uit
 
 
+def _eenheid(a, b):
+    """Eenheidsvector van a naar b, met lon geschaald op de breedtegraad — anders
+    meet je hoeken in graden-ruimte en klopt op 60°N geen enkele hoek."""
+    k = math.cos(math.radians((a[1] + b[1]) / 2.0))
+    vx, vy = (b[0] - a[0]) * k, b[1] - a[1]
+    n = math.hypot(vx, vy) or 1.0
+    return (vx / n, vy / n)
+
+
+def _uit_richting(pts, eind, langs_km=0.5):
+    """Eenheidsvector die UIT het uiteinde wijst, over ~langs_km langs de lijn."""
+    seq = pts if eind == 0 else pts[::-1]
+    pk = seq[-1]
+    acc = 0.0
+    for i in range(1, len(seq)):
+        acc += fw.km(seq[i - 1], seq[i])
+        if acc >= langs_km:
+            pk = seq[i]
+            break
+    return _eenheid(pk, seq[0])
+
+
+def _ketencomponenten(lijnen):
+    """Union-find over ketens die een knoopcel delen — exact de regel waarmee
+    `bake_landnet.bouw()` knopen maakt. Geeft een wortel per keten."""
+    import bake_marnet as bm
+
+    q = lambda p: (round(p[0] / bm.BULK_QUANT), round(p[1] / bm.BULK_QUANT))
+    par = list(range(len(lijnen)))
+
+    def vind(x):
+        while par[x] != x:
+            par[x] = par[par[x]]
+            x = par[x]
+        return x
+
+    cel = {}
+    for gi, pts in enumerate(lijnen):
+        for p in pts:
+            c = q(p)
+            gj = cel.get(c)
+            if gj is None:
+                cel[c] = gi
+            else:
+                ra, rb = vind(gi), vind(gj)
+                if ra != rb:
+                    par[rb] = ra
+    return [vind(i) for i in range(len(lijnen))]
+
+
+def heel_na_simplify(ketens, voor, modus, eps_km=HEAL_NA_SIMPLIFY_KM,
+                     hoek_max=HEAL_HOEK_MAX):
+    """Herstelt UITSLUITEND de verbindingen die de simplify heeft verbroken.
+
+    ⚠️ DE DRAGENDE REGEL: een naad mag alleen gelegd worden tussen twee ketens die
+    vóór de simplify in HETZELFDE component zaten en er ná in verschillende. Daarmee
+    kan deze stap per constructie geen enkele verbinding máken die de brongeometrie
+    niet al had — geen kruising, geen viaduct, geen tunnel die toevallig binnen 150 m
+    passeert. Hij zet alleen terug wat Douglas-Peucker heeft weggegooid.
+
+    Drie guards daar bovenop:
+      * ÉÉN MODALITEIT. `ketens` komt uit één modus-run; dat wordt hier hard getoetst.
+        Spoor↔weg, spoor↔rivier en spoor↔zee kunnen hier dus niet ontstaan — die
+        koppelingen horen bij de aangewezen overslagknooppunten, niet bij een heal.
+      * SPOORWIJDTE. 1435 hecht niet aan 1520; alleen gelijke gauge, of één zijde
+        onbekend (`x`). Een breuk van spoorwijdte is een overstap, geen naad.
+      * RICHTING. Het uiteinde moet in het verlengde van de doellijn liggen (≤hoek_max).
+        Een doorgeknipte lijn loopt door; een lijn die er dwars overheen gaat niet.
+
+    Geeft (naden, rapport per afstandsklasse, steekproef) en muteert `ketens` in-place.
+    """
+    from shapely.geometry import LineString, Point, box  # noqa: E402
+    from shapely.strtree import STRtree                  # noqa: E402
+
+    fout = [k for k in ketens if k.get("modus", modus) != modus]
+    assert not fout, f"{len(fout)} ketens met een andere modus dan {modus!r} in de heal"
+
+    na = [k["pts"] for k in ketens]
+    comp_voor = _ketencomponenten(voor)
+    comp_na = _ketencomponenten(na)
+
+    geoms = [LineString(p) for p in na]
+    boom = STRtree(geoms)
+    venster = (eps_km / 111.32) * 1.6
+    cos_max = math.cos(math.radians(hoek_max))
+
+    kand = []
+    for gi, pts in enumerate(na):
+        for eind in (0, -1):
+            E = pts[eind]
+            uit = _uit_richting(pts, eind)
+            bx = box(E[0] - venster, E[1] - venster, E[0] + venster, E[1] + venster)
+            beste = None
+            for cand in boom.query(bx):
+                cand = int(cand)
+                if cand == gi:
+                    continue
+                if comp_na[cand] == comp_na[gi]:
+                    continue                       # al verbonden
+                if comp_voor[cand] != comp_voor[gi]:
+                    continue                       # ⚠️ bestond vóór de simplify niet
+                ga, gb = ketens[gi]["gauge"], ketens[cand]["gauge"]
+                if ga != gb and "x" not in (ga, gb):
+                    continue                       # spoorwijdte-breuk is geen naad
+                ln = geoms[cand]
+                s = ln.project(Point(E))
+                npnt = ln.interpolate(s)
+                # ⚠️ meteen afronden op de precisie waarmee de geojson wegschrijft:
+                # het uiteinde verhuist naar npc én npc komt in de doellijn, dus beide
+                # moeten letterlijk dezelfde waarde krijgen of de knoopcel valt alsnog
+                # net verkeerd uit.
+                npc = (round(npnt.x, 6), round(npnt.y, 6))
+                d = fw.km(E, npc)
+                if d > eps_km:
+                    continue
+                doel = na[cand]
+                j = min(range(len(doel) - 1),
+                        key=lambda j: fw.km(npc, doel[j]) + fw.km(npc, doel[j + 1]))
+                langs = _eenheid(doel[j], doel[j + 1])
+                if abs(uit[0] * langs[0] + uit[1] * langs[1]) < cos_max:
+                    continue                       # dwars = kruising, geen naad
+                if beste is None or d < beste[0]:
+                    beste = (d, cand, npc)
+            if beste:
+                kand.append((beste[0], gi, eind, beste[1], beste[2]))
+    kand.sort()
+
+    cmap = list(comp_na)
+    idx = {w: i for i, w in enumerate(sorted(set(comp_na)))}
+    par = list(range(len(idx)))
+
+    def vind(x):
+        while par[x] != x:
+            par[x] = par[par[x]]
+            x = par[x]
+        return x
+
+    import bake_marnet as bm
+
+    gebruikt, naden, steekproef = set(), [], []
+    for d, gi, eind, cand, npc in kand:
+        a, b = vind(idx[cmap[gi]]), vind(idx[cmap[cand]])
+        if (gi, eind) in gebruikt or a == b:
+            continue
+        pts = list(na[gi])
+        oud = pts[eind]
+        pts[eind] = npc
+        na[gi] = pts
+        ketens[gi]["pts"] = pts
+        na[cand] = bm._voeg_in(na[cand], npc)
+        ketens[cand]["pts"] = na[cand]
+        gebruikt.add((gi, eind))
+        par[b] = a
+        naden.append(d)
+        if len(steekproef) < 12:
+            steekproef.append({
+                "m": round(d * 1000, 1), "lat": round(oud[1], 5), "lon": round(oud[0], 5),
+                "gauge": f"{ketens[gi]['gauge']}/{ketens[cand]['gauge']}",
+                "regio": f"{ketens[gi]['regio']}/{ketens[cand]['regio']}",
+            })
+
+    klassen = [("<1 m", 0.0, 0.001), ("1-5 m", 0.001, 0.005), ("5-25 m", 0.005, 0.025),
+               ("25-75 m", 0.025, 0.075), ("75-150 m", 0.075, 0.150)]
+    rapport = [(nm, sum(1 for d in naden if lo <= d < hi)) for nm, lo, hi in klassen]
+    print(f"  heal ná simplify: {len(naden):,} naden hersteld "
+          f"(alleen wat de simplify brak; ≤{eps_km * 1000:.0f} m, ≤{hoek_max:.0f}°, "
+          f"gelijke spoorwijdte, één modaliteit)")
+    for nm, n in rapport:
+        if n:
+            print(f"    {nm:>9} : {n:>6,}")
+    return naden, rapport, steekproef
+
+
 def schrijf_geojson(ketens, modus, suffix=""):
     """Eén Feature per keten, met het label dat de bake als systeem gebruikt."""
     # Elk ketenUITEINDE is een plek waar een andere keten kan aanhechten; die
@@ -808,11 +1134,24 @@ def schrijf_geojson(ketens, modus, suffix=""):
         beschermd.add(q(k["pts"][0]))
         beschermd.add(q(k["pts"][-1]))
 
+    # ⚠️ SIMPLIFY EERST, DAN OPNIEUW HELEN — in die volgorde, en niet andersom.
+    # De heal in de pijplijn draait vóór dit punt; Douglas-Peucker breekt daarna een
+    # deel van die naden weer open (Polen: grootste component 15.341 → 8.673 km).
+    # Deze tweede heal zet uitsluitend terug wat hier stuk ging, op de geometrie die
+    # de bake ook echt te zien krijgt — dus ná het afronden op 6 decimalen.
+    voor = [[tuple(p) for p in k["pts"]] for k in ketens]
+    for k, pts in zip(ketens, voor):
+        s = _simplify_met_knopen(pts, beschermd, q)
+        k["pts"] = ([(round(lo, 6), round(la, 6)) for lo, la in s]
+                    if len(s) >= 2 else [(round(lo, 6), round(la, 6)) for lo, la in pts])
+    heel_na_simplify(ketens, voor, modus)
+
     features = []
     for k in ketens:
-        pts = _simplify_met_knopen([tuple(p) for p in k["pts"]], beschermd, q)
+        pts = k["pts"]
         if len(pts) < 2:
             continue
+        k["km"] = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
         label = (f"{modus}-{k['regio']}-{k['gauge']}" +
                  ("-hs" if k.get("hs") else ""))
         features.append({
