@@ -45,6 +45,7 @@ def main():
         fl.keten_invariant(ways, ketens)
         del ways
         ketens, _ = fl.dedup_parallel(ketens)
+        ketens = fl.heel_naden(ketens)
         ketens = fl.snoei_componenten(ketens)
         fl.schrijf_geojson(ketens, "spoor", f"-{regio}")
         km = sum(k["km"] for k in ketens)

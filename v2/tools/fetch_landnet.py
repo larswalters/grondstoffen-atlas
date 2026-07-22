@@ -644,6 +644,41 @@ def dedup_parallel(ketens):
                                  for a, b in weggevouwen]}
 
 
+# ------------------------------------------------------------- naden helen
+
+def heel_naden(ketens, eps_km=HEAL_KM):
+    """Hecht losse ketenuiteinden aan de lijn van een ANDER component (≤eps_km).
+
+    ⚠️ WAAROM DIT NA DE DEDUP MOET. Waar de dedup een keten doormidden knipt
+    omdat een parallel spoor de houder is, eindigt het overblijvende stuk op de
+    afstand tussen twee sporen — zo'n 4 meter — van die houder. Fysiek is dat
+    hetzelfde emplacement, maar er is geen gedeelde vertex, dus de graaf valt er
+    uit elkaar. Hetzelfde geldt voor een aftakking die de dedup net niet raakte.
+
+    Hergebruikt letterlijk de tier-1 confluentie-heal van het riviernet
+    (`bake_marnet._heal_riviernet`): een uiteinde dat binnen eps_km OP de lijn
+    van een ander component projecteert wordt daar aangehecht, waarbij het
+    projectiepunt als vertex in de doellijn komt. CROSS-COMPONENT per
+    constructie, dus een keten kan zichzelf niet kortsluiten.
+    """
+    import bake_marnet as bm
+
+    per = {"land": [("", [tuple(p) for p in k["pts"]]) for k in ketens]}
+    totaal, langste = 0, 0.0
+    for _ronde in range(6):
+        n, l, _ = bm._heal_riviernet(per, eps_km)
+        totaal += n
+        langste = max(langste, l)
+        if n == 0:
+            break
+    for k, (_sig, pts) in zip(ketens, per["land"]):
+        k["pts"] = pts
+        k["km"] = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+    print(f"  heal: {totaal:,} naden gelegd (≤{eps_km * 1000:.0f} m, "
+          f"langste {langste * 1000:.0f} m, cross-component)")
+    return ketens
+
+
 # ------------------------------------------------------- componenten snoeien
 
 def _ankers():
@@ -736,11 +771,46 @@ def snoei_componenten(ketens, ankers=None):
     return uit
 
 
+def _simplify_met_knopen(pts, beschermd, q):
+    """Douglas-Peucker, maar NOOIT over een aanhechtpunt heen.
+
+    ⚠️ DIT IS DE VAL DIE HET NET DEED VERSPLINTEREN. Waar een zijlijn midden op
+    een andere keten aantakt, is dat aanhechtpunt een BINNENvertex van de
+    doorgaande keten. Een kale DP gooit die vertex weg (hij ligt per definitie
+    vlak bij de rechte lijn), waarna de bake er geen gedeelde knoop meer van
+    maakt en de aftakking losraakt. Gemeten: 31.737 componenten met de grootste
+    op 3.102 km — een spoornet van een miljoen km hoort in Europa en
+    Noord-Amerika juist enorme componenten te hebben.
+
+    Daarom: knip de keten op elke beschermde vertex, simplificeer de stukken
+    apart, en las ze weer aaneen. De vorm verandert nauwelijks, de topologie
+    blijft per constructie heel.
+    """
+    snij = [0]
+    for i in range(1, len(pts) - 1):
+        if q(pts[i]) in beschermd:
+            snij.append(i)
+    snij.append(len(pts) - 1)
+    uit = []
+    for a, b in zip(snij, snij[1:]):
+        deel = fw.simplify(pts[a:b + 1], KETEN_SIMPLIFY_KM)
+        uit.extend(deel if not uit else deel[1:])
+    return uit
+
+
 def schrijf_geojson(ketens, modus, suffix=""):
     """Eén Feature per keten, met het label dat de bake als systeem gebruikt."""
+    # Elk ketenUITEINDE is een plek waar een andere keten kan aanhechten; die
+    # vertices mogen nooit door de simplify verdwijnen.
+    q = lambda p: (round(p[0] / 1e-5), round(p[1] / 1e-5))
+    beschermd = set()
+    for k in ketens:
+        beschermd.add(q(k["pts"][0]))
+        beschermd.add(q(k["pts"][-1]))
+
     features = []
     for k in ketens:
-        pts = fw.simplify([tuple(p) for p in k["pts"]], KETEN_SIMPLIFY_KM)
+        pts = _simplify_met_knopen([tuple(p) for p in k["pts"]], beschermd, q)
         if len(pts) < 2:
             continue
         label = (f"{modus}-{k['regio']}-{k['gauge']}" +
@@ -812,6 +882,7 @@ if __name__ == "__main__":
     keten_invariant(ways, ketens)
     if not a.geen_dedup:
         ketens, _rap = dedup_parallel(ketens)
+    ketens = heel_naden(ketens)
     ketens = snoei_componenten(ketens)
     if a.schrijf:
         schrijf_geojson(ketens, a.modus, a.suffix)
