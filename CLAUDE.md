@@ -1,6 +1,97 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (M25 landnet: 1.154.090 km spoor live ?v=045; volgende = wegcorridors, dan koppelen)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (spoor-knip hersteld ?v=046; wegmachinerie staat, corridorlijst wacht op de definities)*
+
+> **✂️ DE SIMPLIFY KNIPTE HET SPOORNET DOOR — HEAL ERNÁ (2026-07-22, laatste).**
+> Live t/m `d322faa` (`?v=046`), [LAR-491] In Progress. **Visuele check van Lars staat nog open.**
+> **→ VOLGENDE: de corridordefinities afmaken → `CORRIDORS` vullen → routeren → bakken**
+> (zie `memory/next-actions.md` en `v2/design/wegcorridors.md`).
+>
+> De landnet-pijplijn is vouwen → dedup → **heal** → snoei → **simplify** → bakken, en die simplify
+> (Douglas-Peucker, tolerantie 100 m, gooit 96% van de vertices weg — Polen 320.157 → 13.774) brak
+> daarna een deel van de naden die de heal net had gelegd. **Polen met de bake-regel** (de knoopregel
+> die de bake écht gebruikt, niet een ruimer meetraster): zonder simplify 77 componenten / grootste
+> **15.341 km (79,3%)**, mét de simplify 91 / **8.673 km (45,1%)** — en de twee helften raakten
+> elkaar daarna op **75 plekken**, waarvan zes binnen 22 m en één op **0,7 meter**. Dat is geen
+> geografie maar een graaf die zijn gedeelde vertex kwijtraakt.
+>
+> **⚠️ TWEE HYPOTHESES EERST WEERLEGD DOOR TE METEN, NIET TE BEREDENEREN.** (1) Het filter gooit
+> élke way met een `service`-tag weg — wereldwijd 1.390.123 ways, in Polen 49.816 tegen 29.201
+> gehouden — en dat leek precies het weefsel dat een haven of mijn aan de hoofdlijn hangt. Fout: met
+> `service=spur|siding|crossover|yard` erbij springt de PKP-PLK-ijking van +1,3% naar **+22,1%** en
+> gaan de componenten *omhoog* (109 → 271). (2) Rastermismatch tussen de bescherming (1e-5) en de
+> knoopcel (`BULK_QUANT`): beide standen geven exact 91 componenten / 8.673 km.
+>
+> **DE FIX** is `heel_na_simplify()`: dezelfde cross-component-heal nóg een keer, ná de simplify en
+> op de geometrie die de bake ook echt ziet (dus ná het afronden op 6 decimalen).
+>
+> **⚠️ HARDE SCHEIDING TUSSEN MODALITEITEN (besluit Lars), EN WEL ALS CONSTRUCTIE-EIGENSCHAP.** Een
+> naad mag alleen tussen ketens die vóór de simplify in **hetzelfde** component zaten en er ná in
+> **verschillende**. Daarmee kan deze stap per definitie geen verbinding *maken* die de
+> brongeometrie niet al had — geen kruising, geen viaduct, geen tunnel die toevallig binnen 150 m
+> passeert. Een guard had je moeten vertrouwen; dit hoef je alleen te lezen. Daar bovenop: één
+> modaliteit (assert), **gelijke spoorwijdte** (1435 hecht niet aan 1520 — een breuk van spoorwijdte
+> is een overstap, geen naad) en een **richtingsguard van 30°**. Multimodale koppelingen blijven
+> voorbehouden aan de aangewezen overslagknooppunten. Prijs die we bewust betalen: de óngeremde heal
+> bracht Polen naar 94% tegen 76% met deze regel — dat verschil bestond uit verbindingen die de bron
+> niet had, want de simplify verschuift lijnen tot 100 m en brengt zo dingen bij elkaar die niet bij
+> elkaar horen.
+>
+> **Gemeten:** grootste component **356.682 → 402.845 km (+12,9%)** · componenten 3.214 → 3.140 ·
+> netwerklengte 1.154.090 → 1.154.092 km · naden per klasse EU 84 (71 <1 m) / CN 38 / RU 14 / rest
+> 5–8, **geen naad boven 75 m** · `marnet.bin`/`marnet.json`/`ports.json` sha256-identiek ·
+> `-t` byte-identiek aan live. **Waar het om ging:** roze havens (de vijver voor de
+> overslagknooppunten) op een component ≥20.000 km **29 → 46** van de 200, op het wereldnet
+> (≥100.000 km) **23 → 45**.
+>
+> **⚠️ EN EEN EIGEN MEETFOUT, WANT DIE HOORT IN DIT BESTAND.** `landnet-aanhecht.json` meet plaats →
+> dichtstbijzijnde **KNOOP**, en knopen liggen op uiteinden/kruisingen + elke 10 km. Een stub van
+> 1 km heeft dus altijd een knoop vlakbij; een doorgaande hoofdlijn die er rakelings langs loopt kan
+> zijn dichtstbijzijnde knoop 5 km verderop hebben. Mijn eerste conclusie — *"het net valt uit
+> elkaar op de emplacementen"* — steunde daarop en was deels artefact: tegen de **lijngeometrie**
+> hermeten verschoof het oordeel voor 11 van de 497 plaatsen (Vostochny, Tongling, New Orleans,
+> Krastsvetmet hangen gewoon aan het hoofdnet). Zelfde familie als de CEMT-diepgangkolom en de
+> vaargeul-projectdiepte: **een getal dat X beschrijft is geen getal dat Y begrenst.**
+
+> **🛣️ DE WEGCORRIDORS — MACHINERIE STAAT, LIJST WACHT OP DE REDACTIERONDE (2026-07-22).**
+> Volledige lijst met oordeel per corridor: **`v2/design/wegcorridors.md`**.
+>
+> De 105 `mode:"road"`-legs gaven na de drie filters **24 kandidaten**. Elk onderzocht en door twee
+> sceptici met verschillende lens aangevallen (24 + 48 agents, nul fouten): **8 bouwbaar · 6 stranden
+> op een centroïde · 3 zijn in werkelijkheid een andere modus · 6 twijfel**, plus **12 corridors die
+> de lijst helemaal miste** — Las Bambas→Pillones (435 km weg, dan 295 km spoor: níét doorlopen naar
+> Matarani), Tavan Tolgoi→Gashuunsukhait (11–12.000 trucks), Oyu Tolgoi→Gashuun Sukhait (80 km,
+> bron Rio Tinto zelf), Kathleen Valley→Geraldton (700 km), Salar de Atacama→La Negra (100%
+> tankwagen), Boké→Katougouma (27 km, sluit aan op ons binnenwaternet), Mount Weld→Leonora.
+>
+> **✅ TWEE BESLUITEN VAN LARS die het bronnenplan corrigeren.** (a) **De tussenpunten worden de
+> acceptatietoets**, niet de lengte: weg is de enige modus zónder scheidsrechter (spoor heeft
+> NARN/RINF, water USACE/CEMT) en van de 24 corridors leverden er **vijf** een gepubliceerde lengte
+> op. De onderzoekers vonden wél OSRM-afstanden en wezen die zélf af — OSRM routeert op
+> OpenStreetMap, dus dezelfde bron als onze extract. (b) **Het filter ">150 km hemelsbreed"
+> vervalt** voor een rol-toets: het is *omgekeerd* gecorreleerd met wegrelevantie, want korte hauls
+> zijn juist waar de weg de enige optie is. Beslissend voorbeeld: **Bingham Canyon** gaat 27 km door
+> een **pijpleiding** naar Magna, Utah — herstel je die datafout, dan gooit het oude filter de
+> corridor alsnog weg; correctheid en overleven stonden tegenover elkaar.
+>
+> **⚠️ DERDE ONTWERPFOUT, IN HET BRONNENPLAN ZELF: het venster mag niet om de grootcirkel liggen.**
+> De echte truckroute Kolwezi→Durban loopt via **Lusaka (155 km van de rechte lijn)** en **Harare
+> (362 km)**; een buffer van 50 km om die lijn mist de corridor volledig en zou dwars door Mozambique
+> zoeken. Het venster ligt nu om **anker → tussenpunten → anker** (`corridor_punten()`).
+>
+> **Machinerie in `fetch_landnet.py`:** `weg_houden()` + `WEG_HOUD` (`motorway` t/m `secondary` —
+> ruim, want `highway=motorway` geeft gemeten **0 km in Zambia én DR Congo**; de scope komt van het
+> venster, niet van de tag) · `corridor_keten()` met Dijkstra per been langs de tussenpunten ·
+> `refs` als **zachte** voorkeur (factor 3) i.p.v. hard filter, want een corridor draagt tien
+> wegnummers waar een rivier één naam draagt · `--modus weg` als eigen pijplijn zonder
+> vouwen/dedup/heal/snoei · de cachevingerafdruk dekt nu óók het wegfilter en de corridorvensters.
+> **`CORRIDORS` is leeg tot de redactieronde** — welke corridors bestaan is een besluit, geen
+> afleiding.
+>
+> **Drie datafouten in `data/*.js`** die hieruit vielen (zie `memory/bugs-and-risks.md`): de
+> verzonnen 610,7 km bij *Japan urban mining → Mitsubishi/Dowa* (landcentroïde × twee-bedrijven-
+> aggregaat), de niet-bestaande stroom *Redwood NV → Novonix TN*, en *Bingham Canyon* (pijpleiding,
+> plus een verzonnen regio-bestemming).
 
 > **🚂 M25 — HET LANDNET STAAT OP DE BOL (2026-07-22, laatste).** Live t/m `d3fae84` (`?v=045`),
 > **visuele go van Lars**. [LAR-491] In Progress. **→ VOLGENDE: de snelwegcorridors, daarna

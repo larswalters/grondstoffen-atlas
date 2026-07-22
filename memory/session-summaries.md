@@ -1,6 +1,60 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-22 · De simplify knipte het spoornet door — heal ernà (live ?v=046)
+
+**TL;DR:** op weg naar de wegcorridors bleek het spoornet dat gisteren live ging structureel kapot.
+De Douglas-Peucker-simplify in `schrijf_geojson` brak precies de naden open die de heal er net had
+ingelegd. Herstel = dezelfde heal nóg een keer, ná de simplify — grootste component
+**356.682 → 402.845 km**, roze havens op het wereldnet **23 → 45** van de 200.
+
+**De diagnose, en twee doodlopende sporen die eerst gemeten moesten worden.** Polen met de
+bake-regel (de knoopregel die de bake écht gebruikt): zonder simplify 77 componenten / grootste
+15.341 km (79,3%), mét de simplify 91 / 8.673 km (45,1%). De twee helften raakten elkaar daarna op
+**75 plekken**, waarvan zes binnen 22 m en één op **0,7 meter** — dat is geen geografie. Weerlegd
+onderweg: (1) het `service=*`-filter zou het weefsel bij emplacementen slopen → met
+`service=spur|siding|crossover|yard` erbij springt de PKP-PLK-ijking van +1,3% naar **+22,1%** en
+gaan de componenten *omhoog* (109 → 271); (2) rastermismatch tussen de bescherming (1e-5) en de
+knoopcel (`BULK_QUANT`) → beide standen exact 91 componenten / 8.673 km.
+
+**⚠️ En een meetfout van mezelf, want die hoort erbij.** `landnet-aanhecht.json` meet plaats →
+dichtstbijzijnde **KNOOP**, en knopen liggen op uiteinden/kruisingen + elke 10 km. Een stub van 1 km
+heeft per definitie een knoop vlakbij; een doorgaande hoofdlijn die er rakelings langs loopt kan
+zijn dichtstbijzijnde knoop 5 km verderop hebben. Mijn eerste conclusie ("het net valt uit elkaar op
+de emplacementen") steunde daarop en was deels artefact — tegen de **lijngeometrie** hermeten
+verschoof het oordeel voor 11 van de 497 plaatsen. Zelfde familie als de CEMT-diepgangkolom en de
+vaargeul-projectdiepte: een getal dat X beschrijft begrenst Y niet.
+
+**Lars' eis en hoe die is uitgevoerd.** Harde scheiding tussen modaliteiten: alleen rail-rail, alleen
+echte gebroken naden, geen kruisingen/viaducten/tunnels zonder gedeelde spoorknoop, nooit
+automatisch spoor↔weg/rivier/zee, multimodaal alleen via expliciete overslagnodes, rapporteren per
+afstandsklasse. Uitgevoerd als **constructie-eigenschap in plaats van guard**: een naad mag alleen
+tussen ketens die vóór de simplify in hetzelfde component zaten en er ná in verschillende, dus de
+heal kan per constructie geen verbinding *maken* die de brongeometrie niet had. Plus gelijke
+spoorwijdte, richtingsguard 30°, modus-assert. Controle: **0** componenten voegen ketens uit
+verschillende pre-simplify-componenten samen. Naden: EU 84 (71 <1 m), CN 38, RU 14, rest 5-8;
+**geen naad boven 75 m**. `marnet.bin`/`marnet.json`/`ports.json` sha256-identiek; `-t` byte-identiek.
+
+**De wegcorridorronde.** 105 `mode:"road"`-legs → 24 kandidaten, elk onderzocht en door twee
+sceptici aangevallen (74 agents, nul fouten): 8 bouwbaar, 6 stranden op een centroïde, 3 zijn een
+andere modus, 6 twijfel — plus **12 corridors die de lijst helemaal miste** (Las Bambas→Pillones,
+Tavan Tolgoi→Gashuunsukhait, Oyu Tolgoi, Kathleen Valley, Salar de Atacama, Boké, Mount Weld).
+Twee besluiten van Lars corrigeren het bronnenplan: de **tussenpunten worden de acceptatietoets**
+(voor weg bestaat geen scheidsrechter; OSRM is OSM-afgeleid en dus dezelfde bron) en het **filter
+">150 km" vervalt** (omgekeerd gecorreleerd met wegrelevantie). Derde ontwerpfout: het scanvenster
+zou om de grootcirkel liggen, maar Kolwezi→Durban loopt via Lusaka (155 km van die lijn) en Harare
+(362 km) — het venster ligt nu om anker → tussenpunten → anker.
+
+**Ook opgeleverd:** de wegmachinerie (`weg_houden()`, corridorvenster, `corridor_keten()` met
+Dijkstra per been, `refs` als zachte voorkeur factor 3, `--modus weg` als eigen pijplijn), de
+cachevingerafdruk die nu óók het wegfilter en de corridorvensters dekt, en een cache-index-sidecar
+nadat elke worker bij een cache-hit het hele scanbestand parseerde voor twee getallen (MemoryError
+halverwege een wereldrun).
+
+**Volgende:** corridordefinities afmaken → `CORRIDORS` vullen → routeren → bakken. `us-new-mexico`
+ontbreekt en is nodig voor Mountain Pass→Fort Worth.
+
+
 ## 2026-07-22 — M25: het landnet (spoor) op de bol, 1.154.090 km (LIVE ?v=045, visuele go)
 
 **Lars draaide de volgorde om:** *"eerst het spoor en een aantal snelwegen neerleggen en dan pas

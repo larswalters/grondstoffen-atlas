@@ -1,7 +1,45 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-21 (riviernet geknoopt: bouwen boven meten, bruggen + meer-oversteken)*
+*Last updated: 2026-07-22 (heal ná de simplify met harde modaliteitsscheiding; de wegcorridor-toets wordt topologisch)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-22 · De post-simplify heal mag ALLEEN herstellen wat de simplify brak
+**Besluit (Lars):** *"De post-simplify heal mag uitsluitend rail-railverbindingen herstellen binnen
+het spoornet. Verbind alleen echte gebroken eindpunten/naden van spoorsegmenten; geen willekeurige
+kruisingen, viaducten of tunnels zonder gedeelde spoorknoop. Maak nooit automatisch verbindingen
+tussen spoor en weg, rivier of zee. Multimodale koppelingen mogen uitsluitend via expliciete
+terminal-/overslagnodes worden aangelegd."*
+**Waarom en hoe uitgevoerd:** niet als guard maar als **constructie-eigenschap** — een naad mag
+alleen gelegd worden tussen twee ketens die vóór de simplify in hetzelfde component zaten en er ná
+in verschillende. Daarmee kan deze stap per definitie geen verbinding *maken* die de brongeometrie
+niet al had; een viaduct of tunnel die toevallig binnen 150 m passeert komt er nooit doorheen. Een
+guard had je moeten vertrouwen, dit hoef je alleen te lezen. Daar bovenop: één modaliteit (assert),
+gelijke spoorwijdte (1435 hecht niet aan 1520 — een breuk van spoorwijdte is een overstap, geen
+naad) en een richtingsguard van 30° zodat een dwars kruisende lijn afvalt.
+**Prijs die we bewust betalen:** de óngeremde heal bracht Polen naar 18.030 km (94%) tegen 14.571 km
+(76%) met deze regel. Dat verschil bestond uit verbindingen die de brongeometrie niet had — de
+simplify verschuift lijnen tot 100 m en brengt daarmee dingen bij elkaar die niet bij elkaar horen.
+
+## 2026-07-22 · De acceptatietoets voor wegcorridors wordt TOPOLOGISCH, niet metrisch
+**Besluit (Lars):** de **tussenpunten** zijn de toets; een gepubliceerde lengte blijft de tweede,
+hardere toets waar die bestaat.
+**Waarom:** weg is de enige modus zónder onafhankelijke scheidsrechter — spoor heeft NARN/RINF,
+water USACE/CEMT. Van de 24 onderzochte corridors leverden er **vijf** een gepubliceerde weglengte
+op. De onderzoekers vonden wél OSRM-rijafstanden en wezen die zélf af met het juiste argument:
+OSRM routeert op OpenStreetMap, dus dezelfde bron als onze extract en dus geen controle. Loopt de
+geroute lijn aantoonbaar via Kasumbalesa, Lusaka, Harare en Beitbridge, dán is het die corridor.
+
+## 2026-07-22 · Het filter ">150 km hemelsbreed" vervalt voor een rol-toets
+**Besluit (Lars):** houd een corridor als de weg de **enige oppervlaktelink** is tussen twee ankers
+van verschillend type (mijn→plant, mijn→spoorkop, plant→haven). Lengte wordt een weergegeven
+attribuut, nooit een filter.
+**Waarom:** het lengtefilter is *omgekeerd* gecorreleerd met wegrelevantie. Lange wegcorridors zijn
+meestal een symptoom van ontbrekende infrastructuur; korte hauls zijn juist waar de weg structureel
+de enige optie is — Oyu Tolgoi→Gashuun Sukhait 80 km (bron: Rio Tinto zelf), Boké→Katougouma 27 km
+(de grootste bauxietstroom ter wereld, en hij sluit aan op ons binnenwaternet), Mount Weld→Leonora
+~120 km, Greenbushes→Kemerton ~90-110 km. Beslissend voorbeeld: **Bingham Canyon** gaat 27 km door
+een pijpleiding naar Magna, Utah — herstel je die datafout, dan gooit het oude filter de corridor
+alsnog weg. Correctheid en overleven stonden tegenover elkaar, en dat is een ontwerpfout.
 
 ## 2026-07-22 · M25 — de volgorde omgedraaid: eerst het landnet, dán aansluiten
 **Besluit (Lars):** *"het is denk ik beter om toch eerst het spoor en een aantal snelwegen neer te

@@ -1,7 +1,42 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-21 (stap 2 havens uitgevoerd: WPI-verrijking + posities, live ?v=044; volgende = stap 3 aansluiten)*
+*Last updated: 2026-07-22 (spoor-knip hersteld ?v=046; wegcorridorlijst ligt klaar, definities lopen)*
 
-## 🔴 START HIER — de SNELWEGCORRIDORS, daarna koppelen
+## 🔴 START HIER — de corridordefinities afmaken, dan `CORRIDORS` vullen en routeren
+
+De machinerie staat (`weg_houden()`, het corridorvenster, `corridor_keten()`, `--modus weg` als
+eigen pijplijn) en `CORRIDORS` is **bewust leeg**: de lijst is een redactiebesluit. Twee besluiten
+van Lars liggen vast (zie `decisions.md`): **de tussenpunten zijn de acceptatietoets** en **het
+filter ">150 km" is vervangen door een rol-toets**.
+
+**1 · De definities afmaken.** Een workflow maakte de definitieve ankers + tussenpunten met
+coördinaten en bronnen voor ~21 corridors; die liep nog bij het schrijven hiervan. Uitkomst
+controleren op: liggen de coördinaten waar de naam zegt, staan de tussenpunten in de juiste
+volgorde, dekken de gekozen extracts de hele route.
+
+**2 · `us-new-mexico` ophalen** (`fetch_landnet.py --download`) — I-40 loopt erdoorheen en zonder
+die extract heeft Mountain Pass → Fort Worth een gat. `us-nevada` en `us-colorado` ontbreken ook.
+
+**3 · Draaien:** `python v2/tools/fetch_landnet.py --modus weg --schrijf`. Het rapport geeft per
+corridor de benen, de **snap-afstand per tussenpunt** (zo valt een fout tussenpunt meteen op) en de
+afwijking van de gepubliceerde lengte waar die bestaat. Daarna `bake_landnet.py --suffix=-t`,
+vergelijken, live bakken, `?v=047`.
+
+**4 · De drie datafouten in `data/*.js`** die de corridorronde vond (zie `bugs-and-risks.md`):
+Japan urban mining (verzonnen 610,7 km), Redwood→Novonix (stroom bestaat niet), Bingham Canyon
+(pijpleiding, geen weg; verkeerde bestemming).
+
+**De lijst zelf staat in `v2/design/wegcorridors.md`** — 24 kandidaten met oordeel, 12 gemiste
+corridors, en de onderbouwing van beide besluiten.
+
+## ✅ AFGEROND 2026-07-22 — de simplify-knip in het spoornet ([LAR-491])
+
+De pijplijn was vouwen → dedup → **heal** → snoei → **simplify** → bakken, en Douglas-Peucker brak
+daarna een deel van de naden weer open. Hersteld met `heel_na_simplify()`, die **alleen terugzet wat
+de simplify brak** (ketens die vóór in hetzelfde component zaten en er ná in verschillende).
+Grootste component **356.682 → 402.845 km**; roze havens op het wereldnet **23 → 45** van de 200.
+Live `?v=046`, commits `615296f` · `e96fb97` · `d322faa`. **Visuele check van Lars staat nog open.**
+
+## 📋 De oude startsectie — de SNELWEGCORRIDORS, daarna koppelen
 
 **Het spoor ligt er** (`?v=045`, visuele go van Lars): 1.154.090 km, `landnet.bin` 4,4 MB,
 237.944 knopen / 236.728 edges, grootste component 356.682 km. Gereedschap staat:

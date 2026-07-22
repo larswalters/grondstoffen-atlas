@@ -1,5 +1,38 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-22 (M25 landnet: 1.154.090 km spoor live ?v=045; volgende = wegcorridors, dan koppelen)*
+*Last updated: 2026-07-22 (spoor-knip hersteld ?v=046; wegmachinerie staat, corridorlijst wacht op de definities)*
+
+## ⚠️ 2026-07-22 later — het spoornet was structureel gebroken, en dat is hersteld
+
+De landnet-pijplijn eindigt op `schrijf_geojson()`, en die draait een **Douglas-Peucker-simplify
+met tolerantie 100 m** die 96% van de vertices weggooit. Dat gebeurde **ná** de heal, en brak
+daarmee een deel van de naden weer open. Polen met de bake-regel: 77 componenten / grootste
+15.341 km (79%) → 91 / 8.673 km (45%); de twee helften raakten elkaar op 75 plekken, waarvan één
+op **0,7 meter**.
+
+Hersteld met `heel_na_simplify()`, die **uitsluitend terugzet wat de simplify brak** — een naad mag
+alleen tussen ketens die vóór in hetzelfde component zaten en er ná in verschillende. Daarmee is
+"geen kruisingen, viaducten of tunnels verbinden" een eigenschap van de constructie in plaats van
+een guard die je moet vertrouwen. Grootste component **356.682 → 402.845 km**; de vijver voor de
+overslagknooppunten (roze havens op het wereldnet) **23 → 45** van de 200. Live `?v=046`.
+
+⚠️ **Meet componenten voortaan tegen de LIJNGEOMETRIE, niet tegen `landnet-aanhecht.json`.** Dat
+bestand meet plaats → dichtstbijzijnde **knoop**, en knopen liggen elke 10 km, dus een stub van 1 km
+lijkt er altijd dichterbij dan een doorgaande hoofdlijn. Die vertekening kostte in deze sessie een
+halve diagnose voor 11 van de 497 plaatsen.
+
+## De wegkant — machinerie staat, lijst wacht op de redactieronde
+
+`CORRIDORS` is **bewust leeg**: welke corridors bestaan is een redactiebesluit, geen afleiding. Wat
+er wel staat in `fetch_landnet.py`: `weg_houden()` + `WEG_HOUD` (`motorway` t/m `secondary` — ruim,
+want `highway=motorway` geeft gemeten **0 km in Zambia én DR Congo**; de scope komt van het venster,
+niet van de tag), het **corridorvenster** om de lijn *anker → tussenpunten → anker*,
+`corridor_keten()` met Dijkstra per been, en `--modus weg` als eigen pijplijn (geen vouwen/dedup/
+heal/snoei — dat is gereedschap voor een net, en dit zijn losse verhalende lijnen).
+
+⚠️ **Het venster ligt niet om de grootcirkel.** De echte truckroute Kolwezi→Durban loopt via Lusaka
+(155 km van de rechte lijn) en Harare (362 km); een buffer van 50 km om de rechte lijn mist de hele
+corridor. De tussenpunten — grensposten en tussensteden — zijn wat een corridor tot een corridor
+maakt, én sinds 2026-07-22 ook de **acceptatietoets** (voor weg bestaat geen scheidsrechter).
 
 ## Stand 2026-07-22 — VIER netten liggen er, koppelen komt als laatste
 
@@ -10,7 +43,7 @@
 | -- | -- | -- | -- |
 | zeenet (MARNET) | 15.933 edges | `marnet.bin` | 0 … 9.685 |
 | riviernet | 407.626 km · 60.131 edges | `marnet.bin` | 9.686 … 71.264 |
-| **landnet (spoor)** | **1.154.090 km · 236.728 edges** | **`landnet.bin` (4,4 MB)** | **lokaal 0 … 237.943** |
+| **landnet (spoor)** | **1.154.092 km · 236.784 edges** | **`landnet.bin` (4,4 MB)** | **lokaal 0 … 237.879** |
 | *(volgt)* wegcorridors | ~20-40 verhalende corridors | `landnet.bin` (soort 3) | idem |
 
 ⚠️ **Het landnet leeft bewust in een EIGEN bestand met LOKALE knoop-ids.** `bak_havens()` slicet de

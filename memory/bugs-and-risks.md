@@ -1,5 +1,42 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-21 (riviernet geknoopt ?v=042; verbindingsstukken toetsen bij de stromen)*
+*Last updated: 2026-07-22 (simplify-knip opgelost; drie datafouten in data/*.js open)*
+
+## ✅ OPGELOST 2026-07-22 — de simplify knipte het spoornet door
+
+`schrijf_geojson()` draaide Douglas-Peucker (tolerantie 100 m) ná de heal, en brak daarmee een deel
+van de naden weer open. Polen, met de bake-regel: 77 componenten / grootste 15.341 km (79%) → 91 /
+8.673 km (45%); de twee helften raakten elkaar op 75 plekken, waarvan zes binnen 22 m en één op
+**0,7 meter**. Opgelost met `heel_na_simplify()`. Wereldwijd: grootste component 356.682 → 402.845 km.
+
+## ⚠️ OPEN — drie fouten in `data/*.js` die de corridorronde blootlegde
+
+Gevonden doordat elke corridor gedwongen werd een échte plek als anker te hebben. Alle drie zijn
+datafouten, geen corridorprobleem — ze horen in de grondstofmodules gerepareerd te worden.
+
+| plek | wat er mis is |
+| -- | -- |
+| `silver` — Japan (urban mining) → Mitsubishi / Dowa | draagt een lengte van **610,7 km** gemeten tussen een **landcentroïde** en een aggregaat van **twee bedrijven**. Een getal dat niets meet maar op bewijs lijkt; moet op `null`. Eén zo'n getal doet meer schade dan alle ontbrekende lengtes bij elkaar |
+| `graphite` — Redwood Materials (Nevada) → Novonix Chattanooga | **de stroom bestaat niet.** Novonix Riverside maakt *synthetisch* grafiet uit petroleum needle coke van Phillips 66 (raffinaderij Lake Charles); Redwood's gepubliceerde anodeproduct is koperfolie, en teruggewonnen grafiet dat niet batterijwaardig is gaat volgens Redwood zelf naar industriële smeermiddelen |
+| `silver` — Bingham Canyon → "VS-raffinage (Pacific-Noordwest)" | **modus én bestemming kloppen niet.** Het concentraat gaat 27 km door een **pijpleiding** (slurry) naar de Rio Tinto Kennecott-smelter bij Magna, Utah. De bestemming is bovendien een verzonnen regio-aggregaat |
+
+Daarnaast, kleiner maar dezelfde familie — **dubbelnamen die twee plaatsen in één knoop persen**:
+`Barro Alto / Onça Puma` (Goiás vs Pará, ~700 km uit elkaar), `Lake Charles/Seadrift`,
+`Arezzo/Vicenza`, `Kwinana / Kemerton` (dat zijn twéé corridors, en de kortere viel weg),
+`Zimplats / Unki / Mimosa`, `Mitsubishi / Dowa`.
+
+## ⚠️ OPEN — 89 atlas-plaatsen hangen aan een spoorcomponent <1.000 km
+
+Ná de heal-fix nog steeds. Een deel is **terecht** — Dubai, Jurong (Singapore) en Nieuw-Caledonië
+hébben geen noemenswaardig spoor. Maar **New York op een component van 0 km** en **Amsterdam op
+87 km** zijn dat niet. Van de 200 roze havens hangen er 28 aan een component <1.000 km.
+⚠️ Meet dit tegen de **lijngeometrie**, niet tegen `landnet-aanhecht.json`: dat bestand meet de
+afstand tot een **knoop**, en knopen liggen elke 10 km, dus een stub van 1 km lijkt er altijd
+dichterbij dan een doorgaande hoofdlijn. Die vertekening kostte in deze sessie een halve diagnose.
+
+## ⚠️ OPEN — `us-new-mexico` ontbreekt in de extract-registry
+
+Nodig voor de corridor Mountain Pass → Fort Worth (I-40 loopt erdoorheen). Ophalen met
+`fetch_landnet.py --download` vóór de wegbake. Ook `us-nevada` en `us-colorado` ontbreken.
 
 ## ✅ OPGELOST 2026-07-21 — de twee angled confluenties zijn dicht via écht water
 
