@@ -1,13 +1,13 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=052";
-import { laadVectorWereld } from "./world.js?v=052";
-import { createTileLayer } from "./tiles.js?v=052";
+import { createGlobe, CONFIG } from "./globe.js?v=053";
+import { laadVectorWereld } from "./world.js?v=053";
+import { createTileLayer } from "./tiles.js?v=053";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=052";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=052";
-import { laadLandnet } from "./landnet.js?v=052";
+  from "./marnet.js?v=053";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=053";
+import { laadLandnet } from "./landnet.js?v=053";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -103,7 +103,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "052", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "053", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
