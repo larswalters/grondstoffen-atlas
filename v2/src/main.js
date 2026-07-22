@@ -1,13 +1,15 @@
 // main.js — start v2 op en koppelt de HUD aan de lagen.
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
-import { createGlobe, CONFIG } from "./globe.js?v=053";
-import { laadVectorWereld } from "./world.js?v=053";
-import { createTileLayer } from "./tiles.js?v=053";
+import * as THREE from "three";
+import { createGlobe, CONFIG } from "./globe.js?v=054";
+import { laadVectorWereld } from "./world.js?v=054";
+import { createTileLayer } from "./tiles.js?v=054";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=053";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=053";
-import { laadLandnet } from "./landnet.js?v=053";
+  from "./marnet.js?v=054";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=054";
+import { laadLandnet } from "./landnet.js?v=054";
+import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=054";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -94,6 +96,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
     // andere getallen (R'dam→Constanța 3.291 i.p.v. 6.285 over zee).
     window.zoekRouteRealistisch = zoekRouteRealistisch;
     zetAttrib();               // vaarweg-data draagt een eigen bronvermelding (ODbL)
+    probeerKoppel();
   })
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
 
@@ -103,7 +106,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "053", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "054", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -121,8 +124,48 @@ laadLandnet(CONFIG.radius, "053", GLOBE.klemOpHorizon)
         `${Math.round(s.netwerkKm).toLocaleString("nl")} km spoor · ` +
         `${s.edges.toLocaleString("nl")} edges · ${s.labels} labels`;
     }
+    probeerKoppel();
   })
   .catch((e) => console.warn("[atlas v2] landnet niet geladen (nog niet gebakken?):", e.message));
+
+// --- HET KOPPELEN: de vier netten aan elkaar (LAR-518) ---------------------
+// Zodra marnet, havens én het landnet er zijn, koppelen we ze via het
+// aangewezen register `knooppunten.json` tot één zoekruimte. De keten-router
+// (zoekKeten) zoekt hier overheen: route = keten van benen met een overstap op
+// een aangewezen knooppunt. Bewust ná het laden en niet gebakken: de offset
+// tussen de knoopruimtes wordt hier berekend en zou stil verlopen bij een
+// rebake van één van beide netten.
+let K = null;
+let REGISTER = null;
+fetch("data/knooppunten.json?v=054")
+  .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+  .then((reg) => { REGISTER = reg; probeerKoppel(); })
+  .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
+
+function probeerKoppel() {
+  if (K || !NET || !HAVENS || !LANDNET || !REGISTER) return;
+  try {
+    K = koppelNetten({
+      marnet: NET, landnet: LANDNET,
+      zeeKnopen: HAVENS.zeeKnopen, register: REGISTER,
+    });
+    window.KETEN = K;
+    const s = K.stats;
+    console.log(
+      `[atlas v2] koppeling: ${s.punten} knooppunten · ${s.overstappen} overstappen · ` +
+      `${s.gemengdeLandknopen} gemengde landknopen · ergste snap ${s.ergsteSnapKm.toFixed(1)} km · ` +
+      `${s.msKoppelen} ms`
+    );
+    const noot = document.getElementById("ketenNoot");
+    if (noot) {
+      noot.textContent =
+        `${s.punten} aangewezen knooppunten · ${s.overstappen} overslagen · ` +
+        `ergste snap ${s.ergsteSnapKm.toFixed(1)} km`;
+    }
+  } catch (e) {
+    console.error("[atlas v2] koppelen mislukt:", e);
+  }
+}
 
 // De losse bulklaag (LAR-515) is hier weg sinds het binnenwater ÉÉN net met de
 // graaf werd: die 374.342 km zitten nu in NET zelf, met de maten per lijn.
@@ -222,10 +265,18 @@ function toonRoute() {
   }
   wisRoute();
 
+  const schip = SCHEEPSKLASSEN[klasseEl.value] || null;
+
+  // "keten": de multi-modale keten-router over álle vier de netten (LAR-518).
+  // Aparte tak, want hij geeft een keten van benen terug i.p.v. één route.
+  if (SCHIP === "keten") {
+    toonKeten(van, naar, schip);
+    return;
+  }
+
   const t0 = performance.now();
   let route = null;
   let modus = "";
-  const schip = SCHEEPSKLASSEN[klasseEl.value] || null;
   const opties = schip ? { schip } : {};
   if (SCHIP === "alles") {
     route = zoekRoute(NET, van.knoop, naar.knoop, opties);
@@ -261,6 +312,103 @@ function toonRoute() {
     (aanloop > 20 ? ` · aanloop ${Math.round(aanloop)} km` : "") +
     (passages.length ? `<br>via ${passages.join(" · ")}` : "");
   window.ROUTE = route; // diagnose
+}
+
+// --- de keten-router tekenen (LAR-518) -------------------------------------
+// Elk been krijgt de kleur van zijn net, zodat je in één oogopslag ziet waar de
+// lading van modaliteit wisselt. De overslagpunten markeren we met een witte
+// ring: dát is de plek waar het "3 schepen, niet 1" zichtbaar wordt.
+const KETEN_KLEUR = {
+  zee: 0x49b6ff, binnen: 0xffc94a, spoor: 0x5fe8c8, weg: 0xff9d3d,
+};
+
+function opBol3(lon, lat, r) {
+  const a = lon * (Math.PI / 180), b = lat * (Math.PI / 180);
+  const c = Math.cos(b);
+  return new THREE.Vector3(r * c * Math.cos(a), r * Math.sin(b), -r * c * Math.sin(a));
+}
+
+function beenLijn(net, been, radius) {
+  const pts = [];
+  let bij = been.knopen[0];
+  for (const e of been.edges) {
+    const start = net.geomStart[e], n = net.geomN[e];
+    const vooruit = net.edgeA[e] === bij;
+    for (let k = 0; k < n; k++) {
+      const idx = vooruit ? start + k : start + (n - 1 - k);
+      pts.push(net.posities[idx * 3], net.posities[idx * 3 + 1], net.posities[idx * 3 + 2]);
+    }
+    bij = vooruit ? net.edgeB[e] : net.edgeA[e];
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(new Float32Array(pts), 3));
+  const mat = new THREE.LineBasicMaterial({
+    color: KETEN_KLEUR[been.groep] ?? 0xffe066, transparent: true, opacity: 0.97,
+  });
+  // Zelfde dieptebehandeling als de andere vectorlagen (2026-07-22): zonder
+  // depthTest:false + horizonklem verdwijnt de lijn achter de bol zodra de
+  // tegels geladen zijn — dan zag Lars een route die er niet leek te zijn.
+  GLOBE.klemOpHorizon(mat);
+  const lijn = new THREE.Line(geo, mat);
+  lijn.renderOrder = 8;   // boven landnet (7)
+  lijn.frustumCulled = false;
+  return lijn;
+}
+
+function toonKeten(van, naar, schip) {
+  if (!K) {
+    infoEl.textContent = "de netten zijn nog niet gekoppeld…";
+    return;
+  }
+  const t0 = performance.now();
+  const opties = { netten: ["zee", "binnen"] };   // standaardprofiel: landbrug dicht
+  if (schip) { opties.schipZee = schip; opties.schipBinnen = schip; }
+  const uit = zoekKeten(K, havenZaden(K, van), havenZaden(K, naar), opties);
+  const ms = performance.now() - t0;
+
+  if (uit.geenPad) {
+    infoEl.innerHTML =
+      `<b>geen keten</b> · ${ms.toFixed(0)} ms<br>` +
+      `<span style="opacity:.8">${uit.reden}</span>`;
+    return;
+  }
+
+  const groep = new THREE.Group();
+  for (const been of uit.benen) {
+    const net = been.net === "landnet" ? LANDNET : NET;
+    if (!net) continue;
+    groep.add(beenLijn(net, been, CONFIG.radius));
+  }
+  // overslagmarkers op de grens tussen twee benen
+  for (let i = 0; i < uit.overstappen.length; i++) {
+    const been = uit.benen[i];
+    const net = been.net === "landnet" ? LANDNET : NET;
+    const kEind = been.knopen[been.knopen.length - 1];
+    const pos = opBol3(net.knoopLon[kEind], net.knoopLat[kEind], CONFIG.radius * 1.001);
+    const ring = new THREE.Mesh(
+      new THREE.SphereGeometry(CONFIG.radius * 0.004, 12, 12),
+      new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false })
+    );
+    ring.position.copy(pos);
+    ring.renderOrder = 9;   // boven de benen
+    groep.add(ring);
+  }
+  routeLijn = groep;
+  GLOBE.globeGroup.add(routeLijn);
+
+  const legs = uit.benen
+    .map((b) => `${b.vervoer} ${Math.round(b.km).toLocaleString("nl")} km`)
+    .join(" → ");
+  const overs = uit.overstappen.length
+    ? `<br>overslag: ${uit.overstappen.map((o) => o.naam).join(" · ")}`
+    : "";
+  infoEl.innerHTML =
+    `<b>${Math.round(uit.km).toLocaleString("nl")} km</b> · ` +
+    `${uit.overslagen}× overslag · ${uit.benen.length} benen · ${ms.toFixed(0)} ms` +
+    (schip ? ` · klasse ${klasseEl.value}` : "") +
+    `<br>${legs}${overs}` +
+    (uit.aanloopKm > 20 ? `<br><span style="opacity:.7">aanloop ${Math.round(uit.aanloopKm)} km</span>` : "");
+  window.KETENROUTE = uit;
 }
 
 // Default = "echt" (LAR-494, op Lars' regel): eerst als zeeschip proberen, en

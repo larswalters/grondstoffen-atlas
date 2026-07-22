@@ -128,20 +128,32 @@ export async function laadLandnet(radius, versie = "053", klemOpHorizon = null) 
   // Label per edge uit de ranges in landnet.json — géén string per edge in het
   // bestand: dat kost bij ~160k edges megabytes JSON voor nul extra informatie.
   const edgeKleur = new Array(nEdges);
+  // Modus per edge (1 = spoor, 2 = weg). De keten-router heeft dit nodig: spoor
+  // en weg delen één knoopruimte in landnet.bin, en een been mag nooit twee
+  // netten mengen — een trein rijdt niet de snelweg op.
+  const edgeModus = new Uint8Array(nEdges);
+  const edgeLabelNaam = new Array(nEdges).fill(null);
   for (const l of meta.labels || []) {
     const k = kleurVoor(l.naam);
-    for (let e = l.edgeVan; e < l.edgeTot && e < nEdges; e++) edgeKleur[e] = k;
+    const m = l.modus === "weg" ? 2 : 1;
+    for (let e = l.edgeVan; e < l.edgeTot && e < nEdges; e++) {
+      edgeKleur[e] = k;
+      edgeModus[e] = m;
+      edgeLabelNaam[e] = l.naam;
+    }
   }
 
   // --- blok 3: geometrie ----------------------------------------------------
   const posities = new Float32Array(nPunten * 3);
   const kleuren = new Float32Array(nPunten * 3);
+  const geomStart = new Uint32Array(nEdges);
   let nSegmenten = 0;
   for (let i = 0; i < nEdges; i++) nSegmenten += geomN[i] - 1;
   const indices = new Uint32Array(nSegmenten * 2);
   {
     let pi = 0, ii = 0;
     for (let e = 0; e < nEdges; e++) {
+      geomStart[e] = pi;
       const kleur = edgeKleur[e] || KLEUR_SPOOR;
       let x = Math.round(knoopLon[edgeA[e]] * schaal);
       let y = Math.round(knoopLat[edgeA[e]] * schaal);
@@ -185,9 +197,44 @@ export async function laadLandnet(radius, versie = "053", klemOpHorizon = null) 
     kmPerSoort[l.modus] = (kmPerSoort[l.modus] || 0) + (l.km || 0);
   }
 
+  // --- graaf (CSR-adjacency) ------------------------------------------------
+  // Nodig voor de keten-router: een been over het landnet is een Dijkstra over
+  // deze graaf, per modus (spoor of weg) gescheiden. Zelfde opbouw als in
+  // marnet.js zodat `zoekLandpad` er identiek overheen loopt.
+  const graad = new Uint32Array(nKnopen + 1);
+  for (let e = 0; e < nEdges; e++) {
+    graad[edgeA[e] + 1]++;
+    graad[edgeB[e] + 1]++;
+  }
+  for (let i = 0; i < nKnopen; i++) graad[i + 1] += graad[i];
+  const adjEdge = new Uint32Array(nEdges * 2);
+  const adjKnoop = new Uint32Array(nEdges * 2);
+  {
+    const kop = graad.slice(0, nKnopen);
+    for (let e = 0; e < nEdges; e++) {
+      const a = edgeA[e], b = edgeB[e];
+      adjEdge[kop[a]] = e; adjKnoop[kop[a]++] = b;
+      adjEdge[kop[b]] = e; adjKnoop[kop[b]++] = a;
+    }
+  }
+  const knoopXYZ = new Float64Array(nKnopen * 3);
+  for (let i = 0; i < nKnopen; i++) {
+    const lon = knoopLon[i] * (Math.PI / 180);
+    const lat = knoopLat[i] * (Math.PI / 180);
+    knoopXYZ[i * 3 + 0] = Math.cos(lat) * Math.cos(lon);
+    knoopXYZ[i * 3 + 1] = Math.sin(lat);
+    knoopXYZ[i * 3 + 2] = Math.cos(lat) * Math.sin(lon);
+  }
+
   return {
     lijnen,
     meta,
+    // graaf-velden — dezelfde namen als een marnet-net, zodat zoekLandpad()
+    // over beide kan lopen
+    knoopLon, knoopLat, knoopXYZ,
+    edgeA, edgeB, edgeKm, edgeModus, edgeLabel: edgeLabelNaam,
+    geomStart, geomN, posities,
+    adjStart: graad, adjEdge, adjKnoop,
     stats: {
       knopen: nKnopen,
       edges: nEdges,

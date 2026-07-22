@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=053" />
+<link rel="stylesheet" href="style.css?v=054" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -67,6 +67,7 @@
       <span><i style="background:#a6f0ff"></i>hogesnelheid</span>
     </div>
     <div id="landNoot"></div>
+    <div id="ketenNoot"></div>
 
     <!-- Havens (LAR-518): bijna 4.000 searoute-havens als losse laag. Ze zijn
          het onderwerp van de overslag — een haven is de plek waar zee,
@@ -103,6 +104,7 @@
       <div class="btnRow">
         <button class="schipBtn is-on" data-schip="echt">realistisch</button>
         <button class="schipBtn" data-schip="alles">alles toestaan</button>
+        <button class="schipBtn" data-schip="keten">keten (overslag)</button>
       </div>
       <!-- Scheepsklasse (LAR-514): filtert edges op vier maten — diepgang,
            breedte, lengte, doorvaarthoogte. "elk schip" is de DEFAULT en zet
@@ -155,6 +157,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=053"></script>
+<script type="module" src="src/main.js?v=054"></script>
 </body>
 </html>

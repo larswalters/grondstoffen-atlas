@@ -1,0 +1,1519 @@
+{
+ "versie": 1,
+ "toelichting": "Aangewezen overslagpunten. Een eigen entiteit met eigen ids — géén afgeleide van ports.json (LOCODE is geen sleutel: 38 duplicaten, waaronder USPWM = Portland Oregon én Portland Maine). Een punt zonder 'zee' biedt nooit een zee-aanhechting aan, hoe dicht MARNET ook ligt.",
+ "punten": [
+  {
+   "id": "rotterdam",
+   "naam": "Rotterdam",
+   "locode": "NLRTM",
+   "bij": [
+    4.483,
+    51.9
+   ],
+   "aanhechting": {
+    "zee": [
+     4.4574,
+     51.9
+    ],
+    "binnen": [
+     4.4956,
+     51.8998
+    ],
+    "spoor": [
+     4.5089,
+     51.9057
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json NLRTM)"
+  },
+  {
+   "id": "antwerpen",
+   "naam": "Antwerpen",
+   "locode": "BEANR",
+   "bij": [
+    4.4,
+    51.217
+   ],
+   "aanhechting": {
+    "zee": [
+     4.2613,
+     51.3409
+    ],
+    "binnen": [
+     4.3933,
+     51.2218
+    ],
+    "spoor": [
+     4.4207,
+     51.2165
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json BEANR)"
+  },
+  {
+   "id": "hamburg",
+   "naam": "Hamburg",
+   "locode": "DEHAM",
+   "bij": [
+    9.933,
+    53.55
+   ],
+   "aanhechting": {
+    "zee": [
+     9.9273,
+     53.5451
+    ],
+    "binnen": [
+     9.9289,
+     53.5417
+    ],
+    "spoor": [
+     9.9347,
+     53.5526
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json DEHAM)"
+  },
+  {
+   "id": "duisburg",
+   "naam": "Duisburg",
+   "locode": "DEDUI",
+   "bij": [
+    6.724,
+    51.43
+   ],
+   "aanhechting": {
+    "binnen": [
+     6.7186,
+     51.4296
+    ],
+    "spoor": [
+     6.711,
+     51.4479
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json DEDUI)"
+  },
+  {
+   "id": "le-havre",
+   "naam": "Le Havre",
+   "locode": "FRLEH",
+   "bij": [
+    0.107,
+    49.486
+   ],
+   "aanhechting": {
+    "zee": [
+     0.0822,
+     49.4859
+    ],
+    "binnen": [
+     0.1167,
+     49.483
+    ],
+    "spoor": [
+     0.1255,
+     49.4926
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json FRLEH)"
+  },
+  {
+   "id": "gdansk",
+   "naam": "Gdańsk",
+   "locode": "PLGDN",
+   "bij": [
+    18.667,
+    54.35
+   ],
+   "aanhechting": {
+    "zee": [
+     19.1052,
+     54.4892
+    ],
+    "binnen": [
+     18.658,
+     54.3504
+    ],
+    "spoor": [
+     18.6436,
+     54.3479
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json PLGDN)"
+  },
+  {
+   "id": "constanta",
+   "naam": "Constanța",
+   "locode": "ROCND",
+   "bij": [
+    28.65,
+    44.167
+   ],
+   "aanhechting": {
+    "zee": [
+     28.6922,
+     44.1674
+    ],
+    "binnen": [
+     28.6152,
+     44.1005
+    ],
+    "spoor": [
+     28.6392,
+     44.1659
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ROCND)"
+  },
+  {
+   "id": "wenen",
+   "naam": "Wenen",
+   "locode": "ATVIE",
+   "bij": [
+    16.364,
+    48.214
+   ],
+   "aanhechting": {
+    "binnen": [
+     16.4245,
+     48.2154
+    ],
+    "spoor": [
+     16.3612,
+     48.2267
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ATVIE)"
+  },
+  {
+   "id": "boedapest",
+   "naam": "Boedapest",
+   "locode": "HUBUD",
+   "bij": [
+    19.039,
+    47.498
+   ],
+   "aanhechting": {
+    "binnen": [
+     19.0427,
+     47.5116
+    ],
+    "spoor": [
+     19.0246,
+     47.4997
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json HUBUD)"
+  },
+  {
+   "id": "novorossiysk",
+   "naam": "Novorossiysk",
+   "locode": "RUNVS",
+   "bij": [
+    37.783,
+    44.717
+   ],
+   "aanhechting": {
+    "zee": [
+     37.8295,
+     44.5897
+    ],
+    "spoor": [
+     37.7832,
+     44.7349
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json RUNVS)"
+  },
+  {
+   "id": "new-orleans",
+   "naam": "New Orleans",
+   "locode": "USMSY",
+   "bij": [
+    -90.05,
+    29.95
+   ],
+   "aanhechting": {
+    "zee": [
+     -90.0295,
+     29.9558
+    ],
+    "binnen": [
+     -90.0286,
+     29.953
+    ],
+    "spoor": [
+     -90.0536,
+     29.9471
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USMSY)"
+  },
+  {
+   "id": "baton-rouge",
+   "naam": "Baton Rouge",
+   "locode": "USBTR",
+   "bij": [
+    -91.183,
+    30.45
+   ],
+   "aanhechting": {
+    "binnen": [
+     -91.1983,
+     30.4396
+    ],
+    "spoor": [
+     -91.1907,
+     30.4514
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USBTR)"
+  },
+  {
+   "id": "memphis",
+   "naam": "Memphis",
+   "locode": "USMEM",
+   "bij": [
+    -90.06,
+    35.138
+   ],
+   "aanhechting": {
+    "binnen": [
+     -90.0677,
+     35.1386
+    ],
+    "spoor": [
+     -90.0634,
+     35.1272
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USMEM)"
+  },
+  {
+   "id": "st-louis",
+   "naam": "East Saint Louis",
+   "locode": "USESL",
+   "bij": [
+    -90.174,
+    38.619
+   ],
+   "aanhechting": {
+    "binnen": [
+     -90.184,
+     38.613
+    ],
+    "spoor": [
+     -90.1716,
+     38.619
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USESL)"
+  },
+  {
+   "id": "cincinnati",
+   "naam": "Cincinnati",
+   "locode": "USCVG",
+   "bij": [
+    -84.512,
+    39.103
+   ],
+   "aanhechting": {
+    "binnen": [
+     -84.5051,
+     39.094
+    ],
+    "spoor": [
+     -84.4958,
+     39.1035
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USCVG)"
+  },
+  {
+   "id": "chicago",
+   "naam": "Chicago",
+   "locode": "USCHI",
+   "bij": [
+    -87.6,
+    41.883
+   ],
+   "aanhechting": {
+    "zee": [
+     -87.5775,
+     41.8552
+    ],
+    "binnen": [
+     -87.6253,
+     41.8887
+    ],
+    "spoor": [
+     -87.6227,
+     41.8842
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USCHI)"
+  },
+  {
+   "id": "duluth",
+   "naam": "Duluth-Superior",
+   "locode": "USDLH",
+   "bij": [
+    -92.1,
+    46.767
+   ],
+   "aanhechting": {
+    "zee": [
+     -91.9666,
+     46.7624
+    ],
+    "binnen": [
+     -92.0259,
+     46.706
+    ],
+    "spoor": [
+     -92.1165,
+     46.7705
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USDLH)"
+  },
+  {
+   "id": "houston",
+   "naam": "Houston",
+   "locode": "USHOU",
+   "bij": [
+    -95.287,
+    29.746
+   ],
+   "aanhechting": {
+    "zee": [
+     -95.11,
+     29.7402
+    ],
+    "binnen": [
+     -95.2926,
+     29.7474
+    ],
+    "spoor": [
+     -95.294,
+     29.7566
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USHOU)"
+  },
+  {
+   "id": "corpus-christi",
+   "naam": "Corpus Christi",
+   "locode": "USCRP",
+   "bij": [
+    -97.4,
+    27.817
+   ],
+   "aanhechting": {
+    "zee": [
+     -97.4384,
+     27.8603
+    ],
+    "spoor": [
+     -97.4154,
+     27.8161
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json USCRP)"
+  },
+  {
+   "id": "montreal",
+   "naam": "Montréal",
+   "locode": "CAMTR",
+   "bij": [
+    -73.559,
+    45.514
+   ],
+   "aanhechting": {
+    "zee": [
+     -73.5356,
+     45.5096
+    ],
+    "binnen": [
+     -73.5458,
+     45.5029
+    ],
+    "spoor": [
+     -73.549,
+     45.5124
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CAMTR)"
+  },
+  {
+   "id": "vancouver",
+   "naam": "Vancouver BC",
+   "locode": "CAVAN",
+   "bij": [
+    -123.117,
+    49.283
+   ],
+   "aanhechting": {
+    "zee": [
+     -123.142,
+     49.3159
+    ],
+    "spoor": [
+     -123.1127,
+     49.2865
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CAVAN)"
+  },
+  {
+   "id": "macapa",
+   "naam": "Macapá (Amazonemond)",
+   "locode": "BRMCP",
+   "bij": [
+    -51.036,
+    0.078
+   ],
+   "aanhechting": {
+    "zee": [
+     -50.8228,
+     0.1318
+    ],
+    "binnen": [
+     -50.9662,
+     0.0184
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json BRMCP)"
+  },
+  {
+   "id": "santos",
+   "naam": "Santos",
+   "locode": "BRSSZ",
+   "bij": [
+    -46.3,
+    -23.95
+   ],
+   "aanhechting": {
+    "zee": [
+     -46.3479,
+     -23.9815
+    ],
+    "spoor": [
+     -46.2855,
+     -23.9622
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json BRSSZ)"
+  },
+  {
+   "id": "rosario",
+   "naam": "Rosario",
+   "locode": "ARROS",
+   "bij": [
+    -60.633,
+    -32.95
+   ],
+   "aanhechting": {
+    "zee": [
+     -60.5992,
+     -32.9707
+    ],
+    "binnen": [
+     -60.6017,
+     -32.9402
+    ],
+    "spoor": [
+     -60.6205,
+     -32.9653
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ARROS)"
+  },
+  {
+   "id": "buenos-aires",
+   "naam": "Buenos Aires",
+   "locode": "ARBUE",
+   "bij": [
+    -58.367,
+    -34.595
+   ],
+   "aanhechting": {
+    "zee": [
+     -58.4706,
+     -34.3253
+    ],
+    "binnen": [
+     -58.3512,
+     -34.6343
+    ],
+    "spoor": [
+     -58.3695,
+     -34.5965
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ARBUE)"
+  },
+  {
+   "id": "callao",
+   "naam": "Callao",
+   "locode": "PECLL",
+   "bij": [
+    -77.15,
+    -12.05
+   ],
+   "aanhechting": {
+    "zee": [
+     -77.7,
+     -12.0
+    ],
+    "spoor": [
+     -77.1365,
+     -12.0481
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json PECLL)"
+  },
+  {
+   "id": "matarani",
+   "naam": "Matarani",
+   "locode": "PEMRI",
+   "bij": [
+    -72.117,
+    -17.0
+   ],
+   "aanhechting": {
+    "zee": [
+     -72.7,
+     -17.3
+    ],
+    "spoor": [
+     -72.108,
+     -17.0019
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json PEMRI)"
+  },
+  {
+   "id": "antofagasta",
+   "naam": "Antofagasta",
+   "locode": "CLANF",
+   "bij": [
+    -70.417,
+    -23.65
+   ],
+   "aanhechting": {
+    "zee": [
+     -71.3,
+     -23.8
+    ],
+    "spoor": [
+     -70.3969,
+     -23.6444
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CLANF)"
+  },
+  {
+   "id": "durban",
+   "naam": "Durban",
+   "locode": "ZADUR",
+   "bij": [
+    31.067,
+    -29.867
+   ],
+   "aanhechting": {
+    "zee": [
+     31.1737,
+     -29.8168
+    ],
+    "spoor": [
+     31.0564,
+     -29.8745
+    ],
+    "weg": [
+     30.9897,
+     -29.8851
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "zee",
+     "weg"
+    ],
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ZADUR)"
+  },
+  {
+   "id": "richards-bay",
+   "naam": "Richards Bay",
+   "locode": "ZARCB",
+   "bij": [
+    32.098,
+    -28.81
+   ],
+   "aanhechting": {
+    "zee": [
+     32.9205,
+     -28.4494
+    ],
+    "spoor": [
+     32.0757,
+     -28.7946
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ZARCB)"
+  },
+  {
+   "id": "saldanha",
+   "naam": "Saldanha Bay",
+   "locode": "ZASDB",
+   "bij": [
+    17.967,
+    -33.033
+   ],
+   "aanhechting": {
+    "zee": [
+     18.2373,
+     -33.8408
+    ],
+    "spoor": [
+     17.9925,
+     -33.0116
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json ZASDB)"
+  },
+  {
+   "id": "dar-es-salaam",
+   "naam": "Dar es Salaam",
+   "locode": "TZDAR",
+   "bij": [
+    39.3,
+    -6.817
+   ],
+   "aanhechting": {
+    "zee": [
+     39.3256,
+     -6.6537
+    ],
+    "spoor": [
+     39.2845,
+     -6.823
+    ],
+    "weg": [
+     39.2783,
+     -6.8148
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "zee",
+     "weg"
+    ],
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json TZDAR)"
+  },
+  {
+   "id": "beira",
+   "naam": "Beira",
+   "locode": "MZBEW",
+   "bij": [
+    34.835,
+    -19.833
+   ],
+   "aanhechting": {
+    "zee": [
+     34.7882,
+     -19.8701
+    ],
+    "spoor": [
+     34.8381,
+     -19.8251
+    ],
+    "weg": [
+     34.8489,
+     -19.8234
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "zee",
+     "weg"
+    ],
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json MZBEW)"
+  },
+  {
+   "id": "walvis-bay",
+   "naam": "Walvis Bay",
+   "locode": "NAWVB",
+   "bij": [
+    14.501,
+    -22.95
+   ],
+   "aanhechting": {
+    "zee": [
+     14.4759,
+     -22.8344
+    ],
+    "spoor": [
+     14.499,
+     -22.9552
+    ],
+    "weg": [
+     14.4923,
+     -22.9632
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "zee",
+     "weg"
+    ],
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json NAWVB)"
+  },
+  {
+   "id": "lobito",
+   "naam": "Lobito",
+   "locode": "AOLOB",
+   "bij": [
+    13.567,
+    -12.333
+   ],
+   "aanhechting": {
+    "zee": [
+     13.5406,
+     -12.2702
+    ],
+    "spoor": [
+     13.5847,
+     -12.3368
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json AOLOB)"
+  },
+  {
+   "id": "kasumbalesa",
+   "naam": "Kasumbalesa (grens DRC/Zambia)",
+   "bij": [
+    27.794,
+    -12.253
+   ],
+   "aanhechting": {
+    "spoor": [
+     27.8027,
+     -12.2479
+    ],
+    "weg": [
+     27.7984,
+     -12.2505
+    ]
+   },
+   "overslag": [
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (aangewezen coördinaat)"
+  },
+  {
+   "id": "shanghai",
+   "naam": "Shanghai",
+   "locode": "CNSHA",
+   "bij": [
+    121.497,
+    31.4
+   ],
+   "aanhechting": {
+    "zee": [
+     121.4187,
+     31.51
+    ],
+    "binnen": [
+     121.527,
+     31.3994
+    ],
+    "spoor": [
+     121.4458,
+     31.3802
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNSHA)"
+  },
+  {
+   "id": "nanjing",
+   "naam": "Nanjing",
+   "locode": "CNNKG",
+   "bij": [
+    118.733,
+    32.079
+   ],
+   "aanhechting": {
+    "zee": [
+     119.5484,
+     32.1968
+    ],
+    "binnen": [
+     118.7268,
+     32.101
+    ],
+    "spoor": [
+     118.7374,
+     32.0976
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "binnen"
+    ],
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNNKG)"
+  },
+  {
+   "id": "wuhan",
+   "naam": "Wuhan",
+   "locode": "CNWUH",
+   "bij": [
+    114.308,
+    30.592
+   ],
+   "aanhechting": {
+    "binnen": [
+     114.2942,
+     30.5681
+    ],
+    "spoor": [
+     114.2969,
+     30.6324
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNWUH)"
+  },
+  {
+   "id": "chongqing",
+   "naam": "Chongqing",
+   "locode": "CNCKG",
+   "bij": [
+    106.539,
+    29.529
+   ],
+   "aanhechting": {
+    "binnen": [
+     106.5319,
+     29.5392
+    ],
+    "spoor": [
+     106.5275,
+     29.5045
+    ]
+   },
+   "overslag": [
+    [
+     "binnen",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNCKG)"
+  },
+  {
+   "id": "tianjin",
+   "naam": "Tianjin",
+   "locode": "CNTSN",
+   "bij": [
+    117.745,
+    38.987
+   ],
+   "aanhechting": {
+    "zee": [
+     117.8503,
+     38.891
+    ],
+    "spoor": [
+     117.7482,
+     38.9894
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNTSN)"
+  },
+  {
+   "id": "qingdao",
+   "naam": "Qingdao",
+   "locode": "CNTAO",
+   "bij": [
+    120.385,
+    36.065
+   ],
+   "aanhechting": {
+    "zee": [
+     120.2646,
+     36.0313
+    ],
+    "spoor": [
+     120.3446,
+     36.0975
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json CNTAO)"
+  },
+  {
+   "id": "singapore",
+   "naam": "Singapore",
+   "locode": "SGSIN",
+   "bij": [
+    103.832,
+    1.239
+   ],
+   "aanhechting": {
+    "zee": [
+     103.7635,
+     1.2599
+    ],
+    "spoor": [
+     103.7812,
+     1.3334
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json SGSIN)"
+  },
+  {
+   "id": "nhava-sheva",
+   "naam": "Nhava Sheva",
+   "locode": "INNSA",
+   "bij": [
+    72.93,
+    18.97
+   ],
+   "aanhechting": {
+    "zee": [
+     72.8078,
+     18.9414
+    ],
+    "spoor": [
+     72.9554,
+     18.9492
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json INNSA)"
+  },
+  {
+   "id": "karachi",
+   "naam": "Karachi",
+   "locode": "PKKHI",
+   "bij": [
+    66.983,
+    24.783
+   ],
+   "aanhechting": {
+    "zee": [
+     66.9757,
+     24.8174
+    ],
+    "spoor": [
+     67.0067,
+     24.8481
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json PKKHI)"
+  },
+  {
+   "id": "yokohama",
+   "naam": "Yokohama",
+   "locode": "JPYOK",
+   "bij": [
+    139.635,
+    35.458
+   ],
+   "aanhechting": {
+    "zee": [
+     139.6857,
+     35.3661
+    ],
+    "spoor": [
+     139.6302,
+     35.452
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json JPYOK)"
+  },
+  {
+   "id": "port-hedland",
+   "naam": "Port Hedland",
+   "locode": "AUPHE",
+   "bij": [
+    118.583,
+    -20.317
+   ],
+   "aanhechting": {
+    "zee": [
+     118.6,
+     -19.6
+    ],
+    "spoor": [
+     118.5658,
+     -20.301
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json AUPHE)"
+  },
+  {
+   "id": "bunbury",
+   "naam": "Bunbury",
+   "locode": "AUBUY",
+   "bij": [
+    115.635,
+    -33.32
+   ],
+   "aanhechting": {
+    "zee": [
+     115.6133,
+     -33.3064
+    ],
+    "spoor": [
+     115.6677,
+     -33.3188
+    ],
+    "weg": [
+     115.7121,
+     -33.373
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ],
+    [
+     "zee",
+     "weg"
+    ],
+    [
+     "spoor",
+     "weg"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json AUBUY)"
+  },
+  {
+   "id": "townsville",
+   "naam": "Townsville",
+   "locode": "AUTSV",
+   "bij": [
+    146.843,
+    -19.293
+   ],
+   "aanhechting": {
+    "zee": [
+     146.8584,
+     -19.2619
+    ],
+    "spoor": [
+     146.8239,
+     -19.2656
+    ]
+   },
+   "overslag": [
+    [
+     "zee",
+     "spoor"
+    ]
+   ],
+   "bron": "aangewezen 2026-07-23 (ports.json AUTSV)"
+  }
+ ]
+}
