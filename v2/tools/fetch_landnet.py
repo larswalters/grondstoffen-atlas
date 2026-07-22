@@ -1124,6 +1124,147 @@ def heel_na_simplify(ketens, voor, modus, eps_km=HEAL_NA_SIMPLIFY_KM,
     return naden, rapport, steekproef
 
 
+def _wegen_graaf(ways, refs=None):
+    """Vertex-graaf over de gescande wegen. Zelfde vorm als `kortste_waterpad` uit
+    M24: elke vertex is een knoop, opeenvolgende vertices zijn verbonden. Wegen
+    delen in OSM hun kruisingsknoop exact, dus stitchen is hier niet nodig — en
+    juist daarom wél een aparte snap voor de ankers (een mijn ligt niet op de weg).
+
+    `refs` is optioneel de whitelist van wegnummers uit het bronnenonderzoek. Hij
+    filtert niet, maar maakt niet-genoemde wegen DUURDER (factor 3). Dat is met
+    opzet zachter dan een filter: een corridor die één ongenummerd stuk bevat moet
+    niet als 'geen pad' eindigen, maar de route mag er ook niet lichtvaardig van
+    afwijken. Zelfde gedachte als de naam-whitelist bij de rivieren, alleen daar
+    kon het hard omdat een rivier één naam draagt en een corridor er tien.
+    """
+    knoop_id, knopen, buren = {}, [], []
+
+    def nid(p):
+        s = (round(p[0], 6), round(p[1], 6))
+        if s not in knoop_id:
+            knoop_id[s] = len(knopen)
+            knopen.append(s)
+            buren.append([])
+        return knoop_id[s]
+
+    for w in ways:
+        straf = 1.0
+        if refs:
+            r = (w.get("ref") or "")
+            straf = 1.0 if any(x and x in r.split(";") for x in refs) else 3.0
+        pts = [tuple(p) for p in w["pts"]]
+        vorige = None
+        for p in pts:
+            k = nid(p)
+            if vorige is not None and vorige != k:
+                d = fw.km(knopen[vorige], knopen[k])
+                buren[vorige].append((k, d, d * straf))
+                buren[k].append((vorige, d, d * straf))
+            vorige = k
+    return knopen, buren
+
+
+def _dichtste_knoop(knopen, punt, max_km=25.0):
+    beste, best_d = None, max_km
+    for i, k in enumerate(knopen):
+        d = fw.km(punt, k)
+        if d < best_d:
+            beste, best_d = i, d
+    return beste, best_d
+
+
+def _dijkstra(knopen, buren, start, doel):
+    """Kortste pad op de GESTRAFTE kosten; geeft de vertexlijst en de ECHTE km."""
+    import heapq
+
+    dist = {start: 0.0}
+    vorig = {}
+    pq = [(0.0, start)]
+    gezien = set()
+    while pq:
+        d, u = heapq.heappop(pq)
+        if u in gezien:
+            continue
+        gezien.add(u)
+        if u == doel:
+            break
+        for v, _echt, kost in buren[u]:
+            nd = d + kost
+            if nd < dist.get(v, float("inf")):
+                dist[v] = nd
+                vorig[v] = u
+                heapq.heappush(pq, (nd, v))
+    if doel not in gezien:
+        return None, 0.0
+    pad = [doel]
+    while pad[-1] != start:
+        pad.append(vorig[pad[-1]])
+    pad.reverse()
+    pts = [knopen[i] for i in pad]
+    km = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
+    return pts, km
+
+
+def corridor_keten(ways, corridor):
+    """Eén corridor → één keten, gerouteerd langs zijn tussenpunten.
+
+    ⚠️ DE TUSSENPUNTEN ZIJN GEEN DECORATIE. Zonder ze zoekt het kortste pad de
+    hemelsbrede lijn op, en die klopt voor geen enkele echte corridor: Kolwezi→
+    Durban loopt via Lusaka (155 km van de rechte lijn) en Harare (362 km). Elk
+    been wordt apart gerouteerd en daarna aaneengeschakeld.
+
+    Geeft (keten_of_None, rapport). Het rapport is wat de redacteur leest: per been
+    de gevonden lengte, en aan het eind de vergelijking met de gepubliceerde lengte.
+    """
+    punten = corridor_punten(corridor)
+    knopen, buren = _wegen_graaf(ways, corridor.get("refs"))
+    if not knopen:
+        return None, {"id": corridor["id"], "fout": "geen wegen in het venster"}
+
+    ankers, snaps = [], []
+    for p in punten:
+        k, d = _dichtste_knoop(knopen, p)
+        if k is None:
+            return None, {"id": corridor["id"],
+                          "fout": f"punt {p} ligt >25 km van elke weg"}
+        ankers.append(k)
+        snaps.append(round(d, 2))
+
+    pts, km_tot, benen = [], 0.0, []
+    for i in range(len(ankers) - 1):
+        deel, km = _dijkstra(knopen, buren, ankers[i], ankers[i + 1])
+        if deel is None:
+            return None, {"id": corridor["id"],
+                          "fout": f"geen wegpad tussen punt {i} en {i + 1}"}
+        benen.append(round(km, 1))
+        km_tot += km
+        pts.extend(deel if not pts else deel[1:])
+
+    gepubliceerd = corridor.get("gepubliceerdKm")
+    afwijking = None
+    if gepubliceerd:
+        afwijking = km_tot / gepubliceerd - 1.0
+
+    keten = {
+        "pts": [(round(lo, 6), round(la, 6)) for lo, la in pts],
+        "km": km_tot,
+        "regio": corridor["id"],
+        "gauge": "corridor",
+        "hs": False,
+        "wayIds": [],
+        "modus": "weg",
+    }
+    return keten, {
+        "id": corridor["id"], "naam": corridor.get("naam", corridor["id"]),
+        "km": round(km_tot, 1), "benen": benen, "snapsKm": snaps,
+        "gepubliceerdKm": gepubliceerd,
+        "afwijking": None if afwijking is None else round(100 * afwijking, 1),
+        "binnenTolerantie": (None if afwijking is None
+                             else abs(afwijking) <= WEG_LENGTE_TOLERANTIE),
+        "punten": len(pts),
+    }
+
+
 def schrijf_geojson(ketens, modus, suffix=""):
     """Eén Feature per keten, met het label dat de bake als systeem gebruikt."""
     # Elk ketenUITEINDE is een plek waar een andere keten kan aanhechten; die
@@ -1214,6 +1355,42 @@ if __name__ == "__main__":
         if a.regios:
             wil = {r.strip() for r in a.regios.split(",")}
             sleutels = [s for s in sleutels if regio_van(s) in wil]
+
+    if a.modus == "weg":
+        # ⚠️ DE WEGKANT DRAAIT EEN ANDERE PIJPLIJN. Vouwen/dedup/heal/snoei zijn er voor
+        # een NET; hier bouwen we geen net maar een handvol verhalende lijnen. Elke
+        # corridor wordt apart gerouteerd tussen zijn ankers, langs zijn tussenpunten.
+        if not CORRIDORS:
+            raise SystemExit("CORRIDORS is leeg — zie v2/design/wegcorridors.md; de lijst "
+                             "is een redactiebesluit, geen afleiding.")
+        nodig = sorted({s for c in CORRIDORS for s in c.get("extracts", [])})
+        if not nodig:
+            raise SystemExit("geen extracts opgegeven bij de corridors")
+        land_scan(nodig, "weg", a.workers)
+        ketens, rapporten = [], []
+        for c in CORRIDORS:
+            deel = land_laad(c.get("extracts", []), "weg")
+            keten, rap = corridor_keten(deel, c)
+            rapporten.append(rap)
+            if keten:
+                ketens.append(keten)
+        print("\n  corridors:")
+        for r in rapporten:
+            if r.get("fout"):
+                print(f"    ⚠️  {r['id']:<28} {r['fout']}")
+                continue
+            meet = ""
+            if r["gepubliceerdKm"]:
+                vlag = "OK" if r["binnenTolerantie"] else "⚠️"
+                meet = (f" · gepubliceerd {r['gepubliceerdKm']:,} km "
+                        f"({r['afwijking']:+.1f}% {vlag})")
+            print(f"    {r['id']:<28} {r['km']:>8,.1f} km · benen {r['benen']}"
+                  f" · snaps {r['snapsKm']}{meet}")
+        if a.schrijf:
+            schrijf_geojson(ketens, "weg", a.suffix)
+        km = sum(k["km"] for k in ketens)
+        print(f"\n  {km:,.0f} km · {len(ketens)} corridors van de {len(CORRIDORS)}")
+        sys.exit(0)
 
     land_scan(sleutels, a.modus, a.workers)
     ways = land_laad(sleutels, a.modus)
