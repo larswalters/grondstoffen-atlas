@@ -52,6 +52,22 @@
       <button class="mnBtn" data-mn="uit">uit</button>
     </div>
 
+    <!-- Landnet (M25): het spoor als vierde net, in een eigen bestand met eigen
+         knoop-ids. Nog niet gekoppeld aan de router — eerst neerleggen, dan
+         verbinden via aangewezen knooppunten. -->
+    <div class="hudLabel">Landnet (spoor)</div>
+    <div class="btnRow">
+      <button class="lnBtn is-on" data-ln="aan">aan</button>
+      <button class="lnBtn" data-ln="uit">uit</button>
+    </div>
+    <div id="havenLegenda" style="margin-bottom:6px">
+      <span><i style="background:#5fe8c8"></i>normaalspoor (1435)</span>
+      <span><i style="background:#ffb877"></i>breedspoor (1520)</span>
+      <span><i style="background:#c9a6ff"></i>smalspoor</span>
+      <span><i style="background:#a6f0ff"></i>hogesnelheid</span>
+    </div>
+    <div id="landNoot"></div>
+
     <!-- Havens (LAR-518): bijna 4.000 searoute-havens als losse laag. Ze zijn
          het onderwerp van de overslag — een haven is de plek waar zee,
          binnenwater en straks spoor/weg samenkomen, dus moet je ze kunnen zien

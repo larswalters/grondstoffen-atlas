@@ -7,6 +7,7 @@ import { createTileLayer } from "./tiles.js?v=044";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
   from "./marnet.js?v=044";
 import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=044";
+import { laadLandnet } from "./landnet.js?v=044";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -96,6 +97,33 @@ Promise.all([laadMarnet(CONFIG.radius), laadHavens()])
   })
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
 
+// --- het landnet (M25) -----------------------------------------------------
+// Spoor (en straks weg) als VIERDE net, in een eigen bestand met eigen knoop-ids.
+// Bewust nog niet gekoppeld aan de router: eerst neerleggen, dan verbinden via
+// aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
+// maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
+let LANDNET = null;
+laadLandnet(CONFIG.radius, "044")
+  .then((ln) => {
+    LANDNET = ln;
+    GLOBE.globeGroup.add(ln.lijnen);
+    window.LANDNET = ln;
+    const s = ln.stats;
+    console.log(
+      `[atlas v2] landnet: ${s.netwerkKm.toLocaleString("nl")} km · ` +
+      `${s.knopen.toLocaleString("nl")} knopen · ${s.edges.toLocaleString("nl")} edges · ` +
+      `${s.punten.toLocaleString("nl")} punten · ${s.labels} labels · ` +
+      `${s.kbOverdracht} KB · laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+    );
+    const noot = document.getElementById("landNoot");
+    if (noot) {
+      noot.textContent =
+        `${Math.round(s.netwerkKm).toLocaleString("nl")} km spoor · ` +
+        `${s.edges.toLocaleString("nl")} edges · ${s.labels} labels`;
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] landnet niet geladen (nog niet gebakken?):", e.message));
+
 // De losse bulklaag (LAR-515) is hier weg sinds het binnenwater ÉÉN net met de
 // graaf werd: die 374.342 km zitten nu in NET zelf, met de maten per lijn.
 // `marnet-bulk.json` wordt niet meer gebakken, dus de fetch gaf bij elke load
@@ -119,6 +147,11 @@ GLOBE.onTick(() => {
   if (routeLijn) {
     const op = Math.max(CONFIG.radius * 4e-6, alt * 0.006);
     routeLijn.scale.setScalar(1 + op / CONFIG.radius);
+  }
+  if (LANDNET) {
+    // Onder het zeenet: waar spoor en water samenkomen hoort het water te winnen.
+    const op = Math.max(CONFIG.radius * 2.5e-6, alt * 0.0045);
+    LANDNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -302,6 +335,9 @@ wireButtons(".clBtn", "cl", (mode) => {
 });
 wireButtons(".mnBtn", "mn", (mode) => {
   if (NET) NET.lijnen.visible = (mode === "aan");
+});
+wireButtons(".lnBtn", "ln", (mode) => {
+  if (LANDNET) LANDNET.lijnen.visible = (mode === "aan");
 });
 wireButtons(".hvBtn", "hv", (mode) => {
   if (HAVENLAAG) HAVENLAAG.punten.visible = (mode === "aan");
