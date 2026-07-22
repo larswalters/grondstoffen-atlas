@@ -2,14 +2,14 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=055";
-import { laadVectorWereld } from "./world.js?v=055";
-import { createTileLayer } from "./tiles.js?v=055";
+import { createGlobe, CONFIG } from "./globe.js?v=056";
+import { laadVectorWereld } from "./world.js?v=056";
+import { createTileLayer } from "./tiles.js?v=056";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=055";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=055";
-import { laadLandnet } from "./landnet.js?v=055";
-import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=055";
+  from "./marnet.js?v=056";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=056";
+import { laadLandnet } from "./landnet.js?v=056";
+import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=056";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -137,7 +137,7 @@ laadLandnet(CONFIG.radius, "054", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=055")
+fetch("data/knooppunten.json?v=056")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));

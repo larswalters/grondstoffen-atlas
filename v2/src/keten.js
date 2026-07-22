@@ -21,7 +21,7 @@
 // (zee · binnen · spoor · weg) en een edge tussen twee groepen bestaat niet.
 // Dat is een constructie-eigenschap, geen guard die je moet vertrouwen.
 
-import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=055";
+import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=056";
 
 export const GROEP = { zee: 0, binnen: 1, spoor: 2, weg: 3 };
 export const GROEP_NAAM = ["zee", "binnen", "spoor", "weg"];
@@ -503,9 +503,25 @@ function bouwKeten(K, lagen, laagIdx, doel) {
  * drempel kan dit classificeren, dus doet de redacteur het: Cincinnati is
  * aangewezen als binnen+spoor, niet zee.
  *
- * Een haven die NIET in het register staat (de duizenden gewone havens) valt
- * terug op de ruwe snap: zee én rivier, elk met zijn eigen aanloop. Daar is
- * geen redacteur, en een verre aanloop verliest vanzelf van een dichtbije.
+ * Een haven die NIET in het register staat (de duizenden gewone havens) zaait
+ * op het net waar hij het DICHTST bij ligt — en alleen dáár. Dat is de fix voor
+ * Karlsruhe→elders: Karlsruhe is een Rijnhaven met een zee-snap op 360 km (de
+ * zee komt daar over de Rijn, niet dwars over land), en zonder deze regel wint
+ * een "zeeschip" dat 360 km landinwaarts begint lexicografisch van de eerlijke
+ * rivier→overslag→zee-keten — met een aanloop die niet eens getekend wordt, dus
+ * de lijn lijkt zomaar in zee te stoppen.
+ *
+ * Waarom geen dubbel zaad meer voor een gewone haven: een verre zee-aanloop is
+ * geen "duur maar geldig" zaad maar een fysieke onwaarheid (hij kruist land).
+ * Een haven die écht op twee netten ligt (kade + riviermond) is precies een
+ * overslagkandidaat en hoort dan in het register — daar krijgt hij zijn tweede
+ * aanhechting terug, aangewezen in plaats van geraden.
+ *
+ * ⚠️ GEEN afstandsdrempel: het interval is leeg (Antofagasta is een échte
+ * zeehaven op 91 km zee-snap, Duisburg een binnenhaven op 152 km). "Dichtste
+ * net" is een RELATIEVE keuze en heeft dat probleem niet — Antofagasta's zee
+ * (91) verslaat zijn rivier (304), Karlsruhe's rivier (2) verslaat zijn zee
+ * (360). Geen magisch getal.
  */
 export function havenZaden(K, haven) {
   const punt = haven.locode ? K.opLocode.get(haven.locode) : null;
@@ -521,14 +537,17 @@ export function havenZaden(K, haven) {
     if (zaden.length) return zaden;
     // een register-punt zonder zee/binnen (bv. Kasumbalesa) valt hieronder door
   }
-  const zaden = [];
-  if (haven.knoop >= 0 && haven.afstandKm >= 0) {
-    zaden.push({ knoop: haven.knoop, km: haven.afstandKm, naam: haven.naam });
+  const heeftZee = haven.knoop >= 0 && haven.afstandKm >= 0;
+  const heeftRivier = haven.knoopRivier >= 0 && haven.afstandRivierKm >= 0;
+  if (heeftZee && heeftRivier) {
+    // het dichtste net wint — geen teleport over land naar het andere net
+    return haven.afstandKm <= haven.afstandRivierKm
+      ? [{ knoop: haven.knoop, km: haven.afstandKm, naam: haven.naam }]
+      : [{ knoop: haven.knoopRivier, km: haven.afstandRivierKm, naam: haven.naam }];
   }
-  if (haven.knoopRivier >= 0 && haven.afstandRivierKm >= 0) {
-    zaden.push({ knoop: haven.knoopRivier, km: haven.afstandRivierKm, naam: haven.naam });
-  }
-  return zaden;
+  if (heeftZee) return [{ knoop: haven.knoop, km: haven.afstandKm, naam: haven.naam }];
+  if (heeftRivier) return [{ knoop: haven.knoopRivier, km: haven.afstandRivierKm, naam: haven.naam }];
+  return [];
 }
 
 /** Zaden voor een aangewezen knooppunt: elke modaliteit die het punt draagt. */
