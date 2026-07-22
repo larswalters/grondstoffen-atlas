@@ -289,6 +289,7 @@ export function createGlobe(mount) {
     altitude = Math.max(CONFIG.minAltitude, Math.min(CONFIG.maxAltitude, altitude * factor));
     camera.position.z = CONFIG.radius + altitude;
     updateNear();
+    werkHorizonBij();
   }
 
   // --- knijpzoom op mobiel -------------------------------------------------
@@ -369,14 +370,42 @@ export function createGlobe(mount) {
   // we de achterkant er in de shader af met de HORIZONTOETS: een punt P op een bol met
   // straal R is zichtbaar vanaf camera C precies als dot(P, C) ≥ R². Dat klopt op elke
   // hoogte, dus er is geen hoogtedrempel meer nodig.
+  //
+  // De toets zelf staat als LETTERLIJKE waarde in de shader (geen uniform): R² verandert
+  // nooit, en één plek minder om verkeerd te bedraden.
+  // ⚠️ MET EEN CLIPPING PLANE, NIET MET EEN EIGEN SHADER. Een handgeschreven
+  // horizontoets in `onBeforeCompile` heeft me twee rondes gekost en werkte niet:
+  // de varying kwam er met het verkeerde teken uit (gemeten: de voorkant op ≈ −6,1
+  // waar JS op dezelfde vertex +5,98 rekent) en ook na omdraaien klopte het beeld
+  // niet — op 5 km hoogte bleef er 0 over. Three.js heeft hier een ondersteunde
+  // voorziening voor, en de horizon ís precies een vlak, dus die gebruiken we.
+  //
+  // De meetkunde: voor een bol met straal R en een camera op afstand d van het
+  // middelpunt is de zichtbare kap begrensd door het vlak met normaal Ĉ op afstand
+  // R²/d van het middelpunt. De camera staat altijd op +z (de BOL draait, niet de
+  // camera), dus de normaal is constant en alleen de afstand loopt mee met de hoogte.
+  const R2 = CONFIG.radius * CONFIG.radius;
+  const horizonVlak = new THREE.Plane(new THREE.Vector3(0, 0, 1), -CONFIG.radius);
+  renderer.localClippingEnabled = true;
+
+  function werkHorizonBij() {
+    const d = camera.position.length();
+    horizonVlak.normal.copy(camera.position).divideScalar(d || 1);
+    horizonVlak.constant = -(R2 / (d || 1));
+  }
+  werkHorizonBij();
+
   function klemOpHorizon(materiaal) {
-    // De dieptetest loslaten is het enige dat werkt; zie de uitleg hierboven.
-    // ⚠️ Geprobeerd en NIET werkend: de achterkant afknippen met een horizontoets in de
-    // shader (dot(P,C) >= R²) via onBeforeCompile. Die knipte van dichtbij juist alles
-    // weg — op 5 km hoogte leverden alle drie de lagen weer 0 pixels. Niet nog eens
-    // proberen zonder eerst uit te zoeken waarom `vHor` daar niet klopt.
-    materiaal.depthTest = false;
+    materiaal.depthTest = false;          // de bol mag deze laag niet meer afdekken
+    materiaal.clippingPlanes = [horizonVlak];   // ...maar de achterkant valt weg
     materiaal.needsUpdate = true;
+  }
+
+  // alleen om te meten: het vlak tijdelijk verzetten (0 = uit)
+  function zetHorizonDrempel(v) {
+    const d = camera.position.length();
+    horizonVlak.constant = v === null ? -(R2 / d) : -v;
+    return { constant: horizonVlak.constant, R2, d: +d.toFixed(4) };
   }
 
   function setSun(mode) {
@@ -410,6 +439,7 @@ export function createGlobe(mount) {
     globeGroup.rotation.x = THREE.MathUtils.degToRad(lat);
 
     for (const fn of tickFns) fn(dt);
+    werkHorizonBij();
     renderer.render(scene, camera);
 
     frames++;
@@ -446,7 +476,7 @@ export function createGlobe(mount) {
   return {
     scene, camera, renderer, globeGroup,
     radius: CONFIG.radius,
-    onTick, setToneMapping, setSun, setBasemap, setSphereSink, klemOpHorizon, zoomBy,
+    onTick, setToneMapping, setSun, setBasemap, setSphereSink, klemOpHorizon, zetHorizonDrempel, zoomBy,
     getAltitude: () => altitude,
     // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km
     getAltitudeKm: () => (altitude / CONFIG.radius) * 6371,
