@@ -3,6 +3,50 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## 2026-07-22 · M25 — de volgorde omgedraaid: eerst het landnet, dán aansluiten
+**Besluit (Lars):** *"het is denk ik beter om toch eerst het spoor en een aantal snelwegen neer te
+leggen en dan pas met connecten beginnen."*
+**Waarom:** `v2/design/overslag-ontwerp.md` §3a draagt M25 al (een knooppunt-entry krijgt gewoon
+`"spoor": [lon,lat]`; Kasumbalesa hoeft geen haven te zijn). Aansluiten ná het landnet = één
+redactieronde over de aangewezen punten in plaats van twee, en de keten-router wordt meteen op zijn
+eindvorm gebouwd (zee ↔ binnen ↔ spoor/weg).
+
+## 2026-07-22 · M25 — LANDBRUG: het standaardprofiel sluit het landnet af
+**Besluit (Lars, AskUserQuestion):** een zeeroute blijft een zeeroute. Het default-profiel draagt
+het groepslabel `land` in `vermijd`; de vervoerswijze per been komt **uit de flows-data**
+(`mode`: 223 ship · 134 rail · 105 road · 36 pipeline) en wordt niet door de router geraden.
+Uitvoeren gebeurt bij het koppelen (M26), maar de regel ligt nú vast zodat die stap weet wat hij
+moet bouwen.
+**Waarom:** een zuivere spoorroute heeft **nul overslagen** en zou lexicografisch winnen van zee —
+R'dam→Shanghai is ~11.000 km over rails tegen 19.610 over zee, en **7 van de 11 invarianten**
+kantelen dan naar een trein. Dit is dezelfde klasse als *"een zeeschip vaart niet door sluizen"*
+(LAR-494): niet oplossen met een kostmodel maar met een profiel. ⚠️ Deze milestone kán de fout per
+constructie niet maken (er is geen edge tussen land en water), dus de guard hoort expliciet in de
+koppelstap — zie `bugs-and-risks.md`.
+
+## 2026-07-22 · M25 — eigen extract-registry, `fw.GEOFABRIK_REGIOS` blijft ongemoeid
+**Besluit:** de 23 extra land-extracts staan in `LAND_EXTRA_REGIOS` in `fetch_landnet.py`, niet in
+de water-registry. De .pbf's staan in dezelfde map.
+**Waarom:** `fw.haal_bulk()` bepaalt zijn invoer als "alles uit `GEOFABRIK_REGIOS` dat op schijf
+staat". Uitbreiden daar verandert stilzwijgend de eerstvolgende **waterbake** — en dus
+`marnet.bin` én `ports.json`. Onbekende sleutels zijn voor water onzichtbaar.
+
+## 2026-07-22 · M25 — dedup van dubbelspoor: per MONSTER, met gauge in de sleutel, geijkt op twee meetlatten
+**Besluit:** parallel dubbelspoor wordt samengevouwen op **monsterniveau** (elk monster krijgt
+sleutel cel≈15 m × richtingsbak 30° × **gauge**; gedekt = een lángere keten zit in dezelfde
+sleutel), waarna de keten in runs van ongedekte monsters wordt geknipt en runs <300 m vervallen.
+**Waarom per monster en niet per keten:** na het vouwen is de langste keten duizenden km lang en
+haalt nooit een drempel — de dedup wordt blind precies waar het meeste dubbelspoor ligt.
+**Waarom gauge in de sleutel:** anders wordt een 1435-lijn de dubbelganger van een parallelle
+1520-lijn en verdwijnen de spoorwijdte-breuken (Małaszewicze, Dostyk) — juist de plekken waar in
+het echt moet worden overgeladen.
+**Parameters GEIJKT, niet gekozen** (tweezijdig, twee onafhankelijke gepubliceerde meetlatten):
+cel 15 m / stap 20 m geeft **NL 3.103 km tegen ProRail ~3.223 (−3,7%)** en **Polen 19.534 tegen
+PKP-PLK ~19.300 (+1,2%)**, terwijl enkelspoor blijft staan (Zambia −0,4% · Cambodja −0,2% ·
+Mongolië −1,2%) en **Sishen–Saldanha op 882 km uitkomt tegen 861 gepubliceerd (+2,4%)**.
+Fijnere stappen kopen nauwelijks nauwkeurigheid maar vermenigvuldigen de monsters (8 m ⇒ 237M
+wereldwijd i.p.v. 95M).
+
 ## 2026-07-21 · Werkregel — bouwen boven meten; route-test geschrapt als gap-detector
 **Besluit (Lars):** geen meet-/analyserondes meer als poort vóór het bouwen; het werkstuk zelf is
 de toets. De geplande route-test als gap-detector vervalt: *"als de realistische route een
