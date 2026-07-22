@@ -1,6 +1,46 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-22 · Vier netten op de bol — en de vectorlaag die niemand kon zien (?v=053)
+
+**TL;DR:** Lars kon het spoornet niet controleren, en dat bleek geen kwestie van kijken: zodra
+de satelliettegels geladen waren leverden **alle** vectorlagen 0 pixels. Opgelost, en daarna
+liggen de **wegcorridors** erop — 17 corridors, 17.635 km, negen binnen de tolerantie van hun
+gepubliceerde lengte. Daarmee vier netten: zee · binnenwater · spoor · weg.
+
+**De onzichtbare vectorlaag.** Gemeten op 1 km hoogte mét tegels: kustlijn 0 (zonder dieptetest
+20.057), zeenet+riviernet 0 (84.477), landnet 0 (30.509). De dader is de **bol en alleen de
+bol** — bol verbergen gaf 29.368 spoorpixels, `depthWrite: false` 29.308, tegels verbergen 0,
+atmosfeer verbergen 0. Hij dekt af terwijl hij 12,7 km ónder de lijnen ligt, wat alleen kan
+doordat `logarithmicDepthBuffer` een mesh via `gl_FragDepth` laat schrijven en een
+`LineBasicMaterial` niet. Fix: `depthTest: false` + renderOrder boven de tegels + een
+`THREE.Plane` op de horizon tegen doorschijnen. Gemeten op 419 km: Frankfurt landnet 64.476
+(zonder klem 68.153), Nederland 49.641 (52.942), zeenet 86.034 → 14.262.
+
+**⚠️ Drie meetfouten van mij in één avond.** (1) Mijn pixelmaat telde "pixels met de kleur van
+de laag" en werd vertekend doordat een lijn over een lichte satellietfoto vervaagt — de juiste
+maat is *hoeveel pixels veranderen als je de laag uitzet*. (2) De eerste fix hing aan een
+hoogtedrempel van 1.500 km, buiten het bereik waarop Lars kijkt, dus voor hem veranderde er
+niets. (3) Ik heb de horizonklem drie keer "kapot" verklaard terwijl ik boven **open water**
+mat — de camera staat standaard op lat 0 / lon 0. Lars' screenshot wees de oorzaak aan: hij
+noemde het *"zweven door de lucht en anders draaien"*, en dat is exact de achterkant van de bol
+van binnenuit gezien.
+
+**De wegcorridors.** Uit 20 nagelopen definities routeerden er 17. Fresnillo→Torreón −0,2% ·
+Kasumbalesa −0,8% · **Copperbelt→Durban 3.068,8 tegen 3.000 (+2,3%)** · Dar es Salaam +2,9% ·
+Kemerton −3,1% · Tavan Tolgoi −3,2% · Las Bambas −4,8% · Goulamina +6,9% · Walvis Bay +7,9% ·
+Oyu Tolgoi +8,7% · Beira +12,5%. Durban loopt via Kasumbalesa, Chirundu, Harare, Beitbridge en
+Johannesburg, elk tussenpunt <110 m van de weg; het anker is Bayhead Road (truck-aanvoer), niet
+de kade. De vijf die in ronde 1 faalden wezen zichzelf aan mét coördinaat: drie doordat de
+scanvensters uit de definities niet meekwamen, en Mountain Pass met *"punt (−115,1372 / 36,175)
+ligt >25 km van elke weg"* — Las Vegas, want `us-nevada` ontbrak in de registry.
+
+**Besloten:** gaten vind je door de stromen te routeren, niet vooraf. Daarom blijven de drie
+corridorgaten en de 89 plaatsen op een klein spoorcomponent staan.
+
+**Volgende:** het koppelen — `knooppunten.json` + de keten-router over álle vier de netten.
+
+
 ## 2026-07-22 · De simplify knipte het spoornet door — heal ernà (live ?v=046)
 
 **TL;DR:** op weg naar de wegcorridors bleek het spoornet dat gisteren live ging structureel kapot.

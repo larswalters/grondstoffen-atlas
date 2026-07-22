@@ -1,7 +1,31 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-22 (heal ná de simplify met harde modaliteitsscheiding; de wegcorridor-toets wordt topologisch)*
+*Last updated: 2026-07-22 (gaten vind je door de stromen te routeren; vectorlagen boven de tegels met horizonklem)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-22 · Gaten vind je door de STROMEN te routeren, niet door ze vooraf te zoeken
+**Besluit (Lars):** *"ik denk ook dat we het vooral moeten meemaken waar er iets ontbreekt; dat
+zien we zodra we de routes voor stromen hebben bekeken."*
+**Waarom:** dezelfde lijn als de riviernet-correctie van 2026-07-21 (*"je ziet vanuit de ruimte
+de rivier gewoon doorlopen terwijl de graaf ophoudt"*) en als [[feedback-bouwen-boven-meten]]:
+het werkstuk is de toets, niet een meetronde vooraf. Een kortste-pad-router rijdt om een gat
+heen en verbergt het; een échte stroom die niet gerouteerd kan worden wijst het gat aan.
+**Gevolg, concreet:** de 89 atlas-plaatsen op een spoorcomponent <1.000 km worden **niet**
+uitgezocht, en de drie wegcorridors zonder pad blijven open staan tot de stromen erover lopen.
+
+## 2026-07-22 · De vectorlagen liggen boven de tegels, met een horizonklem tegen doorschijnen
+**Besluit (Lars):** *"je kan die spoorlijnen toch voor die tegels laten laden, dan is het toch
+goed"*, en daarna over de bijwerking: *"die moeten helemaal weg"*.
+**Waarom:** de bol dekte de hele vectorlaag af (0 pixels voor kust, zee, rivier én spoor) omdat
+`logarithmicDepthBuffer` een mesh via `gl_FragDepth` laat schrijven en een `LineBasicMaterial`
+niet — de dieptevergelijking is dus zinloos en de mesh wint altijd, ook 12,7 km lager.
+`depthTest: false` lost dat op, maar laat de achterkant van de bol doorschijnen; die wordt
+afgeknipt met een `THREE.Plane` op de horizon (kap begrensd door het vlak met normaal Ĉ op
+afstand R²/d, dus klopt op elke hoogte zonder drempel).
+**Verworpen mét meting:** de laag optillen (t/m ×1,01 ≈ 150 km, nul verschil) · renderOrder
+ophogen (t/m 4,5, nul verschil) · `extensions.fragDepth` · een eigen horizontoets in de shader.
+**Ook verworpen:** een hoogtedrempel (`?v=047`, grens op 1.500 km) — technisch werkend maar
+buiten Lars' kijkbereik, want je beoordeelt een spoornet op continent-hoogte.
 
 ## 2026-07-22 · De post-simplify heal mag ALLEEN herstellen wat de simplify brak
 **Besluit (Lars):** *"De post-simplify heal mag uitsluitend rail-railverbindingen herstellen binnen

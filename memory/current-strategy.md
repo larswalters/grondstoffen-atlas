@@ -1,5 +1,24 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-22 (spoor-knip hersteld ?v=046; wegmachinerie staat, corridorlijst wacht op de definities)*
+*Last updated: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors erop; volgende = koppelen)*
+
+## Stand 2026-07-22 avond — VIER netten liggen er, het koppelen is het enige dat rest
+
+| net | omvang | bestand |
+| -- | -- | -- |
+| zeenet (MARNET) | 15.933 edges | `marnet.bin` |
+| riviernet | 407.626 km | `marnet.bin` |
+| landnet (spoor) | 1.154.092 km | `landnet.bin` |
+| **landnet (weg)** | **17 corridors · 17.635 km** | **`landnet.bin`, soort 3** |
+
+De wegkant is bewust **geen net maar een handvol verhalende lijnen**: weg is de enige modus
+zónder onafhankelijke scheidsrechter, dus de acceptatietoets is **topologisch** (loopt de lijn
+aantoonbaar via Kasumbalesa, Chirundu, Beitbridge?) met de gepubliceerde lengte als tweede toets
+waar die bestaat. Negen van de zeventien hebben er een en vallen allemaal binnen de tolerantie.
+
+⚠️ **De vectorlagen liggen boven de tegels met een horizonklem** (`klemOpHorizon` in `globe.js`).
+Zonder dat is de hele vectorlaag onzichtbaar zodra de tegels laden — dat was maandenlang zo en
+niemand kon het zien. Raak `depthTest` op die lagen niet aan zonder de meting opnieuw te doen,
+en meet **niet boven open water**.
 
 ## ⚠️ 2026-07-22 later — het spoornet was structureel gebroken, en dat is hersteld
 

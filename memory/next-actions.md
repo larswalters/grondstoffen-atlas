@@ -1,7 +1,56 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-22 (spoor-knip hersteld ?v=046; wegcorridorlijst ligt klaar, definities lopen)*
+*Last updated: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors + de vectorlaag weer zichtbaar; volgende = koppelen)*
 
-## 🔴 START HIER — de corridordefinities afmaken, dan `CORRIDORS` vullen en routeren
+## 🔴 START HIER — HET KOPPELEN over álle vier de netten
+
+Er liggen nu vier netten: zee (MARNET) · binnenwater (407.626 km) · spoor (1.154.092 km) ·
+**weg (17 corridors, 17.635 km)**. Wat ontbreekt is het enige dat ze bruikbaar maakt.
+
+**1 · `v2/data/knooppunten.json`** — de aangewezen overslagpunten als eigen entiteit, coördinaat
+per modaliteit, expliciet knopenpaar per overstap. Ontwerp ligt klaar in
+`v2/design/overslag-ontwerp.md` §3a (dat draagt M25 al: `"spoor": [lon,lat]` in een entry).
+De vijver is de 200 roze havens; ná de spoorherstel-ronde hangen er **46** aan een
+spoorcomponent ≥20.000 km en **45** aan het wereldnet — dat was 29 resp. 23.
+
+**2 · De keten-router** — route = keten van legs met een overstap op een aangewezen knooppunt,
+lexicografisch minste overslagen → minste km, scheepsklasse per been, "geen pad" mét reden.
+⚠️ De landbrug-regel is beslist: het **standaardprofiel sluit `land`** en de modus per been komt
+uit de flows-data, niet uit de router. ⚠️ `binnenSystemenBij()` bouwt zijn dichtlijst uitsluitend
+uit `net.vaarwegen`, dus een landlabel kan daar nooit gesloten worden — er hoort een expliciete
+groepslabel-tak voor `land`/`spoor`/`weg` naast `binnenvaart`.
+
+**3 · Dán de stromen routeren.** Dat is de toets, en het is Lars' expliciete werkregel:
+*"we moeten het vooral meemaken waar iets ontbreekt; dat zien we zodra we de routes voor stromen
+hebben bekeken."* Niet vooraf gaten zoeken.
+
+## ⚪ BEWUST OPEN GELATEN — komt boven bij het routeren van de stromen
+
+* **Drie wegcorridors zonder pad:** `bx-boke-katougouma` (geen wegen in het venster bij 8 km —
+  de SMB-haul road is vermoedelijk niet als `motorway..secondary` getagd), `li-atacama-lanegra`
+  (tussenpunt −68,3089 / −23,6430 ligt >25 km van elke weg), `ree-mountweld-leonora` (geen
+  wegpad tussen punt 2 en 3).
+* **89 atlas-plaatsen op een spoorcomponent <1.000 km** (New York op 0 km, Amsterdam op 87).
+  Een deel is terecht — Dubai, Jurong en Nieuw-Caledonië hébben geen spoor.
+* **In "egaal" (tegellaag uit) blijft de vectorlaag onzichtbaar** — daar ís de bol het oppervlak,
+  dus hij schrijft diepte en wint opnieuw. Was vóór 2026-07-22 al zo.
+* **Drie datafouten in `data/*.js`** (zie `bugs-and-risks.md`): de verzonnen 610,7 km bij Japan
+  urban mining, de niet-bestaande stroom Redwood→Novonix, en Bingham Canyon (pijpleiding).
+
+## ✅ AFGEROND 2026-07-22 — de wegcorridors ([LAR-491])
+
+**17 corridors, 17.635 km, live `?v=053`** (commit `8336665`). Negen met een gepubliceerde
+lengte, allemaal binnen de tolerantie: Fresnillo→Torreón **−0,2%** · Kasumbalesa −0,8% ·
+**Copperbelt→Durban 3.068,8 tegen 3.000 (+2,3%)** · Dar es Salaam +2,9% · Kemerton −3,1% ·
+Tavan Tolgoi −3,2% · Las Bambas −4,8% · Goulamina +6,9% · Walvis Bay +7,9% · Oyu Tolgoi +8,7% ·
+Beira +12,5%.
+
+## ✅ AFGEROND 2026-07-22 — de vectorlaag was onzichtbaar achter de tegels
+
+Kustlijn, zeenet+riviernet én landnet leverden op 1 km hoogte mét tegels **0 pixels**. Opgelost
+met `depthTest: false` + renderOrder boven de tegels + een `THREE.Plane` op de horizon.
+Live `?v=052` (commit `23b1f83`). Zie `bugs-and-risks.md` voor wat er NIET werkte.
+
+## 📋 Vorige startsectie — de corridordefinities
 
 De machinerie staat (`weg_houden()`, het corridorvenster, `corridor_keten()`, `--modus weg` als
 eigen pijplijn) en `CORRIDORS` is **bewust leeg**: de lijst is een redactiebesluit. Twee besluiten

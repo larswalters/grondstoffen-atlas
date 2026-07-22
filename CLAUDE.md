@@ -1,6 +1,84 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (spoor-knip hersteld ?v=046; wegmachinerie staat, corridorlijst wacht op de definities)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors erop + de vectorlaag weer zichtbaar; volgende = koppelen)*
+
+> **🛣️ VIER NETTEN OP DE BOL — DE WEGCORRIDORS LIGGEN EROP (2026-07-22, laatste).**
+> Live t/m `8336665` (`?v=053`), [LAR-491] In Progress.
+> **→ VOLGENDE: HET KOPPELEN** — `knooppunten.json` + de keten-router over álle vier de netten
+> (zie `memory/next-actions.md` en `v2/design/overslag-ontwerp.md`).
+>
+> **17 corridors, 17.635 km.** Geen wereldwijd wegennet maar verhalende lijnen tussen twee echte
+> ankers, gerouteerd langs hun tussenpunten. Negen hebben een gepubliceerde lengte en vallen
+> allemaal binnen de tolerantie: Fresnillo→Torreón **−0,2%** · Kasumbalesa −0,8% ·
+> **Copperbelt→Durban 3.068,8 tegen 3.000 (+2,3%)** · Dar es Salaam +2,9% · Kemerton −3,1% ·
+> Tavan Tolgoi −3,2% · Las Bambas −4,8% · Goulamina +6,9% · Walvis Bay +7,9% · Oyu Tolgoi +8,7% ·
+> Beira +12,5%. Durban loopt via Kolwezi → Lubumbashi → **Kasumbalesa** → Ndola → Lusaka →
+> **Chirundu** → Harare → **Beitbridge** → Johannesburg → Bayhead, elk tussenpunt <110 m van de
+> weg. Het Durban-anker is bewust de **truck-aanvoerweg** en niet de kade.
+>
+> **DE ZELFCONTROLE VERDIENDE ZICHZELF METEEN TERUG.** Ronde 1 gaf er 15; de vijf die faalden
+> wezen zichzelf aan mét coördinaat. Drie doordat de **scanvensters uit de definities niet
+> meekwamen** (zeven corridors vragen een eigen breedte — Copperbelt→Durban 75 km omdat de RN39
+> bij Fungurume 53 km uitbuigt, Boké→Katougouma juist maar 8), en Mountain Pass met *"punt
+> (−115,1372 / 36,175) ligt >25 km van elke weg"* — dat is Las Vegas, en `us-nevada` stond niet
+> in de registry. Een router die zegt waar hij niet verder kan is meer waard dan een die stil
+> een verkeerde route tekent.
+>
+> **✅ WERKREGEL VAN LARS, en hij stuurt het vervolg:** *"we moeten het vooral meemaken waar iets
+> ontbreekt; dat zien we zodra we de routes voor stromen hebben bekeken."* Daarom zijn de 89
+> atlas-plaatsen op een klein spoorcomponent **niet** uitgezocht en blijven drie corridorgaten
+> open (`bx-boke-katougouma`, `li-atacama-lanegra`, `ree-mountweld-leonora`). Zelfde lijn als de
+> riviernet-correctie: bij twijfel bouwen, meten alleen als diagnose bij iets kapots.
+>
+> **Gemeten:** netwerk 1.154.092 → **1.171.727 km** · 171 labels · `landnet.bin` 4.547 KB ·
+> componenten 3.149 met de grootste op 402.845 km (ongewijzigd) · aanhechting 366/497 ·
+> `marnet.bin`/`marnet.json`/`ports.json` sha256-identiek · `-t` byte-identiek aan live.
+
+> **👁️ DE HELE VECTORLAAG WAS ONZICHTBAAR ZODRA DE TEGELS ER LAGEN (2026-07-22).**
+> Live t/m `23b1f83` (`?v=052`). Dit verklaart waarom Lars het spoornet van de vorige ronde
+> feitelijk nooit heeft kunnen beoordelen.
+>
+> Lars: *"het is voor mij moeilijk controleren want ik zie ze alleen als tegels nog moeten
+> laden."* Gemeten op 1 km hoogte mét tegels — en de maat is **hoeveel pixels veranderen als je
+> de laag uitzet**, niet hoeveel pixels de kleur van de laag hebben (dat tweede vervaagt over een
+> lichte satellietfoto en gaf een vertekend beeld):
+>
+> | laag | met dieptetest | zonder |
+> | -- | -- | -- |
+> | kustlijn (de vectorwereld uit M22) | **0** | 20.057 |
+> | zeenet + riviernet | **0** | 84.477 |
+> | landnet (spoor) | **0** | 30.509 |
+>
+> **DE DADER IS DE BOL, EN ALLEEN DE BOL.** Bol verbergen → 29.368 spoorpixels · bol
+> `depthWrite: false` → 29.308 · tegels verbergen → 0 · atmosfeer verbergen → 0. De tegels en de
+> atmosfeer schrijven al geen diepte. En de bol dekt af terwijl hij **12,7 km ónder** de lijnen
+> ligt (de sink van 0,998), wat alleen kan doordat `logarithmicDepthBuffer` een mesh zijn diepte
+> via `gl_FragDepth` laat schrijven en een `LineBasicMaterial` niet — hun dieptewaarden zijn
+> onvergelijkbaar en de mesh wint altijd.
+>
+> **De fix:** `depthTest: false` op de vectorlagen + renderOrder boven de tegels (tegels 1–3 ·
+> kust 6 · zee+rivier 6,5 · landnet 7), en de achterkant afknippen met een **`THREE.Plane` op de
+> horizon** — voor een bol met straal R en een camera op afstand d is de zichtbare kap begrensd
+> door het vlak met normaal Ĉ op afstand R²/d, dus dat klopt op elke hoogte zonder drempel.
+> Gemeten op 419 km: Frankfurt landnet **64.476** (zonder klem 68.153), Nederland **49.641**
+> (52.942), zeenet 86.034 → 14.262.
+>
+> **⚠️ GEMETEN EN NIET WERKEND — niet opnieuw proberen:** de laag optillen (t/m ×1,01, ruim
+> 150 km) · de renderOrder ophogen (t/m 4,5) · `material.extensions.fragDepth` (WebGL2, al core)
+> · een eigen horizontoets als varying via `onBeforeCompile` (kwam er met omgekeerd teken uit,
+> en ook na omdraaien klopte het beeld niet).
+>
+> **⚠️ EN DRIE MEETFOUTEN VAN MIJ, want die horen in dit bestand.** (1) De pixelmaat hierboven —
+> eerst telde ik kleur en werd het beeld vertekend door de achtergrond. (2) Een eerste fix hing
+> aan een **hoogtedrempel van 1.500 km**, terwijl je een spoornet op continent-hoogte beoordeelt;
+> voor Lars veranderde er dus niets. (3) Ik heb de horizonklem **drie keer kapot verklaard
+> terwijl ik boven open water mat** — de camera staat standaard op lat 0 / lon 0, de Golf van
+> Guinee, en daar hóórt 0 te staan. Meet zichtbaarheid boven een gebied waar de laag hoort te
+> liggen. Lars' screenshot bracht de doorbraak: hij noemde het *"zweven door de lucht en anders
+> draaien"*, en dat is precies de achterkant van de bol, van binnenuit gezien.
+>
+> **⚠️ NOG OPEN:** in **"egaal"** (tegellaag uit) blijft de vectorlaag onzichtbaar — daar ís de
+> bol het oppervlak, dus hij schrijft diepte en wint opnieuw. Was vóór deze sessie al zo.
 
 > **✂️ DE SIMPLIFY KNIPTE HET SPOORNET DOOR — HEAL ERNÁ (2026-07-22, laatste).**
 > Live t/m `d322faa` (`?v=046`), [LAR-491] In Progress. **Visuele check van Lars staat nog open.**

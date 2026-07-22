@@ -1,5 +1,42 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-22 (simplify-knip opgelost; drie datafouten in data/*.js open)*
+*Last updated: 2026-07-22 (vectorlaag was onzichtbaar achter de tegels — opgelost; drie wegcorridors zonder pad)*
+
+## ✅ OPGELOST 2026-07-22 — de HELE vectorlaag was onzichtbaar zodra de tegels er lagen
+
+Niet alleen het spoor. Gemeten op 1 km hoogte mét tegels: kustlijn **0** pixels (zonder
+dieptetest 20.057), zeenet+riviernet **0** (84.477), landnet **0** (30.509). De dader is de
+**bol en alleen de bol** — tegels en atmosfeer schrijven al geen diepte — en hij dekt af terwijl
+hij 12,7 km ónder de lijnen ligt. Dat kan alleen doordat `logarithmicDepthBuffer` een mesh zijn
+diepte via `gl_FragDepth` laat schrijven en een `LineBasicMaterial` niet.
+
+**Opgelost** met `depthTest: false` + renderOrder boven de tegels (tegels 1–3 · kust 6 ·
+zee+rivier 6,5 · landnet 7) en de achterkant afgeknipt met een **`THREE.Plane` op de horizon**.
+
+⚠️ **GEMETEN EN NIET WERKEND — niet opnieuw proberen:**
+
+| poging | resultaat |
+| -- | -- |
+| de laag optillen (t/m ×1,01 ≈ 150 km) | geen enkele pixel verschil |
+| renderOrder ophogen (t/m 4,5) | geen enkele pixel verschil |
+| `material.extensions.fragDepth` | geen verschil (WebGL2, dus al core) |
+| eigen horizontoets als varying via `onBeforeCompile` | kwam er met **omgekeerd teken** uit; ook na omdraaien klopte het beeld niet |
+
+⚠️ **EN DE MEETVAL DIE DRIE RONDES KOSTTE:** meet zichtbaarheid **nooit boven open water**. De
+camera staat standaard op lat 0 / lon 0 — de Golf van Guinee. "0 pixels" betekende daar precies
+niets. Meet boven een gebied waar de laag hóórt te liggen (Frankfurt, Nederland, de Copperbelt).
+En meet met *"hoeveel pixels veranderen als je de laag uitzet"*, niet met *"hoeveel pixels
+hebben de kleur van de laag"* — dat tweede vervaagt over een lichte satellietfoto.
+
+## ⚠️ OPEN — drie wegcorridors zonder pad
+
+Zelfgemeld door de routering, mét coördinaat. Bewust open gelaten op Lars' regel dat gaten bij
+het routeren van de stromen bovenkomen.
+
+| corridor | melding | vermoedelijke oorzaak |
+| -- | -- | -- |
+| `bx-boke-katougouma` | geen wegen in het venster (8 km) | de SMB-haul road staat vermoedelijk niet als `motorway..secondary` in OSM |
+| `li-atacama-lanegra` | punt (−68,3089 / −23,6430) >25 km van elke weg | tussenpunt midden in de salar, of wegklasse te laag |
+| `ree-mountweld-leonora` | geen wegpad tussen punt 2 en 3 | venster of wegklasse |
 
 ## ✅ OPGELOST 2026-07-22 — de simplify knipte het spoornet door
 
