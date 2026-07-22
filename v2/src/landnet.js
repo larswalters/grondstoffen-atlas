@@ -70,7 +70,7 @@ function kleurVoor(label) {
  * Laadt landnet.bin/json en bouwt er één LineSegments van — één draw call voor
  * het hele landnet, kleur per lijn via vertex colors.
  */
-export async function laadLandnet(radius, versie = "047") {
+export async function laadLandnet(radius, versie = "048", klemOpHorizon = null) {
   const t0 = performance.now();
   const [meta, buffer] = await Promise.all([
     fetch(`data/landnet.json?v=${versie}`).then((r) => {
@@ -172,8 +172,12 @@ export async function laadLandnet(radius, versie = "047") {
     opacity: 0.75,
     depthWrite: false,
   });
+  if (klemOpHorizon) klemOpHorizon(mat);
   const lijnen = new THREE.LineSegments(geo, mat);
-  lijnen.renderOrder = 2.75;   // kustlijn 2 · landnet 2,75 · zeenet 3 · route 4 · havens 5
+  // ⚠️ BOVEN DE TEGELS (die staan op 1 · 2 · 3) EN MET DE HORIZONTOETS, anders dekt de
+  // bol deze laag volledig af zodra de tegels geladen zijn — gemeten: 0 pixels.
+  // Zie `klemOpHorizon` in globe.js voor het waarom.
+  lijnen.renderOrder = 7;      // tegels 1-3 · kust 6 · zeenet 6,5 · landnet 7 · route 8 · havens 9
   lijnen.frustumCulled = false;
 
   const kmPerSoort = {};

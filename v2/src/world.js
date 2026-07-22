@@ -41,7 +41,7 @@ function maakLezer(bytes) {
  * @param {number} radius  straal van de bol
  * @returns {Promise<{lijnen: THREE.LineSegments, stats: object}>}
  */
-export async function laadVectorWereld(radius) {
+export async function laadVectorWereld(radius, klemOpHorizon = null) {
   const t0 = performance.now();
 
   const [meta, buffer] = await Promise.all([
@@ -119,8 +119,9 @@ export async function laadVectorWereld(radius) {
     opacity: 0.95,
   });
 
+  if (klemOpHorizon) klemOpHorizon(mat);
   const lijnen = new THREE.LineSegments(geo, mat);
-  lijnen.renderOrder = 2;
+  lijnen.renderOrder = 6;   // boven de tegels (1-3); zie klemOpHorizon in globe.js
 
   const t1 = performance.now();
 

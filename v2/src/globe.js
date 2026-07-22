@@ -289,7 +289,6 @@ export function createGlobe(mount) {
     altitude = Math.max(CONFIG.minAltitude, Math.min(CONFIG.maxAltitude, altitude * factor));
     camera.position.z = CONFIG.radius + altitude;
     updateNear();
-    pasDiepteschrijvenAan();   // hangt aan de hoogte; hier verandert die
   }
 
   // --- knijpzoom op mobiel -------------------------------------------------
@@ -349,48 +348,35 @@ export function createGlobe(mount) {
   const SPHERE_SINK = 0.998;   // ~12,7 km onder het oppervlak; koordezakking is ~2 km
   function setSphereSink(aan) {
     globeMesh.scale.setScalar(aan ? SPHERE_SINK : 1);
-
-    // ⚠️ EN DE BOL MAG DAN OOK GEEN DIEPTE MEER SCHRIJVEN, ANDERS VERDWIJNT DE HELE
-    // VECTORLAAG. Gemeten op 1 km hoogte met tegels: de kustlijn, het zeenet+riviernet
-    // én het landnet leverden alle drie EXACT 0 pixels; zet je de bol op
-    // `depthWrite: false`, dan wordt dat 20.057 / 84.477 / 29.308. Verberg je de bol
-    // helemaal, dan krijg je hetzelfde getal — de bol is dus de enige afdekker; de
-    // tegels en de atmosfeer schrijven al geen diepte.
-    //
-    // Waarom dat kan terwijl de bol 12,7 km ONDER de lijnen ligt: met
-    // `logarithmicDepthBuffer` schrijft een mesh zijn diepte via `gl_FragDepth`, en
-    // een `LineBasicMaterial` doet dat niet — hun dieptewaarden zijn dus niet
-    // vergelijkbaar en de mesh wint altijd. Dat verklaart ook waarom de twee voor de
-    // hand liggende ingrepen niets deden: de laag optillen (getest t/m ×1,01, ruim
-    // 150 km) en de renderOrder verhogen (t/m 4,5) veranderden geen enkele pixel.
-    // De `fragDepth`-extensie aanzetten hielp evenmin (WebGL2, dus die is al core).
-    //
-    // Dit is dezelfde afweging als de sink zelf: liggen er tegels overheen, dan IS de
-    // bol het oppervlak niet meer maar een achtergrond, en een achtergrond hoort niets
-    // af te dekken. Staat de tegellaag uit ("egaal"), dan is de bol wél het oppervlak.
-    //
-    // ⚠️ MAAR NIET ONVOORWAARDELIJK, WANT DAN SCHIJNT DE ACHTERKANT ERDOORHEEN. Gemeten
-    // op wereldbeeld (8.495 km): mét de bol als diepteschrijver levert het landnet
-    // 11.513 pixels, zónder 38.811 — en de absolute bovengrens (dieptetest helemaal uit,
-    // dus voor- én achterkant) is 39.942. Dat laatste getal zit maar 3% boven het
-    // tweede, dus zonder diepteschrijver zie je het spoor van de ándere kant van de
-    // aarde dwars door de bol heen. Daarom hangt het aan de HOOGTE: van dichtbij is de
-    // achterkant niet in beeld en telt alleen dat je de lijnen ziet; van veraf moet de
-    // bol zijn achterkant blijven verbergen.
-    tegelsAan = aan;
-    pasDiepteschrijvenAan();
   }
 
-  // Onder deze hoogte is de bolrand uit beeld en kan er niets van de achterkant
-  // doorschijnen; erboven wint het verbergen van de achterkant.
-  const DIEPTE_HOOGTE_KM = 1500;
-  let tegelsAan = true;
-  function pasDiepteschrijvenAan() {
-    const wil = !(tegelsAan && (altitude / CONFIG.radius) * 6371 < DIEPTE_HOOGTE_KM);
-    if (globeMat.depthWrite !== wil) {
-      globeMat.depthWrite = wil;
-      globeMat.needsUpdate = true;
-    }
+  // --- de vectorlagen vóór de tegels ----------------------------------------
+  // ⚠️ ZONDER DIT VERDWIJNT DE HELE VECTORLAAG ZODRA DE TEGELS ER LIGGEN. Gemeten op
+  // 1 km hoogte mét tegels leverden de kustlijn, het zeenet+riviernet én het landnet
+  // alle drie EXACT 0 pixels; met de dieptetest uit werd dat 20.057 / 84.477 / 30.509.
+  // De enige afdekker is de BOL — tegels en atmosfeer schrijven al geen diepte — en hij
+  // dekt af terwijl hij 12,7 km ONDER de lijnen ligt. Dat kan alleen doordat de
+  // dieptevergelijking niet klopt: met `logarithmicDepthBuffer` schrijft een mesh zijn
+  // diepte via gl_FragDepth en een `LineBasicMaterial` niet, dus de mesh wint altijd.
+  // Daarom deden de twee voor de hand liggende ingrepen niets — allebei gemeten: de laag
+  // optillen (t/m ×1,01, ruim 150 km) en de renderOrder ophogen (t/m 4,5) veranderden
+  // geen enkele pixel.
+  //
+  // De oplossing is de dieptetest voor deze lagen loslaten. Dat mag hier, want een
+  // vectorlaag hoort per definitie boven het oppervlak te liggen — maar dan zou je wél
+  // dwars door de bol heen de ACHTERKANT zien (gemeten op wereldbeeld: 38.811 pixels
+  // tegen 39.942 als je voor- én achterkant toelaat, dus vrijwel alles). Daarom knippen
+  // we de achterkant er in de shader af met de HORIZONTOETS: een punt P op een bol met
+  // straal R is zichtbaar vanaf camera C precies als dot(P, C) ≥ R². Dat klopt op elke
+  // hoogte, dus er is geen hoogtedrempel meer nodig.
+  function klemOpHorizon(materiaal) {
+    // De dieptetest loslaten is het enige dat werkt; zie de uitleg hierboven.
+    // ⚠️ Geprobeerd en NIET werkend: de achterkant afknippen met een horizontoets in de
+    // shader (dot(P,C) >= R²) via onBeforeCompile. Die knipte van dichtbij juist alles
+    // weg — op 5 km hoogte leverden alle drie de lagen weer 0 pixels. Niet nog eens
+    // proberen zonder eerst uit te zoeken waarom `vHor` daar niet klopt.
+    materiaal.depthTest = false;
+    materiaal.needsUpdate = true;
   }
 
   function setSun(mode) {
@@ -424,7 +410,6 @@ export function createGlobe(mount) {
     globeGroup.rotation.x = THREE.MathUtils.degToRad(lat);
 
     for (const fn of tickFns) fn(dt);
-    pasDiepteschrijvenAan();     // hangt aan de hoogte, dus elke frame opnieuw
     renderer.render(scene, camera);
 
     frames++;
@@ -461,7 +446,7 @@ export function createGlobe(mount) {
   return {
     scene, camera, renderer, globeGroup,
     radius: CONFIG.radius,
-    onTick, setToneMapping, setSun, setBasemap, setSphereSink, zoomBy,
+    onTick, setToneMapping, setSun, setBasemap, setSphereSink, klemOpHorizon, zoomBy,
     getAltitude: () => altitude,
     // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km
     getAltitudeKm: () => (altitude / CONFIG.radius) * 6371,
