@@ -157,7 +157,7 @@ let AANSLUITINGEN = null;
 let STROMEN = null;
 let LEIDINGEN = null;
 let stromenGeladen = false;
-laadStromen("065")
+laadStromen("069")
   .then(({ aansluitingen, stromen, pijpleidingen }) => {
     AANSLUITINGEN = aansluitingen;
     STROMEN = stromen;

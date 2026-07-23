@@ -92,11 +92,16 @@ AANSLUITINGEN = [
               "In werkelijkheid lossen veel concentraatschepen verder stroomopwaarts "
               "(Zhangjiagang/Jiangyin) of aan de eigen kade van de smelter."),
     dict(id="cu-tongling-kade", grondstof="copper", fase="erts", rol="losplek",
-         naam="Tongling Nonferrous — loskade aan de Yangtze",
-         plek=[117.77325, 30.93943], modi=["binnen"],
-         bron="OSM way man_made=pier bij TNMG First Metallurgical Plant (ODbL)",
-         noot="De pier ligt 1,5 km van het smelterterrein (30,92631 / 117,76997); de "
-              "smelter zelf heeft geen kade-tag in OSM."),
+         naam="Tongling Nonferrous — kade van de Eerste Smelter (第一冶炼厂)",
+         plek=[117.75647, 30.91755], modi=["binnen"],
+         bron="OSM way 880048985 man_made=pier, aan de zuidwest-rivierzijde van "
+              "'铜陵有色第一冶炼厂' (Tongling Nonferrous First Smelter) (ODbL)",
+         noot="⚠️ VERPLAATST NA LARS' FOTO-CHECK: de vorige plek (117,773 / 30,939) lag "
+              "2,3 km te ver noord bij een ánder terrein. Dit is de eigen pier van de "
+              "TNMG-kopersmelter — de smelter-polygoon (117,763–117,777 / 30,918–30,935) "
+              "ligt er direct achter (west-tip op 0,7 km). Hij ligt bij de zuidpunt van "
+              "het Yangtze-eiland, waar de geulen samenkomen, dus het schip komt hier "
+              "natuurlijk de hoofdgeul op aan."),
 
     # ======================================================================
     # STROOM B — koperconcentraat Escondida → Jiangxi/Guixi (zee → spoor)
