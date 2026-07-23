@@ -15,7 +15,7 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=067";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=068";
 
 // --------------------------------------------------------------------------
 // laden

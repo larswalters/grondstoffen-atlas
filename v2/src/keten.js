@@ -21,7 +21,7 @@
 // (zee · binnen · spoor · weg) en een edge tussen twee groepen bestaat niet.
 // Dat is een constructie-eigenschap, geen guard die je moet vertrouwen.
 
-import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=067";
+import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=068";
 
 export const GROEP = { zee: 0, binnen: 1, spoor: 2, weg: 3 };
 export const GROEP_NAAM = ["zee", "binnen", "spoor", "weg"];

@@ -1,6 +1,6 @@
 {
  "type": "FeatureCollection",
- "toelichting": "Handmatig afgeleide vaarweglijnen die NIET uit de OSM-fetch komen. De grote vaarwegen_bulk.geojson staat in build-cache (gitignored, regenereerbaar). Deze paar committen mee. Voeg toe aan de bake met --extra-vaarwegen. Herleiden: tools/maak_tongling_oostgeul.py.",
+ "toelichting": "Handmatig afgeleide vaarweglijnen (niet uit de OSM-fetch). Herleiden: tools/maak_tongling_oostgeul.py. Voeg toe met bake_marnet.py --extra-vaarwegen.",
  "features": [
   {
    "type": "Feature",
@@ -9,96 +9,53 @@
     "regio": "cn",
     "zeevaart": false,
     "signaal": "ship",
-    "km": 24.793,
-    "wayId": "tongling-oostgeul-afgeleid",
-    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) met middellijn_uit_vlakken.py — OSM heeft de Tongling-oostgeul alleen als watervlak, niet als navigatielijn"
+    "km": 4.595,
+    "wayId": "tongling-oostgeul-zuid",
+    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) via middellijn_uit_vlakken.py (vaarpad); elk segment op watercellen geverifieerd; gesplitst bij de pier zodat de kade daar op een knoop snapt; zuideinde op hoofdgeul-vertex, noordeinde op de hoofdgeul-lijn (heal projecteert)"
    },
    "geometry": {
     "type": "LineString",
     "coordinates": [
      [
-      117.73542,
-      30.89364
+      117.7373,
+      30.9102
      ],
      [
-      117.759,
-      30.903
-     ],
-     [
-      117.762,
-      30.906
-     ],
-     [
-      117.7574,
-      30.912
-     ],
-     [
-      117.7635,
-      30.915
-     ],
-     [
-      117.756,
-      30.918
-     ],
-     [
-      117.7582,
-      30.927
+      117.749,
+      30.921
      ],
      [
       117.768,
-      30.939
+      30.942
+     ]
+    ]
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "label": "bulk-cn",
+    "regio": "cn",
+    "zeevaart": false,
+    "signaal": "ship",
+    "km": 11.702,
+    "wayId": "tongling-oostgeul-noord",
+    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) via middellijn_uit_vlakken.py (vaarpad); elk segment op watercellen geverifieerd; gesplitst bij de pier zodat de kade daar op een knoop snapt; zuideinde op hoofdgeul-vertex, noordeinde op de hoofdgeul-lijn (heal projecteert)"
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      117.768,
+      30.942
      ],
      [
-      117.7822,
-      30.945
-     ],
-     [
-      117.782,
-      30.951
-     ],
-     [
-      117.771,
-      30.954
-     ],
-     [
-      117.7785,
-      30.957
-     ],
-     [
-      117.771,
-      30.96
-     ],
-     [
-      117.7695,
-      30.963
-     ],
-     [
-      117.7695,
-      31.002
-     ],
-     [
-      117.7777,
-      31.011
-     ],
-     [
-      117.7759,
-      31.014
-     ],
-     [
-      117.7665,
+      117.768,
       31.017
      ],
      [
-      117.7622,
-      31.029
-     ],
-     [
-      117.7612,
-      31.041
-     ],
-     [
-      117.73949,
-      31.04238
+      117.758,
+      31.046
      ]
     ]
    }
