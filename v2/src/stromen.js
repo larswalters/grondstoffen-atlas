@@ -15,13 +15,13 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=063";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=064";
 
 // --------------------------------------------------------------------------
 // laden
 // --------------------------------------------------------------------------
 
-export async function laadStromen(versie = "063") {
+export async function laadStromen(versie = "064") {
   const [aansluitingen, stromen, pijpleidingen] = await Promise.all([
     haal(`data/aansluitingen.json?v=${versie}`),
     haal(`data/stromen-pilot.json?v=${versie}`),

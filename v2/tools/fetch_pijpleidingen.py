@@ -125,13 +125,33 @@ def bouw_graaf(elements):
     return buren, punt, ways
 
 
-def dichtstbij(punt, lon, lat):
+def dichtstbij(punt, lon, lat, kandidaten=None):
     beste, besteKm = None, float("inf")
-    for s in punt:
+    for s in (kandidaten if kandidaten is not None else punt):
         d = km(s[0], s[1], lon, lat)
         if d < besteKm:
             beste, besteKm = s, d
     return beste, besteKm
+
+
+def uiteinden(buren):
+    """De vertices met graad 1: de KOP en de STAART van de leiding.
+
+    ⚠️ Hier zat een stille fout in de eerste versie. Zaaien op "de vertex die het
+    dichtst bij de mijn ligt" pakt geregeld een punt MIDDENIN de lijn — en dan
+    kap je de kop eraf en begint de leiding uit het niets, ergens in de woestijn.
+    Lars zag dat meteen: *"hij stopt op een beetje een raar punt, het lijkt niet
+    op een plek waar ze de leiding aanvoeren met slurrie."* Gemeten: het echte
+    uiteinde lag 3,3 km voorbij ons startpunt.
+
+    Een leiding heeft twee einden, en de route loopt van eind tot eind. We zaaien
+    dus bij voorkeur op een uiteinde; ligt er geen binnen een redelijke straal,
+    dan valt de tool terug op de dichtstbijzijnde vertex en zegt dat erbij.
+    """
+    return [s for s, b in buren.items() if len(b) == 1]
+
+
+MAX_UITEINDE_KM = 25      # verder dan dit is het uiteinde van een ándere leiding
 
 
 def kortste_pad(buren, start, doel):
@@ -182,10 +202,24 @@ def verwerk(spec):
         if not punt:
             continue
 
-        a, aKm = dichtstbij(punt, *spec["van"])
-        b, bKm = dichtstbij(punt, *spec["naar"])
+        eind = uiteinden(buren)
+        print(f"     {len(eind)} losse uiteinden in dit leidingnet")
+
+        def zaai(doel, naam):
+            u, uKm = dichtstbij(punt, *doel, kandidaten=eind)
+            v, vKm = dichtstbij(punt, *doel)
+            if u is not None and uKm <= MAX_UITEINDE_KM:
+                extra = (f" (dichtstbijzijnde vertex lag op {vKm:.1f} km — "
+                         f"midden in de lijn, dus niet gebruikt)") if vKm + 0.2 < uKm else ""
+                print(f"     {naam}: uiteinde op {uKm:.1f} km{extra}")
+                return u, uKm
+            print(f"     {naam}: GEEN uiteinde binnen {MAX_UITEINDE_KM} km — "
+                  f"terugval op de dichtstbijzijnde vertex ({vKm:.1f} km)")
+            return v, vKm
+
+        a, aKm = zaai(spec["van"], "mijnkant")
+        b, bKm = zaai(spec["naar"], "kadekant")
         pad, lengte = kortste_pad(buren, a, b)
-        print(f"     mijn-uiteinde op {aKm:.1f} km · kade-uiteinde op {bKm:.1f} km")
         if pad is None:
             print("     ⚠️ geen doorlopende leiding tussen die twee uiteinden")
             continue

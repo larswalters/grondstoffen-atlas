@@ -65,14 +65,16 @@ AANSLUITINGEN = [
     # STROOM A — koperconcentraat Collahuasi → Tongling (zee → rivier)
     # ======================================================================
     dict(id="cu-collahuasi-laad", grondstof="copper", fase="erts", rol="laadplek",
-         naam="Collahuasi — mijn/concentrator (start slurry-pijpleiding)",
-         plek=[-68.66121, -20.96427], modi=[],
-         bron="OSM — 'Minera Doña Inés de Collahuasi', industrial=mine (ODbL)",
-         noot="MODI IS LEEG, en dat is het antwoord: het concentraat verlaat de mijn als "
-              "slurry door een pijpleiding (OSM heeft hem, man_made=pipeline op 3,2 km) "
-              "en de atlas kent nog geen pijpleidingnet. Aanwijzen op 'weg' zou hier een "
-              "vrachtwagen tekenen waar een pijp ligt — en het dichtstbijzijnde wegnet is "
-              "de corridor li-atacama-lanegra, die géén pad heeft."),
+         naam="Collahuasi — kop van de slurryleiding (pompstation)",
+         plek=[-68.64395, -20.97783], modi=[],
+         bron="OSM — kopeinde van de substance=slurry-leiding, 1,9 km van Rajo Ujina "
+              "en 2,3 km van het mijncomplex 'Minera Doña Inés de Collahuasi' (ODbL)",
+         noot="⚠️ VERPLAATST NA LARS' OBSERVATIE dat de lijn 'op een beetje een raar punt' "
+              "begon: dit is nu het KOPEINDE van de leiding zelf, niet de centroïde van het "
+              "mijnterrein 2,3 km verderop. Daar loopt de slurry de pijp in; dáár begint de "
+              "stroom. MODI IS LEEG en dat is het antwoord op de netvraag: de leiding is een "
+              "eigen verbinding, geen gedeeld net (zie design/stroom-aansluiting.md §4a). "
+              "Aanwijzen op 'weg' zou een vrachtwagen tekenen waar een pijp ligt."),
     dict(id="cu-patache-kade", grondstof="copper", fase="erts", rol="overslag",
          naam="Puerto Patache — Collahuasi-concentraatpier",
          plek=[-70.19773, -20.80503], modi=["zee"], knooppunt=None,
