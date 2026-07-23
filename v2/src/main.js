@@ -2,16 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=064";
-import { laadVectorWereld } from "./world.js?v=064";
-import { createTileLayer } from "./tiles.js?v=064";
+import { createGlobe, CONFIG } from "./globe.js?v=065";
+import { laadVectorWereld } from "./world.js?v=065";
+import { createTileLayer } from "./tiles.js?v=065";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=064";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=064";
-import { laadLandnet } from "./landnet.js?v=064";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=064";
-import { laadStromen, routeerStroom } from "./stromen.js?v=064";
-import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=064";
+  from "./marnet.js?v=065";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=065";
+import { laadLandnet } from "./landnet.js?v=065";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=065";
+import { laadStromen, routeerStroom } from "./stromen.js?v=065";
+import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=065";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -157,7 +157,7 @@ let AANSLUITINGEN = null;
 let STROMEN = null;
 let LEIDINGEN = null;
 let stromenGeladen = false;
-laadStromen("064")
+laadStromen("065")
   .then(({ aansluitingen, stromen, pijpleidingen }) => {
     AANSLUITINGEN = aansluitingen;
     STROMEN = stromen;

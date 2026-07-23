@@ -5470,7 +5470,7 @@
     ]
    ],
    "bron": "OpenStreetMap-bijdragers (ODbL) — man_made=pipeline",
-   "noot": "OSM tagt deze leiding met substance=slurry — het is de leiding zelf."
+   "noot": "OSM tagt deze leiding met substance=slurry — het is de leiding zelf. ⚠️ AAN DE HAVENKANT HOUDT DE KARTERING 736 m VÓÓR HET TERMINALVLAK OP: geen enkel slurry-punt in OSM komt dichter bij 'Puerto Patache Collahuasi'. Het laatste stuk — waar de leiding uitmondt en wordt overgepompt — staat niet in de kaart; binnen 1,8 km van het eindpunt kent OSM maar vijf objecten en geen enkele tank of installatie. Dat restje wordt gestippeld getekend (Lars zag het: 'hoort dat niet bij een van die rode plekken waar de leiding uitmondt en ze overpompen')."
   }
  ]
 }

@@ -9,7 +9,7 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
-import { gcKmLL } from "./router.js?v=064";
+import { gcKmLL } from "./router.js?v=065";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee
@@ -78,7 +78,18 @@ export function bouwStroomLaag(gerouteerd, { marnet, landnet, radius, klemOpHori
       // EIGEN VERBINDING met echte geometrie: doorgetrokken, want we weten waar
       // hij ligt. Wel dunner/doffer dan een gerouteerd been, zodat je ziet dat
       // hij niet over een gedeeld net loopt.
-      groep.add(eigenLijn(been.punten, laagje("geenNet"), kleur, klemOpHorizon));
+      const p = been.punten;
+      groep.add(eigenLijn(p, laagje("geenNet"), kleur, klemOpHorizon));
+      // ⚠️ DE GEKARTEERDE LIJN HOEFT NIET TOT DE AANSLUITING TE LOPEN. Bij
+      // Patache houdt OSM's slurry-kartering 736 m vóór het terminalvlak op: het
+      // laatste stuk, waar de leiding uitmondt en wordt overgepompt, staat niet
+      // in de kaart (gemeten: 5 OSM-objecten binnen 1,8 km, geen tank of works).
+      // Dat restje tekenen we GESTIPPELD — we weten dát hij doorloopt, niet
+      // precies waar. Zelfde afspraak als overal: gestippeld = geraden.
+      for (const [a, ll] of [[been.van, p[0]], [been.naar, p[p.length - 1]]]) {
+        if (!(gcKmLL(a.lon, a.lat, ll[0], ll[1]) > 0.05)) continue;
+        groep.add(lastMile(a, ll[0], ll[1], laagje("geenNet"), kleur, klemOpHorizon));
+      }
     } else if ((been.status === "onbekend" || been.status === "geenNet")
                && been.van && been.naar) {
       // ONBEKEND: gestippeld, want dit is een rechte lijn tussen twee punten en
