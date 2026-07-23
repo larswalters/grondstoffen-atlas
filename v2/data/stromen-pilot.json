@@ -19,8 +19,9 @@
      "naar": "cu-patache-kade",
      "net": null,
      "modus": "pijpleiding",
-     "reden": "concentraat verlaat Collahuasi als slurry door een ±200 km pijpleiding; de atlas heeft nog geen pijpleidingnet",
-     "noot": "In data/copper.js bestaat dit been niet: de stroom begint daar op zee. Het eerste gat dat het routeren blootlegt."
+     "reden": "concentraat verlaat Collahuasi als slurry door een ±200 km pijpleiding; de leiding ligt er wél als getekende OSM-geometrie, maar is geen net — je kunt er niet omheen routeren",
+     "noot": "In data/copper.js bestaat dit been niet: de stroom begint daar op zee. Het eerste gat dat het routeren blootlegt.",
+     "geometrie": "cu-collahuasi-patache"
     },
     {
      "van": "cu-patache-kade",
@@ -53,7 +54,7 @@
      "naar": "cu-coloso-kade",
      "net": null,
      "modus": "pijpleiding",
-     "reden": "concentraat gaat per ±166 km slurry-pijpleiding van Escondida naar Coloso; nog geen pijpleidingnet",
+     "reden": "concentraat gaat per ±166 km slurry-pijpleiding van Escondida naar Coloso; nog geen pijpleidingnet — en anders dan bij Collahuasi heeft OSM deze leiding niet doorlopend: geen enkele way draagt hier substance=slurry, en van de 76 pijpleidingen in het venster komt er geen dichter dan 16,5 km bij Coloso. Deze lijn blijft dus recht",
      "noot": "Ook hier begint de stroom in data/copper.js pas op zee."
     },
     {

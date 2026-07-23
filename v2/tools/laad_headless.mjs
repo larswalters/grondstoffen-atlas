@@ -185,6 +185,15 @@ export function laadAansluitingen() {
   return JSON.parse(readFileSync(join(DATA, "aansluitingen.json"), "utf-8"));
 }
 
+/** De slurry-leidingen: tekengeometrie voor de benen zonder net (mag ontbreken). */
+export function laadPijpleidingen() {
+  try {
+    return JSON.parse(readFileSync(join(DATA, "pijpleidingen.json"), "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
 /** De pilot-stromen: welke aansluitingen in welke volgorde, modus per been. */
 export function laadStromenData() {
   return JSON.parse(readFileSync(join(DATA, "stromen-pilot.json"), "utf-8"));

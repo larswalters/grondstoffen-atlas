@@ -30,7 +30,7 @@ export {
   binnenSystemenBij,
   dichtstbijzijndeKnoop,
   gcKmLL,
-} from "./router.js?v=061";
+} from "./router.js?v=062";
 
 const KLEUR_ZEE = new THREE.Color(0x2f9bdd);
 const KLEUR_BINNEN = new THREE.Color(0xd9a441);

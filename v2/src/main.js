@@ -2,16 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=061";
-import { laadVectorWereld } from "./world.js?v=061";
-import { createTileLayer } from "./tiles.js?v=061";
+import { createGlobe, CONFIG } from "./globe.js?v=062";
+import { laadVectorWereld } from "./world.js?v=062";
+import { createTileLayer } from "./tiles.js?v=062";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=061";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=061";
-import { laadLandnet } from "./landnet.js?v=061";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=061";
-import { laadStromen, routeerStroom } from "./stromen.js?v=061";
-import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=061";
+  from "./marnet.js?v=062";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=062";
+import { laadLandnet } from "./landnet.js?v=062";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=062";
+import { laadStromen, routeerStroom } from "./stromen.js?v=062";
+import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=062";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -155,11 +155,13 @@ fetch("data/knooppunten.json?v=058")
 // zelf zijn puur data en mogen later komen.
 let AANSLUITINGEN = null;
 let STROMEN = null;
+let LEIDINGEN = null;
 let stromenGeladen = false;
-laadStromen("061")
-  .then(({ aansluitingen, stromen }) => {
+laadStromen("062")
+  .then(({ aansluitingen, stromen, pijpleidingen }) => {
     AANSLUITINGEN = aansluitingen;
     STROMEN = stromen;
+    LEIDINGEN = pijpleidingen;
     stromenGeladen = true;
     probeerKoppel();
   })
@@ -543,6 +545,10 @@ let stroomLaag = null;              // THREE.Group met alle getoonde stromen
 const stroomInfoEl = () => document.getElementById("stroomInfo");
 
 function aansluitingOp(id) { return K?.aansluitingen.get(id) || null; }
+// De slurry-leidingen: tekengeometrie voor de benen zonder net.
+function leidingOp(id) {
+  return (LEIDINGEN?.leidingen || []).find((l) => l.id === id) || null;
+}
 
 function bouwStromenHud() {
   const lijst = document.getElementById("stromenLijst");
@@ -584,7 +590,7 @@ function toonStromen(ids, { vlieg = false } = {}) {
   let i = 0;
   for (const s of STROMEN.stromen) {
     if (!ids.includes(s.id)) continue;
-    const g = routeerStroom(K, s, aansluitingOp);
+    const g = routeerStroom(K, s, aansluitingOp, leidingOp);
     uitkomsten.push(g);
     groep.add(bouwStroomLaag(g, {
       marnet: NET, landnet: LANDNET, radius: CONFIG.radius,

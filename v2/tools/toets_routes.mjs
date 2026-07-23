@@ -11,7 +11,7 @@
 // Exit-code 0 = alles groen; 1 = een toets faalde.
 
 import { laadMarnetHeadless, laadLandnetHeadless, laadRegister, laadHavens,
-         laadAansluitingen, laadStromenData } from "./laad_headless.mjs";
+         laadAansluitingen, laadStromenData, laadPijpleidingen } from "./laad_headless.mjs";
 import { zoekRoute, zoekRouteRealistisch } from "../src/router.js";
 import { koppelNetten, zoekKeten, havenZaden } from "../src/keten.js";
 import { routeerStroom } from "../src/stromen.js";
@@ -173,9 +173,21 @@ console.log("\n=== D · de werkelijke stromen (M26.1) ===");
     K2.stats.overstappen === K.stats.overstappen,
     `${K2.stats.overstappen} vs ${K.stats.overstappen}`);
 
+  const leidingen = laadPijpleidingen();
   const opId = (id) => K2.aansluitingen.get(id) || null;
+  const opLeiding = (id) => (leidingen?.leidingen || []).find((l) => l.id === id) || null;
+  if (leidingen) {
+    for (const l of leidingen.leidingen) {
+      console.log(`  leiding ${l.id}: ${l.km} km tegen ${l.gepubliceerdKm} gepubliceerd ` +
+        `(${l.afwijkingPct > 0 ? "+" : ""}${l.afwijkingPct}%) · ${l.punten.length} punten`);
+      // De lengtetoets is bij een pijpleiding de ENIGE echte controle: er is geen
+      // tweede bron voor de geometrie, net als bij de wegcorridors.
+      toets(`leiding ${l.id}: lengte binnen 15% van de gepubliceerde`,
+        Math.abs(l.afwijkingPct) <= 15, `${l.afwijkingPct}%`);
+    }
+  }
   for (const s of stromenData.stromen) {
-    const g = routeerStroom(K2, s, opId);
+    const g = routeerStroom(K2, s, opId, opLeiding);
     const beschrijf = g.benen.map((b) =>
       b.status === "ok" ? `${b.vervoer} ${Math.round(b.km)}km`
         : `${b.modus} [${b.status}]`).join(" → ");

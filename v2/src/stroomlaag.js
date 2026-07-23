@@ -9,7 +9,7 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
-import { gcKmLL } from "./router.js?v=061";
+import { gcKmLL } from "./router.js?v=062";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee
@@ -75,7 +75,8 @@ export function bouwStroomLaag(gerouteerd, { marnet, landnet, radius, klemOpHori
         groep.add(lastMile(a, ll[0], ll[1], laagje(been.net), kleur, klemOpHorizon));
       }
     } else if (been.status === "geenNet" && been.van && been.naar) {
-      groep.add(gatLijn(been.van, been.naar, laagje("geenNet"), kleur, klemOpHorizon));
+      groep.add(gatLijn(been.van, been.naar, laagje("geenNet"), kleur, klemOpHorizon,
+                        been.punten));
     }
   }
 
@@ -192,19 +193,30 @@ function lastMile(aansluiting, lon, lat, straal, kleur, klemOpHorizon) {
   return lijn;
 }
 
-/** Een been zonder net (pijpleiding, transportband): recht en gestippeld. */
-function gatLijn(van, naar, straal, kleur, klemOpHorizon) {
+/**
+ * Een been zonder net (pijpleiding, transportband): gestippeld.
+ *
+ * Mét `punten` (de echte OSM-geometrie van de leiding) volgt de lijn de
+ * werkelijke route; zonder is het een rechte interpolatie tussen de twee
+ * uiteinden. Gestippeld blijft hij in beide gevallen — de stippellijn zegt
+ * "dit is geen net", niet "dit is geraden".
+ */
+function gatLijn(van, naar, straal, kleur, klemOpHorizon, punten = null) {
   const pts = [];
-  const n = 48;                       // gesampled, anders snijdt hij door de bol
-  for (let i = 0; i <= n; i++) {
-    const t = i / n;
-    pts.push(opBol3(van.lon + (naar.lon - van.lon) * t,
-                    van.lat + (naar.lat - van.lat) * t, straal));
+  if (punten && punten.length > 1) {
+    for (const [lo, la] of punten) pts.push(opBol3(lo, la, straal));
+  } else {
+    const n = 48;                     // gesampled, anders snijdt hij door de bol
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      pts.push(opBol3(van.lon + (naar.lon - van.lon) * t,
+                      van.lat + (naar.lat - van.lat) * t, straal));
+    }
   }
   const geo = new THREE.BufferGeometry().setFromPoints(pts);
   const mat = new THREE.LineDashedMaterial({
     color: kleur, transparent: true, opacity: 0.55,
-    dashSize: straal * 0.002, gapSize: straal * 0.002,
+    dashSize: straal * 0.0004, gapSize: straal * 0.0004,
   });
   klemOpHorizon?.(mat);
   const lijn = new THREE.Line(geo, mat);

@@ -15,18 +15,22 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=061";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=062";
 
 // --------------------------------------------------------------------------
 // laden
 // --------------------------------------------------------------------------
 
-export async function laadStromen(versie = "061") {
-  const [aansluitingen, stromen] = await Promise.all([
+export async function laadStromen(versie = "062") {
+  const [aansluitingen, stromen, pijpleidingen] = await Promise.all([
     haal(`data/aansluitingen.json?v=${versie}`),
     haal(`data/stromen-pilot.json?v=${versie}`),
+    // De slurry-leidingen zijn TEKENGEOMETRIE, geen net (zelfde rolverdeling als
+    // de bulklaag, LAR-515). Ontbreken ze, dan valt het been terug op de rechte
+    // lijn — de atlas hoort daar niet op te stranden.
+    haal(`data/pijpleidingen.json?v=${versie}`).catch(() => null),
   ]);
-  return { aansluitingen, stromen };
+  return { aansluitingen, stromen, pijpleidingen };
 }
 
 async function haal(url) {
@@ -52,7 +56,7 @@ async function haal(url) {
  * rechte lijn mét reden — niet stiekem over de weg gerouteerd, want dan teken je
  * een vrachtwagen waar een pijp ligt.
  */
-export function routeerStroom(K, stroom, aansluitingOp) {
+export function routeerStroom(K, stroom, aansluitingOp, leidingOp = null) {
   const benen = [];
   let totaalKm = 0;
   let gaten = 0;
@@ -68,8 +72,16 @@ export function routeerStroom(K, stroom, aansluitingOp) {
     }
 
     if (!b.net) {
-      const km = gcKmLL(van.lon, van.lat, naar.lon, naar.lat);
+      // Een been zonder net kan tóch echte geometrie hebben: de slurry-leiding
+      // ligt in OSM, hij is alleen geen routeerbaar net. Dan tekenen we de
+      // WERKELIJKE lijn en tellen we de WERKELIJKE lengte — het blijft een gat
+      // (je kunt er niet omheen routeren), maar het is geen rechte streep meer
+      // dwars door de Andes.
+      const leiding = b.geometrie && leidingOp ? leidingOp(b.geometrie) : null;
+      const km = leiding ? leiding.km : gcKmLL(van.lon, van.lat, naar.lon, naar.lat);
       benen.push({ ...b, status: "geenNet", van, naar, km,
+                   punten: leiding ? leiding.punten : null,
+                   leiding: leiding || null,
                    reden: b.reden || "deze modaliteit is nog geen net in de atlas" });
       totaalKm += km;
       gaten++;
