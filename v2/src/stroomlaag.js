@@ -9,7 +9,7 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
-import { gcKmLL } from "./router.js?v=062";
+import { gcKmLL } from "./router.js?v=063";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee
@@ -74,9 +74,17 @@ export function bouwStroomLaag(gerouteerd, { marnet, landnet, radius, klemOpHori
         if (!(gcKmLL(a.lon, a.lat, ll[0], ll[1]) > 0.01)) continue;
         groep.add(lastMile(a, ll[0], ll[1], laagje(been.net), kleur, klemOpHorizon));
       }
-    } else if (been.status === "geenNet" && been.van && been.naar) {
-      groep.add(gatLijn(been.van, been.naar, laagje("geenNet"), kleur, klemOpHorizon,
-                        been.punten));
+    } else if (been.status === "eigen" && been.punten) {
+      // EIGEN VERBINDING met echte geometrie: doorgetrokken, want we weten waar
+      // hij ligt. Wel dunner/doffer dan een gerouteerd been, zodat je ziet dat
+      // hij niet over een gedeeld net loopt.
+      groep.add(eigenLijn(been.punten, laagje("geenNet"), kleur, klemOpHorizon));
+    } else if ((been.status === "onbekend" || been.status === "geenNet")
+               && been.van && been.naar) {
+      // ONBEKEND: gestippeld, want dit is een rechte lijn tussen twee punten en
+      // geen bewering over de route. De stijl zegt nu één ding — gestippeld =
+      // we weten het niet.
+      groep.add(gatLijn(been.van, been.naar, laagje("geenNet"), kleur, klemOpHorizon));
     }
   }
 
@@ -194,18 +202,37 @@ function lastMile(aansluiting, lon, lat, straal, kleur, klemOpHorizon) {
 }
 
 /**
- * Een been zonder net (pijpleiding, transportband): gestippeld.
+ * EEN EIGEN VERBINDING: een toegewijde schakel met echte geometrie — de
+ * slurryleiding van de mijn naar zijn eigen kade.
  *
- * Mét `punten` (de echte OSM-geometrie van de leiding) volgt de lijn de
- * werkelijke route; zonder is het een rechte interpolatie tussen de twee
- * uiteinden. Gestippeld blijft hij in beide gevallen — de stippellijn zegt
- * "dit is geen net", niet "dit is geraden".
+ * Doorgetrokken, niet gestippeld. Hij is namelijk niet onzeker: we weten precies
+ * waar hij ligt. Wat hem onderscheidt van een gerouteerd been is dat hij niet
+ * over een GEDEELD net loopt — een weg of vaarweg is productonafhankelijk, een
+ * slurryleiding vervoert precies één ding tussen precies twee punten. Dat
+ * verschil zit in de dikte/dofheid, niet in stippels.
  */
-function gatLijn(van, naar, straal, kleur, klemOpHorizon, punten = null) {
+function eigenLijn(punten, straal, kleur, klemOpHorizon) {
+  const pts = punten.map(([lo, la]) => opBol3(lo, la, straal));
+  const geo = new THREE.BufferGeometry().setFromPoints(pts);
+  const mat = new THREE.LineBasicMaterial({
+    color: kleur, transparent: true, opacity: 0.7,
+  });
+  klemOpHorizon?.(mat);
+  const lijn = new THREE.Line(geo, mat);
+  lijn.renderOrder = 10;
+  lijn.frustumCulled = false;
+  return lijn;
+}
+
+/**
+ * ONBEKEND: we weten niet waar deze verbinding loopt. Rechte lijn tussen de twee
+ * uiteinden, gestippeld — en de stippels zeggen nu precies één ding: dit is
+ * geraden, geen route. (Ze betekenden eerder óók "geen net", en dat maakte
+ * dezelfde stijl twee dingen tegelijk.)
+ */
+function gatLijn(van, naar, straal, kleur, klemOpHorizon) {
   const pts = [];
-  if (punten && punten.length > 1) {
-    for (const [lo, la] of punten) pts.push(opBol3(lo, la, straal));
-  } else {
+  {
     const n = 48;                     // gesampled, anders snijdt hij door de bol
     for (let i = 0; i <= n; i++) {
       const t = i / n;

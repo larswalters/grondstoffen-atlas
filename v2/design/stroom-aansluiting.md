@@ -96,6 +96,55 @@ iets ontbreekt."* Wat de pilot naar verwachting blootlegt:
 - **De geometrie-LOD.** Routes zijn op ~2 km gesampled; onder 5 km hoogte worden dat hoeken
   (`lod-ontwerpbrief.md`). Op de kade zelf zie je dat meteen.
 
+## 4a · Een NET is productonafhankelijk — een EIGEN VERBINDING niet
+
+*Besluit van Lars, 2026-07-23, en het corrigeert een indeling die ik fout had.*
+
+> *"wel of niet in de graaf: een weg of spoor of waterweg of zee is niet
+> productafhankelijk, wel door een slurrieleiding gaat geen gas of olie
+> bijvoorbeeld — dus voor de router/simulator kan je er niet heel veel mee.
+> Echter wil je wel dat als je de huidige stromen bekijkt, je de juiste route
+> ziet: dus door de leiding naar de haven, de boot."*
+
+Dat is het criterium waarom iets een net wordt. Een **net** is een gedeelde
+infrastructuur: wie dan ook mag erover, dus het loont om er een graaf van te
+maken waar je overheen kunt zoeken en — bij een verstoring — omheen kunt
+routeren. Zee, binnenwater, spoor en weg zijn dat.
+
+Een **slurryleiding is dat niet.** Daar gaat precies één product doorheen,
+tussen precies twee punten. Als net levert hij niets op: er valt niets op te
+herrouteren, want er is geen andere lading die hem zou kunnen gebruiken. Hem
+tóch tot net promoveren kost een bake en levert een graaf op waar de router
+nooit een keuze in heeft.
+
+**Maar de lijn moet wél kloppen.** Wie de stroom bekijkt hoort te zien: door de
+leiding naar de haven, dan de boot. Daarom haalt `fetch_pijpleidingen.py` de
+geometrie uit OSM en tekent de atlas hem — zonder er een graaf van te maken.
+
+### Wat dat betekent voor "een gat"
+
+Ik noemde dit been eerst een gat. Dat was fout. Een **gat** is *"de atlas mist
+een net dat er hoort te zijn"* — het havenspoor van Beilun, want spoor is wél
+productonafhankelijk en zou moeten aansluiten. De Collahuasi-leiding mist niets:
+hij is compleet, en niet-routeerbaar zijn is zijn aard, geen tekortkoming.
+
+Drie categorieën per been, in plaats van twee:
+
+| status | wat het is | telt als gat |
+|---|---|---|
+| `ok` | gerouteerd over een gedeeld net | nee |
+| `eigen` | toegewijde schakel mét geometrie (slurryleiding) | **nee** |
+| `onbekend` / `geenPad` | route onbekend, of het net is stuk | ja |
+
+### En dus ook: de lijnstijl zegt weer één ding
+
+Gestippeld betekende eerst zowel *"geen net"* als *"we weten het niet"* — twee
+heel verschillende dingen in één stijl. Nu: een eigen verbinding is
+**doorgetrokken** (we weten waar hij ligt, alleen niet gedeeld), en
+**gestippeld** betekent uitsluitend *"dit is een rechte lijn tussen twee punten,
+geen bewering over de route."* Escondida is daarmee nog steeds gestippeld, maar
+om de juiste reden: OSM heeft die leiding niet doorlopend.
+
 ## 5 · Wat dit bewust NIET doet
 
 1. **Geen modale economie** — de modus komt uit de data, niet uit een kostenmodel.

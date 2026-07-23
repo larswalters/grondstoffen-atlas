@@ -19,8 +19,7 @@
      "naar": "cu-patache-kade",
      "net": null,
      "modus": "pijpleiding",
-     "reden": "concentraat verlaat Collahuasi als slurry door een ±200 km pijpleiding; de leiding ligt er wél als getekende OSM-geometrie, maar is geen net — je kunt er niet omheen routeren",
-     "noot": "In data/copper.js bestaat dit been niet: de stroom begint daar op zee. Het eerste gat dat het routeren blootlegt.",
+     "noot": "EIGEN VERBINDING, geen gat: de leiding ligt er als OSM-geometrie (substance=slurry) en gaat van de mijn naar zijn eigen kade. Dat je er niet omheen kunt routeren is geen tekortkoming maar zijn aard — er gaat precies één product doorheen, tussen precies twee punten.",
      "geometrie": "cu-collahuasi-patache"
     },
     {

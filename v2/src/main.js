@@ -2,16 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=062";
-import { laadVectorWereld } from "./world.js?v=062";
-import { createTileLayer } from "./tiles.js?v=062";
+import { createGlobe, CONFIG } from "./globe.js?v=063";
+import { laadVectorWereld } from "./world.js?v=063";
+import { createTileLayer } from "./tiles.js?v=063";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=062";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=062";
-import { laadLandnet } from "./landnet.js?v=062";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=062";
-import { laadStromen, routeerStroom } from "./stromen.js?v=062";
-import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=062";
+  from "./marnet.js?v=063";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=063";
+import { laadLandnet } from "./landnet.js?v=063";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=063";
+import { laadStromen, routeerStroom } from "./stromen.js?v=063";
+import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=063";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -157,7 +157,7 @@ let AANSLUITINGEN = null;
 let STROMEN = null;
 let LEIDINGEN = null;
 let stromenGeladen = false;
-laadStromen("062")
+laadStromen("063")
   .then(({ aansluitingen, stromen, pijpleidingen }) => {
     AANSLUITINGEN = aansluitingen;
     STROMEN = stromen;
@@ -627,9 +627,16 @@ function toonStroomInfo(uitkomsten) {
         return `<div>· ${b.vervoer} <b>${Math.round(b.km).toLocaleString("nl")} km</b>${lm}<br>` +
                `<small style="opacity:.65">${naam}</small></div>`;
       }
-      if (b.status === "geenNet") {
+      if (b.status === "eigen") {
+        // Compleet, alleen niet over een gedeeld net — dus geen waarschuwkleur.
+        return `<div>· ${b.vervoer} <b>${Math.round(b.km).toLocaleString("nl")} km</b> ` +
+               `<span style="opacity:.6">(eigen verbinding)</span><br>` +
+               `<small style="opacity:.65">${b.van?.naam || b.van} → ${b.naar?.naam || b.naar}</small></div>`
+                 .replace(/ — [^→<]*/g, "");
+      }
+      if (b.status === "onbekend" || b.status === "geenNet") {
         return `<div style="color:#ffc94a">· ${b.modus} ~${Math.round(b.km).toLocaleString("nl")} km ` +
-               `<b>— geen net</b><br><small style="opacity:.7">${b.reden}</small></div>`;
+               `<b>— route onbekend</b><br><small style="opacity:.7">${b.reden}</small></div>`;
       }
       return `<div style="color:#ff8a7a">· ${b.modus || b.net} <b>— ${b.status === "geenPad" ? "geen pad" : b.status}</b>` +
              `<br><small style="opacity:.7">${b.reden || ""}</small></div>`;

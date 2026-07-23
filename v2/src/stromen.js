@@ -15,13 +15,13 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=062";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=063";
 
 // --------------------------------------------------------------------------
 // laden
 // --------------------------------------------------------------------------
 
-export async function laadStromen(versie = "062") {
+export async function laadStromen(versie = "063") {
   const [aansluitingen, stromen, pijpleidingen] = await Promise.all([
     haal(`data/aansluitingen.json?v=${versie}`),
     haal(`data/stromen-pilot.json?v=${versie}`),
@@ -72,17 +72,29 @@ export function routeerStroom(K, stroom, aansluitingOp, leidingOp = null) {
     }
 
     if (!b.net) {
-      // Een been zonder net kan tóch echte geometrie hebben: de slurry-leiding
-      // ligt in OSM, hij is alleen geen routeerbaar net. Dan tekenen we de
-      // WERKELIJKE lijn en tellen we de WERKELIJKE lengte — het blijft een gat
-      // (je kunt er niet omheen routeren), maar het is geen rechte streep meer
-      // dwars door de Andes.
+      // ⚠️ EEN EIGEN VERBINDING IS GEEN GAT — Lars' onderscheid, en het is het
+      // juiste: een weg, spoor of vaarweg is PRODUCTONAFHANKELIJK (iedereen mag
+      // erover, dus loont het om er een graaf van te maken waar je overheen kunt
+      // zoeken en omheen kunt routeren). Een slurryleiding is dat niet: daar gaat
+      // precies één ding doorheen, van één mijn naar één kade. Als net levert hij
+      // niets op, want er is geen andere lading die hem zou kunnen gebruiken.
+      //
+      // Dus zodra we de geometrie hébben, is dit been COMPLEET. Niet-routeerbaar
+      // zijn is hier geen tekortkoming maar de aard van het ding. Een gat is
+      // "de atlas mist een net dat er hoort te zijn" — het havenspoor van Beilun,
+      // want spoor is wél productonafhankelijk en zou moeten aansluiten.
       const leiding = b.geometrie && leidingOp ? leidingOp(b.geometrie) : null;
-      const km = leiding ? leiding.km : gcKmLL(van.lon, van.lat, naar.lon, naar.lat);
-      benen.push({ ...b, status: "geenNet", van, naar, km,
-                   punten: leiding ? leiding.punten : null,
-                   leiding: leiding || null,
-                   reden: b.reden || "deze modaliteit is nog geen net in de atlas" });
+      if (leiding) {
+        benen.push({ ...b, status: "eigen", van, naar, km: leiding.km,
+                     punten: leiding.punten, leiding,
+                     vervoer: b.modus || "eigen verbinding" });
+        totaalKm += leiding.km;
+        continue;
+      }
+      // Zonder geometrie weten we niet waar het loopt — en DAT is het gat.
+      const km = gcKmLL(van.lon, van.lat, naar.lon, naar.lat);
+      benen.push({ ...b, status: "onbekend", van, naar, km, punten: null, leiding: null,
+                   reden: b.reden || "we weten niet waar deze verbinding loopt" });
       totaalKm += km;
       gaten++;
       continue;
@@ -270,11 +282,16 @@ function verklaarGeenPad(K, been, van, naar) {
 
 /** Een overslag = twee opeenvolgende benen op verschillende netten. */
 function telOverslagen(benen) {
+  // Een been draagt zijn modaliteit: het net waarover het loopt, of "eigen" voor
+  // een toegewijde verbinding (pijpleiding). Van leiding naar schip wisselt de
+  // lading wel degelijk van vervoermiddel, dus dát is ook een overslag.
+  const soort = (b) => (b.status === "eigen" ? b.modus || "eigen" : b.net);
   const punten = [];
   for (let i = 1; i < benen.length; i++) {
     const a = benen[i - 1], b = benen[i];
-    if (!a.net || !b.net || a.net === b.net) continue;
-    punten.push({ bij: b.van, van: a.net, naar: b.net });
+    const sa = soort(a), sb = soort(b);
+    if (!sa || !sb || sa === sb) continue;
+    punten.push({ bij: b.van, van: sa, naar: sb });
   }
   return punten;
 }

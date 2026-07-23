@@ -198,9 +198,14 @@ console.log("\n=== D · de werkelijke stromen (M26.1) ===");
     // gedicht is. Gaat een getal omlaag → vooruitgang, pas het hier aan. Gaat
     // het omhoog → regressie, en dan hoort deze toets rood te staan.
     //
-    //   cu-collahuasi-tongling = 1  de slurry-pijpleiding Collahuasi→Patache
-    //                               (de atlas heeft geen pijpleidingnet)
-    //   cu-escondida-guixi     = 2  diezelfde pijpleiding + het spoorbeen
+    //   cu-collahuasi-tongling = 0  de slurryleiding is EIGEN VERBINDING, geen
+    //                               gat: we weten waar hij ligt (OSM), en dat hij
+    //                               niet routeerbaar is hoort bij zijn aard —
+    //                               een net is productonafhankelijk, een
+    //                               slurryleiding vervoert één ding tussen twee
+    //                               punten.
+    //   cu-escondida-guixi     = 2  de Escondida-leiding (route ONBEKEND: OSM
+    //                               heeft hem niet doorlopend) + het spoorbeen
     //                               Beilun→Guixi: het havenspoor van Beilun ligt
     //                               op een eigen component van 1.823 km, los van
     //                               het Chinese hoofdnet (402.762 km). Vraagt een
@@ -215,13 +220,18 @@ console.log("\n=== D · de werkelijke stromen (M26.1) ===");
     //                               dezelfde reis wél maakt. Riviernet-gat op de
     //                               Maasvlakte, hetzelfde patroon als LAR-520.
     const VERWACHTE_GATEN = {
-      "cu-collahuasi-tongling": 1,
+      "cu-collahuasi-tongling": 0,
       "cu-escondida-guixi": 2,
       "cu-lobito-duisburg": 0,
       "coal-cerrejon-ruhr": 1,
     };
     for (const b of g.benen) {
-      if (b.status !== "ok") console.log(`     ⚠️ ${b.modus}: ${b.reden}`);
+      // Een EIGEN VERBINDING is compleet — geen waarschuwing, wel vermelden.
+      if (b.status === "eigen") {
+        console.log(`     · ${b.modus}: eigen verbinding, ${Math.round(b.km)} km getekend`);
+      } else if (b.status !== "ok") {
+        console.log(`     ⚠️ ${b.modus}: ${b.reden}`);
+      }
     }
     toets(`${s.id}: aantal gaten ongewijzigd (${VERWACHTE_GATEN[s.id]})`,
       g.gaten === VERWACHTE_GATEN[s.id], `${g.gaten} gaten`);
