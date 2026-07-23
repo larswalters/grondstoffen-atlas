@@ -9,7 +9,7 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
-import { gcKmLL } from "./router.js?v=065";
+import { gcKmLL } from "./router.js?v=066";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee
@@ -42,7 +42,9 @@ const OFFSET_STAP = 2e-6;
 // Straal van de marker in SCHERMRUIMTE: hij hoort er op 8.000 km en op 3 km
 // even groot uit te zien. De hoek die een bol van straal r op afstand d opspant
 // is r/d, dus r moet meelopen met de kijkhoogte.
-const MERK_HOEK = { laadplek: 0.010, overslag: 0.013, losplek: 0.010 };
+// Gehalveerd na Lars' blik op z17: op straatniveau moet het merk de kade
+// AANWIJZEN, niet afdekken — je wilt de pier eronder kunnen zien liggen.
+const MERK_HOEK = { laadplek: 0.005, overslag: 0.0065, losplek: 0.005 };
 const MERK_MIN_KM = 0.02;      // nooit kleiner dan 20 m — anders verdwijnt hij
 const MERK_MAX_KM = 60;        // nooit groter dan 60 km — anders dekt hij af
 
@@ -269,8 +271,18 @@ function gatLijn(van, naar, straal, kleur, klemOpHorizon) {
 const MERK_GEO = new THREE.SphereGeometry(1, 12, 12);
 
 function merk(aansluiting, straal, kleur, rol) {
+  // ⚠️ `transparent: true` IS HIER GEEN COSMETICA — het bepaalt in welke PASS
+  // dit merk terechtkomt, en dát is waarom de merken verdwenen zodra de tegels
+  // binnen waren (Lars: "ik heb ze in sommige beelden wel heel kort gezien").
+  // Three tekent eerst de opaque objecten en daarna pas de transparante; een
+  // renderOrder ordent alleen bínnen zijn eigen pass. Het merk was het enige
+  // object van deze laag zonder de vlag — alle lijnen hier staan er wél op — dus
+  // het werd getekend in de opaque pass en de tegels (transparant, want ze vaden
+  // in met opacity 0→1) schilderden er daarna overheen. `depthTest: false` en
+  // renderOrder 12 kunnen daar per definitie niets tegen doen.
   const m = new THREE.Mesh(MERK_GEO, new THREE.MeshBasicMaterial({
-    color: rol === "overslag" ? 0xffffff : kleur, depthTest: false,
+    color: rol === "overslag" ? 0xffffff : kleur,
+    depthTest: false, transparent: true, opacity: 1,
   }));
   m.position.copy(opBol3(aansluiting.lon, aansluiting.lat, straal));
   m.renderOrder = 12;

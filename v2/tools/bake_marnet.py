@@ -1233,18 +1233,53 @@ def snij_bulk(bulk_lijnen, boom, seg_pts, eps_km=BULK_EPS_KM, min_km=BULK_MIN_KM
             if d <= eps_km:
                 dicht[i] = True
 
-    runs, snippers = [], 0
+    # ⚠️ ALLEEN DE KOP EN DE STAART MOGEN WEG, NOOIT EEN GAT IN HET MIDDEN.
+    #
+    # Dat is exact wat de docstring hierboven al belooft — *"een zijrivier die
+    # de laatste 300 m in de Rijn ligt verliest zijn kop, niet zijn hele
+    # lichaam"* — maar de lus knipte een lijn óók doormidden zodra hij ergens
+    # halverwege binnen eps langs de verhalende laag schampte. Gemeten op de
+    # Yangtze (2026-07-23): de OSM-rivier Zhenjiang→monding (ways 27303391 +
+    # 27303398, samen 195,7 km) verloor vijf stukken van 2,1 · 2,1 · 2,2 · 4,6
+    # en 5,9 km — precies dáár waar de M23-`yangtze`-zone van MARNET ernaast
+    # ligt. De rivier bleef als lijn zichtbaar maar viel in de graaf uit elkaar,
+    # en omdat de MARNET-tegenhanger knoop-ids ónder `zeeKnopen` heeft (groep
+    # ZEE) kon geen binnenvaartbeen er nog overheen. Gevolg: Shanghai→Tongling
+    # week uit naar het Grote Kanaal tot 32,84°N — 616 km met een lus over land.
+    #
+    # Een gat in het midden is dus geen dubbele geometrie meer, maar een BREUK.
+    # Kop en staart afnemen kan geen enkele verbinding verbreken (er hangt per
+    # definitie niets meer achter); een gat in het midden doet dat altijd.
+    # Daarom houden we interne `dicht`-vertices gewoon staan: de lijn blijft één
+    # stuk, met zijn eigen brongeometrie, en er wordt niets bijverzonnen — het
+    # is dezelfde way die er in OSM ook doorloopt.
+    runs, snippers, hersteld, hersteld_km = [], 0, 0, 0.0
     for li in range(len(bulk_lijnen)):
-        loop = []
-        for i in range(offsets[li], offsets[li + 1]):
+        i0, i1 = offsets[li], offsets[li + 1]
+        kop = i0
+        while kop < i1 and dicht[kop]:
+            kop += 1
+        staart = i1
+        while staart > kop and dicht[staart - 1]:
+            staart -= 1
+        # tellen wat we tegenhouden: elk aaneengesloten `dicht`-blok BINNEN de
+        # lijn is een gat dat de oude lus geknipt zou hebben
+        i = kop
+        had_gat = False
+        while i < staart:
             if dicht[i]:
-                if len(loop) > 1:
-                    runs.append((li, loop))
-                loop = []
+                j = i
+                while j < staart and dicht[j]:
+                    j += 1
+                hersteld_km += _lengte_km(alle[max(kop, i - 1):min(staart, j + 1)])
+                had_gat = True
+                i = j
             else:
-                loop.append(alle[i])
-        if len(loop) > 1:
-            runs.append((li, loop))
+                i += 1
+        if had_gat:
+            hersteld += 1
+        if staart - kop > 1:
+            runs.append((li, alle[kop:staart]))
     houd = []
     for li, p in runs:
         if _lengte_km(p) >= min_km:
@@ -1260,6 +1295,9 @@ def snij_bulk(bulk_lijnen, boom, seg_pts, eps_km=BULK_EPS_KM, min_km=BULK_MIN_KM
         "dichtste_bewaard_m": (float(dichtbij_bewaard.min() * 1000)
                                if len(dichtbij_bewaard) else float("inf")),
         "snippers": snippers, "runs": len(houd),
+        # wat de kop/staart-regel heeft tegengehouden: lijnen die vroeger
+        # doormidden werden geknipt, en hoeveel km binnenwater dat scheelt
+        "hersteld": hersteld, "hersteld_km": round(hersteld_km, 1),
     }
     return houd, rapport
 
@@ -1722,7 +1760,9 @@ def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad):
               f"{rap['vertices_weg']:,}/{rap['vertices']:,} vertices dicht · "
               f"{rap['runs']:,} runs (+{rap['snippers']:,} snipper<{BULK_MIN_KM} km weg) · "
               f"max weg {rap['max_weg_m']:.0f} m · dichtste bewaard "
-              f"{rap['dichtste_bewaard_m']:.0f} m · {rap['paren']:,} paren getoetst")
+              f"{rap['dichtste_bewaard_m']:.0f} m · {rap['paren']:,} paren getoetst · "
+              f"{rap['hersteld']:,} lijnen heel gehouden ({rap['hersteld_km']:,.0f} km "
+              f"die vroeger doormidden werd geknipt)")
 
     return {"regios": regios,
             "filterVersie": gj.get("filterVersie"),

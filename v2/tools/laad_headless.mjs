@@ -7,11 +7,25 @@
 // één dat van marnet.js/landnet.js, en als het uiteenloopt faalt de toets luid
 // (verkeerde knopen → geen route), niet stil.
 
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
 const DATA = join(dirname(fileURLToPath(import.meta.url)), "..", "data");
+
+// De bake schrijft desgewenst naar een suffix (`--suffix=-t`) zodat een nieuwe
+// set náást de live set komt te staan en byte-vergeleken kan worden vóór hij
+// live gaat. Zonder deze haak kon de headless toets die -t-set niet lezen —
+// dan toets je dus altijd de set die er al stond, en dat is precies andersom.
+// Gebruik: BAKE_SUFFIX=-t node v2/tools/toets_routes.mjs
+// Terugval op de live naam als de suffix-set dat bestand niet heeft: een
+// marnet-bake schrijft `marnet-t`/`ports-t` maar raakt `landnet` niet, en dan
+// hoort de toets het landnet gewoon te lezen in plaats van te struikelen.
+const S = process.env.BAKE_SUFFIX || "";
+const bestand = (naam, ext) => {
+  const metSuffix = join(DATA, `${naam}${S}.${ext}`);
+  return S && existsSync(metSuffix) ? metSuffix : join(DATA, `${naam}.${ext}`);
+};
 
 function maakLezer(bytes) {
   let p = 0;
@@ -90,8 +104,8 @@ function leesGeometrie(lezer, schaal, nEdges, geomN, edgeA, knoopLon, knoopLat, 
 }
 
 export function laadMarnetHeadless() {
-  const meta = JSON.parse(readFileSync(join(DATA, "marnet.json"), "utf-8"));
-  const lezer = maakLezer(readFileSync(join(DATA, "marnet.bin")));
+  const meta = JSON.parse(readFileSync(bestand("marnet", "json"), "utf-8"));
+  const lezer = maakLezer(readFileSync(bestand("marnet", "bin")));
   const { schaal, knopen: nKnopen, edges: nEdges } = meta;
 
   const knoopLon = new Float64Array(nKnopen), knoopLat = new Float64Array(nKnopen);
@@ -135,8 +149,8 @@ export function laadMarnetHeadless() {
 }
 
 export function laadLandnetHeadless() {
-  const meta = JSON.parse(readFileSync(join(DATA, "landnet.json"), "utf-8"));
-  const lezer = maakLezer(readFileSync(join(DATA, "landnet.bin")));
+  const meta = JSON.parse(readFileSync(bestand("landnet", "json"), "utf-8"));
+  const lezer = maakLezer(readFileSync(bestand("landnet", "bin")));
   const { schaal, knopen: nKnopen, edges: nEdges } = meta;
 
   const knoopLon = new Float64Array(nKnopen), knoopLat = new Float64Array(nKnopen);
@@ -200,7 +214,7 @@ export function laadStromenData() {
 }
 
 export function laadHavens() {
-  const d = JSON.parse(readFileSync(join(DATA, "ports.json"), "utf-8"));
+  const d = JSON.parse(readFileSync(bestand("ports", "json"), "utf-8"));
   const havens = [];
   for (let i = 0; i < d.aantal; i++) {
     havens.push({

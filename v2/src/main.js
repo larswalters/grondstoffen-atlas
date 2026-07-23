@@ -2,16 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=065";
-import { laadVectorWereld } from "./world.js?v=065";
-import { createTileLayer } from "./tiles.js?v=065";
+import { createGlobe, CONFIG } from "./globe.js?v=066";
+import { laadVectorWereld } from "./world.js?v=066";
+import { createTileLayer } from "./tiles.js?v=066";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=065";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=065";
-import { laadLandnet } from "./landnet.js?v=065";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=065";
-import { laadStromen, routeerStroom } from "./stromen.js?v=065";
-import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=065";
+  from "./marnet.js?v=066";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=066";
+import { laadLandnet } from "./landnet.js?v=066";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=066";
+import { laadStromen, routeerStroom } from "./stromen.js?v=066";
+import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=066";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -104,7 +104,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 
 // --- het landnet (M25) -----------------------------------------------------
 // ⚠️ "058" is de BAKE-versie, niet de codeversie. Die twee zijn bewust
-// losgekoppeld: marnet/landnet/ports/knooppunten zijn sinds ?v=058 niet
+// losgekoppeld: marnet/landnet/ports/knooppunten zijn sinds ?v=066 niet
 // opnieuw gebakken, en ze meebumpen met de code dwingt elke bezoeker ~14 MB
 // opnieuw te downloaden voor bit-identieke bestanden. Bump deze alleen bij
 // een echte bake — dat is precies wat de cache-busting-discipline bedoelt.
@@ -144,7 +144,7 @@ laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=058")
+fetch("data/knooppunten.json?v=066")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
