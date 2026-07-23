@@ -9,7 +9,7 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
-import { gcKmLL } from "./router.js?v=066";
+import { gcKmLL } from "./router.js?v=067";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee

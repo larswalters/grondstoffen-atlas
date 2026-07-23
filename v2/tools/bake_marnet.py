@@ -1696,15 +1696,30 @@ def binnenwaternet(nodes, edge_lijst, status, geometrie, vaarwegen_meta,
     return meta
 
 
-def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad):
+def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad,
+             extra_pad=None):
     """Leest vaarwegen_bulk.geojson, sluit dubbele geometrie uit, en geeft een
     losse structuur terug — MUTEERT nodes/edge_lijst/status NIET. Aparte
     uitvoer (marnet-bulk.json), niet marnet.bin: dat garandeert dat de elf
     regressie-invarianten per constructie ongemoeid blijven, niet toevallig.
+
+    `extra_pad` (optioneel) is een klein, GECOMMIT geojson met HANDMATIG
+    afgeleide vaarweglijnen die niet uit de OSM-fetch komen — zoals de
+    Tongling-oostgeul, die OSM alleen als watervlak kent (middellijn afgeleid
+    met middellijn_uit_vlakken.py). De grote `vaarwegen_bulk.geojson` staat in
+    build-cache (gitignored, regenereerbaar uit de fetch); deze paar lijnen niet,
+    dus ze horen apart en committen mee. Ze worden gewoon aan de bulk toegevoegd.
     """
     gj = json.load(open(pad, encoding="utf-8"))
+    features = list(gj["features"])
+    if extra_pad and os.path.exists(extra_pad):
+        extra = json.load(open(extra_pad, encoding="utf-8"))
+        n_extra = len(extra["features"])
+        features += extra["features"]
+        print(f"  + {n_extra} handmatige vaarweglijn(en) uit "
+              f"{os.path.basename(extra_pad)}")
     per_regio = {}
-    for f in gj["features"]:
+    for f in features:
         p = f["properties"]
         regio = p["label"]                    # 'bulk-eu', 'bulk-cn', ...
         if not regio.startswith("bulk-"):
@@ -1789,7 +1804,8 @@ SCHAAL = 10000  # 1e-4 graden per eenheid, zelfde raster als world-10m
 
 
 def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=False,
-                   heal_km=0.0, corridor_km=0.0, bruggen_pad=None, meren_pad=None):
+                   heal_km=0.0, corridor_km=0.0, bruggen_pad=None, meren_pad=None,
+                   extra_vaarwegen_pad=None):
     land = LandTester()
     print(f"landmasker: {len(land.polys):,} polygonen + {len(land.meren):,} meren")
 
@@ -1902,7 +1918,8 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
     edge_gabariet = {}
     if bulk_pad:
         bulk_meta = bulklaag(nodes, edge_lijst, status, geometrie,
-                             vaarwegen_meta, bulk_pad)
+                             vaarwegen_meta, bulk_pad,
+                             extra_pad=extra_vaarwegen_pad)
         if binnenwater:
             # ÉÉN NET: hetzelfde binnenwater gaat nu als echte knopen en edges
             # de graaf in i.p.v. als losse tekenlaag. De 250 m-uitsluiting die
@@ -2378,6 +2395,10 @@ if __name__ == "__main__":
     ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoerbestanden "
                                                  "(marnet<suffix>.bin/json, ports<suffix>.json) "
                                                  "— voor de bake-off-variant")
+    ap.add_argument("--extra-vaarwegen", help="klein GECOMMIT geojson met handmatig "
+                                              "afgeleide vaarweglijnen (bulk-<regio>-features) "
+                                              "die niet uit de OSM-fetch komen, bv. de "
+                                              "Tongling-oostgeul (data/vaarwegen-handmatig.geojson)")
     ap.add_argument("--heal-km", type=float, default=0.0,
                     help="tier-1 confluentie-heal (LAR-520): hecht een lijn-uiteinde dat "
                          "binnen deze afstand OP een andere lijn projecteert daar aan "
@@ -2393,4 +2414,4 @@ if __name__ == "__main__":
         verzoen_en_bak(vaarwegen_pad=args.vaarwegen, bulk_pad=args.bulk, suffix=args.suffix,
                        binnenwater=args.binnenwater, heal_km=args.heal_km,
                        corridor_km=args.corridor_km, bruggen_pad=args.bruggen,
-                       meren_pad=args.meren)
+                       meren_pad=args.meren, extra_vaarwegen_pad=args.extra_vaarwegen)
