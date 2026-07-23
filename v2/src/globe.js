@@ -292,6 +292,60 @@ export function createGlobe(mount) {
     werkHorizonBij();
   }
 
+  // --- naar een plek toe vliegen (M26.1) -----------------------------------
+  // De bol DRAAIT, de camera staat vast op +z. Om een punt (λ, φ) naar de
+  // camera te draaien geldt met deze Euler-volgorde (Rx·Ry) en de teken-afspraak
+  // z = −cos φ · sin λ:
+  //
+  //     lat = φ        lon = −90 − λ
+  //
+  // De −90 is geen fudge maar precies de reden dat de bol bij stand (0,0) niet
+  // naar lon 0 kijkt maar naar lon −90 (de Stille Oceaan bij Galápagos) — die
+  // verschuiving zat er altijd al in, ze was alleen nooit opgeschreven.
+  function standVoor(lonDeg, latDeg) {
+    return { lat: Math.max(-89, Math.min(89, latDeg)), lon: -90 - lonDeg };
+  }
+
+  let vlucht = null;
+
+  /**
+   * Vliegt naar een coördinaat en hoogte. `hoogteKm` is echte hoogte boven het
+   * oppervlak; 1 km is de dichtste stand die de bol toestaat (CONFIG.minAltitude).
+   */
+  function vliegNaar(lonDeg, latDeg, hoogteKm = 4, ms = 1100) {
+    const doel = standVoor(lonDeg, latDeg);
+    // kortste weg over de datumlijn: nooit driekwart om de wereld draaien
+    let dLon = ((doel.lon - lon + 540) % 360) - 180;
+    const vanLat = lat, vanLon = lon, vanAlt = altitude;
+    const naarAlt = Math.max(CONFIG.minAltitude,
+      Math.min(CONFIG.maxAltitude, (hoogteKm / 6371) * CONFIG.radius));
+    vlucht = { t0: performance.now(), ms, vanLat, vanLon, dLon, vanAlt, naarAlt,
+               naarLat: doel.lat };
+  }
+
+  // ⚠️ Bewust GEEN onTick() hier: `tickFns` wordt pas verderop in dit bestand
+  // geïnitialiseerd, dus een registratie op dit punt valt in de temporal dead
+  // zone en sloopt de hele module bij het laden. `frame()` roept deze stap
+  // rechtstreeks aan.
+  function stapVlucht() {
+    if (!vlucht) return;
+    const t = Math.min(1, (performance.now() - vlucht.t0) / vlucht.ms);
+    const e = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;   // easeInOutQuad
+    lat = vlucht.vanLat + (vlucht.naarLat - vlucht.vanLat) * e;
+    lon = vlucht.vanLon + vlucht.dLon * e;
+    // hoogte GEOMETRISCH interpoleren — zoomen is vermenigvuldigen (zie zoomBy),
+    // dus lineair zou de laatste 20 km in één frame gebeuren.
+    altitude = vlucht.vanAlt * Math.pow(vlucht.naarAlt / vlucht.vanAlt, e);
+    camera.position.z = CONFIG.radius + altitude;
+    updateNear();
+    werkHorizonBij();
+    if (t >= 1) vlucht = null;
+  }
+
+  // Slepen/zoomen breekt de vlucht af — de gebruiker wint altijd van de animatie.
+  el.addEventListener("pointerdown", () => { vlucht = null; });
+  el.addEventListener("wheel", () => { vlucht = null; }, { passive: true });
+
   // --- knijpzoom op mobiel -------------------------------------------------
   let pinchDist = 0;
   el.addEventListener("touchmove", (e) => {
@@ -435,6 +489,7 @@ export function createGlobe(mount) {
     const dt = Math.min(0.25, (nu - vorigeTijd) / 1000);
     vorigeTijd = nu;
 
+    stapVlucht();          // vóór het zetten van de rotatie: die leest lat/lon
     globeGroup.rotation.y = THREE.MathUtils.degToRad(lon);
     globeGroup.rotation.x = THREE.MathUtils.degToRad(lat);
 
@@ -477,6 +532,7 @@ export function createGlobe(mount) {
     scene, camera, renderer, globeGroup,
     radius: CONFIG.radius,
     onTick, setToneMapping, setSun, setBasemap, setSphereSink, klemOpHorizon, zetHorizonDrempel, zoomBy,
+    vliegNaar,
     getAltitude: () => altitude,
     // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km
     getAltitudeKm: () => (altitude / CONFIG.radius) * 6371,

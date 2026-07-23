@@ -21,7 +21,7 @@
 // (zee · binnen · spoor · weg) en een edge tussen twee groepen bestaat niet.
 // Dat is een constructie-eigenschap, geen guard die je moet vertrouwen.
 
-import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=058";
+import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=059";
 
 export const GROEP = { zee: 0, binnen: 1, spoor: 2, weg: 3 };
 export const GROEP_NAAM = ["zee", "binnen", "spoor", "weg"];
@@ -44,12 +44,13 @@ export const GROEP_VERVOER = {
  * haven op een spoorknoop, zie landnet.js), en een gebakken offset zou stil
  * verlopen bij een rebake van één van beide netten.
  *
- * @param {object} o.marnet    resultaat van laadMarnet()
- * @param {object} o.landnet   resultaat van laadLandnet(), of null
- * @param {number} o.zeeKnopen aantal zeeknopen in marnet (uit ports.json)
- * @param {object} o.register  knooppunten.json
+ * @param {object} o.marnet        resultaat van laadMarnet()
+ * @param {object} o.landnet       resultaat van laadLandnet(), of null
+ * @param {number} o.zeeKnopen     aantal zeeknopen in marnet (uit ports.json)
+ * @param {object} o.register      knooppunten.json
+ * @param {object} o.aansluitingen aansluitingen.json (M26.1), of null
  */
-export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
+export function koppelNetten({ marnet, landnet, zeeKnopen, register, aansluitingen = null }) {
   const t0 = (typeof performance !== "undefined" ? performance.now() : Date.now());
   const nMar = marnet.knoopLon.length;
   const nLand = landnet ? landnet.knoopLon.length : 0;
@@ -90,6 +91,11 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
   // drempel; de gemeten snap-afstand blijft leidend, dus een punt dat daardoor
   // ver springt is zichtbaar en de redacteur oordeelt.
   const landCompKm = new Float64Array(nLand);   // 0 = geen landnet
+  // De componentwortel per knoop bewaren we óók: hij kost niets extra en maakt
+  // "geen pad" diagnosticeerbaar (besluit 6 uit het ontwerp). Zonder dit getal
+  // is een gefragmenteerd spoornet niet te onderscheiden van een kapotte
+  // router — precies het verschil dat de stromen moeten blootleggen.
+  const landComp = nLand ? new Int32Array(nLand) : new Int32Array(0);
   if (landnet) {
     const par = new Int32Array(nLand);
     for (let i = 0; i < nLand; i++) par[i] = i;
@@ -102,7 +108,7 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
     // rangeerterrein heeft veel knopen op weinig km)
     const compKm = new Float64Array(nLand);
     for (let e = 0; e < landnet.edgeA.length; e++) compKm[find(landnet.edgeA[e])] += landnet.edgeKm[e];
-    for (let i = 0; i < nLand; i++) landCompKm[i] = compKm[find(i)];
+    for (let i = 0; i < nLand; i++) { landComp[i] = find(i); landCompKm[i] = compKm[landComp[i]]; }
   }
   // Drempels per modaliteit: het spoornet bestaat uit grote landsdelen, het
   // wegnet uit korte verhalende corridors (17 stuks) — dus een veel lagere
@@ -143,6 +149,45 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
       ([a, b]) => punt.aanhechting[a] && punt.aanhechting[b]
     );
     punten.push(punt);
+  }
+
+  // --- de aansluitingen per grondstof (M26.1) -------------------------------
+  // Zelfde snap-machine, andere entiteit: waar een register-punt één aanhechting
+  // per modaliteit heeft voor álle lading, heeft een aansluiting er één per
+  // GRONDSTOF — de concentraatkade, het laadspoor bij de smelter. Ontwerp:
+  // `design/stroom-aansluiting.md`.
+  //
+  // ⚠️ Een aansluiting maakt GEEN overstap aan. Hij is uitsluitend een zaad, en
+  // daarom kan deze laag groeien zonder dat één invariant beweegt: de
+  // zoekruimte van zoekKeten verandert er niet van (R'dam→Shanghai 19.610 blijft
+  // 19.610). Wie hier ooit een overstap toevoegt, opent precies de gratis
+  // teleport die het ontwerp in §2.4 heeft dichtgetimmerd.
+  //
+  // ⚠️ We snappen vanaf `plek` — de KADE — en niet vanaf de gemeten coördinaat
+  // uit het bestand. De kade is de waarheid en verschuift niet; knopen wél, bij
+  // elke rebake. De gemeten afstand die eruit komt IS de last mile, en die
+  // wordt getekend (regel 2 van het ontwerp).
+  const aansl = new Map();
+  for (const a of aansluitingen?.aansluitingen || []) {
+    if (aansl.has(a.id)) throw new Error(`keten: dubbele aansluiting-id "${a.id}"`);
+    const ll = a.plek;
+    if (!Array.isArray(ll) || ll.length !== 2 || !isFinite(ll[0]) || !isFinite(ll[1])) {
+      throw new Error(`keten: onbruikbare plek bij aansluiting ${a.id}`);
+    }
+    const rec = {
+      id: a.id, naam: a.naam, grondstof: a.grondstof, fase: a.fase, rol: a.rol,
+      knooppunt: a.knooppunt || null, lon: ll[0], lat: ll[1],
+      bron: a.bron || "", noot: a.noot || "", aanhechting: {},
+    };
+    for (const modus of a.modi || []) {
+      if (!(modus in GROEP)) throw new Error(`keten: onbekende modaliteit "${modus}" bij ${a.id}`);
+      const gcode = GROEP[modus];
+      const opLand = gcode === GROEP.spoor || gcode === GROEP.weg;
+      if (opLand && !landnet) continue;
+      rec.aanhechting[modus] = { lon: ll[0], lat: ll[1], knoop: -1, km: Infinity };
+      vragen[opLand ? "landnet" : "marnet"].push({ punt: rec, modus, gcode, lon: ll[0], lat: ll[1] });
+    }
+    aansl.set(a.id, rec);
   }
 
   // Eén pass per net over alle knopen; per knoop alleen de vragen van dezelfde
@@ -200,11 +245,16 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
   return {
     marnet, landnet, zeeKnopen,
     nMar, nLand, nKnopen, offsetLand: nMar,
-    groepVan, landGroep,
-    punten, overstappen, bijKnoop, opLocode,
+    groepVan, landGroep, landComp, landCompKm,
+    punten, overstappen, bijKnoop, opLocode, aansluitingen: aansl,
     stats: {
       knopen: nKnopen,
       punten: punten.length,
+      aansluitingen: aansl.size,
+      // De ergste last mile is het interessantste getal van deze laag: hij zegt
+      // waar het net ophoudt en de werkelijkheid doorgaat.
+      ergsteLastMileKm: [...aansl.values()].reduce((m, a) => Math.max(m,
+        ...Object.values(a.aanhechting).map((x) => x.km)), 0),
       overstappen: overstappen.length / 2,
       gemengdeLandknopen: gemengd,
       ergsteSnapKm: punten.reduce((m, p) => Math.max(m,
@@ -622,4 +672,21 @@ export function puntZaden(K, punt) {
   return Object.entries(punt.aanhechting).map(([modus, a]) => ({
     knoop: a.knoop, km: a.km, naam: `${punt.naam} (${modus})`,
   }));
+}
+
+/**
+ * Zaden voor een AANSLUITING (M26.1), optioneel beperkt tot één net.
+ *
+ * De `km` is hier de LAST MILE: de afstand van de kade tot de netknoop. Hij
+ * telt eerlijk mee in de route-kilometers en wordt ook getekend — verzwijgen is
+ * de bug waarbij de lijn schijnbaar in het niets stopt.
+ */
+export function aansluitingZaden(K, a, netten = null) {
+  const uit = [];
+  for (const [modus, x] of Object.entries(a.aanhechting)) {
+    if (netten && !netten.includes(modus)) continue;
+    if (x.knoop < 0) continue;
+    uit.push({ knoop: x.knoop, km: x.km, naam: `${a.naam} (${modus})`, modus });
+  }
+  return uit;
 }

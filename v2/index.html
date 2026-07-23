@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=058" />
+<link rel="stylesheet" href="style.css?v=059" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -32,7 +32,7 @@
     <div id="hudKop">
       <div>
         <div class="hudTitle">Atlas v2 · fundament</div>
-        <div class="hudSub">M24 — havens + overslag</div>
+        <div class="hudSub">M26.1 — de stromen op straatniveau</div>
       </div>
       <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
     </div>
@@ -143,6 +143,19 @@
       <div id="routeInfo"></div>
     </div>
 
+    <!-- DE WERKELIJKE STROMEN (M26.1) — geen simulator. De keten komt uit
+         data/*.js, de router zoekt alleen bínnen een been op één net. Elke
+         stroom heeft eigen AANSLUITINGEN: de kade/het laadspoor van déze
+         grondstof, op straatniveau. Ontwerp: design/stroom-aansluiting.md. -->
+    <div class="hudLabel">Stromen (pilot: koper)</div>
+    <div id="stromenLijst"></div>
+    <div class="btnRow">
+      <button id="stromenAlle">beide tonen</button>
+      <button id="stromenWis">wis</button>
+    </div>
+    <div id="stroomInfo"></div>
+    <div id="aanslNoot"></div>
+
     <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
     <div class="hudLabel">Beeldverwerking</div>
     <div class="btnRow">
@@ -175,6 +188,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=058"></script>
+<script type="module" src="src/main.js?v=059"></script>
 </body>
 </html>

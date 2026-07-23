@@ -145,6 +145,16 @@ export function laadRegister() {
   return JSON.parse(readFileSync(join(DATA, "knooppunten.json"), "utf-8"));
 }
 
+/** De aansluitingen per grondstof (M26.1) — zie design/stroom-aansluiting.md. */
+export function laadAansluitingen() {
+  return JSON.parse(readFileSync(join(DATA, "aansluitingen.json"), "utf-8"));
+}
+
+/** De pilot-stromen: welke aansluitingen in welke volgorde, modus per been. */
+export function laadStromenData() {
+  return JSON.parse(readFileSync(join(DATA, "stromen-pilot.json"), "utf-8"));
+}
+
 export function laadHavens() {
   const d = JSON.parse(readFileSync(join(DATA, "ports.json"), "utf-8"));
   const havens = [];

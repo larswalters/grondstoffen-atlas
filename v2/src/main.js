@@ -2,14 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=058";
-import { laadVectorWereld } from "./world.js?v=058";
-import { createTileLayer } from "./tiles.js?v=058";
+import { createGlobe, CONFIG } from "./globe.js?v=059";
+import { laadVectorWereld } from "./world.js?v=059";
+import { createTileLayer } from "./tiles.js?v=059";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=058";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=058";
-import { laadLandnet } from "./landnet.js?v=058";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=058";
+  from "./marnet.js?v=059";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=059";
+import { laadLandnet } from "./landnet.js?v=059";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=059";
+import { laadStromen, routeerStroom } from "./stromen.js?v=059";
+import { bouwStroomLaag } from "./stroomlaag.js?v=059";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -106,7 +108,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "059", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -137,17 +139,40 @@ laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=058")
+fetch("data/knooppunten.json?v=059")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
 
+// --- de stromen-laag (M26.1) -----------------------------------------------
+// De aansluitingen moeten mee de koppeling in (ze worden door dezelfde
+// snap-machine gehaald), dus ze horen bij het wachten hieronder. De stromen
+// zelf zijn puur data en mogen later komen.
+let AANSLUITINGEN = null;
+let STROMEN = null;
+let stromenGeladen = false;
+laadStromen("059")
+  .then(({ aansluitingen, stromen }) => {
+    AANSLUITINGEN = aansluitingen;
+    STROMEN = stromen;
+    stromenGeladen = true;
+    probeerKoppel();
+  })
+  .catch((e) => {
+    // Een ontbrekende stromenlaag mag de atlas nooit tegenhouden — de rest van
+    // de bol staat er los van.
+    console.warn("[atlas v2] stromen niet geladen:", e.message);
+    stromenGeladen = true;
+    probeerKoppel();
+  });
+
 function probeerKoppel() {
-  if (K || !NET || !HAVENS || !LANDNET || !REGISTER) return;
+  if (K || !NET || !HAVENS || !LANDNET || !REGISTER || !stromenGeladen) return;
   try {
     K = koppelNetten({
       marnet: NET, landnet: LANDNET,
       zeeKnopen: HAVENS.zeeKnopen, register: REGISTER,
+      aansluitingen: AANSLUITINGEN,
     });
     window.KETEN = K;
     const s = K.stats;
@@ -172,6 +197,20 @@ function probeerKoppel() {
       frag.appendChild(opt);
     }
     lijst.appendChild(frag);
+
+    if (s.aansluitingen) {
+      console.log(
+        `[atlas v2] aansluitingen: ${s.aansluitingen} · ` +
+        `ergste last mile ${s.ergsteLastMileKm.toFixed(1)} km`
+      );
+      const an = document.getElementById("aanslNoot");
+      if (an) {
+        an.textContent =
+          `${s.aansluitingen} aansluitingen op straatniveau · ` +
+          `ergste last mile ${s.ergsteLastMileKm.toFixed(1)} km`;
+      }
+    }
+    bouwStromenHud();
   } catch (e) {
     console.error("[atlas v2] koppelen mislukt:", e);
   }
@@ -205,6 +244,12 @@ GLOBE.onTick(() => {
     // Onder het zeenet: waar spoor en water samenkomen hoort het water te winnen.
     const op = Math.max(CONFIG.radius * 2.5e-6, alt * 0.0045);
     LANDNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
+  }
+  if (stroomLaag) {
+    // Nog iets hoger dan de route: een stroom loopt vaak óver een route heen en
+    // moet dan zichtbaar blijven.
+    const op = Math.max(CONFIG.radius * 4.5e-6, alt * 0.0065);
+    stroomLaag.scale.setScalar(1 + op / CONFIG.radius);
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -478,6 +523,124 @@ function toonKeten(van, naar, schip) {
     (uit.aanloopKm > 20 ? `<br><span style="opacity:.7">aanloop ${Math.round(uit.aanloopKm)} km</span>` : "");
   window.KETENROUTE = uit;
 }
+
+// --- DE WERKELIJKE STROMEN (M26.1) -----------------------------------------
+// Geen simulator: de keten staat in de data (data/*.js → stromen-pilot.json) en
+// per been zoeken we op precies één net. Wat deze laag toevoegt is POSITIONELE
+// WAARHEID — elke stroom komt aan op zijn eigen kade, niet op de generieke
+// havenstip. Ontwerp: design/stroom-aansluiting.md.
+
+let stroomLaag = null;              // THREE.Group met alle getoonde stromen
+const stroomInfoEl = () => document.getElementById("stroomInfo");
+
+function aansluitingOp(id) { return K?.aansluitingen.get(id) || null; }
+
+function bouwStromenHud() {
+  const lijst = document.getElementById("stromenLijst");
+  if (!lijst || !STROMEN) return;
+  lijst.innerHTML = "";
+  for (const s of STROMEN.stromen) {
+    const rij = document.createElement("button");
+    rij.className = "stroomBtn";
+    rij.innerHTML =
+      `<i style="background:${s.kleur}"></i>` +
+      `<span><b>${s.naam.replace(/^.*· /, "")}</b><br>` +
+      `<small>${s.kort} · ${s.waarde} ${s.eenheid}</small></span>`;
+    rij.addEventListener("click", () => toonStromen([s.id], { vlieg: true }));
+    lijst.appendChild(rij);
+  }
+}
+
+function wisStromen() {
+  if (stroomLaag) {
+    GLOBE.globeGroup.remove(stroomLaag);
+    stroomLaag.traverse?.((o) => { o.geometry?.dispose?.(); o.material?.dispose?.(); });
+    stroomLaag = null;
+  }
+  const el = stroomInfoEl();
+  if (el) el.innerHTML = "";
+}
+
+function toonStromen(ids, { vlieg = false } = {}) {
+  if (!K || !STROMEN) return;
+  wisStromen();
+  const groep = new THREE.Group();
+  const uitkomsten = [];
+
+  let i = 0;
+  for (const s of STROMEN.stromen) {
+    if (!ids.includes(s.id)) continue;
+    const g = routeerStroom(K, s, aansluitingOp);
+    uitkomsten.push(g);
+    groep.add(bouwStroomLaag(g, {
+      marnet: NET, landnet: LANDNET, radius: CONFIG.radius,
+      klemOpHorizon: GLOBE.klemOpHorizon, stroomIndex: i++,
+    }));
+  }
+  stroomLaag = groep;
+  GLOBE.globeGroup.add(groep);
+  window.STROOMROUTE = uitkomsten;      // diagnose-handvat, net als KETENROUTE
+
+  toonStroomInfo(uitkomsten);
+  if (vlieg && uitkomsten.length === 1) {
+    const o = uitkomsten[0].overslagen[0];
+    if (o) GLOBE.vliegNaar(o.bij.lon, o.bij.lat, 6);
+  }
+}
+
+// De informatieregel is hier geen sierraad: hij is de enige plek waar een been
+// zónder pad zichzelf kan melden. Een gat stil laten vallen zou precies de
+// vergissing zijn die het routeren moest blootleggen.
+function toonStroomInfo(uitkomsten) {
+  const el = stroomInfoEl();
+  if (!el) return;
+  const stukken = [];
+  for (const g of uitkomsten) {
+    const regels = g.benen.map((b) => {
+      const naam = `${b.van?.naam || b.van} → ${b.naar?.naam || b.naar}`.replace(/ — [^→]*/g, "");
+      if (b.status === "ok") {
+        const lm = b.lastMileKm > 1
+          ? ` <span style="opacity:.6">(+${Math.round(b.lastMileKm)} km last mile)</span>` : "";
+        return `<div>· ${b.vervoer} <b>${Math.round(b.km).toLocaleString("nl")} km</b>${lm}<br>` +
+               `<small style="opacity:.65">${naam}</small></div>`;
+      }
+      if (b.status === "geenNet") {
+        return `<div style="color:#ffc94a">· ${b.modus} ~${Math.round(b.km).toLocaleString("nl")} km ` +
+               `<b>— geen net</b><br><small style="opacity:.7">${b.reden}</small></div>`;
+      }
+      return `<div style="color:#ff8a7a">· ${b.modus || b.net} <b>— ${b.status === "geenPad" ? "geen pad" : b.status}</b>` +
+             `<br><small style="opacity:.7">${b.reden || ""}</small></div>`;
+    }).join("");
+
+    const oversl = g.overslagen.map((o) =>
+      `<a href="#" data-lon="${o.bij.lon}" data-lat="${o.bij.lat}" class="naarKade">` +
+      `${o.bij.naam.split(" — ")[0]}</a> <small>(${o.van}→${o.naar})</small>`).join(" · ");
+
+    stukken.push(
+      `<div class="stroomKaart" style="border-left-color:${g.stroom.kleur}">` +
+      `<b>${Math.round(g.km).toLocaleString("nl")} km</b> · ` +
+      `${g.overslagen.length}× overslag` +
+      (g.gaten ? ` · <span style="color:#ffc94a">${g.gaten} gat${g.gaten > 1 ? "en" : ""}</span>` : "") +
+      `${regels}` +
+      (oversl ? `<div style="margin-top:4px">overslag: ${oversl}</div>` : "") +
+      `</div>`
+    );
+  }
+  el.innerHTML = stukken.join("");
+  // Op de overslagnaam klikken = ernaartoe vliegen tot straatniveau. Dát is de
+  // toets van deze laag: ligt de lijn op z17 in het juiste bekken?
+  for (const a of el.querySelectorAll("a.naarKade")) {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      GLOBE.vliegNaar(+a.dataset.lon, +a.dataset.lat, 3);
+    });
+  }
+}
+
+document.getElementById("stromenAlle")?.addEventListener("click", () => {
+  toonStromen((STROMEN?.stromen || []).map((s) => s.id));
+});
+document.getElementById("stromenWis")?.addEventListener("click", wisStromen);
 
 // Default = "echt" (LAR-494, op Lars' regel): eerst als zeeschip proberen, en
 // alleen als een uiteinde in het binnenland ligt de binnenvaartsystemen

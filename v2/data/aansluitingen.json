@@ -1,0 +1,205 @@
+{
+ "versie": 1,
+ "toelichting": "Aansluitingen per grondstof: de plek waar één grondstof het net raakt (kade, laadspoor, losplek) op straatniveau. Verfijnt knooppunten.json, vervangt het niet — een stroom zonder aansluiting valt terug op de generieke aanhechting van zijn knooppunt. Zie design/stroom-aansluiting.md.",
+ "bron": "coördinaten uit OpenStreetMap (ODbL) via verken_terminals.py",
+ "aansluitingen": [
+  {
+   "id": "cu-collahuasi-laad",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "laadplek",
+   "naam": "Collahuasi — mijn/concentrator (start slurry-pijpleiding)",
+   "plek": [
+    -68.66121,
+    -20.96427
+   ],
+   "modi": [],
+   "gemeten": {},
+   "bron": "OSM — 'Minera Doña Inés de Collahuasi', industrial=mine (ODbL)",
+   "noot": "MODI IS LEEG, en dat is het antwoord: het concentraat verlaat de mijn als slurry door een pijpleiding (OSM heeft hem, man_made=pipeline op 3,2 km) en de atlas kent nog geen pijpleidingnet. Aanwijzen op 'weg' zou hier een vrachtwagen tekenen waar een pijp ligt — en het dichtstbijzijnde wegnet is de corridor li-atacama-lanegra, die géén pad heeft."
+  },
+  {
+   "id": "cu-patache-kade",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "overslag",
+   "naam": "Puerto Patache — Collahuasi-concentraatpier",
+   "plek": [
+    -70.19773,
+    -20.80503
+   ],
+   "modi": [
+    "zee"
+   ],
+   "gemeten": {
+    "zee": {
+     "bij": [
+      -70.6311,
+      -20.2313
+     ],
+     "snapKm": 78.15
+    }
+   },
+   "bron": "OSM way man_made=pier bij 'Puerto Patache Collahuasi' (ODbL)",
+   "noot": "De EIGEN terminal van Collahuasi. data/copper.js stuurt deze stroom via Antofagasta, 120 km noordelijker; de node-noot zegt zelf al 'Patache/Collahuasi-haven'. Eerste gat dat het routeren blootlegt."
+  },
+  {
+   "id": "cu-shanghai-kade",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "overslag",
+   "naam": "Shanghai/Luojing — Baogang-bulkpier aan de Yangtze",
+   "knooppunt": "shanghai",
+   "plek": [
+    121.47618,
+    31.42704
+   ],
+   "modi": [
+    "zee",
+    "binnen"
+   ],
+   "gemeten": {
+    "zee": {
+     "bij": [
+      121.4187,
+      31.51
+     ],
+     "snapKm": 10.72
+    },
+    "binnen": {
+     "bij": [
+      121.4769,
+      31.4512
+     ],
+     "snapKm": 2.69
+    }
+   },
+   "bron": "OSM way 'Baogang Pier', man_made=pier (ODbL)",
+   "noot": "De bulkpier aan de Yangtze zelf. Concentraat voor de Yangtze-smelters komt niet via Yangshan binnen — dat is een containerhaven op eilanden vóór de kust, tientallen km van de riviermond, en dát is wat data/copper.js noemt. In werkelijkheid lossen veel concentraatschepen verder stroomopwaarts (Zhangjiagang/Jiangyin) of aan de eigen kade van de smelter."
+  },
+  {
+   "id": "cu-tongling-kade",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "losplek",
+   "naam": "Tongling Nonferrous — loskade aan de Yangtze",
+   "plek": [
+    117.77325,
+    30.93943
+   ],
+   "modi": [
+    "binnen"
+   ],
+   "gemeten": {
+    "binnen": {
+     "bij": [
+      117.7346,
+      30.9382
+     ],
+     "snapKm": 3.69
+    }
+   },
+   "bron": "OSM way man_made=pier bij TNMG First Metallurgical Plant (ODbL)",
+   "noot": "De pier ligt 1,5 km van het smelterterrein (30,92631 / 117,76997); de smelter zelf heeft geen kade-tag in OSM."
+  },
+  {
+   "id": "cu-escondida-laad",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "laadplek",
+   "naam": "Escondida — Rajo Escondida (start slurry-pijpleiding)",
+   "plek": [
+    -69.07169,
+    -24.27004
+   ],
+   "modi": [],
+   "gemeten": {},
+   "bron": "OSM way 'Rajo Escondida', landuse=quarry resource=copper (ODbL)",
+   "noot": "Zelfde verhaal als Collahuasi: concentraat per ±166 km slurry-pijp naar Coloso. Het spoor Antofagasta–Salta ligt op 6 km, maar rijdt dit concentraat niet — aanwijzen zou een trein tekenen die er niet is."
+  },
+  {
+   "id": "cu-coloso-kade",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "overslag",
+   "naam": "Puerto Coloso — Escondida-concentraatpier",
+   "knooppunt": "antofagasta",
+   "plek": [
+    -70.46332,
+    -23.76015
+   ],
+   "modi": [
+    "zee"
+   ],
+   "gemeten": {
+    "zee": {
+     "bij": [
+      -71.3,
+      -23.8
+     ],
+     "snapKm": 85.25
+    }
+   },
+   "bron": "OSM way 'Coloso', man_made=pier (ODbL)",
+   "noot": "Escondida's eigen terminal, ±12 km ten zuiden van de haven Antofagasta waar data/copper.js hem heen stuurt. Hangt wél aan het aangewezen knooppunt Antofagasta — dáár zit de overslag naar het spoor."
+  },
+  {
+   "id": "cu-beilun-kade",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "overslag",
+   "naam": "Ningbo-Zhoushan — Beilun ertsterminal (北仑矿石码头)",
+   "plek": [
+    121.87573,
+    29.92742
+   ],
+   "modi": [
+    "zee",
+    "spoor"
+   ],
+   "gemeten": {
+    "zee": {
+     "bij": [
+      121.8837,
+      29.9478
+     ],
+     "snapKm": 2.39
+    },
+    "spoor": {
+     "bij": [
+      121.869,
+      29.9131
+     ],
+     "snapKm": 1.72
+    }
+   },
+   "bron": "OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
+   "noot": "De ertsterminal zelf, niet de containerkades ernaast — precies het onderscheid waarvoor deze laag bestaat."
+  },
+  {
+   "id": "cu-guixi-spoor",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "losplek",
+   "naam": "Jiangxi Copper — smelter Guixi (贵溪冶炼厂)",
+   "plek": [
+    117.2257,
+    28.3338
+   ],
+   "modi": [
+    "spoor"
+   ],
+   "gemeten": {
+    "spoor": {
+     "bij": [
+      117.2119,
+      28.3214
+     ],
+     "snapKm": 1.93
+    }
+   },
+   "bron": "OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
+   "noot": "De grootste kopersmelter ter wereld. Ligt 3,8 km noordelijker dan de node-coördinaat in data/copper.js (28,30 / 117,20) — op wereldniveau onzichtbaar, op straatniveau het verschil tussen smelter en veld."
+  }
+ ]
+}

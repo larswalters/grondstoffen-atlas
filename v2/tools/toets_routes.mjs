@@ -10,10 +10,11 @@
 // Draaien:  node v2/tools/toets_routes.mjs
 // Exit-code 0 = alles groen; 1 = een toets faalde.
 
-import { laadMarnetHeadless, laadLandnetHeadless, laadRegister, laadHavens }
-  from "./laad_headless.mjs";
+import { laadMarnetHeadless, laadLandnetHeadless, laadRegister, laadHavens,
+         laadAansluitingen, laadStromenData } from "./laad_headless.mjs";
 import { zoekRoute, zoekRouteRealistisch } from "../src/router.js";
 import { koppelNetten, zoekKeten, havenZaden } from "../src/keten.js";
+import { routeerStroom } from "../src/stromen.js";
 
 const marnet = laadMarnetHeadless();
 const landnet = laadLandnetHeadless();
@@ -142,6 +143,74 @@ function toonKeten(uit) {
   console.log(`  Saldanha→Manaus: ${toonKeten(r)}`);
   toets("een onmogelijke relatie geeft 'geen pad' met een reden",
     r.geenPad ? typeof r.reden === "string" && r.reden.length > 0 : true);
+}
+
+// ==========================================================================
+// D · de werkelijke stromen (M26.1) — design/stroom-aansluiting.md
+// ==========================================================================
+// Twee dingen moeten hier waar zijn, en ze zijn allebei makkelijk stil kapot
+// te maken: (1) de aansluitingen mogen de zoekruimte NIET veranderen — blok A
+// hierboven draaide zonder aansluitingen, dus we hérmeten de invariant mét;
+// (2) elk been dat een net heeft, moet ook echt een pad hebben.
+
+console.log("\n=== D · de werkelijke stromen (M26.1) ===");
+{
+  const aansluitingen = laadAansluitingen();
+  const stromenData = laadStromenData();
+  const K2 = koppelNetten({ marnet, landnet, zeeKnopen: havens.zeeKnopen,
+                            register, aansluitingen });
+  console.log(
+    `  ${K2.stats.aansluitingen} aansluitingen · ` +
+    `ergste last mile ${K2.stats.ergsteLastMileKm.toFixed(1)} km`
+  );
+
+  // (1) De invariant, opnieuw gemeten MET de aansluitingen erin. Een
+  // aansluiting maakt geen overstap aan, dus dit hoort exact hetzelfde te zijn.
+  const r = zoekKeten(K2, havenZaden(K2, H("Rotterdam")), havenZaden(K2, H("Shanghai")), {});
+  toets("aansluitingen veranderen de zoekruimte niet (R'dam→Shanghai)",
+    !r.geenPad && Math.abs(r.km - 19610) < 60, `${Math.round(r.km)} km`);
+  toets("aansluitingen maken geen overstappen aan",
+    K2.stats.overstappen === K.stats.overstappen,
+    `${K2.stats.overstappen} vs ${K.stats.overstappen}`);
+
+  const opId = (id) => K2.aansluitingen.get(id) || null;
+  for (const s of stromenData.stromen) {
+    const g = routeerStroom(K2, s, opId);
+    const beschrijf = g.benen.map((b) =>
+      b.status === "ok" ? `${b.vervoer} ${Math.round(b.km)}km`
+        : `${b.modus} [${b.status}]`).join(" → ");
+    console.log(`  ${s.id}: ${Math.round(g.km)} km · ${beschrijf}`);
+
+    // ⚠️ GATEN WORDEN GETELD, NIET WEGGEPOETST. Deze getallen staan hier en niet
+    // in de data: een gat in de data zetten maakt hem onzichtbaar zodra hij
+    // gedicht is. Gaat een getal omlaag → vooruitgang, pas het hier aan. Gaat
+    // het omhoog → regressie, en dan hoort deze toets rood te staan.
+    //
+    //   cu-collahuasi-tongling = 1  de slurry-pijpleiding Collahuasi→Patache
+    //                               (de atlas heeft geen pijpleidingnet)
+    //   cu-escondida-guixi     = 2  diezelfde pijpleiding + het spoorbeen
+    //                               Beilun→Guixi: het havenspoor van Beilun ligt
+    //                               op een eigen component van 1.823 km, los van
+    //                               het Chinese hoofdnet (402.762 km). Vraagt een
+    //                               heal-ronde op landnet.bin — hetzelfde soort
+    //                               gat als het gefragmenteerde EU-spoor.
+    const VERWACHTE_GATEN = {
+      "cu-collahuasi-tongling": 1,
+      "cu-escondida-guixi": 2,
+    };
+    for (const b of g.benen) {
+      if (b.status !== "ok") console.log(`     ⚠️ ${b.modus}: ${b.reden}`);
+    }
+    toets(`${s.id}: aantal gaten ongewijzigd (${VERWACHTE_GATEN[s.id]})`,
+      g.gaten === VERWACHTE_GATEN[s.id], `${g.gaten} gaten`);
+    toets(`${s.id}: de overslag zit op de aansluiting van de grondstof`,
+      g.overslagen.length >= 1 && g.overslagen.every((o) => o.bij && o.bij.grondstof === s.grondstof),
+      g.overslagen.map((o) => `${o.van}→${o.naar} @ ${o.bij?.id}`).join(" · "));
+    // Een been mengt nooit netten — hier expliciet nagerekend i.p.v. vertrouwd.
+    toets(`${s.id}: geen been mengt netten`,
+      g.benen.filter((b) => b.status === "ok").every((b) => b.route && b.route.groep === b.net),
+      g.benen.filter((b) => b.status === "ok").map((b) => `${b.net}/${b.route?.groep}`).join(" "));
+  }
 }
 
 // --------------------------------------------------------------------------

@@ -1,0 +1,283 @@
+#!/usr/bin/env python3
+"""maak_aansluitingen.py — bouwt v2/data/aansluitingen.json (M26.1).
+
+Een AANSLUITING is de plek waar één grondstof het net raakt: de concentraatkade,
+het laadspoor bij de smelter, de erts-pier. Waar `knooppunten.json` één
+aanhechting per modaliteit heeft voor álle lading, heeft deze laag er één per
+grondstof — en dát is wat twee lijnen in dezelfde havenmond mogelijk maakt.
+Ontwerp: `v2/design/stroom-aansluiting.md`.
+
+Zelfde rolverdeling als `maak_knooppunten.py`: **deze tool wijst niets aan, hij
+MEET.** De lijst hieronder is redactie; de coördinaten komen uit OSM via
+`verken_terminals.py` (ODbL). Per aansluiting rapporteert de tool de afstand tot
+het dichtstbijzijnde knooppunt in elk net, zodat een verkeerd aangewezen kade
+zichzelf verraadt — het Mountain-Pass-patroon uit de wegcorridors.
+
+⚠️ De snap-afstand is hier GEEN foutmaat maar een MEETRESULTAAT. Een kade op
+40 km van de dichtstbijzijnde MARNET-knoop betekent dat het net daar ophoudt,
+niet dat de kade verkeerd staat. Dat verschil zichtbaar maken is precies waarom
+de stromen geroute worden (Lars' werkregel).
+
+Draaien:  python v2/tools/maak_aansluitingen.py [--schrijf]
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+import numpy as np
+
+HIER = Path(__file__).resolve().parent
+sys.path.insert(0, str(HIER))
+
+import maak_knooppunten as mk  # noqa: E402 — Lezer/lees_knopen/dichtstbij hergebruiken
+
+DATA = HIER.parent / "data"
+
+try:
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+except Exception:
+    pass
+
+
+# ==========================================================================
+# DE AANSLUITINGEN — dit is de redactionele lijst (pilot: koper, twee stromen)
+# ==========================================================================
+# Velden:
+#   id          stabiel, eigen id (géén afgeleide van een haven of LOCODE)
+#   grondstof   sleutel uit data/*.js  (hier: "copper")
+#   fase        erts | raffinaat | product — volgt `stage` in de flows
+#   rol         laadplek | overslag | losplek
+#   plek        [lon, lat] van de KADE/LAADPLEK zelf — straatniveau, uit OSM
+#   modi        op welke netten deze aansluiting mag aanhechten
+#   knooppunt   optioneel: het aangewezen overslagpunt waar hij bij hoort
+#   bron        waar de coördinaat vandaan komt (verplicht, ODbL-attributie)
+#
+# ⚠️ `plek` is de waarheid; de aanhechting wordt gemeten. Een aansluiting met
+# alleen "zee" biedt nooit een spooraanhechting aan, hoe dicht het spoor ook
+# ligt — dezelfde redactionele regel als bij het register.
+
+AANSLUITINGEN = [
+    # ======================================================================
+    # STROOM A — koperconcentraat Collahuasi → Tongling (zee → rivier)
+    # ======================================================================
+    dict(id="cu-collahuasi-laad", grondstof="copper", fase="erts", rol="laadplek",
+         naam="Collahuasi — mijn/concentrator (start slurry-pijpleiding)",
+         plek=[-68.66121, -20.96427], modi=[],
+         bron="OSM — 'Minera Doña Inés de Collahuasi', industrial=mine (ODbL)",
+         noot="MODI IS LEEG, en dat is het antwoord: het concentraat verlaat de mijn als "
+              "slurry door een pijpleiding (OSM heeft hem, man_made=pipeline op 3,2 km) "
+              "en de atlas kent nog geen pijpleidingnet. Aanwijzen op 'weg' zou hier een "
+              "vrachtwagen tekenen waar een pijp ligt — en het dichtstbijzijnde wegnet is "
+              "de corridor li-atacama-lanegra, die géén pad heeft."),
+    dict(id="cu-patache-kade", grondstof="copper", fase="erts", rol="overslag",
+         naam="Puerto Patache — Collahuasi-concentraatpier",
+         plek=[-70.19773, -20.80503], modi=["zee"], knooppunt=None,
+         bron="OSM way man_made=pier bij 'Puerto Patache Collahuasi' (ODbL)",
+         noot="De EIGEN terminal van Collahuasi. data/copper.js stuurt deze stroom via "
+              "Antofagasta, 120 km noordelijker; de node-noot zegt zelf al 'Patache/"
+              "Collahuasi-haven'. Eerste gat dat het routeren blootlegt."),
+    dict(id="cu-shanghai-kade", grondstof="copper", fase="erts", rol="overslag",
+         naam="Shanghai/Luojing — Baogang-bulkpier aan de Yangtze",
+         plek=[121.47618, 31.42704], modi=["zee", "binnen"], knooppunt="shanghai",
+         bron="OSM way 'Baogang Pier', man_made=pier (ODbL)",
+         noot="De bulkpier aan de Yangtze zelf. Concentraat voor de Yangtze-smelters komt "
+              "niet via Yangshan binnen — dat is een containerhaven op eilanden vóór de "
+              "kust, tientallen km van de riviermond, en dát is wat data/copper.js noemt. "
+              "In werkelijkheid lossen veel concentraatschepen verder stroomopwaarts "
+              "(Zhangjiagang/Jiangyin) of aan de eigen kade van de smelter."),
+    dict(id="cu-tongling-kade", grondstof="copper", fase="erts", rol="losplek",
+         naam="Tongling Nonferrous — loskade aan de Yangtze",
+         plek=[117.77325, 30.93943], modi=["binnen"],
+         bron="OSM way man_made=pier bij TNMG First Metallurgical Plant (ODbL)",
+         noot="De pier ligt 1,5 km van het smelterterrein (30,92631 / 117,76997); de "
+              "smelter zelf heeft geen kade-tag in OSM."),
+
+    # ======================================================================
+    # STROOM B — koperconcentraat Escondida → Jiangxi/Guixi (zee → spoor)
+    # ======================================================================
+    dict(id="cu-escondida-laad", grondstof="copper", fase="erts", rol="laadplek",
+         naam="Escondida — Rajo Escondida (start slurry-pijpleiding)",
+         plek=[-69.07169, -24.27004], modi=[],
+         bron="OSM way 'Rajo Escondida', landuse=quarry resource=copper (ODbL)",
+         noot="Zelfde verhaal als Collahuasi: concentraat per ±166 km slurry-pijp naar "
+              "Coloso. Het spoor Antofagasta–Salta ligt op 6 km, maar rijdt dit "
+              "concentraat niet — aanwijzen zou een trein tekenen die er niet is."),
+    dict(id="cu-coloso-kade", grondstof="copper", fase="erts", rol="overslag",
+         naam="Puerto Coloso — Escondida-concentraatpier",
+         plek=[-70.46332, -23.76015], modi=["zee"], knooppunt="antofagasta",
+         bron="OSM way 'Coloso', man_made=pier (ODbL)",
+         noot="Escondida's eigen terminal, ±12 km ten zuiden van de haven Antofagasta "
+              "waar data/copper.js hem heen stuurt. Hangt wél aan het aangewezen "
+              "knooppunt Antofagasta — dáár zit de overslag naar het spoor."),
+    dict(id="cu-beilun-kade", grondstof="copper", fase="erts", rol="overslag",
+         naam="Ningbo-Zhoushan — Beilun ertsterminal (北仑矿石码头)",
+         plek=[121.87573, 29.92742], modi=["zee", "spoor"],
+         bron="OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
+         noot="De ertsterminal zelf, niet de containerkades ernaast — precies het "
+              "onderscheid waarvoor deze laag bestaat."),
+    dict(id="cu-guixi-spoor", grondstof="copper", fase="erts", rol="losplek",
+         naam="Jiangxi Copper — smelter Guixi (贵溪冶炼厂)",
+         plek=[117.22570, 28.33380], modi=["spoor"],
+         bron="OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
+         noot="De grootste kopersmelter ter wereld. Ligt 3,8 km noordelijker dan de "
+              "node-coördinaat in data/copper.js (28,30 / 117,20) — op wereldniveau "
+              "onzichtbaar, op straatniveau het verschil tussen smelter en veld."),
+]
+
+MODI = ("zee", "binnen", "spoor", "weg")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--schrijf", action="store_true", help="aansluitingen.json wegschrijven")
+    args = ap.parse_args()
+
+    ports = json.loads((DATA / "ports.json").read_text(encoding="utf-8"))
+    zee_knopen = ports["zeeKnopen"]
+
+    print("marnet lezen…", flush=True)
+    m_meta, m_lon, m_lat = mk.lees_knopen(DATA / "marnet.json", DATA / "marnet.bin")
+    m_vec = mk.eenheidsvectoren(m_lon, m_lat)
+    idx = {
+        "zee": np.arange(0, zee_knopen),
+        "binnen": np.arange(zee_knopen, len(m_lon)),
+    }
+
+    print("landnet lezen…", flush=True)
+    l_meta, l_lon, l_lat = mk.lees_knopen(DATA / "landnet.json", DATA / "landnet.bin")
+    l_vec = mk.eenheidsvectoren(l_lon, l_lat)
+    knoop_modus = land_knoop_modus(l_meta)
+    idx["spoor"] = np.flatnonzero(knoop_modus == 1)
+    idx["weg"] = np.flatnonzero(knoop_modus == 2)
+    print(f"  landnet: {idx['spoor'].size:,} spoorknopen · {idx['weg'].size:,} wegknopen")
+
+    register = json.loads((DATA / "knooppunten.json").read_text(encoding="utf-8"))
+    bekende_punten = {p["id"] for p in register["punten"]}
+
+    print()
+    print(f"{'aansluiting':40s} {'zee':>9s} {'binnen':>9s} {'spoor':>9s} {'weg':>9s}")
+    print("-" * 80)
+
+    uit, fouten = [], []
+    for e in AANSLUITINGEN:
+        lon, lat = e["plek"]
+        meting = {}
+        for m in MODI:
+            vec, lo, la = (m_vec, m_lon, m_lat) if m in ("zee", "binnen") else (l_vec, l_lon, l_lat)
+            k, d = mk.dichtstbij(vec, idx[m], lon, lat)
+            meting[m] = (k, d, lo, la)
+
+        def cel(m):
+            _, d, _, _ = meting[m]
+            merk = "*" if m in e["modi"] else " "
+            return f"{merk}{d:8.1f}" if d < 1e6 else f"{merk}{'—':>8s}"
+
+        print(f"{e['naam'][:40]:40s} " + " ".join(cel(m) for m in MODI))
+
+        knp = e.get("knooppunt")
+        if knp and knp not in bekende_punten:
+            fouten.append(f"{e['id']}: knooppunt '{knp}' staat niet in knooppunten.json")
+
+        # ⚠️ `gemeten` is een RAPPORT, geen invoer. De lader in keten.js snapt
+        # opnieuw vanaf `plek` — knoop-ids én knoopcoördinaten verschuiven bij
+        # elke rebake, de kade niet. Wijkt de browser af van deze getallen, dan
+        # is de bake veranderd en niet de redactie; dat verschil moet zichtbaar
+        # kunnen worden en daarom staat het hier.
+        gemeten = {}
+        for m in e["modi"]:
+            k, d, lo, la = meting[m]
+            if k < 0:
+                fouten.append(f"{e['id']}: geen knoop in net '{m}'")
+                continue
+            gemeten[m] = {
+                "bij": [round(float(lo[k]), 5), round(float(la[k]), 5)],
+                "snapKm": round(d, 2),
+            }
+
+        uit.append({
+            "id": e["id"],
+            "grondstof": e["grondstof"],
+            "fase": e["fase"],
+            "rol": e["rol"],
+            "naam": e["naam"],
+            **({"knooppunt": knp} if knp else {}),
+            "plek": [round(lon, 5), round(lat, 5)],
+            "modi": list(e["modi"]),
+            "gemeten": gemeten,
+            "bron": e["bron"],
+            **({"noot": e["noot"]} if e.get("noot") else {}),
+        })
+
+    print("-" * 80)
+    print("* = aangewezen modaliteit · getal = km tot de dichtstbijzijnde knoop in dat net")
+    print("  (de snap-afstand is een MEETRESULTAAT, geen fout: ver = daar houdt het net op)")
+
+    if fouten:
+        print("\n⚠️ FOUTEN:")
+        for f in fouten:
+            print("  " + f)
+        return 1
+
+    doc = {
+        "versie": 1,
+        "toelichting": (
+            "Aansluitingen per grondstof: de plek waar één grondstof het net raakt "
+            "(kade, laadspoor, losplek) op straatniveau. Verfijnt knooppunten.json, "
+            "vervangt het niet — een stroom zonder aansluiting valt terug op de "
+            "generieke aanhechting van zijn knooppunt. Zie design/stroom-aansluiting.md."
+        ),
+        "bron": "coördinaten uit OpenStreetMap (ODbL) via verken_terminals.py",
+        "aansluitingen": uit,
+    }
+    print(f"\n{len(uit)} aansluitingen · "
+          f"{sum(len(a['gemeten']) for a in uit)} aanhechtingen")
+    if args.schrijf:
+        pad = DATA / "aansluitingen.json"
+        pad.write_text(json.dumps(doc, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"geschreven: {pad} ({pad.stat().st_size / 1024:.1f} KB)")
+    else:
+        print("(niets geschreven — geef --schrijf mee)")
+    return 0
+
+
+def land_knoop_modus(l_meta):
+    """Modus per landnet-knoop (1=spoor, 2=weg) uit de label-ranges op de edges.
+
+    Kopie van de leesstap in maak_knooppunten.main(); die zit daar in de body en
+    is niet los aan te roepen. Bewust dezelfde volgorde van varint-velden — een
+    afwijking hier geeft stil verschoven knopen, niet een foutmelding.
+    """
+    lezer = mk.Lezer((DATA / "landnet.bin").read_bytes())
+    for _ in range(l_meta["knopen"]):
+        lezer.volgende(); lezer.volgende()
+    n_edges = l_meta["edges"]
+    e_a = np.empty(n_edges, dtype=np.int64)
+    e_b = np.empty(n_edges, dtype=np.int64)
+    a = b = 0
+    for i in range(n_edges):
+        a += lezer.volgende()
+        b += lezer.volgende()
+        e_a[i] = a
+        e_b[i] = b
+        lezer.volgende()          # km
+        lezer.volgende()          # soort
+        lezer.volgende()          # aantal punten
+        if lezer.volgende() == 1:
+            for _ in range(4):
+                lezer.volgende()
+
+    modus = np.zeros(l_meta["knopen"], dtype=np.uint8)
+    for lab in l_meta["labels"]:
+        code = 1 if lab["modus"] == "spoor" else 2
+        v, t = lab["edgeVan"], min(lab["edgeTot"], n_edges)
+        modus[e_a[v:t]] = code
+        modus[e_b[v:t]] = code
+    return modus
+
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -1,0 +1,74 @@
+{
+ "versie": 1,
+ "toelichting": "De pilot van M26.1: twee WERKELIJKE koperstromen, been voor been over de gekoppelde netten. Geen simulator — de keten komt uit data/copper.js, de router zoekt alleen binnen één been op één net. Zie design/stroom-aansluiting.md.",
+ "stromen": [
+  {
+   "id": "cu-collahuasi-tongling",
+   "grondstof": "copper",
+   "naam": "Koperconcentraat · Collahuasi → Tongling",
+   "kort": "zee → rivier",
+   "fase": "erts",
+   "kleur": "#E0965A",
+   "waarde": 150,
+   "eenheid": "kt Cu/jaar (indicatief)",
+   "bronStroom": "data/copper.js — cu-collahuasi > cu-ref-tongling (value 150, mode ship, stage erts)",
+   "noot": "De overslag zee → rivier: het zeeschip lost aan de Yangtze-monding, een binnenschip vaart 700 km stroomopwaarts naar de smelter. data/copper.js noemt hier 'Shanghai (Yangshan)' als via-haven — dat is een containerhaven op eilanden voor de kust, niet de rivier.",
+   "benen": [
+    {
+     "van": "cu-collahuasi-laad",
+     "naar": "cu-patache-kade",
+     "net": null,
+     "modus": "pijpleiding",
+     "reden": "concentraat verlaat Collahuasi als slurry door een ±200 km pijpleiding; de atlas heeft nog geen pijpleidingnet",
+     "noot": "In data/copper.js bestaat dit been niet: de stroom begint daar op zee. Het eerste gat dat het routeren blootlegt."
+    },
+    {
+     "van": "cu-patache-kade",
+     "naar": "cu-shanghai-kade",
+     "net": "zee",
+     "modus": "zeeschip"
+    },
+    {
+     "van": "cu-shanghai-kade",
+     "naar": "cu-tongling-kade",
+     "net": "binnen",
+     "modus": "binnenschip"
+    }
+   ]
+  },
+  {
+   "id": "cu-escondida-guixi",
+   "grondstof": "copper",
+   "naam": "Koperconcentraat · Escondida → Jiangxi Copper (Guixi)",
+   "kort": "zee → spoor",
+   "fase": "erts",
+   "kleur": "#F2C08A",
+   "waarde": 260,
+   "eenheid": "kt Cu/jaar (indicatief)",
+   "bronStroom": "data/copper.js — cu-escondida > cu-ref-jiangxi (value 260, mode ship, stage erts)",
+   "noot": "De overslag zee → spoor: dezelfde grondstof, dezelfde fase, een andere overslagsoort. Hiermee zijn beide opties naast elkaar te bekijken.",
+   "benen": [
+    {
+     "van": "cu-escondida-laad",
+     "naar": "cu-coloso-kade",
+     "net": null,
+     "modus": "pijpleiding",
+     "reden": "concentraat gaat per ±166 km slurry-pijpleiding van Escondida naar Coloso; nog geen pijpleidingnet",
+     "noot": "Ook hier begint de stroom in data/copper.js pas op zee."
+    },
+    {
+     "van": "cu-coloso-kade",
+     "naar": "cu-beilun-kade",
+     "net": "zee",
+     "modus": "zeeschip"
+    },
+    {
+     "van": "cu-beilun-kade",
+     "naar": "cu-guixi-spoor",
+     "net": "spoor",
+     "modus": "trein"
+    }
+   ]
+  }
+ ]
+}
