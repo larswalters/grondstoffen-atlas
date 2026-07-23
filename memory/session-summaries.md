@@ -1154,3 +1154,25 @@ strandden op sessielimiet, synthese zelf uit de journals): riviernet = 10.670 fr
 STITCHEN EERST (LAR-520, blocks LAR-518), dan gelaagde A* + knooppunten.json + klasse per been.
 Havenbron-weging: WPI/EMODnet/UNECE-rolverdeling. Docs: overslag-ontwerp.md + havenbron-keuze.md.
 Commits 11dbde9 / 97b0ee6 / aacd253 / 7f1c06f / 5b7c3cd. Vault: [[2026-07-21-grondstoffen-atlas-havens-en-overslag-ontwerp]].
+
+## 2026-07-23 (avond) — Groene stroom (Collahuasi→Tongling) verfijnd + Yangtze-heal
+Lars keek de groene pilotstroom na op straatniveau; drie fixes, live t/m `?v=070` (commits
+`8d2842e`·`7afc0e1`·`5e6fcd5`·`d14c602`·`a0b5959`). **(1) De Yangtze was onderbroken in de
+graaf** — `snij_bulk()` knipte de rivier doormidden i.p.v. alleen kop/staart (dubbele-geometrie-
+uitsluiting mag geen middengat maken); been Shanghai→Tongling 616 → 540 km, wereldwijd 59 lijnen
+/ ~282 km heel gehouden, zee-invarianten onveranderd. **(2) Overslag-markers verdwenen zodra de
+tegels laadden** — het merk zat als enige stroomlaag-object in de opaque pass (geen
+`transparent:true`), de invadende transparante tegels schilderden eroverheen; vlag + kleinere
+maat. **(3) Tongling-kade naar de echte TNMG-kopersmelter** (Lars wees 'm op de foto aan; stond
+eerst 2,3 km te noord, toen bij de oude gesloten smelter). Kade op de oostgeul, en OSM legt de
+Yangtze langs de westgeul → oostgeul afgeleid met `middellijn_uit_vlakken.py` op een 167 m-raster
+(water-constrained, geen segment over land), **alleen de noordaanvaart** want met óók de zuidkant
+maakte de router een lus om het hele eiland. Nieuw: bake-optie `--extra-vaarwegen` (handmatige
+vaarweglijnen bij de bulk, gecommit `data/vaarwegen-handmatig.geojson`, reproduceerbaar via
+`tools/maak_tongling_oostgeul.py`) + `BAKE_SUFFIX` in `laad_headless.mjs`. Toets 30/30 groen.
+**Wortel + volgende stap (Lars zelf):** de gebakken hoofd-Yangtze heeft bij de noordpunt een grove
+rechte sprong van ~16 km die niet op de rivier ligt → een fijne oostgeul kan er niet schoon aan
+healen. Lars pakt in een verse sessie een spoor- + riviernet-heal op (LAR-520-familie: Beilun
+1.823 km los, EU-spoor, Yangtze-braid, Maasvlakte-riviergat) zodat de graaf beide kanten van het
+eiland verbindt en de handmatige omweg vervalt. Vault:
+[[2026-07-23-grondstoffen-atlas-tongling-verfijning]].

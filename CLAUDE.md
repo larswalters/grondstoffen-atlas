@@ -1,6 +1,6 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (M26.1 live ?v=065: vier werkelijke stromen op straatniveau; volgende = netgaten healen + aansluitingen verfijnen)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (avond) (M26.1 live ?v=070: groene stroom Tongling verfijnd — Yangtze-heal, markers, kade; volgende = Lars doet zelf de spoor+riviernet-heal)*
 
 > **🚚 M26.1 — DE STROMEN OP STRAATNIVEAU (2026-07-23, laatste).** Live t/m `34f7a3a` (`?v=065`).
 > **Vier werkelijke stromen staan been voor been op de bol**, twee grondstoffen. Ontwerp:
@@ -1584,6 +1584,16 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-23 (avond) · Tongling-verfijning (live `?v=070`)** — drie fixes op de groene stroom.
+  (1) `snij_bulk()` in `bake_marnet.py` knipt nu alleen **kop/staart** weg, nooit een gat in het
+  midden (dubbele-geometrie-uitsluiting mag de rivier niet doormidden knippen) — de Yangtze was
+  daardoor onderbroken in de graaf. (2) Overslag-marker krijgt `transparent:true` (zat in de opaque
+  pass, tegels schilderden eroverheen). (3) Tongling-kade naar de nieuwe TNMG-kopersmelter, met een
+  op 167 m afgeleide oostgeul (`middellijn_uit_vlakken.py`, water-constrained), **alleen de
+  noordaanvaart** (zuidkant erbij = router-lus om het eiland). Nieuw: bake-optie `--extra-vaarwegen`
+  (gecommit `data/vaarwegen-handmatig.geojson`, reproduceerbaar via `tools/maak_tongling_oostgeul.py`)
+  + `BAKE_SUFFIX` in `laad_headless.mjs`. **Wortel/volgende:** grove hoofd-Yangtze bij de noordpunt →
+  Lars doet zelf een spoor+riviernet-heal (LAR-520-familie) i.p.v. per stroom handmatig geulen.
 - **2026-07-23 · M26.1 — de AANSLUITING per grondstof (live `?v=065`)** — `v2/data/aansluitingen.json`
   geeft elke grondstof zijn eigen kade/laadspoor op ~50 m (OSM/ODbL via `verken_terminals.py`,
   gemeten door `maak_aansluitingen.py`). Verfijnt `knooppunten.json`, vervangt het niet; een

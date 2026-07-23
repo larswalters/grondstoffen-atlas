@@ -1,5 +1,36 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-23 (M26.1: Beilun-havenspoor + Maasvlakte-riviergat erbij; vijf eigen fouten opgelost)*
+*Last updated: 2026-07-23 (avond) (Tongling-verfijning: Yangtze-heal, markers, kade; wortel = grove hoofdgeul-geometrie → spoor+riviernet-heal openstaand)*
+
+## ⚠️ OPEN 2026-07-23 (avond) — de gebakken hoofd-Yangtze is te grof bij de Tongling-noordpunt
+De Chang-Jiang-middellijn (OSM way 226556520) heeft tussen lat 31,042 en 31,074 één **rechte
+segment van ~16 km** dat de echte riviercurve om de eilandnoordpunt niet volgt (springt van
+lon 117,74 naar 117,90). Gevolg: een fijn (167 m) afgeleide oostgeul-lijn kan er niet binnen
+heal-afstand (250 m) aan aansluiten, want de gebakken lijn ligt kilometers naast het echte
+water. Daarom is de Tongling-oostgeul nu **handmatig** afgeleid en bewust **alleen aan de
+noordkant** aangesloten (met óók de zuidkant koos de router de westgeul + zuidjunctie en
+maakte een lus om het hele eiland). **Structurele fix (Lars, volgende sessie):** een
+riviernet-heal op dit gevlochten stuk (LAR-520-familie) die de hoofdgeul en de zijgeulen aan
+beide eilandpunten verbindt — dan vervalt `data/vaarwegen-handmatig.geojson`.
+
+## ✅ OPGELOST 2026-07-23 (avond) — de Yangtze was onderbroken in de graaf (snij_bulk knipte doormidden)
+`snij_bulk()` in `bake_marnet.py` sluit dubbele OSM-geometrie uit door alles binnen 250 m van
+de verhalende MARNET-laag weg te knippen. Bedoeld om een zijrivier zijn **kop of staart** af te
+nemen, maar hij knipte ook **middenin** — en dan valt de rivier in de graaf uit elkaar terwijl
+hij op het scherm doorloopt. Op de Yangtze vielen vijf stukken (2,1–5,9 km) weg precies waar de
+M23-`yangtze`-zone ernaast ligt; die zone heeft knoop-ids ónder `zeeKnopen` (groep **zee**), dus
+een binnenvaartbeen kon er niet op → Shanghai→Tongling maakte een lus tot lat 32,84 (Grote
+Kanaal), 616 km. Fix: alleen kop en staart mogen weg (die verbreken per definitie geen
+verbinding; een middengat altijd), interne `dicht`-vertices blijven staan. Been 616 → **540 km**;
+wereldwijd **59 lijnen / ~282 km** heel gehouden; zee-invarianten onveranderd.
+
+## ✅ OPGELOST 2026-07-23 (avond) — overslag-markers verdwenen zodra de tegels laadden
+Het merk (een bolletje op de kade) was het enige object van `stroomlaag.js` zónder
+`transparent:true`. Three tekent de opaque pass vóór de transparante; de invadende tegels
+(transparant, vaden in met opacity 0→1) schilderden er daarna overheen. `renderOrder` en
+`depthTest:false` ordenen alleen bínnen een pass en konden er niets tegen doen. Fix: vlag
+toegevoegd (zelfde pass als de lijnen) + marker-maat gehalveerd zodat het de kade aanwijst
+i.p.v. afdekt. (Lars: *"ik heb ze in sommige beelden wel heel kort gezien"* = precies dit
+symptoom.)
 
 ## OPEN 2026-07-23 - Beilun-havenspoor ligt los van het Chinese hoofdnet
 De spoor-aansluiting van de ertsterminal Beilun (`cu-beilun-kade`) snapt op een component van

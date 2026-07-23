@@ -1,7 +1,28 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-23 (M26.1: aansluiting per grondstof; net vs eigen verbinding; bake- los van codeversie)*
+*Last updated: 2026-07-23 (avond) (Tongling-verfijning: snij_bulk kop/staart; oostgeul alleen noordaanvaart; --extra-vaarwegen)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-23 (avond) - snij_bulk knipt alleen kop/staart weg, nooit een gat in het midden
+**Besluit:** de dubbele-geometrie-uitsluiting in `bake_marnet.py` (`snij_bulk`) verwijdert alleen
+een aaneengesloten begin- of eindstuk dat binnen 250 m van de verhalende laag ligt; interne
+`dicht`-vertices blijven staan.
+**Waarom:** kop/staart afnemen kan per definitie geen verbinding verbreken (er hangt niets meer
+achter); een gat in het midden verbreekt de rivier altijd. Gemeten op de Yangtze: vijf middengaten
+lieten het binnenvaartbeen een lus van 616 km maken tot lat 32,84. Na de fix één stuk, 540 km;
+wereldwijd 59 lijnen / ~282 km heel gehouden.
+
+## 2026-07-23 (avond) - de Tongling-oostgeul is HANDMATIG afgeleid en alleen aan de noordkant aangesloten
+**Besluit:** OSM legt de navigeerbare Yangtze bij Tongling langs de westgeul, maar de nieuwe
+TNMG-kopersmelterkade ligt aan de oostgeul → een oostgeul-middellijn afgeleid uit `natural=water`
+(`middellijn_uit_vlakken.py`, 167 m-raster, water-constrained) en toegevoegd via de nieuwe
+bake-optie `--extra-vaarwegen` (gecommit in `data/vaarwegen-handmatig.geojson`, reproduceerbaar
+via `tools/maak_tongling_oostgeul.py`). Bewust **alleen de noordaanvaart** (kade → hoofdgeul-knoop).
+**Waarom:** met óók de zuidkant aangesloten koos de router de westgeul + zuidjunctie en maakte een
+lus om het hele eiland. Alleen noord = het schip komt van benedenstrooms recht binnen.
+**Bekende beperking / betere weg:** dit is een workaround voor een grove gebakken hoofdgeul (rechte
+sprong van ~16 km bij de noordpunt). De structurele fix is een riviernet-heal op de braid
+(LAR-520-familie) die de graaf aan beide eilandpunten verbindt — dan vervalt deze handmatige lijn.
 
 ## 2026-07-23 - Een NET is productonafhankelijk, een EIGEN VERBINDING niet (besluit Lars)
 **Besluit:** iets wordt alleen een net (graaf in de router) als het GEDEELDE infrastructuur is.
