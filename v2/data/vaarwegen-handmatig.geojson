@@ -9,53 +9,92 @@
     "regio": "cn",
     "zeevaart": false,
     "signaal": "ship",
-    "km": 4.595,
-    "wayId": "tongling-oostgeul-zuid",
-    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) via middellijn_uit_vlakken.py (vaarpad); elk segment op watercellen geverifieerd; gesplitst bij de pier zodat de kade daar op een knoop snapt; zuideinde op hoofdgeul-vertex, noordeinde op de hoofdgeul-lijn (heal projecteert)"
-   },
-   "geometry": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      117.7373,
-      30.9102
-     ],
-     [
-      117.749,
-      30.921
-     ],
-     [
-      117.768,
-      30.942
-     ]
-    ]
-   }
-  },
-  {
-   "type": "Feature",
-   "properties": {
-    "label": "bulk-cn",
-    "regio": "cn",
-    "zeevaart": false,
-    "signaal": "ship",
-    "km": 11.702,
+    "km": 27.265,
     "wayId": "tongling-oostgeul-noord",
-    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) via middellijn_uit_vlakken.py (vaarpad); elk segment op watercellen geverifieerd; gesplitst bij de pier zodat de kade daar op een knoop snapt; zuideinde op hoofdgeul-vertex, noordeinde op de hoofdgeul-lijn (heal projecteert)"
+    "bron": "middellijn afgeleid uit natural=water (China-extract, ODbL) via middellijn_uit_vlakken.py (vaarpad, 167 m), water-constrained; noordeinde op de hoofdgeul-knoop 117,897/31,077 — de kade snapt op het HAVEN-uiteinde"
    },
    "geometry": {
     "type": "LineString",
     "coordinates": [
      [
-      117.768,
-      30.942
+      117.7695,
+      30.9865
      ],
      [
-      117.768,
-      31.017
+      117.7755,
+      31.0045
      ],
      [
-      117.758,
-      31.046
+      117.7875,
+      31.012
+     ],
+     [
+      117.8025,
+      31.015
+     ],
+     [
+      117.8115,
+      31.0225
+     ],
+     [
+      117.8145,
+      31.0255
+     ],
+     [
+      117.819,
+      31.033
+     ],
+     [
+      117.822,
+      31.0495
+     ],
+     [
+      117.8205,
+      31.069
+     ],
+     [
+      117.813,
+      31.0885
+     ],
+     [
+      117.816,
+      31.0975
+     ],
+     [
+      117.819,
+      31.1005
+     ],
+     [
+      117.825,
+      31.099
+     ],
+     [
+      117.843,
+      31.081
+     ],
+     [
+      117.849,
+      31.0585
+     ],
+     [
+      117.8535,
+      31.054
+     ],
+     [
+      117.8835,
+      31.06
+     ],
+     [
+      117.8955,
+      31.066
+     ],
+     [
+      117.897,
+      31.0675
+     ],
+     [
+      117.897,
+      31.0765
      ]
     ]
    }

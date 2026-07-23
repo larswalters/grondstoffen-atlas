@@ -82,10 +82,10 @@
    "grondstof": "copper",
    "fase": "erts",
    "rol": "losplek",
-   "naam": "Tongling Nonferrous — kade van de Eerste Smelter (第一冶炼厂)",
+   "naam": "Tongling Nonferrous — kade van de nieuwe kopersmelter",
    "plek": [
-    117.75647,
-    30.91755
+    117.7718,
+    30.98656
    ],
    "modi": [
     "binnen"
@@ -93,14 +93,14 @@
    "gemeten": {
     "binnen": {
      "bij": [
-      117.7373,
-      30.9102
+      117.7695,
+      30.9865
      ],
-     "snapKm": 2.0
+     "snapKm": 0.22
     }
    },
-   "bron": "OSM way 880048985 man_made=pier, aan de zuidwest-rivierzijde van '铜陵有色第一冶炼厂' (Tongling Nonferrous First Smelter) (ODbL)",
-   "noot": "⚠️ VERPLAATST NA LARS' FOTO-CHECK: de vorige plek (117,773 / 30,939) lag 2,3 km te ver noord bij een ánder terrein. Dit is de eigen pier van de TNMG-kopersmelter — de smelter-polygoon (117,763–117,777 / 30,918–30,935) ligt er direct achter (west-tip op 0,7 km). Hij ligt bij de zuidpunt van het Yangtze-eiland, waar de geulen samenkomen, dus het schip komt hier natuurlijk de hoofdgeul op aan."
+   "bron": "OSM natural=water-oever bij de kade van de nieuwe Tongling Nonferrous-verwerkingsplant; kade-tip 117,7717/30,98236 → begin 117,7719/30,99133, smelter erachter op 117,7806/30,98656 (ODbL)",
+   "noot": "⚠️ TWEE KEER VERPLAATST NA LARS' FOTO-CHECK. Eerst stond hij bij een ánder terrein (117,773/30,939), toen bij de OUDE gesloten smelter (117,756/30,918). Dit is nu de kade van de NIEUWE, actieve kopersmelter van de TNMG-groep (Lars wees exact aan: roze = kade, blauw = smelter). Hij ligt op de oostgeul bij het begin van de splitsing (noordpunt van het eiland); het schip komt van benedenstrooms de hoofdgeul af, gaat bij de noordpunt de oostgeul in en zakt naar de kade — zie de oostgeul-lijn in data/vaarwegen-handmatig.geojson."
   },
   {
    "id": "cu-escondida-laad",
