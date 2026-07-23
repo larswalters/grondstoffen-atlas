@@ -170,6 +170,18 @@ html, body {
 
 #routeInfo b { color: var(--ink); }
 
+/* keten-modus: spoor/weg meenemen */
+.hudCheck {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 10.5px;
+  color: var(--ink-dim);
+  cursor: pointer;
+  line-height: 1.3;
+}
+.hudCheck input { accent-color: var(--accent); width: 14px; height: 14px; flex: none; }
+
 /* --- legenda bij de havenlaag -------------------------------------------- */
 
 #havenLegenda {

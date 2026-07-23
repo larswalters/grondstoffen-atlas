@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=056" />
+<link rel="stylesheet" href="style.css?v=058" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -115,6 +115,13 @@
         <button class="schipBtn" data-schip="alles">alles toestaan</button>
         <button class="schipBtn" data-schip="keten">keten (overslag)</button>
       </div>
+      <!-- Alleen in keten-modus: neem spoor + weg mee. Default uit (landbrug-
+           regel). Aan = het spoornet doet mee; kies bv. een ◆-knooppunt zoals
+           Kasumbalesa om een zuivere spoorroute te zien. -->
+      <label id="landnetMeeRij" class="hudCheck">
+        <input type="checkbox" id="landnetMee" />
+        <span>spoor + weg meenemen (◆-knooppunten kiesbaar)</span>
+      </label>
       <!-- Scheepsklasse (LAR-514): filtert edges op vier maten — diepgang,
            breedte, lengte, doorvaarthoogte. "elk schip" is de DEFAULT en zet
            geen enkele edge dicht; alle bestaande regressiegetallen gelden bij
@@ -168,6 +175,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=056"></script>
+<script type="module" src="src/main.js?v=058"></script>
 </body>
 </html>

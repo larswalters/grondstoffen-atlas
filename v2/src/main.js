@@ -2,14 +2,14 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=056";
-import { laadVectorWereld } from "./world.js?v=056";
-import { createTileLayer } from "./tiles.js?v=056";
+import { createGlobe, CONFIG } from "./globe.js?v=058";
+import { laadVectorWereld } from "./world.js?v=058";
+import { createTileLayer } from "./tiles.js?v=058";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=056";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=056";
-import { laadLandnet } from "./landnet.js?v=056";
-import { koppelNetten, zoekKeten, havenZaden, GROEP_NAAM } from "./keten.js?v=056";
+  from "./marnet.js?v=058";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=058";
+import { laadLandnet } from "./landnet.js?v=058";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=058";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -106,7 +106,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "054", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -137,7 +137,7 @@ laadLandnet(CONFIG.radius, "054", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=056")
+fetch("data/knooppunten.json?v=058")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
@@ -162,6 +162,16 @@ function probeerKoppel() {
         `${s.punten} aangewezen knooppunten · ${s.overstappen} overslagen · ` +
         `ergste snap ${s.ergsteSnapKm.toFixed(1)} km`;
     }
+    // De aangewezen knooppunten óók in de route-keuze, met ◆ ervoor. Zo kun je
+    // een landlocked overslagpunt kiezen en het spoornet echt in gebruik zien.
+    const lijst = document.getElementById("havenLijst");
+    const frag = document.createDocumentFragment();
+    for (const p of K.punten) {
+      const opt = document.createElement("option");
+      opt.value = knoopLabel(p);
+      frag.appendChild(opt);
+    }
+    lijst.appendChild(frag);
   } catch (e) {
     console.error("[atlas v2] koppelen mislukt:", e);
   }
@@ -236,6 +246,26 @@ function vindHaven(tekst) {
   );
 }
 
+// Een keten-eindpunt kan een haven zijn óf een aangewezen knooppunt. Knooppunten
+// dragen ◆ in de lijst; zo kun je een landlocked overslagpunt (Kasumbalesa,
+// Wenen, Duisburg) kiezen en dus een zuivere spoor- of binnenvaartroute zien.
+const KNOOP_MERK = "◆ ";
+function knoopLabel(p) { return `${KNOOP_MERK}${p.naam}`; }
+
+function vindKetenEindpunt(tekst) {
+  if (!tekst) return null;
+  const t = tekst.trim().toLowerCase();
+  if (K) {
+    const zonderMerk = t.startsWith(KNOOP_MERK.trim().toLowerCase())
+      ? t.slice(KNOOP_MERK.trim().length).trim() : t;
+    const p = K.punten.find((x) => knoopLabel(x).toLowerCase() === t)
+      || K.punten.find((x) => x.naam.toLowerCase() === zonderMerk);
+    if (p) return { kind: "knoop", punt: p, naam: p.naam };
+  }
+  const h = vindHaven(tekst);
+  return h ? { kind: "haven", haven: h, naam: h.naam } : null;
+}
+
 function gcKmLL(lon1, lat1, lon2, lat2) {
   const r = Math.PI / 180;
   const d = Math.sin(lat1 * r) * Math.sin(lat2 * r) +
@@ -257,6 +287,24 @@ function toonRoute() {
     infoEl.textContent = "netwerk laadt nog…";
     return;
   }
+  const schip = SCHEEPSKLASSEN[klasseEl.value] || null;
+
+  // "keten": de multi-modale keten-router over álle vier de netten (LAR-518).
+  // Aparte tak, want hij geeft een keten van benen terug i.p.v. één route, en
+  // hij accepteert ook de aangewezen knooppunten (Kasumbalesa, Wenen, …) als
+  // eindpunt — niet alleen havens. Zo is een zuivere spoorroute te bekijken.
+  if (SCHIP === "keten") {
+    const a = vindKetenEindpunt(vanEl.value);
+    const b = vindKetenEindpunt(naarEl.value);
+    if (!a || !b) {
+      infoEl.textContent = "kies twee punten uit de lijst (haven of ◆ knooppunt)";
+      return;
+    }
+    wisRoute();
+    toonKeten(a, b, schip);
+    return;
+  }
+
   const van = vindHaven(vanEl.value);
   const naar = vindHaven(naarEl.value);
   if (!van || !naar) {
@@ -264,15 +312,6 @@ function toonRoute() {
     return;
   }
   wisRoute();
-
-  const schip = SCHEEPSKLASSEN[klasseEl.value] || null;
-
-  // "keten": de multi-modale keten-router over álle vier de netten (LAR-518).
-  // Aparte tak, want hij geeft een keten van benen terug i.p.v. één route.
-  if (SCHIP === "keten") {
-    toonKeten(van, naar, schip);
-    return;
-  }
 
   const t0 = performance.now();
   let route = null;
@@ -355,15 +394,27 @@ function beenLijn(net, been, radius) {
   return lijn;
 }
 
+// Zaden voor een keten-eindpunt: een haven (zee/binnen) of een aangewezen
+// knooppunt (alle modaliteiten die het punt draagt, incl. spoor/weg).
+function eindpuntZaden(ep) {
+  return ep.kind === "knoop" ? puntZaden(K, ep.punt) : havenZaden(K, ep.haven);
+}
+
 function toonKeten(van, naar, schip) {
   if (!K) {
     infoEl.textContent = "de netten zijn nog niet gekoppeld…";
     return;
   }
   const t0 = performance.now();
-  const opties = { netten: ["zee", "binnen"] };   // standaardprofiel: landbrug dicht
+  // Standaardprofiel sluit het landnet (de landbrug-regel): een zuivere
+  // spoorroute heeft 0 overslagen en zou lexicografisch van zee winnen. De knop
+  // "spoor/weg meenemen" zet het open zodat je het spoornet in gebruik kunt zien.
+  const netten = landnetMee
+    ? ["zee", "binnen", "spoor", "weg"]
+    : ["zee", "binnen"];
+  const opties = { netten };
   if (schip) { opties.schipZee = schip; opties.schipBinnen = schip; }
-  const uit = zoekKeten(K, havenZaden(K, van), havenZaden(K, naar), opties);
+  const uit = zoekKeten(K, eindpuntZaden(van), eindpuntZaden(naar), opties);
   const ms = performance.now() - t0;
 
   if (uit.geenPad) {
@@ -374,22 +425,39 @@ function toonKeten(van, naar, schip) {
   }
 
   const groep = new THREE.Group();
+  const netVan = (been) => (been.net === "landnet" ? LANDNET : NET);
+  const knoopPos = (net, kLokaal, lift = 1) =>
+    opBol3(net.knoopLon[kLokaal], net.knoopLat[kLokaal], CONFIG.radius * lift);
+
   for (const been of uit.benen) {
-    const net = been.net === "landnet" ? LANDNET : NET;
+    const net = netVan(been);
     if (!net) continue;
     groep.add(beenLijn(net, been, CONFIG.radius));
   }
-  // overslagmarkers op de grens tussen twee benen
+
+  // De overstap zelf: een kort verbindingslijntje tussen het eind van het ene
+  // been en het begin van het volgende, plus een witte ring op het overslagpunt.
+  // Zonder dat lijntje "mist" de route een stukje bij elke overslag — de twee
+  // aanhechtingen liggen een paar km uit elkaar (kade ↔ emplacement/riviermond).
   for (let i = 0; i < uit.overstappen.length; i++) {
-    const been = uit.benen[i];
-    const net = been.net === "landnet" ? LANDNET : NET;
-    const kEind = been.knopen[been.knopen.length - 1];
-    const pos = opBol3(net.knoopLon[kEind], net.knoopLat[kEind], CONFIG.radius * 1.001);
+    const beenA = uit.benen[i], beenB = uit.benen[i + 1];
+    const netA = netVan(beenA), netB = netVan(beenB);
+    const kEindA = beenA.knopen[beenA.knopen.length - 1];
+    const kStartB = beenB.knopen[0];
+    const pA = knoopPos(netA, kEindA, 1.0009);
+    const pB = knoopPos(netB, kStartB, 1.0009);
+
+    const cGeo = new THREE.BufferGeometry().setFromPoints([pA, pB]);
+    const cMat = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9, depthTest: false });
+    const connector = new THREE.Line(cGeo, cMat);
+    connector.renderOrder = 8.5;
+    groep.add(connector);
+
     const ring = new THREE.Mesh(
       new THREE.SphereGeometry(CONFIG.radius * 0.004, 12, 12),
       new THREE.MeshBasicMaterial({ color: 0xffffff, depthTest: false })
     );
-    ring.position.copy(pos);
+    ring.position.copy(knoopPos(netA, kEindA, 1.001));
     ring.renderOrder = 9;   // boven de benen
     groep.add(ring);
   }
@@ -449,13 +517,33 @@ klasseEl.addEventListener("change", () => {
   if (vanEl.value && naarEl.value) toonRoute();
 });
 
+// Landnet meenemen in de keten (spoor + weg). Default UIT: de landbrug-regel
+// (een zuivere spoorroute heeft 0 overslagen en wint anders lexicografisch van
+// zee). Aan = je kunt het spoornet in gebruik zien, bv. een landlocked ◆-punt.
+let landnetMee = false;
+const landnetMeeEl = document.getElementById("landnetMee");
+const landnetMeeRij = document.getElementById("landnetMeeRij");
+if (landnetMeeEl) {
+  landnetMeeEl.addEventListener("change", () => {
+    landnetMee = landnetMeeEl.checked;
+    if (vanEl.value && naarEl.value && SCHIP === "keten") toonRoute();
+  });
+}
+
+function toonLandnetKnop() {
+  // alleen zinvol in keten-modus
+  if (landnetMeeRij) landnetMeeRij.style.display = SCHIP === "keten" ? "" : "none";
+}
+
 for (const b of document.querySelectorAll(".schipBtn")) {
   b.addEventListener("click", () => {
     SCHIP = b.dataset.schip;
     for (const o of document.querySelectorAll(".schipBtn")) o.classList.toggle("is-on", o === b);
+    toonLandnetKnop();
     if (vanEl.value && naarEl.value) toonRoute();
   });
 }
+toonLandnetKnop();
 
 document.getElementById("routeGo").addEventListener("click", toonRoute);
 document.getElementById("routeWis").addEventListener("click", wisRoute);

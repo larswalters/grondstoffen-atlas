@@ -70,8 +70,10 @@ console.log(`  ${K.stats.punten} punten · ${K.stats.overstappen} overstappen ·
   `${K.stats.gemengdeLandknopen} gemengde landknopen · ` +
   `ergste snap ${K.stats.ergsteSnapKm.toFixed(1)} km · ${K.stats.msKoppelen} ms`);
 toets("alle punten gesnapt (geen exception)", true);
-toets("ergste snap-afstand < 6 km (redactioneel plausibel)",
-  K.stats.ergsteSnapKm < 6, `${K.stats.ergsteSnapKm.toFixed(1)} km`);
+toets("water-aanhechtingen snappen tegen 0 (< 6 km)",
+  K.stats.ergsteSnapWaterKm < 6, `${K.stats.ergsteSnapWaterKm.toFixed(1)} km`);
+toets("land-aanhechtingen snappen op de hoofdlijn (< 60 km cap)",
+  K.stats.ergsteSnapLandKm <= 60, `${K.stats.ergsteSnapLandKm.toFixed(1)} km`);
 // zeeknoop-identiteit: knoop 6811 draagt 22 havens — een overstap mag nooit op
 // "raakt deze knoop" triggeren. We toetsen dat de overstappen expliciete
 // knopenparen zijn (verschillende knoop per modaliteit binnen een punt).

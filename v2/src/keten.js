@@ -21,7 +21,7 @@
 // (zee · binnen · spoor · weg) en een edge tussen twee groepen bestaat niet.
 // Dat is een constructie-eigenschap, geen guard die je moet vertrouwen.
 
-import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=056";
+import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=058";
 
 export const GROEP = { zee: 0, binnen: 1, spoor: 2, weg: 3 };
 export const GROEP_NAAM = ["zee", "binnen", "spoor", "weg"];
@@ -80,6 +80,41 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
     return g ? g - 1 : GROEP.spoor;
   };
 
+  // Componentgrootte per landnet-knoop (union-find). Een aanhechting hoort op
+  // het DOORGAANDE net, niet op een losse emplacement-stub: de dichtstbijzijnde
+  // knoop van Shanghai is een rangeerspoor van een paar honderd meter, terwijl
+  // het hoofdnet (89.000 knopen) 5 km verderop ligt. Zonder deze regel snapt
+  // elk register-punt op zo'n stub en geeft élke spoorroute "geen pad". De
+  // CLAUDE.md noemt deze val expliciet (knoop-afstand meet een stub, niet de
+  // doorgaande lijn). We snappen daarom bij voorkeur op een component boven een
+  // drempel; de gemeten snap-afstand blijft leidend, dus een punt dat daardoor
+  // ver springt is zichtbaar en de redacteur oordeelt.
+  const landCompKm = new Float64Array(nLand);   // 0 = geen landnet
+  if (landnet) {
+    const par = new Int32Array(nLand);
+    for (let i = 0; i < nLand; i++) par[i] = i;
+    const find = (x) => { while (par[x] !== x) { par[x] = par[par[x]]; x = par[x]; } return x; };
+    for (let e = 0; e < landnet.edgeA.length; e++) {
+      const a = find(landnet.edgeA[e]), b = find(landnet.edgeB[e]);
+      if (a !== b) par[a] = b;
+    }
+    // som van edge-km per component (km zegt meer dan knoopaantal: een dicht
+    // rangeerterrein heeft veel knopen op weinig km)
+    const compKm = new Float64Array(nLand);
+    for (let e = 0; e < landnet.edgeA.length; e++) compKm[find(landnet.edgeA[e])] += landnet.edgeKm[e];
+    for (let i = 0; i < nLand; i++) landCompKm[i] = compKm[find(i)];
+  }
+  // Drempels per modaliteit: het spoornet bestaat uit grote landsdelen, het
+  // wegnet uit korte verhalende corridors (17 stuks) — dus een veel lagere
+  // drempel voor weg, anders sneuvelt elke corridor.
+  const DREMPEL_KM = { [GROEP.spoor]: 1000, [GROEP.weg]: 30 };
+  // Maar het doorgaande net mag niet ONREDELIJK ver liggen: een punt waarvan de
+  // dichtstbijzijnde hoofdlijn honderden km weg is, hoort daar niet op te
+  // snappen (dan teken je een route die er niet is). Ligt er geen hoofdlijn
+  // binnen deze straal, dan valt het punt terug op de dichtstbijzijnde knoop —
+  // en dan geeft een spoorroute daar eerlijk "geen pad".
+  const MAX_LAND_SNAP_KM = 60;
+
   // --- het register snappen -------------------------------------------------
   // De machine meet, de redacteur oordeelt: elke aanhechting krijgt een
   // gemeten snap-afstand mee. Géén drempel — een punt dat niet klopt verraadt
@@ -112,8 +147,14 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
 
   // Eén pass per net over alle knopen; per knoop alleen de vragen van dezelfde
   // groep. Goedkoper dan per vraag het hele net aflopen en exact even nauwkeurig.
-  snapVragen(marnet, 0, (k) => (k < zeeKnopen ? GROEP.zee : GROEP.binnen), vragen.marnet);
-  if (landnet) snapVragen(landnet, nMar, (k) => (landGroep[k] ? landGroep[k] - 1 : GROEP.spoor), vragen.landnet);
+  snapVragen(marnet, 0, (k) => (k < zeeKnopen ? GROEP.zee : GROEP.binnen), vragen.marnet, null);
+  if (landnet) {
+    const groepLokaal = (k) => (landGroep[k] ? landGroep[k] - 1 : GROEP.spoor);
+    // een knoop komt in aanmerking als hij op een component ligt boven de drempel
+    // van zijn modaliteit — zo landt de aanhechting op de doorgaande lijn
+    const geschikt = (k) => landCompKm[k] >= (DREMPEL_KM[groepLokaal(k)] ?? 0);
+    snapVragen(landnet, nMar, groepLokaal, vragen.landnet, geschikt, MAX_LAND_SNAP_KM);
+  }
 
   for (const lijst of [vragen.marnet, vragen.landnet]) {
     for (const v of lijst) {
@@ -168,12 +209,28 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register }) {
       gemengdeLandknopen: gemengd,
       ergsteSnapKm: punten.reduce((m, p) => Math.max(m,
         ...Object.values(p.aanhechting).map((a) => a.km)), 0),
+      // apart, want een land-aanhechting mag legitiem tientallen km snappen
+      // (haven → doorgaande hoofdlijn), een water-aanhechting hoort tegen 0
+      ergsteSnapWaterKm: punten.reduce((m, p) => Math.max(m,
+        ...["zee", "binnen"].map((mo) => p.aanhechting[mo]?.km ?? 0)), 0),
+      ergsteSnapLandKm: punten.reduce((m, p) => Math.max(m,
+        ...["spoor", "weg"].map((mo) => p.aanhechting[mo]?.km ?? 0)), 0),
       msKoppelen: Math.round(t1 - t0),
     },
   };
 }
 
-function snapVragen(net, offset, groepVanLokaal, vragen) {
+/**
+ * Snapt elke vraag op de dichtstbijzijnde knoop van zijn groep, in één pass.
+ *
+ * `geschikt(k)` (optioneel) markeert de knopen op het DOORGAANDE net. Is die
+ * gegeven, dan houden we per vraag twee kandidaten bij: de dichtstbijzijnde
+ * GESCHIKTE knoop én de dichtstbijzijnde van welke dan ook. We nemen de
+ * geschikte als die bestaat, anders de gewone — zo landt een aanhechting op de
+ * doorgaande lijn zonder ooit hard te falen op een punt zonder groot component
+ * in de buurt.
+ */
+function snapVragen(net, offset, groepVanLokaal, vragen, geschikt, maxGeschiktKm = Infinity) {
   if (!vragen.length) return;
   const perGroep = new Map();
   for (const v of vragen) {
@@ -182,7 +239,8 @@ function snapVragen(net, offset, groepVanLokaal, vragen) {
       x: Math.cos(v.lat * Math.PI / 180) * Math.cos(v.lon * Math.PI / 180),
       y: Math.sin(v.lat * Math.PI / 180),
       z: Math.cos(v.lat * Math.PI / 180) * Math.sin(v.lon * Math.PI / 180),
-      besteDot: -2, besteK: -1,
+      besteDot: -2, besteK: -1,          // dichtstbijzijnde van welke dan ook
+      besteDotG: -2, besteKG: -1,        // dichtstbijzijnde GESCHIKTE
     };
     if (!perGroep.has(v.gcode)) perGroep.set(v.gcode, []);
     perGroep.get(v.gcode).push(q);
@@ -191,22 +249,31 @@ function snapVragen(net, offset, groepVanLokaal, vragen) {
   for (let k = 0; k < n; k++) {
     const lijst = perGroep.get(groepVanLokaal(k));
     if (!lijst) continue;
+    const ok = geschikt ? geschikt(k) : true;
     const nx = net.knoopXYZ[k * 3], ny = net.knoopXYZ[k * 3 + 1], nz = net.knoopXYZ[k * 3 + 2];
     for (const q of lijst) {
       const d = nx * q.x + ny * q.y + nz * q.z;
       if (d > q.besteDot) { q.besteDot = d; q.besteK = k; }
+      if (ok && d > q.besteDotG) { q.besteDotG = d; q.besteKG = k; }
     }
   }
   for (const lijst of perGroep.values()) {
     for (const q of lijst) {
-      if (q.besteK < 0) continue;
+      // de geschikte (doorgaande) knoop wint alleen als hij niet ONREDELIJK ver
+      // ligt; anders de dichtstbijzijnde van welke dan ook
+      const kmG = q.besteKG >= 0
+        ? 6371 * Math.acos(Math.max(-1, Math.min(1, q.besteDotG))) : Infinity;
+      const geschiktGevonden = q.besteKG >= 0 && kmG <= maxGeschiktKm;
+      const k = geschiktGevonden ? q.besteKG : q.besteK;
+      const dot = geschiktGevonden ? q.besteDotG : q.besteDot;
+      if (k < 0) continue;
       const a = q.v.punt.aanhechting[q.v.modus];
-      a.knoop = q.besteK + offset;
-      a.km = 6371 * Math.acos(Math.max(-1, Math.min(1, q.besteDot)));
+      a.knoop = k + offset;
+      a.km = 6371 * Math.acos(Math.max(-1, Math.min(1, dot)));
       // ⚠️ marnet.js draait de x/z-afspraak om bij het tekenen (z = −sin lon),
       // maar knoopXYZ gebruikt +sin — hier dus consequent knoopXYZ.
-      a.knoopLon = net.knoopLon[q.besteK];
-      a.knoopLat = net.knoopLat[q.besteK];
+      a.knoopLon = net.knoopLon[k];
+      a.knoopLat = net.knoopLat[k];
     }
   }
 }
