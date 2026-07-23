@@ -1,8 +1,82 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (het koppelen live ?v=058: keten-router over alle vier de netten; volgende = de stromen routeren)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (M26.1 live ?v=065: vier werkelijke stromen op straatniveau; volgende = netgaten healen + aansluitingen verfijnen)*
 
-> **🔗 HET KOPPELEN — DE KETEN-ROUTER OVER ÁLLE VIER DE NETTEN (2026-07-23, laatste).**
+> **🚚 M26.1 — DE STROMEN OP STRAATNIVEAU (2026-07-23, laatste).** Live t/m `34f7a3a` (`?v=065`).
+> **Vier werkelijke stromen staan been voor been op de bol**, twee grondstoffen. Ontwerp:
+> `v2/design/stroom-aansluiting.md`. **→ VOLGENDE: de twee netgaten healen + de aansluitingen
+> verfijnen** (zie `memory/next-actions.md`).
+>
+> **NIEUWE ENTITEIT: DE AANSLUITING PER GRONDSTOF** (`v2/data/aansluitingen.json`, 15 stuks).
+> `knooppunten.json` heeft één aanhechting per modaliteit voor **álle** lading — genoeg voor een
+> wereldbol, onwaar op straatniveau, en per constructie niet in staat twee lijnen in dezelfde
+> havenmond te dragen. Elke stroom krijgt nu zijn eigen kade/laadspoor op ~50 m; coördinaten uit
+> **OSM (ODbL)** via de nieuwe scout `v2/tools/verken_terminals.py`, gemeten door
+> `v2/tools/maak_aansluitingen.py` (de machine meet, de redacteur oordeelt — zelfde rolverdeling
+> als `maak_knooppunten.py`). **Aansluitingen maken GEEN overstap aan**, en dát beschermt de
+> invarianten: R'dam→Shanghai blijft 19.610 km / 89 overstappen, getoetst vóór én ná.
+>
+> | stroom | traject | uitkomst |
+> |---|---|---|
+> | Collahuasi → Tongling | leiding → zee → Yangtze | 19.406 km · 0 gaten · 2× overslag |
+> | Escondida → Guixi | leiding → zee → spoor | 19.239 km · 2 gaten |
+> | Lobito → Duisburg | zee → Rijn | **9.946 km · 0 gaten** (eerste volledige keten) |
+> | Cerrejón → Ruhr | spoor 146 → zee → Rijn | 8.377 km · 1 gat |
+>
+> **DE PREMISSE IS GEMETEN, NIET BEWEERD:** Waalhaven hecht op binnenknoop 40927, EMO op 40904 —
+> ruim 30 km uit elkaar, dus koper en kolen komen écht op verschillende plekken de Rijn op.
+> Duisburg idem: kathode naar Ruhrort (Becken A), cokeskool 7 km noordelijker naar de
+> Schwelgern-pier bij ThyssenKrupp. Het spoorbeen van Cerrejón komt uit op **146 km** tegen een
+> echte lijnlengte van ~150 (`Vía Ferroviaria Albania - Puerto Bolívar`) — die geïsoleerde
+> component van 158 km wordt gered door de terugvalregel, precies waarvoor die bedoeld was.
+>
+> **✅ BESLUIT VAN LARS — EEN NET IS PRODUCTONAFHANKELIJK, EEN EIGEN VERBINDING NIET.** *"Een weg of
+> spoor of waterweg of zee is niet productafhankelijk, wel door een slurrieleiding gaat geen gas of
+> olie."* Alleen gedeelde infrastructuur wordt een graaf; door een slurryleiding gaat één product
+> tussen twee punten, dus valt er nooit iets te herrouteren. Ik noemde dat been daarom ten onrechte
+> een **gat** — een gat is *"de atlas mist een net dat er hóórt te zijn"* (het havenspoor van
+> Beilun), niet *"deze schakel is privé"*. Drie categorieën: `ok` · `eigen` (toegewijd mét
+> geometrie, géén gat) · `onbekend`/`geenPad`. **Gevolg: de lijnstijl zegt weer één ding** —
+> doorgetrokken = we weten waar hij ligt, gestippeld = uitsluitend "geraden".
+>
+> **⚠️ VIER GATEN, ELK GEVONDEN DOOR TE ROUTEREN** (Lars werkregel in de praktijk):
+> (1) **Beilun-havenspoor** op een eigen component van 1.823 km tegen het Chinese hoofdnet van
+> 402.762 → geen treinpad; (2) **EMO-kade op een losstaand havenbekken van 4 km** terwijl Duisburg
+> op de doorgaande Rijn (24.517 km) zit → het kolen-Rijnbeen faalt terwijl koper 30 km verderop
+> dezelfde reis wél maakt; (3) **zeenet grof langs Chili** (78–85 km last mile, consistent met de
+> bekende 91 km bij Antofagasta); (4) **`data/*.js` te grofkorrelig voor straatniveau** — Antofagasta
+> i.p.v. Patache, Yangshan i.p.v. een rivierkade, Guixi 3,8 km mis. `keten.js` meet nu de componenten
+> van land- **én** waternet, zodat "geen pad" op elk net zijn reden draagt (besluit 6 van het
+> overslag-ontwerp, eindelijk waargemaakt).
+>
+> **⚠️ VIJF FOUTEN VAN MIJ, ALLE DOOR LARS OOG GEVONDEN — EN DRIE HEBBEN ÉÉN WORTEL: maten als vaste
+> fractie van de bolstraal.** Markers van **19,1 km** met `depthTest:false` (op 3 km hoogte een
+> ondoorzichtige bol over het scherm) · lijnen zwevend op **3,8–10,2 km** → parallax, *"je ziet ze op
+> de verkeerde plek onder bepaalde hoek"* · koperkleur onleesbaar op de Atacama. **De les stond al in
+> dit project** (`zetHavenGrootte`): wat je op élke hoogte wilt zien hoort in SCHERMruimte geschaald,
+> niet in wereldruimte. Plus: **snoeien op knoopniveau doet per definitie niets** — het uiteinde ís al
+> de dichtstbijzijnde knoop (daar is op gezaaid), de overvaar-lus zit in de lijngeometrie ertussen →
+> per **vertex** snoeien (Shanghai 10,7 → 4,5 km, Beilun 2,4 → 0,2). En de **pijpleiding werd gezaaid
+> op een vertex middenin zichzelf**, waardoor hij uit het niets begon.
+>
+> **DE SLURRYLEIDING LIGT EROP** (`v2/tools/fetch_pijpleidingen.py` → `v2/data/pijpleidingen.json`):
+> Collahuasi→Patache gestikt uit 14 OSM-ways met `substance=slurry`, 1.363 punten, **192,4 km tegen
+> ±200 gepubliceerd (−3,8%)** — de lengtetoets is hier de énige controle, net als bij de wegcorridors.
+> **7 van de 14 ways dragen tegelijk `highway=track`+`surface=dirt`:** de pijp ligt begraven onder
+> zijn eigen onderhoudsweg, en dát is de zandweg die Lars op de satellietfoto zag — de beste
+> bevestiging dat het tracé klopt. Escondida→Coloso lukt **niet** (nul `substance=slurry`; geen van de
+> 76 pijpleidingen komt dichter dan 16,5 km bij Coloso) → rechte stippellijn mét reden. Nagerekend:
+> `Canaleta de Relaves` (tailings) zit met **0/283** punten níet in ons pad. Aan de havenkant houdt de
+> kartering **736 m vóór het terminalvlak** op; dat restje wordt gestippeld getekend.
+>
+> **Bijvangst-besluit: de BAKE-versie is losgekoppeld van de CODE-versie.** Data meebumpen zonder
+> rebake dwong elke bezoeker ~14 MB **bit-identieke** binaries opnieuw te downloaden.
+>
+> **`toets_routes.mjs` 15/15 → 30/30 groen**; de verwachte gaten per stroom staan in de test mét hun
+> reden (omlaag = vooruitgang, omhoog = regressie). `stromen.js` is three-vrij (tekenen in
+> `stroomlaag.js`), zelfde splitsing als `router.js`; `globe.js` kreeg `vliegNaar()`.
+
+> **🔗 HET KOPPELEN — DE KETEN-ROUTER OVER ÁLLE VIER DE NETTEN (2026-07-23, eerder).**
 > Live t/m `0b64c79` (`?v=058`), [LAR-518] In Progress. Lars' eerste blik: *"ziet er al redelijk
 > goed uit."* **→ VOLGENDE: de STROMEN routeren (M26)** — de lakmoesproef; modus per been uit de
 > flows-data (zie `memory/next-actions.md`).
@@ -1510,6 +1584,31 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-23 · M26.1 — de AANSLUITING per grondstof (live `?v=065`)** — `v2/data/aansluitingen.json`
+  geeft elke grondstof zijn eigen kade/laadspoor op ~50 m (OSM/ODbL via `verken_terminals.py`,
+  gemeten door `maak_aansluitingen.py`). Verfijnt `knooppunten.json`, vervangt het niet; een
+  aansluiting maakt **geen overstap** aan, dus de zoekruimte beweegt niet (R'dam→Shanghai 19.610 /
+  89 overstappen, getoetst vóór én ná). Gemeten bewijs dat de laag nodig is: Waalhaven hecht op
+  binnenknoop 40927, EMO op 40904 — 30 km uit elkaar.
+- **2026-07-23 · Een NET is productonafhankelijk, een EIGEN VERBINDING niet (besluit Lars)** — alleen
+  gedeelde infrastructuur wordt een graaf. Door een slurryleiding gaat één product tussen twee punten,
+  dus valt er nooit iets te herrouteren en levert een net niets op. Zo'n been krijgt status `eigen` en
+  telt **niet als gat** (een gat is "de atlas mist een net dat er hóórt te zijn"). Drie categorieën
+  `ok`/`eigen`/`onbekend`; gestippeld betekent voortaan uitsluitend "geraden". Voor olie/gas ligt het
+  anders (Droezjba, Power of Siberia zijn wél gedeeld) → aparte milestone. Zie `design/stroom-aansluiting.md` §4a.
+- **2026-07-23 · Per been één net; de keten komt uit de data** — `routeerStroom` zoekt met `zoekKeten`
+  op `netten: [één net]`, `maxOverstap: 0`. Eén `zoekKeten` over de hele reis zou de keten *zoeken*
+  terwijl `data/*.js` hem al kent (`via:` + `mode:`); dat is de simulator, en die komt later.
+- **2026-07-23 · Snoeien op de dichtste nadering gebeurt op VERTEX-niveau** — op knoopniveau doet het
+  per definitie niets (het uiteinde ís al de dichtstbijzijnde knoop, daar is op gezaaid); de
+  overvaar-lus zit in de geometrie tússen knopen van ~10 km. Shanghai 10,7 → 4,5 km.
+- **2026-07-23 · Een pijpleiding zaait op zijn UITEINDE (graad 1), niet op de dichtstbijzijnde vertex** —
+  anders begint hij middenin zichzelf. Twee bevestigingen tegelijk: 186,5 → 192,4 km en −6,8% → −3,8%.
+- **2026-07-23 · Wat op élke hoogte zichtbaar moet zijn, schaalt in SCHERMruimte** — vaste fracties van
+  de bolstraal gaven markers van 19,1 km en lijnen die 3,8–10,2 km zweefden (parallax op straatniveau).
+  De les stond al in `zetHavenGrootte`.
+- **2026-07-23 · De BAKE-versie is losgekoppeld van de CODE-versie** — meebumpen zonder rebake dwong
+  elke bezoeker ~14 MB bit-identieke binaries opnieuw te downloaden.
 - **2026-07-23 · Het koppelen — keten-router over alle vier de netten (live `?v=058`)** — `zoekKeten`
   in `v2/src/keten.js`: gelaagde multi-source Dijkstra met toestand (knoop, aantal overstappen), een
   been mengt nooit netten, overstap = toestandssprong over het expliciete knopenpaar uit een

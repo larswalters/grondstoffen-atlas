@@ -1,7 +1,76 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-23 (het koppelen: keten-router over alle vier de netten; hoofdlijn-snap voor land)*
+*Last updated: 2026-07-23 (M26.1: aansluiting per grondstof; net vs eigen verbinding; bake- los van codeversie)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-23 - Een NET is productonafhankelijk, een EIGEN VERBINDING niet (besluit Lars)
+**Besluit:** iets wordt alleen een net (graaf in de router) als het GEDEELDE infrastructuur is.
+Zee, binnenwater, spoor en weg zijn dat; een slurryleiding niet. Een been over zo'n toegewijde
+verbinding krijgt status `eigen` en telt **niet als gat**. Drie categorieen: `ok` (gerouteerd),
+`eigen` (toegewijd met geometrie), `onbekend`/`geenPad` (wel een gat).
+**Waarom (Lars):** *"een weg of spoor of waterweg of zee is niet productafhankelijk, wel door een
+slurrieleiding gaat geen gas of olie - dus voor de router/simulator kan je er niet heel veel mee.
+Echter wil je wel dat als je de huidige stromen bekijkt, je de juiste route ziet."* Door een
+leiding gaat een product tussen twee punten en valt er nooit iets te herrouteren; een graaf levert
+daar niets op. Maar de lijn moet wel kloppen. Ik noemde dat been eerst ten onrechte een gat - een
+gat is "de atlas mist een net dat er hoort te zijn" (het havenspoor van Beilun), niet "deze schakel
+is prive".
+**Gevolg:** de lijnstijl zegt weer een ding - doorgetrokken = we weten waar hij ligt, gestippeld =
+uitsluitend "rechte lijn tussen twee punten, geen bewering over de route". Zie
+`v2/design/stroom-aansluiting.md` par. 4a. **Open:** voor olie/gas ligt het anders (Droezjba, Power
+of Siberia zijn wel gedeeld) - dan een eigen milestone.
+
+## 2026-07-23 - De AANSLUITING per grondstof: een tweede, fijnere laag naast het register
+**Besluit:** `v2/data/aansluitingen.json` geeft elke grondstof zijn eigen kade/laadspoor op ~50 m
+(coordinaten uit OSM/ODbL). Verfijnt `knooppunten.json`, vervangt het niet: zonder aansluiting valt
+een stroom terug op de generieke aanhechting. Een aansluiting maakt **geen overstap** aan.
+**Waarom:** het register heeft een aanhechting per modaliteit voor alle lading - genoeg voor een
+wereldbol, onwaar op straatniveau, en het kan per constructie geen twee lijnen in dezelfde
+havenmond dragen. Gemeten bewijs: Waalhaven hecht op binnenknoop 40927, EMO op 40904 - 30 km uit
+elkaar. Dat aansluitingen geen overstap aanmaken is wat de invarianten beschermt: R'dam-Shanghai
+blijft 19.610 km en 89 overstappen (getoetst voor en na).
+
+## 2026-07-23 - Per been een net; de keten komt uit de data, niet uit de router
+**Besluit:** `routeerStroom` zoekt elk been met `zoekKeten` op `netten: [een net]`,
+`maxOverstap: 0`. De volgorde van aansluitingen staat in `stromen-pilot.json`, afgeleid van
+`data/*.js`.
+**Waarom:** `overslag-ontwerp.md` par. 5.2 legde dit al vast - de flows-data draagt `mode` per been,
+dus de atlas hoeft de modal split niet te raden. Een `zoekKeten` over de hele reis zou de keten
+*zoeken* (lexicografisch) terwijl de data hem al kent; dat is de simulator, en die komt later.
+`zoekKeten` blijft ongemoeid voor de vrije haven-haven-vraag in de HUD.
+
+## 2026-07-23 - Snoeien op de dichtste nadering gebeurt op VERTEX-niveau, niet op knoopniveau
+**Besluit:** `snoeiUiteinden()` knipt een been af op de vertex van de lijngeometrie die het dichtst
+bij de kade ligt.
+**Waarom:** op knoopniveau doet snoeien per definitie niets - het uiteinde is al de dichtstbijzijnde
+knoop, daar is op gezaaid. De overvaar-lus (Lars: *"anders vaart de boot ervoorbij en dan terug"*)
+zit in de geometrie tussen knopen die ~10 km uit elkaar liggen. Gemeten: Shanghai 10,7 -> 4,5 km,
+Beilun 2,4 -> 0,2 km. Dezelfde familie als de `landnet-aanhecht.json`-meetfout: een knoop-afstand
+meet niet waar de LIJN het dichtst langs komt.
+
+## 2026-07-23 - Een pijpleiding zaait op zijn UITEINDE, niet op de dichtstbijzijnde vertex
+**Besluit:** `fetch_pijpleidingen.py` zoekt de vertices met graad 1 en zaait daarop (terugval op de
+dichtstbijzijnde vertex als er geen uiteinde binnen 25 km ligt, met melding).
+**Waarom:** zaaien op "wat het dichtst bij de mijn ligt" pakte een punt **middenin** de lijn, zodat
+de kop eraf viel en de leiding uit het niets begon (Lars: *"hij stopt op een beetje een raar punt,
+het lijkt niet op een plek waar ze de leiding aanvoeren met slurrie"*). Een leiding heeft twee
+einden en de route loopt van eind tot eind. Twee bevestigingen tegelijk: 186,5 -> **192,4 km** en de
+afwijking tegenover de gepubliceerde ~200 km van -6,8% -> **-3,8%**.
+
+## 2026-07-23 - Wat op elke hoogte zichtbaar moet zijn, schaalt in SCHERMRUIMTE
+**Besluit:** markergrootte via `zetMerkGrootte()` (evenredig met kijkhoogte); de lijnlift komt
+uitsluitend van de altitude-evenredige schaling in `main.js`, niet uit vaste fracties van de straal.
+**Waarom:** de eerste versie gebruikte vaste fracties - markers van **19,1 km** met
+`depthTest:false` (op 3 km hoogte een ondoorzichtige bol over het scherm) en lijnen die **3,8-10,2
+km** boven het oppervlak zweefden, wat op straatniveau parallax geeft: je ziet de lijn naast de
+kade. Onzichtbaar vanuit de ruimte, catastrofaal van dichtbij. De les stond al in dit project
+(`zetHavenGrootte` in havens.js).
+
+## 2026-07-23 - De BAKE-versie is losgekoppeld van de CODE-versie
+**Besluit:** `marnet`/`landnet`/`ports`/`knooppunten` houden `?v=058` (hun laatste bake); alleen
+code en gewijzigde data bumpen mee met de codeversie.
+**Waarom:** meebumpen zonder rebake dwingt elke bezoeker ~14 MB **bit-identieke** binaries opnieuw
+te downloaden. De cache-busting-discipline bedoelt "bump bij elke bake", niet "bump bij elke commit".
 
 ## 2026-07-23 · Een niet-aangewezen haven zaait op zijn DICHTSTE net, niet op beide
 **Besluit:** in `havenZaden` seedt een haven die NIET in `knooppunten.json` staat alleen op het

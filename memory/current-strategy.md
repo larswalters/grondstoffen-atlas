@@ -1,5 +1,33 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors erop; volgende = koppelen)*
+*Last updated: 2026-07-23 (M26.1 live ?v=065: vier stromen op straatniveau; volgende = healen + verfijnen)*
+
+## Stand 2026-07-23 — de stromen liggen erop, en ze wijzen de gaten aan
+
+De vier netten zijn gekoppeld (LAR-518) en er lopen nu **vier werkelijke stromen** overheen (M26.1).
+Daarmee is de fase "fundament" voorbij: de atlas toont niet meer alleen infrastructuur maar echte
+ketens, been voor been, van laadplek tot fabriek.
+
+**De drie lagen onder een stroom, van grof naar fijn:**
+
+| laag | wat het is | bestand |
+| -- | -- | -- |
+| de netten | zee, binnenwater, spoor, weg — gedeelde infrastructuur | `marnet.bin` / `landnet.bin` |
+| het register | welke plaatsen mogen overslaan, per modaliteit | `knooppunten.json` |
+| de aansluitingen | de kade of het laadspoor van **deze grondstof**, ~50 m | `aansluitingen.json` |
+
+**De werkregel die dit stuurt** (Lars): *"we moeten het vooral meemaken waar iets ontbreekt; dat
+zien we zodra we de routes voor stromen hebben bekeken."* Precies wat gebeurde — vier netgaten
+kwamen boven die geen enkele meting vooraf had opgeleverd, en de router meldt ze nu zelf mét getal
+in plaats van stil "geen pad" te zeggen.
+
+**Wat wel en niet een net wordt** (besluit Lars, 2026-07-23): alleen GEDEELDE infrastructuur. Een
+slurryleiding vervoert één product tussen twee punten en levert als graaf niets op; die wordt
+tekengeometrie ("eigen verbinding") en telt niet als gat. Voor olie en gas ligt dat anders — daar
+is een pijpleiding wél gedeeld, en dan pas is een pijpleidingnet een eigen milestone waard.
+
+**Niet de simulator.** De keten van een stroom komt uit `data/*.js` (`via:` + `mode:` per been); de
+router zoekt alleen BÍNNEN een been, op precies één net. Vervoerskeuzes verzinnen is de simulator,
+en die komt later.
 
 ## Stand 2026-07-22 avond — VIER netten liggen er, het koppelen is het enige dat rest
 

@@ -1,5 +1,48 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-23 (keten-router live; EU-spoor gefragmenteerd + Manaus-riviergat als open risico's)*
+*Last updated: 2026-07-23 (M26.1: Beilun-havenspoor + Maasvlakte-riviergat erbij; vijf eigen fouten opgelost)*
+
+## OPEN 2026-07-23 - Beilun-havenspoor ligt los van het Chinese hoofdnet
+De spoor-aansluiting van de ertsterminal Beilun (`cu-beilun-kade`) snapt op een component van
+**1.823 km**; Jiangxi Copper/Guixi zit op het Chinese hoofdnet van **402.762 km**. Daardoor geeft
+`cu-escondida-guixi` "geen pad" op het treinbeen. Zelfde soort breuk als het EU-spoor hieronder;
+een cross-component-heal op `landnet.bin` kan beide dekken. De router meldt het nu zelf met getal
+(`verklaarGeenPad()` in `stromen.js`), dus dit is diagnosticeerbaar in plaats van stil.
+
+## OPEN 2026-07-23 - Maasvlakte-riviergat: EMO hangt aan een bekken van 4 km
+De EMO-kolenkade hecht op een **losstaand havenbekken van 4 km**, terwijl Duisburg op de doorgaande
+Rijn (**24.517 km**) ligt -> het Rijnbeen van `coal-cerrejon-ruhr` faalt. Scherp contrast dat de
+diagnose bevestigt: de koperkade in de Waalhaven, 30 km verderop, zit wel op de doorgaande Rijn en
+maakt dezelfde reis probleemloos. Riviernet-fragmentatie, patroon van [LAR-520].
+
+## OPEN 2026-07-23 - de via-havens in `data/*.js` zijn te grofkorrelig voor straatniveau
+Op wereldniveau onzichtbaar, op z17 fout: `cu-collahuasi` vaart via **Antofagasta** terwijl zijn
+eigen `note` "Patache/Collahuasi-haven" zegt en Collahuasi daar een eigen terminal heeft;
+`cu-port-shanghai` is **Yangshan** - een containerhaven op eilanden voor de kust, niet de rivier;
+de Guixi-smelter ligt **3,8 km** van zijn node-coordinaat. De aansluitingenlaag omzeilt dit nu per
+stroom, maar de onderliggende data blijft grof.
+
+## OPEN 2026-07-23 - OSM tagt niet wat er op een kade wordt overgeslagen
+Bij geen van de gekozen kades in Rotterdam en Duisburg zegt OSM welke lading er omgaat; de
+toewijzing leunt op de buren binnen 1 km (ArcelorMittal Staalhandel / Metaalhandel Ketting bij de
+Waalhaven; Kokerei Schwelgern + Erzlager bij de Schwelgern-pier). Staat per aansluiting in de
+`noot`. Idem bij Patache: de **espesadores** - het echte uitmondingspunt van de slurryleiding,
+bevestigd door Collahuasi's eigen video - staan **helemaal niet in OSM** (vijf objecten binnen
+1,8 km, geen tank). Daardoor houdt de gekarteerde leiding **736 m voor het terminalvlak** op; dat
+restje wordt gestippeld getekend.
+
+## OPGELOST 2026-07-23 - vijf fouten van mij, alle door Lars' visuele controle gevonden
+Drie ervan hadden een wortel: **maten als vaste fractie van de bolstraal** (zie `decisions.md`).
+1. Markers van **19,1 km** met `depthTest:false` -> op straatniveau een bol over het hele scherm.
+   Nu schermgebonden (60 km op wereldhoogte, 30 m op 3 km).
+2. Lijnen zwevend op **3,8-10,2 km** -> parallax; je zag ze naast de kade. Vaste lift eruit.
+3. Koperkleur onleesbaar op de Atacama (zandkleur op zandkleur) -> pilot in contrastkleuren.
+4. **Het schip voer de haven voorbij en kwam terug** - snoeien op knoopniveau doet per definitie
+   niets; nu per vertex (Shanghai 10,7 -> 4,5 km).
+5. **De pijpleiding begon middenin zichzelf** - zaaien op de dichtstbijzijnde vertex i.p.v. het
+   uiteinde; het echte kopeinde lag 3,3 km verderop.
+**Niet gereproduceerd:** Lars meldde traagheid ("bijna onbruikbaar"), later vanzelf weg - mogelijk
+zijn laptop. Gemeten kostte de hele stromenlaag 0,02-0,04 ms per frame op elke hoogte, ook met een
+marker centraal in beeld. De 19 km-bol was de beste kandidaat maar is niet bewezen.
 
 ## ⚠️ OPEN 2026-07-23 — EU-spoor is gefragmenteerd in de M25-bake
 Register-punten in Europa liggen op verschillende spoorcomponenten: Antwerpen (comp ~4.813 knopen)

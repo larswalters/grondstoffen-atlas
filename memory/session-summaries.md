@@ -1,6 +1,63 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-23 - M26.1: de stromen op straatniveau, live ?v=065
+Vier werkelijke stromen staan been voor been op de bol, twee grondstoffen. Nieuwe entiteit: de
+**aansluiting per grondstof** (`v2/data/aansluitingen.json`, 15 stuks, coordinaten uit OSM/ODbL via
+de nieuwe scout `v2/tools/verken_terminals.py`, gemeten door `maak_aansluitingen.py`).
+`knooppunten.json` heeft een aanhechting per modaliteit voor alle lading en kan op straatniveau
+geen twee lijnen in dezelfde havenmond dragen.
+
+- **Collahuasi -> Tongling** 19.406 km, 0 gaten, 2x overslag (leiding -> zee -> Yangtze)
+- **Escondida -> Guixi** 19.239 km, 2 gaten (leiding onbekend + treinbeen zonder pad)
+- **Lobito -> Duisburg** 9.946 km, **0 gaten** - de eerste keten die volledig doorloopt
+- **Cerrejon -> Ruhr** 8.377 km, 1 gat; spoorbeen 146 km over Cerrejons eigen kolenlijn (~150
+  gepubliceerd), zee 8.231, Rijnbeen faalt
+
+**De premisse is gemeten, niet beweerd:** Waalhaven hecht op binnenknoop 40927, EMO op 40904 - 30 km
+uit elkaar, dus koper en kolen komen echt op verschillende plekken de Rijn op. Duisburg idem:
+kathode naar Ruhrort (Becken A), cokeskool 7 km noordelijker naar de Schwelgern-pier bij
+ThyssenKrupp. Aansluitingen maken **geen overstap** aan, dus de zoekruimte beweegt niet
+(R'dam-Shanghai 19.610 / 89 overstappen, getoetst voor en na).
+
+**Besluit van Lars dat een indeling van mij corrigeerde:** een NET is productonafhankelijk, een
+EIGEN VERBINDING niet. Een slurryleiding vervoert een product tussen twee punten en levert als graaf
+niets op - dus geen net, en daarmee ook **geen gat**. Drie categorieen: `ok` / `eigen` / `onbekend`.
+Gevolg: gestippeld betekent voortaan uitsluitend "geraden", doorgetrokken "we weten waar hij ligt".
+
+**Vier gaten gevonden door te routeren** (Lars' werkregel): Beilun-havenspoor los van het Chinese
+hoofdnet (1.823 vs 402.762 km) - EMO-kade op een losstaand havenbekken van 4 km, terwijl koper 30 km
+verderop wel doorloopt - zeenet grof langs Chili (78-85 km last mile) - de via-havens in `data/*.js`
+te grofkorrelig (Antofagasta i.p.v. Patache, Yangshan i.p.v. rivierkade, Guixi 3,8 km mis).
+
+**Vijf fouten van mij, alle door Lars' oog gevonden, drie met een wortel: maten als vaste fractie
+van de bolstraal.** Markers 19,1 km met depthTest:false; lijnen zwevend op 3,8-10,2 km (parallax);
+geel op de Atacama onleesbaar. Plus: snoeien op knoopniveau doet per definitie niets - de
+overvaar-lus zit in de lijngeometrie tussen knopen (nu per vertex: Shanghai 10,7 -> 4,5 km). En de
+pijpleiding werd gezaaid op een vertex middenin zichzelf, waardoor hij uit het niets begon; zaaien
+op graad-1-uiteinden gaf 186,5 -> 192,4 km en -6,8% -> -3,8%.
+
+**De slurryleiding ligt erop** (`fetch_pijpleidingen.py`): Collahuasi->Patache gestikt uit 14
+OSM-ways met `substance=slurry`, 1.363 punten. 7 van de 14 ways dragen tegelijk `highway=track` +
+`surface=dirt` - de pijp ligt begraven onder zijn eigen onderhoudsweg, en dat is de zandweg die Lars
+op de satellietfoto zag: de beste bevestiging dat het tracee klopt. Escondida->Coloso lukt niet
+(nul `substance=slurry`; geen van de 76 pijpleidingen komt dichter dan 16,5 km bij Coloso) -> blijft
+een rechte stippellijn met die reden. Nagerekend: `Canaleta de Relaves` (tailings) zit met 0/283
+punten niet in ons pad.
+
+**Collahuasi's eigen video** gaf de keten na de leiding bij Puerto Patache: espesadores ->
+planta de molibdeno -> planta de filtro -> stockpile -> embarque. Daarmee bevestigd dat de twee
+ronde tanks die Lars aanwees de indikkers zijn, en dus het echte uitmondingspunt. Bewust niet
+gemodelleerd ("we laten het hierbij, verfijnen kan later").
+
+**Bijvangst-besluit:** bake-versie losgekoppeld van codeversie - data meebumpen zonder rebake kostte
+elke bezoeker ~14 MB bit-identieke binaries. `toets_routes.mjs` 15/15 -> **30/30 groen**; de
+verwachte gaten per stroom staan in de test met hun reden (omlaag = vooruitgang, omhoog = regressie).
+
+Commits: `d5b2204` (pilot) - `d8e86fd` (schermgebonden maten + snoeien) - `0f4ba0b` (twee stromen
+erbij) - `5bc5997` (slurryleiding) - `4d1581e` (net vs eigen verbinding) - `17b5ac2` (zaaien op
+uiteinde) - `34f7a3a` (ongekarteerd laatste stuk gestippeld). Alle gepusht, live op Pages.
+
 ## 2026-07-23 — Het koppelen: de keten-router over álle vier de netten (LAR-518), live ?v=058
 De vier netten (zee · binnenwater · spoor · weg) gekoppeld via een aangewezen register
 (`v2/data/knooppunten.json`, 49 overslagpunten met coördinaat per modaliteit + expliciet knopenpaar
