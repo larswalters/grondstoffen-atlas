@@ -1,29 +1,41 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors + de vectorlaag weer zichtbaar; volgende = koppelen)*
+*Last updated: 2026-07-23 (het koppelen live ?v=058: keten-router over alle vier de netten; volgende = de stromen routeren)*
 
-## 🔴 START HIER — HET KOPPELEN over álle vier de netten
+## 🔴 START HIER — DE STROMEN ROUTEREN (M26), de lakmoesproef
 
-Er liggen nu vier netten: zee (MARNET) · binnenwater (407.626 km) · spoor (1.154.092 km) ·
-**weg (17 corridors, 17.635 km)**. Wat ontbreekt is het enige dat ze bruikbaar maakt.
+Het koppelen staat (`?v=058`, Lars: *"ziet er al redelijk goed uit"*). De vier netten zijn nu één
+zoekruimte via `knooppunten.json` + `zoekKeten`. **De echte toets is nu de stromen** — Lars'
+werkregel: *"we moeten het vooral meemaken waar iets ontbreekt; dat zien we zodra we de routes voor
+stromen hebben bekeken."* Route de bestaande `mode`-legs uit `data/*.js` over de gekoppelde graaf
+en kijk waar het net gaten heeft; de modus per been komt uit de flows-data, niet uit de router.
 
-**1 · `v2/data/knooppunten.json`** — de aangewezen overslagpunten als eigen entiteit, coördinaat
-per modaliteit, expliciet knopenpaar per overstap. Ontwerp ligt klaar in
-`v2/design/overslag-ontwerp.md` §3a (dat draagt M25 al: `"spoor": [lon,lat]` in een entry).
-De vijver is de 200 roze havens; ná de spoorherstel-ronde hangen er **46** aan een
-spoorcomponent ≥20.000 km en **45** aan het wereldnet — dat was 29 resp. 23.
+## ⚪ GATEN GEVONDEN DEZE SESSIE — te dichten voor of tijdens het routeren van de stromen
 
-**2 · De keten-router** — route = keten van legs met een overstap op een aangewezen knooppunt,
-lexicografisch minste overslagen → minste km, scheepsklasse per been, "geen pad" mét reden.
-⚠️ De landbrug-regel is beslist: het **standaardprofiel sluit `land`** en de modus per been komt
-uit de flows-data, niet uit de router. ⚠️ `binnenSystemenBij()` bouwt zijn dichtlijst uitsluitend
-uit `net.vaarwegen`, dus een landlabel kan daar nooit gesloten worden — er hoort een expliciete
-groepslabel-tak voor `land`/`spoor`/`weg` naast `binnenvaart`.
+* **EU-spoor is gefragmenteerd** in de M25-bake: Antwerpen en Duisburg liggen op verschillende
+  spoorcomponenten, dus Antwerpen→Duisburg per trein = "geen pad". China en Zuid-Afrika zijn wél
+  één net (Shanghai→Chongqing = trein 2.299 km werkt). Vraagt een **heal-ronde op het EU-spoor**
+  (dezelfde soort cross-component-heal als het riviernet, maar op landnet.bin — aparte klus).
+* **Manaus→Rotterdam = "geen pad"** (eerlijk; was eerst de fictieve verre-snap). Manaus' riviersnap
+  zit vermoedelijk op een losgekoppeld Amazone-fragment dat Macapá niet raakt — een riviernet-gat.
+* **Modale economie kent de graaf bewust niet** (ontwerp §5.1): Karlsruhe→Chongqing loopt via
+  Constanța/Donau (km-kortst) i.p.v. Rotterdam+zee. Acceptabel — de flows-data stuurt de echte modus
+  in M26. Als Lars het tóch wil sturen: dat is een aparte beslissing.
+* **Het register is bewust klein (49 punten)** — groeit als het routeren van de stromen laat zien
+  welke overslagpunten ontbreken. Niet vooraf uitbreiden.
 
-**3 · Dán de stromen routeren.** Dat is de toets, en het is Lars' expliciete werkregel:
-*"we moeten het vooral meemaken waar iets ontbreekt; dat zien we zodra we de routes voor stromen
-hebben bekeken."* Niet vooraf gaten zoeken.
+## ✅ AFGEROND 2026-07-23 — HET KOPPELEN ([LAR-518])
 
-## ⚪ BEWUST OPEN GELATEN — komt boven bij het routeren van de stromen
+De vier netten gekoppeld + keten-router, live `?v=058` (commits `26c4860`·`dbb467c`·`8e3776a`·`0b64c79`).
+- **`v2/data/knooppunten.json`** — 49 aangewezen overslagpunten (`v2/tools/maak_knooppunten.py` meet
+  de snap per modaliteit). Modaliteit is aangewezen: Duisburg zonder zee, Macapá i.p.v. Manaus.
+- **`v2/src/keten.js`** — `koppelNetten` + `zoekKeten` (been mengt nooit netten; overstap =
+  toestandssprong; lexicografisch minste overslagen → minste km). **`v2/src/router.js`** three-vrij
+  losgemaakt; `v2/tools/toets_routes.mjs` = eerste uitvoerbare test, **15/15 groen**.
+- **HUD:** knop *keten (overslag)* + *spoor+weg meenemen* + ◆-knooppunten kiesbaar; menu inklapbaar
+  + scrollbaar (mobiel). Drie bugronden gefixt: dichtste-net-zaad, hoofdlijn-snap, HUD-bereikbaarheid.
+- Zee-invarianten onveranderd (19.610 / 8.031); `marnet`/`ports`/`landnet`-bins onaangeraakt.
+
+## ⚪ OUDER OPEN GELATEN — komt boven bij het routeren van de stromen
 
 * **Drie wegcorridors zonder pad:** `bx-boke-katougouma` (geen wegen in het venster bij 8 km —
   de SMB-haul road is vermoedelijk niet als `motorway..secondary` getagd), `li-atacama-lanegra`

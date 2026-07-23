@@ -1,5 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-22 (vectorlaag was onzichtbaar achter de tegels — opgelost; drie wegcorridors zonder pad)*
+*Last updated: 2026-07-23 (keten-router live; EU-spoor gefragmenteerd + Manaus-riviergat als open risico's)*
+
+## ⚠️ OPEN 2026-07-23 — EU-spoor is gefragmenteerd in de M25-bake
+Register-punten in Europa liggen op verschillende spoorcomponenten: Antwerpen (comp ~4.813 knopen)
+en Duisburg (comp ~2.556) zijn níet verbonden, dus Antwerpen→Duisburg per trein = "geen pad" — óók
+mét de hoofdlijn-snap. China (89.296-knoop component) en Zuid-Afrika zijn wél één net, daar werkt
+spoor (Shanghai→Chongqing = trein 2.299 km). **Risico:** zodra de stromen over spoor door Europa
+moeten, ontbreken die verbindingen. **Fix (later):** een cross-component-heal op `landnet.bin`, de
+familie van de riviernet-heal (LAR-520) maar dan voor spoor, met gelijke-spoorwijdte-guard.
+
+## ⚠️ OPEN 2026-07-23 — Manaus→Rotterdam geeft "geen pad"
+Sinds de dichtste-net-zaad-fix (geen fictieve verre zee-snap meer) valt Manaus terug op zijn
+riviersnap, en die zit vermoedelijk op een Amazone-fragment dat het aangewezen Macapá-punt niet
+raakt. Eerlijk "geen pad" i.p.v. een verzonnen route — maar het wijst op een riviernet-gat op de
+Amazone dat een heal of een extra aangewezen punt vraagt. Komt boven bij het routeren van de stromen.
+
+## ✅ OPGELOST 2026-07-23 — spoornet leek nergens in gebruik (rangeerspoor-snap)
+Register-punten snapten op de dichtstbijzijnde landnet-knoop = meestal een emplacement-stub van een
+paar honderd meter, terwijl het doorgaande net km's verderop lag → élke spoorroute "geen pad".
+Opgelost met **hoofdlijn-snap** in `koppelNetten` (union-find; component-drempel spoor 1.000 / weg
+30 km; cap 60 km, anders terugval + eerlijk "geen pad"). Dit is de val die de `CLAUDE.md` al noemde
+bij `landnet-aanhecht.json`: knoop-afstand meet een stub, niet de doorgaande lijn.
+
+## ✅ OPGELOST 2026-07-23 — de route-lijn stopte zomaar in zee (verre zee-snap)
+Een niet-aangewezen binnenhaven (Karlsruhe, zee-snap 360 km) kreeg een zee-zaad met een aanloop die
+dwars over land liep en niet getekend werd → de lijn leek in zee te stoppen. Opgelost: een niet-
+aangewezen haven zaait alleen op zijn dichtste net (`havenZaden`). Aangewezen havens houden hun
+dubbele aanhechting.
 
 ## ✅ OPGELOST 2026-07-22 — de HELE vectorlaag was onzichtbaar zodra de tegels er lagen
 

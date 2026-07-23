@@ -1,6 +1,41 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-22 (vier netten live ?v=053: 17 wegcorridors erop + de vectorlaag weer zichtbaar; volgende = koppelen)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (het koppelen live ?v=058: keten-router over alle vier de netten; volgende = de stromen routeren)*
+
+> **🔗 HET KOPPELEN — DE KETEN-ROUTER OVER ÁLLE VIER DE NETTEN (2026-07-23, laatste).**
+> Live t/m `0b64c79` (`?v=058`), [LAR-518] In Progress. Lars' eerste blik: *"ziet er al redelijk
+> goed uit."* **→ VOLGENDE: de STROMEN routeren (M26)** — de lakmoesproef; modus per been uit de
+> flows-data (zie `memory/next-actions.md`).
+>
+> De vier netten (zee · binnenwater · spoor · weg) zijn gekoppeld via een aangewezen register
+> (`v2/data/knooppunten.json`, **49 overslagpunten** met coördinaat per modaliteit + expliciet
+> knopenpaar per overstap; `v2/tools/maak_knooppunten.py` meet de snap) en een keten-router
+> (`v2/src/keten.js` · `zoekKeten`): een been mengt nooit netten (constructie-eigenschap, geen edge
+> tussen twee groepen), een overstap is een **toestandssprong** op een aangewezen punt (+1 laag), en
+> de sleutel is **lexicografisch minste overslagen → daarbinnen minste km** — het structurele slot
+> op de Donau-ring (R'dam→Shanghai wint met 0 overslagen over zee; een Europa-keten wordt nóóit in
+> km vergeleken). De zee-routeerfuncties zijn losgemaakt naar **`v2/src/router.js`** (three-vrij),
+> zodat **`v2/tools/toets_routes.mjs` — de eerste uitvoerbare test van de repo, 15/15 groen** —
+> exact dezelfde code draait als de browser; bounds-assert op de heap (typed array negeert overloop
+> stil).
+>
+> **⚠️ DRIE BUGRONDEN, ELK GEVONDEN DOOR TE ROUTEREN (Lars' werkregel in de praktijk).**
+> (1) Een **niet-aangewezen** haven zaait op zijn **dichtste** net i.p.v. beide — Karlsruhe
+> (Rijnhaven, zee-snap 360 km) tekende anders een zeeschip dat 360 km landinwaarts begon, en de
+> niet-getekende aanloop liet de lijn zomaar in zee stoppen (Lars' screenshot). Geen afstandsdrempel
+> (leeg interval: Antofagasta échte zeehaven op 91 km, Duisburg binnenhaven op 152), maar een
+> RELATIEVE keuze. (2) Het **spoornet was nergens in gebruik**: register-punten snapten op
+> **rangeersporen** van een paar honderd meter terwijl het hoofdnet 5 km verderop lag → **hoofdlijn-
+> snap** (union-find in `koppelNetten`, component-drempel spoor 1.000 / weg 30 km, cap 60 km, anders
+> terugval + eerlijk "geen pad") → **Shanghai→Chongqing = trein 2.299 km**; plus knop *spoor+weg
+> meenemen* en de ◆-knooppunten kiesbaar in de route-test. (3) Het **HUD liep op mobiel buiten
+> beeld** → scrollbaar + inklapbaar (▾, ingeklapt op ≤640px).
+>
+> **⚠️ ECHT GAT GEVONDEN: EU-spoor is gefragmenteerd** in de M25-bake (Antwerpen↔Duisburg op losse
+> componenten → geen treinpad; China/Zuid-Afrika wél één net). Ook **Manaus→Rotterdam = "geen pad"**
+> (Amazone-fragment raakt Macapá niet). Beide staan in `memory/bugs-and-risks.md` — vragen een
+> heal-ronde. Zee-invarianten onveranderd (19.610 / 8.031); `marnet.bin`/`marnet.json`/`ports.json`/
+> `landnet.bin` **onaangeraakt** (geen rebake; de koppeling gebeurt bij het laden).
 
 > **🛣️ VIER NETTEN OP DE BOL — DE WEGCORRIDORS LIGGEN EROP (2026-07-22, laatste).**
 > Live t/m `8336665` (`?v=053`), [LAR-491] In Progress.
@@ -1475,6 +1510,15 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-23 · Het koppelen — keten-router over alle vier de netten (live `?v=058`)** — `zoekKeten`
+  in `v2/src/keten.js`: gelaagde multi-source Dijkstra met toestand (knoop, aantal overstappen), een
+  been mengt nooit netten, overstap = toestandssprong over het expliciete knopenpaar uit een
+  `knooppunten.json`-entry (+1 laag), **lexicografisch minste overslagen → minste km** (slot op de
+  Donau-ring). `router.js` three-vrij losgemaakt → `toets_routes.mjs` (15/15) draait dezelfde code.
+  Niet-aangewezen haven zaait op zijn **dichtste** net (geen verre zee-teleport). **Hoofdlijn-snap**
+  voor land: register-punt snapt op een component boven een drempel (spoor 1.000 / weg 30 km, cap
+  60 km), anders "geen pad" — een rangeerspoor-snap gaf anders nooit een treinroute. Zee-invarianten
+  onveranderd; bins onaangeraakt (koppeling bij het laden).
 - **2026-07-21 · LAR-520 riviernet gestitcht (live `?v=040`, commit `f477668`)** — twee-traps
   over-water heal in `binnenwaternet()`: **tier-1** cross-component confluentie-heal (uiteinde → op
   de lijn van een ander component, ≤250 m, over water per constructie) + **tier-2** collineaire

@@ -1,7 +1,50 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-22 (gaten vind je door de stromen te routeren; vectorlagen boven de tegels met horizonklem)*
+*Last updated: 2026-07-23 (het koppelen: keten-router over alle vier de netten; hoofdlijn-snap voor land)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-23 · Een niet-aangewezen haven zaait op zijn DICHTSTE net, niet op beide
+**Besluit:** in `havenZaden` seedt een haven die NIET in `knooppunten.json` staat alleen op het
+net waar hij het dichtst bij ligt (min van zee-snap vs rivier-snap); een aangewezen haven houdt
+zijn volledige designated modaliteiten.
+**Waarom:** een verre zee-aanloop is geen "duur maar geldig" zaad maar een fysieke onwaarheid —
+hij kruist land. Karlsruhe (Rijnhaven, zee-snap 360 km) tekende anders een *zeeschip dat 360 km
+landinwaarts begon*; de niet-getekende aanloop liet de lijn zomaar in zee stoppen. Geen
+afstandsdrempel (het interval is leeg: Antofagasta is een échte zeehaven op 91 km, Duisburg een
+binnenhaven op 152 km), maar een RELATIEVE keuze — geen magisch getal. Zelfde klasse als de
+Cincinnati-fictie, die via het register werd opgelost.
+
+## 2026-07-23 · Land-aanhechtingen snappen op de HOOFDLIJN, niet op het dichtstbijzijnde spoor
+**Besluit:** een spoor/weg-aanhechting van een knooppunt snapt bij voorkeur op een landnet-knoop
+die op een component boven een drempel ligt (spoor 1.000 km, weg 30 km — corridors zijn kort),
+met een cap van **60 km**: ligt er geen hoofdlijn dichterbij, dan valt hij terug op de
+dichtstbijzijnde knoop en geeft spoor daar eerlijk "geen pad". Union-find in `koppelNetten`, niet
+gebakken.
+**Waarom:** de dichtstbijzijnde knoop is meestal een **rangeerspoor** van een paar honderd meter
+(Shanghai's hoofdnet ligt 5 km verderop), waardoor élke spoorroute "geen pad" gaf — het spoornet
+leek nergens in gebruik. Dit is de val die de `CLAUDE.md` al noemde bij `landnet-aanhecht.json`:
+knoop-afstand meet een stub, niet de doorgaande lijn. De gemeten snap-afstand blijft leidend
+(machine meet, redacteur oordeelt).
+
+## 2026-07-23 · De keten-router: overstap = toestandssprong, lexicografisch minste overslagen
+**Besluit:** `zoekKeten` (in `v2/src/keten.js`) is een gelaagde multi-source Dijkstra met toestand
+(knoop, aantal overstappen). Een been mengt nooit netten (constructie-eigenschap: geen edge tussen
+twee groepen); een overstap springt over het expliciete knopenpaar uit een `knooppunten.json`-entry
+(+1 laag); de sleutel is **lexicografisch minste overslagen → daarbinnen minste km**.
+**Waarom:** exact het ontwerp uit `v2/design/overslag-ontwerp.md` (het vierpanel). Lexicografisch
+is het structurele slot op de Donau-ring: R'dam→Shanghai slaagt met 0 overslagen over zee en een
+keten dwars door Europa (2 overslagen) wordt nóóit in km vergeleken — er is geen getal om verkeerd
+te kiezen. Een overslag is GEEN nul-kost-edge (dat brak twee invarianten); het is een sprong.
+Het standaardprofiel sluit het landnet (de landbrug-regel); modus per been komt in M26 uit de
+flows-data.
+
+## 2026-07-23 · router.js three-vrij + de eerste uitvoerbare test van de repo
+**Besluit:** de zee-routeerfuncties (`zoekRoute`, `zoekRouteRealistisch`, `binnenSystemenBij`) staan
+nu in `v2/src/router.js` zonder three-import; `marnet.js` her-exporteert ze. `v2/tools/toets_routes.mjs`
++ `laad_headless.mjs` draaien EXACT die code headless (15 invariant/keten-toetsen).
+**Waarom:** een tweede implementatie van de A* voor een test loopt een half jaar later stil uit de
+pas. Nu bewijst de test wat de browser doet. Plus een bounds-assert op de heap: een typed array
+negeert een schrijf buiten zijn bereik STIL → verkeerde route zonder foutmelding.
 
 ## 2026-07-22 · Gaten vind je door de STROMEN te routeren, niet door ze vooraf te zoeken
 **Besluit (Lars):** *"ik denk ook dat we het vooral moeten meemaken waar er iets ontbreekt; dat

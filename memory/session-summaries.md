@@ -1,6 +1,23 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-23 — Het koppelen: de keten-router over álle vier de netten (LAR-518), live ?v=058
+De vier netten (zee · binnenwater · spoor · weg) gekoppeld via een aangewezen register
+(`v2/data/knooppunten.json`, 49 overslagpunten met coördinaat per modaliteit + expliciet knopenpaar
+per overstap; `maak_knooppunten.py` meet de snap) en een keten-router (`zoekKeten`): een been mengt
+nooit netten, overstap = toestandssprong op een aangewezen punt (+1 laag), **lexicografisch minste
+overslagen → minste km** (het slot op de Donau-ring). `router.js` losgemaakt van three zodat de
+**eerste uitvoerbare test van de repo** (`toets_routes.mjs`, 15/15 groen) exact dezelfde code draait
+als de browser; bounds-assert op de heap. Drie bugronden, elk gevonden door te routeren: (1) een
+niet-aangewezen haven zaait op zijn **dichtste** net i.p.v. beide (Karlsruhe tekende anders een
+zeeschip dat 360 km landinwaarts begon → de lijn stopte in zee); (2) het **spoornet was nergens in
+gebruik** doordat register-punten op **rangeersporen** snapten (hoofdnet 5 km verderop) → hoofdlijn-
+snap (component-drempel spoor 1.000 / weg 30 km, cap 60 km) → Shanghai→Chongqing = trein 2.299 km;
+knop *spoor+weg meenemen* + ◆-knooppunten kiesbaar; (3) HUD op mobiel buiten beeld → scrollbaar +
+inklapbaar. Echt gat: **EU-spoor gefragmenteerd** (Antwerpen↔Duisburg op losse componenten). Zee-
+invarianten onveranderd (19.610 / 8.031); marnet/ports/landnet-bins onaangeraakt. Lars: *"ziet er al
+redelijk goed uit."* Volgende = de stromen routeren (M26).
+
 ## 2026-07-22 · Vier netten op de bol — en de vectorlaag die niemand kon zien (?v=053)
 
 **TL;DR:** Lars kon het spoornet niet controleren, en dat bleek geen kwestie van kijken: zodra
