@@ -15,13 +15,13 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=059";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=060";
 
 // --------------------------------------------------------------------------
 // laden
 // --------------------------------------------------------------------------
 
-export async function laadStromen(versie = "059") {
+export async function laadStromen(versie = "060") {
   const [aansluitingen, stromen] = await Promise.all([
     haal(`data/aansluitingen.json?v=${versie}`),
     haal(`data/stromen-pilot.json?v=${versie}`),
@@ -98,19 +98,130 @@ export function routeerStroom(K, stroom, aansluitingOp) {
       throw new Error(`stromen: been ${b.van}→${b.naar} gaf ${uit.benen.length} deelbenen`);
     }
     const been = uit.benen[0];
+    // ⚠️ SNOEIEN OP DE DICHTSTE NADERING. Een been eindigt op de dichtstbijzijnde
+    // KNOOP, en knopen liggen op kruisingen en verder elke ~10 km — dus de
+    // laatste knoop ligt geregeld vóórbij de terminal. Ongesnoeid vaart het
+    // schip de haven voorbij en komt via de last mile terug (Lars: "anders vaart
+    // de boot ervoorbij en dan terug naar de overslaghaven").
+    //
+    // Dit is dezelfde val die `landnet-aanhecht.json` al een keer opleverde: een
+    // knoop-afstand meet niet waar de LIJN het dichtst langs komt. Snoeien lost
+    // dat op zonder rebake — we knippen het been af op het punt van dichtste
+    // nadering en laten de last mile daar beginnen.
+    const net = b.net === "spoor" || b.net === "weg" ? K.landnet : K.marnet;
+    const gesnoeid = snoeiUiteinden(net, been, van, naar);
     benen.push({
       ...b, status: "ok", van, naar,
-      km: uit.km, route: been,
+      km: uit.km - gesnoeid.wegKm, route: been, gesnoeidKm: gesnoeid.wegKm,
       vervoer: b.modus || GROEP_VERVOER[b.net] || b.net,
-      // De last mile is het stuk kade → netknoop, aan beide kanten. Apart
-      // bijgehouden omdat het precies het getal is dat zegt waar het net ophoudt.
-      lastMileKm: (van.aanhechting[b.net]?.km ?? 0) + (naar.aanhechting[b.net]?.km ?? 0),
+      // De last mile is het stuk kade → het punt waar het been nu écht begint
+      // en eindigt (ná het snoeien), aan beide kanten. Apart bijgehouden omdat
+      // het precies het getal is dat zegt waar het net ophoudt.
+      lastMileKm: gesnoeid.lastMileKm,
+      // waar het been ná het snoeien écht begint en eindigt — de last mile
+      // wordt hiernaartoe getekend, niet naar de oude knoop
+      vanLL: gesnoeid.vanLL, naarLL: gesnoeid.naarLL,
     });
-    totaalKm += uit.km;
+    totaalKm += uit.km - gesnoeid.wegKm;
   }
 
   return { stroom, benen, km: totaalKm, gaten,
            overslagen: telOverslagen(benen) };
+}
+
+/**
+ * Knipt aan beide uiteinden het stuk weg dat vóórbij de aansluiting ligt.
+ *
+ * ⚠️ Werkt op VERTEX-niveau, en dat is het hele punt. Op knoopniveau doet deze
+ * functie per definitie NIETS: het uiteinde van een been ís al de knoop die het
+ * dichtst bij de kade ligt (daar is op gezaaid). De overvaar-lus zit dus niet
+ * tussen de knopen maar erbínnen — in de lijngeometrie die knopen van ~10 km
+ * uit elkaar overspant. Gemeten in Shanghai: dichtstbijzijnde knoop 10,7 km,
+ * dichtste nadering van de lijn 4,5 km.
+ *
+ * De nóg fijnere variant (de edge openknippen op een nieuwe vertex, zoals
+ * `hecht_aan_keten()` in de baker doet) hoort in de bake thuis, niet hier.
+ *
+ * Muteert `been` (knipVan/knipNaar/km) en geeft terug hoeveel km eraf ging, wat
+ * de last mile daarna is, en waar het been nu begint en eindigt.
+ */
+function snoeiUiteinden(net, been, van, naar) {
+  const pts = beenPunten(net, been);
+  if (pts.n < 2) return { wegKm: 0, lastMileKm: 0 };
+
+  // Dichtste nadering, per vertex, in XYZ — geen trigonometrie per punt nodig:
+  // op de eenheidsbol is de grootste dot de kleinste hoek.
+  const dichtste = (a) => {
+    const la = a.lat * Math.PI / 180, lo = a.lon * Math.PI / 180, c = Math.cos(la);
+    const ax = c * Math.cos(lo), ay = Math.sin(la), az = c * Math.sin(lo);
+    let besteI = 0, besteDot = -Infinity;
+    for (let i = 0; i < pts.n; i++) {
+      // ⚠️ posities gebruiken z = −sin(lon) (tekenafspraak van marnet.js),
+      // knoopXYZ +sin. Hier dus het teken omdraaien, anders spiegelt de meting
+      // over de meridiaan en snoei je aan de verkeerde kant.
+      const d = pts.x[i] * ax + pts.y[i] * ay + (-pts.z[i]) * az;
+      if (d > besteDot) { besteDot = d; besteI = i; }
+    }
+    // ⚠️ De posities liggen op de BOLSTRAAL (2,4), niet op de eenheidsbol. De
+    // vergelijking hierboven is daar ongevoelig voor (alles schaalt mee), maar
+    // de hoek niet: zonder normaliseren klemt acos op 1 en meldt elke last mile
+    // 0,0 km. Precies het soort stille meetfout dat dit project vaker heeft
+    // gezien — de keuze klopte, het getal niet.
+    return { i: besteI, km: 6371 * Math.acos(Math.max(-1, Math.min(1, besteDot / pts.straal))) };
+  };
+
+  const start = dichtste(van);
+  const eind = dichtste(naar);
+  if (!(start.i < eind.i)) return { wegKm: 0, lastMileKm: start.km + eind.km };
+
+  const voor = pts.kmTot[pts.n - 1];
+  been.knipVan = start.i;
+  been.knipNaar = eind.i;
+  been.km = pts.kmTot[eind.i] - pts.kmTot[start.i];
+  return { wegKm: Math.max(0, voor - been.km), lastMileKm: start.km + eind.km,
+           vanLL: pts.ll(start.i), naarLL: pts.ll(eind.i) };
+}
+
+/**
+ * De volledige getekende polylijn van een been, in dezelfde volgorde als
+ * `routeLijn()` hem opbouwt, plus de cumulatieve kilometers.
+ *
+ * Bewust op VERTEX-niveau en niet op knoopniveau: knopen liggen op kruisingen
+ * en verder elke ~10 km, dus de dichtstbijzijnde KNOOP is bijna nooit het punt
+ * waar de vaarweg het dichtst langs de kade komt. Dat verschil is exact de
+ * meetfout die dit project al eens maakte op `landnet-aanhecht.json` — en het
+ * is hier zichtbaar als een schip dat de haven voorbijvaart en terugkomt.
+ */
+function beenPunten(net, been) {
+  const xs = [], ys = [], zs = [];
+  let bij = been.knopen[0];
+  for (const e of been.edges) {
+    const start = net.geomStart[e], n = net.geomN[e];
+    const vooruit = net.edgeA[e] === bij;
+    for (let k = 0; k < n; k++) {
+      const idx = vooruit ? start + k : start + (n - 1 - k);
+      // opeenvolgende edges delen hun eindvertex — niet dubbel opnemen
+      if (k === 0 && xs.length) continue;
+      xs.push(net.posities[idx * 3]);
+      ys.push(net.posities[idx * 3 + 1]);
+      zs.push(net.posities[idx * 3 + 2]);
+    }
+    bij = vooruit ? net.edgeB[e] : net.edgeA[e];
+  }
+  const n = xs.length;
+  const straal = n ? Math.hypot(xs[0], ys[0], zs[0]) : 1;
+  const kmTot = new Float64Array(n);
+  for (let i = 1; i < n; i++) {
+    const dot = (xs[i] * xs[i - 1] + ys[i] * ys[i - 1] + zs[i] * zs[i - 1]) / (straal * straal);
+    kmTot[i] = kmTot[i - 1] + 6371 * Math.acos(Math.max(-1, Math.min(1, dot)));
+  }
+  return {
+    n, x: xs, y: ys, z: zs, kmTot, straal,
+    ll: (i) => {
+      const r = Math.hypot(xs[i], ys[i], zs[i]);
+      return [Math.atan2(-zs[i], xs[i]) * 180 / Math.PI, Math.asin(ys[i] / r) * 180 / Math.PI];
+    },
+  };
 }
 
 /**

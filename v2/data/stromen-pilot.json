@@ -8,7 +8,7 @@
    "naam": "Koperconcentraat · Collahuasi → Tongling",
    "kort": "zee → rivier",
    "fase": "erts",
-   "kleur": "#E0965A",
+   "kleur": "#2BE86B",
    "waarde": 150,
    "eenheid": "kt Cu/jaar (indicatief)",
    "bronStroom": "data/copper.js — cu-collahuasi > cu-ref-tongling (value 150, mode ship, stage erts)",
@@ -42,7 +42,7 @@
    "naam": "Koperconcentraat · Escondida → Jiangxi Copper (Guixi)",
    "kort": "zee → spoor",
    "fase": "erts",
-   "kleur": "#F2C08A",
+   "kleur": "#B569FF",
    "waarde": 260,
    "eenheid": "kt Cu/jaar (indicatief)",
    "bronStroom": "data/copper.js — cu-escondida > cu-ref-jiangxi (value 260, mode ship, stage erts)",
@@ -70,5 +70,6 @@
     }
    ]
   }
- ]
+ ],
+ "kleurnoot": "De LOD-ontwerpbrief zegt 'kleur = grondstof', en de koperkleur (#E0965A) is op de Atacama en de Chinese kust onleesbaar: zandkleur op zandkleur. Voor de pilot wint LEESBAARHEID — dit zijn de twee kleuren uit Lars' eigen schets. Of de kleurregel grondstof-gebonden blijft of per stroom mag verschillen is een openstaand ontwerpbesluit voor de rest van M26."
 }

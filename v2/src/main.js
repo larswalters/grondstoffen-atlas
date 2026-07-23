@@ -2,16 +2,16 @@
 // Bewust dun: alle logica hoort in de lagen, niet hier.
 
 import * as THREE from "three";
-import { createGlobe, CONFIG } from "./globe.js?v=059";
-import { laadVectorWereld } from "./world.js?v=059";
-import { createTileLayer } from "./tiles.js?v=059";
+import { createGlobe, CONFIG } from "./globe.js?v=060";
+import { laadVectorWereld } from "./world.js?v=060";
+import { createTileLayer } from "./tiles.js?v=060";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=059";
-import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=059";
-import { laadLandnet } from "./landnet.js?v=059";
-import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=059";
-import { laadStromen, routeerStroom } from "./stromen.js?v=059";
-import { bouwStroomLaag } from "./stroomlaag.js?v=059";
+  from "./marnet.js?v=060";
+import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=060";
+import { laadLandnet } from "./landnet.js?v=060";
+import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=060";
+import { laadStromen, routeerStroom } from "./stromen.js?v=060";
+import { bouwStroomLaag, zetMerkGrootte } from "./stroomlaag.js?v=060";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -103,12 +103,17 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
   .catch((e) => console.error("[atlas v2] marnet niet geladen:", e));
 
 // --- het landnet (M25) -----------------------------------------------------
+// ⚠️ "058" is de BAKE-versie, niet de codeversie. Die twee zijn bewust
+// losgekoppeld: marnet/landnet/ports/knooppunten zijn sinds ?v=058 niet
+// opnieuw gebakken, en ze meebumpen met de code dwingt elke bezoeker ~14 MB
+// opnieuw te downloaden voor bit-identieke bestanden. Bump deze alleen bij
+// een echte bake — dat is precies wat de cache-busting-discipline bedoelt.
 // Spoor (en straks weg) als VIERDE net, in een eigen bestand met eigen knoop-ids.
 // Bewust nog niet gekoppeld aan de router: eerst neerleggen, dan verbinden via
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "059", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -139,7 +144,7 @@ laadLandnet(CONFIG.radius, "059", GLOBE.klemOpHorizon)
 // rebake van één van beide netten.
 let K = null;
 let REGISTER = null;
-fetch("data/knooppunten.json?v=059")
+fetch("data/knooppunten.json?v=058")
   .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
   .then((reg) => { REGISTER = reg; probeerKoppel(); })
   .catch((e) => console.warn("[atlas v2] knooppunten.json niet geladen:", e.message));
@@ -151,7 +156,7 @@ fetch("data/knooppunten.json?v=059")
 let AANSLUITINGEN = null;
 let STROMEN = null;
 let stromenGeladen = false;
-laadStromen("059")
+laadStromen("060")
   .then(({ aansluitingen, stromen }) => {
     AANSLUITINGEN = aansluitingen;
     STROMEN = stromen;
@@ -247,9 +252,13 @@ GLOBE.onTick(() => {
   }
   if (stroomLaag) {
     // Nog iets hoger dan de route: een stroom loopt vaak óver een route heen en
-    // moet dan zichtbaar blijven.
+    // moet dan zichtbaar blijven. ⚠️ Dit is de ENIGE lift die de stromenlaag
+    // heeft — evenredig met de kijkhoogte, net als de andere vectorlagen. De
+    // vaste lift die hier eerst in stroomlaag.js zat (3,8–10,2 km) gaf op
+    // straatniveau parallax: je zag de lijn kilometers naast de kade.
     const op = Math.max(CONFIG.radius * 4.5e-6, alt * 0.0065);
     stroomLaag.scale.setScalar(1 + op / CONFIG.radius);
+    for (const g of stroomLaag.children) zetMerkGrootte(g, GLOBE.getAltitudeKm());
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -554,7 +563,12 @@ function bouwStromenHud() {
 function wisStromen() {
   if (stroomLaag) {
     GLOBE.globeGroup.remove(stroomLaag);
-    stroomLaag.traverse?.((o) => { o.geometry?.dispose?.(); o.material?.dispose?.(); });
+    // ⚠️ alleen lijn-geometrie vrijgeven: de markers delen één bolgeometrie
+    // (MERK_GEO in stroomlaag.js). Die weggooien maakt de vólgende klik leeg.
+    stroomLaag.traverse?.((o) => {
+      if (o.isLine) o.geometry?.dispose?.();
+      o.material?.dispose?.();
+    });
     stroomLaag = null;
   }
   const el = stroomInfoEl();
@@ -584,7 +598,10 @@ function toonStromen(ids, { vlieg = false } = {}) {
   toonStroomInfo(uitkomsten);
   if (vlieg && uitkomsten.length === 1) {
     const o = uitkomsten[0].overslagen[0];
-    if (o) GLOBE.vliegNaar(o.bij.lon, o.bij.lat, 6);
+    // Regionaal aanvliegen, niet meteen tot de kade: een duik van 8.500 naar
+    // 3 km in één seconde vraagt élk tegelniveau z5..z19 tegelijk op. Vanaf
+    // hier klik je de overslagnaam aan om door te zakken.
+    if (o) GLOBE.vliegNaar(o.bij.lon, o.bij.lat, 120, 1500);
   }
 }
 
@@ -632,7 +649,7 @@ function toonStroomInfo(uitkomsten) {
   for (const a of el.querySelectorAll("a.naarKade")) {
     a.addEventListener("click", (e) => {
       e.preventDefault();
-      GLOBE.vliegNaar(+a.dataset.lon, +a.dataset.lat, 3);
+      GLOBE.vliegNaar(+a.dataset.lon, +a.dataset.lat, 2.5, 1800);
     });
   }
 }

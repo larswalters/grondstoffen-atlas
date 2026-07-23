@@ -9,50 +9,108 @@
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
 import * as THREE from "three";
+import { gcKmLL } from "./router.js?v=060";
 
 // Elke stroom draagt de kleur van zijn grondstof (data/*.js `flowColor`). De
 // MODALITEIT zit niet in de kleur maar in de lijnstijl — anders kun je twee
 // grondstoffen in dezelfde havenmond niet uit elkaar houden, en dat is precies
 // wat deze laag moet laten zien.
-const LIFT = {
-  // Radiale lift per net, in fracties van de straal. Voorkomt z-fighting waar
-  // twee benen dezelfde edges delen (dat is geen fout: routes delen letterlijk
-  // edges sinds M23 — bundelen is gratis, maar dan moet je ze wel zien liggen).
-  zee: 1.0006, binnen: 1.0008, spoor: 1.0010, weg: 1.0012, geenNet: 1.0014,
-};
-const LAST_MILE_LIFT = 1.0016;
+// ⚠️ HIER ZAT DE FOUT VAN DE EERSTE VERSIE, EN HET IS ÉÉN FOUT MET DRIE
+// GEZICHTEN: maten als vaste fractie van de bolstraal. Op wereldhoogte
+// onzichtbaar, op straatniveau catastrofaal.
+//
+//   * de lift stond op 1,0006–1,0016 × straal = **3,8 tot 10,2 km boven het
+//     oppervlak**. Vanuit de ruimte zie je daar niets van; op 3 km hoogte
+//     kijk je schuin tegen een lijn aan die kilometers boven de kade hangt en
+//     zie je hem dus op de verkeerde plek. (Lars: "zweeft te hoog waardoor je
+//     ze op de verkeerde plek ziet onder bepaalde hoek of hoogte.")
+//   * de markers hadden een straal van 0,003 × straal = **19,1 km**, mét
+//     depthTest:false — op straatniveau een ondoorzichtige bol over het hele
+//     scherm.
+//
+// De les staat al in dit project (`zetHavenGrootte`): wat je op élke hoogte
+// wilt zien hoort in SCHERMRUIMTE geschaald te worden, niet in wereldruimte.
+// De lift laten we over aan de altitude-evenredige schaling in main.js — exact
+// zoals de kustlijn, het zeenet en het landnet het al doen.
+//
+// Wat blijft is een MINIEME onderlinge volgorde-offset zodat twee stromen die
+// dezelfde vaarweg delen niet in elkaar flikkeren. 2e-6 × straal = 12 m: genoeg
+// om de tie te breken, te klein om ooit parallax te geven.
+const NET_OFFSET = { zee: 0, binnen: 1, spoor: 2, weg: 3, geenNet: 4 };
+const OFFSET_STAP = 2e-6;
+
+// Straal van de marker in SCHERMRUIMTE: hij hoort er op 8.000 km en op 3 km
+// even groot uit te zien. De hoek die een bol van straal r op afstand d opspant
+// is r/d, dus r moet meelopen met de kijkhoogte.
+const MERK_HOEK = { laadplek: 0.010, overslag: 0.013, losplek: 0.010 };
+const MERK_MIN_KM = 0.02;      // nooit kleiner dan 20 m — anders verdwijnt hij
+const MERK_MAX_KM = 60;        // nooit groter dan 60 km — anders dekt hij af
 
 export function bouwStroomLaag(gerouteerd, { marnet, landnet, radius, klemOpHorizon,
                                              stroomIndex = 0 }) {
   const groep = new THREE.Group();
   const kleur = new THREE.Color(gerouteerd.stroom.kleur || "#ffe066");
-  // Elke stroom een eigen minieme extra lift, zodat twee grondstoffen die
-  // dezelfde vaarweg delen naast elkaar leesbaar blijven i.p.v. te flikkeren.
-  const stroomLift = 1 + stroomIndex * 0.00035;
+  // Onderlinge volgorde-offset in de orde van tientallen meters — zie de
+  // toelichting bij NET_OFFSET. Niet meer dan dat: de echte lift komt van de
+  // altitude-evenredige schaling in main.js.
+  const laagje = (net) => radius * (1 + ((NET_OFFSET[net] ?? 0) + stroomIndex * 5) * OFFSET_STAP);
 
   for (const been of gerouteerd.benen) {
     if (been.status === "ok") {
       const net = been.net === "spoor" || been.net === "weg" ? landnet : marnet;
-      groep.add(routeLijn(net, been.route, radius * LIFT[been.net] * stroomLift,
-                          kleur, klemOpHorizon));
-      // de last mile aan beide kanten: kade → netknoop
-      for (const [a, kant] of [[been.van, 0], [been.naar, 1]]) {
-        const h = a.aanhechting[been.net];
-        if (!h || !(h.km > 0.01)) continue;
-        groep.add(lastMile(a, h, radius * LAST_MILE_LIFT * stroomLift, kleur, klemOpHorizon, kant));
+      groep.add(routeLijn(net, been.route, laagje(been.net), kleur, klemOpHorizon));
+      // De last mile aan beide kanten: kade → het punt waar het been écht
+      // begint/eindigt. ⚠️ Dat is NIET de gesnapte knoop uit de aansluiting:
+      // het been is gesnoeid op de dichtste nadering van de LIJN, dus we lezen
+      // de uiteinden uit het snoeiresultaat. Naar de oude knoop tekenen brengt
+      // de overvaar-lus visueel gewoon weer terug.
+      const kn = been.route.knopen;
+      const eindpunten = [
+        [been.van, been.vanLL || [net.knoopLon[kn[0]], net.knoopLat[kn[0]]]],
+        [been.naar, been.naarLL
+          || [net.knoopLon[kn[kn.length - 1]], net.knoopLat[kn[kn.length - 1]]]],
+      ];
+      for (const [a, ll] of eindpunten) {
+        if (!(gcKmLL(a.lon, a.lat, ll[0], ll[1]) > 0.01)) continue;
+        groep.add(lastMile(a, ll[0], ll[1], laagje(been.net), kleur, klemOpHorizon));
       }
     } else if (been.status === "geenNet" && been.van && been.naar) {
-      groep.add(gatLijn(been.van, been.naar, radius * LIFT.geenNet * stroomLift,
-                        kleur, klemOpHorizon));
+      groep.add(gatLijn(been.van, been.naar, laagje("geenNet"), kleur, klemOpHorizon));
     }
   }
 
   // De aansluitingen zelf: een bolletje op de kade. Dit is het punt dat op z17
   // óp de juiste kade moet liggen — de acceptatietoets van deze hele laag.
+  // De straal wordt elke frame bijgesteld door zetMerkGrootte().
+  const merken = [];
   for (const a of aansluitingenVan(gerouteerd)) {
-    groep.add(merk(a, radius * LAST_MILE_LIFT * stroomLift, kleur, a.rol));
+    const m = merk(a, radius, kleur, a.rol);
+    merken.push(m);
+    groep.add(m);
   }
+  groep.userData.merken = merken;
+  groep.userData.radius = radius;
   return groep;
+}
+
+/**
+ * Houdt de markers even groot in BEELD, op elke hoogte.
+ *
+ * Zonder dit staat er op straatniveau een ondoorzichtige bol van 19 km over de
+ * hele kade — precies de fout die deze laag in de eerste versie onbruikbaar
+ * maakte. Zelfde principe als `zetHavenGrootte()` in havens.js, alleen werkt
+ * die met puntgrootte in pixels en deze met een bolstraal in wereldruimte:
+ * de opgespannen hoek r/d is constant als r meeloopt met de kijkhoogte.
+ */
+export function zetMerkGrootte(laag, altitudeKm) {
+  const radius = laag.userData?.radius;
+  if (!radius) return;
+  const perKm = radius / 6371;
+  for (const m of laag.userData.merken || []) {
+    const hoek = MERK_HOEK[m.userData.rol] ?? 0.010;
+    const km = Math.max(MERK_MIN_KM, Math.min(MERK_MAX_KM, altitudeKm * hoek));
+    m.scale.setScalar(km * perKm / m.geometry.parameters.radius);
+  }
 }
 
 function aansluitingenVan(gerouteerd) {
@@ -78,13 +136,22 @@ function routeLijn(net, been, straal, kleur, klemOpHorizon) {
     const vooruit = net.edgeA[e] === bij;
     for (let k = 0; k < n; k++) {
       const idx = vooruit ? start + k : start + (n - 1 - k);
+      // ⚠️ Opeenvolgende edges DELEN hun eindvertex. Die dubbel opnemen is
+      // visueel onzichtbaar maar verschuift de indexering, en dan snijdt het
+      // snoeien uit stromen.js op de verkeerde plek. Dezelfde regel als in
+      // `beenPunten()` — de twee moeten per constructie dezelfde reeks geven.
+      if (k === 0 && pts.length) continue;
       // De gebakken posities liggen op de bolstraal; radiaal opschalen tilt ze
       // op zonder de vorm te raken.
       pts.push(net.posities[idx * 3], net.posities[idx * 3 + 1], net.posities[idx * 3 + 2]);
     }
     bij = vooruit ? net.edgeB[e] : net.edgeA[e];
   }
-  const arr = new Float32Array(pts);
+  // Snoeien op de dichtste nadering: exact hetzelfde stuk dat stromen.js heeft
+  // GETELD, anders wijken het getal in de HUD en de lijn op de bol van elkaar af.
+  const vanI = been.knipVan ?? 0;
+  const naarI = been.knipNaar ?? (pts.length / 3 - 1);
+  const arr = new Float32Array(pts.slice(vanI * 3, (naarI + 1) * 3));
   const schaal = straal / straalVan(arr);
   for (let i = 0; i < arr.length; i++) arr[i] *= schaal;
 
@@ -108,10 +175,10 @@ function straalVan(arr) {
  * meegetekend in het been — dit stukje is niet gerouteerd maar rechtgetrokken,
  * en dat verschil hoort zichtbaar te zijn.
  */
-function lastMile(aansluiting, h, straal, kleur, klemOpHorizon) {
+function lastMile(aansluiting, lon, lat, straal, kleur, klemOpHorizon) {
   const geo = new THREE.BufferGeometry().setFromPoints([
     opBol3(aansluiting.lon, aansluiting.lat, straal),
-    opBol3(h.knoopLon ?? h.lon, h.knoopLat ?? h.lat, straal),
+    opBol3(lon, lat, straal),
   ]);
   const mat = new THREE.LineDashedMaterial({
     color: kleur, transparent: true, opacity: 0.85,
@@ -147,17 +214,18 @@ function gatLijn(van, naar, straal, kleur, klemOpHorizon) {
   return lijn;
 }
 
-const ROL_MAAT = { laadplek: 0.0030, overslag: 0.0038, losplek: 0.0030 };
+// Eenheidsbol; de echte maat komt elke frame uit zetMerkGrootte(). Zo staat de
+// hoogte-afhankelijkheid op één plek in plaats van in de constructor.
+const MERK_GEO = new THREE.SphereGeometry(1, 12, 12);
 
 function merk(aansluiting, straal, kleur, rol) {
-  const m = new THREE.Mesh(
-    new THREE.SphereGeometry(straal * (ROL_MAAT[rol] ?? 0.003), 12, 12),
-    new THREE.MeshBasicMaterial({
-      color: rol === "overslag" ? 0xffffff : kleur, depthTest: false,
-    })
-  );
+  const m = new THREE.Mesh(MERK_GEO, new THREE.MeshBasicMaterial({
+    color: rol === "overslag" ? 0xffffff : kleur, depthTest: false,
+  }));
   m.position.copy(opBol3(aansluiting.lon, aansluiting.lat, straal));
   m.renderOrder = 12;
   m.userData.aansluiting = aansluiting;
+  m.userData.rol = rol;
+  m.scale.setScalar(straal * 1e-4);   // voorlopig; direct overschreven
   return m;
 }

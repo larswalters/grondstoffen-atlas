@@ -58,6 +58,37 @@ function bouwGraaf(nKnopen, nEdges, edgeA, edgeB) {
   return { adjStart: graad, adjEdge, adjKnoop };
 }
 
+/**
+ * Het derde blok van de bin: de LIJNGEOMETRIE per edge (delta-varint, eerste
+ * vertex = knoop A). Headless las dit blok eerst niet — en dan meet de toets
+ * iets anders dan de browser, precies wat dit bestand moet voorkomen: het
+ * snoeien op dichtste nadering (M26.1) gebeurt op vertex-niveau, niet op
+ * knoopniveau. `posities` is XYZ op de bolstraal, dezelfde afspraak als
+ * marnet.js (z = -sin lon).
+ */
+function leesGeometrie(lezer, schaal, nEdges, geomN, edgeA, knoopLon, knoopLat, radius) {
+  let nPunten = 0;
+  for (let i = 0; i < nEdges; i++) nPunten += geomN[i];
+  const geomStart = new Uint32Array(nEdges);
+  const posities = new Float64Array(nPunten * 3);
+  let pi = 0;
+  for (let e = 0; e < nEdges; e++) {
+    geomStart[e] = pi;
+    let x = Math.round(knoopLon[edgeA[e]] * schaal);
+    let y = Math.round(knoopLat[edgeA[e]] * schaal);
+    for (let k = 0; k < geomN[e]; k++) {
+      if (k > 0) { x += lezer.volgende(); y += lezer.volgende(); }
+      const lon = (x / schaal) * Math.PI / 180, lat = (y / schaal) * Math.PI / 180;
+      const c = Math.cos(lat);
+      posities[pi * 3] = radius * c * Math.cos(lon);
+      posities[pi * 3 + 1] = radius * Math.sin(lat);
+      posities[pi * 3 + 2] = -radius * c * Math.sin(lon);
+      pi++;
+    }
+  }
+  return { geomStart, posities };
+}
+
 export function laadMarnetHeadless() {
   const meta = JSON.parse(readFileSync(join(DATA, "marnet.json"), "utf-8"));
   const lezer = maakLezer(readFileSync(join(DATA, "marnet.bin")));
@@ -88,13 +119,15 @@ export function laadMarnetHeadless() {
     }
   }
 
+  const geo = leesGeometrie(lezer, schaal, nEdges, geomN, edgeA, knoopLon, knoopLat, 2.4);
+
   const edgeLabel = new Array(nEdges).fill(null);
   for (const [ei, label] of Object.entries(meta.passages || {})) edgeLabel[Number(ei)] = label;
 
   return {
     ...bouwGraaf(nKnopen, nEdges, edgeA, edgeB),
     knoopLon, knoopLat, knoopXYZ: eenheidsXYZ(knoopLon, knoopLat),
-    edgeA, edgeB, edgeKm, edgeSoort, edgeLabel,
+    edgeA, edgeB, edgeKm, edgeSoort, edgeLabel, geomN, ...geo,
     edgeDiepgang, edgeBreedte, edgeLengte, edgeHoogte,
     vaarwegen: meta.vaarwegen || {}, passages: meta.passages || {},
     stats: { knopen: nKnopen, edges: nEdges },
@@ -132,10 +165,12 @@ export function laadLandnetHeadless() {
     for (let e = l.edgeVan; e < Math.min(l.edgeTot, nEdges); e++) { edgeModus[e] = m; edgeLabel[e] = l.naam; }
   }
 
+  const geo = leesGeometrie(lezer, schaal, nEdges, geomN, edgeA, knoopLon, knoopLat, 2.4);
+
   return {
     ...bouwGraaf(nKnopen, nEdges, edgeA, edgeB),
     knoopLon, knoopLat, knoopXYZ: eenheidsXYZ(knoopLon, knoopLat),
-    edgeA, edgeB, edgeKm, edgeModus, edgeLabel,
+    edgeA, edgeB, edgeKm, edgeModus, edgeLabel, geomN, ...geo,
     meta,
     stats: { knopen: nKnopen, edges: nEdges },
   };
