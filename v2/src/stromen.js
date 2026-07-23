@@ -15,13 +15,13 @@
 //
 // Ontwerp: `v2/design/stroom-aansluiting.md`.
 
-import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=060";
+import { zoekKeten, aansluitingZaden, GROEP_VERVOER } from "./keten.js?v=061";
 
 // --------------------------------------------------------------------------
 // laden
 // --------------------------------------------------------------------------
 
-export async function laadStromen(versie = "060") {
+export async function laadStromen(versie = "061") {
   const [aansluitingen, stromen] = await Promise.all([
     haal(`data/aansluitingen.json?v=${versie}`),
     haal(`data/stromen-pilot.json?v=${versie}`),
@@ -237,14 +237,20 @@ function beenPunten(net, been) {
  * een hoofdnet van 400.000 km is een gat in de bake, geen routeerfout.
  */
 function verklaarGeenPad(K, been, van, naar) {
-  const opLand = been.net === "spoor" || been.net === "weg";
-  if (!opLand || !K.landComp || !K.landComp.length) return null;
   const kA = van.aanhechting[been.net]?.knoop;
   const kB = naar.aanhechting[been.net]?.knoop;
-  if (!(kA >= K.nMar) || !(kB >= K.nMar)) return null;
-  const cA = K.landComp[kA - K.nMar], cB = K.landComp[kB - K.nMar];
+  if (!(kA >= 0) || !(kB >= 0)) return null;
+
+  // Land en water hebben elk hun eigen componenttabel; de vraag is dezelfde.
+  const opLand = been.net === "spoor" || been.net === "weg";
+  const comp = opLand ? K.landComp : K.marComp;
+  const compKm = opLand ? K.landCompKm : K.marCompKm;
+  if (!comp || !comp.length) return null;
+  const idx = (k) => (opLand ? k - K.nMar : k);
+
+  const cA = comp[idx(kA)], cB = comp[idx(kB)];
   if (cA === cB) return null;                    // andere oorzaak — niet raden
-  const km = (k) => Math.round(K.landCompKm[k - K.nMar]).toLocaleString("nl");
+  const km = (k) => Math.round(compKm[idx(k)]).toLocaleString("nl");
   return `de twee aansluitingen liggen op verschillende ${been.net}-componenten ` +
          `(${km(kA)} km bij "${van.naam.split(" — ")[0]}" vs ${km(kB)} km bij ` +
          `"${naar.naam.split(" — ")[0]}") — een gat in de bake, geen routeerfout`;

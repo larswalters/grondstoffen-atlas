@@ -44,11 +44,11 @@ except Exception:
 
 
 # ==========================================================================
-# DE AANSLUITINGEN — dit is de redactionele lijst (pilot: koper, twee stromen)
+# DE AANSLUITINGEN — dit is de redactionele lijst (pilot: 4 stromen, 2 grondstoffen)
 # ==========================================================================
 # Velden:
 #   id          stabiel, eigen id (géén afgeleide van een haven of LOCODE)
-#   grondstof   sleutel uit data/*.js  (hier: "copper")
+#   grondstof   sleutel uit data/*.js ("copper" / "coal")
 #   fase        erts | raffinaat | product — volgt `stage` in de flows
 #   rol         laadplek | overslag | losplek
 #   plek        [lon, lat] van de KADE/LAADPLEK zelf — straatniveau, uit OSM
@@ -119,6 +119,67 @@ AANSLUITINGEN = [
          bron="OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
          noot="De ertsterminal zelf, niet de containerkades ernaast — precies het "
               "onderscheid waarvoor deze laag bestaat."),
+    # ======================================================================
+    # STROOM C — koperkathode Lobito → Rotterdam → Rijn → Duisburg
+    # ======================================================================
+    dict(id="cu-lobito-kade", grondstof="copper", fase="raffinaat", rol="overslag",
+         naam="Lobito — Porto do Lobito, kade van de Lobito-corridor",
+         plek=[13.54900, -12.34709], modi=["zee"], knooppunt="lobito",
+         bron="OSM way 'Porto do Lobito', industrial=port landuse=harbour (ODbL)",
+         noot="Het zee-eind van de Lobito-corridor; de Benguela-spoorlijn (CFB) ligt er "
+              "1,1 km vandaan. Kathode gaat hier recht de Atlantische Oceaan op — zonder "
+              "Kaap en zonder Malakka."),
+    dict(id="cu-rotterdam-kade", grondstof="copper", fase="raffinaat", rol="overslag",
+         naam="Rotterdam — Waalhaven, stukgoedkade",
+         plek=[4.39341, 51.89369], modi=["zee", "binnen"], knooppunt="rotterdam",
+         bron="OSM way man_made=pier in de Waalhaven (ODbL)",
+         noot="⚠️ OSM tagt deze pier NIET met wat er wordt overgeslagen; de redactionele "
+              "keuze steunt op de buren binnen 1 km (ArcelorMittal Staalhandel, "
+              "Metaalhandel Ketting, Dutch Trading Consortium) — dit is de metaalhoek van "
+              "de Waalhaven. Wat telt voor deze pilot: hij ligt ~30 km van de kolenkade op "
+              "de Maasvlakte en hecht op een ándere binnenknoop."),
+    dict(id="cu-duisburg-kade", grondstof="copper", fase="raffinaat", rol="losplek",
+         naam="Duisburg — Duisport Ruhrort, Becken A",
+         plek=[6.75590, 51.45187], modi=["binnen"],
+         bron="OSM way 'Becken A', harbour=yes (ODbL)",
+         noot="Stukgoedbekken van de grootste binnenhaven ter wereld. OSM zegt niet welk "
+              "bekken non-ferro doet; het onderscheid dat hier telt is dat kolen 7 km "
+              "noordelijker lossen, aan de Schwelgern-pier bij het staalbedrijf."),
+
+    # ======================================================================
+    # STROOM D — steenkool Cerrejón → Puerto Bolívar → Rotterdam → Ruhr
+    # ======================================================================
+    dict(id="coal-cerrejon-laad", grondstof="coal", fase="raffinaat", rol="laadplek",
+         naam="Cerrejón — Complejo Carbonífero, laadzijde",
+         plek=[-72.55960, 11.12067], modi=["spoor"],
+         bron="OSM way 'Complejo Carbonífero El Cerrejón', landuse=quarry (ODbL)",
+         noot="OSM tagt het laadstation zelf niet; de eigen spoorlijn ligt er wél als "
+              "'Vía Ferroviaria Albania - Puerto Bolívar' (railway=rail usage=main). "
+              "Gemeten: mijn en pier zitten op DEZELFDE spoorcomponent van 158 km — de "
+              "echte lijn is ~150 km, dus die component ís deze kolenlijn."),
+    dict(id="coal-bolivar-kade", grondstof="coal", fase="raffinaat", rol="overslag",
+         naam="Puerto Bolívar — kolenpier van Cerrejón",
+         plek=[-71.97693, 12.23912], modi=["zee", "spoor"],
+         bron="OSM way 'Terminal de Carbones del Cerrejón', landuse=industrial (ODbL)",
+         noot="Het zee-eind van de kolenlijn: hier gaat de trein leeg terug en vertrekt de "
+              "capesize. Een van de weinige plekken in de atlas waar spoor en zee elkaar "
+              "raken zónder tussenliggende stad."),
+    dict(id="coal-rotterdam-kade", grondstof="coal", fase="raffinaat", rol="overslag",
+         naam="Rotterdam — EMO, droge-bulkterminal Maasvlakte",
+         plek=[4.05354, 51.94109], modi=["zee", "binnen"], knooppunt="rotterdam",
+         bron="OSM way 'EMO', landuse=industrial operator=HES International B.V. (ODbL)",
+         noot="DE KERN VAN DE PILOT: dezelfde haven als de koperkade hierboven, ~30 km "
+              "verderop, en met een eigen aanhechting op het binnenwaternet (knoop 40904 "
+              "tegen 40927). Met één aanhechting per haven zijn deze twee stromen niet uit "
+              "elkaar te houden."),
+    dict(id="coal-duisburg-kade", grondstof="coal", fase="raffinaat", rol="losplek",
+         naam="Duisburg — Schwelgern-pier (ThyssenKrupp-staal)",
+         plek=[6.72347, 51.51321], modi=["binnen"],
+         bron="OSM way man_made=pier bij Schwelgern, met moorings (ODbL)",
+         noot="De kolen-/ertskade van het staalbedrijf zelf: Kokerei Schwelgern ligt op "
+              "1,3 km, het Erzlager op 1,2 km, ThyssenKrupp Steel op 0,6 km. Cokeskool "
+              "gaat hier naar de hoogoven, niet naar een stukgoedbekken."),
+
     dict(id="cu-guixi-spoor", grondstof="copper", fase="erts", rol="losplek",
          naam="Jiangxi Copper — smelter Guixi (贵溪冶炼厂)",
          plek=[117.22570, 28.33380], modi=["spoor"],

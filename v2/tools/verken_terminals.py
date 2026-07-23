@@ -83,6 +83,29 @@ SITES = [
     {"id": "guixi", "naam": "Jiangxi Copper (Guixi) — smelter + laadspoor",
      "midden": (28.30, 117.22), "straal": 9000, "soort": "fabriek",
      "waarom": "aankomst van stroom B; de grootste kopersmelter ter wereld"},
+
+    # --- stroom C: koperkathode Lobito → Rotterdam → Rijn → Duisburg --------
+    {"id": "lobito", "naam": "Lobito — kadeterminal van de Lobito-corridor",
+     "midden": (-12.35, 13.55), "straal": 7000, "soort": "kade",
+     "waarom": "vertrek van stroom C; het Angolese eind van de Copperbelt-corridor"},
+    {"id": "rotterdam-metaal", "naam": "Rotterdam — stukgoed/metaalkades (Waalhaven e.o.)",
+     "midden": (51.895, 4.395), "straal": 6000, "soort": "kade",
+     "waarom": "waar kathode aan land komt — NIET de droge-bulkkade van kolen"},
+    {"id": "duisburg", "naam": "Duisburg — Duisport, binnenhavenbekkens",
+     "midden": (51.445, 6.725), "straal": 8000, "soort": "losplek",
+     "waarom": "aankomst van stroom C én D; grootste binnenhaven ter wereld"},
+
+    # --- stroom D: steenkool Cerrejón → Rotterdam → Rijn → Ruhr ------------
+    {"id": "cerrejon", "naam": "Cerrejón — kolenmijn + laadstation",
+     "midden": (11.10, -72.60), "straal": 12000, "soort": "mijn",
+     "waarom": "vertrek van stroom D; eigen 150 km kolenspoor naar de kust"},
+    {"id": "puerto-bolivar", "naam": "Puerto Bolívar — kolenpier van Cerrejón",
+     "midden": (12.23, -71.98), "straal": 7000, "soort": "kade",
+     "waarom": "het zee-eind van dat kolenspoor"},
+    {"id": "rotterdam-bulk", "naam": "Rotterdam — EMO droge-bulkterminal (Maasvlakte)",
+     "midden": (51.955, 4.045), "straal": 7000, "soort": "kade",
+     "waarom": "de kolenkade — dezelfde haven als stroom C, andere terminal; dát is "
+               "waarom de aansluitingenlaag bestaat"},
 ]
 
 

@@ -194,9 +194,19 @@ console.log("\n=== D · de werkelijke stromen (M26.1) ===");
     //                               het Chinese hoofdnet (402.762 km). Vraagt een
     //                               heal-ronde op landnet.bin — hetzelfde soort
     //                               gat als het gefragmenteerde EU-spoor.
+    //   cu-lobito-duisburg     = 0  volledig gerouteerd, mijn tot fabriek.
+    //   coal-cerrejon-ruhr     = 1  het Rijnbeen: de EMO-kade op de Maasvlakte
+    //                               hecht op een LOSSTAAND havenbekken van 4 km,
+    //                               terwijl Duisburg op de doorgaande Rijn zit
+    //                               (24.517 km). De Waalhaven-kade 30 km verderop
+    //                               zit wél op de Rijn — vandaar dat stroom C
+    //                               dezelfde reis wél maakt. Riviernet-gat op de
+    //                               Maasvlakte, hetzelfde patroon als LAR-520.
     const VERWACHTE_GATEN = {
       "cu-collahuasi-tongling": 1,
       "cu-escondida-guixi": 2,
+      "cu-lobito-duisburg": 0,
+      "coal-cerrejon-ruhr": 1,
     };
     for (const b of g.benen) {
       if (b.status !== "ok") console.log(`     ⚠️ ${b.modus}: ${b.reden}`);

@@ -21,7 +21,7 @@
 // (zee · binnen · spoor · weg) en een edge tussen twee groepen bestaat niet.
 // Dat is een constructie-eigenschap, geen guard die je moet vertrouwen.
 
-import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=060";
+import { gcKmLL, schipGrenzen, edgePast } from "./router.js?v=061";
 
 export const GROEP = { zee: 0, binnen: 1, spoor: 2, weg: 3 };
 export const GROEP_NAAM = ["zee", "binnen", "spoor", "weg"];
@@ -110,6 +110,26 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register, aansluiting
     for (let e = 0; e < landnet.edgeA.length; e++) compKm[find(landnet.edgeA[e])] += landnet.edgeKm[e];
     for (let i = 0; i < nLand; i++) { landComp[i] = find(i); landCompKm[i] = compKm[landComp[i]]; }
   }
+  // Zelfde componentmeting voor het WATERnet. Kost één union-find over 76.000
+  // edges en maakt "geen pad" ook op zee en rivier diagnosticeerbaar — zonder
+  // dit getal is een riviernet dat in fragmenten uiteenvalt niet te onderscheiden
+  // van een kapotte router, en dat onderscheid is precies waar het riviernet-
+  // stitchwerk (LAR-520) over ging.
+  const marComp = new Int32Array(nMar);
+  const marCompKm = new Float64Array(nMar);
+  {
+    const par = new Int32Array(nMar);
+    for (let i = 0; i < nMar; i++) par[i] = i;
+    const find = (x) => { while (par[x] !== x) { par[x] = par[par[x]]; x = par[x]; } return x; };
+    for (let e = 0; e < marnet.edgeA.length; e++) {
+      const a = find(marnet.edgeA[e]), b = find(marnet.edgeB[e]);
+      if (a !== b) par[a] = b;
+    }
+    const compKm = new Float64Array(nMar);
+    for (let e = 0; e < marnet.edgeA.length; e++) compKm[find(marnet.edgeA[e])] += marnet.edgeKm[e];
+    for (let i = 0; i < nMar; i++) { marComp[i] = find(i); marCompKm[i] = compKm[marComp[i]]; }
+  }
+
   // Drempels per modaliteit: het spoornet bestaat uit grote landsdelen, het
   // wegnet uit korte verhalende corridors (17 stuks) — dus een veel lagere
   // drempel voor weg, anders sneuvelt elke corridor.
@@ -245,7 +265,7 @@ export function koppelNetten({ marnet, landnet, zeeKnopen, register, aansluiting
   return {
     marnet, landnet, zeeKnopen,
     nMar, nLand, nKnopen, offsetLand: nMar,
-    groepVan, landGroep, landComp, landCompKm,
+    groepVan, landGroep, landComp, landCompKm, marComp, marCompKm,
     punten, overstappen, bijKnoop, opLocode, aansluitingen: aansl,
     stats: {
       knopen: nKnopen,

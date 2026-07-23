@@ -69,6 +69,64 @@
      "modus": "trein"
     }
    ]
+  },
+  {
+   "id": "cu-lobito-duisburg",
+   "grondstof": "copper",
+   "naam": "Koperkathode · Lobito → Duisburg",
+   "kort": "zee → rivier (Europa)",
+   "fase": "raffinaat",
+   "kleur": "#4FC3FF",
+   "waarde": 90,
+   "eenheid": "kt Cu/jaar (indicatief)",
+   "bronStroom": "data/copper.js — cu-port-lobito > cu-mkt-germany (value 90, mode ship, stage raffinaat)",
+   "noot": "Copperbelt-kathode via de Lobito-corridor recht de Atlantische Oceaan over — zonder Kaap en zonder Malakka — en dan de Rijn op. Europese keten, dus zelf na te rekenen op straatniveau.",
+   "benen": [
+    {
+     "van": "cu-lobito-kade",
+     "naar": "cu-rotterdam-kade",
+     "net": "zee",
+     "modus": "zeeschip"
+    },
+    {
+     "van": "cu-rotterdam-kade",
+     "naar": "cu-duisburg-kade",
+     "net": "binnen",
+     "modus": "binnenschip"
+    }
+   ]
+  },
+  {
+   "id": "coal-cerrejon-ruhr",
+   "grondstof": "coal",
+   "naam": "Steenkool · Cerrejón → Ruhr",
+   "kort": "spoor → zee → rivier",
+   "fase": "raffinaat",
+   "kleur": "#FF6B4A",
+   "waarde": 30,
+   "eenheid": "Mt/jaar (indicatief)",
+   "bronStroom": "data/coal.js — coal-colombia > coal-mkt-eu (value 30, mode ship, stage raffinaat)",
+   "noot": "DE TOETS VAN DEZE HELE LAAG: kolen komen in DEZELFDE haven aan als de koperkathode hierboven, maar op een andere kade — droge bulk op de Maasvlakte tegenover stukgoed in de Waalhaven, ruim 30 km uit elkaar. Met één aanhechting per haven zijn die twee stromen niet te onderscheiden; dát is waarom aansluitingen.json bestaat. Begint bovendien met een echt spoorbeen: Cerrejóns eigen 150 km kolenlijn naar Puerto Bolívar.",
+   "benen": [
+    {
+     "van": "coal-cerrejon-laad",
+     "naar": "coal-bolivar-kade",
+     "net": "spoor",
+     "modus": "trein"
+    },
+    {
+     "van": "coal-bolivar-kade",
+     "naar": "coal-rotterdam-kade",
+     "net": "zee",
+     "modus": "zeeschip"
+    },
+    {
+     "van": "coal-rotterdam-kade",
+     "naar": "coal-duisburg-kade",
+     "net": "binnen",
+     "modus": "binnenschip"
+    }
+   ]
   }
  ],
  "kleurnoot": "De LOD-ontwerpbrief zegt 'kleur = grondstof', en de koperkleur (#E0965A) is op de Atacama en de Chinese kust onleesbaar: zandkleur op zandkleur. Voor de pilot wint LEESBAARHEID — dit zijn de twee kleuren uit Lars' eigen schets. Of de kleurregel grondstof-gebonden blijft of per stroom mag verschillen is een openstaand ontwerpbesluit voor de rest van M26."
