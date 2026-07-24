@@ -1233,3 +1233,9 @@ R'dam→Wuhan routeert nu dóór de oostgeul (686 km been); Collahuasi→Tonglin
 bevestigd besloten. Werkwijze-les vastgelegd (ook als globale memory): satelliet-overlay is
 de standaard voor handmatige vaarweglijnen; OSM-watervlak is geen waarheid.
 Vault: wiki/projects/General/grondstoffen-atlas/2026-07-24-grondstoffen-atlas-tongling-oostgeul-graaf.md
+
+## 2026-07-24 (aanvulling) — Tongling-eindstand: beide geulen, Lars' go (live ?v=077)
+De v076-knip van de west-arm bleek een misinterpretatie; teruggedraaid in v077 — hoofdgeul
+én oostgeul naast elkaar als simpele graaf. Lars: "top helemaal goed — zo lang beide geulen
+een simpele graaf, dat was alles." Toets 30/30. Klus (incl. eerdere Tongling-rondes) kostte
+~3 sessies; de satelliet-overlay-werkwijze is de blijvende winst.

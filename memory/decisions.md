@@ -1794,3 +1794,11 @@ De 18-puntslijn eindigt op vertex [2] (117,7373/30,9102) en vertex [7] (117,7696
 226556520 — de bake knipt de hoofdlijn op die knooppunt-cellen en maakt gedeelde knopen = echte
 juncties, zonder op de heal te leunen. **Why:** een uiteinde dat níet op een vertex valt hangt af
 van de tier-1-heal (≤250 m) en kan bij een rebake netto anders uitpakken.
+
+## 2026-07-24 · Tongling-eindstand: BEIDE geulen blijven in de graaf — de west-arm-knip teruggedraaid
+De v076-knip van de hoofdgeul-west-arm was een misinterpretatie van Lars' "die rode mag er dan
+weer uit" — hij arceerde geel de verwijderde hoofdgeul ("we waren zo dichtbij"). Eindstand
+(v077, zijn go): hoofdgeul én oostgeul naast elkaar als simpele graaf; de oostgeul is de tak
+naar de kade. Het knipWayId-mechanisme blijft bestaan voor als er ooit écht een foute arm weg
+moet. **Why/les:** bij een aanwijzing over wélke lijn weg moet eerst laten aanwijzen op een
+screenshot i.p.v. de meest ingrijpende lezing bouwen — dat kostte een extra live-ronde.

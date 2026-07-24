@@ -1,10 +1,17 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (Tongling-oostgeul als graaf, satelliet-gelegd + west-arm eruit, live ?v=076; open = Lars' visuele check)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (Tongling AF — beide geulen als graaf, live ?v=077, Lars' go)*
 
-> **🛰️ TONGLING-OOSTGEUL ALS GRAAF — SATELLIET-GELEGD, WEST-ARM ERUIT (2026-07-24, laatste).**
-> Live `?v=076` (commits `6327707`→`68c33c9`). **→ VOLGENDE: Lars' visuele check op de
-> west-arm-verwijdering** (toets 30/30; zie `memory/next-actions.md`).
+> **🛰️ TONGLING: BEIDE GEULEN ALS GRAAF — SATELLIET-GELEGD (2026-07-24, laatste; AF).**
+> Live `?v=077` (commits `6327707`→`5428001`), **Lars' go: *"top helemaal goed — zo lang
+> beide geulen een simpele graaf, dat was alles."*** **→ VOLGENDE: optioneel de 22 grove
+> AFGEKNIPT-sites** (zie `memory/next-actions.md`).
+>
+> **⚠️ EINDSTAND = BEIDE ARMEN NAAST ELKAAR.** De v076-knip van de hoofdgeul-west-arm was
+> een misinterpretatie van *"die rode mag er dan weer uit"* — Lars arceerde geel de
+> verwijderde hoofdgeul (*"we waren zo dichtbij"*) → teruggedraaid in v077. Les: bij
+> "welke lijn weg" eerst laten aanwijzen op een screenshot. Het `knipWayId`-mechanisme
+> blijft bestaan voor als er ooit écht een foute arm weg moet.
 >
 > **DE WERKWIJZE-DOORBRAAK — OSM'S WATERVLAK IS GEEN WAARHEID, DE SATELLIET WEL.** OSM kent de
 > Tongling-oostgeul (waar de schepen echt varen, kade aan de oostoever) alleen als onvolledig
