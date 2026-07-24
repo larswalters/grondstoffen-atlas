@@ -6,7 +6,7 @@ import { createGlobe, CONFIG } from "./globe.js?v=070";
 import { laadVectorWereld } from "./world.js?v=070";
 import { createTileLayer } from "./tiles.js?v=070";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=075";
+  from "./marnet.js?v=076";
 import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=070";
 import { laadLandnet } from "./landnet.js?v=070";
 import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=070";

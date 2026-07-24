@@ -1736,12 +1736,50 @@ def bulklaag(nodes, edge_lijst, status, geometrie, vaarwegen_meta, pad,
     """
     gj = json.load(open(pad, encoding="utf-8"))
     features = list(gj["features"])
+    knippen = []
     if extra_pad and os.path.exists(extra_pad):
         extra = json.load(open(extra_pad, encoding="utf-8"))
-        n_extra = len(extra["features"])
-        features += extra["features"]
-        print(f"  + {n_extra} handmatige vaarweglijn(en) uit "
-              f"{os.path.basename(extra_pad)}")
+        # Een extra-feature met `knipWayId` is geen vaarweg maar een INSTRUCTIE:
+        # knip uit die bulk-way het stuk tussen de twee punten in de geometry
+        # (dichtstbijzijnde vertices). Zo kan een handmatige lijn een fout
+        # gemapte OSM-arm vervángen i.p.v. ernaast te liggen — Tongling: de
+        # west-arm om het eiland eruit, de oostgeul (waar de schepen varen) erin.
+        toevoegen = []
+        for f in extra["features"]:
+            if f["properties"].get("knipWayId") is not None:
+                knippen.append(f)
+            else:
+                toevoegen.append(f)
+        features += toevoegen
+        print(f"  + {len(toevoegen)} handmatige vaarweglijn(en) uit "
+              f"{os.path.basename(extra_pad)}"
+              + (f" · {len(knippen)} knip-instructie(s)" if knippen else ""))
+    for kf in knippen:
+        doel_id = kf["properties"]["knipWayId"]
+        (ka, kb) = kf["geometry"]["coordinates"]
+        raak = [f for f in features if f["properties"].get("wayId") == doel_id]
+        if len(raak) != 1:
+            raise RuntimeError(f"knipWayId {doel_id}: {len(raak)} features gevonden "
+                               f"(verwacht precies 1 — is de fetch veranderd?)")
+        f = raak[0]
+        pts = f["geometry"]["coordinates"]
+        ia = min(range(len(pts)), key=lambda i: gc_km(pts[i], ka))
+        ib = min(range(len(pts)), key=lambda i: gc_km(pts[i], kb))
+        if ia > ib:
+            ia, ib = ib, ia
+        if gc_km(pts[ia], ka) + gc_km(pts[ib], kb) > 1.0:
+            raise RuntimeError(f"knipWayId {doel_id}: knippunten liggen niet op de "
+                               f"way (>1 km mis) — coördinaten checken")
+        weg_km = sum(gc_km(pts[i], pts[i + 1]) for i in range(ia, ib))
+        features.remove(f)
+        for stuk in (pts[:ia + 1], pts[ib:]):
+            if len(stuk) > 1:
+                nf = {"type": "Feature",
+                      "properties": dict(f["properties"]),
+                      "geometry": {"type": "LineString", "coordinates": stuk}}
+                features.append(nf)
+        print(f"  knip way {doel_id}: vertex {ia}..{ib} eruit "
+              f"({weg_km:,.1f} km arm verwijderd, kop en staart blijven)")
     per_regio = {}
     for f in features:
         p = f["properties"]
