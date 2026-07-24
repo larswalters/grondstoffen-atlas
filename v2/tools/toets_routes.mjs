@@ -126,8 +126,13 @@ function toonKeten(uit) {
     !r.geenPad && r.overslagen >= 1);
   if (!r.geenPad) {
     const namen = r.overstappen.map((o) => o.naam).join(", ");
-    toets("R'dam→Cincinnati: overslag bij New Orleans",
-      namen.includes("New Orleans"), namen);
+    // Sinds 2026-07-24 wint Chicago van New Orleans: de heal-fix (verlengen
+    // i.p.v. verplaatsen) hield de Illinois/Chicago-naden heel, en de keten
+    // Seaway → Chicago → Illinois → Mississippi → Ohio is met 9.591 km ruim
+    // korter dan 11.199 via New Orleans — zelfde 1 overslag, dus km beslist.
+    // Zeevaart over de Seaway is bestaand modelgedrag (Duluth→R'dam 8.031).
+    toets("R'dam→Cincinnati: overslag bij Chicago",
+      namen.includes("Chicago"), namen);
   }
 }
 {
@@ -137,12 +142,17 @@ function toonKeten(uit) {
     !r.geenPad && r.overslagen >= 1);
 }
 
-// een haven ver van elk net → geen pad mét reden
+// Manaus lag tot 2026-07-24 op een SLIVER-snap (riviernet-fragment van 4
+// cellen op 10,5 km) terwijl de doorgaande Amazone — die al tot Macapá loopt —
+// op 13 km lag → "geen pad". De rivier-snap verkiest nu een doorgaand
+// component, RELATIEF gewogen (bak_havens, het hoofdlijn-snap-precedent), en de
+// keten loopt: zee → overslag Macapá → ±1.300 km binnenschip de Amazone op.
 {
   const r = keten("Saldanha Bay", "Manaus");
   console.log(`  Saldanha→Manaus: ${toonKeten(r)}`);
-  toets("een onmogelijke relatie geeft 'geen pad' met een reden",
-    r.geenPad ? typeof r.reden === "string" && r.reden.length > 0 : true);
+  toets("Manaus is bereikbaar over de Amazone (sliver-snap-fix)",
+    !r.geenPad && r.overslagen >= 1
+    && r.overstappen.some((o) => o.naam.includes("Macap")));
 }
 
 // ==========================================================================
@@ -204,26 +214,29 @@ console.log("\n=== D · de werkelijke stromen (M26.1) ===");
     //                               een net is productonafhankelijk, een
     //                               slurryleiding vervoert één ding tussen twee
     //                               punten.
-    //   cu-escondida-guixi     = 2  de Escondida-leiding (route ONBEKEND: OSM
-    //                               heeft hem niet doorlopend) + het spoorbeen
-    //                               Beilun→Guixi: het havenspoor van Beilun ligt
-    //                               op een eigen component van 1.823 km, los van
-    //                               het Chinese hoofdnet (402.762 km). Vraagt een
-    //                               heal-ronde op landnet.bin — hetzelfde soort
-    //                               gat als het gefragmenteerde EU-spoor.
+    //   cu-escondida-guixi     = 1  sinds 2026-07-24 (was 2): het spoorbeen
+    //                               Beilun→Guixi rijdt — de dedup-connectiviteits-
+    //                               guard (fetch_landnet.herstel_verbindingen)
+    //                               heelde het Beilun-havenspoor aan het Chinese
+    //                               hoofdnet (98,9% van het CN-spoor is nu één
+    //                               component), trein 883 km. Blijft over: de
+    //                               Escondida-leiding (route ONBEKEND: OSM heeft
+    //                               hem niet doorlopend — geen way met
+    //                               substance=slurry richting Coloso).
     //   cu-lobito-duisburg     = 0  volledig gerouteerd, mijn tot fabriek.
-    //   coal-cerrejon-ruhr     = 1  het Rijnbeen: de EMO-kade op de Maasvlakte
-    //                               hecht op een LOSSTAAND havenbekken van 4 km,
-    //                               terwijl Duisburg op de doorgaande Rijn zit
-    //                               (24.517 km). De Waalhaven-kade 30 km verderop
-    //                               zit wél op de Rijn — vandaar dat stroom C
-    //                               dezelfde reis wél maakt. Riviernet-gat op de
-    //                               Maasvlakte, hetzelfde patroon als LAR-520.
+    //   coal-cerrejon-ruhr     = 0  sinds 2026-07-24 (was 1): het EMO-bekken
+    //                               hing los door de tier-1/tier-2-flip-flop in
+    //                               de heal — tier-1 legde de 15 m-naad naar het
+    //                               Beerkanaal, tier-2 trok hem elke ronde weer
+    //                               los. De heal VERLENGT een uiteinde nu i.p.v.
+    //                               het te verplaatsen, dus de naad blijft
+    //                               liggen: Amazonehaven → Beerkanaal →
+    //                               Hartelkanaal → Oude Maas → Rijn.
     const VERWACHTE_GATEN = {
       "cu-collahuasi-tongling": 0,
-      "cu-escondida-guixi": 2,
+      "cu-escondida-guixi": 1,
       "cu-lobito-duisburg": 0,
-      "coal-cerrejon-ruhr": 1,
+      "coal-cerrejon-ruhr": 0,
     };
     for (const b of g.benen) {
       // Een EIGEN VERBINDING is compleet — geen waarschuwing, wel vermelden.

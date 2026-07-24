@@ -6,7 +6,7 @@ import { createGlobe, CONFIG } from "./globe.js?v=070";
 import { laadVectorWereld } from "./world.js?v=070";
 import { createTileLayer } from "./tiles.js?v=070";
 import { laadMarnet, laadHavens, zoekRoute, zoekRouteRealistisch, bouwRouteLijn }
-  from "./marnet.js?v=070";
+  from "./marnet.js?v=071";
 import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=070";
 import { laadLandnet } from "./landnet.js?v=070";
 import { koppelNetten, zoekKeten, havenZaden, puntZaden, GROEP_NAAM } from "./keten.js?v=070";
@@ -113,7 +113,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "058", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "071", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);

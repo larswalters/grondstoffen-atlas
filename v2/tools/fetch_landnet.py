@@ -82,6 +82,21 @@ DEDUP_BAKKEN = 6             # richtingsbakken van 30° over 180°
 DEDUP_MONSTER_M = 20.0
 DEDUP_SNIPPER_KM = 0.30      # kortere overgebleven run = wisselconfetti
 HEAL_KM = 0.15
+# ⚠️ DE DEDUP MAG GEEN VERBINDING VERBREKEN DIE DE BRON HAD — de snij_bulk-les
+# (bake_marnet 2026-07-23) op verbindingsniveau. Gemeten (BE+NL+NRW,
+# 2026-07-24): Antwerpen↔Duisburg is in de ruwe OSM-topologie één component,
+# óók onder het huidige service-filter, maar het gebakken net breekt — en niet
+# door de snipper alleen (snipper 0,15 i.p.v. 0,30 maakte de grootste component
+# juist KLEINER: 4.135 → 3.531 km). De dader: per-monster-dekking door een MIX
+# van langere ketens die elk maar een stukje naast de weggevouwen keten liggen
+# — de keten verdwijnt en niemand draagt zijn corridor. `herstel_verbindingen`
+# zet daarom verwijderde stukken terug die componenten van het gehouden net
+# verbinden; kortste stukkenpad per componentpaar wint (de knoop_riviernet-
+# regel). De teruggezette km is dubbelspoor-km en telt dus iets mee in de
+# lengte-ijking — gerapporteerd, nooit stil.
+HERSTEL_RAAK_M = 150.0       # = HEAL_KM: raakafstand stuk ↔ component
+HERSTEL_MONSTER_KM = 0.1     # bemonstering langs stuk én gehouden net
+HERSTEL_MAX_RONDES = 4
 MIN_COMPONENT_KM = 25.0
 ANKER_KM = 25.0              # een component "raakt" een atlas-plaats binnen dit
 
@@ -960,7 +975,7 @@ def dedup_parallel(ketens):
 
     keten_arr = np.array(kolom_keten, dtype=np.int64)
     km_arr = np.array(kolom_km, dtype=np.float64)
-    uit, weggevouwen = [], []
+    uit, weggevouwen, verwijderd = [], [], []
     km_voor = sum(k["km"] for k in ketens)
     for i, k in enumerate(ketens):
         masker = keten_arr == i
@@ -971,6 +986,7 @@ def dedup_parallel(ketens):
             continue
         if vlaggen.all():
             weggevouwen.append((k["km"], k))
+            verwijderd.append((k, 0.0, k["km"]))
             continue
         # runs van ONgedekte monsters
         run_start = None
@@ -984,6 +1000,7 @@ def dedup_parallel(ketens):
         if run_start is not None:
             stukken.append((run_start, kms[-1]))
         bewaard = 0.0
+        gehouden_iv = []
         for van, tot in stukken:
             if tot - van < DEDUP_SNIPPER_KM:
                 continue
@@ -995,6 +1012,16 @@ def dedup_parallel(ketens):
             nk["km"] = sum(fw.km(pts[a], pts[a + 1]) for a in range(len(pts) - 1))
             bewaard += nk["km"]
             uit.append(nk)
+            gehouden_iv.append((van, tot))
+        # het complement — alles wat hier verdwijnt — gaat als interval op de
+        # oorspronkelijke keten mee naar de connectiviteitsguard
+        vorige = 0.0
+        for van, tot in gehouden_iv:
+            if van - vorige > 1e-3:
+                verwijderd.append((k, vorige, van))
+            vorige = tot
+        if k["km"] - vorige > 1e-3:
+            verwijderd.append((k, vorige, k["km"]))
         if bewaard < k["km"] * 0.98:
             weggevouwen.append((k["km"] - bewaard, k))
 
@@ -1020,6 +1047,7 @@ def dedup_parallel(ketens):
             print(f"      {km_weg:8,.1f} km · gauge {k['gauge']:<8} · "
                   f"rond ({m[1]:.3f}, {m[0]:.3f})")
     return uit, {"km_voor": km_voor, "km_na": km_na,
+                 "verwijderd": verwijderd,
                  "weggevouwen": [(round(a, 2), b["pts"][len(b["pts"]) // 2])
                                  for a, b in weggevouwen]}
 
@@ -1056,6 +1084,179 @@ def heel_naden(ketens, eps_km=HEAL_KM):
         k["km"] = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
     print(f"  heal: {totaal:,} naden gelegd (≤{eps_km * 1000:.0f} m, "
           f"langste {langste * 1000:.0f} m, cross-component)")
+    return ketens
+
+
+# ------------------------------------------- de connectiviteitsguard (dedup)
+
+def _herstel_cellen(pts, dlat):
+    """Celkeys van ~HERSTEL_MONSTER_KM-monsters langs pts (150 m-raster)."""
+    uit = []
+    for _km, lo, la, _az in _monsters(pts, HERSTEL_MONSTER_KM):
+        cy = int(round(la / dlat))
+        cx = int(round(lo * max(0.05, math.cos(math.radians(la))) / dlat))
+        uit.append((cy + 200000) * 1000000 + (cx + 400000))
+    return uit
+
+
+def herstel_verbindingen(ketens, verwijderd):
+    """Zet dedup-verwijderde stukken terug die twee componenten verbinden.
+
+    Zie het blok bij HERSTEL_RAAK_M voor het waarom. Mechanisme per ronde:
+      1. componenten van het gehouden net op de bake-regel;
+      2. raakgraaf op 150 m-cellen: verwijderd stuk ↔ component en stuk ↔ stuk
+         (kettingen van verwijderde stukken tellen mee — een corridor verdwijnt
+         zelden in één stuk);
+      3. per groep die ≥2 componenten omspant: herstel het KORTSTE stukkenpad
+         tussen de componenten (Dijkstra op stuklengte — een parallelle tweede
+         lijn wordt dus niet mee teruggezet);
+      4. heel_naden hecht de teruggezette stukken; opnieuw tot stabiel.
+    Muteert/retourneert `ketens`; print wat terugkomt — nooit stil.
+    """
+    import heapq
+
+    dlat = HERSTEL_RAAK_M / 111320.0
+    BUUR = (-1000001, -1000000, -999999, -1, 0, 1, 999999, 1000000, 1000001)
+
+    stukken = []
+    for k, van, tot in verwijderd:
+        pts = _snijd(k["pts"], van, tot)
+        if len(pts) < 2:
+            continue
+        stukken.append({"k": k, "pts": pts, "km": max(tot - van, 1e-3),
+                        "cellen": None, "hersteld": False})
+
+    totaal_stuks, totaal_km = 0, 0.0
+    herstelde = []
+    for ronde in range(HERSTEL_MAX_RONDES):
+        comps = _ketencomponenten([k["pts"] for k in ketens])
+        # cel → componentwortels van het gehouden net (meestal één per cel)
+        cel_comp = {}
+        for gi, k in enumerate(ketens):
+            c = comps[gi]
+            for key in _herstel_cellen(k["pts"], dlat):
+                oud = cel_comp.get(key)
+                if oud is None:
+                    cel_comp[key] = c
+                elif isinstance(oud, int):
+                    if oud != c:
+                        cel_comp[key] = {oud, c}
+                else:
+                    oud.add(c)
+        # cel → kandidaat-stukken (voor stuk↔stuk-kettingen)
+        cel_stuk = {}
+        kandidaten = [si for si, s in enumerate(stukken) if not s["hersteld"]]
+        for si in kandidaten:
+            s = stukken[si]
+            if s["cellen"] is None:
+                s["cellen"] = _herstel_cellen(s["pts"], dlat)
+            for key in s["cellen"]:
+                cel_stuk.setdefault(key, []).append(si)
+
+        # raakgraaf: per stuk de geraakte comps en buurstukken
+        raakt_comp, raakt_stuk = {}, {}
+        for si in kandidaten:
+            cs, ss = set(), set()
+            for key in stukken[si]["cellen"]:
+                for d in BUUR:
+                    w = cel_comp.get(key + d)
+                    if w is not None:
+                        cs.update((w,) if isinstance(w, int) else w)
+                    for sj in cel_stuk.get(key + d, ()):
+                        if sj != si:
+                            ss.add(sj)
+            raakt_comp[si] = cs
+            raakt_stuk[si] = ss
+
+        # union-find over comps + stukken → groepen
+        par = {}
+
+        def vind(x):
+            while par.setdefault(x, x) != x:
+                par[x] = par[par[x]]
+                x = par[x]
+            return x
+
+        def unie(a, b):
+            ra, rb = vind(a), vind(b)
+            if ra != rb:
+                par[rb] = ra
+
+        for si in kandidaten:
+            for c in raakt_comp[si]:
+                unie(("s", si), ("c", c))
+            for sj in raakt_stuk[si]:
+                unie(("s", si), ("s", sj))
+        groepen = {}
+        for si in kandidaten:
+            g = groepen.setdefault(vind(("s", si)), {"stukken": [], "comps": set()})
+            g["stukken"].append(si)
+            g["comps"] |= raakt_comp[si]
+
+        herstel = set()
+        for g in groepen.values():
+            terminals = sorted(g["comps"])
+            if len(terminals) < 2:
+                continue
+            # Dijkstra over de groep: comp-knopen kosten 0, stuk-knopen hun km.
+            # Vanuit één terminal; het prev-pad naar elke andere terminal is het
+            # kortste stukkenpad — die stukken komen terug.
+            start = ("c", terminals[0])
+            dist, prev = {start: 0.0}, {}
+            heap = [(0.0, start)]
+            while heap:
+                d, kn = heapq.heappop(heap)
+                if d > dist.get(kn, 1e18) + 1e-9:
+                    continue
+                if kn[0] == "c":
+                    buren = [("s", si) for si in g["stukken"]
+                             if kn[1] in raakt_comp[si]]
+                else:
+                    si = kn[1]
+                    buren = ([("c", c) for c in raakt_comp[si]]
+                             + [("s", sj) for sj in raakt_stuk[si]])
+                for b in buren:
+                    nd = d + (stukken[b[1]]["km"] if b[0] == "s" else 0.0)
+                    if nd < dist.get(b, 1e18) - 1e-9:
+                        dist[b] = nd
+                        prev[b] = kn
+                        heapq.heappush(heap, (nd, b))
+            for t in terminals[1:]:
+                kn = ("c", t)
+                if kn not in dist:
+                    continue          # raakt de groep alleen via een buurstuk-cel
+                while kn in prev:
+                    if kn[0] == "s":
+                        herstel.add(kn[1])
+                    kn = prev[kn]
+
+        if not herstel:
+            break
+        for si in sorted(herstel):
+            s = stukken[si]
+            s["hersteld"] = True
+            nk = dict(s["k"])
+            nk["pts"] = s["pts"]
+            nk["km"] = sum(fw.km(s["pts"][a], s["pts"][a + 1])
+                           for a in range(len(s["pts"]) - 1))
+            ketens.append(nk)
+            herstelde.append(nk)
+            totaal_km += nk["km"]
+        totaal_stuks += len(herstel)
+        print(f"  guard ronde {ronde + 1}: {len(herstel):,} verwijderde stukken "
+              f"terug (verbonden ≥2 componenten)")
+        ketens = heel_naden(ketens)
+
+    if totaal_stuks:
+        top = sorted(herstelde, key=lambda k: -k["km"])[:8]
+        print(f"  guard: {totaal_stuks:,} stukken / {totaal_km:,.1f} km teruggezet "
+              f"— dubbelspoor-km, telt mee in de lengte-ijking (kijk na op de bol):")
+        for k in top:
+            m = k["pts"][len(k["pts"]) // 2]
+            print(f"    {k['km']:7,.2f} km · gauge {k['gauge']:<8} · "
+                  f"rond ({m[1]:.3f}, {m[0]:.3f})")
+    else:
+        print("  guard: geen verwijderd stuk verbond twee componenten — niets teruggezet")
     return ketens
 
 
@@ -1624,8 +1825,11 @@ if __name__ == "__main__":
     ketens = vouw_ketens(ways)
     keten_invariant(ways, ketens)
     if not a.geen_dedup:
-        ketens, _rap = dedup_parallel(ketens)
-    ketens = heel_naden(ketens)
+        ketens, rap = dedup_parallel(ketens)
+        ketens = heel_naden(ketens)
+        ketens = herstel_verbindingen(ketens, rap["verwijderd"])
+    else:
+        ketens = heel_naden(ketens)
     ketens = snoei_componenten(ketens)
     if a.schrijf:
         schrijf_geojson(ketens, a.modus, a.suffix)

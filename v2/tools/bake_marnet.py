@@ -1442,14 +1442,32 @@ def _heal_riviernet(lijnen_per_regio, eps_km):
     for d, gi, eind, cand, npc in kand:
         if (gi, eind) in used or find2(gi) == find2(cand):
             continue
+        cregio, cli = idx[cand]              # projectiepunt als vertex in de doel-lijn
+        csig, cpts = lijnen_per_regio[cregio][cli]
+        nieuw = _voeg_in(cpts, npc)
+        if len(nieuw) == len(cpts):
+            # geen insert: npc valt vrijwel op een bestaande doelvertex — neem dan
+            # die exacte waarde, anders kan de knoopcel nét verkeerd vallen en
+            # blijft de naad een cel naast de doel-lijn liggen.
+            npc = min(cpts, key=lambda p: gc_km(npc, p))
+        else:
+            lijnen_per_regio[cregio][cli] = (csig, nieuw)
         regio, li = idx[gi]
         sig, pts = lijnen_per_regio[regio][li]
         pts = list(pts)
-        pts[eind] = npc                      # uiteinde op de doel-lijn
+        # ⚠️ VERLENGEN, NIET VERPLAATSEN. `pts[eind] = npc` trok een samenvallend
+        # tweeling-eindpunt los (twee lijnen die in dezelfde cel eindigen): het
+        # verplaatste uiteinde nam de gedeelde knoop mee en liet de tweeling
+        # verweesd achter, waarna tier-2 het uiteinde terugsnapte — de
+        # EMO-flip-flop (Maasvlakte, 2026-07-24): de lus legde en lostrok
+        # dezelfde 15 m-naad zes rondes lang en eindigde losgekoppeld. Een
+        # verlenging kan per constructie geen bestaande celkoppeling verbreken,
+        # in welke volgorde de naden ook gelegd worden.
+        if gc_km(pts[eind], npc) > 1e-4:
+            pts = ([npc] + pts) if eind == 0 else (pts + [npc])
+        else:
+            pts[eind] = npc                  # valt al samen: exact gelijktrekken
         lijnen_per_regio[regio][li] = (sig, pts)
-        cregio, cli = idx[cand]              # projectiepunt als vertex in de doel-lijn
-        csig, cpts = lijnen_per_regio[cregio][cli]
-        lijnen_per_regio[cregio][cli] = (csig, _voeg_in(cpts, npc))
         used.add((gi, eind))
         cmap[find2(gi)] = find2(cand)
         naden.append(d)
@@ -1562,7 +1580,13 @@ def _heal_corridors(lijnen_per_regio, eps_km, hoek_max=45.0):
         regio, li = idx[gi]
         sig, pts = lijnen_per_regio[regio][li]
         pts = list(pts)
-        pts[e] = F                          # snap dit uiteinde op het andere
+        # VERLENGEN, NIET VERPLAATSEN — zelfde regel als tier-1: een verplaatst
+        # uiteinde kan een samenvallend tweeling-eindpunt lostrekken (de
+        # EMO-flip-flop). Een verlenging verbreekt nooit een bestaande cel.
+        if gc_km(pts[e], F) > 1e-4:
+            pts = ([F] + pts) if e == 0 else (pts + [F])
+        else:
+            pts[e] = F                      # valt al samen: exact gelijktrekken
         lijnen_per_regio[regio][li] = (sig, pts)
         used.add((gi, e))
         used.add((gj, e2))
@@ -2111,7 +2135,8 @@ def verzoen_en_bak(vaarwegen_pad=None, bulk_pad=None, suffix="", binnenwater=Fal
     print(f"  {os.path.basename(bin_pad):<14}: {os.path.getsize(bin_pad) / 1024:,.0f} KB")
     print(f"  {os.path.basename(json_pad):<14}: {os.path.getsize(json_pad) / 1024:,.0f} KB")
 
-    bak_havens(nodes, node_q, suffix, zee_knopen=zee_knopen, land=land)
+    bak_havens(nodes, node_q, suffix, zee_knopen=zee_knopen, land=land,
+               edge_lijst=edge_lijst)
     return onopgelost
 
 
@@ -2151,7 +2176,24 @@ WPI_VRACHT = (("loWharves", "W"), ("loContainer", "C"), ("loSolidBulk", "D"),
               ("loBreakBulk", "S"))
 
 
-def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
+# De rivier-snap verkiest een knoop op een DOORGAAND component boven een
+# dichterbij gelegen sliver — het landnet-precedent (hoofdlijn-snap, keten.js):
+# Manaus snapte op een fragment van 4 cellen op 10,5 km terwijl de doorgaande
+# Amazone (die al tot Macapá loopt) op 13,9 km lag → "geen pad" naar Rotterdam.
+# De gemeten afstand blijft de échte afstand naar de gekozen knoop; alleen de
+# keuze wélke knoop verschuift. ⚠️ De keuze is RELATIEF (zoals het dichtste-net-
+# principe in havenZaden): het doorgaande component wint alleen als het niet
+# onevenredig verder ligt dan de dichtstbijzijnde knoop. Een absolute straal
+# alléén teleporteerde Whitby/Rostock (echte snap 0,5–0,8 km op een klein lokaal
+# net) naar een hoofdstroom op ~58 km — precies de Karlsruhe-klasse onwaarheid.
+RIVIER_SNAP_COMP_KM = 100.0     # "doorgaand" = component van minstens dit
+RIVIER_SNAP_MAX_KM = 60.0       # harde bovengrens, zelfde klasse als MAX_LAND_SNAP_KM
+RIVIER_SNAP_FACTOR = 2.0        # doorgaand mag hooguit 2× + 1 km verder liggen
+RIVIER_SNAP_SLACK_KM = 1.0
+
+
+def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None,
+               edge_lijst=None):
     """searoute's havens, gesnapt aan BEIDE netten (LAR-518).
 
     ⚠️ EEN HAVEN HEEFT TWEE AANHECHTINGEN, en dat is de kern van dit issue.
@@ -2201,9 +2243,43 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
     riv_xyz = (np.array([to3d(lo / SCHAAL, la / SCHAAL) for lo, la in node_q[grens:]])
                if grens < len(node_q) else None)
 
+    # component-km per rivierknoop, voor de doorgaand-boven-sliver-keuze (zie
+    # RIVIER_SNAP_COMP_KM hierboven). Koorde-km tussen knopen volstaat als maat:
+    # de drempel scheidt slivers van enkele km van hoofdstromen van duizenden.
+    riv_groot = None
+    if riv_xyz is not None and edge_lijst is not None:
+        nriv = len(node_q) - grens
+        par = list(range(nriv))
+
+        def _vind(x):
+            while par[x] != x:
+                par[x] = par[par[x]]
+                x = par[x]
+            return x
+
+        riv_edges = []
+        for (a, b), _p in edge_lijst:
+            if a >= grens and b >= grens:
+                ra, rb = _vind(a - grens), _vind(b - grens)
+                if ra != rb:
+                    par[rb] = ra
+                riv_edges.append((a - grens, gc_km(
+                    (node_q[a][0] / SCHAAL, node_q[a][1] / SCHAAL),
+                    (node_q[b][0] / SCHAAL, node_q[b][1] / SCHAAL))))
+        comp_km = {}
+        for a_lok, km_e in riv_edges:
+            r = _vind(a_lok)
+            comp_km[r] = comp_km.get(r, 0.0) + km_e
+        groot = np.fromiter((comp_km.get(_vind(i), 0.0) >= RIVIER_SNAP_COMP_KM
+                             for i in range(nriv)), dtype=bool, count=nriv)
+        groot_idx = np.flatnonzero(groot)
+        if len(groot_idx):
+            riv_groot = (groot_idx, riv_xyz[groot_idx])
+
     namen, landen, locodes, ll = [], [], [], []
     knoop, afstand = [], []            # zeenet
     knoop_riv, afstand_riv = [], []    # riviernet (-1 = geen riviernet gebakken)
+    riv_verlegd = []                   # sliver → doorgaand component (rapportage)
     afstand_water = []                 # tot kustlijn of meeroever (-1 = niet gemeten)
     wpi_maat, wpi_spoor, wpi_vracht = [], [], []
     wpi_afstand = []                   # searoute-punt <-> WPI-punt (-1 = geen match)
@@ -2295,6 +2371,17 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
             dr = riv_xyz @ v
             besteR = int(np.argmax(dr))
             kmR = R_AARDE * math.acos(max(-1.0, min(1.0, float(dr[besteR]))))
+            if riv_groot is not None:
+                gidx, gxyz = riv_groot
+                dg = gxyz @ v
+                bg = int(np.argmax(dg))
+                kmG = R_AARDE * math.acos(max(-1.0, min(1.0, float(dg[bg]))))
+                wint = (kmG <= RIVIER_SNAP_MAX_KM
+                        and kmG <= kmR * RIVIER_SNAP_FACTOR + RIVIER_SNAP_SLACK_KM)
+                if wint and int(gidx[bg]) != besteR:
+                    riv_verlegd.append((kmR, kmG, naam))
+                if wint:
+                    besteR, kmR = int(gidx[bg]), kmG
             knoop_riv.append(grens + besteR)   # index in de VOLLEDIGE knopenlijst
             afstand_riv.append(round(kmR, 1))
         afstand_water.append(round(land.afstand_tot_open_water(lon, lat), 1)
@@ -2337,6 +2424,12 @@ def bak_havens(nodes, node_q, suffix="", zee_knopen=None, land=None):
         az = np.array(afstand)
         print(f"  {'':14}  | raakt BEIDE netten ≤5 km: {int(((az <= 5) & (ar <= 5)).sum()):,} · "
               f"≤25 km: {int(((az <= 25) & (ar <= 25)).sum()):,}")
+        if riv_verlegd:
+            v_ = sorted(riv_verlegd, key=lambda x: -(x[1] - x[0]))
+            print(f"  {'':14}  | rivier-snap verlegd naar doorgaand component "
+                  f"(≥{RIVIER_SNAP_COMP_KM:.0f} km): {len(riv_verlegd):,} havens; grootste sprongen:")
+            for kmR, kmG, nm in v_[:5]:
+                print(f"  {'':14}  |   {nm[:28]:<28} sliver {kmR:6.1f} → doorgaand {kmG:6.1f} km")
     if land is not None:
         # ⚠️ De havenpoort: ligt dit punt uberhaupt AAN WATER? De bron is een
         # UN/LOCODE-lijst en bevat dus wegterminals en grensovergangen (Denver,
