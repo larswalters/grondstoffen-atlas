@@ -87,11 +87,11 @@ export async function laadMarnet(radius, klemOpHorizon = null) {
   // ?v= mee op de data: zelfde cache-busting-discipline als de scripts —
   // verandert de bake, dan bumpt de versie en kan geen cache blijven hangen.
   const [meta, buffer] = await Promise.all([
-    fetch("data/marnet.json?v=076").then((r) => {
+    fetch("data/marnet.json?v=077").then((r) => {
       if (!r.ok) throw new Error(`marnet.json: HTTP ${r.status}`);
       return r.json();
     }),
-    fetch("data/marnet.bin?v=076").then((r) => {
+    fetch("data/marnet.bin?v=077").then((r) => {
       if (!r.ok) throw new Error(`marnet.bin: HTTP ${r.status}`);
       return r.arrayBuffer();
     }),
@@ -396,7 +396,7 @@ export function bouwRouteLijn(net, route, radius, voorstuk = [], nastuk = []) {
  * anders dan "ver weg", en die twee moeten uit elkaar te houden blijven.
  */
 export async function laadHavens() {
-  const r = await fetch("data/ports.json?v=076");
+  const r = await fetch("data/ports.json?v=077");
   if (!r.ok) throw new Error(`ports.json: HTTP ${r.status}`);
   const d = await r.json();
   const havens = [];

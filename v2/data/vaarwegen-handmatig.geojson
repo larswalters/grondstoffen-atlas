@@ -1,6 +1,6 @@
 {
  "type": "FeatureCollection",
- "toelichting": "Handmatig geplaatste vaarweglijnen + knip-instructies (niet uit de OSM-fetch). Herleiden: tools/maak_tongling_oostgeul.py. Voeg toe met bake_marnet.py --extra-vaarwegen.",
+ "toelichting": "Handmatig geplaatste vaarweglijnen (niet uit de OSM-fetch). Herleiden: tools/maak_tongling_oostgeul.py. Voeg toe met bake_marnet.py --extra-vaarwegen.",
  "features": [
   {
    "type": "Feature",
@@ -83,27 +83,6 @@
      [
       117.766,
       31.1
-     ],
-     [
-      117.7696,
-      31.1091
-     ]
-    ]
-   }
-  },
-  {
-   "type": "Feature",
-   "properties": {
-    "label": "bulk-cn",
-    "knipWayId": 226556520,
-    "bron": "verwijder de west-arm om het Tongling-eiland (schepen varen de oostgeul; zie de lijn hierboven)"
-   },
-   "geometry": {
-    "type": "LineString",
-    "coordinates": [
-     [
-      117.7373,
-      30.9102
      ],
      [
       117.7696,

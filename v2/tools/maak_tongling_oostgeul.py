@@ -95,23 +95,17 @@ def main():
                                    "Tracé geverifieerd op satelliet (Lars, 2026-07-24)."},
             "geometry": {"type": "LineString",
                          "coordinates": [[round(p[0], 5), round(p[1], 5)] for p in LIJN]}}
-    # Knip-instructie: de WEST-arm van way 226556520 (长江) tussen onze twee
-    # juncties eruit — OSM legt de hoofdgeul om de westkant van het eiland,
-    # maar de schepen varen de oostgeul (Lars' satelliet-check, 2026-07-24).
-    # De rivier loopt na de knip via de oostgeul-lijn hierboven door; kop
-    # (zuid van vertex [2]) en staart (noord van vertex [7]) blijven staan.
-    knip = {"type": "Feature",
-            "properties": {"label": "bulk-cn", "knipWayId": 226556520,
-                           "bron": "verwijder de west-arm om het Tongling-eiland "
-                                   "(schepen varen de oostgeul; zie de lijn hierboven)"},
-            "geometry": {"type": "LineString",
-                         "coordinates": [[117.7373, 30.9102], [117.7696, 31.1091]]}}
+    # ⚠️ GEEN knip van de west-arm (way 226556520): dat is en blijft de
+    # hoofdgeul. De v076-poging die 'm verwijderde was een misinterpretatie —
+    # Lars (2026-07-24): "waarom heb je nu weer de lijn uit de hoofdgeul
+    # verwijderd?" Beide armen bestaan naast elkaar; de oostgeul is de tak
+    # naar de kade. (Het knipWayId-mechanisme in bake_marnet blijft bestaan
+    # voor als er ooit écht een foute arm weg moet.)
     out = {"type": "FeatureCollection",
-           "toelichting": "Handmatig geplaatste vaarweglijnen + knip-instructies "
-                          "(niet uit de OSM-fetch). Herleiden: "
-                          "tools/maak_tongling_oostgeul.py. Voeg toe met "
-                          "bake_marnet.py --extra-vaarwegen.",
-           "features": [feat, knip]}
+           "toelichting": "Handmatig geplaatste vaarweglijnen (niet uit de "
+                          "OSM-fetch). Herleiden: tools/maak_tongling_oostgeul.py. "
+                          "Voeg toe met bake_marnet.py --extra-vaarwegen.",
+           "features": [feat]}
     pad_uit = os.path.join(V2, "data", "vaarwegen-handmatig.geojson")
     json.dump(out, open(pad_uit, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     print(f"geschreven: {pad_uit}")
