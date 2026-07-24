@@ -174,6 +174,139 @@ def componenten(n_knopen, edges):
     return [vind(i) for i in range(n_knopen)]
 
 
+HEAL_LASTMILE_M = 200.0   # naad-cap knoop→knoop: klein op rail, ruim binnen de tier-2-norm (2 km)
+HEAL_HOOFD_KM = 1000.0    # "hoofdnet" = component ≥ dit (koppelNetten's spoor-hoofdlijn-drempel)
+
+
+def vind_lastmile_connectoren(nodes, edges, geometrie, labels):
+    """Zoekt de naden die de last-mile-clusters aan het spoornet knopen. OSM tekent
+    de spur/siding/yard-ways wél maar knoopt de knopen op de junctie niet altijd
+    aan elkaar — bij Tongling hangt de smelter via een 107 m-gaatje aan een 179 km-
+    netwerk, dat op zijn beurt via 16 m aan het volgende stuk. Geen echte afstand,
+    een OSM-topologie-gat (de LAR-520-klasse).
+
+    ⚠️ TRANSITIEF en VERTEX-op-VERTEX. Niet alleen naar het 1000 km-hoofdnet (dan
+    mis je het 179 km-tussennet), maar greedy op de kleinste naad: knoop een
+    'besmet' cluster (bevat last-mile-rail) aan het net waar het het dichtst bij
+    ligt, propageer de besmetting, herhaal — zo groeit smelter→179 km→hoofdnet aan
+    elkaar. De connectoren zijn coördinaatparen van BESTAANDE vertices, dus de
+    HERBAKE (bouw) laat ze samenvallen — geen coördinaat-round-trip, geen edge-
+    split (die brak eerder de meta), niets verzonnen: alleen naden ≤ cap.
+
+    Geeft een lijst connector-geometrieën [[lon,lat],[lon,lat]] terug.
+    """
+    if not any(l == "spoor-lastmile" for l in labels):
+        return []
+    wortel = componenten(len(nodes), edges)
+    comp_km = defaultdict(float)
+    for i, (a, _b) in enumerate(edges):
+        comp_km[wortel[a]] += sum(bm.gc_km(geometrie[i][j], geometrie[i][j + 1])
+                                  for j in range(len(geometrie[i]) - 1))
+    besmet0 = {wortel[edges[i][0]] for i, l in enumerate(labels) if l == "spoor-lastmile"}
+
+    # cel-venster rond de besmette clusters + alle vertices daarin (per component)
+    CEL = 0.002
+    venster = set()
+    for i, (a, _b) in enumerate(edges):
+        if wortel[a] not in besmet0:
+            continue
+        for lo, la in geometrie[i]:
+            ci, cj = round(lo / CEL), round(la / CEL)
+            for di in range(-2, 3):
+                for dj in range(-2, 3):
+                    venster.add((ci + di, cj + dj))
+    V = []                     # (comp_root, lon, lat)
+    grid = defaultdict(list)
+    for i, _e in enumerate(edges):
+        for lo, la in geometrie[i]:
+            cel = (round(lo / CEL), round(la / CEL))
+            if cel in venster:
+                grid[cel].append(len(V))
+                V.append((wortel[edges[i][0]], lo, la))
+
+    # kandidaat-naden: vertex ↔ vertex van een ANDER component, ≤ cap
+    kand = []
+    for vi, (rv, lo, la) in enumerate(V):
+        ci, cj = round(lo / CEL), round(la / CEL)
+        for di in range(-2, 3):
+            for dj in range(-2, 3):
+                for uj in grid.get((ci + di, cj + dj), ()):
+                    if uj <= vi:
+                        continue
+                    ru, ulo, ula = V[uj]
+                    if ru == rv:
+                        continue
+                    g = bm.gc_km((lo, la), (ulo, ula))
+                    if g * 1000 <= HEAL_LASTMILE_M:
+                        kand.append((g, (lo, la), (ulo, ula), rv, ru))
+    kand.sort(key=lambda k: k[0])
+
+    # greedy union met besmetting-propagatie: verbind alleen als één kant besmet is
+    lu = {}
+    def lf(x):
+        lu.setdefault(x, x)
+        while lu[x] != x:
+            lu[x] = lu[lu[x]]
+            x = lu[x]
+        return x
+    besmet = set(besmet0)
+    conns = []
+    for g, p, q, rv, ru in kand:
+        a, b = lf(rv), lf(ru)
+        if a == b:
+            continue
+        if a not in besmet and b not in besmet:
+            continue
+        lu[a] = b
+        besmet.add(lf(b))
+        conns.append([list(p), list(q)])
+    return conns
+
+
+def drop_onverbonden(nodes, edges, geometrie, soorten, labels, meta):
+    """Gooit last-mile/heal-edges weg die ná de heal nóg op een klein (< hoofdnet)
+    component liggen. Een losstaand spoortje is schadelijk: een aansluiting kan
+    erop snappen i.p.v. op de echte lijn (dat brak Cerrejón→Bolívar). Regel: de
+    pass mag alleen VERBINDEN, nooit een nieuw snap-doel maken."""
+    w2 = componenten(len(nodes), edges)
+    ck2 = defaultdict(float)
+    for i, (a, _b) in enumerate(edges):
+        ck2[w2[a]] += sum(bm.gc_km(geometrie[i][j], geometrie[i][j + 1])
+                          for j in range(len(geometrie[i]) - 1))
+    houd = [i for i in range(len(edges))
+            if not (labels[i] in ("spoor-lastmile", "spoor-heal")
+                    and ck2[w2[edges[i][0]]] < HEAL_HOOFD_KM)]
+    gedropt = len(edges) - len(houd)
+    if not gedropt:
+        return 0
+    edges[:] = [edges[i] for i in houd]
+    geometrie[:] = [geometrie[i] for i in houd]
+    soorten[:] = [soorten[i] for i in houd]
+    labels[:] = [labels[i] for i in houd]
+    nm = {}
+    for idx, lab in enumerate(labels):
+        if lab not in nm:
+            nm[lab] = {"modus": "weg" if lab.startswith("weg") else "spoor",
+                       "edgeVan": idx, "edgeTot": idx + 1, "km": 0.0,
+                       "bron": meta.get(lab, {}).get("bron", "")}
+        nm[lab]["edgeTot"] = idx + 1
+        nm[lab]["km"] += sum(bm.gc_km(geometrie[idx][j], geometrie[idx][j + 1])
+                             for j in range(len(geometrie[idx]) - 1))
+    for lab in nm:
+        nm[lab]["km"] = round(nm[lab]["km"], 1)
+    meta.clear()
+    meta.update(nm)
+    # WEES-KNOPEN opruimen: de drop laat knopen zonder edge achter, en de router
+    # snapt een aansluiting op de dichtste KNOOP — een 0-graads wees kaapt zo een
+    # snap van de echte lijn (dat brak Cerrejón→Bolívar).
+    gebruikt_kn = sorted({a for e in edges for a in e})
+    if len(gebruikt_kn) < len(nodes):
+        hermap = {oud: nieuw for nieuw, oud in enumerate(gebruikt_kn)}
+        nodes[:] = [nodes[o] for o in gebruikt_kn]
+        edges[:] = [(hermap[a], hermap[b]) for a, b in edges]
+    return gedropt
+
+
 def schrijf_bin(nodes, edges, geometrie, soorten, pad):
     uit = bytearray()
     x = y = 0
@@ -219,6 +352,18 @@ def main():
     per_label, bronnen = laad_lijnen()
     nodes, edges, geometrie, soorten, labels, meta = bouw(per_label)
     print(f"\n  {len(per_label):,} labels · {len(nodes):,} knopen · {len(edges):,} edges")
+    # LAST-MILE HEAL, in twee bouw-passes: (1) vind de naden die de last-mile-
+    # clusters transitief aan het net knopen, (2) voeg ze als geometrie toe en
+    # HERBAK — bouw laat de connector-uiteinden (bestaande vertices) samenvallen,
+    # dus alles knoopt schoon aaneen zonder edge-split of coördinaat-round-trip.
+    conns = vind_lastmile_connectoren(nodes, edges, geometrie, labels)
+    if conns:
+        per_label.setdefault("spoor-heal", []).extend(
+            ({"label": "spoor-heal", "regio": "heal", "modus": "spoor",
+              "gauge": "onbekend", "hs": False}, pts) for pts in conns)
+        nodes, edges, geometrie, soorten, labels, meta = bouw(per_label)
+    gedropt = drop_onverbonden(nodes, edges, geometrie, soorten, labels, meta)
+    print(f"  last-mile heal: {len(conns)} naden gelegd · {gedropt} onverbonden edges gedropt")
 
     # ⚠️ Datumgrens: MARNET had 15 knopen dubbel op lon ±180. Relevant voor
     # Tsjoekotka en Alaska; wrap_lon is bij het laden al toegepast, dit toetst het.
