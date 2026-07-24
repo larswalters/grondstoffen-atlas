@@ -43,22 +43,28 @@ V2 = os.path.dirname(HERE)
 # van way 226556520 (长江), zodat de bake er een gedeelde knoop van maakt.
 # ⚠️ NIET diagonaal oversteken naar de oostelijke junctie (v073-fout: snijdt
 # dwars over het eiland) en NIET de 27 km-lus om de top (v070).
+# Elk punt is met de hand op de Esri-satelliet (z14, grid 0,01°) in het MIDDEN
+# van de vaargeul gelegd — de v074-punten hingen tegen het mid-riviereiland
+# (31,05–31,07), de oostoever (31,03) en liepen zuid van de kade over het
+# landbouweiland heen (30,93–30,96, daar ligt de geul óóstelijk van het eiland).
 LIJN = [
     (117.7373, 30.9102),    # zuid-junctie op de hoofdgeul (vertex [2])
     (117.7480, 30.9230),
-    (117.7570, 30.9390),
-    (117.7625, 30.9540),
-    (117.7660, 30.9690),
-    (117.7695, 30.9790),
+    (117.7590, 30.9320),
+    (117.7692, 30.9410),
+    (117.7713, 30.9540),
+    (117.7700, 30.9640),
+    (117.7687, 30.9700),
+    (117.7690, 30.9790),
     (117.7718, 30.98656),   # kade (aansluiting cu-tongling-kade)
-    (117.7725, 30.9990),
-    (117.7705, 31.0130),
-    (117.7675, 31.0280),
-    (117.7650, 31.0430),
-    (117.7638, 31.0580),
-    (117.7638, 31.0730),
-    (117.7650, 31.0880),
-    (117.7680, 31.1000),
+    (117.7700, 30.9990),
+    (117.7680, 31.0130),
+    (117.7655, 31.0280),
+    (117.7648, 31.0430),
+    (117.7670, 31.0580),
+    (117.7670, 31.0730),
+    (117.7660, 31.0880),
+    (117.7660, 31.1000),
     (117.7696, 31.1091),    # noord-junctie op de hoofdgeul (vertex [7])
 ]
 

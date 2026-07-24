@@ -9,7 +9,7 @@
     "regio": "cn",
     "zeevaart": false,
     "signaal": "ship",
-    "km": 22.936,
+    "km": 23.476,
     "wayId": "tongling-oostgeul",
     "bron": "Tongling-oostgeul noordwaarts: kade → door de geul → junctie op de Yangtze-hoofdgeul bij de NOORDPUNT (117,8016/31,1331, vertex van way 226556520). Punten t/m 31,0975 water-constrained afgeleid uit natural=water (China-extract, ODbL, v070-afleiding); OSM heeft geen waterway-middellijn voor deze geul. Tracé geverifieerd op satelliet (Lars, 2026-07-24)."
    },
@@ -25,19 +25,27 @@
       30.923
      ],
      [
-      117.757,
-      30.939
+      117.759,
+      30.932
      ],
      [
-      117.7625,
+      117.7692,
+      30.941
+     ],
+     [
+      117.7713,
       30.954
      ],
      [
-      117.766,
-      30.969
+      117.77,
+      30.964
      ],
      [
-      117.7695,
+      117.7687,
+      30.97
+     ],
+     [
+      117.769,
       30.979
      ],
      [
@@ -45,35 +53,35 @@
       30.98656
      ],
      [
-      117.7725,
+      117.77,
       30.999
      ],
      [
-      117.7705,
+      117.768,
       31.013
      ],
      [
-      117.7675,
+      117.7655,
       31.028
      ],
      [
-      117.765,
+      117.7648,
       31.043
      ],
      [
-      117.7638,
+      117.767,
       31.058
      ],
      [
-      117.7638,
+      117.767,
       31.073
      ],
      [
-      117.765,
+      117.766,
       31.088
      ],
      [
-      117.768,
+      117.766,
       31.1
      ],
      [
