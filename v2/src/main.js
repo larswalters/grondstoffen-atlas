@@ -113,7 +113,7 @@ Promise.all([laadMarnet(CONFIG.radius, GLOBE.klemOpHorizon), laadHavens()])
 // aangewezen knooppunten — Lars' volgorde. Een ontbrekend bestand is geen fout
 // maar "nog niet gebakken": de rest van de atlas moet gewoon doorladen.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "080", GLOBE.klemOpHorizon)
+laadLandnet(CONFIG.radius, "081", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);

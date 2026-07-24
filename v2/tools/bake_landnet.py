@@ -365,15 +365,17 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
             if cel in venster:
                 grid[cel].append((i, j, lo, la))
 
-    def lokaal_bereikbaar(start, doelen, cap_km):
-        """Begrensde Dijkstra over het spoornet: raakt `start` een van de
-        `doelen` binnen cap_km?"""
+    def bereik(start, cap_km):
+        """Begrensde Dijkstra over het spoornet: alle knopen ≤ cap_km vanaf
+        `start`. Als SET, want per uiteinde toetsen we meerdere kandidaten —
+        de eerste (dichtstbijzijnde) kandidaat is vaak een spoortje van het
+        EIGEN emplacement (bereikbaar, dus geen gat), terwijl de échte
+        ontbrekende junctie er 100 m achter ligt (Guixi-zuidtak: eigen web op
+        23 m, de corridor op 181 m — en die tweede is het gat)."""
         afst = {start: 0.0}
         rij = [(0.0, start)]
         while rij:
             d, u = heapq.heappop(rij)
-            if u in doelen:
-                return True
             if d > afst.get(u, math.inf):
                 continue
             for v, km in adj[u]:
@@ -381,7 +383,7 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
                 if nd <= cap_km and nd < afst.get(v, math.inf):
                     afst[v] = nd
                     heapq.heappush(rij, (nd, v))
-        return False
+        return afst
 
     def uit_richting(k):
         """Eenheidsrichting waarin het uiteinde WIJST (de lijn uit), lokaal vlak.
@@ -424,8 +426,11 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
     cos_evenwijdig = math.cos(math.radians(OMWEG_HOEK_GR))
     cos_vooruit = math.cos(math.radians(OMWEG_VOORUIT_GR))
 
-    # kandidaten: per uiteinde de dichtstbijzijnde vreemde vertex ≤ cap die de
-    # richtings-guards haalt
+    # kandidaten: per uiteinde ALLE vreemde vertices ≤ cap die de richtings-
+    # guards halen, dichtstbijzijnde eerst — en dan de eerste die lokaal
+    # ONbereikbaar is. Niet alleen de allerdichtstbijzijnde toetsen: die is
+    # vaak een spoortje van het eigen emplacement (bereikbaar → "geen gat"),
+    # terwijl de echte ontbrekende junctie er net achter ligt.
     kand = []
     for k in uiteinden:
         lo, la = nodes[k]
@@ -436,7 +441,7 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
             continue
         c = math.cos(math.radians(la))
         ci, cj = round(lo / CEL), round(la / CEL)
-        best, best_e, best_ll = math.inf, -1, None
+        passend = []
         for di in range(-2, 3):
             for dj in range(-2, 3):
                 for ei, vj, vlo, vla in grid.get((ci + di, cj + dj), ()):
@@ -446,7 +451,7 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
                     if gauge and g2 and gauge != g2:
                         continue
                     d = bm.gc_km((lo, la), (vlo, vla))
-                    if d * 1000.0 > OMWEG_GAT_M or d >= best:
+                    if d * 1000.0 > OMWEG_GAT_M:
                         continue
                     if d > 0:              # samenvallende vertices: sterkste bewijs, geen hoekruis
                         ldir = lijn_richting(ei, vj)
@@ -457,18 +462,60 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
                             n = math.hypot(dx, dy)
                             if n > 0 and (dx * richting[0] + dy * richting[1]) / n < cos_vooruit:
                                 continue   # doel opzij/achter — dwarssport tussen parallellen
-                    best, best_e, best_ll = d, ei, (vlo, vla)
-        if best_e >= 0:
-            kand.append((best, k, best_e, best_ll))
+                    passend.append((d, ei, (vlo, vla)))
+        # óók de NADERING van de tip op de lijnstukken zelf: vertex-schaarste
+        # verbergt anders een junctie — bij Guixi kruiste de fabriekstak de
+        # junctie-stub op 8 m, maar het dichtstbijzijnde vertex lag 55 m
+        # ACHTER de tip en sneuvelde op de vooruit-guard. De Tongling-les één
+        # slag verder: het knoopgat was groot terwijl het vertexgat klein was;
+        # hier is het vertexgat groot terwijl de LIJN er fysiek doorheen loopt.
+        # Binnen OMWEG_ZIJWAARTS_M projectie-afstand telt de lijn als
+        # samenvallend; doelvertex = dichtstbijzijnde bestaande vertex van dat
+        # segment (de pass legt nooit nieuwe punten — herbake last vertices).
+        for di in range(-2, 3):
+            for dj in range(-2, 3):
+                for ei, vj, vlo, vla in grid.get((ci + di, cj + dj), ()):
+                    if ei in eigen:
+                        continue
+                    pts2 = geometrie[ei]
+                    if vj + 1 >= len(pts2):
+                        continue
+                    g2 = spoorwijdte(labels[ei])
+                    if gauge and g2 and gauge != g2:
+                        continue
+                    p, q2 = pts2[vj], pts2[vj + 1]
+                    # projectie van (lo,la) op segment p-q2, lokaal vlak
+                    px, py = (q2[0] - p[0]) * c, q2[1] - p[1]
+                    seg2 = px * px + py * py
+                    if seg2 <= 0:
+                        continue
+                    wx, wy = (lo - p[0]) * c, la - p[1]
+                    t = max(0.0, min(1.0, (wx * px + wy * py) / seg2))
+                    prj = (p[0] + t * (q2[0] - p[0]), p[1] + t * (q2[1] - p[1]))
+                    dproj = bm.gc_km((lo, la), prj)
+                    if dproj * 1000.0 > OMWEG_ZIJWAARTS_M:
+                        continue
+                    sn = math.hypot(px, py)
+                    if sn > 0 and abs((px * richting[0] + py * richting[1]) / sn) < cos_evenwijdig:
+                        continue           # segment staat haaks op de stub — kruising
+                    doel = p if bm.gc_km((lo, la), p) <= bm.gc_km((lo, la), q2) else q2
+                    passend.append((dproj, ei, (doel[0], doel[1])))
+        if not passend:
+            continue
+        passend.sort(key=lambda x: x[0])
+        afst = bereik(k, OMWEG_LOKAAL_KM)
+        for d, ei, ll in passend:
+            a, b = edges[ei]
+            if a in afst or b in afst:
+                continue                   # al verbonden — echte junctie, geen gat
+            kand.append((d, k, ei, ll))
+            break                          # dichtstbijzijnde ónbereikbare wint
     kand.sort(key=lambda x: x[0])
 
     # greedy: kleinste gat eerst, één naad per junctie-cel-paar (tweeling-
     # uiteinden die naar elkaars lijn wijzen leggen anders dubbele naden)
     conns, gedaan = [], set()
     for gat, k, ei, (vlo, vla) in kand:
-        doelen = set(edges[ei])
-        if lokaal_bereikbaar(k, doelen, OMWEG_LOKAAL_KM):
-            continue                       # echte junctie bestaat al — geen gat
         lo, la = nodes[k]
         sleutel = tuple(sorted([(round(lo / CEL), round(la / CEL)),
                                 (round(vlo / CEL), round(vla / CEL))]))
