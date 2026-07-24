@@ -1,5 +1,18 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-24 (routebrief-werkwijze: corridors als controleerbare puntenlijst; AIS-net corridor-first)*
+*Last updated: 2026-07-24 (schone bol: waternet verwijderd, AIS-ombouw gestart — M27)*
+
+## Stand 2026-07-24 (laat) — schone bol, de AIS-graaf komt
+
+**Besluit Lars: alles nat weg** — het volledige waternet (marnet zee + binnenvaart) is van de
+bol en uit de bake verwijderd zodat het natte net clean uit AIS-density opgebouwd wordt
+("dan is het net ook veel dichter"). Backup: tag `pre-ais-net` + branch `backup/pre-ais-net`
+(`?v=082`, toets 30/30). Live `?v=083`: bol = tegels + vectorwereld + landnet + havens
+(ankers). Water-toetsen geparkeerd via zelfopheffende guard (heffen zichzelf op zodra er
+weer een waternet-bake ligt); keten/router/stromen-code blijft in de repo, ongebruikt.
+Bron binnen: World Bank "Global Shipping Traffic Density" **Commercial** (458 MB,
+gratis/CC-BY, 0,005°≈500 m, jan 2015–feb 2021; incl. BULK CARRIER/ORE CARRIER/PUSHER
+TUG/INLAND TANKER → óók binnenvaart) in `v2/build-cache/ais/`. Volgende: raster verkennen
+(Rijn/Maasvlakte) → eerste zelfgelegde knopen (pilot Maasvlakte, brief = ankers, AIS = geul).
 
 ## Stand 2026-07-24 (avond) — de routebrief stuurt, het net volgt
 

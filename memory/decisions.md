@@ -1833,3 +1833,17 @@ weer uit" — hij arceerde geel de verwijderde hoofdgeul ("we waren zo dichtbij"
 naar de kade. Het knipWayId-mechanisme blijft bestaan voor als er ooit écht een foute arm weg
 moet. **Why/les:** bij een aanwijzing over wélke lijn weg moet eerst laten aanwijzen op een
 screenshot i.p.v. de meest ingrijpende lezing bouwen — dat kostte een extra live-ronde.
+
+## 2026-07-24 — Alles nat weg: clean slate voor de AIS-watergraaf (M27)
+**Wat:** het volledige waternet (marnet zee + binnenvaart) van de bol en uit de bake
+verwijderd (`?v=083`); het natte net wordt opnieuw opgebouwd uit World Bank AIS-density
+(0037580, Commercial), corridor-first: brief = ankers, AIS = geul. Backup: tag
+`pre-ais-net` + branch `backup/pre-ais-net` (`?v=082`, toets 30/30).
+**Waarom (Lars):** de router koos corridors zonder kennis van de werkelijkheid en het
+OSM-verzoende net bleef bron van fouten (Beerkanaal, Tongling); AIS-density laat zien waar
+schepen écht varen en levert een veel dichter net. Expliciet gekozen boven "alleen
+binnenvaart" en "alleen visueel verbergen". De eerdere nuance "open-zeenet blijft zolang
+het werkt" (routebrief-sessie) is hiermee ingehaald.
+**Gevolg:** water-routering/-toetsen tijdelijk uit (zelfopheffende guards); havens/
+knooppunten/aansluitingen blijven als aanhechtpunten; keten/router/stromen-code blijft in
+de repo voor het AIS-net.

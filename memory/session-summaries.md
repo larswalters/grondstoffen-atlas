@@ -1249,3 +1249,14 @@ de toets ving meteen de Beerkanaal-fout en bevestigde de Oude Maas. AIS-net corr
 World Bank Global Shipping Traffic Density geverifieerd (gratis, ~500 m, wereldwijd incl.
 China). Design-docs commit a595095, gepusht.
 Vault: wiki/projects/General/grondstoffen-atlas/2026-07-24-grondstoffen-atlas-routebrieven-ais-net.md
+
+## 2026-07-24 (laat) — Schone bol: waternet eruit voor de AIS-ombouw (`?v=083`)
+Besluit Lars: alles nat weg, clean slate voor de AIS-graaf ("dan is het net ook veel
+dichter"). Backup tag `pre-ais-net`/branch `backup/pre-ais-net` (`?v=082`, 30/30) →
+sloop (commit `960ad15`): bol = tegels + vectorwereld + landnet + havens-als-ankers;
+marnet.bin/json weg; HUD Zeeroutes/route-test/stromen eruit; toets_routes +
+toets_stromen_14 geparkeerd via zelfopheffende guard, toets_spoor_aansluiting (land-only)
+groen. World Bank AIS-density Commercial (458 MB, gratis/CC-BY, incl. PUSHER TUG/INLAND
+TANKER) → `v2/build-cache/ais/`; rasterio 1.5 + scikit-image 0.26 geïnstalleerd.
+Volgende: raster verkennen (Rijn/Maasvlakte) → pilot Maasvlakte (brief = ankers, AIS = geul).
+Vault: [[2026-07-24-grondstoffen-atlas-schone-bol-ais-sloop]]

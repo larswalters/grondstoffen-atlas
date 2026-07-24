@@ -1,6 +1,25 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (routebrief-werkwijze + eerste brief Cerrejón→Ruhr, commit a595095)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (M27: schone bol — waternet eruit voor de AIS-ombouw, `?v=083`)*
+
+> **🌊 M27 · SCHONE BOL — HET WATERNET IS ERUIT VOOR DE AIS-OMBOUW (2026-07-24, laatste).**
+> **Besluit Lars: alles nat weg** (zee + binnenvaart, expliciet gekozen boven "alleen
+> binnenvaart" of "alleen visueel verbergen") — het natte net wordt clean opgebouwd uit
+> **World Bank AIS-density** (0037580, Commercial 458 MB in `v2/build-cache/ais/`, gratis/
+> CC-BY, 0,005°≈500 m, incl. PUSHER TUG + INLAND TANKER = binnenvaart), corridor-first:
+> **brief = ankers, AIS = geul**. De nuance "open-zeenet blijft zolang het werkt" is hiermee
+> ingehaald.
+> **Backup: tag `pre-ais-net` + branch `backup/pre-ais-net`** (commit `73cf5d2`, `?v=082`,
+> toets_routes 30/30) — dáár leven route-test, keten-router, stromenlaag en de oude bakes.
+> **Live `?v=083`** (commit `960ad15`): bol = tegels + vectorwereld + landnet + havens
+> (ankers, kleuren nog uit de oude ports.json-bake); `marnet.bin`/`marnet.json` verwijderd;
+> HUD-secties Zeeroutes/route-test/stromen weg. `toets_routes.mjs` + `toets_stromen_14.mjs`
+> **geparkeerd via een zelfopheffende guard** (geen marnet.bin → melding + exit 0; nieuwe
+> waternet-bake → draaien vanzelf); `toets_spoor_aansluiting.mjs` (land-only) draait door.
+> Keten/router/stromen-code blijft in de repo, alleen `main.js` importeert hem niet meer.
+> **→ VOLGENDE:** zip uitpakken → raster verkennen (helderheid Rijn/Maasvlakte) → **pilot
+> Maasvlakte**: eerste zelfgelegde knopen (de Beerkanaal-fix wordt onderdeel van de nieuwe
+> graaf) → opschalen langs de vier pilotcorridors. Gereedschap: rasterio 1.5 + scikit-image.
 
 > **📋 DE ROUTEBRIEF — NIEUWE WERKWIJZE (2026-07-24, laatste).** Besluit Lars: per stroom een
 > **routebrief** die de werkelijke corridor vastlegt als controleerbare puntenlijst — elk dorp/

@@ -1,17 +1,28 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (routebrief-werkwijze + eerste brief Cerrejón→Ruhr, commit `a595095`)*
+*Last updated: 2026-07-24 (schone bol `?v=083`; AIS-density binnen — M27 loopt)*
 
-## 🔴 START HIER
+## 🔴 START HIER — M27: de AIS-watergraaf
 
-* **Routebrief-vervolg (werkwijze staat, besluit Lars — zie `v2/design/routebrief-werkwijze.md`):**
-  (a) **Beerkanaal-fix**: het Rijnbeen van de kolenstroom via-punt→via-punt langs de brief
-  routeren — EMO → Suurhoffbrug → Hartelkanaal (níet het Beerkanaal), eindpunt Schwelgern
-  Rijn-km 790,20; brief: `v2/design/routebrieven/kolen-cerrejon-ruhr.md` (§Toets).
-  (b) **World Bank "Global Shipping Traffic Density"** downloaden (Data Catalog 0037580,
-  GeoTIFF ~500 m, gratis) → eerste zelfgelegde knopen van het corridor-first natte net rond
-  de Maasvlakte (pilot). Empirisch toetsen hoe helder Rijn/Yangtze in het raster staan.
-  (c) **Routebrieven voor de andere drie pilotstromen** — Beilun→Guixi (China-spoor) is de
-  zware (grootste kans op een verkeerde corridor).
+* **`v2/build-cache/ais/shipdensity_commercial.zip` uitpakken en verkennen** (rasterio staat):
+  hoe helder staan Rijn/Maasvlakte (en later Yangtze) in het 500 m-raster? Empirische toets
+  uit de routebrief-sessie.
+* **Pilot Maasvlakte**: eerste zelfgelegde knopen/edges van het nieuwe natte net —
+  **brief = ankers** (routebrief kolen Cerrejón→Ruhr: EMO → Suurhoffbrug → Hartelkanaal,
+  níet het Beerkanaal), **AIS-density = geul**. De Beerkanaal-fix wordt zo onderdeel van de
+  nieuwe graaf i.p.v. een patch op de oude.
+* **Opschalen langs de vier pilotcorridors**; routebrieven voor de andere drie stromen —
+  Beilun→Guixi (China-spoor) is de zware.
+* *Herinnering:* de water-toetsen (`toets_routes.mjs`, `toets_stromen_14.mjs`) heffen hun
+  parkering zelf op zodra er weer een waternet-bake ligt — verwachtingen dan herijken op het
+  AIS-net (de oude 30/30-stand leeft op tag `pre-ais-net`).
+
+## ✅ AFGEROND 2026-07-24 — SCHONE BOL: WATERNET ERUIT (live `?v=083`, commit `960ad15`)
+
+Besluit Lars: alles nat weg (zee + binnenvaart), clean slate voor de AIS-graaf. Backup tag
+`pre-ais-net` + branch `backup/pre-ais-net` (`?v=082`, 30/30). Bol = tegels + vectorwereld +
+landnet + havens-als-ankers; marnet.bin/json verwijderd; HUD-secties Zeeroutes/route-test/
+stromen weg; water-toetsen geparkeerd (zelfopheffende guard), land-toets draait door.
+AIS-bron gedownload (Commercial 458 MB, gratis/CC-BY) + rasterio/scikit-image geïnstalleerd.
 * **Optioneel: de 22 grove AFGEKNIPT-sites breder uitrollen.** De last-mile-pass draait nu op de
   15 aangewezen aansluitingen; de brede detector (`toets_spoor_aansluiting.mjs`) vond nog **22
   AFGEKNIPT** industriële nodes (Fresnillo, Kalgoorlie, Norilsk, Hunan-Ag…) — dat zijn de grove
