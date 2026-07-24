@@ -1,6 +1,37 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (industrieel last-mile-spoor geheeld, live ?v=072: Tongling/Beilun/Guixi/Duisburg-sidings hechten aan het net; volgende = optioneel de 22 grove AFGEKNIPT-sites)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (Tongling-oostgeul als graaf, satelliet-gelegd + west-arm eruit, live ?v=076; open = Lars' visuele check)*
+
+> **🛰️ TONGLING-OOSTGEUL ALS GRAAF — SATELLIET-GELEGD, WEST-ARM ERUIT (2026-07-24, laatste).**
+> Live `?v=076` (commits `6327707`→`68c33c9`). **→ VOLGENDE: Lars' visuele check op de
+> west-arm-verwijdering** (toets 30/30; zie `memory/next-actions.md`).
+>
+> **DE WERKWIJZE-DOORBRAAK — OSM'S WATERVLAK IS GEEN WAARHEID, DE SATELLIET WEL.** OSM kent de
+> Tongling-oostgeul (waar de schepen echt varen, kade aan de oostoever) alleen als onvolledig
+> `natural=water`-vlak: een U-lus om een zandbank. Elke afleiding met `middellijn_uit_vlakken.py`
+> gaf daarom de 27 km-lus — en twee live-rondes gingen fout (v073 diagonaal over het eiland,
+> v074 punten tegen de oevers/het landbouweiland). Lars: *"kan je niet gewoon zelf kijken?"* →
+> **Esri World Imagery-tegels lokaal gestitcht (z14, PIL) met een 0,01°-grid, de lijn erop
+> getekend, elk punt visueel in het midden van de vaargeul gelegd** — in één ronde goed (v075,
+> Lars: *"die lichtblauwe lijn is helemaal goed"*). Dit is voortaan de STANDAARD voor handmatige
+> vaarweglijnen; NL-kanalen van 3 m lukten wél omdat die als bevaarbare *lijn* gemapt zijn.
+>
+> **DE LIJN:** 18 punten, zuid-junctie (117,7373/30,9102 = vertex [2] van way 226556520) → kade
+> (117,7718/30,98656) → noord-junctie (117,7696/31,1091 = vertex [7]). Uiteinden op exacte
+> vertices → de bake maakt gedeelde knopen (echte juncties, geen heal-afhankelijkheid).
+> `tools/maak_tongling_oostgeul.py` volledig herschreven; gecommit in
+> `data/vaarwegen-handmatig.geojson`.
+>
+> **NIEUW KNIP-MECHANISME (`bake_marnet.bulklaag`):** een extra-vaarwegen-feature met `knipWayId`
+> is een instructie — verwijder uit die bulk-way het stuk tussen de twee geometry-punten
+> (dichtstbijzijnde vertices, guard ≤1 km). Toegepast op de **west-arm om het Tongling-eiland
+> (22,8 km, vertex 2..7)**: Lars — *"die rode mag er dan weer uit."* De rivier én de doorgaande
+> Wuhan-vaart lopen nu dóór de oostgeul (been 686 km, +1 km). Zo vervángt een handmatige lijn een
+> fout gemapte OSM-arm i.p.v. ernaast te liggen, reproduceerbaar bij elke rebake.
+>
+> **Gemeten:** toets_routes **30/30 elke ronde** · zee-invarianten exact (19.610/89) ·
+> Collahuasi→Tongling 0 gaten (binnenbeen 530 km). **Kleur = grondstof: bevestigd besloten**
+> (het open ontwerppunt vervalt). Versies `?v=073`→`076`, data-versies meegebumpt.
 
 > **🚂 INDUSTRIEEL LAST-MILE-SPOOR GEHEELD (2026-07-24, laatste).** Live `?v=072` (commit `6266aba`),
 > Lars' visuele go: *"mooi tot in de haven en bij de grote fabrieken een lijntje aangesloten op het
@@ -1663,6 +1694,16 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-24 · Satelliet-overlay is de standaard voor handmatige vaarweglijnen** — OSM's
+  watervlak is geen waarheid over waar schepen varen (Tongling-oostgeul = onvolledige U-lus →
+  elke afleiding gaf 27 km om); Esri-tegels lokaal stitchen (z14, 0,01°-grid) en elk punt
+  visueel in het geul-midden leggen. Nooit meer een handmatige lijn live op alleen
+  OSM-watermaskers of beredeneerde coördinaten.
+- **2026-07-24 · knipWayId: een handmatige lijn mag een foute OSM-arm vervángen** — extra-
+  vaarwegen-feature met `knipWayId` = knip-instructie in `bulklaag` (stuk tussen twee punten
+  eruit, guard ≤1 km); west-arm Tongling (22,8 km) verwijderd, doorgaande vaart via de oostgeul.
+- **2026-07-24 · Handmatige lijn-uiteinden op exacte vertices van de moeder-way** — dan knipt
+  de bake daar en ontstaan gedeelde knopen (echte juncties) zonder op de tier-1-heal te leunen.
 - **2026-07-24 · Industrieel last-mile-spoor: additief insluiten, niet het globale filter aan** —
   het M25-filter dropt álle `service=`-rail (juist het last-mile-spoor); globaal insluiten blies de
   China-ijking +22% op. `fetch_service_lastmile.py` sluit `service=spur/siding/yard` alléén binnen

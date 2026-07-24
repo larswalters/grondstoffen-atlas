@@ -1220,3 +1220,16 @@ healen. Lars pakt in een verse sessie een spoor- + riviernet-heal op (LAR-520-fa
 1.823 km los, EU-spoor, Yangtze-braid, Maasvlakte-riviergat) zodat de graaf beide kanten van het
 eiland verbindt en de handmatige omweg vervalt. Vault:
 [[2026-07-23-grondstoffen-atlas-tongling-verfijning]].
+
+## 2026-07-24 — Tongling-oostgeul als graaf (satelliet-gelegd, west-arm eruit; live ?v=076)
+De oostgeul als échte graaf-tak: 18 punten zuid-junctie → kade → noord-junctie (exacte
+vertices van way 226556520). Drie live-rondes: v073 (diagonaal over het eiland — fout),
+v074 (stippen-lijn, tegen oevers/landbouweiland — fout), v075 (satelliet-doorbraak: Esri
+z14-tegels gestitcht + 0,01°-grid, elk punt visueel in het geul-midden — Lars: "die
+lichtblauwe lijn is helemaal goed"), v076 (west-arm 22,8 km eruit via nieuw
+knipWayId-mechanisme in bake_marnet.bulklaag — Lars: "die rode mag er dan weer uit").
+R'dam→Wuhan routeert nu dóór de oostgeul (686 km been); Collahuasi→Tongling 0 gaten
+(binnenbeen 530 km); toets_routes 30/30 elke ronde; zee-invarianten exact. Kleur=grondstof
+bevestigd besloten. Werkwijze-les vastgelegd (ook als globale memory): satelliet-overlay is
+de standaard voor handmatige vaarweglijnen; OSM-watervlak is geen waarheid.
+Vault: wiki/projects/General/grondstoffen-atlas/2026-07-24-grondstoffen-atlas-tongling-oostgeul-graaf.md

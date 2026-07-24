@@ -1769,3 +1769,28 @@ WPI = kandidaat wereldwijde verrijking/filter (verifieren: curl 403, Browser-pan
 EMODnet CC-BY = EU-positiecorrectie (mediaan 0,60 km van de kust, LOCODE-gekoppeld);
 UNECE Blue Book heeft RAILACCESS maar licentie verbiedt herdistributie -> alleen redactionele
 meetlat bij het aanwijzen; UN/LOCODE alleen als sleutel (hele boogminuten = ~1,85 km resolutie).
+
+## 2026-07-24 · Tongling-oostgeul: satelliet-overlay is de standaard voor handmatige vaarweglijnen
+OSM kent de oostgeul alleen als onvolledig `natural=water`-vlak (U-lus om een zandbank) — elke
+afleiding met `middellijn_uit_vlakken.py` gaf de 27 km-lus, nooit de geul waar de schepen varen.
+Twee foute live-rondes (v073 diagonaal over het eiland, v074 tegen de oevers) tot Lars' aanwijzing
+*"kan je niet gewoon zelf kijken?"*: Esri World Imagery-tegels lokaal stitchen (z14) met een
+0,01°-grid en elk punt visueel in het midden van de vaargeul leggen. In één ronde goed (v075).
+**Why:** de satelliet is tóch al de skin van de bol — hetzelfde beeld als Lars ziet; OSM-watervlak
+is geen waarheid over bevaarbaarheid. NL-kanalen van 3 m lukten wél omdat die als *lijn* gemapt zijn.
+
+## 2026-07-24 · knipWayId-mechanisme: een handmatige lijn mag een foute OSM-arm vervángen
+Nieuw in `bake_marnet.bulklaag`: een extra-vaarwegen-feature met `knipWayId` is een INSTRUCTIE —
+verwijder uit die bulk-way het stuk tussen de twee punten in de geometry (dichtstbijzijnde
+vertices, guard: knippunten >1 km van de way = fout). Toegepast op way 226556520 (长江): de
+west-arm om het Tongling-eiland (22,8 km, vertex 2..7) eruit; de rivier en de doorgaande
+Wuhan-vaart lopen nu dóór de satelliet-gelegde oostgeul (been 686 km, +1 km). **Why:** zonder knip
+lagen de goede en de foute lijn er allebei (Lars: "die rode mag er dan weer uit") en bleef de
+router de west-arm nemen. De instructie reist mee in het gecommitte `vaarwegen-handmatig.geojson` →
+reproduceerbaar bij elke rebake.
+
+## 2026-07-24 · Oostgeul-uiteinden op exacte vertices van de hoofdgeul-way
+De 18-puntslijn eindigt op vertex [2] (117,7373/30,9102) en vertex [7] (117,7696/31,1091) van way
+226556520 — de bake knipt de hoofdlijn op die knooppunt-cellen en maakt gedeelde knopen = echte
+juncties, zonder op de heal te leunen. **Why:** een uiteinde dat níet op een vertex valt hangt af
+van de tier-1-heal (≤250 m) en kan bij een rebake netto anders uitpakken.

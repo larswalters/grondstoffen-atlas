@@ -1,19 +1,27 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (industrieel last-mile-spoor geheeld, live `?v=072`, Lars' visuele go; volgende = optioneel de 22 grove AFGEKNIPT-sites breder uitrollen)*
+*Last updated: 2026-07-24 (Tongling-oostgeul als graaf, satelliet-gelegd, west-arm eruit — live `?v=076`; open = Lars' visuele check op de west-arm-verwijdering)*
 
-## 🔴 START HIER — de volgende optionele stappen
+## 🔴 START HIER
 
+* **Visuele check Lars op `?v=076`** — de west-arm-verwijdering bij Tongling (toets 30/30
+  groen, R'dam→Wuhan routeert dóór de oostgeul; zijn oog is de acceptatie).
 * **Optioneel: de 22 grove AFGEKNIPT-sites breder uitrollen.** De last-mile-pass draait nu op de
   15 aangewezen aansluitingen; de brede detector (`toets_spoor_aansluiting.mjs`) vond nog **22
   AFGEKNIPT** industriële nodes (Fresnillo, Kalgoorlie, Norilsk, Hunan-Ag…) — dat zijn de grove
   `data/*.js`-coördinaten, niet de aansluitingen. Uitrollen = per site een precieze coördinaat
   opzoeken (veel zijn stad-centroïdes) en `PUNT_EXTRACT` in `fetch_service_lastmile.py` uitbreiden;
   de heal + drop + wees-opruiming werken dan generiek mee.
-* **Tongling-oostgeul (water in) blijft de handmatige lijn** (`data/vaarwegen-handmatig.geojson`,
-  reproduceerbaar via `tools/maak_tongling_oostgeul.py`). Stond los van dit spoor-werk; de grove
-  ~16 km-sprong in de gebakken hoofd-Yangtze is nog steeds BRONgeometrie, niet met de spoor-heal
-  op te lossen. Een fijne her-afleiding van de hoofdgeul (`middellijn_uit_vlakken.py` op het
-  gevlochten stuk) is de structurele fix als je 'm wilt.
+
+## ✅ AFGEROND 2026-07-24 — TONGLING-OOSTGEUL ALS GRAAF (live `?v=076`, commits `6327707`→`68c33c9`)
+
+De oostgeul (waar de schepen echt varen) als échte graaf-tak: 18 punten, zuid-junctie →
+kade → noord-junctie, beide uiteinden op exacte vertices van hoofdgeul-way 226556520 →
+gedeelde knopen. OSM's fout gemapte **west-arm (22,8 km) eruit** via het nieuwe
+`knipWayId`-mechanisme in `bake_marnet.bulklaag` (extra-vaarwegen-feature = knip-instructie,
+guard ≤1 km). **Werkwijze-doorbraak:** OSM's watervlak bleek geen waarheid (elke afleiding
+gaf de 27 km-lus) → Esri-tegels lokaal gestitcht (z14, 0,01°-grid) en elk punt visueel in
+het geul-midden gelegd — voortaan de standaard voor handmatige vaarweglijnen. Kleur =
+grondstof: bevestigd besloten. Toets 30/30 elke ronde; zee-invarianten exact.
 * **Realiteitsronde** (Lars' eigen volgorde: "eerst de rail beter verbinden, dan de realiteit"):
   per dragende site checken of het product écht per trein/truck vertrekt (bedrijfsrapporten) —
   nu is er een stuk minder te vullen omdat de last-mile-sidings al hechten.
