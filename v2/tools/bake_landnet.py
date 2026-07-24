@@ -278,7 +278,15 @@ def vind_lastmile_connectoren(nodes, edges, geometrie, labels):
 
 
 OMWEG_GAT_M = 200.0     # uiteinde → vreemd spoor: geen echte afstand maar een niet-geknoopte junctie
-OMWEG_LOKAAL_KM = 40.0  # binnen deze graafafstand bereikbaar = echte junctie, géén gat
+OMWEG_LOKAAL_KM = 5.0   # binnen deze graafafstand bereikbaar = echte junctie, géén gat.
+                        # ⚠️ Stond op 40 en dat was de verkeerde vraag: een stootblok naast
+                        # een lijn mét een wissel 300 m verderop moet blijven staan (vandaar
+                        # de drempel), maar bij Guixi eindigde de 贵溪疏解线-fabrieksaanloop
+                        # 10-15 m naast de corridor (in OSM óngeknoopt — raw gemeten, de
+                        # LAR-520-klasse) en was de corridor "bereikbaar" via 8,2 km
+                        # emplacement + kopmaken. Een 10 m-gat met een omweg van kilometers
+                        # is een gat. 5 km spaart elk echt rangeer-/stootblokgeval en vangt
+                        # de heuse ontbrekende juncties.
 OMWEG_HOEK_GR = 45.0    # stub moet EVENWIJDIG aan de doellijn lopen: een wissel takt
                         # rakend aan, een kruising staat haaks — een stub die haaks op een
                         # kruisende lijn eindigt is een viaduct/stootblok, geen junctie
