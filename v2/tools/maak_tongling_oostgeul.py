@@ -1,26 +1,25 @@
 #!/usr/bin/env python3
-"""maak_tongling_oostgeul.py — MIDDELLIJN van de Tongling-oostgeul (noordaanvaart).
+"""maak_tongling_oostgeul.py — HAND-GEPLAATSTE middellijn van de Tongling-oostgeul.
 
-Waarom: OSM legt de navigeerbare Yangtze-middellijn bij Tongling langs de
-WESTgeul om het eiland, terwijl de kade van de nieuwe Tongling Nonferrous-
-kopersmelter aan de OOSTgeul ligt (117,772 / 30,987; kade-tip 30,982 → begin
-30,991, smelter op 117,781 / 30,987). Die oostgeul heeft in OSM geen
-`waterway`-middellijn, alleen `natural=water`-vlak — het Amazone-geval.
+Waarom hand-geplaatst i.p.v. afgeleid uit de watervlakken:
 
-De kade ligt bij het BEGIN van de splitsing (noordpunt van het eiland). Het
-schip komt van benedenstrooms (NE) de hoofdgeul af, gaat bij de noordpunt de
-oostgeul in en zakt naar de kade. Daarom leiden we ALLEEN de noordaanvaart af
-(kade → noordelijke hoofdgeul-knoop): dat geeft een schone route zonder de lus
-om het hele eiland die ontstond toen de oostgeul óók aan de zuidkant hing (de
-router koos dan de westgeul + zuidjunctie).
+  OSM legt de navigeerbare Yangtze-middellijn bij Tongling langs de WESTgeul om
+  het eiland (`waterway=长江`, way 226556520). De kade van de nieuwe Tongling
+  Nonferrous-kopersmelter ligt aan de OOSTgeul, tussen het eiland en de stad
+  (kade 117,772 / 30,987). Die oostgeul is in OSM alléén `natural=water`-vlak,
+  géén eigen `waterway`-lijn — en dat vlak is een gevlochten U rond een
+  mid-river zandbank: de kade en de noordoost-junctie liggen beide onderaan en
+  hebben in OSM alléén water-verbinding via de top (~27 km "om de lus"). Elke
+  automatische afleiding (middellijn_uit_vlakken.py, elke klaring-drempel t/m
+  ~30 m) geeft daarom die lange lus, niet de rechte geul waar de schepen in het
+  echt varen (Lars' satellietbeeld + rode schets, 2026-07-24).
 
-Aanpak:
-  1. `vaarpad` over de watervlakken (167 m-raster over de noordpunt), van het
-     kade-waterpunt naar een échte hoofdgeul-knoop die de router al gebruikt
-     (117,897 / 31,077). Zo sluit het noordeinde aan op de graaf.
-  2. Water-constrained simplify: een punt wordt alleen weggelaten als de rechte
-     buur→buur AANTOONBAAR op watercellen blijft. Geen enkel segment over land
-     (Lars' eis: "ze raken land" mag niet).
+  Daarom plaatsen we de oostgeul-centerline HANDMATIG langs het werkelijke
+  vaarkanaal: kade → recht noordoost langs de oostoever van het eiland → de
+  noordoost-junctie op de hoofdgeul (117,897 / 31,0765, hetzelfde aansluitpunt
+  dat de router al gebruikt). De router komt van benedenstrooms (Shanghai, NO)
+  de hoofdgeul af, gaat bij die junctie de oostgeul in en zakt recht naar de
+  kade. Eén aansluitpunt op de hoofdgeul (zoals voorheen) → geen eiland-lus.
 
 Uitvoer: v2/data/vaarwegen-handmatig.geojson (gecommit, klein). Bakken:
     python v2/tools/bake_marnet.py --binnenwater \
@@ -35,73 +34,55 @@ import json
 import math
 import os
 
-import numpy as np
-
-import middellijn_uit_vlakken as mv
-
 HERE = os.path.dirname(os.path.abspath(__file__))
 V2 = os.path.dirname(HERE)
 
-BBOX = (30.94, 117.72, 31.14, 117.94)   # noordpunt van het eiland
-CEL = 0.0015                            # 167 m — fijn genoeg voor de smalle geul
-HAVEN = (117.7695, 30.9865)             # waterpunt vlak west van de kade-tip
-NOORD_KNOOP = (117.897, 31.077)         # hoofdgeul-knoop die de router al gebruikt
+# Hand-geplaatste centerline langs de werkelijke oostgeul (Lars' rode lijn),
+# kade → noordoost-junctie op de Yangtze. Punten liggen op het vaarkanaal
+# tussen het eiland en de stad; het middenstuk kruist een mid-river zandbank
+# die OSM als land kaart maar die op de satelliet open water is.
+LIJN = [
+    (117.7718, 30.98656),   # kade (aansluiting cu-tongling-kade)
+    (117.780, 30.998),
+    (117.792, 31.010),
+    (117.804, 31.023),
+    (117.816, 31.036),
+    (117.830, 31.048),
+    (117.847, 31.056),
+    (117.865, 31.062),
+    (117.881, 31.067),
+    (117.897, 31.0765),     # noordoost-junctie op de hoofdgeul (way 226556520)
+]
 
 
 def km(a, b):
-    return 6371 * math.acos(min(1, math.sin(math.radians(a[1])) * math.sin(math.radians(b[1]))
-                            + math.cos(math.radians(a[1])) * math.cos(math.radians(b[1]))
-                            * math.cos(math.radians(b[0] - a[0]))))
+    la1, lo1, la2, lo2 = map(math.radians, (a[1], a[0], b[1], b[0]))
+    h = (math.sin((la2 - la1) / 2) ** 2
+         + math.cos(la1) * math.cos(la2) * math.sin((lo2 - lo1) / 2) ** 2)
+    return 2 * 6371 * math.asin(min(1.0, math.sqrt(h)))
 
 
 def main():
-    lons, lats, masker, klaring = mv.raster(["china"], BBOX, CEL)
-    dlon, dlat = lons[1] - lons[0], lats[1] - lats[0]
-
-    def water(lo, la):
-        j = int(round((lo - lons[0]) / dlon))
-        i = int(round((la - lats[0]) / dlat))
-        return 0 <= i < masker.shape[0] and 0 <= j < masker.shape[1] and bool(masker[i, j])
-
-    def wet(a, b):
-        n = max(3, int(km(a, b) / 0.04))
-        return all(water(a[0] + (b[0] - a[0]) * t / n, a[1] + (b[1] - a[1]) * t / n)
-                   for t in range(n + 1))
-
-    def simp(P):
-        out = [P[0]]
-        i = 0
-        while i < len(P) - 1:
-            j = len(P) - 1
-            while j > i + 1 and not wet(P[i], P[j]):
-                j -= 1
-            out.append(P[j])
-            i = j
-        return out
-
-    pad, _ = mv.vaarpad(lons, lats, klaring, HAVEN, NOORD_KNOOP, min_klaring=0.06)
-    lijn = simp([tuple(round(x, 5) for x in p) for p in pad])
-
-    droog = [i for i in range(len(lijn) - 1) if not wet(lijn[i], lijn[i + 1])]
-    if droog:
-        raise SystemExit(f"segment(en) over land: {droog} — raster/ankers checken")
-    tot = sum(km(lijn[i], lijn[i + 1]) for i in range(len(lijn) - 1))
-    dichtst = min(km((117.7717, 30.98236), p) for p in lijn)
-    print(f"oostgeul-noordaanvaart: {len(lijn)} punten · {tot:.1f} km · alles op water · "
+    tot = sum(km(LIJN[i], LIJN[i + 1]) for i in range(len(LIJN) - 1))
+    dichtst = min(km((117.7717, 30.98236), p) for p in LIJN)
+    print(f"oostgeul (hand-geplaatst): {len(LIJN)} punten · {tot:.1f} km · "
           f"kade-tip op {dichtst:.2f} km")
 
     feat = {"type": "Feature",
             "properties": {"label": "bulk-cn", "regio": "cn", "zeevaart": False,
                            "signaal": "ship", "km": round(tot, 3),
-                           "wayId": "tongling-oostgeul-noord",
-                           "bron": "middellijn afgeleid uit natural=water (China-extract, "
-                                   "ODbL) via middellijn_uit_vlakken.py (vaarpad, 167 m), "
-                                   "water-constrained; noordeinde op de hoofdgeul-knoop "
-                                   "117,897/31,077 — de kade snapt op het HAVEN-uiteinde"},
+                           "wayId": "tongling-oostgeul",
+                           "bron": "HAND-geplaatste centerline langs de werkelijke "
+                                   "Tongling-oostgeul (kade → NO-junctie 117,897/31,0765 "
+                                   "op de Yangtze-hoofdgeul). OSM kaart deze oostgeul "
+                                   "alleen als natural=water-vlak (gevlochten U rond een "
+                                   "zandbank), geen navigeerbare waterway-lijn; automatisch "
+                                   "afleiden gaf altijd de 27 km-lus. Plek geverifieerd op "
+                                   "satelliet (Lars, 2026-07-24)."},
             "geometry": {"type": "LineString",
-                         "coordinates": [[round(p[0], 5), round(p[1], 5)] for p in lijn]}}
+                         "coordinates": [[round(p[0], 5), round(p[1], 5)] for p in LIJN]}}
     out = {"type": "FeatureCollection",
-           "toelichting": "Handmatig afgeleide vaarweglijnen (niet uit de OSM-fetch). "
+           "toelichting": "Handmatig geplaatste vaarweglijnen (niet uit de OSM-fetch). "
                           "Herleiden: tools/maak_tongling_oostgeul.py. Voeg toe met "
                           "bake_marnet.py --extra-vaarwegen.",
            "features": [feat]}
