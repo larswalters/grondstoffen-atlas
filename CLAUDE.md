@@ -1,8 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (Tongling AF — beide geulen als graaf, live ?v=077, Lars' go)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (routebrief-werkwijze + eerste brief Cerrejón→Ruhr, commit a595095)*
 
-> **🛰️ TONGLING: BEIDE GEULEN ALS GRAAF — SATELLIET-GELEGD (2026-07-24, laatste; AF).**
+> **📋 DE ROUTEBRIEF — NIEUWE WERKWIJZE (2026-07-24, laatste).** Besluit Lars: per stroom een
+> **routebrief** die de werkelijke corridor vastlegt als controleerbare puntenlijst — elk dorp/
+> splitsing/sluis in volgorde, per punt bron + status (bevestigd/aannemelijk/onzeker), negatieve
+> ankers ("loopt NIET door Cuestecitas"); tweezijdige toets: **dekking** (alle bevestigde punten
+> in volgorde) + **verklikker** (geraakte plaats niet in de brief = vlag); routeren
+> **via-punt→via-punt**; **simulator alleen op zee** (spoor/leiding/binnenvaart brief-gestuurd).
+> Spec: `v2/design/routebrief-werkwijze.md` · eerste brief:
+> `v2/design/routebrieven/kolen-cerrejon-ruhr.md` (spoorbeen **37 punten** laadlus→Muelle
+> Carbonífero · Rijnbeen **93 punten** EMO→Schwelgern **Rijn-km 790,20**, operator-bron
+> thyssenkrupp Veerhaven: Hartelkanaal→Oude Maas→Merwede→Waal→Rijn, 240 km, sluisvrij). Commit
+> `a595095`, gepusht (docs-only, geen ?v=-bump).
+> **De toets ving meteen raak:** het gerouteerde Rijnbeen (`?v=071`) vaart via het **Beerkanaal**,
+> maar het echte duwstel gaat bij de Suurhoffbrug direct het Hartelkanaal in (doorsteek Beerdam
+> 1997) → fix openstaand (`memory/bugs-and-risks.md`); de Oude Maas-keuze is wél extern bevestigd.
+> **→ VOLGENDE:** Beerkanaal-fix + via-punt-routeren langs de brief · **World Bank "Global
+> Shipping Traffic Density"** (Data Catalog 0037580, ~500 m, gratis, wereldwijd incl. China) als
+> geul-bewijs voor een corridor-first nat net (pilot Maasvlakte) · briefs voor de overige drie
+> pilotstromen (Beilun→Guixi = de zware).
+
+> **🛰️ TONGLING: BEIDE GEULEN ALS GRAAF — SATELLIET-GELEGD (2026-07-24, eerder; AF).**
 > Live `?v=077` (commits `6327707`→`5428001`), **Lars' go: *"top helemaal goed — zo lang
 > beide geulen een simpele graaf, dat was alles."*** **→ VOLGENDE: optioneel de 22 grove
 > AFGEKNIPT-sites** (zie `memory/next-actions.md`).
@@ -1701,6 +1720,18 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-24 · De routebrief: corridors als controleerbare puntenlijst (besluit Lars)** — per
+  stroom een brief met de werkelijke corridor (elk dorp/splitsing/sluis in volgorde, per punt
+  bron + status, negatieve ankers; tweezijdige toets dekking + verklikker; routeren
+  via-punt→via-punt; **simulator alleen op zee**, spoor/leiding/binnenvaart brief-gestuurd).
+  Spec `v2/design/routebrief-werkwijze.md`; bewezen op de eerste brief (Cerrejón→Ruhr):
+  Beerkanaal-fout gevangen, Oude Maas bevestigd, Schwelgern = Rijn-km 790,20.
+- **2026-07-24 · AIS-net corridor-first; World Bank density als geul-bewijs (idee Lars)** — het
+  natte net (aanloop + binnenwater) zelf knopen leggen op brief-ankers + AIS-vaardichtheid
+  (World Bank "Global Shipping Traffic Density", Data Catalog 0037580, 0,005° ≈ 500 m, gratis,
+  wereldwijd incl. China) en handmatig verbinden, i.p.v. datasets verzoenen. Nuance op LAR-482:
+  AIS = geul-bewijs voor de graaf, geen stromen-bron. Open-zeenet blijft zolang het werkt;
+  reeks stopt feb 2021 (prima voor geulen) — binnenrivier-helderheid empirisch toetsen.
 - **2026-07-24 · Satelliet-overlay is de standaard voor handmatige vaarweglijnen** — OSM's
   watervlak is geen waarheid over waar schepen varen (Tongling-oostgeul = onvolledige U-lus →
   elke afleiding gaf 27 km om); Esri-tegels lokaal stitchen (z14, 0,01°-grid) en elk punt

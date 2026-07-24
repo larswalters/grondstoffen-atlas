@@ -1,5 +1,18 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-24 (last-mile-spoor live ?v=072: service-sidings hechten aan het net; volgende = optioneel de 22 grove AFGEKNIPT-sites + realiteitsronde)*
+*Last updated: 2026-07-24 (routebrief-werkwijze: corridors als controleerbare puntenlijst; AIS-net corridor-first)*
+
+## Stand 2026-07-24 (avond) — de routebrief stuurt, het net volgt
+
+Nieuwe werkwijze (besluit Lars): per stroom een **routebrief** — de werkelijke corridor als
+geordende, gesourcete puntenlijst (`v2/design/routebrief-werkwijze.md`) — en de lijn wordt
+ertegen getoetst: **dekking** (alle bevestigde punten in volgorde) + **verklikker** (geraakte
+plaats niet in de brief = vlag). Spoor/leiding/binnenvaart zijn **brief-gestuurd** (routeren
+via-punt→via-punt); **simulator alleen op zee**. Voor het natte net gaan we **corridor-first**:
+brief = ankers, AIS-density (World Bank Global Shipping Traffic Density, ~500 m, gratis,
+wereldwijd) = waar de geul ligt; knopen zelf leggen en verbinden i.p.v. datasets verzoenen
+(nuance op LAR-482: AIS = geul-bewijs, geen stromen-bron; open-zeenet blijft zolang het
+werkt). Eerste brief (kolen Cerrejón→Ruhr, spoor 37 + Rijn 93 punten) bewees de methode:
+Beerkanaal-fout gevangen, Oude Maas bevestigd, Schwelgern = Rijn-km 790,20.
 
 > **Stand na ?v=072 — het last-mile-spoor hecht.** Het M25-filter dropt álle `service=`-rail;
 > een additieve pass (`fetch_service_lastmile.py`) sluit `service=spur/siding/yard` bij de

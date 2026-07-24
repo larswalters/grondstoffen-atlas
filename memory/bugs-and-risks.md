@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-24 (last-mile-spoor ?v=072: Tongling/Beilun/Guixi/Duisburg-sidings hechten; 22 grove AFGEKNIPT-sites blijven open als bredere uitrol)*
+*Last updated: 2026-07-24 (routebrief-vondst: Rijnbeen kolenstroom via het Beerkanaal — fix openstaand)*
+
+## ⚠️ OPEN — Rijnbeen kolenstroom vaart via het Beerkanaal (routebrief-vondst 2026-07-24)
+De gerouteerde corridor (`?v=071`: EMO→Beerkanaal→Hartelkanaal→Oude Maas→Rijn, 254 km) wijkt aan
+de havenkant af van de werkelijke duwvaartroute: het duwstel verlaat de Mississippihaven
+**oostwaarts** en gaat bij de **Suurhoffbrug direct het Hartelkanaal in** (open verbinding sinds
+de doorsteek van de Beerdam, eind 1997; het Beerkanaal is de zeevaart-kant). Operator-opgave
+240 km vs 254 gerouteerd. Fix = het been via-punt→via-punt langs de brief routeren; eindpunt
+hoort op de Schwelgern-haveningang, Rijn-km 790,20 (51.512, 6.723). Bron + puntenlijst:
+`v2/design/routebrieven/kolen-cerrejon-ruhr.md` (§Toets tegen de huidige atlas).
 
 ## ✅ OPGELOST 2026-07-24 — industrieel last-mile-spoor niet aangesloten (live ?v=072)
 De sidings die een smelter/terminal aan de hoofdlijn knopen waren losse stubs, omdat het M25-filter

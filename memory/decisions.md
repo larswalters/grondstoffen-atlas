@@ -1,7 +1,38 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (industrieel last-mile-spoor: additieve service-rail-pass + transitieve vertex-heal + drop-onverbonden)*
+*Last updated: 2026-07-24 (routebrief-werkwijze + simulator-alleen-op-zee + AIS corridor-first)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-24 - De routebrief: corridors als controleerbare puntenlijst (besluit Lars)
+**Besluit:** per stroom een routebrief in `v2/design/routebrieven/` — de werkelijke corridor als
+geordende puntenlijst (elk dorp/splitsing/sluis, per punt km · coördinaat · bron · status
+bevestigd/aannemelijk/onzeker, plus negatieve ankers zoals "loopt NIET door Cuestecitas"). De
+getekende/gerouteerde lijn wordt tweezijdig getoetst: dekking (alle bevestigde punten in
+volgorde, marge ~2 km / kop-staart ~100 m) + verklikker (geraakte plaats niet in de brief =
+vlag). Routeren per been via-punt→via-punt. Werkwijze: `v2/design/routebrief-werkwijze.md`.
+**Waarom:** de router koos corridors zonder kennis van de werkelijkheid en alle QA hing op het
+oog van Lars (Honshu-klasse fouten). Met een brief ziet de maker zelf waar de lijn afwijkt —
+bewezen bij de allereerste brief (Cerrejón→Ruhr): de Beerkanaal-fout in het gerouteerde Rijnbeen
+gevangen, de Oude Maas-keuze extern bevestigd (operator-bron thyssenkrupp Veerhaven), en het
+eindpunt gecorrigeerd naar Schwelgern Rijn-km 790,20.
+
+## 2026-07-24 - Simulator alleen op zee; spoor/leiding/binnenvaart brief-gestuurd (besluit Lars)
+**Besluit:** het zeebeen blijft router-werk (in de brief alleen kade→kade); alle land- en
+binnenvaartbenen volgen de brief.
+**Waarom:** die netten zijn te fragiel voor vrije routering (Lars). Bijvangst: een brief-gestuurd
+been maakt een netgat lokaal zichtbaar ("tussen punt 7 en 8 geen pad") i.p.v. als geldige omweg.
+
+## 2026-07-24 - AIS-net corridor-first; World Bank density als geul-bewijs (idee Lars)
+**Besluit:** het natte net (havenaanloop + binnenwater) wordt corridor-first opgebouwd — knopen
+zelf leggen op de brief-ankers + de AIS-vaardichtheid, en handmatig verbinden. Bron: World Bank
+"Global Shipping Traffic Density" (Data Catalog 0037580; IMF-analyse van uurlijkse AIS-posities
+jan 2015–feb 2021; 0,005° ≈ 500 m; 6 scheepstype-lagen; publiek/gratis; wereldwijd incl. China).
+Het open-zeenet blijft staan zolang het werkt.
+**Waarom:** de natte ellende was steeds het lassen van andermans datasets (EMO-bekken 4 km los,
+Chileense last-mile 78–85 km) — waar schepen echt varen ís het net, en zelf gelegde knopen hebben
+per constructie geen naden. Nuance op 2026-07-18/LAR-482 ("AIS toont schepen, geen lading"): AIS
+dient uitsluitend als geul-bewijs voor de graaf, niet als stromen-bron. Kanttekening: de reeks
+stopt op feb 2021; helderheid van binnenrivieren (Rijn/Yangtze) empirisch toetsen bij de download.
 
 ## 2026-07-24 - Industrieel last-mile-spoor: additief insluiten, niet het globale filter aanzetten
 **Besluit:** `fetch_service_lastmile.py` sluit `service=spur/siding/yard` in binnen 7 km van de

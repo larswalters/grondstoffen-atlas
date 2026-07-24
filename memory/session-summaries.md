@@ -1239,3 +1239,13 @@ De v076-knip van de west-arm bleek een misinterpretatie; teruggedraaid in v077 �
 én oostgeul naast elkaar als simpele graaf. Lars: "top helemaal goed — zo lang beide geulen
 een simpele graaf, dat was alles." Toets 30/30. Klus (incl. eerdere Tongling-rondes) kostte
 ~3 sessies; de satelliet-overlay-werkwijze is de blijvende winst.
+
+## 2026-07-24 (avond) — Routebrief-werkwijze + eerste brief Cerrejon->Ruhr + AIS-richting
+Besluit Lars: per stroom een routebrief (de werkelijke corridor als controleerbare puntenlijst
+met bron + status per punt; tweezijdige toets dekking + verklikker; via-punt-routeren;
+simulator alleen op zee). Eerste brief kolen Cerrejon->Ruhr: spoorbeen 37 punten + Rijnbeen 93
+punten met operator-bron (thyssenkrupp Veerhaven, 240 km sluisvrij, Schwelgern km 790,2) —
+de toets ving meteen de Beerkanaal-fout en bevestigde de Oude Maas. AIS-net corridor-first;
+World Bank Global Shipping Traffic Density geverifieerd (gratis, ~500 m, wereldwijd incl.
+China). Design-docs commit a595095, gepusht.
+Vault: wiki/projects/General/grondstoffen-atlas/2026-07-24-grondstoffen-atlas-routebrieven-ais-net.md

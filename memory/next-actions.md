@@ -1,14 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (Tongling AF — beide geulen als graaf, live `?v=077`, Lars' go)*
+*Last updated: 2026-07-24 (routebrief-werkwijze + eerste brief Cerrejón→Ruhr, commit `a595095`)*
 
 ## 🔴 START HIER
 
+* **Routebrief-vervolg (werkwijze staat, besluit Lars — zie `v2/design/routebrief-werkwijze.md`):**
+  (a) **Beerkanaal-fix**: het Rijnbeen van de kolenstroom via-punt→via-punt langs de brief
+  routeren — EMO → Suurhoffbrug → Hartelkanaal (níet het Beerkanaal), eindpunt Schwelgern
+  Rijn-km 790,20; brief: `v2/design/routebrieven/kolen-cerrejon-ruhr.md` (§Toets).
+  (b) **World Bank "Global Shipping Traffic Density"** downloaden (Data Catalog 0037580,
+  GeoTIFF ~500 m, gratis) → eerste zelfgelegde knopen van het corridor-first natte net rond
+  de Maasvlakte (pilot). Empirisch toetsen hoe helder Rijn/Yangtze in het raster staan.
+  (c) **Routebrieven voor de andere drie pilotstromen** — Beilun→Guixi (China-spoor) is de
+  zware (grootste kans op een verkeerde corridor).
 * **Optioneel: de 22 grove AFGEKNIPT-sites breder uitrollen.** De last-mile-pass draait nu op de
   15 aangewezen aansluitingen; de brede detector (`toets_spoor_aansluiting.mjs`) vond nog **22
   AFGEKNIPT** industriële nodes (Fresnillo, Kalgoorlie, Norilsk, Hunan-Ag…) — dat zijn de grove
   `data/*.js`-coördinaten, niet de aansluitingen. Uitrollen = per site een precieze coördinaat
   opzoeken (veel zijn stad-centroïdes) en `PUNT_EXTRACT` in `fetch_service_lastmile.py` uitbreiden;
   de heal + drop + wees-opruiming werken dan generiek mee.
+
+## ✅ AFGEROND 2026-07-24 — ROUTEBRIEF-WERKWIJZE + EERSTE BRIEF (commit `a595095`, gepusht)
+
+Besluit Lars: per stroom een **routebrief** die de échte corridor vastlegt — elk dorp/
+splitsing/sluis in volgorde, per punt bron + status (bevestigd/aannemelijk/onzeker),
+negatieve ankers, tweezijdige toets (dekking + verklikker), routeren via-punt→via-punt,
+**simulator alleen op zee**. Spec: `v2/design/routebrief-werkwijze.md`. Eerste brief kolen
+Cerrejón→Ruhr: spoorbeen 37 punten (laadlus→Muelle Carbonífero) + Rijnbeen 93 punten mét
+operator-bron (thyssenkrupp Veerhaven: Hartelkanaal→Oude Maas→Merwede→Waal→Rijn, 240 km,
+sluisvrij) — de toets ving meteen de **Beerkanaal-fout** en bevestigde de Oude Maas-keuze.
+AIS-richting: corridor-first met World Bank-density als geul-bewijs (idee Lars, geverifieerd).
 
 ## ✅ AFGEROND 2026-07-24 — TONGLING: BEIDE GEULEN ALS GRAAF (live `?v=077`, Lars' go, commits `6327707`→`5428001`)
 
