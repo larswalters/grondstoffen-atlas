@@ -14,9 +14,19 @@
 //
 // Draaien:  node v2/tools/toets_stromen_14.mjs
 
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { laadMarnetHeadless, laadLandnetHeadless, laadHavens,
          laadRegister } from "./laad_headless.mjs";
 import { koppelNetten, zoekKeten, havenZaden } from "../src/keten.js";
+
+// ⚠️ GEPARKEERD (2026-07-24, AIS-ombouw): zie de guard-noot in toets_routes.mjs.
+if (!existsSync(join(dirname(fileURLToPath(import.meta.url)), "..", "data", "marnet.bin"))) {
+  console.log("geparkeerd: geen marnet.bin — waternet verwijderd voor de AIS-ombouw " +
+    "(oude stand: git-tag pre-ais-net). Deze toets komt terug op het AIS-net.");
+  process.exit(0);
+}
 
 const marnet = laadMarnetHeadless();
 const landnet = laadLandnetHeadless();

@@ -10,11 +10,25 @@
 // Draaien:  node v2/tools/toets_routes.mjs
 // Exit-code 0 = alles groen; 1 = een toets faalde.
 
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 import { laadMarnetHeadless, laadLandnetHeadless, laadRegister, laadHavens,
          laadAansluitingen, laadStromenData, laadPijpleidingen } from "./laad_headless.mjs";
 import { zoekRoute, zoekRouteRealistisch } from "../src/router.js";
 import { koppelNetten, zoekKeten, havenZaden } from "../src/keten.js";
 import { routeerStroom } from "../src/stromen.js";
+
+// ⚠️ GEPARKEERD (2026-07-24, AIS-ombouw, besluit Lars): het waternet is uit de
+// bake verwijderd — het wordt corridor-first opnieuw opgebouwd uit World Bank
+// AIS-density. Zonder marnet.bin valt hier niets te toetsen; de laatste groene
+// stand (30/30) staat op tag `pre-ais-net`. De guard heft zichzelf op zodra er
+// weer een waternet-bake ligt.
+if (!existsSync(join(dirname(fileURLToPath(import.meta.url)), "..", "data", "marnet.bin"))) {
+  console.log("geparkeerd: geen marnet.bin — waternet verwijderd voor de AIS-ombouw " +
+    "(oude stand: git-tag pre-ais-net). Deze toets komt terug op het AIS-net.");
+  process.exit(0);
+}
 
 const marnet = laadMarnetHeadless();
 const landnet = laadLandnetHeadless();

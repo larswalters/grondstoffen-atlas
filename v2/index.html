@@ -32,7 +32,7 @@
     <div id="hudKop">
       <div>
         <div class="hudTitle">Atlas v2 · fundament</div>
-        <div class="hudSub">M26.1 — de stromen op straatniveau</div>
+        <div class="hudSub">M27 — schone bol · AIS-waternet in opbouw</div>
       </div>
       <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
     </div>
@@ -54,12 +54,11 @@
       <button class="clBtn" data-cl="uit">uit</button>
     </div>
 
-    <!-- Het verzoende MARNET-netwerk: blauw = zee, amber = binnenwater. -->
-    <div class="hudLabel">Zeeroutes (MARNET)</div>
-    <div class="btnRow">
-      <button class="mnBtn is-on" data-mn="aan">aan</button>
-      <button class="mnBtn" data-mn="uit">uit</button>
-    </div>
+    <!-- ⚠️ AIS-OMBOUW (2026-07-24): het waternet (marnet zee + binnenvaart) is
+         hier bewust WEG — het wordt opnieuw opgebouwd uit World Bank
+         AIS-density (corridor-first, brief = ankers, AIS = geul). De oude
+         stand mét waternet, route-test, keten-router en stromen staat op
+         git-tag `pre-ais-net` (?v=082). -->
 
     <!-- Landnet (M25): het spoor als vierde net, in een eigen bestand met eigen
          knoop-ids. Nog niet gekoppeld aan de router — eerst neerleggen, dan
@@ -76,7 +75,6 @@
       <span><i style="background:#a6f0ff"></i>hogesnelheid</span>
     </div>
     <div id="landNoot"></div>
-    <div id="ketenNoot"></div>
 
     <!-- Havens (LAR-518): bijna 4.000 searoute-havens als losse laag. Ze zijn
          het onderwerp van de overslag — een haven is de plek waar zee,
@@ -98,63 +96,8 @@
     </div>
     <div id="havenNoot"></div>
 
-    <!-- Haven→haven testen: A* over het netwerk, geel = de gevonden route. -->
-    <div class="hudLabel">Route testen (haven → haven)</div>
-    <div id="routeTest">
-      <input id="vanHaven" list="havenLijst" placeholder="van — typ een haven" autocomplete="off" />
-      <input id="naarHaven" list="havenLijst" placeholder="naar — typ een haven" autocomplete="off" />
-      <datalist id="havenLijst"></datalist>
-      <!-- Sinds de Donau-ring (LAR-494) loopt er binnenwater van de Noordzee
-           naar de Zwarte Zee, en dan is het kortste graafpad voor een zeeschip
-           ineens dwars door Europa. "realistisch" (default) probeert eerst een
-           zuivere zeeroute en zet binnenwater alleen open waar een uiteinde
-           écht in het binnenland ligt. "alles toestaan" toont het oude,
-           permissieve gedrag — bruikbaar om de corridor te inspecteren. -->
-      <div class="btnRow">
-        <button class="schipBtn is-on" data-schip="echt">realistisch</button>
-        <button class="schipBtn" data-schip="alles">alles toestaan</button>
-        <button class="schipBtn" data-schip="keten">keten (overslag)</button>
-      </div>
-      <!-- Alleen in keten-modus: neem spoor + weg mee. Default uit (landbrug-
-           regel). Aan = het spoornet doet mee; kies bv. een ◆-knooppunt zoals
-           Kasumbalesa om een zuivere spoorroute te zien. -->
-      <label id="landnetMeeRij" class="hudCheck">
-        <input type="checkbox" id="landnetMee" />
-        <span>spoor + weg meenemen (◆-knooppunten kiesbaar)</span>
-      </label>
-      <!-- Scheepsklasse (LAR-514): filtert edges op vier maten — diepgang,
-           breedte, lengte, doorvaarthoogte. "elk schip" is de DEFAULT en zet
-           geen enkele edge dicht; alle bestaande regressiegetallen gelden bij
-           die stand. Een edge zonder gemeten maat laat elk schip door. -->
-      <select id="schipKlasse" title="filter de route op scheepsmaten">
-        <option value="" selected>elk schip — geen maatfilter</option>
-        <option value="IV">klasse IV · 85 × 9,5 m · 2,80 m diep</option>
-        <option value="Va">klasse Va · 110 × 11,4 m · 4,50 m diep</option>
-        <option value="Vb">klasse Vb · 185 × 11,4 m · 4,50 m diep</option>
-        <option value="VIb">klasse VIb · 195 × 22,8 m · 4,50 m diep</option>
-        <option value="VIc">klasse VIc · 280 × 22,8 m · 4,00 m diep</option>
-        <option value="VII">klasse VII · 285 × 34,2 m · 4,50 m diep</option>
-        <option value="VS-tow">VS-duwkonvooi 3×3 · 178 × 32 m · 2,74 m diep</option>
-      </select>
-      <div class="btnRow">
-        <button id="routeGo">route</button>
-        <button id="routeWis">wis</button>
-      </div>
-      <div id="routeInfo"></div>
-    </div>
-
-    <!-- DE WERKELIJKE STROMEN (M26.1) — geen simulator. De keten komt uit
-         data/*.js, de router zoekt alleen bínnen een been op één net. Elke
-         stroom heeft eigen AANSLUITINGEN: de kade/het laadspoor van déze
-         grondstof, op straatniveau. Ontwerp: design/stroom-aansluiting.md. -->
-    <div class="hudLabel">Stromen (pilot)</div>
-    <div id="stromenLijst"></div>
-    <div class="btnRow">
-      <button id="stromenAlle">alle tonen</button>
-      <button id="stromenWis">wis</button>
-    </div>
-    <div id="stroomInfo"></div>
-    <div id="aanslNoot"></div>
+    <!-- Route-test, keten-router en stromen (M26.x) zijn met het waternet mee
+         geparkeerd op tag `pre-ais-net` — ze komen terug op het AIS-net. -->
 
     <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
     <div class="hudLabel">Beeldverwerking</div>
@@ -188,6 +131,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=082"></script>
+<script type="module" src="src/main.js?v=083"></script>
 </body>
 </html>
