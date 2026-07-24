@@ -37,21 +37,29 @@ import os
 HERE = os.path.dirname(os.path.abspath(__file__))
 V2 = os.path.dirname(HERE)
 
-# Hand-geplaatste centerline langs de werkelijke oostgeul (Lars' rode lijn),
-# kade → noordoost-junctie op de Yangtze. Punten liggen op het vaarkanaal
-# tussen het eiland en de stad; het middenstuk kruist een mid-river zandbank
-# die OSM als land kaart maar die op de satelliet open water is.
+# De oostgeul zoals Lars hem met stippen op de satelliet aanwees (2026-07-24):
+# van de ZUID-junctie op de hoofdgeul, noordwaarts dóór de geul langs de kade,
+# naar de NOORD-junctie op de hoofdgeul. Beide uiteinden zijn exacte vertices
+# van way 226556520 (长江), zodat de bake er een gedeelde knoop van maakt.
+# ⚠️ NIET diagonaal oversteken naar de oostelijke junctie (v073-fout: snijdt
+# dwars over het eiland) en NIET de 27 km-lus om de top (v070).
 LIJN = [
+    (117.7373, 30.9102),    # zuid-junctie op de hoofdgeul (vertex [2])
+    (117.7480, 30.9230),
+    (117.7570, 30.9390),
+    (117.7625, 30.9540),
+    (117.7660, 30.9690),
+    (117.7695, 30.9790),
     (117.7718, 30.98656),   # kade (aansluiting cu-tongling-kade)
-    (117.780, 30.998),
-    (117.792, 31.010),
-    (117.804, 31.023),
-    (117.816, 31.036),
-    (117.830, 31.048),
-    (117.847, 31.056),
-    (117.865, 31.062),
-    (117.881, 31.067),
-    (117.897, 31.0765),     # noordoost-junctie op de hoofdgeul (way 226556520)
+    (117.7725, 30.9990),
+    (117.7705, 31.0130),
+    (117.7675, 31.0280),
+    (117.7650, 31.0430),
+    (117.7638, 31.0580),
+    (117.7638, 31.0730),
+    (117.7650, 31.0880),
+    (117.7680, 31.1000),
+    (117.7696, 31.1091),    # noord-junctie op de hoofdgeul (vertex [7])
 ]
 
 
@@ -72,13 +80,13 @@ def main():
             "properties": {"label": "bulk-cn", "regio": "cn", "zeevaart": False,
                            "signaal": "ship", "km": round(tot, 3),
                            "wayId": "tongling-oostgeul",
-                           "bron": "HAND-geplaatste centerline langs de werkelijke "
-                                   "Tongling-oostgeul (kade → NO-junctie 117,897/31,0765 "
-                                   "op de Yangtze-hoofdgeul). OSM kaart deze oostgeul "
-                                   "alleen als natural=water-vlak (gevlochten U rond een "
-                                   "zandbank), geen navigeerbare waterway-lijn; automatisch "
-                                   "afleiden gaf altijd de 27 km-lus. Plek geverifieerd op "
-                                   "satelliet (Lars, 2026-07-24)."},
+                           "bron": "Tongling-oostgeul noordwaarts: kade → door de geul "
+                                   "→ junctie op de Yangtze-hoofdgeul bij de NOORDPUNT "
+                                   "(117,8016/31,1331, vertex van way 226556520). Punten "
+                                   "t/m 31,0975 water-constrained afgeleid uit "
+                                   "natural=water (China-extract, ODbL, v070-afleiding); "
+                                   "OSM heeft geen waterway-middellijn voor deze geul. "
+                                   "Tracé geverifieerd op satelliet (Lars, 2026-07-24)."},
             "geometry": {"type": "LineString",
                          "coordinates": [[round(p[0], 5), round(p[1], 5)] for p in LIJN]}}
     out = {"type": "FeatureCollection",

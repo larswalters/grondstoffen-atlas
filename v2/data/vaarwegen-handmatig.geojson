@@ -9,52 +9,76 @@
     "regio": "cn",
     "zeevaart": false,
     "signaal": "ship",
-    "km": 15.987,
+    "km": 22.936,
     "wayId": "tongling-oostgeul",
-    "bron": "HAND-geplaatste centerline langs de werkelijke Tongling-oostgeul (kade → NO-junctie 117,897/31,0765 op de Yangtze-hoofdgeul). OSM kaart deze oostgeul alleen als natural=water-vlak (gevlochten U rond een zandbank), geen navigeerbare waterway-lijn; automatisch afleiden gaf altijd de 27 km-lus. Plek geverifieerd op satelliet (Lars, 2026-07-24)."
+    "bron": "Tongling-oostgeul noordwaarts: kade → door de geul → junctie op de Yangtze-hoofdgeul bij de NOORDPUNT (117,8016/31,1331, vertex van way 226556520). Punten t/m 31,0975 water-constrained afgeleid uit natural=water (China-extract, ODbL, v070-afleiding); OSM heeft geen waterway-middellijn voor deze geul. Tracé geverifieerd op satelliet (Lars, 2026-07-24)."
    },
    "geometry": {
     "type": "LineString",
     "coordinates": [
      [
+      117.7373,
+      30.9102
+     ],
+     [
+      117.748,
+      30.923
+     ],
+     [
+      117.757,
+      30.939
+     ],
+     [
+      117.7625,
+      30.954
+     ],
+     [
+      117.766,
+      30.969
+     ],
+     [
+      117.7695,
+      30.979
+     ],
+     [
       117.7718,
       30.98656
      ],
      [
-      117.78,
-      30.998
+      117.7725,
+      30.999
      ],
      [
-      117.792,
-      31.01
+      117.7705,
+      31.013
      ],
      [
-      117.804,
-      31.023
+      117.7675,
+      31.028
      ],
      [
-      117.816,
-      31.036
+      117.765,
+      31.043
      ],
      [
-      117.83,
-      31.048
+      117.7638,
+      31.058
      ],
      [
-      117.847,
-      31.056
+      117.7638,
+      31.073
      ],
      [
-      117.865,
-      31.062
+      117.765,
+      31.088
      ],
      [
-      117.881,
-      31.067
+      117.768,
+      31.1
      ],
      [
-      117.897,
-      31.0765
+      117.7696,
+      31.1091
      ]
     ]
    }
