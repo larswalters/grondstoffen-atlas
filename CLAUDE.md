@@ -1,6 +1,47 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-23 (avond) (M26.1 live ?v=070: groene stroom Tongling verfijnd — Yangtze-heal, markers, kade; volgende = Lars doet zelf de spoor+riviernet-heal)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (heal-ronde live ?v=071: pijplijn verbreekt niets meer — EMO, Manaus, Beilun, EU-spoor dicht; volgende = visuele check Lars)*
+
+> **🩹 DE HEAL-RONDE — DE PIJPLIJN VERBREEKT NIETS MEER (2026-07-24, laatste).** Live `?v=071`
+> (commit `0eaff4b`). **→ VOLGENDE: visuele check van Lars** (guard-stukken op de bol, de nieuwe
+> Cincinnati-route, de kolenstroom tot de Schwelgern-pier); daarna de rest van M26.
+>
+> **DE DIAGNOSE DRAAIDE DE OPDRACHT OM.** De geplande "spoor+riviernet-heal" begon met een
+> meet-workflow (8 agents, incl. tegenspraakronde) en een **raw-experiment** op de OSM-topologie:
+> op élk breukpunt (Antwerpen↔Duisburg, Beilun↔Guixi) is de bron al verbonden, **óók onder ons
+> service-filter**. De breuken waren dus eigen maaksel — niet het net healen, maar de pijplijn
+> laten ophouden met knippen. De snij_bulk-regel van 2026-07-23 ("een stap mag geen verbinding
+> verbreken die de bron had") staat nu op alle drie de knip-plekken:
+>
+> 1. **De heal VERLENGT een uiteinde i.p.v. het te verplaatsen** (tier-1 én tier-2, bake_marnet).
+>    Verplaatsen trok samenvallende tweeling-eindpunten los en tier-2 snapte ze terug — de
+>    **EMO-flip-flop**: dezelfde 15 m-naad werd zes rondes gelegd en losgetrokken, eindstand los.
+>    Nu convergeert de heal en loopt EMO→Beerkanaal→Hartelkanaal→Oude Maas→Rijn: **Cerrejón→Ruhr
+>    0 gaten** (trein 146 → zee 8.231 → binnenschip 254 km). Bijvangst: **R'dam→Cincinnati
+>    11.199 → 9.591 km** via Chicago (Seaway→Illinois; zelfde 1 overslag, dus km besliste).
+> 2. **De haven-riviersnap verkiest een doorgaand component (≥100 km), RELATIEF gewogen**
+>    (hooguit 2×+1 km verder, cap 60; `bak_havens`): **Manaus** van een 4-cellen-sliver naar de
+>    echte Amazone → **Saldanha→Manaus routeert** (overslag Macapá, 1.299 km binnenschip).
+>    113 havens verlegd, gerapporteerd; zee-snaps **byte-identiek**. ⚠️ Absolute drempel
+>    verworpen: teleporteerde Whitby/Rostock (0,5–0,8 km echt) naar 58 km — Karlsruhe-klasse.
+> 3. **De dedup kreeg een connectiviteitsguard** (`herstel_verbindingen`, fetch_landnet): niets
+>    wegvouwen dat ≥2 componenten verbond; terug via het **kortste stukkenpad** per componentpaar.
+>    Wereld: 1.185 stukken / 3.468 km terug (0,3%) → **componenten 3.140 → 638 · grootste
+>    402.845 → 664.313 km (+65%)** · **Beilun↔Guixi rijdt (trein 883 km**, CN 98,9% één
+>    component) · **Antwerpen↔Duisburg één component** (EU 96%).
+>
+> **⚠️ GEMETEN EN VERWORPEN (niet opnieuw proberen):** DEDUP_SNIPPER_KM 0,30→0,15 alléén — de
+> grootste component kromp er zelfs van (4.135 → 3.531 km op BE+NL+NRW); de wortel was
+> per-monster-dekking door een MIX van houders, niet de snipper. En de eerdere service-filter-
+> weerlegging gebruikte het verkeerde criterium (componenten-télling), maar het raw-experiment
+> pleit het filter definitief vrij als oorzaak van de A↔B-breuken.
+>
+> **toets_routes 30/30** — verwachtingen mee met de gemeten waarheid (omlaag = vooruitgang):
+> cerrejon 1→0 gaten · escondida 2→1 (rest = Escondida-leiding, echt OSM-gat) · Cincinnati-
+> overslag New Orleans→Chicago · Manaus-bereikbaarheid gepind. Zee-invarianten exact
+> (19.610 / 89). **⚠️ BLIJFT OPEN:** de Tongling-vlecht (de 16 km-sprong is BRONgeometrie, geen
+> pipeline-knip — de handmatige oostgeul blijft nodig) · echte OSM-gaten EU-spoor rond
+> Krefeld/Kempen.
 
 > **🚚 M26.1 — DE STROMEN OP STRAATNIVEAU (2026-07-23, laatste).** Live t/m `34f7a3a` (`?v=065`).
 > **Vier werkelijke stromen staan been voor been op de bol**, twee grondstoffen. Ontwerp:
@@ -1584,6 +1625,15 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-24 · De heal VERLENGT een uiteinde, verplaatst het nooit** — verplaatsen trok
+  tweeling-eindpunten los (EMO-flip-flop: naad zes rondes gelegd en losgetrokken); verlengen kan
+  per constructie geen bestaande celkoppeling verbreken. Tier-1 én tier-2, bake_marnet.
+- **2026-07-24 · Haven-riviersnap relatief naar een doorgaand component** (≥100 km, hooguit
+  2×+1 km verder, cap 60) — Manaus van sliver naar de echte Amazone; absolute drempel verworpen
+  (teleporteerde Whitby/Rostock 58 km, Karlsruhe-klasse). Landnet-precedent op water.
+- **2026-07-24 · De dedup mag geen verbinding verbreken die de bron had** —
+  `herstel_verbindingen`: verwijderde stukken die ≥2 componenten verbinden komen terug via het
+  kortste stukkenpad (knoop_riviernet-regel). Verworpen alternatief (gemeten): snipper 0,15.
 - **2026-07-23 (avond) · Tongling-verfijning (live `?v=070`)** — drie fixes op de groene stroom.
   (1) `snij_bulk()` in `bake_marnet.py` knipt nu alleen **kop/staart** weg, nooit een gat in het
   midden (dubbele-geometrie-uitsluiting mag de rivier niet doormidden knippen) — de Yangtze was

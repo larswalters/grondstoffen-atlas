@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-24 - De heal-ronde: de pijplijn verbreekt niets meer, live ?v=071
+Diagnose eerst (meet-workflow, 8 agents incl. tegenspraak): een raw-experiment op de OSM-topologie
+bewees dat de bron op elk breukpunt al verbonden was — Antwerpen-Duisburg en Beilun-Guixi zijn ook
+onder ons service-filter een component. De breuken waren dus eigen maaksel. Drie fixes:
+
+1. **De heal VERLENGT een uiteinde i.p.v. het te verplaatsen** (bake_marnet, tier-1 en tier-2).
+   Verplaatsen trok samenvallende tweeling-eindpunten los en tier-2 snapte ze terug: de
+   EMO-flip-flop (zelfde 15 m-naad zes rondes gelegd en losgetrokken). Nu convergeert de heal;
+   Cerrejon->Ruhr 0 gaten (was 1). Bijvangst: R'dam->Cincinnati 11.199 -> 9.591 km via Chicago.
+2. **De haven-riviersnap verkiest een doorgaand component (>=100 km), relatief gewogen**
+   (hooguit 2x+1 km verder; absolute drempel verworpen — teleporteerde Whitby/Rostock 58 km).
+   Manaus van 4-cellen-sliver naar de echte Amazone; Saldanha->Manaus routeert (Macapa, 1.299 km).
+3. **Dedup-connectiviteitsguard** (herstel_verbindingen in fetch_landnet): niets wegvouwen dat
+   >=2 componenten verbond; terug via het kortste stukkenpad. Wereld: 1.185 stukken / 3.468 km
+   terug (0,3%) -> componenten 3.140 -> 638, grootste 402.845 -> 664.313 km. Beilun-Guixi rijdt
+   (trein 883 km), Antwerpen-Duisburg een component (EU 96%).
+
+Gemeten en verworpen: snipper 0,30->0,15 alleen maakt het NIET beter (grootste component kromp).
+toets_routes 30/30 (verwachtingen mee: cerrejon 1->0, escondida 2->1, Cincinnati->Chicago, Manaus
+gepind); zee-invarianten exact (19.610 / 89; zee-snaps byte-identiek). Commit 0eaff4b, ?v=071.
+Open: Tongling-vlecht (brongeometrie), Escondida-leiding onbekend, echte OSM-gaten Krefeld/Kempen.
+
 ## 2026-07-23 - M26.1: de stromen op straatniveau, live ?v=065
 Vier werkelijke stromen staan been voor been op de bol, twee grondstoffen. Nieuwe entiteit: de
 **aansluiting per grondstof** (`v2/data/aansluitingen.json`, 15 stuks, coordinaten uit OSM/ODbL via

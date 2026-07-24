@@ -1,5 +1,16 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-23 (M26.1 live ?v=065: vier stromen op straatniveau; volgende = healen + verfijnen)*
+*Last updated: 2026-07-24 (heal-ronde live ?v=071: pijplijn verbreekt niets meer; volgende = visuele check + rest van M26)*
+
+## Stand 2026-07-24 — de netten zijn heel waar de bron heel is
+
+De heal-ronde (aangekondigd als "spoor+riviernet-heal") bleek een pijplijn-fix: een
+raw-experiment bewees dat de bron op elk breukpunt al verbonden was, dus repareren we niet het
+net maar de stappen die knipten. **De regel die nu op alle drie de knip-plekken staat: een stap
+mag geen verbinding verbreken die de bron had** — snij_bulk (kop/staart, 2026-07-23), de heal
+(verlengen i.p.v. verplaatsen) en de dedup (connectiviteitsguard, kortste stukkenpad terug).
+Spoor wereldwijd: 638 componenten met de grootste op 664.313 km; alle vier de M26.1-netgaten
+dicht op de Escondida-leiding na (echt OSM-gat). Wat overblijft is brongrofheid (Tongling-vlecht)
+en echte OSM-gaten — geen pipeline-schade meer.
 
 ## Stand 2026-07-23 — de stromen liggen erop, en ze wijzen de gaten aan
 

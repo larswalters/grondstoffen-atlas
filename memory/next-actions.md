@@ -1,27 +1,31 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-23 (M26.1 live `?v=070`: groene stroom Tongling verfijnd; volgende = Lars doet zelf de spoor+riviernet-heal)*
+*Last updated: 2026-07-24 (heal-ronde live `?v=071`: pijplijn verbreekt niets meer — EMO, Manaus, Beilun, EU-spoor dicht; volgende = visuele check Lars)*
 
-## 🔴 START HIER — SPOOR- + RIVIERNET-HEAL (Lars pakt dit zelf op, volgende sessie)
+## 🔴 START HIER — VISUELE CHECK ?v=071 + restpunten
 
-Lars' conclusie na de Tongling-verfijning: laat de **graaf gewoon aan beide kanten van een
-eiland/breuk aansluiten** i.p.v. per stroom handmatig een geul af te leiden. De echte wortel
-van de Tongling-worsteling: de gebakken hoofd-Yangtze heeft bij de noordpunt een **grove
-rechte sprong van ~16 km** die niet op de rivier ligt, dus een fijne oostgeul kan er niet
-schoon aan healen. Een riviernet-heal op zo'n gevlochten stuk (LAR-520-familie) lost dat
-structureel op en maakt de handmatige oostgeul (`data/vaarwegen-handmatig.geojson`) overbodig.
-Eén ronde kan meerdere gaten dekken:
+* **Visuele check Lars op `?v=071`** — vooral: de teruggezette guard-stukken op de bol
+  (locatielijstjes staan in de bake-uitvoer, "kijk na op de bol"), de nieuwe
+  R'dam→Cincinnati-route via Chicago, en de kolenstroom die nu tot de Schwelgern-pier loopt.
+* **Tongling-vlecht blijft open** — de grove rechte sprong van ~16 km in de gebakken
+  hoofd-Yangtze is BRONgeometrie (OSM-middellijn te grof), geen pipeline-knip; de heal-ronde
+  raakt hem dus niet. Handmatige oostgeul (`data/vaarwegen-handmatig.geojson`) blijft nodig
+  tot de hoofdgeul daar fijner wordt afgeleid (bv. met `middellijn_uit_vlakken.py` op het
+  gevlochten stuk).
+* **Echte OSM-gaten**: EU-spoor rond Krefeld/Kempen (daar ligt écht niets in de bron) en de
+  Escondida-slurryleiding (geen `substance=slurry` richting Coloso) — alleen met handwerk of
+  betere bron te dichten; status `onbekend` is eerlijk.
 
-* **Beilun-havenspoor** ligt op een eigen spoorcomponent van **1.823 km**, los van het
-  Chinese hoofdnet (**402.762 km**) → `cu-escondida-guixi` krijgt geen treinpad. Cross-
-  component-heal op `landnet.bin`, dezelfde soort als het riviernet in [LAR-520]. Hetzelfde
-  geldt voor het **gefragmenteerde EU-spoor** (Antwerpen↔Duisburg).
-* **Yangtze-braid bij Tongling** — de hoofdgeul en de oostgeul zouden aan beide eilandpunten
-  moeten verbinden (Lars' rode schets). Nu handmatig omzeild met een op 167 m afgeleide
-  oostgeul (alleen noordaanvaart). Riviernet-heal maakt dat overbodig.
-* **Maasvlakte-riviergat:** de EMO-kade hecht op een **losstaand havenbekken van 4 km**,
-  terwijl Duisburg op de doorgaande Rijn (**24.517 km**) zit → het kolen-Rijnbeen faalt
-  terwijl koper 30 km verderop (Waalhaven) dezelfde reis wél maakt. Riviernet-fragmentatie,
-  patroon van [LAR-520].
+## ✅ AFGEROND 2026-07-24 — DE HEAL-RONDE (de spoor+riviernet-heal van hieronder)
+
+Live `?v=071` (commit `0eaff4b`). De diagnose draaide de opdracht om: niet het net healen,
+maar de pijplijn laten ophouden met knippen — de bron was op elk breukpunt al verbonden
+(raw-experiment, ook onder het service-filter).
+
+- **Heal verlengt i.p.v. verplaatst** → EMO-flip-flop weg; Cerrejón→Ruhr **0 gaten**.
+- **Riviersnap relatief naar doorgaand component** → Manaus→Amazone; Saldanha→Manaus routeert.
+- **Dedup-connectiviteitsguard** → spoor 3.140 → **638 componenten**, grootste 402.845 →
+  **664.313 km**; Beilun↔Guixi trein 883 km; Antwerpen↔Duisburg één component (EU 96%).
+- toets_routes 30/30; zee-invarianten exact. Gemeten en verworpen: snipper verlagen alléén.
 
 ## ✅ AFGEROND 2026-07-23 (avond) — GROENE STROOM (COLLAHUASI→TONGLING) VERFIJND
 

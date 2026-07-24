@@ -1,7 +1,39 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-23 (avond) (Tongling-verfijning: snij_bulk kop/staart; oostgeul alleen noordaanvaart; --extra-vaarwegen)*
+*Last updated: 2026-07-24 (heal-ronde: heal verlengt, riviersnap relatief doorgaand, dedup-connectiviteitsguard)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-24 - De heal VERLENGT een uiteinde, verplaatst het nooit
+**Besluit:** `_heal_riviernet` en `_heal_corridors` (bake_marnet) zetten het projectiepunt als
+NIEUW eindvertex vóór/achter het uiteinde i.p.v. het uiteinde te verplaatsen.
+**Waarom:** verplaatsen trok samenvallende tweeling-eindpunten los (twee lijnen die in dezelfde
+cel eindigen): het verplaatste uiteinde nam de gedeelde knoop mee, tier-2 snapte het terug op het
+verweesde punt en de lus convergeerde nooit — de EMO-flip-flop (zelfde 15 m-naad zes rondes
+gelegd en losgetrokken, eindstand losgekoppeld). Een verlenging kan per constructie geen
+bestaande celkoppeling verbreken, in welke volgorde de naden ook vallen.
+
+## 2026-07-24 - De haven-riviersnap verkiest een doorgaand component, RELATIEF gewogen
+**Besluit:** `bak_havens` snapt de rivierkant bij voorkeur op een component ≥100 km, maar alleen
+als die hooguit 2×+1 km verder ligt dan de dichtstbijzijnde knoop (cap 60 km); de gemeten
+afstand blijft de echte afstand naar de gekozen knoop.
+**Waarom:** Manaus snapte op een sliver van 4 cellen (10,5 km) terwijl de doorgaande Amazone —
+die al tot Macapá loopt — op 13,9 km lag → "geen pad" naar Rotterdam. Het landnet-precedent
+(hoofdlijn-snap) toegepast op water. ⚠️ Een ABSOLUTE straal alléén is verworpen: die
+teleporteerde Whitby/Rostock (echte snap 0,5–0,8 km op een klein lokaal net) naar een
+hoofdstroom op ~58 km — de Karlsruhe-klasse onwaarheid. Relatief, geen magisch getal.
+
+## 2026-07-24 - De dedup mag geen verbinding verbreken die de bron had (connectiviteitsguard)
+**Besluit:** `dedup_parallel` geeft alle verwijderde stukken als intervallen terug en
+`herstel_verbindingen` zet elk stuk terug dat ≥2 componenten van het gehouden net verbindt —
+kortste stukkenpad per componentpaar (de knoop_riviernet-regel), iteratief met de heal,
+gerapporteerd en nooit stil.
+**Waarom:** een keten kan per-monster "gedekt" zijn door een MIX van langere ketens die elk maar
+een stukje naast hem liggen — dan verdween hij terwijl niemand zijn corridor droeg (rond Viersen
+ketens van 2–12 km, netbreed tot 78 km). Raw-experiment bewees dat de bron op elk breukpunt al
+verbonden was, óók onder het service-filter. Gemeten en verworpen als alternatief: snipper
+0,30→0,15 alléén (grootste component kromp er zelfs van). Prijs: 3.468 km dubbelspoor terug
+(0,3%), telt mee in de lengte-ijking — gerapporteerd. Resultaat wereld: componenten 3.140→638,
+grootste 402.845→664.313 km; Beilun↔Guixi en Antwerpen↔Duisburg verbonden.
 
 ## 2026-07-23 (avond) - snij_bulk knipt alleen kop/staart weg, nooit een gat in het midden
 **Besluit:** de dubbele-geometrie-uitsluiting in `bake_marnet.py` (`snij_bulk`) verwijdert alleen

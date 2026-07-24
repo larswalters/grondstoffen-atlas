@@ -1,5 +1,18 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-23 (avond) (Tongling-verfijning: Yangtze-heal, markers, kade; wortel = grove hoofdgeul-geometrie → spoor+riviernet-heal openstaand)*
+*Last updated: 2026-07-24 (heal-ronde ?v=071: EMO/Manaus/Beilun/EU-spoor opgelost; Tongling-vlecht en echte OSM-gaten blijven open)*
+
+## ✅ OPGELOST 2026-07-24 — vier netbreuken in één ronde (de pijplijn knipte ze zelf)
+Raw-experiment bewees vooraf: de bron was op elk breukpunt al verbonden, óók onder het
+service-filter. Drie fixes: (1) de heal VERLENGT een uiteinde i.p.v. het te verplaatsen —
+verplaatsen trok samenvallende tweeling-eindpunten los en tier-2 snapte ze terug (de
+EMO-flip-flop: zelfde 15 m-naad zes rondes gelegd en losgetrokken); (2) de haven-riviersnap
+verkiest relatief een doorgaand component (absolute drempel verworpen: teleporteerde
+Whitby/Rostock 58 km); (3) dedup-connectiviteitsguard `herstel_verbindingen` — niets wegvouwen
+dat ≥2 componenten verbond, terug via het kortste stukkenpad (wereld: 1.185 stukken / 3.468 km,
+0,3%). Daarmee opgelost: **EMO→Rijn** (kolen 0 gaten) · **Manaus→Amazone** (Saldanha→Manaus
+routeert) · **Beilun↔Guixi** (trein 883 km) · **EU-spoor** (Antwerpen↔Duisburg één component).
+⚠️ Gemeten en verworpen (niet opnieuw proberen): DEDUP_SNIPPER_KM 0,30→0,15 alléén — grootste
+component kromp er zelfs van (4.135 → 3.531 km op BE+NL+NRW).
 
 ## ⚠️ OPEN 2026-07-23 (avond) — de gebakken hoofd-Yangtze is te grof bij de Tongling-noordpunt
 De Chang-Jiang-middellijn (OSM way 226556520) heeft tussen lat 31,042 en 31,074 één **rechte
@@ -32,14 +45,14 @@ toegevoegd (zelfde pass als de lijnen) + marker-maat gehalveerd zodat het de kad
 i.p.v. afdekt. (Lars: *"ik heb ze in sommige beelden wel heel kort gezien"* = precies dit
 symptoom.)
 
-## OPEN 2026-07-23 - Beilun-havenspoor ligt los van het Chinese hoofdnet
+## ✅ OPGELOST 2026-07-24 (dedup-guard, zie boven) - Beilun-havenspoor ligt los van het Chinese hoofdnet
 De spoor-aansluiting van de ertsterminal Beilun (`cu-beilun-kade`) snapt op een component van
 **1.823 km**; Jiangxi Copper/Guixi zit op het Chinese hoofdnet van **402.762 km**. Daardoor geeft
 `cu-escondida-guixi` "geen pad" op het treinbeen. Zelfde soort breuk als het EU-spoor hieronder;
 een cross-component-heal op `landnet.bin` kan beide dekken. De router meldt het nu zelf met getal
 (`verklaarGeenPad()` in `stromen.js`), dus dit is diagnosticeerbaar in plaats van stil.
 
-## OPEN 2026-07-23 - Maasvlakte-riviergat: EMO hangt aan een bekken van 4 km
+## ✅ OPGELOST 2026-07-24 (heal verlengt i.p.v. verplaatst, zie boven) - Maasvlakte-riviergat: EMO hing aan een bekken van 4 km
 De EMO-kolenkade hecht op een **losstaand havenbekken van 4 km**, terwijl Duisburg op de doorgaande
 Rijn (**24.517 km**) ligt -> het Rijnbeen van `coal-cerrejon-ruhr` faalt. Scherp contrast dat de
 diagnose bevestigt: de koperkade in de Waalhaven, 30 km verderop, zit wel op de doorgaande Rijn en
@@ -75,7 +88,7 @@ Drie ervan hadden een wortel: **maten als vaste fractie van de bolstraal** (zie 
 zijn laptop. Gemeten kostte de hele stromenlaag 0,02-0,04 ms per frame op elke hoogte, ook met een
 marker centraal in beeld. De 19 km-bol was de beste kandidaat maar is niet bewezen.
 
-## ⚠️ OPEN 2026-07-23 — EU-spoor is gefragmenteerd in de M25-bake
+## ✅ OPGELOST 2026-07-24 (dedup-guard, zie boven) — EU-spoor was gefragmenteerd in de M25-bake
 Register-punten in Europa liggen op verschillende spoorcomponenten: Antwerpen (comp ~4.813 knopen)
 en Duisburg (comp ~2.556) zijn níet verbonden, dus Antwerpen→Duisburg per trein = "geen pad" — óók
 mét de hoofdlijn-snap. China (89.296-knoop component) en Zuid-Afrika zijn wél één net, daar werkt
@@ -83,7 +96,7 @@ spoor (Shanghai→Chongqing = trein 2.299 km). **Risico:** zodra de stromen over
 moeten, ontbreken die verbindingen. **Fix (later):** een cross-component-heal op `landnet.bin`, de
 familie van de riviernet-heal (LAR-520) maar dan voor spoor, met gelijke-spoorwijdte-guard.
 
-## ⚠️ OPEN 2026-07-23 — Manaus→Rotterdam geeft "geen pad"
+## ✅ OPGELOST 2026-07-24 (relatieve doorgaand-component-snap, zie boven) — Manaus→Rotterdam gaf "geen pad"
 Sinds de dichtste-net-zaad-fix (geen fictieve verre zee-snap meer) valt Manaus terug op zijn
 riviersnap, en die zit vermoedelijk op een Amazone-fragment dat het aangewezen Macapá-punt niet
 raakt. Eerlijk "geen pad" i.p.v. een verzonnen route — maar het wijst op een riviernet-gat op de
