@@ -71,12 +71,21 @@ def sha(pad):
 
 
 def laad_lijnen():
-    """Alle landnet_*.geojson uit de build-cache → {label: [(props, pts)]}."""
+    """Alle landnet_*.geojson uit de build-cache → {label: [(props, pts)]}.
+
+    Plus v2/data/landnet-handmatig.geojson (gecommit): hand-geplaatste stukken
+    waar OSM een aantoonbaar bestaande lijn mist — zelfde rol als
+    vaarwegen-handmatig.geojson bij het water (Tongling-oostgeul). Hun
+    uiteinden zijn exacte kopieën van bestaande OSM-vertices, dus de exacte
+    las hecht ze per constructie (zie maak_guixi_zuidlijn.py)."""
     paden = sorted(glob.glob(os.path.join(CACHE, "landnet_*.geojson")))
     paden = [p for p in paden if "-proef" not in os.path.basename(p)]
     if not paden:
         raise SystemExit("geen landnet_*.geojson in build-cache — draai eerst "
                          "run_landnet_wereld.py")
+    handmatig = os.path.join(DATA, "landnet-handmatig.geojson")
+    if os.path.exists(handmatig):
+        paden.append(handmatig)
     per_label = defaultdict(list)
     bronnen = []
     for pad in paden:

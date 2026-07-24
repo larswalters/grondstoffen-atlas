@@ -385,8 +385,8 @@
    "rol": "losplek",
    "naam": "Jiangxi Copper — smelter Guixi (贵溪冶炼厂)",
    "plek": [
-    117.2257,
-    28.3338
+    117.226,
+    28.3271
    ],
    "modi": [
     "spoor"
@@ -394,14 +394,14 @@
    "gemeten": {
     "spoor": {
      "bij": [
-      117.2119,
-      28.3214
+      117.229789,
+      28.32701
      ],
-     "snapKm": 1.93
+     "snapKm": 0.37
     }
    },
    "bron": "OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
-   "noot": "De grootste kopersmelter ter wereld. Ligt 3,8 km noordelijker dan de node-coördinaat in data/copper.js (28,30 / 117,20) — op wereldniveau onzichtbaar, op straatniveau het verschil tussen smelter en veld."
+   "noot": "De grootste kopersmelter ter wereld. Plek = de ertslosbundel mét portaalkranen midden op het terrein (satelliet 2026-07-24), niet het polygoon-middelpunt 800 m noordelijker: daarop snapte de route naar een noordstreng en tekende hij een lus om de fabriek. Bereikbaar via de 贵溪站-专用线 (zh.wikipedia); het OSM-gemiste middenstuk daarvan is hand-geplaatst (landnet-handmatig.geojson)."
   }
  ]
 }

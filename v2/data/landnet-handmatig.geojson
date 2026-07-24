@@ -1,0 +1,70 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "label": "spoor-handmatig",
+    "regio": "cn",
+    "modus": "spoor",
+    "gauge": "1435",
+    "naam": "贵溪站-专用线 middenstuk (Jiangxi Copper, hand-geplaatst)",
+    "bron": "satelliet-overtrek Esri World Imagery (z17); uiteinden = exacte OSM-vertices ways 472264816/995766154 (ODbL). Bestaan 专用线: zh.wikipedia 贵溪站; rol 贵溪北: Xinhua 皖赣铁路 40 jaar (2024-06-02).",
+    "km": 2.477
+   },
+   "geometry": {
+    "type": "LineString",
+    "coordinates": [
+     [
+      117.220748,
+      28.306619
+     ],
+     [
+      117.221,
+      28.3077
+     ],
+     [
+      117.2217,
+      28.3106
+     ],
+     [
+      117.2226,
+      28.3129
+     ],
+     [
+      117.2236,
+      28.3153
+     ],
+     [
+      117.2248,
+      28.3175
+     ],
+     [
+      117.226,
+      28.3195
+     ],
+     [
+      117.2272,
+      28.3213
+     ],
+     [
+      117.2283,
+      28.323
+     ],
+     [
+      117.2292,
+      28.3245
+     ],
+     [
+      117.2301,
+      28.3257
+     ],
+     [
+      117.229789,
+      28.32701
+     ]
+    ]
+   }
+  }
+ ]
+}
