@@ -1391,7 +1391,7 @@ def _voeg_in(pts, npc):
     return pts[:beste_j + 1] + [npc] + pts[beste_j + 1:]
 
 
-def _heal_riviernet(lijnen_per_regio, eps_km):
+def _heal_riviernet(lijnen_per_regio, eps_km, evenwijdig_gr=None):
     """Tier-1 confluentie-heal (LAR-520). Een lijn-UITEINDE dat binnen eps_km OP
     de lijn van een ANDER component projecteert wordt daar aangehecht: het
     projectiepunt komt als vertex in de doel-lijn en het uiteinde verschuift
@@ -1404,6 +1404,14 @@ def _heal_riviernet(lijnen_per_regio, eps_km):
     kleinste gaten, progressieve union zodat een paar niet twee keer hecht. De
     lengtetoets per corridor blijft de eindcontrole (valkuil 3).
 
+    `evenwijdig_gr` (SPOOR, niet water): hecht alleen als het uiteinde binnen
+    zoveel graden EVENWIJDIG aan de doellijn ligt. Een wissel takt rakend aan;
+    een kruising staat er haaks op — zonder deze guard prikte de heal een
+    projectiepunt in de HS-lijn precies op een viaduct (Ningbo, 杭深线 ×
+    宁波北环线: in OSM geen gedeelde node) en reed de trein er V-bochten die
+    niet bestaan. Een zijRIVIER mondt daarentegen onder élke hoek uit, dus voor
+    water blijft dit None.
+
     Muteert lijnen_per_regio in-place. Geeft (n_naden, langste_km, alle_km).
     """
     comp, idx = _lijn_componenten(lijnen_per_regio)
@@ -1411,21 +1419,38 @@ def _heal_riviernet(lijnen_per_regio, eps_km):
     geoms = [LineString(p) for p in lines]
     boom = STRtree(geoms)
     venster = (eps_km / 111.32) * 1.6      # ruime bbox-marge (lon krapper dan lat)
+    cos_ev = math.cos(math.radians(evenwijdig_gr)) if evenwijdig_gr else None
 
     kand = []
     for gi, pts in enumerate(lines):
         for eind in (0, -1):
             E = pts[eind]
+            if cos_ev is not None:
+                cl = math.cos(math.radians(E[1]))
+                ux, uy = _richting(pts, eind)
+                ux *= cl                     # beide richtingen in dezelfde metriek
+                un = math.hypot(ux, uy) or 1.0
+                ux, uy = ux / un, uy / un
             bx = box(E[0] - venster, E[1] - venster, E[0] + venster, E[1] + venster)
             beste = None
             for cand in boom.query(bx):
                 if cand == gi or comp[cand] == comp[gi]:
                     continue
                 ln = geoms[cand]
-                npnt = ln.interpolate(ln.project(Point(E)))
+                pd = ln.project(Point(E))
+                npnt = ln.interpolate(pd)
                 d = gc_km(E, (npnt.x, npnt.y))
-                if d <= eps_km and (beste is None or d < beste[0]):
-                    beste = (d, cand, (npnt.x, npnt.y))
+                if d > eps_km or (beste is not None and d >= beste[0]):
+                    continue
+                if cos_ev is not None:
+                    delta = 0.0005           # ~50 m langs de doellijn
+                    pa = ln.interpolate(max(0.0, pd - delta))
+                    pb = ln.interpolate(min(ln.length, pd + delta))
+                    tx, ty = (pb.x - pa.x) * cl, pb.y - pa.y
+                    tn = math.hypot(tx, ty)
+                    if tn > 0 and abs(tx * ux + ty * uy) / tn < cos_ev:
+                        continue             # haaks op de doellijn — kruising, geen junctie
+                beste = (d, cand, (npnt.x, npnt.y))
             if beste:
                 kand.append((beste[0], gi, eind, beste[1], beste[2]))
     kand.sort()

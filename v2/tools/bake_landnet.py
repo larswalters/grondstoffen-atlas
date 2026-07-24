@@ -54,7 +54,6 @@ CACHE = os.path.join(V2, "build-cache")
 DATA = os.path.join(V2, "data")
 
 LAND_KNOOP_KM = 10.0        # tussenknoop op lange stukken
-LAND_QUANT = bm.BULK_QUANT  # ~1 m; twee vertices hierbinnen zijn hetzelfde punt
 SOORT = {"spoor": 2, "weg": 3}
 
 # De drie bestanden die deze bake met geen byte mag aanraken.
@@ -101,8 +100,21 @@ def bouw(per_label):
     ⚠️ Knoop ≠ hoekpunt. Dat is dezelfde ontkoppeling als bij het riviernet: de
     Donau haalde met knopen op 15 km elke stad binnen ±4 km van haar officiële
     rivierkilometer, omdat de lijn ertussen volledig bewaard blijft.
+
+    ⚠️ DE LAS IS EXACT, NIET GEQUANTISEERD. De oude ~1 m-cel laste twee lijnen
+    aaneen zodra ze elkaar dicht genoeg passeerden — en bij een viaduct is de
+    horizontale afstand nul. Raw-meting Ningbo (杭深线 × 宁波北环线): in OSM
+    géén gedeelde node, in onze graaf wél één knoop, en de trein maakte er
+    V-bochten die fysiek niet bestaan. OSM's eigen topologieregel is "verbonden
+    d.e.s.d.a. gedeelde node", en een gedeelde node draagt in elke extract
+    exact dezelfde coördinaat; ook elke heal schrijft zijn projectie-/
+    connectorpunt exact in beide lijnen. Lassen op exacte gelijkheid houdt dus
+    precies de echte juncties en de bewuste heals over — en niets van het
+    viaduct-toeval (Lars: "een bocht die niet bestaat gewoon niet verbinden").
+    Een junctie die in OSM als twee losse nodes < 1 m uit elkaar gemapt staat
+    wordt nu een doodlopend uiteinde — en dat vangt de omweg-gaten-heal.
     """
-    q = lambda p: (round(p[0] / LAND_QUANT), round(p[1] / LAND_QUANT))
+    q = lambda p: (p[0], p[1])
 
     # 1 · welke cellen zijn een uiteinde of een kruising?
     tel = defaultdict(int)
@@ -267,6 +279,13 @@ def vind_lastmile_connectoren(nodes, edges, geometrie, labels):
 
 OMWEG_GAT_M = 200.0     # uiteinde → vreemd spoor: geen echte afstand maar een niet-geknoopte junctie
 OMWEG_LOKAAL_KM = 40.0  # binnen deze graafafstand bereikbaar = echte junctie, géén gat
+OMWEG_HOEK_GR = 45.0    # stub moet EVENWIJDIG aan de doellijn lopen: een wissel takt
+                        # rakend aan, een kruising staat haaks — een stub die haaks op een
+                        # kruisende lijn eindigt is een viaduct/stootblok, geen junctie
+                        # (Lars: "een bocht die niet bestaat gewoon niet verbinden")
+OMWEG_VOORUIT_GR = 60.0 # bij gaten > OMWEG_ZIJWAARTS_M moet het doel ook VÓÓR de stub
+                        # liggen — anders leg je 100 m-sporten tussen parallelle lijnen
+OMWEG_ZIJWAARTS_M = 30.0  # onder dit gaatje is de tip-naar-doel-richting meetruis
 
 
 def spoorwijdte(label):
@@ -287,10 +306,25 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
     44 km hemelsbreed 706 km graaf maakte; oost-China alleen al telde er 1.486.
 
     Guards: alleen graad-1 uiteinden · alleen spoor · zelfde spoorwijdte (een
-    breuk van gauge is een overstap, geen naad) · en de lokale onbereikbaarheid
+    breuk van gauge is een overstap, geen naad) · de lokale onbereikbaarheid
     zelf (een stootblok naast een lijn waarmee verderop gewoon een junctie
-    bestaat, blijft een stootblok). Connectoren zijn coördinaatparen van
-    BESTAANDE vertices; de herbake (bouw) laat ze samenvallen."""
+    bestaat, blijft een stootblok) · en de RICHTING, in twee delen:
+
+    1. RAAKLIJN — de stub moet binnen OMWEG_HOEK_GR evenwijdig aan de doellijn
+       lopen. Een wissel/verbindingsboog takt rakend aan; een kruising staat er
+       haaks op. Zonder deze guard verbond de pass stubs die op een kruisende
+       lijn eindigen (afgeknipte ways op een viaduct) en maakte de trein er
+       V-bochten die fysiek niet bestaan (Lars' screenshots bij Guixi/Ningbo).
+       De raaklijn is óók bij mini-gaatjes betrouwbaar, waar de tip-naar-doel-
+       richting alleen maar digitalisatieruis is.
+    2. VOORUIT — bij gaten > OMWEG_ZIJWAARTS_M moet het doel binnen
+       OMWEG_VOORUIT_GR vóór de stub liggen, anders leg je dwarssporten tussen
+       parallelle lijnen (HS naast conventioneel binnen 200 m is heel gewoon).
+       Ónder die drempel mag het doel ook opzij of nét achter de tip liggen:
+       een tak schiet zijn junctie in OSM vaak een paar meter voorbij.
+
+    Connectoren zijn coördinaatparen van BESTAANDE vertices; de herbake (bouw)
+    laat ze samenvallen."""
     spoor = [i for i, l in enumerate(labels) if not l.startswith("weg")]
 
     # adjacency + graad op knoop-niveau, alleen spoor
@@ -316,12 +350,12 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
         for di in range(-2, 3):
             for dj in range(-2, 3):
                 venster.add((ci + di, cj + dj))
-    grid = defaultdict(list)         # cel -> [(edge_i, lon, lat)]
+    grid = defaultdict(list)         # cel -> [(edge_i, vertex_j, lon, lat)]
     for i in spoor:
-        for lo, la in geometrie[i]:
+        for j, (lo, la) in enumerate(geometrie[i]):
             cel = (round(lo / CEL), round(la / CEL))
             if cel in venster:
-                grid[cel].append((i, lo, la))
+                grid[cel].append((i, j, lo, la))
 
     def lokaal_bereikbaar(start, doelen, cap_km):
         """Begrensde Dijkstra over het spoornet: raakt `start` een van de
@@ -341,26 +375,82 @@ def vind_omweg_connectoren(nodes, edges, geometrie, labels):
                     heapq.heappush(rij, (nd, v))
         return False
 
-    # kandidaten: per uiteinde de dichtstbijzijnde vreemde vertex ≤ cap
+    def uit_richting(k):
+        """Eenheidsrichting waarin het uiteinde WIJST (de lijn uit), lokaal vlak.
+        Geen stabiele richting te bepalen → None, en dan verbinden we niet."""
+        pts = geometrie[incident[k][0]]
+        lo, la = nodes[k]
+        volg = pts if bm.gc_km(pts[0], (lo, la)) <= bm.gc_km(pts[-1], (lo, la)) else pts[::-1]
+        binnen = None
+        for p in volg[1:]:
+            if bm.gc_km(volg[0], p) * 1000.0 > 5.0:
+                binnen = p
+                break
+        if binnen is None:
+            return None
+        c = math.cos(math.radians(volg[0][1]))
+        dx, dy = (volg[0][0] - binnen[0]) * c, volg[0][1] - binnen[1]
+        n = math.hypot(dx, dy)
+        return (dx / n, dy / n) if n > 0 else None
+
+    def lijn_richting(ei, j):
+        """Eenheidsrichting van de doellijn rond vertex j (raaklijn), lokaal
+        vlak. Loop naar beide kanten tot > 5 m voor een stabiele richting."""
+        pts = geometrie[ei]
+        p0 = pts[j]
+        voor = achter = None
+        for p in pts[j + 1:]:
+            if bm.gc_km(p0, p) * 1000.0 > 5.0:
+                voor = p
+                break
+        for p in pts[j - 1::-1]:
+            if bm.gc_km(p0, p) * 1000.0 > 5.0:
+                achter = p
+                break
+        a, b = achter or p0, voor or p0
+        c = math.cos(math.radians(p0[1]))
+        dx, dy = (b[0] - a[0]) * c, b[1] - a[1]
+        n = math.hypot(dx, dy)
+        return (dx / n, dy / n) if n > 0 else None
+
+    cos_evenwijdig = math.cos(math.radians(OMWEG_HOEK_GR))
+    cos_vooruit = math.cos(math.radians(OMWEG_VOORUIT_GR))
+
+    # kandidaten: per uiteinde de dichtstbijzijnde vreemde vertex ≤ cap die de
+    # richtings-guards haalt
     kand = []
     for k in uiteinden:
         lo, la = nodes[k]
         eigen = set(incident[k])
         gauge = spoorwijdte(labels[incident[k][0]])
+        richting = uit_richting(k)
+        if richting is None:
+            continue
+        c = math.cos(math.radians(la))
         ci, cj = round(lo / CEL), round(la / CEL)
         best, best_e, best_ll = math.inf, -1, None
         for di in range(-2, 3):
             for dj in range(-2, 3):
-                for ei, vlo, vla in grid.get((ci + di, cj + dj), ()):
+                for ei, vj, vlo, vla in grid.get((ci + di, cj + dj), ()):
                     if ei in eigen:
                         continue
                     g2 = spoorwijdte(labels[ei])
                     if gauge and g2 and gauge != g2:
                         continue
                     d = bm.gc_km((lo, la), (vlo, vla))
-                    if d < best:
-                        best, best_e, best_ll = d, ei, (vlo, vla)
-        if best_e >= 0 and best * 1000.0 <= OMWEG_GAT_M:
+                    if d * 1000.0 > OMWEG_GAT_M or d >= best:
+                        continue
+                    if d > 0:              # samenvallende vertices: sterkste bewijs, geen hoekruis
+                        ldir = lijn_richting(ei, vj)
+                        if ldir is not None and abs(ldir[0] * richting[0] + ldir[1] * richting[1]) < cos_evenwijdig:
+                            continue       # stub staat haaks op de doellijn — kruising
+                        if d * 1000.0 > OMWEG_ZIJWAARTS_M:
+                            dx, dy = (vlo - lo) * c, vla - la
+                            n = math.hypot(dx, dy)
+                            if n > 0 and (dx * richting[0] + dy * richting[1]) / n < cos_vooruit:
+                                continue   # doel opzij/achter — dwarssport tussen parallellen
+                    best, best_e, best_ll = d, ei, (vlo, vla)
+        if best_e >= 0:
             kand.append((best, k, best_e, best_ll))
     kand.sort(key=lambda x: x[0])
 

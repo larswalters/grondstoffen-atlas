@@ -1074,7 +1074,10 @@ def heel_naden(ketens, eps_km=HEAL_KM):
     per = {"land": [("", [tuple(p) for p in k["pts"]]) for k in ketens]}
     totaal, langste = 0, 0.0
     for _ronde in range(6):
-        n, l, _ = bm._heal_riviernet(per, eps_km)
+        # evenwijdig_gr: een spoor-uiteinde hecht alleen RAKEND aan (wissel),
+        # nooit haaks (dat is een viaduct/kruising — de Ningbo-les, zie
+        # _heal_riviernet). Voor water geldt de guard niet.
+        n, l, _ = bm._heal_riviernet(per, eps_km, evenwijdig_gr=45.0)
         totaal += n
         langste = max(langste, l)
         if n == 0:
@@ -1083,7 +1086,7 @@ def heel_naden(ketens, eps_km=HEAL_KM):
         k["pts"] = pts
         k["km"] = sum(fw.km(pts[i], pts[i + 1]) for i in range(len(pts) - 1))
     print(f"  heal: {totaal:,} naden gelegd (≤{eps_km * 1000:.0f} m, "
-          f"langste {langste * 1000:.0f} m, cross-component)")
+          f"langste {langste * 1000:.0f} m, cross-component, evenwijdig ≤45°)")
     return ketens
 
 
