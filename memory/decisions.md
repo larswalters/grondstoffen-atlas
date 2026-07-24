@@ -1,7 +1,36 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (heal-ronde: heal verlengt, riviersnap relatief doorgaand, dedup-connectiviteitsguard)*
+*Last updated: 2026-07-24 (industrieel last-mile-spoor: additieve service-rail-pass + transitieve vertex-heal + drop-onverbonden)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-24 - Industrieel last-mile-spoor: additief insluiten, niet het globale filter aanzetten
+**Besluit:** `fetch_service_lastmile.py` sluit `service=spur/siding/yard` in binnen 7 km van de
+aangewezen aansluitingen (→ `build-cache/landnet_lastmile.geojson`, die `bake_landnet` via zijn
+`landnet_*.geojson`-glob meebakt). Het globale M25-spoor-filter blijft `service=`-rail droppen.
+**Waarom:** het last-mile-spoor (de siding/spur die een smelter aan de hoofdlijn knoopt) wordt
+door het M25-filter gedropt, maar `service=` GLOBAAL insluiten blies de China-ijking +142/+22% op
+en jaagt de componenten omhoog (M25-meting). Alléén binnen de straal van de aangewezen punten =
+targeted, en marnet/ports/knooppunten blijven byte-identiek.
+
+## 2026-07-24 - De last-mile-heal is TRANSITIEF en vertex-op-vertex, dan herbakken
+**Besluit:** `bake_landnet.vind_lastmile_connectoren` knoopt greedy elk 'besmet' cluster (bevat
+last-mile-rail) aan het dichtstbijzijnde *grotere* net (niet alleen ≥1000 km), propageert de
+besmetting en herhaalt (smelter→179 km-tussennet→hoofdnet). Connectoren = coördinaatparen van
+BESTAANDE vertices; daarna één herbake (`bouw`) die ze laat samenvallen.
+**Waarom:** OSM tekent de service-ways wél maar knoopt de junctie-knopen niet (Tongling: 107 m-gat
+naar een 179 km-net, dat via 16 m aan het volgende — de LAR-520-klasse). Knoop-naar-knoop faalt
+(junctie zit midden op een edge: knoop-gat 927 m, vertex-gat 29 m). Edge-split faalde op de
+meta-contiguïteit; een herbake met bestaande-vertex-connectoren lost dat schoon op. Enkel naar
+het 1000 km-hoofdnet healen miste het 179 km-tussennet → transitief.
+
+## 2026-07-24 - De last-mile-pass mag ALLEEN verbinden, nooit een nieuw snap-doel maken
+**Besluit:** `drop_onverbonden` gooit last-mile/heal-edges weg die ná de heal nóg op een klein
+(< hoofdnet) component liggen, EN ruimt wees-knopen op (nodes zonder edge, na een compaction +
+edge-herindexering).
+**Waarom:** een losstaand spoortje is schadelijk — een aansluiting snapt op de dichtste KNOOP, en
+een 0-graads wees kaapt zo een snap van de echte lijn. Dat brak Cerrejón→Bolívar twee keer: eerst
+via een gedropte tweede-helft van een gesplitste hoofdlijn (spoor-heal-label), toen via een
+wees-knoop na de drop. Zo kan de pass per constructie niets laten regresseren (toets_routes 30/30).
 
 ## 2026-07-24 - De heal VERLENGT een uiteinde, verplaatst het nooit
 **Besluit:** `_heal_riviernet` en `_heal_corridors` (bake_marnet) zetten het projectiepunt als

@@ -1,8 +1,46 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (heal-ronde live ?v=071: pijplijn verbreekt niets meer — EMO, Manaus, Beilun, EU-spoor dicht; volgende = visuele check Lars)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (industrieel last-mile-spoor geheeld, live ?v=072: Tongling/Beilun/Guixi/Duisburg-sidings hechten aan het net; volgende = optioneel de 22 grove AFGEKNIPT-sites)*
 
-> **🩹 DE HEAL-RONDE — DE PIJPLIJN VERBREEKT NIETS MEER (2026-07-24, laatste).** Live `?v=071`
+> **🚂 INDUSTRIEEL LAST-MILE-SPOOR GEHEELD (2026-07-24, laatste).** Live `?v=072` (commit `6266aba`),
+> Lars' visuele go: *"mooi tot in de haven en bij de grote fabrieken een lijntje aangesloten op het
+> grote net, zo moet het."* **→ VOLGENDE: optioneel de 22 grove AFGEKNIPT-sites breder uitrollen**
+> (`memory/next-actions.md`).
+>
+> **WORTEL:** het M25-spoor-filter dropt álle `service=`-rail — juist de siding/spur die een smelter/
+> mijn/terminal aan de hoofdlijn knoopt. Twee detectoren gebouwd i.p.v. één handmatige reparatie:
+> `v2/tools/toets_stromen_14.mjs` bewees dat het **riviernet solide** is (10 riviersstromen, diepe
+> Yangtze→Chongqing/Mississippi/Seaway/Donau/Rijn, 0 gaten — geen Manaus/Tongling-siblings);
+> `v2/tools/toets_spoor_aansluiting.mjs` classificeerde 579 industriële nodes (VERBONDEN 258 · LANGE
+> SPUR 180 · GEEN SPOOR 119 · **AFGEKNIPT 22** = siding ≤3 km bij de plant, los van het net).
+>
+> **LARS HAD GELIJK** (*"je ziet ze gewoon liggen op de kaart, één stuk loopt naar de smelter, het
+> andere moet aansluiten"*): OSM tekende de service-ways wél maar knoopte de junctie-knopen niet —
+> bij Tongling hangt de smelter via een **107 m-gaatje** aan een 179 km-net, dat via **16 m** aan het
+> volgende stuk. Geen echte afstand, een OSM-topologie-gat (de LAR-520-klasse). Bevestigd op de
+> china-extract: `service=spur` (0,9 km) + 89× `service=yard`, allemaal door óns filter gedropt.
+>
+> **DE FIX (additief, veilig):**
+> 1. **`v2/tools/fetch_service_lastmile.py`** sluit `service=spur/siding/yard` in binnen 7 km van de
+>    aangewezen aansluitingen → `build-cache/landnet_lastmile.geojson` (via de glob meegebakt). Het
+>    globale filter aanzetten blies de China-ijking +22% op → alléén lokaal.
+> 2. **`bake_landnet.vind_lastmile_connectoren`** heelt **transitief vertex-op-vertex**: elk 'besmet'
+>    cluster greedy aan het dichtstbijzijnde *grotere* net (niet alleen ≥1000 km — dan mis je het
+>    179 km-tussennet), propageer, herhaal → smelter→179 km→hoofdnet. Connectoren = coördinaatparen
+>    van BESTAANDE vertices, daarna één herbake (`bouw`) die ze laat samenvallen (geen coördinaat-
+>    round-trip, geen edge-split).
+> 3. **`drop_onverbonden`**: rail die ná de heal nóg los is → weg, én **wees-knopen** opgeruimd. De
+>    pass mag alléén verbinden, nooit een nieuw snap-doel maken. ⚠️ Twee regressies onderweg gevangen
+>    (beide Cerrejón→Bolívar): een edge-split gaf een hoofdlijn-splithelft het spoor-heal-label → de
+>    drop wierp het weg; en de drop liet wees-knopen achter → Bolívar snapte op een 0-graads wees.
+>
+> **Tongling/Beilun/Guixi/Duisburg aan het hoofdnet** (uitgaand kathode-per-trein over de échte
+> siding) · **toets_routes 30/30 (geen regressie)** · **marnet/ports/knooppunten byte-identiek** ·
+> grootste component 664.151 → **671.829 km** (221 naden ≤200 m). **⚠️ OPEN:** de 22 grove AFGEKNIPT-
+> sites (Fresnillo/Kalgoorlie/Norilsk…) zijn `data/*.js`-coördinaten, niet aansluitingen → aparte
+> bredere uitrol · Tongling-**oostgeul** (water in) blijft de handmatige lijn.
+
+> **🩹 DE HEAL-RONDE — DE PIJPLIJN VERBREEKT NIETS MEER (2026-07-24, eerder).** Live `?v=071`
 > (commit `0eaff4b`). **→ VOLGENDE: visuele check van Lars** (guard-stukken op de bol, de nieuwe
 > Cincinnati-route, de kolenstroom tot de Schwelgern-pier); daarna de rest van M26.
 >
@@ -1625,6 +1663,18 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-24 · Industrieel last-mile-spoor: additief insluiten, niet het globale filter aan** —
+  het M25-filter dropt álle `service=`-rail (juist het last-mile-spoor); globaal insluiten blies de
+  China-ijking +22% op. `fetch_service_lastmile.py` sluit `service=spur/siding/yard` alléén binnen
+  7 km van de aangewezen aansluitingen in; marnet/ports byte-identiek.
+- **2026-07-24 · De last-mile-heal is TRANSITIEF, vertex-op-vertex, dan herbakken** — OSM knoopt de
+  junctie-knopen niet (Tongling: 107 m-gat naar een 179 km-net, LAR-520-klasse). Greedy elk 'besmet'
+  cluster aan het dichtstbijzijnde *grotere* net (niet alleen ≥1000 km), propageren; connectoren op
+  bestaande vertices + één herbake. Knoop-naar-knoop faalt (junctie midden op edge); edge-split brak
+  de meta.
+- **2026-07-24 · De last-mile-pass mag ALLEEN verbinden, nooit een nieuw snap-doel maken** —
+  `drop_onverbonden` gooit onverbonden last-mile-rail weg + ruimt wees-knopen op. Een 0-graads wees
+  kaapt anders een aansluiting-snap (brak Cerrejón→Bolívar twee keer: gedropte splithelft, toen wees).
 - **2026-07-24 · De heal VERLENGT een uiteinde, verplaatst het nooit** — verplaatsen trok
   tweeling-eindpunten los (EMO-flip-flop: naad zes rondes gelegd en losgetrokken); verlengen kan
   per constructie geen bestaande celkoppeling verbreken. Tier-1 én tier-2, bake_marnet.

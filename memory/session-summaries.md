@@ -1,6 +1,28 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-24 - Industrieel last-mile-spoor geheeld, live ?v=072
+Vervolg op de heal-ronde: is er meer spoor/riviergraaf dat we missen? Twee detectoren gebouwd
+i.p.v. één handmatige reparatie. `toets_stromen_14.mjs` (per grondstof één teststroom, havenniveau):
+het riviernet is solide — 10 riviersstromen (diepe Yangtze→Chongqing, Mississippi, Seaway, Donau,
+Rijn) routeren 0 gaten, geen Manaus/Tongling-siblings. `toets_spoor_aansluiting.mjs` (579
+industriële nodes): VERBONDEN 258 · LANGE SPUR 180 · GEEN SPOOR 119 · **AFGEKNIPT 22** (siding
+≤3 km bij de plant, los van het net). **Wortel:** het M25-filter dropt álle `service=`-rail — juist
+de siding/spur die een smelter aan de hoofdlijn knoopt (china-extract Tongling: `service=spur`
+0,9 km + 89× `service=yard`). **Lars had gelijk** (*"je ziet ze gewoon liggen op de kaart"*): OSM
+tekende de ways maar knoopte de junctie-knopen niet — de smelter hangt via een 107 m-gaatje aan een
+179 km-net, dat via 16 m aan het volgende (de LAR-520-klasse). **Fix:** `fetch_service_lastmile.py`
+sluit `service=spur/siding/yard` binnen 7 km van de aansluitingen in (globaal insluiten blies M25
++22% op → alléén lokaal); `bake_landnet` heelt transitief vertex-op-vertex (smelter→179 km→hoofdnet,
+≤200 m, bestaande-vertex-connectoren + herbake); `drop_onverbonden` gooit onverbonden rail weg +
+ruimt wees-knopen op. **Twee bugs onderweg (beide Cerrejón→Bolívar-regressie):** edge-split gaf een
+hoofdlijn-splithelft het spoor-heal-label → drop wierp het weg; en de drop liet wees-knopen achter
+→ Bolívar snapte op een 0 km-wees. Opgelost via vertex-connectoren + wees-opruiming. **Resultaat:**
+Tongling/Beilun/Guixi/Duisburg aan het hoofdnet, uitgaand kathode-per-trein over de échte siding;
+toets_routes 30/30, marnet/ports byte-identiek, grootste 664.151→671.829 km. Live `?v=072`
+(commit `6266aba`), Lars' visuele go: *"mooi tot in de haven en bij de grote fabrieken een lijntje
+aangesloten op het grote net, zo moet het."* Open: 22 grove AFGEKNIPT-sites = aparte bredere uitrol.
+
 ## 2026-07-24 - De heal-ronde: de pijplijn verbreekt niets meer, live ?v=071
 Diagnose eerst (meet-workflow, 8 agents incl. tegenspraak): een raw-experiment op de OSM-topologie
 bewees dat de bron op elk breukpunt al verbonden was — Antwerpen-Duisburg en Beilun-Guixi zijn ook

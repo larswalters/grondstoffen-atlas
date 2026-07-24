@@ -1,5 +1,20 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-24 (heal-ronde ?v=071: EMO/Manaus/Beilun/EU-spoor opgelost; Tongling-vlecht en echte OSM-gaten blijven open)*
+*Last updated: 2026-07-24 (last-mile-spoor ?v=072: Tongling/Beilun/Guixi/Duisburg-sidings hechten; 22 grove AFGEKNIPT-sites blijven open als bredere uitrol)*
+
+## ✅ OPGELOST 2026-07-24 — industrieel last-mile-spoor niet aangesloten (live ?v=072)
+De sidings die een smelter/terminal aan de hoofdlijn knopen waren losse stubs, omdat het M25-filter
+álle `service=`-rail dropt. Additieve pass (`fetch_service_lastmile.py`) + transitieve vertex-heal
+in `bake_landnet` + drop-onverbonden. Tongling/Beilun/Guixi/Duisburg hechten nu. Twee regressies
+onderweg gevangen (beide Cerrejón→Bolívar): (1) een edge-split gaf de tweede helft van een
+gesplitste hoofdlijn het spoor-heal-label → de drop wierp dat legitieme stuk weg → van edge-split
+terug naar vertex-connectoren; (2) de drop liet **wees-knopen** achter → Bolívar snapte op een
+0-graads wees i.p.v. de 158 km-kolenlijn → wees-knopen compacteren na de drop. Pas dáárna 30/30.
+
+## ⚠️ OPEN — 22 grove AFGEKNIPT-sites (bredere uitrol)
+`toets_spoor_aansluiting.mjs` vindt 22 industriële nodes met een gemapte-maar-losse siding
+(Fresnillo, Kalgoorlie, Norilsk, Hunan-Ag…). Dat zijn de grove `data/*.js`-coördinaten (vaak
+stad-centroïdes), niet de aangewezen aansluitingen — de last-mile-pass raakt ze pas als hun
+precieze coördinaat + extract in `PUNT_EXTRACT` staan. Geen bug in de pass; bewust nog niet uitgerold.
 
 ## ✅ OPGELOST 2026-07-24 — vier netbreuken in één ronde (de pijplijn knipte ze zelf)
 Raw-experiment bewees vooraf: de bron was op elk breukpunt al verbonden, óók onder het

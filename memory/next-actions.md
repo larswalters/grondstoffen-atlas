@@ -1,19 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (heal-ronde live `?v=071`: pijplijn verbreekt niets meer — EMO, Manaus, Beilun, EU-spoor dicht; volgende = visuele check Lars)*
+*Last updated: 2026-07-24 (industrieel last-mile-spoor geheeld, live `?v=072`, Lars' visuele go; volgende = optioneel de 22 grove AFGEKNIPT-sites breder uitrollen)*
 
-## 🔴 START HIER — VISUELE CHECK ?v=071 + restpunten
+## 🔴 START HIER — de volgende optionele stappen
 
-* **Visuele check Lars op `?v=071`** — vooral: de teruggezette guard-stukken op de bol
-  (locatielijstjes staan in de bake-uitvoer, "kijk na op de bol"), de nieuwe
-  R'dam→Cincinnati-route via Chicago, en de kolenstroom die nu tot de Schwelgern-pier loopt.
-* **Tongling-vlecht blijft open** — de grove rechte sprong van ~16 km in de gebakken
-  hoofd-Yangtze is BRONgeometrie (OSM-middellijn te grof), geen pipeline-knip; de heal-ronde
-  raakt hem dus niet. Handmatige oostgeul (`data/vaarwegen-handmatig.geojson`) blijft nodig
-  tot de hoofdgeul daar fijner wordt afgeleid (bv. met `middellijn_uit_vlakken.py` op het
-  gevlochten stuk).
-* **Echte OSM-gaten**: EU-spoor rond Krefeld/Kempen (daar ligt écht niets in de bron) en de
-  Escondida-slurryleiding (geen `substance=slurry` richting Coloso) — alleen met handwerk of
-  betere bron te dichten; status `onbekend` is eerlijk.
+* **Optioneel: de 22 grove AFGEKNIPT-sites breder uitrollen.** De last-mile-pass draait nu op de
+  15 aangewezen aansluitingen; de brede detector (`toets_spoor_aansluiting.mjs`) vond nog **22
+  AFGEKNIPT** industriële nodes (Fresnillo, Kalgoorlie, Norilsk, Hunan-Ag…) — dat zijn de grove
+  `data/*.js`-coördinaten, niet de aansluitingen. Uitrollen = per site een precieze coördinaat
+  opzoeken (veel zijn stad-centroïdes) en `PUNT_EXTRACT` in `fetch_service_lastmile.py` uitbreiden;
+  de heal + drop + wees-opruiming werken dan generiek mee.
+* **Tongling-oostgeul (water in) blijft de handmatige lijn** (`data/vaarwegen-handmatig.geojson`,
+  reproduceerbaar via `tools/maak_tongling_oostgeul.py`). Stond los van dit spoor-werk; de grove
+  ~16 km-sprong in de gebakken hoofd-Yangtze is nog steeds BRONgeometrie, niet met de spoor-heal
+  op te lossen. Een fijne her-afleiding van de hoofdgeul (`middellijn_uit_vlakken.py` op het
+  gevlochten stuk) is de structurele fix als je 'm wilt.
+* **Realiteitsronde** (Lars' eigen volgorde: "eerst de rail beter verbinden, dan de realiteit"):
+  per dragende site checken of het product écht per trein/truck vertrekt (bedrijfsrapporten) —
+  nu is er een stuk minder te vullen omdat de last-mile-sidings al hechten.
+* **Echte OSM-gaten** (blijven `onbekend`): EU-spoor rond Krefeld/Kempen (daar ligt écht niets)
+  en de Escondida-slurryleiding (geen `substance=slurry` richting Coloso).
+
+## ✅ AFGEROND 2026-07-24 — INDUSTRIEEL LAST-MILE-SPOOR GEHEELD (live `?v=072`, commit `6266aba`)
+
+Vervolg op de heal-ronde: is er meer spoor/riviergraaf dat we missen? Twee detectoren
+(`toets_stromen_14.mjs` → riviernet solide, 0 gaten; `toets_spoor_aansluiting.mjs` → 22 AFGEKNIPT).
+Wortel: het M25-filter dropt álle `service=`-rail — juist het last-mile-spoor. Fix:
+`fetch_service_lastmile.py` (service=spur/siding/yard binnen 7 km van de aansluitingen) +
+transitieve vertex-op-vertex heal in `bake_landnet` (smelter→tussennet→hoofdnet ≤200 m) +
+`drop_onverbonden` (weg + wees-knoop-opruiming, anti-regressie). Tongling/Beilun/Guixi/Duisburg
+aan het hoofdnet; toets_routes 30/30; marnet/ports byte-identiek; Lars' visuele go.
 
 ## ✅ AFGEROND 2026-07-24 — DE HEAL-RONDE (de spoor+riviernet-heal van hieronder)
 

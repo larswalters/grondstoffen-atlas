@@ -1,5 +1,13 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-24 (heal-ronde live ?v=071: pijplijn verbreekt niets meer; volgende = visuele check + rest van M26)*
+*Last updated: 2026-07-24 (last-mile-spoor live ?v=072: service-sidings hechten aan het net; volgende = optioneel de 22 grove AFGEKNIPT-sites + realiteitsronde)*
+
+> **Stand na ?v=072 — het last-mile-spoor hecht.** Het M25-filter dropt álle `service=`-rail;
+> een additieve pass (`fetch_service_lastmile.py`) sluit `service=spur/siding/yard` bij de
+> aangewezen aansluitingen in en `bake_landnet` heelt die clusters transitief vertex-op-vertex aan
+> het net (drop-onverbonden + wees-opruiming = anti-regressie). Tongling/Beilun/Guixi/Duisburg
+> hangen nu aan het hoofdnet. Detectoren: `toets_spoor_aansluiting.mjs` (breed) + `toets_stromen_14.mjs`
+> (riviernet solide). Volgende: optioneel de 22 grove AFGEKNIPT-sites, dan de realiteitsronde.
+
 
 ## Stand 2026-07-24 — de netten zijn heel waar de bron heel is
 
