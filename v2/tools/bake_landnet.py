@@ -33,9 +33,11 @@ Draaien:  python v2/tools/bake_landnet.py
 import argparse
 import glob
 import hashlib
+import heapq
 import json
 import math
 import os
+import re
 import sys
 from collections import defaultdict
 
@@ -263,6 +265,122 @@ def vind_lastmile_connectoren(nodes, edges, geometrie, labels):
     return conns
 
 
+OMWEG_GAT_M = 200.0     # uiteinde → vreemd spoor: geen echte afstand maar een niet-geknoopte junctie
+OMWEG_LOKAAL_KM = 40.0  # binnen deze graafafstand bereikbaar = echte junctie, géén gat
+
+
+def spoorwijdte(label):
+    """De gauge uit een spoorlabel ('spoor-cn-1435-hs' → '1435'). Geen gauge in
+    het label (spoor-heal, spoor-lastmile) = onbekend, en onbekend is GEEN grens
+    — hetzelfde draagprincipe als de scheepsmaten in de router."""
+    m = re.search(r"-(\d{3,4})(?:-|$)", label)
+    return m.group(1) if m else None
+
+
+def vind_omweg_connectoren(nodes, edges, geometrie, labels):
+    """De OMWEG-GATEN: een doodlopend spooruiteinde dat op < OMWEG_GAT_M van
+    ander spoor eindigt, terwijl dat spoor over de graaf pas na een grote omweg
+    (of nooit) bereikbaar is. De cross-component-heals zien deze klasse per
+    definitie niet: beide kanten hangen (via de omweg) al aan hetzelfde
+    component, dus er lijkt niets los. Je vindt ze alleen door te routeren —
+    Beilun→Guixi reed 879 km waar ~700 hoort, omdat de knip Zhuji↔Yiwu van
+    44 km hemelsbreed 706 km graaf maakte; oost-China alleen al telde er 1.486.
+
+    Guards: alleen graad-1 uiteinden · alleen spoor · zelfde spoorwijdte (een
+    breuk van gauge is een overstap, geen naad) · en de lokale onbereikbaarheid
+    zelf (een stootblok naast een lijn waarmee verderop gewoon een junctie
+    bestaat, blijft een stootblok). Connectoren zijn coördinaatparen van
+    BESTAANDE vertices; de herbake (bouw) laat ze samenvallen."""
+    spoor = [i for i, l in enumerate(labels) if not l.startswith("weg")]
+
+    # adjacency + graad op knoop-niveau, alleen spoor
+    adj = defaultdict(list)          # knoop -> [(buur, km)]
+    incident = defaultdict(list)     # knoop -> [edge_i]
+    for i in spoor:
+        a, b = edges[i]
+        km = sum(bm.gc_km(geometrie[i][j], geometrie[i][j + 1])
+                 for j in range(len(geometrie[i]) - 1))
+        adj[a].append((b, km))
+        adj[b].append((a, km))
+        incident[a].append(i)
+        incident[b].append(i)
+    uiteinden = [k for k, inc in incident.items() if len(inc) == 1]
+
+    # vertex-grid alléén in het venster rond de uiteinden (zelfde truc als de
+    # last-mile-pass: wereldwijd alle vertices grid-den is onnodig zwaar)
+    CEL = 0.002
+    venster = set()
+    for k in uiteinden:
+        lo, la = nodes[k]
+        ci, cj = round(lo / CEL), round(la / CEL)
+        for di in range(-2, 3):
+            for dj in range(-2, 3):
+                venster.add((ci + di, cj + dj))
+    grid = defaultdict(list)         # cel -> [(edge_i, lon, lat)]
+    for i in spoor:
+        for lo, la in geometrie[i]:
+            cel = (round(lo / CEL), round(la / CEL))
+            if cel in venster:
+                grid[cel].append((i, lo, la))
+
+    def lokaal_bereikbaar(start, doelen, cap_km):
+        """Begrensde Dijkstra over het spoornet: raakt `start` een van de
+        `doelen` binnen cap_km?"""
+        afst = {start: 0.0}
+        rij = [(0.0, start)]
+        while rij:
+            d, u = heapq.heappop(rij)
+            if u in doelen:
+                return True
+            if d > afst.get(u, math.inf):
+                continue
+            for v, km in adj[u]:
+                nd = d + km
+                if nd <= cap_km and nd < afst.get(v, math.inf):
+                    afst[v] = nd
+                    heapq.heappush(rij, (nd, v))
+        return False
+
+    # kandidaten: per uiteinde de dichtstbijzijnde vreemde vertex ≤ cap
+    kand = []
+    for k in uiteinden:
+        lo, la = nodes[k]
+        eigen = set(incident[k])
+        gauge = spoorwijdte(labels[incident[k][0]])
+        ci, cj = round(lo / CEL), round(la / CEL)
+        best, best_e, best_ll = math.inf, -1, None
+        for di in range(-2, 3):
+            for dj in range(-2, 3):
+                for ei, vlo, vla in grid.get((ci + di, cj + dj), ()):
+                    if ei in eigen:
+                        continue
+                    g2 = spoorwijdte(labels[ei])
+                    if gauge and g2 and gauge != g2:
+                        continue
+                    d = bm.gc_km((lo, la), (vlo, vla))
+                    if d < best:
+                        best, best_e, best_ll = d, ei, (vlo, vla)
+        if best_e >= 0 and best * 1000.0 <= OMWEG_GAT_M:
+            kand.append((best, k, best_e, best_ll))
+    kand.sort(key=lambda x: x[0])
+
+    # greedy: kleinste gat eerst, één naad per junctie-cel-paar (tweeling-
+    # uiteinden die naar elkaars lijn wijzen leggen anders dubbele naden)
+    conns, gedaan = [], set()
+    for gat, k, ei, (vlo, vla) in kand:
+        doelen = set(edges[ei])
+        if lokaal_bereikbaar(k, doelen, OMWEG_LOKAAL_KM):
+            continue                       # echte junctie bestaat al — geen gat
+        lo, la = nodes[k]
+        sleutel = tuple(sorted([(round(lo / CEL), round(la / CEL)),
+                                (round(vlo / CEL), round(vla / CEL))]))
+        if sleutel in gedaan:
+            continue
+        gedaan.add(sleutel)
+        conns.append([[lo, la], [vlo, vla]])
+    return conns
+
+
 def drop_onverbonden(nodes, edges, geometrie, soorten, labels, meta):
     """Gooit last-mile/heal-edges weg die ná de heal nóg op een klein (< hoofdnet)
     component liggen. Een losstaand spoortje is schadelijk: een aansluiting kan
@@ -362,8 +480,18 @@ def main():
             ({"label": "spoor-heal", "regio": "heal", "modus": "spoor",
               "gauge": "onbekend", "hs": False}, pts) for pts in conns)
         nodes, edges, geometrie, soorten, labels, meta = bouw(per_label)
+    # OMWEG-GATEN HEAL — ná de last-mile heal (die kan uiteinden al hebben
+    # opgelost), op de dan geldende geometrie. Zelfde twee-passen-vorm: naden
+    # vinden als vertex-paren, dan herbakken zodat ze samenvallen.
+    omweg = vind_omweg_connectoren(nodes, edges, geometrie, labels)
+    if omweg:
+        per_label.setdefault("spoor-heal", []).extend(
+            ({"label": "spoor-heal", "regio": "heal", "modus": "spoor",
+              "gauge": "onbekend", "hs": False}, pts) for pts in omweg)
+        nodes, edges, geometrie, soorten, labels, meta = bouw(per_label)
     gedropt = drop_onverbonden(nodes, edges, geometrie, soorten, labels, meta)
-    print(f"  last-mile heal: {len(conns)} naden gelegd · {gedropt} onverbonden edges gedropt")
+    print(f"  last-mile heal: {len(conns)} naden gelegd · omweg-gaten: {len(omweg)} naden · "
+          f"{gedropt} onverbonden edges gedropt")
 
     # ⚠️ Datumgrens: MARNET had 15 knopen dubbel op lon ±180. Relevant voor
     # Tsjoekotka en Alaska; wrap_lon is bij het laden al toegepast, dit toetst het.
