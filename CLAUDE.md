@@ -1,6 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-24 (M27: schone bol — waternet eruit voor de AIS-ombouw, `?v=083`)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: het AIS-waternet ligt op de bol — pilot `?v=084`, check Lars uitstaand)*
+
+> **🛰️ M27 · HET AIS-WATERNET LIGT OP DE BOL — PILOT (2026-07-25, laatste).** Live `?v=084`
+> (commit `9ddd96f`), **visuele check van Lars staat uit.** De eerste vaargeulen uit de
+> AIS-density als zichtbare laag (lichtblauw, HUD-knop "AIS-waternet (pilot)"), vier
+> vensters: **Tongling** — de S-bocht én **beide geulen om het eiland rechtstreeks uit de
+> data** (het satelliet-handwerk van 24 juli wordt overbodig; mini-gaatje oostgeul blijft) ·
+> **Nederland** — compleet binnenvaartnet · **Shanghai-mond** — aanloopgeulen scherp ·
+> **Patache** — kustcorridor, snipperig.
+> **Pijplijn** (`v2/tools/bake_aisnet.py`, kijk-eerst via `v2/tools/verken_ais.py`):
+> drempel 100k AIS-berichten/cel → **adaptief verdunnen** (brede vlakken lokaal uitsnijden,
+> per deelgebied tot de vaarrug drempelen — ⚠️ les die twee rondes kostte: heel NL-water is
+> ÉÉN verbonden component, per-component herdrempelen sloopte de rivieren tot streepjes) →
+> glad log-veld σ=1 (tegen krulwerk) → confetti-filter <8 cellen → skeletonize → polylijnen
+> met spur-snoei. Tekenlaag `v2/src/aisnet.js`: één LineSegments, zelfde tekendiscipline als
+> de andere vectorlagen. Data: `v2/data/aisnet-pilot.json` (770 KB, 9.631 lijnen).
+> **Besloten:** ankervlek-filter = **convergentiegedrag** (een corridor dunt onder oplopende
+> drempel naar één rug, een ankervlek convergeert nooit) — uitvoering in de graaf-stap;
+> **open zee krijgt een eigen recept** (bredere gladstrijking, Patache bewijst waarom).
+> **→ VOLGENDE:** Lars' check op `?v=084` → graaf-stap (knopen/edges, convergentie-filter,
+> gaatjes healen, 2-puntslijnen consolideren, havens/aansluitingen aanhechten — brief =
+> ankers) of eerst het recept aanscherpen.
 
 > **🌊 M27 · SCHONE BOL — HET WATERNET IS ERUIT VOOR DE AIS-OMBOUW (2026-07-24, laatste).**
 > **Besluit Lars: alles nat weg** (zee + binnenvaart, expliciet gekozen boven "alleen

@@ -1,20 +1,31 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (schone bol `?v=083`; AIS-density binnen — M27 loopt)*
+*Last updated: 2026-07-25 (M27: AIS-pilot live `?v=084`, check Lars uitstaand)*
 
-## 🔴 START HIER — M27: de AIS-watergraaf
+## 🔴 START HIER — M27: van pilot-lijnen naar graaf
 
-* **`v2/build-cache/ais/shipdensity_commercial.zip` uitpakken en verkennen** (rasterio staat):
-  hoe helder staan Rijn/Maasvlakte (en later Yangtze) in het 500 m-raster? Empirische toets
-  uit de routebrief-sessie.
-* **Pilot Maasvlakte**: eerste zelfgelegde knopen/edges van het nieuwe natte net —
-  **brief = ankers** (routebrief kolen Cerrejón→Ruhr: EMO → Suurhoffbrug → Hartelkanaal,
-  níet het Beerkanaal), **AIS-density = geul**. De Beerkanaal-fix wordt zo onderdeel van de
-  nieuwe graaf i.p.v. een patch op de oude.
+* **Lars' visuele check op `?v=084`**: liggen de AIS-geullijnen in de echte geulen
+  (Tongling beide geulen · binnenvaart-NL · Shanghai-aanloop)? Uitkomst bepaalt: recept
+  aanscherpen of door naar de graaf-stap.
+* **De graaf-stap**: knopen op splitsingen + edges met km uit de pilot-lijnen ·
+  **ankervlek-filter via convergentiegedrag** (een corridor dunt onder oplopende drempel
+  naar één rug, een ankervlek blijft een vlak — wat niet convergeert is geen geul) ·
+  mini-gaatjes healen (oostgeul Tongling) · de 2-puntslijnen-fragmentatie consolideren
+  (8.467 van 9.631 lijnen) · havens/aansluitingen aanhechten (brief = ankers).
+* **Open-zee-recept**: Patache is snipperig — diffuus verkeer vraagt bredere
+  gladstrijking (grotere σ, lagere drempel) dan een geul; apart houden van het geul-recept.
 * **Opschalen langs de vier pilotcorridors**; routebrieven voor de andere drie stromen —
   Beilun→Guixi (China-spoor) is de zware.
 * *Herinnering:* de water-toetsen (`toets_routes.mjs`, `toets_stromen_14.mjs`) heffen hun
   parkering zelf op zodra er weer een waternet-bake ligt — verwachtingen dan herijken op het
   AIS-net (de oude 30/30-stand leeft op tag `pre-ais-net`).
+
+## ✅ AFGEROND 2026-07-25 — AIS-PILOT OP DE BOL (live `?v=084`, commit `9ddd96f`)
+
+`verken_ais.py` (kijk-eerst: density-PNG's bewezen de bron) + `bake_aisnet.py` (drempel
+100k → adaptief verdunnen → glad log-veld → confetti-filter → skelet + spur-snoei) +
+`aisnet.js` (één LineSegments, HUD-knop). Tongling's beide geulen komen rechtstreeks uit
+de data; binnenvaart-NL compleet. Les: heel NL-water is één verbonden component —
+per-component herdrempelen sloopte de rivieren; brede vlakken lokaal uitsnijden.
 
 ## ✅ AFGEROND 2026-07-24 — SCHONE BOL: WATERNET ERUIT (live `?v=083`, commit `960ad15`)
 

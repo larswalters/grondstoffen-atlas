@@ -1260,3 +1260,12 @@ groen. World Bank AIS-density Commercial (458 MB, gratis/CC-BY, incl. PUSHER TUG
 TANKER) → `v2/build-cache/ais/`; rasterio 1.5 + scikit-image 0.26 geïnstalleerd.
 Volgende: raster verkennen (Rijn/Maasvlakte) → pilot Maasvlakte (brief = ankers, AIS = geul).
 Vault: [[2026-07-24-grondstoffen-atlas-schone-bol-ais-sloop]]
+
+## 2026-07-25 — Het AIS-waternet ligt op de bol (pilot `?v=084`)
+Zelfde dag als de sloop: vaargeulen uit de World Bank-density als zichtbare laag, vier
+vensters (Tongling · Nederland · Patache · Shanghai). **Tongling: beide geulen om het
+eiland komen rechtstreeks uit de data.** Pijplijn: drempel 100k → adaptief verdunnen
+(les: NL-water = één component, brede vlakken lokaal uitsnijden) → glad log-veld →
+confetti-filter → skelet + spur-snoei. Besloten: ankervlek-filter = convergentiegedrag
+(graaf-stap); open zee eigen recept. Wacht op Lars' visuele check → dan de graaf-stap.
+Vault: [[2026-07-25-grondstoffen-atlas-ais-pilot-op-de-bol]]

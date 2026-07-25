@@ -874,3 +874,14 @@ Bekend dekkingsgat: Saldanha Bay (ijzererts, ZA) ontbreekt volledig (112 km naar
   riviernet vaak een rivierknoop. Netfilter nodig.
 - meta.passages telt 53.989 entries waarvan 52 echte zeestraten; wie erover itereert toont het
   halve riviernet.
+
+## 2026-07-25 — AIS-pilot: bekende opens
+- **Ankervelden/havenbekkens** zijn nog kluwens in de pilot-laag (Shanghai rechts,
+  R''dam-bekkens) — filter via convergentiegedrag komt in de graaf-stap.
+- **Open zee snipperig** (Patache): diffuus verkeer past niet in het geul-recept;
+  eigen recept met bredere gladstrijking nodig.
+- **Mini-gaatje in de Tongling-oostgeul** + 2-puntslijnen-fragmentatie (8.467/9.631)
+  — beide voor de graaf-stap (healen/consolideren).
+- **Meetles:** met het browserpaneel dicht is de drawingBuffer 1×1 én draait rAF niet
+  (vliegNaar doet niets) — pixel-metingen dan zinloos; verifieer via console/preview-PNG''s
+  of laat Lars live kijken.

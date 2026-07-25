@@ -1,5 +1,19 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-24 (schone bol: waternet verwijderd, AIS-ombouw gestart — M27)*
+*Last updated: 2026-07-25 (M27: het AIS-waternet ligt op de bol — pilot `?v=084`, check Lars uitstaand)*
+
+## Stand 2026-07-25 — de eerste AIS-geulen liggen erop
+
+Pilot live (`?v=084`): vaargeulen uit de AIS-density als zichtbare laag in vier vensters —
+Tongling (**beide geulen om het eiland rechtstreeks uit de data**, het satelliet-handwerk
+van 24 juli is daarmee overbodig aan het worden), Nederland (compleet binnenvaartnet),
+Shanghai-mond (scherp), Patache (snipperig — open zee vraagt een eigen recept). Pijplijn
+`bake_aisnet.py`: drempel 100k berichten → **adaptief verdunnen** (brede vlakken lokaal
+uitsnijden en per gebied tot de vaarrug drempelen; les: heel NL-water is één component,
+per-component drempelen sloopte de rivieren) → glad log-veld σ=1 → confetti-filter →
+skelet → polylijnen + spur-snoei. Ankervlek-filter beslist als **convergentiegedrag**
+(corridor dunt naar een rug, ankervlek convergeert nooit) — uitvoering in de graaf-stap.
+**Wacht op Lars' visuele check**; daarna de graaf-stap (knopen/edges, healen, havens
+aanhechten) of eerst het recept aanscherpen.
 
 ## Stand 2026-07-24 (laat) — schone bol, de AIS-graaf komt
 
