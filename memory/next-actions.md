@@ -1,11 +1,13 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: rug-recept live `?v=085`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M27: gloed live `?v=086`, check Lars uitstaand)*
 
-## 🔴 START HIER — M27: van rug-lijnen naar graaf
+## 🔴 START HIER — M27: gloed-check, dan de graaf
 
-* **Lars' visuele check op `?v=085`**: liggen de rug-lijnen in de echte geulen en is het
-  net dicht/compleet genoeg (Tongling beide geulen · binnenvaart-NL · Patache-corridor ·
-  Shanghai-aanloop)? Uitkomst bepaalt: knoppen bijstellen of door naar de graaf-stap.
+* **Lars' visuele check op `?v=086`**: is de gloed (het dichtheidsveld additief op de
+  bol) het beeld dat hij zoekt? De rug-lijnen staan standaard uit (HUD-knop
+  "AIS-waternet (lijnen, pilot)") en blijven het zaad voor de graaf-stap.
+* **Gloed opschalen** (later, na de check): voorbij de vier vensters — per-corridor
+  texturen of een gedownsamplede wereldlaag voor uitgezoomd kijken.
 * **De graaf-stap**: knopen op splitsingen + edges met km uit de rug-lijnen ·
   **convergentie-filter voor de resterende ankervlek-restjes** (Shanghai-ankerkolommen
   geven nog korte lijnen; een corridor dunt onder oplopende drempel naar één rug, een

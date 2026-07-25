@@ -3,6 +3,19 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## 2026-07-25 - Het BEELD van het AIS-waternet is de GLOED, de lijnen zijn graaf-zaad (besluit Lars)
+**Besluit:** het dichtheidsveld zelf op de bol als additieve gloed-textuur per venster
+(`bake_aisgloed.py` + `aisgloed.js`, HUD-default aan); de geëxtraheerde rug-lijnen
+blijven bestaan als zaad voor de graaf-stap maar staan standaard uit. **Reden:** twee
+afgekeurde lijnen-recepten op rij bewezen dat middellijn-extractie op een 500 m-raster
+nooit het beeld geeft dat de dichtheids-PNG's beloven — het mooie ís het veld
+(breedte, drukte, parallelle banen), en dat gaat bij vectorisatie per definitie
+verloren. Gekozen boven de hybride (OSM-geometrie terug + AIS als bewijs) en boven
+verder verfijnen van de lijnen.
+**Rendervorm:** vierdemachtswortel-schaal (log perst alles bevaren in de topband → één
+witte vlek), blauw→cyaan→wit op zwart, AdditiveBlending (zwart telt niets op = vanzelf
+onzichtbaar boven land), randvervaging tegen harde vensterranden.
+
 ## 2026-07-25 - AIS-extractie werkt op het CONTINUE veld, niet op een binair masker (rug-recept)
 **Besluit:** het drempel+verdunnen-recept van `?v=084` is vervangen door het rug-recept:
 Steger-rug-NMS op het log-veld (twee schalen, σ²-genormaliseerd) + hysteresis (zwak maar

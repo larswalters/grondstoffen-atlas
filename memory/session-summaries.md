@@ -1,6 +1,16 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-25 (avond) - De AIS-drukte als gloed op de bol, live ?v=086
+Lars' check op ?v=085: ook de rug-lijnen ogen mager op de bol. Diagnose: het mooie op
+de dichtheids-PNG's is het veld zelf (500 m-raster vs meters-satelliet; breed water
+heeft geen eenduidige middellijn). Keuze Lars: **de gloed als laag**. Gebouwd:
+`bake_aisgloed.py` (artefact-gaten dichten → vierdemachtswortel-schaal — log = één
+witte vlek — → blauw→cyaan→wit op zwart → ×3 + blur → randvervaging) + `aisgloed.js`
+(gebogen quad per venster, AdditiveBlending, klemOpHorizon, renderOrder 6,3). HUD:
+gloed standaard aan, lijnen standaard uit (graaf-zaad). Commit `af55a8d`, gepusht;
+wacht op check.
+
 ## 2026-07-25 - AIS-waternet herbakken met het rug-recept, live ?v=085
 Lars keurde de v084-pilot af (hoekig, onderbrekingen in de Tongling-oostgeul én de Rijn,
 dunner dan de dichtheidsfoto's beloven) en vroeg een **andere aanpak, geen fix**.

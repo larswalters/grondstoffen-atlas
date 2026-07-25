@@ -1,5 +1,19 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: AIS-waternet herbakken met het rug-recept — `?v=085`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M27: de AIS-drukte als gloed — `?v=086`, check Lars uitstaand)*
+
+## Stand 2026-07-25 (avond) — de gloed is het beeld, de lijnen zijn het zaad
+
+Lars keurde ook het rug-lijnenbeeld af op de bol (*"waarom is de omzetting zo mager?"*).
+Diagnose: het mooie op de dichtheids-PNG's is het **veld zelf** — breedte, drukte,
+parallelle banen — en dat gaat bij elke middellijn-extractie op een 500 m-raster
+verloren; bovendien kijkt de bol op meters-scherp satelliet en heeft breed water geen
+eenduidige middellijn. **Keuze Lars: de gloed als laag** (boven de hybride met
+OSM-geometrie en boven verder verfijnen). Live `?v=086` (commit `af55a8d`):
+`bake_aisgloed.py` (gloed-textuur per venster: artefact-gaten dichten →
+vierdemachtswortel-schaal → blauw→cyaan→wit op zwart → ×3 + blur → randvervaging) +
+`aisgloed.js` (gebogen quad, AdditiveBlending, klemOpHorizon, renderOrder 6,3). HUD:
+gloed standaard aan, lijnen standaard uit. **Wacht op Lars' check op `?v=086`**;
+inhoudelijk volgende stap blijft de graaf-stap op de rug-lijnen.
 
 ## Stand 2026-07-25 (laat) — het rug-recept vervangt drempel+verdunnen
 

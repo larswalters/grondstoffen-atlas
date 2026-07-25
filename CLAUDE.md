@@ -1,6 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: AIS-waternet herbakken met het rug-recept — `?v=085`, check Lars uitstaand)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: de AIS-drukte als gloed — `?v=086`, check Lars uitstaand)*
+
+> **✨ M27 · DE AIS-DRUKTE ALS GLOED — HET BEELD IS HET VELD, DE LIJNEN ZIJN HET ZAAD
+> (2026-07-25, laatste).** Live `?v=086` (commit `af55a8d`), **check Lars uitstaand.**
+> Lars keurde óók het rug-lijnenbeeld af (*"waarom is de omzetting naar onze atlas zo
+> mager?"*). Diagnose: wat op de dichtheids-PNG's mooi is, is het **veld zelf**
+> (breedte, drukte, parallelle banen) en dat gaat bij élke middellijn-extractie op een
+> 500 m-raster verloren; de bol kijkt bovendien op meters-scherp satelliet en breed
+> water heeft geen eenduidige middellijn. **Keuze Lars: de gloed als laag** (boven de
+> hybride met OSM-geometrie uit `pre-ais-net`, en boven verder lijnen verfijnen).
+> **Gebouwd:** `v2/tools/bake_aisgloed.py` — per venster een gloed-textuur:
+> artefact-gaten dichten (tegelnaden) → **vierdemachtswortel-schaal** (⚠️ log perst
+> alles bevaren in de topband → één witte vlek) → blauw→cyaan→wit op ZWART → ×3 +
+> zachte blur → randvervaging (venster dooft uit i.p.v. hard afkappen). En
+> `v2/src/aisgloed.js` — gebogen quad per venster, **AdditiveBlending** (zwart telt
+> niets op = vanzelf onzichtbaar boven land), transparent + depthWrite uit,
+> klemOpHorizon, renderOrder 6,3. HUD: **"AIS-drukte (gloed)" standaard aan ·
+> "AIS-waternet (lijnen, pilot)" standaard uit** — de rug-lijnen blijven het zaad voor
+> de graaf-stap. Data: `v2/data/aisgloed/` (4 PNG's + manifest, ~1,7 MB).
+> **→ VOLGENDE:** Lars' check op `?v=086` → de graaf-stap op de rug-lijnen
+> (knopen/edges, convergentie-filter, havens aanhechten) · later: gloed opschalen
+> voorbij de vier vensters.
 
 > **🏔️ M27 · HET RUG-RECEPT VERVANGT DREMPEL+VERDUNNEN (2026-07-25, laatste).** Live
 > `?v=085` (commit `9576dea`), **visuele check van Lars staat uit.** Lars keurde `?v=084`
