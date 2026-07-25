@@ -1,5 +1,29 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-25 (World Bank AIS-raster: artefact-nullen in geuldraden — gegeven, geen bug van ons)*
+*Last updated: 2026-07-25 (M28: aisstream-dekking is geografisch begrensd — gegeven, geen bug)*
+
+## ⚠️ GEGEVEN — aisstream heeft geen dekking landinwaarts in China (2026-07-25)
+De stationskaart van aisstream (open/vrijwillig netwerk) is dicht op Europa incl. het Duitse
+binnenland, de VS-kust **plus** Grote Meren en het Mississippi/Ohio-binnenland, Japan/Korea/
+Zuidoost-Azië en de Australische kust — maar China heeft **alleen kustpunten**. Een station
+reikt 40–80 km; Tongling ligt ±400 km landinwaarts. Gemeten: 0 berichten in 3 minuten tegen
+293/min voor Rotterdam. Dit is geen storing en geen bug, maar de harde grens van M28: **de
+Yangtze krijgt geen eigen tracks** en houdt het World Bank density-raster als fallback
+(`bake_aisnet.py`, kop gemarkeerd). Het tongling-venster blijft in de collector staan zodat
+het antwoord doorlopend geverifieerd wordt in plaats van uit één momentopname te komen.
+Praktisch gevolg: het Tongling-handwerk (`data/vaarwegen-handmatig.geojson`, de satelliet-
+gelegde oostgeul) blijft nodig — juist daar waar tracks het overbodig zouden maken.
+
+## ⚠️ RISICO — VPS-schijf: 22,8 GB vrij van 96 GB (2026-07-25)
+De collector schrijft ~234 MB/dag ruw per Rijnmond-formaat venster. Ondervangen: afgesloten
+dagen worden automatisch gegzipt (~10×) en onder **2 GB vrij** stopt de collector met
+schrijven (stream + health lopen door) in plaats van de schijf vol te laten lopen. Bij het
+toevoegen van drukke vensters (Shanghai-mond, VS-binnenwateren) eerst een dag meten. Hermes,
+Traefik en form4app delen deze schijf.
+
+## ⏳ OPEN — reboot-overleving collector niet live bevestigd (2026-07-25)
+`ais-collector.service` is `enabled` met `Restart=always`, en crash- én verbindingsherstel zijn
+echt getest (`kill -9`, `ss -K`). Een echte reboot is **niet** gedaan omdat Hermes, Traefik en
+form4app op dezelfde VPS draaien. Bevestigen bij de eerstvolgende geplande reboot.
 
 ## ⚠️ GEGEVEN — het World Bank AIS-raster heeft artefacten (2026-07-25)
 Geulen staan er vaak in als 1-cels draden met uniforme waarden (oostgeul Tongling:

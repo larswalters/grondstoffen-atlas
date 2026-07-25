@@ -1,6 +1,41 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-25 (nacht) - M28 · AIS-tracknet gestart: de collector draait, density = fallback
+Lars had het plan buiten de sessie om herzien en wees M28 in Linear aan als leidend boven
+`now.md`: de vaargraaf komt uit **tracks van individuele schepen** (aisstream) i.p.v. uit het
+500 m-dichtheidsraster. Eén doorvaart = één vloeiende edge op GPS-precisie tot áán de kade,
+dus geen threshold/skeleton en geen artefacten.
+
+**LAR-528 (Done) — dekkingstest.** Protocol eerst geverifieerd (subscription binnen 3 s,
+`PositionReport`-velden), toen gemeten vanaf de VPS: Rotterdam **884 berichten / 293 per min /
+572 unieke MMSI in 3 minuten**, Tongling **0**. Lars stuurde vooraf de stationskaart, die het
+al voorspelde: dicht op Europa, de VS-kust **plus** Grote Meren en Mississippi/Ohio-binnenland,
+Japan/Korea/Zuidoost-Azië en Australië — China alleen kustpunten. Beslisregel tak 2: doorgaan
+voor de gedekte corridors, Yangtze houdt het density-raster.
+
+**LAR-529 (Done) — collector live.** `ais-collector.service` op de VPS, enabled. Bewust dom:
+ruwe JSONL per UTC-dag, geen track-logica; auto-reconnect met backoff, health-regel per venster
+elke 5 min, dagelijkse gzip, harde ondergrens 2 GB vrij. Bestendigheid écht getest op de
+draaiende service: socket weggetrokken met `ss -K` → 2 s later weer verbonden; `kill -9` →
+systemd herstart en schrijft door in hetzelfde dagbestand. Reboot alleen mechanisch geborgd.
+Gemeten volume (552 byte/bericht → 234 MB/dag ruw) liet toe de corridor meteen tot **Duisburg**
+door te trekken — het Rijnbeen uit de kolen-routebrief; health na 5 min: rijnmond 408/min,
+rijn-corridor 221/min (579 MMSI), tongling 0/min.
+
+**LAR-534 (Done) — overdracht en opruimen.** `now.md` heeft een M28-pointer bovenaan en de
+gloed-sectie is naar "eerder, plan vervangen" gezet; `bake_aisnet.py` draagt een FALLBACK-kop
+en `bake_aisgloed.py` een "visuele laag"-kop; 12,2 GB opgeruimd (de uitgepakte raster — de
+458 MB-zip bevat TIF én overview en blijft); de 69 GB geofabrik-extracts blijven staan omdat
+dat de OSM-bronnen van het landnet zijn, geen rivierarchief.
+
+Commit `7dbf1b5` (collector + dekkingstest + `v2/design/ais-collector-vps.md` + fallback-koppen);
+geen `?v=`-bump, want geen browser-assets geraakt. ⚠️ De geplande firewall-test werd geweigerd
+door de permissie-classifier; `ss -K` was de gelijkwaardige vervanging.
+
+**Volgende:** LAR-530 track-naar-graaf (pilot Rotterdam-Rijnmonding) → LAR-531 terminal-nodes.
+De eerste week oogt de graaf dunner dan de density-screenshots — by design.
+
 ## 2026-07-25 (avond) - De AIS-drukte als gloed op de bol, live ?v=086
 Lars' check op ?v=085: ook de rug-lijnen ogen mager op de bol. Diagnose: het mooie op
 de dichtheids-PNG's is het veld zelf (500 m-raster vs meters-satelliet; breed water

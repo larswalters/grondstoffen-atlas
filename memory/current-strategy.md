@@ -1,7 +1,43 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: de AIS-drukte als gloed — `?v=086`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M28: het AIS-tracknet verzamelt; density = fallback)*
 
-## Stand 2026-07-25 (avond) — de gloed is het beeld, de lijnen zijn het zaad
+## Stand 2026-07-25 (nacht) — M28: de graaf komt uit TRACKS, niet uit dichtheid
+
+**Het plan is omgedraaid** (besluit Lars, buiten de sessie om vastgelegd als Linear-
+milestone *"M28 · AIS-tracknet"*, LAR-528 t/m LAR-535). Niet het 500 m-dichtheidsraster
+maar de **tracks van individuele schepen** — geordende ping-reeksen per MMSI via
+[aisstream.io](https://aisstream.io) — zijn de bron van de vaargraaf. Eén doorvaart =
+één vloeiende edge op GPS-precisie, tot áán de kade. Geen threshold, geen skeleton, dus
+per constructie geen driehoek-uitschieters, lussen of spurs; terminal-nodes vallen er
+gratis uit via ligplaats-clusters (SOG < 0,5 kn).
+
+**Taakverdeling per laag:** open zee = MARNET blijft · kust/riviermonding/binnenwater/
+havens = eigen AIS-tracks · overgang = overlap-stitching · offshore olie/gas = World Bank
+platformlaag als node-bron · fallback = het density-raster voor corridors zonder tracks.
+
+**⚠️ De beperking is geografisch, niet technisch.** De aisstream-stationskaart is dicht op
+Europa (incl. Duits binnenland/Rijn), de VS-kust **plus** Grote Meren en Mississippi/Ohio-
+binnenland, Japan/Korea/Zuidoost-Azië en de Australische kust — maar China heeft **alleen
+kustpunten**. Gemeten in 3 minuten: Rotterdam 884 berichten / 293 per min / 572 unieke
+MMSI, **Tongling 0**. Een station reikt 40–80 km en Tongling ligt ±400 km landinwaarts.
+Besluit Lars: doorgaan voor de gedekte corridors; de Yangtze houdt het density-raster.
+
+**De collector draait** (`ais-collector.service`, VPS `root@187.124.169.172`, enabled) en
+is **bewust dom**: ruwe berichten erin, ruwe JSONL per UTC-dag eruit, géén track-logica.
+Die zit in de aparte verwerkingsstap (LAR-530), zodat een verbeterd recept nooit nieuwe
+verzameltijd kost. Vensters `rijnmond` · `rijn-corridor` (tot Duisburg — het Rijnbeen uit
+de kolen-routebrief) · `tongling` (doorlopende controle). Opzet + bediening:
+`v2/design/ais-collector-vps.md`.
+
+**Verwachting, expliciet:** de eerste week oogt de graaf dunner dan de density-screenshots.
+Corridors vullen zich één doorvaart tegelijk — dat is by design, geen tegenvaller.
+Verzamelen en bouwen overlappen.
+
+De gloed (`bake_aisgloed.py` + `aisgloed.js`) blijft als **visuele laag**; `bake_aisnet.py`
+blijft werkend als **fallback**. Beide zijn geen routeringsbron meer — dat staat nu ook in
+hun bestandskop.
+
+## Stand 2026-07-25 (avond) — de gloed is het beeld, de lijnen zijn het zaad *(ingehaald door M28)*
 
 Lars keurde ook het rug-lijnenbeeld af op de bol (*"waarom is de omzetting zo mager?"*).
 Diagnose: het mooie op de dichtheids-PNG's is het **veld zelf** — breedte, drukte,

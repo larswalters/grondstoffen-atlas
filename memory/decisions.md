@@ -1,7 +1,58 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (AIS-extractie = rug-recept, geen binaire drempel)*
+*Last updated: 2026-07-25 (M28: de graaf komt uit tracks; density = fallback)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-25 - De vaargraaf komt uit TRACKS, niet uit dichtheid (besluit Lars, M28)
+**Besluit:** niet het 500 m-dichtheidsraster maar de tracks van individuele schepen
+(ping-reeksen per MMSI via aisstream.io) zijn de bron van de vaargraaf.
+**Waarom:** een gevolgd schip levert direct een polyline die per constructie in de geul
+ligt — geen threshold, geen skeleton, dus geen driehoek-uitschieters, lussen of spurs
+(de M27-artefacten verdwijnen structureel i.p.v. per fix). Class A zendt varend elke
+2–10 s ≈ elke 10–20 m bij binnenvaartsnelheid, dus GPS-precisie tot áán de kade — dat
+lost ook vertakkende havenbekkens op die een 500 m-raster fundamenteel niet aankan.
+Bijvangst: haven-connectors grotendeels overbodig, en terminal-nodes vallen gratis uit
+de ligplaats-pingwolkjes. Het density/skeleton-plan is **fallback** geworden, niet weg.
+
+## 2026-07-25 - M28 gaat door ondanks nul dekking in China (besluit Lars)
+**Besluit:** het tracknet uitvoeren voor de gedekte corridors; de Yangtze houdt het
+World Bank density-raster als tussenoplossing.
+**Waarom:** gemeten in 3 minuten — Rotterdam 884 berichten / 293 per min / 572 unieke
+MMSI, Tongling **0**. De aisstream-stationskaart heeft in China alleen kustpunten en een
+station reikt 40–80 km, terwijl Tongling ±400 km landinwaarts ligt; dat is geen storing
+maar een geografisch gegeven. Lars: *"op al die plekken waar die wel ligt lijkt me dit
+wel de meest makkelijke en accurate manier om mooie graaflijnen te maken tot de exacte
+dok."* Het tongling-venster blijft in de collector staan als doorlopende controle — het
+kost niets en verandert een momentopname in een doorlopend antwoord.
+
+## 2026-07-25 - De collector is bewust DOM; alle verwerking zit in een aparte stap
+**Besluit:** `ais_collector.py` schrijft ruwe berichten ongefilterd weg als JSONL per
+UTC-dag en bevat géén track-logica.
+**Waarom:** track-bouw, varend/stilliggend knippen en bundelen zijn recept-werk dat nog
+gaat veranderen (LAR-530). Zit dat in de collector, dan kost elke recept-verbetering
+nieuwe verzameltijd. Nu hoeft verzamelde data nooit opnieuw. Om dezelfde reden gaat
+`ShipStaticData` er vanaf dag één in, hoewel de spec het als "later evt." noemde: het
+scheepstype komt uitsluitend uit dat berichttype en LAR-531 heeft het nodig — en het
+kost nauwelijks volume (1 per schip per ~6 min tegen 1 per 2–10 s voor posities).
+
+## 2026-07-25 - Corridor-uitbreiding wordt bepaald door gemeten volume, niet geschat
+**Besluit:** eerst één venster meten, dán uitbreiden — en op die meting is de corridor
+meteen doorgetrokken tot Duisburg, als **apart venster** naast `rijnmond`.
+**Waarom:** gemeten 552 byte/bericht → 234 MB/dag ruw, ~23 MB gegzipt voor de
+Rijnmond-box, tegen 22,8 GB vrij op de VPS. Dat maakte het Rijnbeen uit de kolen-
+routebrief (EMO → Schwelgern) gratis meeneembaar. Losse vensters i.p.v. één grote box
+omdat de collector een bericht bij het **eerste passende** venster telt — zo blijven de
+health-regels per segment leesbaar (rijnmond 408/min · rijn-corridor 221/min · tongling
+0/min) en zie je dekkingsverlies per corridor in plaats van als één getal.
+
+## 2026-07-25 - Het geofabrik-archief (69 GB) blijft staan
+**Besluit:** niet opruimen bij LAR-534; alleen de uitgepakte density-raster (12,2 GB) is
+weg, want die zat volledig in de bewaarde 458 MB-zip (incl. `.ovr`).
+**Waarom:** de 69 GB zijn geen rivierdata-archief maar de **OSM-extracts waaruit ook het
+landnet wordt gebakken** (1,17 mln km spoor + wegcorridors, live op de bol). Weggooien
+dwingt een re-download van ~69 GB bij de eerstvolgende landnet- of last-mile-rebake — en
+die komt er, want het tracknet moet aan land gestitcht worden. Heroverwegen zodra dat
+stitchen staat.
 
 ## 2026-07-25 - Het BEELD van het AIS-waternet is de GLOED, de lijnen zijn graaf-zaad (besluit Lars)
 **Besluit:** het dichtheidsveld zelf op de bol als additieve gloed-textuur per venster

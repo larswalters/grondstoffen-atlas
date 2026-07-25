@@ -1,6 +1,68 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: de AIS-drukte als gloed — `?v=086`, check Lars uitstaand)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M28: het AIS-tracknet verzamelt; density = fallback)*
+
+> **🛰️ M28 · HET AIS-TRACKNET VERZAMELT — DE DENSITY IS FALLBACK GEWORDEN (2026-07-25,
+> LAATSTE). ⚠️ HET PLAN STAAT IN LINEAR:** milestone *"M28 · AIS-tracknet — zee- en
+> binnenwaternet uit echte scheepstracks"*, issues **LAR-528 t/m LAR-535**. Lees dát, niet de
+> gloed/density-banners hieronder — die beschrijven een plan dat is vervallen als
+> routeringsbron.
+>
+> **DE OMSLAG.** Niet de dichtheid (500 m-raster → threshold → skeletonize) maar de **tracks
+> van individuele schepen** — geordende ping-reeksen per MMSI via aisstream.io — zijn de bron
+> van de vaargraaf. Eén doorvaart = één vloeiende edge op GPS-precisie, tot áán de kade. Geen
+> drempel, geen skelet, dus **per constructie** geen driehoek-uitschieters, lussen of spurs;
+> terminal-nodes vallen er gratis uit via ligplaats-clusters (SOG < 0,5 kn), en haven-connectors
+> worden grotendeels overbodig omdat tracks aan de kade eindigen. Taakverdeling: open zee =
+> MARNET blijft · kust/riviermonding/binnenwater/havens = eigen tracks · overgang =
+> overlap-stitching · offshore olie/gas = World Bank platformlaag als node-bron.
+>
+> **⚠️ DE BEPERKING IS GEOGRAFISCH, EN DIE IS GEMETEN.** Dekkingstest (LAR-528, **Done**,
+> `v2/tools/ais_dekkingstest.py`): Rotterdam **884 berichten / 293 per min / 572 unieke MMSI
+> in 3 minuten**, Tongling **0**. De aisstream-stationskaart voorspelde dat al — dicht op
+> Europa (incl. Duits binnenland/Rijn), VS-kust **plus** Grote Meren en Mississippi/Ohio-
+> binnenland, Japan/Korea/Zuidoost-Azië, Australische kust, maar **China alleen kustpunten**;
+> een station reikt 40–80 km en Tongling ligt ±400 km landinwaarts. Beslisregel tak 2 → **M28
+> door voor de gedekte corridors; de Yangtze houdt het density-raster.** Besluit Lars: *"op al
+> die plekken waar die wel ligt lijkt me dit wel de meest makkelijke en accurate manier om
+> mooie graaflijnen te maken tot de exacte dok."* Gevolg: het satelliet-gelegde
+> Tongling-handwerk blijft nodig — juist daar waar tracks het overbodig zouden maken.
+>
+> **DE COLLECTOR DRAAIT** (LAR-529, **Done**): `ais-collector.service` op de VPS
+> (`root@187.124.169.172`, enabled). **Bewust dom** — ruwe berichten erin, ruwe JSONL per
+> UTC-dag eruit, géén track-logica; die zit in LAR-530, zodat een verbeterd recept nooit nieuwe
+> verzameltijd kost. Auto-reconnect met backoff, health-regel per venster elke 5 min, dagelijkse
+> gzip, harde ondergrens 2 GB vrij (de VPS had er 22,8 van 96). Vensters `rijnmond` ·
+> `rijn-corridor` · `tongling`. Bron `v2/tools/ais_collector.py`, opzet + bediening
+> `v2/design/ais-collector-vps.md`.
+>
+> **Bestendigheid getest op de draaiende service, niet aangenomen:** TCP-socket weggetrokken
+> (`ss -K`) → `ConnectionClosedError` gelogd, **2 s later weer verbonden** · `kill -9` →
+> systemd herstart binnen 10 s en schrijft **dóór in hetzelfde dagbestand** (append-mode).
+> Reboot alleen mechanisch geborgd (`enabled` + `Restart=always`) — niet live bevestigd omdat
+> Hermes/Traefik/form4app op dezelfde VPS draaien. ⚠️ De geplande firewall-test werd geweigerd
+> door de permissie-classifier; `ss -K` test hetzelfde codepad.
+>
+> **VOLUME BESLISTE DE SCOPE:** 552 byte/bericht → 234 MB/dag ruw, ~23 MB gegzipt voor de
+> Rijnmond-box. Daarom is de corridor meteen doorgetrokken tot **Duisburg** — het Rijnbeen uit
+> de kolen-routebrief (EMO → Schwelgern) loopt nu vanzelf vol. Los venster i.p.v. één grote
+> box, want de collector telt een bericht bij het **eerste passende** venster: health na 5 min
+> = rijnmond 408/min · **rijn-corridor 221/min (579 MMSI)** · tongling 0/min. `ShipStaticData`
+> zit er vanaf dag één bij (spec zei "later evt."): scheepstype komt nergens anders vandaan,
+> LAR-531 heeft het nodig, en verzamelde data hoort nooit opnieuw te hoeven.
+>
+> **LAR-534 (Done):** `now.md` wijst naar M28 · `bake_aisnet.py` = **fallback** (werkend, voor
+> corridors zonder eigen tracks) en `bake_aisgloed.py` = **visuele laag**, beide gemarkeerd in
+> hun bestandskop · **12,2 GB opgeruimd** (de uitgepakte raster; de 458 MB-zip blijft en bevat
+> TIF én overview — zie `v2/build-cache/ais/FALLBACK.md`) · de **69 GB geofabrik-extracts
+> blijven** staan: dat zijn de OSM-bronnen waaruit óók het landnet wordt gebakken, geen
+> rivierarchief.
+>
+> Commit `7dbf1b5`, **geen `?v=`-bump** (geen browser-assets geraakt).
+> **→ VOLGENDE:** LAR-530 track-naar-graaf (pilot Rotterdam-Rijnmonding; ⚠️ bundel-afstand
+> kleiner dan de eiland-schaal) → LAR-531 terminal-nodes uit ligplaats-clusters. Laat de
+> collector lopen: de eerste week oogt de graaf dunner dan de density-screenshots, corridors
+> vullen zich één doorvaart tegelijk — **by design**.
 
 > **✨ M27 · DE AIS-DRUKTE ALS GLOED — HET BEELD IS HET VELD, DE LIJNEN ZIJN HET ZAAD
 > (2026-07-25, laatste).** Live `?v=086` (commit `af55a8d`), **check Lars uitstaand.**
@@ -1807,6 +1869,29 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-25 · De vaargraaf komt uit TRACKS, niet uit dichtheid (besluit Lars, M28)** —
+  tracks per MMSI via aisstream i.p.v. het 500 m-density-raster. Een gevolgd schip levert
+  per constructie een polyline ín de geul: geen threshold, geen skeleton, dus de
+  M27-artefacten (driehoek-uitschieters, lussen, spurs) verdwijnen structureel i.p.v. per
+  fix — én op GPS-precisie tot áán de kade, wat vertakkende havenbekkens oplost die een
+  raster fundamenteel niet aankan. Density/skeleton is **fallback**, niet weg.
+- **2026-07-25 · M28 gaat door ondanks nul dekking in China** — gemeten: Rotterdam 293
+  berichten/min, Tongling 0. Aisstream is een open stationsnetwerk met alleen kustdekking in
+  China (bereik 40–80 km, Tongling ligt ±400 km landinwaarts). Uitvoeren voor de gedekte
+  corridors; de Yangtze houdt het density-raster. Het tongling-venster blijft draaien als
+  doorlopende controle i.p.v. een momentopname.
+- **2026-07-25 · De collector is bewust DOM, alle verwerking zit in een aparte stap** — ruwe
+  JSONL per UTC-dag, géén track-logica (LAR-530). Anders kost elke recept-verbetering nieuwe
+  verzameltijd; nu hoeft verzamelde data nooit opnieuw. Om dezelfde reden gaat
+  `ShipStaticData` er vanaf dag één in, ondanks "later evt." in de spec.
+- **2026-07-25 · Corridor-uitbreiding op gemeten volume, en als LOSSE vensters** — eerst één
+  venster meten (552 byte/bericht → 234 MB/dag), dán uitbreiden; de collector telt een bericht
+  bij het eerste passende venster, dus losse vensters houden de health-regels per segment
+  leesbaar en tonen dekkingsverlies per corridor.
+- **2026-07-25 · Het geofabrik-archief (69 GB) blijft** — dat zijn de OSM-extracts van het
+  landnet, geen rivierarchief; weggooien dwingt een re-download bij de eerstvolgende
+  landnet-rebake, en die komt er als het tracknet aan land gestitcht wordt. Alleen de
+  uitgepakte density-raster (12,2 GB) is weg — die zat volledig in de bewaarde 458 MB-zip.
 - **2026-07-24 · De routebrief: corridors als controleerbare puntenlijst (besluit Lars)** — per
   stroom een brief met de werkelijke corridor (elk dorp/splitsing/sluis in volgorde, per punt
   bron + status, negatieve ankers; tweezijdige toets dekking + verklikker; routeren

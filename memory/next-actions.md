@@ -1,24 +1,48 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: gloed live `?v=086`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M28: collector verzamelt; volgende = track-naar-graaf)*
 
-## 🔴 START HIER — M27: gloed-check, dan de graaf
+## 🔴 START HIER — M28 · LAR-530: track-naar-graaf
 
-* **Lars' visuele check op `?v=086`**: is de gloed (het dichtheidsveld additief op de
-  bol) het beeld dat hij zoekt? De rug-lijnen staan standaard uit (HUD-knop
-  "AIS-waternet (lijnen, pilot)") en blijven het zaad voor de graaf-stap.
-* **Gloed opschalen** (later, na de check): voorbij de vier vensters — per-corridor
-  texturen of een gedownsamplede wereldlaag voor uitgezoomd kijken.
-* **De graaf-stap**: knopen op splitsingen + edges met km uit de rug-lijnen ·
-  **convergentie-filter voor de resterende ankervlek-restjes** (Shanghai-ankerkolommen
-  geven nog korte lijnen; een corridor dunt onder oplopende drempel naar één rug, een
-  ankervlek convergeert nooit) · havens/aansluitingen aanhechten (brief = ankers).
-  ⚠️ Neem het raster-gegeven mee uit `bugs-and-risks.md`: waarde-drempels onderscheiden
-  geul niet van ankervlek, geometrie wel.
-* **Opschalen langs de vier pilotcorridors**; routebrieven voor de andere drie stromen —
-  Beilun→Guixi (China-spoor) is de zware.
+**Het plan staat in Linear** (milestone *"M28 · AIS-tracknet"*, LAR-528 t/m LAR-535) —
+niet in de oude gloed/density-notities hieronder. De collector draait al en verzamelt;
+er is dus dagelijks meer materiaal, en wachten kost niets.
+
+* **LAR-530 · track-naar-graaf**, de kern. Stappen uit het issue:
+  1. tracks per MMSI (sorteren op tijd, splitsen bij tijdsprong > X min of onrealistische
+     sprongafstand — vangt meteen stream-uitval van de collector af);
+  2. varend/stilliggend knippen (SOG < ~0,5 kn → apart, dat is LAR-531-materiaal);
+  3. opschonen per track (max plausibele snelheid tussen punten, Douglas-Peucker + lichte
+     smoothing);
+  4. **track-bundeling** — meerdere doorvaarten middelen tot één centerline per vaarbaan.
+     ⚠️ Bundel-afstand **kleiner dan de eiland-schaal**, anders smelten twee geulen om een
+     eiland samen tot één lijn (de Tongling-les, ook al is Tongling zelf nu ongedekt);
+  5. naar graafformaat: nodes op splitsingen/samenkomsten, edges met lengte.
+* **Pilot = Rotterdam-Rijnmonding** (Tongling valt af wegens dekking). Eerst één corridor
+  end-to-end vóór het generiek maken.
+* **Integriteits-metrics per run loggen**, geen screenshot-vergelijking als primaire check:
+  aantal losse componenten · edges/nodes · bereikbaarheid van havens/terminal-nodes vanuit
+  de hoofdcomponent · verdeling snap-afstanden.
+* **LAR-531 · terminal-nodes** uit de ligplaats-clusters (DBSCAN ε ~50–100 m), verrijkt met
+  scheepstype uit `ShipStaticData` — dat komt al binnen, dus dit kan zodra stap 2 draait.
+  Let op het onderscheid ankerplaats vs kade (afstand tot land / laad-context).
+* **Collector-hygiëne:** af en toe `journalctl -u ais-collector | grep health` — blijft een
+  venster op 0/min staan terwijl de verbinding er is, dan is dat dekking, geen storing.
+  Schijf: dagbestanden gzippen automatisch, ondergrens 2 GB (VPS had 22,8 GB vrij).
+* **Kandidaat-vensters zodra het recept staat:** de VS-binnenwateren (Mississippi/Ohio/
+  Illinois/Seaway — Memphis, Cincinnati, Baton Rouge uit de routebrieven) zijn volgens de
+  stationskaart gedekt, en dat zijn precies de corridors met de meeste OSM-topologiegaten.
+* **Open, meeliften bij gelegenheid:** de reboot-overleving van `ais-collector.service` is
+  mechanisch geborgd (`enabled` + `Restart=always`) maar niet live bevestigd — bevestigen
+  bij de eerstvolgende geplande VPS-reboot (Hermes/Traefik/form4app draaien mee).
 * *Herinnering:* de water-toetsen (`toets_routes.mjs`, `toets_stromen_14.mjs`) heffen hun
   parkering zelf op zodra er weer een waternet-bake ligt — verwachtingen dan herijken op het
   AIS-net (de oude 30/30-stand leeft op tag `pre-ais-net`).
+
+## ⏸️ INGEHAALD DOOR M28 — de graaf-stap op de rug-lijnen
+
+De onderstaande M27-acties (gloed-check, graaf-stap op de rug-lijnen, convergentie-filter)
+zijn **geen route meer**. De gloed blijft als visuele laag, `bake_aisnet.py` als fallback
+voor ongedekte corridors. Bewaard als context, niet als werklijst.
 
 ## ✅ AFGEROND 2026-07-25 (laat) — RUG-RECEPT VERVANGT DREMPEL+VERDUNNEN (live `?v=085`, commit `9576dea`)
 
