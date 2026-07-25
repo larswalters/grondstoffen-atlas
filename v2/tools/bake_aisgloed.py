@@ -1,5 +1,10 @@
 # bake_aisgloed.py — de AIS-drukte als GLOED (M27, pilot).
 #
+# ⚠️ STATUS SINDS 2026-07-25 (M28, LAR-534): deze laag BLIJFT als VISUELE laag —
+# hij is alleen geen routeringsbron meer. De vaargraaf komt vanaf nu uit echte
+# scheepstracks (aisstream, milestone "M28 · AIS-tracknet", LAR-528 t/m LAR-535);
+# het density-raster is nog fallback-bron voor corridors zonder eigen tracks.
+#
 # Lars' keuze (2026-07-25): niet de geëxtraheerde middellijnen maar het
 # dichtheidsveld zélf op de bol — de blauwe gloed van zes jaar scheepvaart,
 # zoals de verken_ais.py-PNG's die de bron bewezen. De lijnen (bake_aisnet.py)

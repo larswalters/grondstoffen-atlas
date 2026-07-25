@@ -1,5 +1,18 @@
 # bake_aisnet.py — de eerste AIS-watergraaf (M27, pilot): het RUG-recept.
 #
+# ⚠️⚠️ STATUS SINDS 2026-07-25: FALLBACK, GEEN ROUTEERBRON MEER (M28, LAR-534).
+# Het density/skeleton-plan is vervangen door het AIS-TRACKNET: de tracks van
+# individuele schepen (ping-reeksen per MMSI via aisstream.io) zijn nu de bron
+# van de vaargraaf — één doorvaart = één vloeiende edge op GPS-precisie, tot aan
+# de kade, zonder threshold en zonder skeleton. Zie de Linear-milestone
+# "M28 · AIS-tracknet" (LAR-528 t/m LAR-535) en v2/tools/ais_dekkingstest.py.
+#
+# Deze pijplijn blijft bestaan en werkend als FALLBACK voor corridors waar we te
+# weinig eigen tracks krijgen — in de praktijk de Yangtze, want de aisstream-
+# stationskaart heeft in China alleen kustdekking (landinwaarts richting Tongling
+# staat geen ontvanger). Gebruik hem daar bewust en gedocumenteerd; bouw er geen
+# nieuw werk meer bovenop.
+#
 # Leidt uit de World Bank-density (0037580, Commercial) per venster de vaargeul
 # af en schrijft polylijnen naar v2/data/aisnet-pilot.json, zodat de bol ze als
 # zichtbare laag kan tekenen (aisnet.js). Dit is bewust de KIJK-stap van de
