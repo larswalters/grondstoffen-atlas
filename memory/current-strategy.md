@@ -1,7 +1,22 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: het AIS-waternet ligt op de bol — pilot `?v=084`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M27: AIS-waternet herbakken met het rug-recept — `?v=085`, check Lars uitstaand)*
 
-## Stand 2026-07-25 — de eerste AIS-geulen liggen erop
+## Stand 2026-07-25 (laat) — het rug-recept vervangt drempel+verdunnen
+
+Lars keurde `?v=084` af (hoekig, gaten in de Tongling-oostgeul én de Rijn, dunner dan de
+dichtheidsfoto's beloven) → `bake_aisnet.py` volledig herschreven naar het **rug-recept**
+(live `?v=085`, commit `9576dea`): Steger-rug-NMS op het **continue** log-veld (twee
+schalen σ 1,5/3,5, σ²-genormaliseerd; ankervlekken zijn blobs en vallen er per
+constructie uit) → hysteresis 0,35/1,1 (zwak maar aaneengesloten loopt door → de gaten
+dicht, geen harde 100k-drempel meer) → bezettingstoets per lijn, **geijkt** op de
+oostgeul-draad (≥0,53) vs de Patache-drijfzone (≤0,40) + groot-component-eis →
+kruimel-/spur-snoei → gladstrijken (1-2-1, uiteinden vast). 2.369 lijnen / 245 KB (was
+9.631 fragmenten / 770 KB); beide Tongling-geulen doorlopend, NL glad tot de grens,
+Patache één corridor, Shanghai-aanloop strak. Gemeten rasterfeit: geulen = 1-cels draden
+mét artefact-nullen; drijfzones = corridor-waarden als speckle → alleen geometrie
+onderscheidt. **Wacht op Lars' check op `?v=085`**, dan de graaf-stap.
+
+## Stand 2026-07-25 — de eerste AIS-geulen liggen erop (v084, vervangen)
 
 Pilot live (`?v=084`): vaargeulen uit de AIS-density als zichtbare laag in vier vensters —
 Tongling (**beide geulen om het eiland rechtstreeks uit de data**, het satelliet-handwerk

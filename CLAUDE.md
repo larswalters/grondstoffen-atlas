@@ -1,9 +1,35 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: het AIS-waternet ligt op de bol — pilot `?v=084`, check Lars uitstaand)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M27: AIS-waternet herbakken met het rug-recept — `?v=085`, check Lars uitstaand)*
 
-> **🛰️ M27 · HET AIS-WATERNET LIGT OP DE BOL — PILOT (2026-07-25, laatste).** Live `?v=084`
-> (commit `9ddd96f`), **visuele check van Lars staat uit.** De eerste vaargeulen uit de
+> **🏔️ M27 · HET RUG-RECEPT VERVANGT DREMPEL+VERDUNNEN (2026-07-25, laatste).** Live
+> `?v=085` (commit `9576dea`), **visuele check van Lars staat uit.** Lars keurde `?v=084`
+> af — *"niet een graaf die we in de router kunnen gebruiken"*: onderbrekingen in de
+> Tongling-oostgeul én de Rijn, hoekig, dunner dan de dichtheidsfoto's beloven — en vroeg
+> een **andere aanpak, geen fix**.
+> **`bake_aisnet.py` volledig herschreven naar het rug-recept** (werkt op het CONTINUE
+> log-veld, niet op een binair masker): **Steger-rug-NMS** op twee schalen (σ 1,5 geulen ·
+> σ 3,5 brede zeecorridors, σ²-genormaliseerd — een ankervlek is een blob zonder
+> dwars-maximum en valt er per constructie uit) → **hysteresis 0,35/1,1** (zwak maar
+> aaneengesloten loopt door → de oostgeul-/Rijn-gaten dicht, geen 100k-drempel meer) →
+> **bezettingstoets per lijn, geijkt** op de oostgeul-draad (moet blijven, strikt ≥0,53)
+> vs de Patache-drijfzone (moet weg, ≤0,40) + groot-component-eis → **kruimel-snoei**
+> (geïsoleerde mini-netwerkjes weg) → **gladstrijken** (1-2-1, uiteinden vast voor
+> gedeelde juncties). Resultaat: **2.369 lijnen / 245 KB** (was 9.631 fragmenten /
+> 770 KB) — beide Tongling-geulen doorlopend · NL compleet en glad tot de grens ·
+> Patache **één kustcorridor** · Shanghai-aanloop strak (ankerkolommen bewust voor de
+> graaf-stap-convergentiefilter).
+> **⚠️ Gemeten rasterfeit dat het ontwerp stuurde:** geulen zijn vaak **1-cels draden**
+> met uniforme waarden (oostgeul 17,8M/cel) mét artefact-nullen (tegelnaden — de zwarte
+> band bij Shanghai is er een); drijfzones dragen **dezelfde ~3M-waarden als corridors
+> maar als speckle** → alleen geometrie onderscheidt, geen waarde-drempel. **Gemeten en
+> verworpen** (file-header): NMS-tolerantie · vlak-bezetting · max-filter-bezetting.
+> **→ VOLGENDE:** Lars' check op `?v=085` → graaf-stap (knopen/edges,
+> convergentie-filter, havens/aansluitingen aanhechten — brief = ankers).
+
+> **🛰️ M27 · HET AIS-WATERNET LIGT OP DE BOL — PILOT (2026-07-25, eerder; recept
+> vervangen door het rug-recept hierboven).** Live was `?v=084`
+> (commit `9ddd96f`); Lars keurde dit recept bij de check af. De eerste vaargeulen uit de
 > AIS-density als zichtbare laag (lichtblauw, HUD-knop "AIS-waternet (pilot)"), vier
 > vensters: **Tongling** — de S-bocht én **beide geulen om het eiland rechtstreeks uit de
 > data** (het satelliet-handwerk van 24 juli wordt overbodig; mini-gaatje oostgeul blijft) ·

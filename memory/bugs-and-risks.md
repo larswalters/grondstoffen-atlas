@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-24 (routebrief-vondst: Rijnbeen kolenstroom via het Beerkanaal — fix openstaand)*
+*Last updated: 2026-07-25 (World Bank AIS-raster: artefact-nullen in geuldraden — gegeven, geen bug van ons)*
+
+## ⚠️ GEGEVEN — het World Bank AIS-raster heeft artefacten (2026-07-25)
+Geulen staan er vaak in als 1-cels draden met uniforme waarden (oostgeul Tongling:
+17,8M/cel) mét losse exacte-nul-cellen erin, soms hele nul-rijen — tegelnaden in de
+World Bank-verwerking (de zwarte band bij Shanghai op de screenshots is er ook een).
+Drijf-/ankerzones dragen dezelfde ~3M-waarden als corridors maar als speckle (p50 van
+de bezette cellen: 2 berichten). Elke toekomstige stap op dit raster (de graaf-stap!)
+moet hiermee rekenen: waarde-drempels onderscheiden geul niet van ankervlek — geometrie
+(doorlopende draad vs spikkels) wel. Het rug-recept in `bake_aisnet.py` is hierop geijkt.
 
 ## ⚠️ OPEN — Rijnbeen kolenstroom vaart via het Beerkanaal (routebrief-vondst 2026-07-24)
 De gerouteerde corridor (`?v=071`: EMO→Beerkanaal→Hartelkanaal→Oude Maas→Rijn, 254 km) wijkt aan

@@ -1,7 +1,21 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-24 (routebrief-werkwijze + simulator-alleen-op-zee + AIS corridor-first)*
+*Last updated: 2026-07-25 (AIS-extractie = rug-recept, geen binaire drempel)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-25 - AIS-extractie werkt op het CONTINUE veld, niet op een binair masker (rug-recept)
+**Besluit:** het drempel+verdunnen-recept van `?v=084` is vervangen door het rug-recept:
+Steger-rug-NMS op het log-veld (twee schalen, σ²-genormaliseerd) + hysteresis (zwak maar
+aaneengesloten loopt door) + een per-lijn-bezettingstoets die **geijkt** is op een echte
+geuldraad (Tongling-oostgeul, moet blijven) vs een echte drijfzone (Patache, moet weg) +
+kruimel-snoei + gladstrijken. **Reden:** een binaire drempel knipt geulen op elke dip
+(oostgeul/Rijn-gaten), verdunnen maakt het net hoekig en dun, en het raster zelf dwingt
+dit af — geulen zijn 1-cels draden mét artefact-nullen, drijfzones dragen dezelfde
+waarden als corridors maar als speckle, dus alleen geometrie onderscheidt.
+**Gemeten en verworpen** (niet opnieuw proberen; staat ook in de header van
+`bake_aisnet.py`): NMS-tolerantie (mask dik → skelet naast de draad), vlak-bezetting
+(land telt als onbezet → smalle rivieren sneuvelen), max-filter-bezetting (laat
+speckle-webben door).
 
 ## 2026-07-24 - De routebrief: corridors als controleerbare puntenlijst (besluit Lars)
 **Besluit:** per stroom een routebrief in `v2/design/routebrieven/` — de werkelijke corridor als

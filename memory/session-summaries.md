@@ -1,6 +1,23 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-25 - AIS-waternet herbakken met het rug-recept, live ?v=085
+Lars keurde de v084-pilot af (hoekig, onderbrekingen in de Tongling-oostgeul én de Rijn,
+dunner dan de dichtheidsfoto's beloven) en vroeg een **andere aanpak, geen fix**.
+`bake_aisnet.py` volledig herschreven naar het **rug-recept**: Steger-rug-NMS op het
+continue log-veld (twee schalen σ 1,5/3,5, σ²-genormaliseerd — ankervlekken zijn blobs en
+vallen er per constructie uit) → hysteresis 0,35/1,1 (zwak maar aaneengesloten loopt door:
+de oostgeul- en Rijn-gaten dicht zonder harde drempel) → bezettingstoets per lijn, geijkt
+op oostgeul-draad (≥0,53) vs Patache-drijfzone (≤0,40) + groot-component-eis →
+kruimel-/spur-snoei → gladstrijken (1-2-1, uiteinden vast). Resultaat: 2.369 lijnen /
+245 KB (was 9.631 fragmenten / 770 KB) — beide Tongling-geulen doorlopend, NL compleet en
+glad tot de grens, Patache één kustcorridor, Shanghai-aanloop strak. Gemeten rasterfeit
+dat het ontwerp stuurde: geulen zijn vaak 1-cels draden met uniforme waarden (17,8M/cel)
+mét artefact-nullen (tegelnaden); drijfzones dragen dezelfde ~3M-waarden als corridors
+maar als speckle — alleen geometrie onderscheidt. Gemeten en verworpen (in de
+file-header): NMS-tolerantie, vlak-bezetting, max-filter-bezetting. Commit `9576dea`,
+gepusht; wacht op Lars' visuele check op `?v=085`.
+
 ## 2026-07-24 - Industrieel last-mile-spoor geheeld, live ?v=072
 Vervolg op de heal-ronde: is er meer spoor/riviergraaf dat we missen? Twee detectoren gebouwd
 i.p.v. één handmatige reparatie. `toets_stromen_14.mjs` (per grondstof één teststroom, havenniveau):

@@ -1,23 +1,33 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M27: AIS-pilot live `?v=084`, check Lars uitstaand)*
+*Last updated: 2026-07-25 (M27: rug-recept live `?v=085`, check Lars uitstaand)*
 
-## 🔴 START HIER — M27: van pilot-lijnen naar graaf
+## 🔴 START HIER — M27: van rug-lijnen naar graaf
 
-* **Lars' visuele check op `?v=084`**: liggen de AIS-geullijnen in de echte geulen
-  (Tongling beide geulen · binnenvaart-NL · Shanghai-aanloop)? Uitkomst bepaalt: recept
-  aanscherpen of door naar de graaf-stap.
-* **De graaf-stap**: knopen op splitsingen + edges met km uit de pilot-lijnen ·
-  **ankervlek-filter via convergentiegedrag** (een corridor dunt onder oplopende drempel
-  naar één rug, een ankervlek blijft een vlak — wat niet convergeert is geen geul) ·
-  mini-gaatjes healen (oostgeul Tongling) · de 2-puntslijnen-fragmentatie consolideren
-  (8.467 van 9.631 lijnen) · havens/aansluitingen aanhechten (brief = ankers).
-* **Open-zee-recept**: Patache is snipperig — diffuus verkeer vraagt bredere
-  gladstrijking (grotere σ, lagere drempel) dan een geul; apart houden van het geul-recept.
+* **Lars' visuele check op `?v=085`**: liggen de rug-lijnen in de echte geulen en is het
+  net dicht/compleet genoeg (Tongling beide geulen · binnenvaart-NL · Patache-corridor ·
+  Shanghai-aanloop)? Uitkomst bepaalt: knoppen bijstellen of door naar de graaf-stap.
+* **De graaf-stap**: knopen op splitsingen + edges met km uit de rug-lijnen ·
+  **convergentie-filter voor de resterende ankervlek-restjes** (Shanghai-ankerkolommen
+  geven nog korte lijnen; een corridor dunt onder oplopende drempel naar één rug, een
+  ankervlek convergeert nooit) · havens/aansluitingen aanhechten (brief = ankers).
+  ⚠️ Neem het raster-gegeven mee uit `bugs-and-risks.md`: waarde-drempels onderscheiden
+  geul niet van ankervlek, geometrie wel.
 * **Opschalen langs de vier pilotcorridors**; routebrieven voor de andere drie stromen —
   Beilun→Guixi (China-spoor) is de zware.
 * *Herinnering:* de water-toetsen (`toets_routes.mjs`, `toets_stromen_14.mjs`) heffen hun
   parkering zelf op zodra er weer een waternet-bake ligt — verwachtingen dan herijken op het
   AIS-net (de oude 30/30-stand leeft op tag `pre-ais-net`).
+
+## ✅ AFGEROND 2026-07-25 (laat) — RUG-RECEPT VERVANGT DREMPEL+VERDUNNEN (live `?v=085`, commit `9576dea`)
+
+Lars keurde v084 af (hoekig, gaten in oostgeul + Rijn, te dun) → tweede recept i.p.v.
+fix. `bake_aisnet.py` herschreven: Steger-rug-NMS op het continue log-veld (2 schalen,
+σ²-genormaliseerd) + hysteresis (zwak-maar-aaneengesloten loopt door → gaten dicht) +
+geijkte bezettingstoets (oostgeul ≥0,53 vs drijfzone ≤0,40 + groot-component) +
+kruimel-snoei + gladstrijken. 2.369 lijnen / 245 KB (was 9.631 / 770). Beide
+Tongling-geulen doorlopend · NL glad tot de grens · Patache één corridor. Gemeten en
+verworpen in de file-header: NMS-tolerantie, vlak-bezetting, max-filter-bezetting.
+Het aparte "open-zee-recept" is hiermee opgegaan in de grove σ 3,5-schaal.
 
 ## ✅ AFGEROND 2026-07-25 — AIS-PILOT OP DE BOL (live `?v=084`, commit `9ddd96f`)
 
