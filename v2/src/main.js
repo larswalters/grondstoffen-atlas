@@ -108,7 +108,7 @@ laadLandnet(CONFIG.radius, "082", GLOBE.klemOpHorizon)
 // Patache · Shanghai. Kijk-laag: eerst moet de lijn in de echte geul liggen,
 // dan pas wordt dit een graaf met knopen en haven-aanhechting.
 let AISNET = null;
-laadAisnet(CONFIG.radius, "084", GLOBE.klemOpHorizon)
+laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
   .then((an) => {
     AISNET = an;
     GLOBE.globeGroup.add(an.lijnen);
