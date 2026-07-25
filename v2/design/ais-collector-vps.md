@@ -31,7 +31,48 @@ is, dan is dat een **dekkingsprobleem**, geen storing — precies het onderschei
 dat we bij de Yangtze willen kunnen maken.
 
 Vensters wijzigen = `vensters.json` aanpassen + `systemctl restart ais-collector`.
-De collector leest het bestand alleen bij start.
+De collector leest het bestand alleen bij start. Vensters die niets opleveren worden
+in de health-regel compact als `stil: …` genoemd, zodat het signaal niet verdrinkt in
+een rij nullen.
+
+## Gemeten dekking per corridor (2026-07-25, steekproeven van 3 min)
+
+Voordat een venster aangaat is het één test waard: aisstream draait op een open
+stationsnetwerk en de dekking is **geografisch grillig**, niet evenredig met
+scheepvaartdrukte. Gemeten, in berichten/min:
+
+| corridor | /min | oordeel |
+|---|---|---|
+| noord-dld (Elbe/Weser/NOK) | 353 | dicht |
+| rijnmond | 427 | dicht |
+| rijn-corridor (t/m Duisburg) | 234 | dicht |
+| schelde-antw | 218 | dicht |
+| japan-korea | 139 | goed |
+| meren-seaway | 66 | goed |
+| malakka | 24 | dun |
+| donau-boven (Wenen–Boedapest) | 16 | dun |
+| ohio-illinois | 5 | zeer dun |
+| Straat Taiwan | 12 | dun |
+| **mississippi (New Orleans–Memphis)** | **0** | geen dekking |
+| **donau-onder (IJzeren Poort–Constanța)** | **0** | geen dekking |
+| **shanghai-mond · ningbo-beilun · tongling** | **0** | geen dekking |
+| gibraltar · panama | 1–2 | vrijwel niets |
+
+**Twee dingen die dit vertelt.** Ten eerste: **het Chinese vasteland is ook aan de kust
+donker.** Dat is met een positieve controle vastgesteld en niet uit een uitblijvend
+signaal afgeleid — in dezelfde subscriptie leverden Busan 220 en Tokio-baai 71
+berichten terwijl Shanghai op 0 stond, dus het is geen box-limiet of subscriptiefout.
+De stippen die op de dekkingskaart bij China lijken te staan, zijn Korea, Japan en
+Taiwan.
+
+Ten tweede: **de dekking is sterk waar walstations dicht bij druk vaarwater staan en
+zwak op open zee** (Gibraltar 2/min, Panama 1/min) — logisch bij een walbereik van
+40–80 km. Dat bevestigt de taakverdeling van M28 langs een onafhankelijke weg: open
+zee blijft MARNET, AIS levert kust/riviermonding/binnenwater/havens.
+
+Altijd-stille vensters blijven bewust staan (`mississippi`, `shanghai-mond`,
+`ningbo-beilun`, `tongling`): ze kosten niets en zijn de goedkoopste manier om te
+merken dat er alsnog een station bijkomt.
 
 ## Schijf — de reden dat dit expliciet is
 

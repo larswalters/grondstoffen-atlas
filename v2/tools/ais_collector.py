@@ -141,14 +141,23 @@ class Gezondheid:
 
     def rapporteer(self) -> None:
         minuten = max((time.monotonic() - self.sinds) / 60.0, 1e-9)
-        delen = [
-            f"{naam} {self.tellers[naam] / minuten:.0f}/min "
-            f"({len(self.mmsis[naam])} MMSI)"
-            for naam in self.vensters
-        ]
-        log(f"health · {self.totaal:,} berichten in {minuten:.0f} min · "
-            + " · ".join(delen)
-            + (f" · buiten vensters {self.buiten:,}" if self.buiten else ""))
+        # Vensters die niets opleveren (bewuste bewakers zoals tongling) worden
+        # apart en compact genoemd: anders verdrinkt bij een stuk of tien
+        # corridors het signaal in een rij nullen.
+        levend, stil = [], []
+        for naam in self.vensters:
+            if self.tellers[naam]:
+                levend.append(f"{naam} {self.tellers[naam] / minuten:.0f}/min "
+                              f"({len(self.mmsis[naam])} MMSI)")
+            else:
+                stil.append(naam)
+        regel = f"health · {self.totaal:,} berichten in {minuten:.0f} min · "
+        regel += " · ".join(levend) if levend else "GEEN ENKEL VENSTER LEVERT DATA"
+        if stil:
+            regel += f" · stil: {', '.join(stil)}"
+        if self.buiten:
+            regel += f" · buiten vensters {self.buiten:,}"
+        log(regel)
         self.reset()
 
 
