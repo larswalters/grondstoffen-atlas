@@ -17,6 +17,7 @@ import { createTileLayer } from "./tiles.js?v=070";
 import { laadHavens } from "./marnet.js?v=077";
 import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=070";
 import { laadLandnet } from "./landnet.js?v=070";
+import { laadAisnet } from "./aisnet.js?v=084";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -101,6 +102,32 @@ laadLandnet(CONFIG.radius, "082", GLOBE.klemOpHorizon)
   })
   .catch((e) => console.warn("[atlas v2] landnet niet geladen (nog niet gebakken?):", e.message));
 
+// --- het AIS-waternet (M27, pilot) -----------------------------------------
+// De eerste zichtbare stap van de ombouw: vaargeulen afgeleid uit World Bank
+// AIS-density (bake_aisnet.py), vier testvensters — Tongling · Nederland ·
+// Patache · Shanghai. Kijk-laag: eerst moet de lijn in de echte geul liggen,
+// dan pas wordt dit een graaf met knopen en haven-aanhechting.
+let AISNET = null;
+laadAisnet(CONFIG.radius, "084", GLOBE.klemOpHorizon)
+  .then((an) => {
+    AISNET = an;
+    GLOBE.globeGroup.add(an.lijnen);
+    window.AISNET = an;
+    const s = an.stats;
+    console.log(
+      `[atlas v2] aisnet: ${s.lijnen.toLocaleString("nl")} lijnen · ` +
+      `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
+      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+    );
+    const noot = document.getElementById("aisNoot");
+    if (noot) {
+      noot.textContent =
+        `pilot: ${Object.keys(an.vensters).join(" · ")} — ` +
+        `${s.lijnen.toLocaleString("nl")} geullijnen uit AIS-density`;
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message));
+
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
 // met de kijkhoogte. Elke laag z'n eigen plank: kustlijn onder, landnet erboven,
@@ -114,6 +141,11 @@ GLOBE.onTick(() => {
   if (LANDNET) {
     const op = Math.max(CONFIG.radius * 2.5e-6, alt * 0.0045);
     LANDNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
+  }
+  if (AISNET) {
+    // Boven het landnet: waar spoor en water samenkomen hoort water te winnen.
+    const op = Math.max(CONFIG.radius * 3e-6, alt * 0.005);
+    AISNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -151,6 +183,9 @@ wireButtons(".clBtn", "cl", (mode) => {
 });
 wireButtons(".lnBtn", "ln", (mode) => {
   if (LANDNET) LANDNET.lijnen.visible = (mode === "aan");
+});
+wireButtons(".anBtn", "an", (mode) => {
+  if (AISNET) AISNET.lijnen.visible = (mode === "aan");
 });
 wireButtons(".hvBtn", "hv", (mode) => {
   if (HAVENLAAG) HAVENLAAG.punten.visible = (mode === "aan");

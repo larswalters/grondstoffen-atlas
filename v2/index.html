@@ -54,11 +54,20 @@
       <button class="clBtn" data-cl="uit">uit</button>
     </div>
 
-    <!-- ⚠️ AIS-OMBOUW (2026-07-24): het waternet (marnet zee + binnenvaart) is
-         hier bewust WEG — het wordt opnieuw opgebouwd uit World Bank
+    <!-- ⚠️ AIS-OMBOUW (2026-07-24): het oude waternet (marnet zee + binnen-
+         vaart) is bewust WEG — het wordt opnieuw opgebouwd uit World Bank
          AIS-density (corridor-first, brief = ankers, AIS = geul). De oude
          stand mét waternet, route-test, keten-router en stromen staat op
          git-tag `pre-ais-net` (?v=082). -->
+
+    <!-- Het AIS-waternet (M27, pilot): vaargeulen uit de AIS-density, vier
+         testvensters (Tongling · Nederland · Patache · Shanghai). -->
+    <div class="hudLabel">AIS-waternet (pilot)</div>
+    <div class="btnRow">
+      <button class="anBtn is-on" data-an="aan">aan</button>
+      <button class="anBtn" data-an="uit">uit</button>
+    </div>
+    <div id="aisNoot"></div>
 
     <!-- Landnet (M25): het spoor als vierde net, in een eigen bestand met eigen
          knoop-ids. Nog niet gekoppeld aan de router — eerst neerleggen, dan
@@ -131,6 +140,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=083"></script>
+<script type="module" src="src/main.js?v=084"></script>
 </body>
 </html>
