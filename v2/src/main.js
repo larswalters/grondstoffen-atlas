@@ -18,6 +18,7 @@ import { laadHavens } from "./marnet.js?v=077";
 import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=070";
 import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
+import { laadAisgloed } from "./aisgloed.js?v=086";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -111,6 +112,9 @@ let AISNET = null;
 laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
   .then((an) => {
     AISNET = an;
+    // standaard UIT (besluit Lars 2026-07-25): het beeld komt van de gloed-
+    // laag; de lijnen blijven als graaf-zaad achter hun eigen HUD-knop.
+    an.lijnen.visible = false;
     GLOBE.globeGroup.add(an.lijnen);
     window.AISNET = an;
     const s = an.stats;
@@ -127,6 +131,29 @@ laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
     }
   })
   .catch((e) => console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message));
+
+// --- de AIS-drukte als gloed (M27) -----------------------------------------
+// Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
+// gloed van zes jaar scheepvaart, additief per pilotvenster — dít is het
+// beeld; de lijnen hierboven zijn het graaf-zaad.
+let AISGLOED = null;
+laadAisgloed(CONFIG.radius, "086", GLOBE.klemOpHorizon)
+  .then((g) => {
+    AISGLOED = g;
+    GLOBE.globeGroup.add(g.groep);
+    window.AISGLOED = g;
+    const s = g.stats;
+    console.log(
+      `[atlas v2] aisgloed: ${s.vensters} vensters · ` +
+      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+    );
+    const noot = document.getElementById("gloedNoot");
+    if (noot) {
+      noot.textContent =
+        `drukte 2015–2021 als gloed: ${Object.keys(g.vensters).join(" · ")}`;
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] aisgloed niet geladen (nog niet gebakken?):", e.message));
 
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
@@ -186,6 +213,9 @@ wireButtons(".lnBtn", "ln", (mode) => {
 });
 wireButtons(".anBtn", "an", (mode) => {
   if (AISNET) AISNET.lijnen.visible = (mode === "aan");
+});
+wireButtons(".glBtn", "gl", (mode) => {
+  if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
 });
 wireButtons(".hvBtn", "hv", (mode) => {
   if (HAVENLAAG) HAVENLAAG.punten.visible = (mode === "aan");

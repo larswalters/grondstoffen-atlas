@@ -60,12 +60,22 @@
          stand mét waternet, route-test, keten-router en stromen staat op
          git-tag `pre-ais-net` (?v=082). -->
 
-    <!-- Het AIS-waternet (M27, pilot): vaargeulen uit de AIS-density, vier
-         testvensters (Tongling · Nederland · Patache · Shanghai). -->
-    <div class="hudLabel">AIS-waternet (pilot)</div>
+    <!-- De AIS-drukte als GLOED (M27): het dichtheidsveld zélf op de bol,
+         additief per pilotvenster — dít is het beeld (besluit Lars 2026-07-25). -->
+    <div class="hudLabel">AIS-drukte (gloed)</div>
     <div class="btnRow">
-      <button class="anBtn is-on" data-an="aan">aan</button>
-      <button class="anBtn" data-an="uit">uit</button>
+      <button class="glBtn is-on" data-gl="aan">aan</button>
+      <button class="glBtn" data-gl="uit">uit</button>
+    </div>
+    <div id="gloedNoot"></div>
+
+    <!-- Het AIS-waternet (M27, pilot): geullijnen uit de AIS-density, vier
+         testvensters (Tongling · Nederland · Patache · Shanghai). Standaard
+         uit — dit is het graaf-zaad, de gloed hierboven is het beeld. -->
+    <div class="hudLabel">AIS-waternet (lijnen, pilot)</div>
+    <div class="btnRow">
+      <button class="anBtn" data-an="aan">aan</button>
+      <button class="anBtn is-on" data-an="uit">uit</button>
     </div>
     <div id="aisNoot"></div>
 
@@ -140,6 +150,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=085"></script>
+<script type="module" src="src/main.js?v=086"></script>
 </body>
 </html>
