@@ -32,7 +32,7 @@
     <div id="hudKop">
       <div>
         <div class="hudTitle">Atlas v2 · fundament</div>
-        <div class="hudSub">M27 — schone bol · AIS-waternet in opbouw</div>
+        <div class="hudSub">M28 — AIS-tracknet · de collector verzamelt</div>
       </div>
       <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
     </div>
@@ -68,6 +68,17 @@
       <button class="glBtn" data-gl="uit">uit</button>
     </div>
     <div id="gloedNoot"></div>
+
+    <!-- De ruwe AIS-pings (M28, LAR-535): het venster op wat de collector op de
+         VPS binnenkrijgt. Puur weergave — hiermee beoordeel je DEKKING (leeg
+         stuk rivier = geen station) en leg je de pings naast satelliet en graaf.
+         Standaard uit; ververst zichzelf zolang de laag aan staat. -->
+    <div class="hudLabel">AIS-pings (debug)</div>
+    <div class="btnRow">
+      <button class="apBtn" data-ap="aan">aan</button>
+      <button class="apBtn is-on" data-ap="uit">uit</button>
+    </div>
+    <div id="pingNoot"></div>
 
     <!-- Het AIS-waternet (M27, pilot): geullijnen uit de AIS-density, vier
          testvensters (Tongling · Nederland · Patache · Shanghai). Standaard
@@ -150,6 +161,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=086"></script>
+<script type="module" src="src/main.js?v=087"></script>
 </body>
 </html>

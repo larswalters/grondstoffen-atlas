@@ -19,6 +19,7 @@ import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=
 import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
+import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -155,6 +156,52 @@ laadAisgloed(CONFIG.radius, "086", GLOBE.klemOpHorizon)
   })
   .catch((e) => console.warn("[atlas v2] aisgloed niet geladen (nog niet gebakken?):", e.message));
 
+// --- de ruwe AIS-pings als debuglaag (M28, LAR-535) ------------------------
+// Het venster op wat de collector op de VPS binnenkrijgt. Hiermee beoordeel je
+// DEKKING terwijl je kijkt: een leeg stuk rivier in de graaf kan "geen schepen"
+// óf "geen ontvanger" betekenen, en alleen deze laag laat het verschil zien.
+// Puur weergave — de echte tracks worden gebouwd in LAR-530.
+let AISPINGS = null;
+function toonPingNoot() {
+  const noot = document.getElementById("pingNoot");
+  if (!noot || !AISPINGS) return;
+  const s = AISPINGS.stats;
+  const vers = s.jongsteMin === null ? "—"
+    : s.jongsteMin < 60 ? `${s.jongsteMin} min`
+    : `${Math.round(s.jongsteMin / 60)} u`;
+  noot.textContent =
+    `${s.punten.toLocaleString("nl")} pings · ${s.schepen.toLocaleString("nl")} schepen · ` +
+    `laatste ${vers} geleden · ${s.uren} u venster, korrel ${s.korrelMin} min`;
+}
+laadAisPings(CONFIG.radius)
+  .then((p) => {
+    AISPINGS = p;
+    GLOBE.globeGroup.add(p.punten);
+    window.AISPINGS = p;
+    const s = p.stats;
+    console.log(
+      `[atlas v2] aispings: ${s.punten.toLocaleString("nl")} punten · ` +
+      `${s.schepen.toLocaleString("nl")} schepen (${s.varend.toLocaleString("nl")} varend) · ` +
+      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+    );
+    toonPingNoot();
+  })
+  // Zacht falen: de VPS is geen dragende afhankelijkheid van de atlas.
+  .catch((e) => {
+    console.warn("[atlas v2] aispings niet geladen (VPS bereikbaar?):", e.message);
+    const noot = document.getElementById("pingNoot");
+    if (noot) noot.textContent = "geen verbinding met de collector op de VPS";
+  });
+
+// De publisher op de VPS draait elk kwartier; ververs alleen zolang de laag
+// zichtbaar is, zodat een dichtgeklapte HUD geen verkeer veroorzaakt.
+setInterval(() => {
+  if (!AISPINGS || !AISPINGS.punten.visible) return;
+  ververspings(AISPINGS, CONFIG.radius)
+    .then(toonPingNoot)
+    .catch((e) => console.warn("[atlas v2] aispings verversen mislukt:", e.message));
+}, 5 * 60 * 1000);
+
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
 // met de kijkhoogte. Elke laag z'n eigen plank: kustlijn onder, landnet erboven,
@@ -173,6 +220,12 @@ GLOBE.onTick(() => {
     // Boven het landnet: waar spoor en water samenkomen hoort water te winnen.
     const op = Math.max(CONFIG.radius * 3e-6, alt * 0.005);
     AISNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
+  }
+  if (AISPINGS && AISPINGS.punten.visible) {
+    // Zelfde plank als het AIS-net: dit is water-materiaal, geen haven.
+    const op = Math.max(CONFIG.radius * 3.5e-6, alt * 0.0055);
+    AISPINGS.punten.scale.setScalar(1 + op / CONFIG.radius);
+    zetPingGrootte(AISPINGS, GLOBE.getAltitudeKm(), GLOBE.renderer.getPixelRatio());
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -216,6 +269,17 @@ wireButtons(".anBtn", "an", (mode) => {
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
+});
+wireButtons(".apBtn", "ap", (mode) => {
+  if (!AISPINGS) return;
+  AISPINGS.punten.visible = (mode === "aan");
+  // Bij aanzetten meteen de verste stand ophalen: de laag kan uren uit hebben
+  // gestaan en dan is de zichtbare data ouder dan het venster suggereert.
+  if (mode === "aan") {
+    ververspings(AISPINGS, CONFIG.radius)
+      .then(toonPingNoot)
+      .catch(() => {});
+  }
 });
 wireButtons(".hvBtn", "hv", (mode) => {
   if (HAVENLAAG) HAVENLAAG.punten.visible = (mode === "aan");

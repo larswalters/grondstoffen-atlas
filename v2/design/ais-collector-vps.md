@@ -54,6 +54,50 @@ LAR-531 nodig heeft. Het kost nauwelijks volume — één bericht per schip per 
 minuten tegen één per 2–10 seconden voor posities. Alsnog uitzetten kan met
 `--soorten PositionReport`.
 
+## De pings-debuglaag (LAR-535)
+
+De atlas draait op GitHub Pages en is statisch, dus de bol kan niet in de JSONL op
+de VPS kijken. Daar zit een publicatie-stapje tussen:
+
+1. **`ais_pings_publiceren.py`** (systemd-timer `ais-publiceren.timer`, elk kwartier)
+   leest de laatste 24 uur, dunt uit en schrijft `pings.json` + een voorgecomprimeerde
+   `pings.json.gz` naar `/var/lib/ais-collector/publiek/`.
+2. **nginx** (container `ais-pings`, `/docker/ais-pings/`) serveert die map op
+   `127.0.0.1:8088`, met `gzip_static on` en `Cache-Control: max-age=60`.
+3. **Traefik** routeert `https://ais.187.124.169.172.nip.io` daarheen via de
+   file-provider (`/docker/traefik/dynamic/ais-pings.yml`), met een Let's
+   Encrypt-certificaat en CORS voor `larswalters.github.io` plus de
+   localhost-dev-poorten.
+4. **`v2/src/aispings.js`** fetcht dat bestand achter de HUD-knop *"AIS-pings (debug)"*
+   en tekent de punten. Standaard uit; ververst zichzelf elke 5 minuten zolang de laag
+   aan staat.
+
+**Het uitdunnen is waar het interessant wordt.** Een schip aan de kade zendt ~30×
+per uur vrijwel dezelfde positie. Op één gedeelde tijdkorrel eten die ligplaats-pings
+het puntenbudget op, waarna de zelfregulering de korrel grover maakt en juist de
+trackvorm van de vàrende schepen sneuvelt — het omgekeerde van wat je wilt zien.
+Daarom hebben stilliggers (SOG < 0,5 kn) een eigen, veel grovere korrel (1 uur):
+ze dragen alleen "hier is een ligplaats", en dat zegt één punt per uur net zo goed.
+Effect gemeten op dezelfde data: **22.543 → 6.093 punten**, 506 → 157 KB.
+
+Blijft het na uitdunnen boven `MAX_PUNTEN` (120.000), dan wordt de korrel voor
+varende schepen vanzelf grover (1 → 2 → 5 → 10 → 30 min). Zo blijft het bestand
+hanteerbaar als er drukkere vensters bij komen zonder dat iemand een limiet nastelt.
+
+**Kleur zegt twee dingen tegelijk:** varend loopt wit → cyaan → donkerblauw met de
+ouderdom van de ping (verse doorvaarten springen eruit), stilliggend is warm oranje
+zonder tijdsverloop — dat zijn de ligplaatsen, en die zijn juist als *plek*
+interessant (ze worden de terminal-nodes in LAR-531).
+
+## De ruwe data naar de PC (LAR-530)
+
+`v2/tools/haal_ais_data.py` trekt de afgesloten `.jsonl.gz`-dagen naar
+`v2/build-cache/ais/tracks/`. Trekken in plaats van duwen, omdat de PC niet altijd
+aan staat en geen inkomende toegang heeft; de bestaande SSH-sleutel doet het werk.
+De dag van vandaag wordt overgeslagen (die groeit nog). Met `--opruimen` gaat een dag
+ná een op grootte gecontroleerde kopie van de VPS af — nodig, want daar is maar
+~22 GB vrij.
+
 ## Verwerking gebeurt hier NIET
 
 De collector is bewust dom: ruwe berichten erin, ruwe JSONL eruit. Tracks bouwen,
