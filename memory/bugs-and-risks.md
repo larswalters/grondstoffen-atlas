@@ -1,6 +1,25 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-07-25 (M28: aisstream-dekking is geografisch begrensd — gegeven, geen bug)*
 
+## ⚠️ VOORLOPIG GEMETEN — dekkingsgat op de Rijn bij Wesel (2026-07-25, bevestigen)
+Door Lars gezien op de nieuwe pings-debuglaag en nagemeten in `pings.json`: tussen
+**lon 6,37 en 6,75** komt geen enkele ping binnen, terwijl het aan weerszijden druk is
+(6,15–6,30 Emmerich: 215 pings · **6,35–6,65 Wesel: 0** · 6,70–6,85 Duisburg: 637, in
+hetzelfde tijdvenster). Laatste ping stroomopwaarts 51,754 N / 6,366 O (voorbij Rees),
+eerstvolgende 51,400 N / 6,745 O (Duisburg-Rheinhausen): **47 km hemelsbreed, ~55 km
+langs de rivier** — de Rijn langs Xanten, Wesel en Rheinberg. De collector-box loopt door
+tot 7,0 O / 51,15 N, dus dit is géén venster-rand maar een ontbrekende ontvanger.
+
+⚠️ **Voorbehoud:** de meting besloeg pas **1,2 uur** data (collector startte 20:23 UTC).
+Een schip doet 2–3 uur over dat traject, dus één rustig uur kan strikt genomen toeval
+zijn — de drukke flanken maken dat onwaarschijnlijk. **Hermeten zodra er een volle dag
+ligt**, en dan hard vastleggen of doorhalen.
+
+Waarom het uitmaakt: dit stuk ligt op het Rijnbeen van de kolen-routebrief (EMO →
+Schwelgern). Duisburg zelf is goed gedekt, dus de track-graaf krijgt hier een gat van
+~55 km. Oplosrichting: density-raster als fallback voor dít segment, of de OSM-geometrie
+lenen — dezelfde rolverdeling als bij de Yangtze.
+
 ## ⚠️ GEGEVEN — aisstream heeft geen dekking landinwaarts in China (2026-07-25)
 De stationskaart van aisstream (open/vrijwillig netwerk) is dicht op Europa incl. het Duitse
 binnenland, de VS-kust **plus** Grote Meren en het Mississippi/Ohio-binnenland, Japan/Korea/
