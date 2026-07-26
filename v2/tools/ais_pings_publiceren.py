@@ -49,28 +49,63 @@ VARE_GRENS = 0.5                 # knopen; onder = ligplaats
 
 
 def bronbestanden(map_pad: Path, uren: float):
-    """De dagbestanden die het venster kunnen raken, oud -> nieuw."""
+    """De dagbestanden die het venster kunnen raken, oud -> nieuw.
+
+    Eén dag kan meerdere bestanden hebben: bij de omzetting naar `--live-gz`
+    gaat het ongegzipte deel naar `<dag>-a.jsonl(.gz)` en schrijft de collector
+    verder in `<dag>.jsonl.gz`. Beide horen bij dezelfde dag, dus pak ze allebei
+    — anders vallen de uren vóór een omzetting stil uit het venster."""
     nu = datetime.now(timezone.utc)
     dagen = {(nu - timedelta(hours=h)).strftime("%Y-%m-%d")
              for h in (0, uren, uren / 2)}
     paden = []
     for dag in sorted(dagen):
-        plat = map_pad / f"{dag}.jsonl"
-        gz = map_pad / f"{dag}.jsonl.gz"
-        if plat.exists():
-            paden.append(plat)
-        elif gz.exists():
-            paden.append(gz)
+        kandidaten = sorted(map_pad.glob(f"{dag}*.jsonl")) + \
+                     sorted(map_pad.glob(f"{dag}*.jsonl.gz"))
+        # Staat een dag zowel plat als gegzipt klaar, dan is dat dezelfde inhoud
+        # (de gzip-ronde ruimt het platte bestand pas daarna op) -> plat wint.
+        gezien = set()
+        for pad in kandidaten:
+            stam = pad.name.split(".jsonl")[0]
+            if stam in gezien:
+                continue
+            gezien.add(stam)
+            paden.append(pad)
     return paden
 
 
 def open_regels(pad: Path):
+    """Regels uit een dagbestand, gegzipt of plat.
+
+    ⚠️ Het dagbestand van vandaag wordt LIVE geschreven (`--live-gz`), dus de
+    laatste gzip-member heeft nog geen end-of-stream-marker. Python gooit daar
+    een EOFError op nadat het alles wat er wél staat al heeft opgeleverd. Dat is
+    hier de normale toestand en geen fout: lees tot waar de schrijver is en stop.
+    Zonder deze vangst faalt élke publiceerronde zolang de collector draait."""
     if pad.suffix == ".gz":
-        with gzip.open(pad, "rt", encoding="utf-8", errors="replace") as fh:
-            yield from fh
+        fh = gzip.open(pad, "rt", encoding="utf-8", errors="replace")
     else:
-        with pad.open(encoding="utf-8", errors="replace") as fh:
-            yield from fh
+        fh = pad.open(encoding="utf-8", errors="replace")
+    try:
+        while True:
+            try:
+                regel = next(fh)
+            except StopIteration:
+                return
+            except EOFError:
+                return          # staart van het levende bestand — verwacht
+            yield regel
+    finally:
+        fh.close()
+
+
+# De drie berichtsoorten die een positie dragen. `PositionReport` is UITSLUITEND
+# Class A; Class B-transponders (sleepboten, binnenvaart, kleinere schepen) komen
+# binnen als de twee ClassB-varianten. Die dragen dezelfde Latitude/Longitude/Sog,
+# dus alleen de sleutel verschilt — maar ze weglaten kost ruwweg de helft van de
+# schepen (gemeten 2026-07-26: 9.655 ber/min mét tegen 4.465 zonder).
+POSITIE_SOORTEN = ("PositionReport", "StandardClassBPositionReport",
+                   "ExtendedClassBPositionReport")
 
 
 def lees(paden, grens: datetime):
@@ -78,11 +113,17 @@ def lees(paden, grens: datetime):
     slaan we over: een half weggeschreven laatste regel mag niets breken."""
     for pad in paden:
         for regel in open_regels(pad):
-            if '"PositionReport"' not in regel:
+            if "PositionReport" not in regel:
                 continue
             try:
                 b = json.loads(regel)
-                pr = b["Message"]["PositionReport"]
+                bericht = b["Message"]
+                for soort in POSITIE_SOORTEN:
+                    if soort in bericht:
+                        pr = bericht[soort]
+                        break
+                else:
+                    continue
                 meta = b["MetaData"]
                 # aisstream levert "2026-07-25 20:23:17.115098352 +0000 UTC" —
                 # nanoseconden, en die slikt fromisoformat niet (max 6 cijfers).
