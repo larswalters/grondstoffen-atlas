@@ -1,45 +1,45 @@
-# bouw_tracks.py — van ruwe pings naar losse scheepstracks per corridor (LAR-530, stap 1).
+# bouw_tracks.py — van ruwe pings naar losse scheepstracks (LAR-530, stap 1).
 #
-# Leest collector-JSONL (aisstream-schema — maakt niet uit of de dag van de VPS
-# komt of uit haal_marinecadastre.py) en bouwt per MMSI geordende tracks:
+# Twee bronnen, één recept:
+#   --bron <map>  collector-JSONL(.gz) (aisstream-schema; VPS of haal_marinecadastre)
+#   --csv  <map>  MarineCadastre-dagen (ais-*.csv.zst) DIRECT — bij landelijke
+#                 schaal is csv-parsen 5-10x sneller dan 270 mln json.loads
 #
-#   1. pings per schip sorteren op tijd;
-#   2. knippen bij een datagat (> KNIP_MIN zonder énige ping) — ontvanger weg of
-#      schip het venster uit: twee losse doorvaarten;
-#   3. stilliggen eruit (SOG < VARE_GRENS) — een ligplaats is een plek, geen
-#      route. Maar een kórte stop (≤ STIL_MAX: sluis-wachttijd, even ankeren)
-#      knipt de track NIET — anders valt één reis Nieuw-Orleans→Memphis uiteen
-#      in een stuk per sluis en verlies je precies de doorgaande vaart die de
-#      graaf nodig heeft. Alleen echt aanleggen (> STIL_MAX) beëindigt een been,
-#      en dát eindpunt is meteen dok-materiaal voor LAR-531;
-#   4. GPS-uitschieters eruit: een punt dat een onmogelijke snelheid impliceert
-#      (> MAX_KNOPEN tegen beide buren) wordt overgeslagen;
-#   5. tracks korter dan MIN_PUNTEN of MIN_KM weg (ruis, manoeuvreren op een kade).
+# Het venster is OPTIONEEL. De 14-daagse pilot bakte twee rechthoeken en Lars
+# zag het gevolg meteen op de bol: de rivier "hield op" bij lat 35,6 (de
+# vensterrand Memphis->Cairo) terwijl de bron daar gewoon data heeft. Zonder
+# --venster gaat alles mee.
 #
-# Elke track draagt zijn netto verplaatsing (dlat/dlon): daarmee splitst de
-# graaf-stap de op- en afvaart in eigen bundels — één geul, twee vaarbanen.
+# Track-regels (ongewijzigd):
+#   - knip bij een datagat > KNIP_MIN zonder énige ping;
+#   - een korte stop (<= STIL_MAX: sluis, even ankeren) knipt NIET; echt
+#     aanleggen wél — en dat eindpunt is dok-materiaal voor LAR-531;
+#   - een onmogelijke sprong (> MAX_KNOPEN) knipt (dubbel-MMSI-vlechten);
+#   - GPS-uitschieters (te snel tegen béide buren) vallen weg;
+#   - mini-tracks (< MIN_PUNTEN of < MIN_KM) vallen weg.
 #
-# Bewust nog GEEN bundeling of graafbouw — eerst laten zien dat één doorvaart
-# één vloeiende lijn in de geul is. De uitvoer is het zaad voor de graaf-stap.
+# Schaal: landelijk passen de pings niet in RAM (28 dagen VS ≈ 270 mln punten).
+# Daarom twee passes via bucket-bestanden op schijf: pass 1 streamt de bron en
+# schrijft elk punt als 16 bytes naar bucket mmsi % N_BUCKETS; pass 2 bouwt per
+# bucket (≈ 1/64e van de data) de tracks. Geheugen blijft ~honderden MB.
 #
-# Gebruik:
-#   python tools/bouw_tracks.py --bron build-cache/ais/marinecadastre \
-#       --venster mississippi-breed --uit build-cache/ais/tracks/mississippi.json
-#
-# Uitvoer: {"venster": [z,w,n,o], "tracks": [{"mmsi": .., "punten": [[lat,lon,epoch_min], ..]}]}
+# Uitvoer: JSONL.gz — één track per regel:
+#   {"mmsi": .., "km": .., "dlat": .., "dlon": .., "punten": [[lat,lon,t_min], ..]}
+# (dlat/dlon = netto verplaatsing: op-/afvaart-splitsing in de graaf-stap.)
 
 import argparse
+import csv
 import gzip
+import io
 import json
 import math
+import struct
 import sys
+import tempfile
 import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-# Vensters ruimer dan de collector-health-banen: de rivier moet erin blijven
-# (pilot-les: de Mississippi meandert tussen Baton Rouge en Vicksburg west van
-# lon -91,5 en viel zo uit het smalle venster — dat leek een dekkingsgat).
 VENSTERS = {
     "mississippi-breed": (28.90, -92.50, 35.60, -89.00),
     "ohio-illinois":     (36.50, -90.50, 41.60, -84.00),
@@ -49,12 +49,15 @@ VENSTERS = {
 }
 
 KNIP_MIN = 30        # minuten zonder énige ping -> nieuwe track (datagat)
-STIL_MAX = 90        # minuten stilliggen die een track overleeft (sluis/anker);
-                     # langer = aangelegd -> knip
+STIL_MAX = 90        # minuten stilliggen die een track overleeft; langer = aangelegd
 VARE_GRENS = 0.5     # knopen; onder = stilliggend
-MAX_KNOPEN = 40      # sneller dan dit tegen beide buren = GPS-uitschieter
+MAX_KNOPEN = 40      # sneller = GPS-uitschieter of dubbel-MMSI
 MIN_PUNTEN = 8
 MIN_KM = 2.0
+N_BUCKETS = 64
+
+# 16 bytes per ping: mmsi u32 · t_min u32 · lat f32 · lon f32 · sog in 1/10 kn u16 pad
+PUNT = struct.Struct("<IIffH2x")
 
 POSITIE_SOORTEN = ("PositionReport", "StandardClassBPositionReport",
                    "ExtendedClassBPositionReport")
@@ -66,13 +69,11 @@ def km(lat1, lon1, lat2, lon2):
     return 6371.0 * math.hypot(dlat, dlon)
 
 
-def lees_pings(bron: Path, venster):
-    z, w, n, o = venster
+# ── pass 1: bron -> buckets ────────────────────────────────────────────────
+
+def stream_jsonl(bron: Path):
     bestanden = sorted(bron.glob("*.jsonl.gz")) + sorted(bron.glob("*.jsonl"))
     bestanden = [b for b in bestanden if not b.name.startswith("ais-")]
-    if not bestanden:
-        sys.exit(f"geen jsonl(.gz) in {bron}")
-    print(f"{len(bestanden)} dagbestand(en) uit {bron}")
     for pad in bestanden:
         opener = gzip.open if pad.suffix == ".gz" else open
         with opener(pad, "rt", encoding="utf-8", errors="replace") as fh:
@@ -94,119 +95,185 @@ def lees_pings(bron: Path, venster):
                             break
                     else:
                         continue
-                    lat, lon = pr["Latitude"], pr["Longitude"]
-                    if not (z <= lat <= n and w <= lon <= o):
-                        continue
                     meta = b["MetaData"]
                     tijd = datetime.strptime(meta["time_utc"][:26],
                                              "%Y-%m-%d %H:%M:%S.%f"
                                              ).replace(tzinfo=timezone.utc)
+                    mmsi = meta.get("MMSI")
+                    if mmsi is None:
+                        continue
+                    sog = pr.get("Sog") or 0.0
+                    yield (int(mmsi), int(tijd.timestamp() // 60),
+                           pr["Latitude"], pr["Longitude"], sog)
                 except (json.JSONDecodeError, KeyError, ValueError, TypeError):
                     continue
-                sog = pr.get("Sog")
-                yield (meta.get("MMSI"), lat, lon,
-                       int(tijd.timestamp() // 60),
-                       sog if sog is not None else 0.0)
 
 
-def bouw(pings):
-    perschip = {}
-    for mmsi, lat, lon, t_min, sog in pings:
-        if mmsi is None:
+def stream_csv(bron: Path):
+    try:
+        import zstandard
+    except ImportError:
+        sys.exit("pip install zstandard")
+    bestanden = sorted(bron.glob("ais-*.csv.zst"))
+    epoch = datetime(1970, 1, 1, tzinfo=timezone.utc)
+    for pad in bestanden:
+        t0 = time.monotonic()
+        n = 0
+        with pad.open("rb") as f:
+            lezer = csv.reader(io.TextIOWrapper(
+                zstandard.ZstdDecompressor().stream_reader(f), encoding="utf-8"))
+            kop = next(lezer)
+            ix = {k: i for i, k in enumerate(kop)}
+            i_m, i_t = ix["mmsi"], ix["base_date_time"]
+            i_la, i_lo, i_s = ix["latitude"], ix["longitude"], ix["sog"]
+            for rij in lezer:
+                try:
+                    # "2025-07-25 00:00:01" — handmatig parsen is ~3x sneller
+                    # dan strptime en dit is de hete lus van 270 mln regels
+                    ts = rij[i_t]
+                    dt = datetime(int(ts[0:4]), int(ts[5:7]), int(ts[8:10]),
+                                  int(ts[11:13]), int(ts[14:16]),
+                                  tzinfo=timezone.utc)
+                    yield (int(rij[i_m]), int((dt - epoch).total_seconds() // 60),
+                           float(rij[i_la]), float(rij[i_lo]),
+                           float(rij[i_s]) if rij[i_s] else 0.0)
+                    n += 1
+                except (ValueError, IndexError):
+                    continue
+        print(f"  {pad.name}: {n:,} posities in {time.monotonic()-t0:.0f}s",
+              flush=True)
+
+
+def vul_buckets(pings, venster, werkmap: Path):
+    z = w = n_ = o = None
+    if venster:
+        z, w, n_, o = venster
+    handles = [(werkmap / f"bucket-{i:02d}.bin").open("wb") for i in range(N_BUCKETS)]
+    buffers = [bytearray() for _ in range(N_BUCKETS)]
+    tot = 0
+    for mmsi, t_min, lat, lon, sog in pings:
+        if venster and not (z <= lat <= n_ and w <= lon <= o):
             continue
-        perschip.setdefault(mmsi, []).append((t_min, lat, lon, sog))
+        i = mmsi % N_BUCKETS
+        buffers[i] += PUNT.pack(mmsi, t_min, lat, lon,
+                                min(int(sog * 10), 65535))
+        tot += 1
+        if len(buffers[i]) > 1 << 20:
+            handles[i].write(buffers[i]); buffers[i] = bytearray()
+    for h, buf in zip(handles, buffers):
+        h.write(buf); h.close()
+    return tot
 
-    tracks = []
+
+# ── pass 2: buckets -> tracks ──────────────────────────────────────────────
+
+def bouw_bucket(pad: Path):
+    ruw = pad.read_bytes()
+    perschip = {}
+    for (mmsi, t_min, lat, lon, sog10) in PUNT.iter_unpack(ruw):
+        perschip.setdefault(mmsi, []).append((t_min, lat, lon, sog10 / 10.0))
+
     for mmsi, rijen in perschip.items():
         rijen.sort()
         huidig = []
-        laatste_ping = None      # laatste ping, varend óf stil (datagat-detectie)
-        stil_sinds = None        # begin van de lopende stilligperiode
+        laatste_ping = None
+        stil_sinds = None
+
+        def sluit():
+            nonlocal huidig
+            if huidig:
+                yield_tracks.append((mmsi, huidig))
+                huidig = []
+
+        yield_tracks = []
         for t_min, lat, lon, sog in rijen:
             if sog < VARE_GRENS:
                 if stil_sinds is None:
                     stil_sinds = t_min
-                # lang genoeg stil = aangelegd -> been afsluiten
                 if huidig and t_min - stil_sinds > STIL_MAX:
-                    tracks.append((mmsi, huidig))
-                    huidig = []
+                    yield_tracks.append((mmsi, huidig)); huidig = []
                 laatste_ping = t_min
                 continue
             if huidig and (
                     (laatste_ping is not None and t_min - laatste_ping > KNIP_MIN)
                     or (stil_sinds is not None and t_min - stil_sinds > STIL_MAX)):
-                tracks.append((mmsi, huidig))
-                huidig = []
+                yield_tracks.append((mmsi, huidig)); huidig = []
             stil_sinds = None
-            # dubbele minuut van hetzelfde schip: eerste wint (1-min-resolutie volstaat)
             if huidig and huidig[-1][2] == t_min:
                 continue
-            # Onmogelijke sprong -> KNIP, niet alleen het punt droppen. Twee
-            # schepen die hetzelfde MMSI uitzenden vlechten op tijd gesorteerd
-            # tot één zigzag tussen twee plekken; de per-punt-uitschieterfilter
-            # ziet dat niet (elk punt heeft aan de eigen kant een nette buur).
-            # Knippen laat de vlecht uiteenvallen in fragmenten die MIN_PUNTEN
-            # opruimt, en vangt meteen venster-uit-venster-in-sprongen.
             if huidig:
                 la, lo, tv = huidig[-1]
                 dt_uur = max(t_min - tv, 1) / 60.0
                 if km(lat, lon, la, lo) / dt_uur > MAX_KNOPEN * 1.852:
-                    tracks.append((mmsi, huidig))
-                    huidig = []
+                    yield_tracks.append((mmsi, huidig)); huidig = []
             huidig.append((lat, lon, t_min))
             laatste_ping = t_min
         if huidig:
-            tracks.append((mmsi, huidig))
+            yield_tracks.append((mmsi, huidig))
 
-    # GPS-uitschieters: onmogelijke snelheid tegen béide buren -> punt weg.
-    schoon = []
-    uitschieters = 0
-    for mmsi, punten in tracks:
-        gefilterd = []
-        for i, (lat, lon, t) in enumerate(punten):
-            def te_snel(j):
-                la, lo, tj = punten[j]
-                dt_uur = max(abs(t - tj), 1) / 60.0
-                return km(lat, lon, la, lo) / dt_uur > MAX_KNOPEN * 1.852
-            if 0 < i < len(punten) - 1 and te_snel(i - 1) and te_snel(i + 1):
-                uitschieters += 1
-                continue
-            gefilterd.append((lat, lon, t))
-        lengte = sum(km(*gefilterd[i][:2], *gefilterd[i + 1][:2])
-                     for i in range(len(gefilterd) - 1))
-        if len(gefilterd) >= MIN_PUNTEN and lengte >= MIN_KM:
-            schoon.append({"mmsi": mmsi, "km": round(lengte, 1),
-                           # netto verplaatsing: op-/afvaart-splitsing in de graaf-stap
-                           "dlat": round(gefilterd[-1][0] - gefilterd[0][0], 4),
-                           "dlon": round(gefilterd[-1][1] - gefilterd[0][1], 4),
-                           "punten": [[round(la, 5), round(lo, 5), t]
-                                      for la, lo, t in gefilterd]})
-    schoon.sort(key=lambda tr: -tr["km"])
-    return schoon, uitschieters
+        for mmsi_, punten in yield_tracks:
+            gefilterd = []
+            for i, (lat, lon, t) in enumerate(punten):
+                def te_snel(j):
+                    la, lo, tj = punten[j]
+                    dt_uur = max(abs(t - tj), 1) / 60.0
+                    return km(lat, lon, la, lo) / dt_uur > MAX_KNOPEN * 1.852
+                if 0 < i < len(punten) - 1 and te_snel(i - 1) and te_snel(i + 1):
+                    continue
+                gefilterd.append((lat, lon, t))
+            lengte = sum(km(*gefilterd[i][:2], *gefilterd[i + 1][:2])
+                         for i in range(len(gefilterd) - 1))
+            if len(gefilterd) >= MIN_PUNTEN and lengte >= MIN_KM:
+                yield {"mmsi": mmsi_, "km": round(lengte, 1),
+                       "dlat": round(gefilterd[-1][0] - gefilterd[0][0], 4),
+                       "dlon": round(gefilterd[-1][1] - gefilterd[0][1], 4),
+                       "punten": [[round(la, 5), round(lo, 5), t]
+                                  for la, lo, t in gefilterd]}
 
 
 def main():
-    p = argparse.ArgumentParser(description="Pings -> scheepstracks per corridor (LAR-530)")
-    p.add_argument("--bron", type=Path, required=True,
-                   help="map met collector-JSONL(.gz)-dagen")
-    p.add_argument("--venster", required=True,
-                   help=f"één van {', '.join(VENSTERS)} of 'z,w,n,o'")
-    p.add_argument("--uit", type=Path, required=True)
+    p = argparse.ArgumentParser(description="Pings -> scheepstracks (LAR-530)")
+    p.add_argument("--bron", type=Path, help="map met collector-JSONL(.gz)")
+    p.add_argument("--csv", type=Path, help="map met MarineCadastre ais-*.csv.zst")
+    p.add_argument("--venster", help=f"optioneel: {', '.join(VENSTERS)} of 'z,w,n,o'")
+    p.add_argument("--uit", type=Path, required=True,
+                   help=".jsonl.gz — één track per regel")
     args = p.parse_args()
+    if not args.bron and not args.csv:
+        sys.exit("geef --bron en/of --csv")
 
-    venster = (VENSTERS.get(args.venster)
-               or tuple(float(x) for x in args.venster.split(",")))
+    venster = None
+    if args.venster:
+        venster = (VENSTERS.get(args.venster)
+                   or tuple(float(x) for x in args.venster.split(",")))
+
     begon = time.monotonic()
-    tracks, uitschieters = bouw(lees_pings(args.bron, venster))
-    tot_km = sum(t["km"] for t in tracks)
-    tot_pt = sum(len(t["punten"]) for t in tracks)
-    print(f"{len(tracks):,} tracks · {tot_km:,.0f} km · {tot_pt:,} punten · "
-          f"{uitschieters} GPS-uitschieters weg · {time.monotonic()-begon:.0f}s")
+    with tempfile.TemporaryDirectory(prefix="tracks-", dir=args.uit.parent) as tmp:
+        werkmap = Path(tmp)
+        tot = 0
+        if args.csv:
+            tot += vul_buckets(stream_csv(args.csv), venster, werkmap)
+        if args.bron:
+            tot += vul_buckets(stream_jsonl(args.bron), venster, werkmap)
+        print(f"pass 1: {tot:,} pings in {N_BUCKETS} buckets "
+              f"({time.monotonic()-begon:.0f}s)", flush=True)
 
-    args.uit.parent.mkdir(parents=True, exist_ok=True)
-    args.uit.write_text(json.dumps(
-        {"venster": list(venster), "bron": str(args.bron.name),
-         "tracks": tracks}, separators=(",", ":")), encoding="utf-8")
+        n_tracks = n_punten = 0
+        tot_km = 0.0
+        args.uit.parent.mkdir(parents=True, exist_ok=True)
+        with gzip.open(args.uit, "wt", encoding="utf-8", compresslevel=6) as uit:
+            for i in range(N_BUCKETS):
+                for track in bouw_bucket(werkmap / f"bucket-{i:02d}.bin"):
+                    uit.write(json.dumps(track, separators=(",", ":")) + "\n")
+                    n_tracks += 1
+                    n_punten += len(track["punten"])
+                    tot_km += track["km"]
+                if (i + 1) % 16 == 0:
+                    print(f"pass 2: bucket {i+1}/{N_BUCKETS} · "
+                          f"{n_tracks:,} tracks", flush=True)
+
+    print(f"{n_tracks:,} tracks · {tot_km:,.0f} km · {n_punten:,} punten · "
+          f"{time.monotonic()-begon:.0f}s totaal")
     print(f"geschreven: {args.uit} ({args.uit.stat().st_size/1e6:.1f} MB)")
 
 

@@ -140,7 +140,7 @@ laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
 // en afvaart elk hun kleur. Kijk-laag; de graaf-stap (LAR-530) rekent op de
 // volledige trackset in build-cache.
 let AISTRACKS = null;
-laadAisTracks(CONFIG.radius, "088", GLOBE.klemOpHorizon)
+laadAisTracks(CONFIG.radius, "089", GLOBE.klemOpHorizon)
   .then((at) => {
     AISTRACKS = at;
     at.groep.visible = false;   // standaard uit, net als de andere debuglagen
@@ -155,8 +155,8 @@ laadAisTracks(CONFIG.radius, "088", GLOBE.klemOpHorizon)
     const noot = document.getElementById("tracksNoot");
     if (noot) {
       noot.textContent =
-        `${Object.keys(at.vensters).join(" · ")} — ` +
-        `${s.lijnen.toLocaleString("nl")} doorvaarten (14 dagen, MarineCadastre)`;
+        `heel VS, 28 dagen — ${s.lijnen.toLocaleString("nl")} doorvaarten ` +
+        `(dekkingsselectie, MarineCadastre)`;
     }
   })
   .catch((e) => console.warn("[atlas v2] aistracks niet geladen (nog niet gebakken?):", e.message));

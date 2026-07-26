@@ -1,33 +1,36 @@
-# bak_aistracks.py — een selectie echte scheepstracks als kijk-laag voor de bol.
+# bak_aistracks.py — echte scheepstracks als kijk-laag voor de bol.
 #
-# De bol is de echte toets (niet de matplotlib-plaatjes): liggen de gevaren
-# lijnen in de geul op satelliet, zie je op- en afvaart als eigen banen, en
-# eindigen benen op de dokken? Deze baker maakt daarvoor v2/data/
-# aistracks-pilot.json uit de uitvoer van bouw_tracks.py.
+# Leest de JSONL.gz van bouw_tracks.py (één track per regel, landelijk) en
+# selecteert wat de bol nodig heeft. Geen vensters meer — de pilot-vensters
+# gaven precies de "afgekapte rivier" die Lars op de bol zag.
 #
-# Bewust een SELECTIE, geen alles: de volle trackset is ~200 MB JSON en de
-# kijkvraag heeft aan een paar honderd lange doorvaarten per richting genoeg.
-# De graaf-stap (LAR-530) rekent straks gewoon op de volledige build-cache-set.
+# De selectie is DEKKINGSGEDREVEN, niet volume-gedreven: een track wordt
+# opgenomen als hij genoeg nog-onbezette 0,01°-cellen (~1 km) dekt. Zo haalt
+# élke zijrivier, elk kanaal en elke havenarm de bol (de eerste track daar is
+# per definitie nieuw), terwijl de duizenden herhaal-doorvaarten op de
+# hoofdvaarweg niet allemaal meegaan. Op- en afvaart tellen als gescheiden
+# celruimtes, zodat beide vaarbanen van een geul gedekt blijven.
 #
 #   python tools/bak_aistracks.py \
-#       --tracks build-cache/ais/tracks/mississippi.json build-cache/ais/tracks/ohio-illinois.json \
+#       --tracks build-cache/ais/tracks/vs-landelijk.jsonl.gz \
 #       --uit data/aistracks-pilot.json
 #
-# Formaat = het aisnet-pilot-patroon (punten als [lon, lat]) + `richting`:
-#   {"bron": ..., "vensters": {naam: [z,w,n,o]}, "lijnen":
-#     [{"venster": naam, "richting": "op"|"af", "punten": [[lon,lat], ...]}]}
+# Uitvoer (aisnet-patroon, punten als [lon, lat]):
+#   {"bron": ..., "lijnen": [{"richting": "op"|"af", "punten": [[lon,lat], ..]}]}
 
 import argparse
+import gzip
 import json
 import math
 from pathlib import Path
 
-PER_RICHTING = 400        # langste N tracks per venster per richting
-TOL_M = 40.0              # Douglas-Peucker; een geul is ~200 m+, dus 40 m is veilig
+CEL = 0.01                # ~1 km — de dekkings-korrel
+MIN_NIEUW = 6             # cellen die een track nieuw moet dekken om mee te gaan
+MAX_PUNTEN = 1_200_000    # puntenbudget van het bol-bestand (na verdunning)
+TOL_M = 40.0              # Douglas-Peucker
 
 
 def dp(punten, tol_m):
-    """Douglas-Peucker op [lat, lon]-punten (equirectangulair, prima op geul-schaal)."""
     if len(punten) < 3:
         return punten
     cosl = math.cos(math.radians(punten[0][0]))
@@ -64,43 +67,50 @@ def dp(punten, tol_m):
 
 def main():
     p = argparse.ArgumentParser(description="Track-selectie bakken voor de bol")
-    p.add_argument("--tracks", type=Path, nargs="+", required=True)
+    p.add_argument("--tracks", type=Path, nargs="+", required=True,
+                   help="jsonl.gz van bouw_tracks.py")
     p.add_argument("--uit", type=Path, required=True)
-    p.add_argument("--per-richting", type=int, default=PER_RICHTING)
+    p.add_argument("--max-punten", type=int, default=MAX_PUNTEN)
+    p.add_argument("--min-nieuw", type=int, default=MIN_NIEUW)
     p.add_argument("--tol-m", type=float, default=TOL_M)
     args = p.parse_args()
 
-    vensters = {}
+    bezet = {"op": set(), "af": set()}
     lijnen = []
+    n_punten = 0
+    n_gezien = n_gekozen = 0
     for pad in args.tracks:
-        d = json.loads(pad.read_text(encoding="utf-8"))
-        naam = pad.stem
-        vensters[naam] = d["venster"]
-        per = {"op": [], "af": []}
-        for t in d["tracks"]:
-            r = ("op" if (t["dlat"] if abs(t["dlat"]) >= abs(t["dlon"])
-                          else t["dlon"]) > 0 else "af")
-            per[r].append(t)
-        for r, ts in per.items():
-            ts.sort(key=lambda t: -t["km"])
-            gekozen = ts[:args.per_richting]
-            n_in = sum(len(t["punten"]) for t in gekozen)
-            n_uit = 0
-            for t in gekozen:
+        with gzip.open(pad, "rt", encoding="utf-8") as fh:
+            for regel in fh:
+                t = json.loads(regel)
+                n_gezien += 1
+                r = ("op" if (t["dlat"] if abs(t["dlat"]) >= abs(t["dlon"])
+                              else t["dlon"]) > 0 else "af")
+                cellen = {(round(p_[0] / CEL), round(p_[1] / CEL))
+                          for p_ in t["punten"]}
+                nieuw = cellen - bezet[r]
+                # naarmate het budget volloopt wordt de laag kieskeuriger:
+                # nieuwe gebieden blijven binnenkomen, herhaling steeds minder
+                vol = n_punten / args.max_punten
+                drempel = args.min_nieuw + int(vol * vol * 60)
+                if len(nieuw) < drempel:
+                    continue
+                bezet[r] |= cellen
                 pts = dp([[p_[0], p_[1]] for p_ in t["punten"]], args.tol_m)
-                n_uit += len(pts)
-                lijnen.append({"venster": naam, "richting": r,
+                n_punten += len(pts)
+                n_gekozen += 1
+                lijnen.append({"richting": r,
                                "punten": [[round(lo, 5), round(la, 5)]
                                           for la, lo in pts]})
-            print(f"{naam}/{r}: {len(gekozen)} tracks · "
-                  f"{n_in:,} -> {n_uit:,} punten (DP {args.tol_m:.0f} m)")
 
-    doc = {"bron": "MarineCadastre (NOAA/USACE, publiek domein) via "
-                   "haal_marinecadastre.py + bouw_tracks.py",
-           "vensters": vensters, "lijnen": lijnen}
+    doc = {"bron": "MarineCadastre (NOAA/USACE, publiek domein) — "
+                   "dekkingsgedreven selectie via bak_aistracks.py",
+           "lijnen": lijnen}
     args.uit.write_text(json.dumps(doc, separators=(",", ":")), encoding="utf-8")
-    print(f"geschreven: {args.uit} — {args.uit.stat().st_size/1e6:.1f} MB · "
-          f"{len(lijnen)} lijnen")
+    op = sum(1 for l in lijnen if l["richting"] == "op")
+    print(f"{n_gekozen:,} van {n_gezien:,} tracks gekozen "
+          f"(op {op:,} · af {n_gekozen-op:,}) · {n_punten:,} punten · "
+          f"{args.uit.stat().st_size/1e6:.1f} MB -> {args.uit}")
 
 
 if __name__ == "__main__":
