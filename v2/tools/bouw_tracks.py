@@ -4,12 +4,20 @@
 # komt of uit haal_marinecadastre.py) en bouwt per MMSI geordende tracks:
 #
 #   1. pings per schip sorteren op tijd;
-#   2. knippen bij een tijdsprong (> KNIP_MIN) — dat zijn twee losse doorvaarten;
-#   3. stilliggen eruit (SOG < VARE_GRENS) — een ligplaats is een plek, geen route;
-#      een stilligpauze midden in een reeks knipt de track (aanleggen = einde been);
+#   2. knippen bij een datagat (> KNIP_MIN zonder énige ping) — ontvanger weg of
+#      schip het venster uit: twee losse doorvaarten;
+#   3. stilliggen eruit (SOG < VARE_GRENS) — een ligplaats is een plek, geen
+#      route. Maar een kórte stop (≤ STIL_MAX: sluis-wachttijd, even ankeren)
+#      knipt de track NIET — anders valt één reis Nieuw-Orleans→Memphis uiteen
+#      in een stuk per sluis en verlies je precies de doorgaande vaart die de
+#      graaf nodig heeft. Alleen echt aanleggen (> STIL_MAX) beëindigt een been,
+#      en dát eindpunt is meteen dok-materiaal voor LAR-531;
 #   4. GPS-uitschieters eruit: een punt dat een onmogelijke snelheid impliceert
 #      (> MAX_KNOPEN tegen beide buren) wordt overgeslagen;
 #   5. tracks korter dan MIN_PUNTEN of MIN_KM weg (ruis, manoeuvreren op een kade).
+#
+# Elke track draagt zijn netto verplaatsing (dlat/dlon): daarmee splitst de
+# graaf-stap de op- en afvaart in eigen bundels — één geul, twee vaarbanen.
 #
 # Bewust nog GEEN bundeling of graafbouw — eerst laten zien dat één doorvaart
 # één vloeiende lijn in de geul is. De uitvoer is het zaad voor de graaf-stap.
@@ -40,7 +48,9 @@ VENSTERS = {
     "rijn-corridor":     (51.15, 4.75, 52.10, 7.00),
 }
 
-KNIP_MIN = 30        # minuten zonder ping -> nieuwe track
+KNIP_MIN = 30        # minuten zonder énige ping -> nieuwe track (datagat)
+STIL_MAX = 90        # minuten stilliggen die een track overleeft (sluis/anker);
+                     # langer = aangelegd -> knip
 VARE_GRENS = 0.5     # knopen; onder = stilliggend
 MAX_KNOPEN = 40      # sneller dan dit tegen beide buren = GPS-uitschieter
 MIN_PUNTEN = 8
@@ -110,22 +120,41 @@ def bouw(pings):
     for mmsi, rijen in perschip.items():
         rijen.sort()
         huidig = []
-        vorige_t = None
+        laatste_ping = None      # laatste ping, varend óf stil (datagat-detectie)
+        stil_sinds = None        # begin van de lopende stilligperiode
         for t_min, lat, lon, sog in rijen:
-            if sog < VARE_GRENS:                      # stilliggen knipt de track
-                if huidig:
+            if sog < VARE_GRENS:
+                if stil_sinds is None:
+                    stil_sinds = t_min
+                # lang genoeg stil = aangelegd -> been afsluiten
+                if huidig and t_min - stil_sinds > STIL_MAX:
                     tracks.append((mmsi, huidig))
                     huidig = []
-                vorige_t = t_min
+                laatste_ping = t_min
                 continue
-            if vorige_t is not None and t_min - vorige_t > KNIP_MIN and huidig:
+            if huidig and (
+                    (laatste_ping is not None and t_min - laatste_ping > KNIP_MIN)
+                    or (stil_sinds is not None and t_min - stil_sinds > STIL_MAX)):
                 tracks.append((mmsi, huidig))
                 huidig = []
+            stil_sinds = None
             # dubbele minuut van hetzelfde schip: eerste wint (1-min-resolutie volstaat)
             if huidig and huidig[-1][2] == t_min:
                 continue
+            # Onmogelijke sprong -> KNIP, niet alleen het punt droppen. Twee
+            # schepen die hetzelfde MMSI uitzenden vlechten op tijd gesorteerd
+            # tot één zigzag tussen twee plekken; de per-punt-uitschieterfilter
+            # ziet dat niet (elk punt heeft aan de eigen kant een nette buur).
+            # Knippen laat de vlecht uiteenvallen in fragmenten die MIN_PUNTEN
+            # opruimt, en vangt meteen venster-uit-venster-in-sprongen.
+            if huidig:
+                la, lo, tv = huidig[-1]
+                dt_uur = max(t_min - tv, 1) / 60.0
+                if km(lat, lon, la, lo) / dt_uur > MAX_KNOPEN * 1.852:
+                    tracks.append((mmsi, huidig))
+                    huidig = []
             huidig.append((lat, lon, t_min))
-            vorige_t = t_min
+            laatste_ping = t_min
         if huidig:
             tracks.append((mmsi, huidig))
 
@@ -147,6 +176,9 @@ def bouw(pings):
                      for i in range(len(gefilterd) - 1))
         if len(gefilterd) >= MIN_PUNTEN and lengte >= MIN_KM:
             schoon.append({"mmsi": mmsi, "km": round(lengte, 1),
+                           # netto verplaatsing: op-/afvaart-splitsing in de graaf-stap
+                           "dlat": round(gefilterd[-1][0] - gefilterd[0][0], 4),
+                           "dlon": round(gefilterd[-1][1] - gefilterd[0][1], 4),
                            "punten": [[round(la, 5), round(lo, 5), t]
                                       for la, lo, t in gefilterd]})
     schoon.sort(key=lambda tr: -tr["km"])
