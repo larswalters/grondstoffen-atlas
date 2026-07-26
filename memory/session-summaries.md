@@ -1,6 +1,44 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-26 (nacht) - M28 · pings-debuglaag live + dekking empirisch nagemeten
+Lars miste de toggle uit LAR-535 — terecht, die was nog niet gebouwd. Alsnog gedaan en live
+op `?v=087`: HUD-knop *"AIS-pings (debug)"*, gevoed door een eigen HTTPS-endpoint op de VPS
+(publisher-timer elk kwartier → nginx op `localhost:8088` → Traefik met Let's Encrypt + CORS
+via de file-provider, dus form4app en Traefik zelf onaangeraakt). Zijn vraag "kan je de data
+niet mailen of naar cloudopslag sturen" splitste twee behoeftes: de atlas heeft een fetchbare
+URL nodig (Pages is statisch), de ruwe JSONL moet naar de PC voor LAR-530 — dat tweede werd
+`haal_ais_data.py` dat trekt via de bestaande SSH-sleutel.
+
+**Ontwerpkern:** stilliggers kregen een eigen, veel grovere tijdkorrel. Een schip aan de kade
+zendt ~30× per uur dezelfde positie en vreet zo het puntenbudget op, waarna de zelfregulering
+de korrel grover maakt en juist de trackvorm van de *varende* schepen sneuvelt. 22.543 →
+6.093 punten, 506 → 157 KB.
+
+**De laag verdiende zich in een uur terug.** (1) Lars zag een gat op de Rijn: Emmerich 215
+pings · Wesel 0 · Duisburg 637 in hetzelfde venster = 47 km hemelsbreed / ~55 km rivier
+zonder ontvanger, precies op het Rijnbeen van de kolen-routebrief. Voorbehoud: 1,2 uur data,
+hermeten na een volle dag. (2) Zijn voorstel om de Chinese kust erbij te nemen voor betere
+MARNET-aansluitingen is weerlegd **met een positieve controle** — in dezelfde subscriptie
+Busan 220 en Tokio-baai 71 berichten tegen Shanghai 0 en Ningbo 0, dus geen box-limiet: het
+Chinese vasteland is ook aan de kust donker, en de stippen bij China op de dekkingskaart zijn
+Korea/Japan/Taiwan.
+
+**Daarna breder aangezet** (besluit Lars): collector 3 → 13 vensters, 9 met data. Gemeten
+berichten/min: rijnmond 427 · noord-dld 353 · rijn-corridor 234 · schelde-antw 218 ·
+japan-korea 139 · meren-seaway 66 · malakka 24 · donau-boven 16 · ohio-illinois 5 ·
+mississippi 0 · donau-onder 0 · gibraltar 2 · panama 1. Structureel: dekking is sterk waar
+walstations dicht bij druk vaarwater staan en zwak op open zee — dat bevestigt langs een
+onafhankelijke weg de M28-taakverdeling (open zee blijft MARNET). ~1,2 GB/dag ruw,
+~120 MB gegzipt, 22 GB vrij.
+
+Uit Lars' Starlink-punt volgde een werkregel: dekking kan opportunistisch aangroeien, dus een
+gat is een momentopname — stille vensters laten staan, niet repareren met geleende geometrie
+zolang het nog kan dichtlopen, en meten als aandeel van de uren mét dekking.
+
+Commits `1ae5fc8` (`?v=087`), `2025dec` (Wesel-notitie), `a302044` (13 vensters + dekking).
+**Volgende:** laten lopen, morgen verder; Wesel hermeten; LAR-530 track-naar-graaf.
+
 ## 2026-07-25 (nacht) - M28 · AIS-tracknet gestart: de collector draait, density = fallback
 Lars had het plan buiten de sessie om herzien en wees M28 in Linear aan als leidend boven
 `now.md`: de vaargraaf komt uit **tracks van individuele schepen** (aisstream) i.p.v. uit het

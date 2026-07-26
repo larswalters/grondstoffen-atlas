@@ -1,11 +1,24 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M28: collector verzamelt; volgende = track-naar-graaf)*
+*Last updated: 2026-07-26 (M28: 13 vensters verzamelen; volgende = track-naar-graaf)*
 
 ## 🔴 START HIER — M28 · LAR-530: track-naar-graaf
 
 **Het plan staat in Linear** (milestone *"M28 · AIS-tracknet"*, LAR-528 t/m LAR-535) —
-niet in de oude gloed/density-notities hieronder. De collector draait al en verzamelt;
-er is dus dagelijks meer materiaal, en wachten kost niets.
+niet in de oude gloed/density-notities hieronder. De collector draait al op **13 vensters**
+en verzamelt; er is dus dagelijks meer materiaal, en wachten kost niets.
+
+**Eerst even dit, kost vijf minuten:**
+
+* **Wesel hermeten** zodra er een volle dag ligt (zie `bugs-and-risks.md`): loopt het gat
+  van ~55 km dicht of is het structureel? Dat bepaalt of de pilot-corridor een gedocumenteerd
+  gat krijgt.
+* **Schijf en health kort nalopen:** `journalctl -u ais-collector | grep health | tail -3`
+  en `df -h /`. Bij ~1,2 GB/dag ruw kan het maanden door, maar overdag ligt het hoger dan de
+  nachtmeting.
+* **Aanbod dat openstaat** (Lars nog niet op geantwoord): een dekkingsrapport per
+  corridor-segment dat toont wélk aandeel van de uren dekking had — dan zie je in één blik
+  welke gaten dichtlopen en welke echt leeg blijven. Volgt uit Lars' Starlink-punt: dekking
+  is statistisch, niet binair.
 
 * **LAR-530 · track-naar-graaf**, de kern. Stappen uit het issue:
   1. tracks per MMSI (sorteren op tijd, splitsen bij tijdsprong > X min of onrealistische

@@ -1,6 +1,66 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-25 (M28: het AIS-tracknet verzamelt; density = fallback)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-26 (M28: 13 vensters verzamelen; pings-debuglaag live)*
+
+> **🔦 M28 · DE PINGS-DEBUGLAAG STAAT OP DE BOL — EN LEGDE METEEN TWEE GATEN BLOOT
+> (2026-07-26, LAATSTE).** Live `?v=087` (commits `1ae5fc8` · `a302044`), LAR-535 **Done**.
+>
+> **De laag.** HUD-toggle *"AIS-pings (debug)"* toont wat de collector binnenkrijgt. Pages is
+> statisch, dus de VPS publiceert: `ais_pings_publiceren.py` (systemd-timer, elk kwartier) →
+> nginx op `127.0.0.1:8088` → Traefik `ais.187.124.169.172.nip.io` met Let's Encrypt + CORS,
+> via de **file-provider** (zelfde patroon als `cockpit.yml`, dus form4app en de
+> Traefik-container onaangeraakt). Besluit Lars: **endpoint boven meeliften met het repo** —
+> geen databestanden in de git-history, geen Pages-rebuild + 10 min cache tussen data en
+> beeld. En de **PC trekt** de ruwe data via de bestaande SSH-sleutel (`haal_ais_data.py`,
+> `--opruimen` als overloop), geen mail of cloud — mail viel af op grootte.
+>
+> **⚠️ ONTWERPKERN — stilliggers krijgen een EIGEN, veel grovere tijdkorrel.** Een schip aan
+> de kade zendt ~30× per uur vrijwel dezelfde positie. Op één gedeelde korrel eten die
+> ligplaats-pings het puntenbudget op, waarna de zelfregulering de korrel grover maakt en
+> **juist de trackvorm van de varende schepen sneuvelt** — het omgekeerde van wat je wilt
+> zien. Gemeten op dezelfde data: **22.543 → 6.093 punten**, 506 → 157 KB. Boven 120.000
+> punten wordt alleen de varend-korrel grover (1 → 2 → 5 → 10 → 30 min). Kleur zegt twee
+> dingen: varend wit→cyaan→donkerblauw op ouderdom, stilliggend warm oranje (de ligplaatsen,
+> straks de terminal-nodes van LAR-531).
+>
+> **⚠️ VONDST 1 — een gat van ~55 km op de Rijn bij Wesel**, door Lars gezien op de bol en
+> daarna nagemeten: Emmerich (6,15–6,30) **215 pings** · Wesel (6,35–6,65) **0** · Duisburg
+> (6,70–6,85) **637**, in hetzelfde tijdvenster. Laatste ping stroomopwaarts 51,754 N /
+> 6,366 O, eerstvolgende 51,400 N / 6,745 O = **47 km hemelsbreed**. Géén venster-rand (de box
+> loopt tot 7,0 O / 51,15 N), en het ligt precies op het Rijnbeen van de kolen-routebrief
+> (EMO → Schwelgern). *Voorbehoud: 1,2 uur data — hermeten zodra er een volle dag ligt.*
+>
+> **⚠️ VONDST 2 — de Chinese kust is ÓÓK donker, en dat is bewezen met een POSITIEVE
+> CONTROLE.** Niet afgeleid uit een uitblijvend signaal: in **dezelfde subscriptie** leverden
+> **Busan 220** en **Tokio-baai 71** berichten in 3 minuten terwijl **Shanghai 0** en
+> **Ningbo 0** stonden — dus geen box-limiet en geen subscriptiefout. De stippen die op de
+> dekkingskaart bij China lijken te staan zijn Korea, Japan en Taiwan. Lars' idee "Chinese
+> kust voor betere MARNET-aansluitingen" vervalt daarmee, na drie minuten test in plaats van
+> drie weken wachten. **Werkregel: concludeer "geen dekking" nooit uit stilte alleen — stuur
+> een venster mee waar het aantoonbaar wél moet stromen.**
+>
+> **COLLECTOR 3 → 13 VENSTERS** (9 met data; besluit Lars: nu al breder, want verzamelen en
+> het recept bouwen lopen parallel en elke gemiste dag is onherhaalbaar). Berichten/min:
+> rijnmond 427 · noord-dld 353 · rijn-corridor 234 · schelde-antw 218 · japan-korea 139 ·
+> meren-seaway 66 · malakka 24 · donau-boven 16 · Taiwan 12 · ohio-illinois 5 ·
+> **mississippi 0 · donau-onder 0 · China 0** · gibraltar 2 · panama 1. **Structureel: dekking
+> is sterk waar walstations dicht bij druk vaarwater staan en zwak op open zee** (bereik
+> 40–80 km) — dat bevestigt **langs een onafhankelijke weg** de taakverdeling die M28 al
+> aannam: open zee blijft MARNET, AIS levert kust, riviermondingen, binnenwater en havens.
+> Ook: de onder-Mississippi heeft géén dekking — de binnenlandse VS-stippen op de kaart zitten
+> op de Meren, niet op de rivieren. Volume ~1.480 berichten/min ≈ 1,2 GB/dag ruw / ~120 MB
+> gegzipt; 22 GB vrij. Volledige tabel: `v2/design/ais-collector-vps.md`.
+>
+> **WERKREGEL uit Lars' Starlink-punt** (*"als er in die weken een schip langsvaart dat AIS
+> streamt is ook goed"*): scheepsgebonden ontvangers nemen toe, dus dekking kan opportunistisch
+> aangroeien en een gat is een **momentopname**, geen eigenschap van de kaart. Gevolg: stille
+> vensters laten staan (goedkoopste stationsdetector), een gat **niet** repareren met geleende
+> geometrie zolang het nog kan dichtlopen, en meten als *welk aandeel van de uren dekking had*
+> in plaats van "0 pings". ⚠️ Eerlijk erbij: aisstream documenteert nergens dát het feeders van
+> gebruikers accepteert — dat blijft een verwachting, geen feit.
+>
+> **→ VOLGENDE:** even laten lopen · Wesel hermeten na een volle dag · **LAR-530
+> track-naar-graaf** (pilot Rotterdam-Rijnmonding) · LAR-531 terminal-nodes.
 
 > **🛰️ M28 · HET AIS-TRACKNET VERZAMELT — DE DENSITY IS FALLBACK GEWORDEN (2026-07-25,
 > LAATSTE). ⚠️ HET PLAN STAAT IN LINEAR:** milestone *"M28 · AIS-tracknet — zee- en
@@ -1869,6 +1929,28 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-26 · De pings-debuglaag krijgt een eigen VPS-endpoint, niet het atlas-repo
+  (besluit Lars)** — Pages is statisch dus er moet een fetchbare URL zijn; meeliften met het
+  repo betekent databestanden in de git-history, ~2 min rebuild plus 10 min cache tussen data
+  en beeld, en een groeiend repo. Traefik stond er al met een file-provider, dus het kostte
+  één nginx-container zonder form4app of Traefik zelf aan te raken.
+- **2026-07-26 · Stilliggers krijgen een eigen, grovere tijdkorrel in de debuglaag** — een
+  schip aan de kade zendt ~30× per uur dezelfde positie; op één gedeelde korrel vreten die het
+  puntenbudget op, waarna de zelfregulering juist de trackvorm van de vàrende schepen sloopt.
+  22.543 → 6.093 punten.
+- **2026-07-26 · De PC trekt de ruwe data (besluit Lars)** — geen push vanaf de VPS, geen mail
+  (te groot), geen cloud: de PC staat niet altijd aan en heeft geen inkomende toegang, en de
+  bestaande SSH-sleutel volstaat.
+- **2026-07-26 · Nu al breder verzamelen: 13 vensters (besluit Lars)** — elke niet-verzamelde
+  dag is onherhaalbaar, en de collector is bewust dom, dus verzamelen en het recept bouwen
+  lopen parallel zonder elkaar te raken.
+- **2026-07-26 · Een dekkingsgat wordt niet gerepareerd zolang het nog kan dichtlopen** — volgt
+  uit Lars' Starlink-punt: dekking kan opportunistisch aangroeien, dus geleend werk is
+  weggegooid werk zodra er één ontvanger bijkomt, én het maakt de graaf ondoorzichtig over wat
+  gemeten is. Een gat is statistisch (aandeel uren mét dekking), niet binair.
+- **2026-07-26 · Dekking toets je met een POSITIEVE CONTROLE in dezelfde subscriptie** —
+  "geen dekking" nooit concluderen uit stilte alleen. Busan 220 / Tokio 71 tegen Shanghai 0
+  sloot een box-limiet of subscriptiefout per constructie uit.
 - **2026-07-25 · De vaargraaf komt uit TRACKS, niet uit dichtheid (besluit Lars, M28)** —
   tracks per MMSI via aisstream i.p.v. het 500 m-density-raster. Een gevolgd schip levert
   per constructie een polyline ín de geul: geen threshold, geen skeleton, dus de

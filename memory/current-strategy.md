@@ -1,5 +1,32 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M28: het AIS-tracknet verzamelt; density = fallback)*
+*Last updated: 2026-07-26 (M28: 13 vensters verzamelen; pings-debuglaag live)*
+
+## Stand 2026-07-26 (nacht) — de debuglaag staat, de dekkingskaart is gemeten
+
+De **pings-debuglaag** (LAR-535) staat live op `?v=087`: HUD-toggle *"AIS-pings (debug)"*
+gevoed door een eigen HTTPS-endpoint op de VPS (publisher-timer elk kwartier → nginx op
+`localhost:8088` → Traefik met Let's Encrypt + CORS via de file-provider). Besluit Lars:
+endpoint boven meeliften met het repo; en de **PC trekt** de ruwe data via de bestaande
+SSH-sleutel (`haal_ais_data.py`), geen mail of cloud.
+
+**De laag verdiende zich in een uur terug.** Lars zag een gat op de Rijn: Emmerich 215
+pings · **Wesel 0** · Duisburg 637 in hetzelfde venster = ~55 km zonder ontvanger, precies
+op het Rijnbeen van de kolen-routebrief. En zijn voorstel om de Chinese kust erbij te nemen
+is met een **positieve controle** weerlegd: in dezelfde subscriptie Busan 220 en Tokio-baai
+71 berichten tegen Shanghai 0 en Ningbo 0 — dus geen box-limiet, het Chinese vasteland is
+ook aan de kust donker.
+
+**De collector staat nu op 13 vensters** (9 met data, besluit Lars: nu al breder, want
+verzamelen en het recept bouwen lopen parallel). ~1.480 berichten/min ≈ 1,2 GB/dag ruw,
+~120 MB gegzipt; 22 GB vrij. Gemeten dekking per corridor staat in
+`v2/design/ais-collector-vps.md`; de structurele conclusie is dat dekking sterk is waar
+walstations dicht bij druk vaarwater staan en zwak op open zee — wat **langs een
+onafhankelijke weg** de M28-taakverdeling bevestigt (open zee = MARNET).
+
+**Werkregel die hieruit volgt** (uit Lars' Starlink-punt): dekking kan opportunistisch
+aangroeien, dus een gat is een momentopname en geen eigenschap van de kaart. Stille vensters
+blijven staan, een gat wordt **niet** gerepareerd met geleende geometrie zolang het nog kan
+dichtlopen, en de zinnige maat is *welk aandeel van de uren dekking had* — niet "0 pings".
 
 ## Stand 2026-07-25 (nacht) — M28: de graaf komt uit TRACKS, niet uit dichtheid
 

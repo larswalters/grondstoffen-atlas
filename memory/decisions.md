@@ -1,7 +1,58 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M28: de graaf komt uit tracks; density = fallback)*
+*Last updated: 2026-07-26 (M28: debuglaag live, dekking per corridor gemeten)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-26 - De pings-debuglaag krijgt een eigen VPS-endpoint, niet het atlas-repo (besluit Lars)
+**Besluit:** de VPS publiceert `pings.json` achter Traefik (`ais.187.124.169.172.nip.io`)
+in plaats van het bestand elk uur naar het atlas-repo te committen.
+**Waarom:** Pages is statisch, dus er moet hoe dan ook een fetchbare URL zijn. Meeliften
+met het repo betekent databestanden in de git-history, een Pages-rebuild van ~2 minuten en
+daarbovenop 10 minuten cache tussen data en beeld, plus een repo dat blijft groeien. Het
+endpoint kost één nginx-container omdat Traefik er al staat met een file-provider — dus
+form4app en de Traefik-container zelf hoefden niet aangeraakt.
+
+## 2026-07-26 - Stilliggers krijgen een EIGEN, veel grovere tijdkorrel in de debuglaag
+**Besluit:** varende schepen worden op 1 minuut uitgedund, stilliggers (SOG < 0,5 kn) op
+een uur, met een aparte sleutelruimte per soort.
+**Waarom:** een schip aan de kade zendt ~30× per uur vrijwel dezelfde positie. Op één
+gedeelde korrel eten die ligplaats-pings het puntenbudget op, waarna de zelfregulering de
+korrel grover maakt en **juist de trackvorm van de varende schepen sneuvelt** — precies het
+omgekeerde van wat je wilt zien. Een stilligger draagt alleen "hier is een ligplaats", en
+dat zegt één punt per uur net zo goed. Gemeten op dezelfde data: 22.543 → 6.093 punten.
+
+## 2026-07-26 - De PC TREKT de ruwe data; geen push, geen mail, geen cloud (besluit Lars)
+**Besluit:** `haal_ais_data.py` haalt de afgesloten dagbestanden op via de bestaande
+SSH-sleutel; `--opruimen` wist ze daarna van de VPS.
+**Waarom:** de PC staat niet altijd aan en heeft geen inkomende toegang, dus duwen vanaf de
+VPS is de verkeerde richting. Mail viel af op grootte (~40 MB/dag gegzipt tegen Gmails
+25 MB). Trekken voegt geen credentials toe en is incrementeel.
+
+## 2026-07-26 - Nu al breder verzamelen: 13 vensters (besluit Lars)
+**Besluit:** niet wachten tot het track-recept staat, maar meteen alle corridors met dekking
+aanzetten.
+**Waarom:** Lars — *"als dat een paar weken kan duren kan je hem misschien beter al
+aanzetten."* Elke dag die je niet verzamelt is onherhaalbaar, en de collector is bewust dom,
+dus verzamelen en het recept bouwen lopen parallel zonder elkaar te raken.
+
+## 2026-07-26 - Een dekkingsgat wordt NIET gerepareerd zolang het nog kan dichtlopen
+**Besluit:** geen geleende OSM-/density-geometrie in een gat stoppen op basis van een
+momentopname; eerst over een langere periode meten. En als er ooit geleend wordt, moet zo'n
+edge herkenbaar uit een andere bron komen.
+**Waarom:** volgt uit Lars' punt dat scheepsgebonden ontvangers (Starlink) toenemen —
+dekking kan opportunistisch aangroeien, dus een gat is een momentopname en geen eigenschap
+van de kaart. Geleend werk is dan weggegooid werk zodra er één ontvanger bijkomt, en het
+maakt de graaf ondoorzichtig over wat gemeten is. Consequentie voor de meting: een gat is
+**statistisch** — de maat is welk aandeel van de uren dekking had, niet "0 pings".
+
+## 2026-07-26 - Dekking toets je met een POSITIEVE CONTROLE in dezelfde subscriptie
+**Besluit:** "geen dekking" nooit concluderen uit een uitblijvend signaal alleen; altijd een
+venster meesturen waar het aantoonbaar wél moet stromen.
+**Waarom:** bij de Chinese kust leverde dat het verschil tussen "geen station" en "onze
+subscriptie klopt niet". Busan 220 en Tokio-baai 71 berichten tegen Shanghai 0 en Ningbo 0
+in dezelfde verbinding sluit een box-limiet of subscriptiefout per constructie uit. Zelfde
+familie als de meetfouten die dit project eerder maakte (zichtbaarheid meten boven open
+water, route-A vergelijken met wat de bol niet tekent).
 
 ## 2026-07-25 - De vaargraaf komt uit TRACKS, niet uit dichtheid (besluit Lars, M28)
 **Besluit:** niet het 500 m-dichtheidsraster maar de tracks van individuele schepen

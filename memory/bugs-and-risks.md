@@ -1,5 +1,20 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-25 (M28: aisstream-dekking is geografisch begrensd — gegeven, geen bug)*
+*Last updated: 2026-07-26 (M28: dekking per corridor gemeten; China ook aan de kust donker)*
+
+## ⚠️ GEGEVEN — ook de Chinese KUST heeft geen aisstream-dekking (2026-07-26)
+Aanvulling op de China-notitie hieronder, en het weerlegt het idee om de Chinese kust erbij
+te nemen voor betere MARNET-aansluitingen. **Bewezen met een positieve controle in dezelfde
+subscriptie:** Busan **220** en Tokio-baai **71** berichten in 3 minuten, tegen **Shanghai 0**
+en **Ningbo-Beilun 0**. Geen box-limiet, geen subscriptiefout. De stippen die op de
+aisstream-dekkingskaart bij China lijken te staan zijn Korea, Japan en Taiwan.
+**Werkregel:** concludeer "geen dekking" nooit uit een uitblijvend signaal alleen — stuur
+altijd een venster mee waar het aantoonbaar wél moet stromen.
+
+Andere nulmetingen uit dezelfde ronde: **onder-Mississippi (New Orleans–Memphis) 0** (de
+binnenlandse VS-stippen zitten op de Meren, niet op de rivieren) en **donau-onder 0**.
+Gibraltar 2/min en Panama 1/min zijn praktisch niets — dekking is sterk bij walstations nabij
+druk vaarwater en zwak op open zee (bereik 40–80 km). Volledige tabel in
+`v2/design/ais-collector-vps.md`.
 
 ## ⚠️ VOORLOPIG GEMETEN — dekkingsgat op de Rijn bij Wesel (2026-07-25, bevestigen)
 Door Lars gezien op de nieuwe pings-debuglaag en nagemeten in `pings.json`: tussen
