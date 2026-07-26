@@ -42,7 +42,13 @@ import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-MAX_PUNTEN = 120_000
+# Puntenbudget. 120k stamde uit de venster-tijd (13 rechthoeken); op het
+# wereldabonnement is dat meteen op — daar zit ~215k punten in op de GROFSTE
+# korrel, dus de zelfregulering had geen ruimte meer en de trackvorm van de
+# varende schepen ging eraan. 500k geeft die ruimte terug (ruwweg 4,3 MB
+# gegzipt bij dit tempo) en laat de korrel weer zijn werk doen. Te verstellen
+# zonder de code aan te raken: `--max-punten`.
+MAX_PUNTEN = 500_000
 KORRELS = [1, 2, 5, 10, 30]      # minuten, voor VARENDE schepen
 STIL_KORREL_MIN = 60             # minuten, voor stilliggers (zie dun_uit)
 VARE_GRENS = 0.5                 # knopen; onder = ligplaats
@@ -169,6 +175,8 @@ def main() -> None:
     p.add_argument("--uit", type=Path, required=True)
     p.add_argument("--vensters", type=Path, required=True)
     p.add_argument("--uren", type=float, default=24.0)
+    p.add_argument("--max-punten", type=int, default=MAX_PUNTEN,
+                   help=f"puntenbudget voor de uitvoer (default {MAX_PUNTEN:,})")
     args = p.parse_args()
 
     nu = datetime.now(timezone.utc)
@@ -187,7 +195,7 @@ def main() -> None:
         punten = sum(len(v) for v in perschip.values())
         print(f"  korrel {korrel:2d} min -> {punten:,} punten "
               f"({len(perschip):,} schepen)")
-        if punten <= MAX_PUNTEN:
+        if punten <= args.max_punten:
             break
     else:
         print(f"  ⚠️ ook op {KORRELS[-1]} min nog {punten:,} punten — "
