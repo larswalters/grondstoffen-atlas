@@ -1,6 +1,50 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-26 (M28: collector op wereldabonnement, Class B erbij)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (M28: MarineCadastre = VS-bron, heel-VS-tracks op de bol, tracks = het net)*
+
+> **🇺🇸 M28 · MARINECADASTRE = DE TWEEDE BRON — HEEL-VS-TRACKS OP DE BOL, EN DE TRACKS ZÍJN
+> HET NET (2026-07-27, LAATSTE).** Live **`?v=089`** (commits t/m `d5500e4`), HUD-laag
+> **"AIS-tracks VS (pilot)"**: 18.609 doorvaarten, amber = opvaart / ijsblauw = afvaart.
+>
+> **DE BRON.** Op Lars' vraag naar extra bronnen bleek **MarineCadastre (NOAA/USACE)**
+> precies het archief dat aisstream in de VS mist: dagelijkse heel-VS CSV-dumps (~285
+> MB/dag, publiek domein, `curl` zonder registratie, 2009-heden, **mét binnenrivieren**) —
+> mississippi **768/min waar aisstream 0 heeft**, duwboot (type 31) dominant. Kerninzicht:
+> **de graaf heeft geen líve data nodig, alleen tracks** — een archief is even goed als een
+> stream. 28 dagen verwerkt: **259,4 mln pings → 510.510 tracks / 27,4 mln km in 20,5 min**
+> (`bouw_tracks.py` herbouwd: CSV direct = 5-10× sneller dan de JSONL-omweg, twee passes
+> via 64 bucket-bestanden, **venster optioneel** — Lars zag op de bol de rivier "ophouden"
+> bij lat 35,6: dat was ónze vensterrand Memphis→Cairo, niet de data → vensters weg).
+>
+> **⚠️ DE VIDALIA-TOETS besliste de graafvorm.** Grafietstroom `gr-port-neworleans` →
+> `gr-ref-vidalia` over echte barge-tracks: kade-snap **0,46 km**, **55 tracks eindigen /
+> 72 beginnen** binnen 3 km van de Syrah-kade (dok-bewijs = LAR-531-materiaal). Lengtetoets:
+> celgraaf **−7,4%** en "onrealistisch hoekig" (Lars) — de échte gevaren lijn van één schip
+> **−0,1%** (430,6 vs ~431 km). **→ BESLUIT LARS: geen centerline-bundeling; LAR-530 wordt
+> een TRACK-GRAAF** — knopen op raakpunten (~200 m), edge-geometrie = de echte gevaren lijn,
+> op-/afvaart als eigen banen (`dlat`/`dlon` zit op elke track). **Open zee blijft definitief
+> MARNET** (stitchen in de overlapzone waar tracks 40-80 km de zee op lopen). Venster 4 weken.
+>
+> **Track-regels (op Lars' review):** korte stop ≤90 min (sluis/anker) knipt níet (langste
+> track 472 → **1.010 km**); écht aanleggen knipt wél; een onmogelijke sprong knipt
+> (dubbel-MMSI-vlechten die de per-punt-uitschieterfilter mist). **Bol-selectie is
+> dekkingsgedreven**, niet top-N: track gaat mee als hij genoeg onbezette ~1 km-cellen dekt
+> (op/af eigen celruimtes) — elke zijrivier/havenarm haalt de bol (21,4 MB, default uit).
+>
+> **EUROPA = DE EIGEN COLLECTOR, zelfde recept** (geen Europees MarineCadastre): 2 dagen →
+> 23.766 tracks, **Rijnmond→Duisburg al 3.195** — en het **Wesel-gat is dichtgelopen**
+> (momentopname, zoals de Starlink-werkregel voorspelde). Wekelijks meebakken. Ook gefixt:
+> de pings-publisher lag stil sinds de wereldfeed-omzetting (live-gzip EOFError = normale
+> toestand van een levend bestand + Class B viel buiten de filter + het `-a`-dagdeel viel
+> uit het venster); puntenbudget 120k → **500k** (`--max-punten`), korrel 30 → 5 min.
+>
+> **Gereedschap:** `haal_marinecadastre.py` (download + omzetten naar collector-JSONL) ·
+> `bouw_tracks.py` (bron-agnostisch, landelijke schaal) · `bak_aistracks.py`
+> (dekkingsselectie) · `aistracks.js` (+ HUD-toggle). **⚠️ LOPEND:** vier research-agents
+> zoeken open AIS-archieven (Europa/Scandinavië · Canada/Oceanië · Azië ·
+> Z-Amerika/Afrika/globaal) — rapport verwerken bij de volgende sessie.
+> **→ VOLGENDE:** de **track-graaf** (VS eerst; acceptatie New Orleans→Vidalia +
+> R'dam→Duisburg) · MARNET-aanhechting · terminal-nodes uit track-eindpunten (LAR-531).
 
 > **🌍 M28 · GEEN VENSTERS MEER — DE COLLECTOR PAKT DE HELE WERELD, ÉN WE ZAGEN DE HELFT VAN
 > DE SCHEPEN NIET (2026-07-26, LAATSTE).** Aanleiding: Lars' observatie dat de dekking van de

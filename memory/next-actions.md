@@ -1,7 +1,29 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: wereldabonnement + Class B; volgende = track-naar-graaf)*
+*Last updated: 2026-07-27 (M28: heel-VS-tracks live, volgende = de TRACK-GRAAF)*
 
-## 🔴 START HIER — M28 · LAR-530: track-naar-graaf
+## 🔴 START HIER — M28 · LAR-530 in zijn NIEUWE vorm: de track-graaf
+
+**⚠️ Besluit Lars 2026-07-27: GEEN centerline-bundeling** — stap 4 van het oude
+issue-plan hieronder vervalt. De tracks zelf zijn het net:
+
+1. **Track-graaf bouwen** — knopen waar tracks elkaar raken (~200 m gekwantiseerd),
+   edge-geometrie = de échte gevaren lijn (géén celcentra: dat gaf −7,4% en hoekigheid;
+   de echte lijn gaf −0,1% op de Vidalia-toets). Op-/afvaart als eigen banen
+   (`dlat`/`dlon` zit al op elke track). VS eerst (data compleet: 28 dagen,
+   `build-cache/ais/tracks/vs-landelijk.jsonl.gz`, 510.510 tracks).
+   **Acceptatie: New Orleans→Vidalia** (snap ≤0,5 km, lengte ±paar %, via echte
+   geometrie) **en R'dam→Duisburg** op de collector-set.
+2. **MARNET-aanhechting** in de overlapzone (tracks lopen 40-80 km de zee op — daar
+   liggen MARNET-knopen; hecht op echte geometrie i.p.v. een 50 km-schuine snap).
+3. **Terminal-nodes (LAR-531)** uit de track-eindpunten: "einde been = aangelegd"
+   clustert al zichtbaar op de dokken (Memphis President's Island, Syrah Vidalia 55×).
+4. **Europa wekelijks meebakken** (collector dikt ~850 MB/dag aan; zelfde
+   `bouw_tracks.py --bron`).
+5. **Agent-rapporten verwerken** (4 agents: Europa/Scandinavië · Canada/Oceanië ·
+   Azië · Z-Amerika/Afrika/globaal) → per regio bronbesluit: eigen archief /
+   collector / MARNET+density.
+
+## Ouder (deels vervallen) — het oorspronkelijke LAR-530-plan
 
 **Het plan staat in Linear** (milestone *"M28 · AIS-tracknet"*, LAR-528 t/m LAR-535) —
 niet in de oude gloed/density-notities hieronder. De collector draait al op **13 vensters**

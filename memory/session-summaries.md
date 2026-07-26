@@ -1415,3 +1415,15 @@ eiland komen rechtstreeks uit de data.** Pijplijn: drempel 100k → adaptief ver
 confetti-filter → skelet + spur-snoei. Besloten: ankervlek-filter = convergentiegedrag
 (graaf-stap); open zee eigen recept. Wacht op Lars' visuele check → dan de graaf-stap.
 Vault: [[2026-07-25-grondstoffen-atlas-ais-pilot-op-de-bol]]
+
+## 2026-07-27 — M28: MarineCadastre als tweede bron, heel-VS-tracks op de bol (`?v=089`)
+Publisher-fix (live-gzip EOFError + Class B + `-a`-dag; budget 120k→500k) → MarineCadastre-
+pilot (mississippi 768/min vs aisstream 0) → Vidalia-toets (kade-snap 0,46 km, 55 tracks
+eindigen op de kade, echte lijn −0,1%) → 28 dagen heel VS: 259,4 mln pings → 510.510
+tracks / 27,4 mln km (bouw_tracks herbouwd: CSV direct, 64 buckets, venster optioneel) →
+bol-laag "AIS-tracks VS (pilot)" met dekkingsselectie (18.609 doorvaarten). Europa via de
+eigen collector (2 dagen → Rijnmond→Duisburg 3.195 tracks; Wesel-gat dichtgelopen).
+Besluiten Lars: geen bundeling (track-graaf met echte geometrie) · open zee = MARNET ·
+4-wekenvenster. Vier research-agents naar open AIS-bronnen wereldwijd gestart.
+Commits `1739398`·`1c2a94f`·`fa68cdd`·`7301eeb`·`1aa39c8`·`d5500e4`.
+Vault: [[2026-07-27-grondstoffen-atlas-m28-marinecadastre-vs-tracks]]

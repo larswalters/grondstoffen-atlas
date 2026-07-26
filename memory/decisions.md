@@ -2023,3 +2023,23 @@ het werkt" (routebrief-sessie) is hiermee ingehaald.
 **Gevolg:** water-routering/-toetsen tijdelijk uit (zelfopheffende guards); havens/
 knooppunten/aansluitingen blijven als aanhechtpunten; keten/router/stromen-code blijft in
 de repo voor het AIS-net.
+
+- **2026-07-27 · Geen centerline-bundeling — de tracks zelf zijn het net (besluit Lars)** —
+  LAR-530 wordt een track-graaf: knopen op raakpunten (~200 m), edge-geometrie = de échte
+  gevaren lijn. Gemeten reden: de Vidalia-toets gaf op een celgraaf −7,4% en "onrealistisch
+  hoekig", op de echte gevaren lijn −0,1% (430,6 vs ~431 km). Meerdere tracks per geul is
+  gewenst (op-/afvaart eigen banen, straks per grondstof).
+- **2026-07-27 · Open zee blijft definitief MARNET (besluit Lars)** — aisstream levert
+  buiten de 40-80 km kuststrook vrijwel niets (Gibraltar 2/min, Panama 1/min) en
+  satelliet-AIS is betaald. Stitchen in de overlapzone waar de tracks de zee op lopen.
+- **2026-07-27 · MarineCadastre (NOAA/USACE) = de VS-tracknet-bron** — dagelijkse
+  heel-VS-dumps, publiek domein, mét binnenrivieren: mississippi 768/min waar aisstream
+  0 heeft. Kerninzicht: de graaf heeft geen líve data nodig, alleen tracks — een
+  historisch archief is even goed als een stream. Venster 4 weken (besluit Lars).
+- **2026-07-27 · Track-knip-regels** — een korte stop (≤90 min: sluis, ankeren) knipt een
+  track níet (anders valt één reis uiteen in een stuk per sluis; langste track 472 →
+  1.010 km); écht aanleggen knipt wél en dat eindpunt is LAR-531-dokmateriaal; een
+  onmogelijke sprong knipt de track (dubbel-MMSI-vlechten die een per-punt-filter mist).
+- **2026-07-27 · Bol-selectie is dekkingsgedreven, niet top-N** — een track gaat mee als
+  hij genoeg onbezette ~1 km-cellen dekt (op/af als eigen celruimtes, drempel stijgt met
+  het budget): elke zijrivier/havenarm haalt de bol, de duizendste herhaling niet.

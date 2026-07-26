@@ -1,5 +1,39 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: collector op wereldabonnement, Class B erbij)*
+*Last updated: 2026-07-27 (M28: MarineCadastre = VS-bron, heel-VS-tracks op de bol, tracks = het net)*
+
+## Stand 2026-07-27 (nacht) — twee bronnen, één recept, en de tracks zíjn het net
+
+**MarineCadastre (NOAA/USACE) is de tweede tracknet-bron.** Dagelijkse heel-VS-dumps
+(CSV.zst ~285 MB/dag, publiek domein, `curl` zonder registratie, 2009-heden, mét de
+binnenrivieren): mississippi **768/min waar aisstream 0 heeft**, duwboten dominant.
+Kerninzicht: **de graaf heeft geen líve data nodig, alleen tracks** — een historisch
+archief is even goed als een stream. 28 dagen (29 jun–26 jul 2025) verwerkt:
+**259,4 mln pings → 510.510 tracks / 27,4 mln km** in 20,5 min
+(`bouw_tracks.py` herbouwd: CSV direct = 5-10× sneller dan de JSONL-omweg, twee passes
+via 64 bucket-bestanden, venster optioneel — de pilot-vensters gaven op de bol een
+"afgekapte rivier" bij lat 35,6 en zijn weg).
+
+**Live `?v=089`: HUD-laag "AIS-tracks VS (pilot)"** — 18.609 doorvaarten via een
+**dekkingsgedreven selectie** (track gaat mee als hij genoeg onbezette ~1 km-cellen
+dekt; op/af als eigen celruimtes), amber = opvaart / ijsblauw = afvaart.
+
+**⚠️ DE DRIE BESLUITEN VAN LARS die de graaf-stap herdefiniëren:**
+1. **Geen centerline-bundeling — de tracks zelf zijn het net.** LAR-530 wordt een
+   **track-graaf**: knopen waar tracks elkaar raken (~200 m gekwantiseerd),
+   edge-geometrie = de échte gevaren lijn. Bewijs dat dat moet: de Vidalia-toets gaf
+   op een celgraaf −7,4% en "onrealistisch hoekig" (Lars), op de echte gevaren lijn
+   **−0,1%** (430,6 vs ~431 km).
+2. **Open zee blijft definitief MARNET** — aisstream levert daar niets (walbereik
+   40-80 km), satelliet-AIS is betaald. Stitchen in de overlapzone waar tracks de zee
+   op lopen.
+3. **Track-venster 4 weken** — langere doorvaarten (langste nu 1.010 km), dokken vol.
+
+**Europa = de eigen collector, zelfde recept.** Geen Europees MarineCadastre; 2 dagen
+VPS-data → 23.766 tracks (Rijnmond→Duisburg al **3.195**; het Wesel-gat is
+**dichtgelopen** — momentopname, zoals de Starlink-werkregel voorspelde). Wekelijks
+meebakken. Vier research-agents zoeken open archieven voor de rest (rapport volgt).
+
+---
 
 ## Stand 2026-07-26 (middag) — geen vensters meer, en we zagen de helft van de schepen niet
 
