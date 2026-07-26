@@ -80,6 +80,21 @@
     </div>
     <div id="pingNoot"></div>
 
+    <!-- Echte scheepstracks (M28, VS-pilot): gevaren lijnen van individuele
+         schepen uit MarineCadastre (NOAA) — de bron die de VS-binnenrivieren
+         dekt waar aisstream niets ontvangt. Amber = opvaart, ijsblauw =
+         afvaart. Standaard uit; dit is de bol-toets van de track-aanpak. -->
+    <div class="hudLabel">AIS-tracks VS (pilot)</div>
+    <div class="btnRow">
+      <button class="atBtn" data-at="aan">aan</button>
+      <button class="atBtn is-on" data-at="uit">uit</button>
+    </div>
+    <div id="havenLegenda" style="margin-bottom:6px">
+      <span><i style="background:#ffd166"></i>opvaart</span>
+      <span><i style="background:#7fe8ff"></i>afvaart</span>
+    </div>
+    <div id="tracksNoot"></div>
+
     <!-- Het AIS-waternet (M27, pilot): geullijnen uit de AIS-density, vier
          testvensters (Tongling · Nederland · Patache · Shanghai). Standaard
          uit — dit is het graaf-zaad, de gloed hierboven is het beeld. -->
@@ -161,6 +176,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=087"></script>
+<script type="module" src="src/main.js?v=088"></script>
 </body>
 </html>

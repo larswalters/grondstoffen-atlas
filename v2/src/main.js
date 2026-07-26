@@ -20,6 +20,7 @@ import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
+import { laadAisTracks } from "./aistracks.js?v=088";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -132,6 +133,33 @@ laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
     }
   })
   .catch((e) => console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message));
+
+// --- echte scheepstracks (M28, VS-pilot) -----------------------------------
+// De bol-toets van de track-aanpak: gevaren lijnen van individuele schepen
+// (MarineCadastre — de VS-binnenrivieren waar aisstream niets ontvangt), op-
+// en afvaart elk hun kleur. Kijk-laag; de graaf-stap (LAR-530) rekent op de
+// volledige trackset in build-cache.
+let AISTRACKS = null;
+laadAisTracks(CONFIG.radius, "088", GLOBE.klemOpHorizon)
+  .then((at) => {
+    AISTRACKS = at;
+    at.groep.visible = false;   // standaard uit, net als de andere debuglagen
+    GLOBE.globeGroup.add(at.groep);
+    window.AISTRACKS = at;
+    const s = at.stats;
+    console.log(
+      `[atlas v2] aistracks: ${s.lijnen.toLocaleString("nl")} tracks · ` +
+      `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
+      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+    );
+    const noot = document.getElementById("tracksNoot");
+    if (noot) {
+      noot.textContent =
+        `${Object.keys(at.vensters).join(" · ")} — ` +
+        `${s.lijnen.toLocaleString("nl")} doorvaarten (14 dagen, MarineCadastre)`;
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] aistracks niet geladen (nog niet gebakken?):", e.message));
 
 // --- de AIS-drukte als gloed (M27) -----------------------------------------
 // Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
@@ -266,6 +294,9 @@ wireButtons(".lnBtn", "ln", (mode) => {
 });
 wireButtons(".anBtn", "an", (mode) => {
   if (AISNET) AISNET.lijnen.visible = (mode === "aan");
+});
+wireButtons(".atBtn", "at", (mode) => {
+  if (AISTRACKS) AISTRACKS.groep.visible = (mode === "aan");
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
