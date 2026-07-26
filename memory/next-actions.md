@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: 13 vensters verzamelen; volgende = track-naar-graaf)*
+*Last updated: 2026-07-26 (M28: wereldabonnement + Class B; volgende = track-naar-graaf)*
 
 ## 🔴 START HIER — M28 · LAR-530: track-naar-graaf
 
@@ -9,16 +9,24 @@ en verzamelt; er is dus dagelijks meer materiaal, en wachten kost niets.
 
 **Eerst even dit, kost vijf minuten:**
 
-* **Wesel hermeten** zodra er een volle dag ligt (zie `bugs-and-risks.md`): loopt het gat
-  van ~55 km dicht of is het structureel? Dat bepaalt of de pilot-corridor een gedocumenteerd
-  gat krijgt.
-* **Schijf en health kort nalopen:** `journalctl -u ais-collector | grep health | tail -3`
-  en `df -h /`. Bij ~1,2 GB/dag ruw kan het maanden door, maar overdag ligt het hoger dan de
-  nachtmeting.
+* **Schijfritme is nu routine, geen luxe.** De collector staat op een wereldabonnement met
+  live gzip: ~1 GB/dag gegzipt tegen ~22 GB vrij = **~20 dagen marge**. Loop
+  `df -h /` + `ls -la /var/lib/ais-collector/ais/` na en draai
+  `python v2/tools/haal_ais_data.py --opruimen` als er afgesloten dagen liggen.
+  ⚠️ De harde ondergrens (2 GB) stopt alleen het schrijven, niet de stream — dat valt pas op
+  in `journalctl`.
+* **~~Wesel hermeten~~ — GEDAAN (2026-07-26):** op 12,5 uur is lon 6,5 nog steeds **0** en
+  6,6 slechts 5 berichten in één uurvak, tegen 509 op 6,3 en 14.118 op 6,7. **Structureel**,
+  zie `bugs-and-risks.md`. De pilot-corridor krijgt dus een gedocumenteerd gat.
+* **Optioneel: tweede wereldscan op een ander tijdstip.** `python v2/tools/ais_wereldscan.py
+  --minuten 60` (op de VPS) + `analyseer_wereldscan.py`. Scheidt de twijfelgevallen: "0 in dit
+  uur" bewijst geen afwezigheid van dekking, terwijl wat binnenkwam wél hard bewijs van
+  aanwezigheid is. Vooral zinnig voor havens met weinig bewegingen per dag.
 * **Aanbod dat openstaat** (Lars nog niet op geantwoord): een dekkingsrapport per
   corridor-segment dat toont wélk aandeel van de uren dekking had — dan zie je in één blik
   welke gaten dichtlopen en welke echt leeg blijven. Volgt uit Lars' Starlink-punt: dekking
-  is statistisch, niet binair.
+  is statistisch, niet binair. **Nu goedkoper dan eerst**, want het wereldabonnement levert
+  elke corridor al aan.
 
 * **LAR-530 · track-naar-graaf**, de kern. Stappen uit het issue:
   1. tracks per MMSI (sorteren op tijd, splitsen bij tijdsprong > X min of onrealistische

@@ -1,7 +1,54 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: debuglaag live, dekking per corridor gemeten)*
+*Last updated: 2026-07-26 (M28: wereldabonnement + Class B in de collector)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-26 - Class B erbij in de collector (besluit Lars)
+**Besluit:** de collector abonneert op `PositionReport` · `ShipStaticData` ·
+`StandardClassBPositionReport` · `ExtendedClassBPositionReport` · `StaticDataReport`.
+**Waarom:** `PositionReport` is **uitsluitend Class A** (msg 1/2/3) — dat staat nergens in de
+naam en werd daardoor een maand lang niet opgemerkt. Gemeten in een wereldabonnement:
+**9.655 ber/min en 8.089 unieke MMSI mét Class B** tegen **4.465 en 4.269 zonder**; in onze
+eigen vensters meren-seaway **+77%** en schelde-antw **+42%** unieke schepen. Geen
+codewijziging nodig — de collector bint al op `MetaData`, dus het was puur de
+abonnementslijst. De default staat nu in `ais_collector.py` mét de meting in de help-tekst,
+zodat een rebuild hem niet stilzwijgend terugzet.
+
+## 2026-07-26 - Wereldabonnement in plaats van vensters (besluit Lars)
+**Besluit:** de collector abonneert op de hele wereld; de 13 vensters blijven bestaan als
+**health-banen** (rapportage per corridor), niet als filter.
+**Waarom:** de héle aisstream-feed is **~9.800 berichten/min** en onze 13 vensters trokken
+daar al ~1.600 van — bij die verhouding is een vensterlijst voortijdige zuinigheid die later
+een corridor kost die je niet meer kunt terughalen (verzamelen is onherhaalbaar, verwerken
+niet). De vensters als health-banen houden uitval per corridor zichtbaar in `journalctl` in
+plaats van te verdrinken in één wereldtotaal.
+
+## 2026-07-26 - Live gzip is een voorwaarde voor het wereldabonnement, geen optimalisatie
+**Besluit:** `--wereld` weigert te starten zonder `--live-gz`; het dagbestand wordt direct als
+`.jsonl.gz` geschreven.
+**Waarom:** de wereldfeed is ruw ~8,5 GB/dag tegen ~1 GB gegzipt, en er staat ~22 GB vrij —
+ongegzipt raakt de collector binnen twee dagen zijn eigen schrijfstop, en die stopt alleen het
+schrijven (de stream loopt door, dus het valt pas op in de log). gzip staat concatenatie toe,
+dus append over een herstart heen blijft geldig: elke herstart voegt een nieuw member toe. Een
+ongegzipt dagbestand van vóór de omzetting wordt apart weggezet (`<dag>-a.jsonl`) en alsnog
+ingepakt, zodat het niet met de nieuwe naam botst.
+
+## 2026-07-26 - De wereldscan bewaart het ruwe uur en kan herberekenen
+**Besluit:** `ais_wereldscan.py` schrijft naast het raster de volledige ruwe JSONL.gz weg en
+heeft een `--herbereken`-modus die het raster daaruit opnieuw opbouwt.
+**Waarom:** de eerste scan telde alleen totalen, dus je kon niet zien *waar* Class B het
+verschil maakt. Met het ruwe uur op schijf kostte die rijkere uitsplitsing **geen nieuwe
+meettijd** — exact het principe waarom de collector bewust dom is: meten is onherhaalbaar,
+analyseren niet.
+
+## 2026-07-26 - Dekking meten doe je per HAVEN met varend verkeer, niet per cel
+**Besluit:** `analyseer_wereldscan.py` scoort de 3.963 havens uit `ports.json` tegen het
+raster en splitst **varend** verkeer af als aparte maat.
+**Waarom:** de projectvraag is niet "hoeveel cellen zijn gevuld" maar "tot welke kade kunnen
+we een spoor leggen". Stilliggers leveren een ligplaats (LAR-531-materiaal), maar alleen
+varende schepen leveren een **route** naar die kade. Uitslag: 1.169 van 3.963 havens.
+⚠️ Bij een straal van 30 km delen buurhavens cellen — de ranglijst leest als regio, niet als
+haven.
 
 ## 2026-07-26 - De pings-debuglaag krijgt een eigen VPS-endpoint, niet het atlas-repo (besluit Lars)
 **Besluit:** de VPS publiceert `pings.json` achter Traefik (`ais.187.124.169.172.nip.io`)

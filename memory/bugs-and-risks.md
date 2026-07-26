@@ -1,5 +1,42 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: dekking per corridor gemeten; China ook aan de kust donker)*
+*Last updated: 2026-07-26 (M28: wereldwijde dekking gemeten; Wesel bevestigd structureel)*
+
+## ⚠️ BEVESTIGD — het Wesel-gat is structureel (2026-07-26, hermeten)
+Het voorbehoud hieronder ("berust op 1,2 uur data") is opgeheven. Hermeten op **12,5 uur**,
+elk bericht geteld per 0,1° lengtegraad binnen de rijn-corridor:
+
+| lon | berichten | MMSI | uurvakken met data |
+|---|---|---|---|
+| 6,3 | 509 | 119 | 12 |
+| 6,4 | 81 | 44 | 12 |
+| **6,5** | **0** | **0** | **0** |
+| **6,6** | **5** | **2** | **1** |
+| 6,7 | 14.118 | 197 | 12 |
+
+Aan weerszijden twaalf uur onafgebroken verkeer, ertussen twee lege bins — **geen
+steekproefartefact maar een eigenschap van het stationsnetwerk**. De pilot-corridor
+(Rotterdam-Rijnmonding → Duisburg) krijgt hier dus een gedocumenteerd gat van ~55 km. Conform
+de werkregel wordt het **niet** gerepareerd met geleende geometrie: dekking kan opportunistisch
+aangroeien, dus geleend werk is weggegooid werk zodra er één ontvanger bijkomt.
+
+## ⚠️ RISICO OPGELOST, NIEUW RISICO ERVOOR TERUG — schijf bij het wereldabonnement (2026-07-26)
+Sinds 14:08 UTC draait de collector op een wereldabonnement. **Ruw zou dat ~8,5 GB/dag zijn
+tegen ~22 GB vrij** = schrijfstop binnen twee dagen; daarom schrijft hij nu direct gegzipt
+(~1 GB/dag, ~20 dagen marge) en **weigert `--wereld` zonder `--live-gz`**.
+⚠️ **Blijvend risico:** de harde ondergrens van 2 GB stopt alléén het schrijven — de stream
+loopt door, dus een volle schijf valt niet op in de data maar alleen in `journalctl`.
+`haal_ais_data.py --opruimen` is daarmee onderhoud geworden, geen luxe.
+
+## ⚠️ GEGEVEN — wat NOOIT uit tracks gebouwd gaat worden (2026-07-26, wereldwijd gemeten)
+Van de 3.963 havens heeft er **1.169 (29,5%) varend verkeer**. **Nul** havens met varend
+verkeer in: **Chili (47 havens) · Peru (28) · VAE (22) · Egypte (18) · Nigeria (18) ·
+Roemenië (16) · Angola (12) · Iran (12) · Saoedi-Arabië (11) · Filipijnen (58) · Vietnam (21) ·
+Tanzania (8)**. Dat raakt het koperbeen (Collahuasi/Escondida → Patache/Antofagasta),
+**Hormuz**, **Lobito**, **Constanța** en **Suez** — die corridors blijven op MARNET + het
+density-raster aangewezen; daar valt geen track te leggen.
+⚠️ **Nuance bij de meting:** één uur. "0 in dit uur" bewijst geen afwezigheid van dekking bij
+een haven met weinig bewegingen; wat wél binnenkwam is hard bewijs van aanwezigheid. Voor de
+extreme gevallen (Zuid-Azië + Golf samen 163 berichten in een uur) is toeval uitgesloten.
 
 ## ⚠️ GEGEVEN — ook de Chinese KUST heeft geen aisstream-dekking (2026-07-26)
 Aanvulling op de China-notitie hieronder, en het weerlegt het idee om de Chinese kust erbij

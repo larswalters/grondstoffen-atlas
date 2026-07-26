@@ -3,6 +3,30 @@
 De verzamelaar die het tracknet voedt. Draait permanent op de Hostinger-VPS
 (`root@187.124.169.172`) naast de Hermes-gateway, als systemd-service.
 
+> **⚠️ SINDS 2026-07-26 · WERELDABONNEMENT + CLASS B + LIVE GZIP.** De collector draait met
+> `--wereld --live-gz` en op **vijf** berichtsoorten. De vensters hieronder filteren niets
+> meer — ze zijn **health-banen** geworden (rapportage per corridor in `journalctl`).
+>
+> **Waarom wereld:** de héle aisstream-feed is gemeten **~9.800 berichten/min**, en 13
+> vensters trokken daar al ~1.600 van. Bij die verhouding is een vensterlijst voortijdige
+> zuinigheid die later een corridor kost die je niet meer kunt terughalen. Na de omzetting
+> gemeten: **7.858 ber/min · ~850 MB/dag gegzipt · 80% van de berichten valt buiten de oude
+> vensters.**
+>
+> **Waarom Class B:** `PositionReport` is **uitsluitend Class A** (msg 1/2/3). Class B komt
+> binnen als `StandardClassBPositionReport` / `ExtendedClassBPositionReport` en zijn naam/type
+> als `StaticDataReport` (msg 24). Gemeten: **9.655 ber/min en 8.089 unieke MMSI mét** tegen
+> **4.465 en 4.269 zonder**. Per corridor: meren-seaway **+77%**, schelde-antw **+42%**,
+> noord-dld +21%, Rijn +12–15% unieke schepen.
+>
+> **Waarom live gzip verplicht is:** ruw ~8,5 GB/dag tegen ~1 GB gegzipt bij ~22 GB vrij. De
+> code **weigert `--wereld` zonder `--live-gz`**. gzip staat concatenatie toe, dus append over
+> een herstart heen blijft geldig; een ongegzipt dagbestand van vóór de omzetting gaat naar
+> `<dag>-a.jsonl` en wordt alsnog ingepakt.
+>
+> **Gevolg voor het beheer:** `haal_ais_data.py --opruimen` is onderhoud geworden, geen luxe —
+> ~20 dagen marge, en de harde ondergrens stopt alléén het schrijven (de stream loopt door).
+
 ## Wat waar staat
 
 | Pad | Wat |
@@ -34,6 +58,37 @@ Vensters wijzigen = `vensters.json` aanpassen + `systemctl restart ais-collector
 De collector leest het bestand alleen bij start. Vensters die niets opleveren worden
 in de health-regel compact als `stil: …` genoemd, zodat het signaal niet verdrinkt in
 een rij nullen.
+
+## De wereldwijde dekkingsmeting (2026-07-26, 1 uur, alles)
+
+`v2/tools/ais_wereldscan.py` neemt één abonnement op de héle wereld **zonder berichtfilter**
+en telt per rastercel; `analyseer_wereldscan.py` legt dat naast de 3.963 havens uit
+`ports.json`. Zo meet je **hun** netwerk in plaats van onze abonnementskeuze.
+
+**588.627 berichten · 41.812 unieke schepen · 4.207 cellen van 0,25°.** Hun walstations zenden
+zichzelf uit als `BaseStationReport`, dus de stationskaart is gemeten in plaats van geloofd:
+
+| regio | stations | posities | aandeel |
+|---|---|---|---|
+| Europa | **397** | 277.185 | **73,9%** |
+| Noord-Amerika | 171 | 62.704 | 16,7% |
+| Oceanië | 20 | 13.488 | 3,6% |
+| Oost-Azië | 22 | 11.102 | 3,0% |
+| Afrika/Midden-Oosten | 20 | 5.076 | 1,4% |
+| Zuid-Amerika | 11 | 3.532 | 0,9% |
+| **Zuid-Azië/Golf** | — | **163** | **0,0%** |
+
+**Per haven — de vraag die telt.** Van de 3.963 havens heeft **1.402 (35,4%)** enig signaal en
+**1.169 (29,5%) varend verkeer**; alleen daar valt een spoor náár de kade te bouwen (stilliggers
+geven een ligplaats, geen route). **Nul havens met varend verkeer:** Chili (47) · Peru (28) ·
+VAE (22) · Egypte (18) · Nigeria (18) · Roemenië (16) · Angola (12) · Iran (12) ·
+Saoedi-Arabië (11) · Filipijnen (58) · Vietnam (21) · Tanzania (8) → het koperbeen, Hormuz,
+Lobito, Constanța en Suez blijven op MARNET + density.
+
+⚠️ **Eén uur is een momentopname.** "0 in dit uur" bewijst geen afwezigheid van dekking bij een
+haven met weinig bewegingen; wat wél binnenkwam is hard bewijs van aanwezigheid. Voor de
+extremen (Zuid-Azië + Golf samen 163 berichten) is toeval uitgesloten. ⚠️ En bij 30 km straal
+delen buurhavens cellen — de ranglijst leest als regio, niet als haven.
 
 ## Gemeten dekking per corridor (2026-07-25, steekproeven van 3 min)
 

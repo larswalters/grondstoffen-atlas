@@ -1,6 +1,52 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-26 (middag) - M28 · wereldwijde dekkingsmeting, Class B-vondst, collector op wereldabonnement
+Lars: *"de dekking van de AISstream pings lijkt wel een heel stuk slechter dan op hun website
+omschreven."* Half waar — en dat onderscheid was de sessie. **Het meeste zwart op de bol was
+onze eigen vensterlijst**: de pings-laag tekent alleen wat de collector binnenkrijgt, en die
+stond op 13 rechthoeken. De witte vlek bij de Kaspische Zee op zijn screenshot kón zelfs geen
+ping zijn (geen venster daar) — dat is de zonreflectie. Hun site belooft *"roughly 200 km off
+the majority of the world's coastlines"* mét de disclaimers dat er géén 100% dekking is en dat
+de stationskaart **niet** het bereik per station toont; daar liep de verwachting mis.
+
+**Vondst 1, op Lars' vraag "nu haal je alles op wat via aisstream binnenkomt toch?": nee.**
+`PositionReport` is uitsluitend Class A (msg 1/2/3); Class B komt binnen als
+`StandardClassB-`/`ExtendedClassBPositionReport` en als `StaticDataReport`. Die vielen buiten
+zowel de scan als de draaiende collector. Gemeten: **9.655 ber/min en 8.089 unieke MMSI mét**
+tegen **4.465 en 4.269 zonder**. Class B toegevoegd (besluit Lars); winst in onze vensters
+voor/na: meren-seaway 99 → **175** MMSI (+77%), schelde-antw 555 → **789** (+42%), noord-dld
++21%, rijn-corridor +15%, rijnmond +12%, japan-korea ruis. Geen codewijziging nodig — de
+collector bint al op `MetaData`.
+
+**Vondst 2, op Lars' "je gaat het toch gewoon wereldwijd doen zonder vensters?":** de héle
+feed is maar ~9.800 ber/min terwijl onze 13 vensters daar al ~1.600 van trokken. Collector
+omgezet naar **wereldabonnement** met de vensters als **health-banen**. Live gzip was daarbij
+een voorwaarde (ruw ~8,5 GB/dag tegen ~1 GB gegzipt bij 22 GB vrij); de code weigert nu
+`--wereld` zonder `--live-gz`. Het ruwe dagbestand van vanochtend werd bij de omzetting apart
+weggezet en ingepakt (**677 MB → 89 MB**). Nagemeten na de omzetting: **7.858 ber/min ·
+~850 MB/dag gegzipt · 31.297 van de 39.290 berichten (80%) buiten de oude vensters** — dat is
+precies wat we voorheen misliepen.
+
+**De wereldscan (1 uur, alles, geen filter):** 588.627 berichten · 41.812 unieke schepen ·
+4.207 cellen van 0,25°. Walstations zenden zichzelf uit als `BaseStationReport`, dus de
+stationskaart is **gemeten**: 641 stations — Europa 397 · Noord-Amerika 171 · Oost-Azië 22 ·
+Afrika/MO 20 · Oceanië 20 · Zuid-Amerika 11. Posities: Europa **73,9%**, Noord-Amerika 16,7%,
+en **Zuid-Azië + de Golf samen 163 berichten = 0,0%** (Hormuz alleen zou er duizenden geven).
+
+**De uitslag die telt:** van de 3.963 havens heeft **1.169 (29,5%) varend verkeer** — alleen
+daar valt een spoor náár de kade te bouwen. 968 havens hebben Class B-verkeer, **31
+uitsluitend** (Opua, Grand Haven, Næstved, Marsden Point, Almirante, Stockton, Kingston,
+Lübeck…). **Nul** in Chili (47 havens), Peru (28), VAE (22), Egypte, Nigeria, Roemenië,
+Angola, Iran, Filipijnen, Vietnam → koperbeen, Hormuz, Lobito, Constanța en Suez blijven op
+MARNET + density.
+
+**Bijvangst:** het Wesel-gat hermeten op 12,5 uur (was 1,2) — lon 6,5 nog steeds 0, 6,6 vijf
+berichten, tegen 509 en 14.118 aan weerszijden. **Structureel.**
+
+Nieuw gereedschap: `ais_wereldscan.py` (wereldabonnement, 0,25°-raster, ruwe gz,
+`--herbereken`) + `analyseer_wereldscan.py` (3.963 havens gescoord, varend afgesplitst).
+
 ## 2026-07-26 (nacht) - M28 · pings-debuglaag live + dekking empirisch nagemeten
 Lars miste de toggle uit LAR-535 — terecht, die was nog niet gebouwd. Alsnog gedaan en live
 op `?v=087`: HUD-knop *"AIS-pings (debug)"*, gevoed door een eigen HTTPS-endpoint op de VPS

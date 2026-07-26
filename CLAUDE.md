@@ -1,6 +1,76 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-26 (M28: 13 vensters verzamelen; pings-debuglaag live)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-26 (M28: collector op wereldabonnement, Class B erbij)*
+
+> **🌍 M28 · GEEN VENSTERS MEER — DE COLLECTOR PAKT DE HELE WERELD, ÉN WE ZAGEN DE HELFT VAN
+> DE SCHEPEN NIET (2026-07-26, LAATSTE).** Aanleiding: Lars' observatie dat de dekking van de
+> opgeslagen pings veel slechter oogde dan aisstream belooft.
+>
+> **HALF WAAR, EN DAT ONDERSCHEID IS DE LES.** De pings-laag tekent alleen wat de collector
+> binnenkrijgt, en die stond op **13 rechthoeken** — VS-oostkust, Middellandse Zee en het hele
+> zuidelijk halfrond waren donker **omdat we er niet om vroegen**. (De witte vlek bij de
+> Kaspische Zee op Lars' screenshot kón geen ping zijn: daar ligt geen venster — dat was de
+> zonreflectie op de bol.) Hun site belooft *"roughly 200 km off the majority of the world's
+> coastlines"* mét de expliciete disclaimers dat er **géén 100% dekking** is en dat de
+> stationskaart **niet** het bereik per station weergeeft. Wij lazen een stippenkaart van
+> stations als een dekkingskaart.
+>
+> **⚠️ VONDST 1 — `PositionReport` IS UITSLUITEND CLASS A.** Op Lars' vraag *"nu haal je alles
+> op wat via aisstream binnenkomt toch?"*: nee. Class B-transponders komen binnen als
+> **`StandardClassBPositionReport`** / **`ExtendedClassBPositionReport`** en hun naam/type als
+> **`StaticDataReport`** (msg 24) — die vielen buiten zowel de scan als de draaiende collector.
+> Gemeten in een wereldabonnement: **9.655 ber/min en 8.089 unieke MMSI mét** tegen **4.465 en
+> 4.269 zonder** — ruwweg **de helft van de schepen was onzichtbaar**. Winst in onze eigen
+> vensters, voor/ná: **meren-seaway 99 → 175 MMSI (+77%)** · **schelde-antw 555 → 789 (+42%)** ·
+> noord-dld +21% · rijn-corridor +15% · rijnmond +12% · japan-korea ruis (daar en op de Rijn
+> vaart de vracht Class A). **Geen codewijziging nodig** — de collector bint al op `MetaData`.
+>
+> **⚠️ VONDST 2 — DE HELE FEED IS MAAR ~9.800 BER/MIN.** Onze 13 vensters trokken daar al
+> ~1.600 van. Besluit Lars (*"je gaat het toch gewoon wereldwijd doen zonder vensters?"*):
+> **wereldabonnement**, de vensters blijven bestaan als **health-banen** zodat uitval per
+> corridor zichtbaar blijft in `journalctl`. Nagemeten na de omzetting: **7.858 ber/min ·
+> ~850 MB/dag gegzipt · 31.297 van 39.290 berichten (80%) buiten de oude vensters** — precies
+> wat we misliepen.
+>
+> **⚠️ LIVE GZIP IS EEN VOORWAARDE, GEEN OPTIMALISATIE.** Ruw is de wereldfeed ~8,5 GB/dag
+> tegen ~1 GB gegzipt bij ~22 GB vrij — ongegzipt raakt de collector binnen twee dagen zijn
+> eigen schrijfstop, en die stopt **alleen het schrijven** (de stream loopt door, dus het valt
+> pas op in de log). De code **weigert `--wereld` zonder `--live-gz`**. gzip staat concatenatie
+> toe, dus append over een herstart heen blijft geldig. Een ongegzipt dagbestand van vóór de
+> omzetting gaat naar `<dag>-a.jsonl` en wordt alsnog ingepakt (**677 MB → 89 MB**).
+>
+> **DE GEMETEN DEKKINGSKAART (1 uur, alles, geen filter):** 588.627 berichten · 41.812 unieke
+> schepen · 4.207 cellen van 0,25°. Hun **walstations zenden zichzelf uit** (`BaseStationReport`),
+> dus de stationskaart is nu gemeten in plaats van geloofd: **641 stations** — Europa **397** ·
+> Noord-Amerika 171 · Oost-Azië 22 · Afrika/MO 20 · Oceanië 20 · Zuid-Amerika 11. Posities:
+> **Europa 73,9%** · Noord-Amerika 16,7% · Oceanië 3,6% · Oost-Azië 3,0% · Afrika/MO 1,4% ·
+> Zuid-Amerika 0,9% · **Zuid-Azië + Golf 163 berichten = 0,0%** (Hormuz alleen zou er duizenden
+> geven — geen steekproefruis).
+>
+> **⚠️ DE UITSLAG DIE DE SCOPE BEPAALT — PER HAVEN.** Van de **3.963 havens** heeft **1.402
+> (35,4%)** enig signaal en **1.169 (29,5%) VAREND verkeer**; alleen daar valt een spoor náár de
+> kade te bouwen, want stilliggers geven een ligplaats (LAR-531) en geen route. **968** havens
+> hebben Class B-verkeer, **31 uitsluitend** (Opua, Grand Haven, Næstved, Marsden Point,
+> Almirante, Stockton, Kingston, Lübeck…) — die waren volledig onzichtbaar. **Nul havens met
+> varend verkeer:** Chili **(47)** · Peru (28) · VAE (22) · Egypte (18) · Nigeria (18) ·
+> Roemenië (16) · Angola (12) · Iran (12) · Saoedi-Arabië (11) · Filipijnen (58) · Vietnam (21) ·
+> Tanzania (8). Dat is het **koperbeen** (Collahuasi/Escondida → Patache/Antofagasta),
+> **Hormuz**, **Lobito**, **Constanța** en **Suez** → die blijven op MARNET + het density-raster.
+> **Wél uit tracks te bouwen:** NW-Europa compleet · Noord-Amerika (Grote Meren + Seaway + beide
+> kusten) · Japan/Korea · Australië/NZ · Singapore/Malakka.
+>
+> **WESEL HERMETEN — STRUCTUREEL.** De openstaande actie van de vorige sessie, nu op **12,5 uur**
+> i.p.v. 1,2: lon 6,3 → **509** · 6,4 → 81 · **6,5 → 0** · 6,6 → 5 (in één uurvak) · 6,7 →
+> **14.118**, met aan weerszijden twaalf uur onafgebroken verkeer. Geen steekproefartefact.
+>
+> **NIEUW GEREEDSCHAP:** `v2/tools/ais_wereldscan.py` (wereldabonnement · 0,25°-raster · ruwe
+> JSONL.gz · **`--herbereken`** zodat een rijkere vraag achteraf géén nieuwe meettijd kost —
+> dezelfde reden waarom de collector dom is) + `v2/tools/analyseer_wereldscan.py` (3.963 havens
+> gescoord, **varend** afgesplitst, Class B-only benoemd). Data in
+> `v2/build-cache/ais/wereldscan/` incl. `walstations.json`.
+> **→ VOLGENDE:** schijfritme (`haal_ais_data.py --opruimen`, ~20 dagen marge) · **LAR-530
+> track-naar-graaf** (pilot Rotterdam-Rijnmonding) · optioneel een tweede scan op ander tijdstip
+> ("0 in dit uur" ≠ geen dekking; wat binnenkwam is wél hard bewijs).
 
 > **🔦 M28 · DE PINGS-DEBUGLAAG STAAT OP DE BOL — EN LEGDE METEEN TWEE GATEN BLOOT
 > (2026-07-26, LAATSTE).** Live `?v=087` (commits `1ae5fc8` · `a302044`), LAR-535 **Done**.
@@ -1929,6 +1999,25 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-26 · Class B erbij in de collector (besluit Lars)** — `PositionReport` is
+  uitsluitend Class A (msg 1/2/3); Class B komt binnen als `StandardClassB-`/
+  `ExtendedClassBPositionReport` en `StaticDataReport`. Gemeten wereldwijd: 9.655 ber/min en
+  8.089 unieke MMSI mét, tegen 4.465 en 4.269 zonder — de helft van de schepen was onzichtbaar.
+  Geen codewijziging nodig; de collector bint al op `MetaData`.
+- **2026-07-26 · Wereldabonnement in plaats van vensters (besluit Lars)** — de hele feed is
+  maar ~9.800 ber/min en 13 vensters trokken daar al ~1.600 van; vensters kosten dan later een
+  corridor die niet terug te halen is. De vensters blijven **health-banen** zodat uitval per
+  corridor zichtbaar blijft.
+- **2026-07-26 · Live gzip is een voorwaarde voor `--wereld`, geen optimalisatie** — ruw
+  ~8,5 GB/dag tegen ~1 GB gegzipt bij ~22 GB vrij; de schrijfstop stopt alleen het schrijven,
+  niet de stream, dus een volle schijf valt pas op in de log. De code weigert de combinatie.
+- **2026-07-26 · De wereldscan bewaart het ruwe uur en kan herberekenen** — `--herbereken`
+  bouwt het raster opnieuw uit het bewaarde bestand, dus de Class A/B-uitsplitsing per cel
+  kostte geen nieuwe meettijd. Meten is onherhaalbaar, analyseren niet.
+- **2026-07-26 · Dekking meet je per HAVEN met varend verkeer, niet per cel** — de vraag is
+  "tot welke kade kunnen we een spoor leggen"; stilliggers geven een ligplaats, alleen varende
+  schepen een route. 1.169 van 3.963 havens. ⚠️ Bij 30 km straal delen buurhavens cellen — de
+  ranglijst leest als regio, niet als haven.
 - **2026-07-26 · De pings-debuglaag krijgt een eigen VPS-endpoint, niet het atlas-repo
   (besluit Lars)** — Pages is statisch dus er moet een fetchbare URL zijn; meeliften met het
   repo betekent databestanden in de git-history, ~2 min rebuild plus 10 min cache tussen data

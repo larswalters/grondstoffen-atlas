@@ -1,5 +1,43 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: 13 vensters verzamelen; pings-debuglaag live)*
+*Last updated: 2026-07-26 (M28: collector op wereldabonnement, Class B erbij)*
+
+## Stand 2026-07-26 (middag) — geen vensters meer, en we zagen de helft van de schepen niet
+
+**De collector staat sinds 14:08 UTC op een WERELDABONNEMENT** met vijf berichtsoorten en
+**live gzip**. Twee metingen dwongen dat af.
+
+**1 · `PositionReport` is uitsluitend Class A.** Class B-transponders komen binnen als
+`StandardClassB-`/`ExtendedClassBPositionReport` en hun naam/type als `StaticDataReport`
+(msg 24) — die vielen buiten zowel de dekkingsscan als de draaiende collector. Gemeten in een
+wereldabonnement: **9.655 ber/min en 8.089 unieke MMSI mét** tegen **4.465 en 4.269 zonder**.
+In onze eigen vensters: meren-seaway **+77%**, schelde-antw **+42%**, noord-dld +21%, Rijn
++12–15% (daar vaart de vracht Class A). Geen codewijziging nodig — de collector bint al op
+`MetaData`, dus het was puur de abonnementslijst.
+
+**2 · De hele aisstream-feed is maar ~9.800 ber/min** en onze 13 vensters trokken daar al
+~1.600 van. Bij die verhouding zijn vensters voortijdige zuinigheid: ze kosten later een
+corridor die je niet meer kunt terughalen. **De vensters blijven bestaan als health-banen**,
+zodat uitval per corridor zichtbaar blijft in `journalctl` in plaats van te verdrinken in één
+wereldtotaal. **Live gzip is daarbij een voorwaarde, geen optimalisatie**: ruw ~8,5 GB/dag
+tegen ~1 GB gegzipt bij ~22 GB vrij — de code weigert `--wereld` zonder `--live-gz`.
+
+**De gemeten dekkingskaart (1 uur, alles, 588.627 berichten / 41.812 schepen).** Hun
+walstations zenden zichzelf uit als `BaseStationReport`, dus de stationskaart is nu gemeten:
+**641 stations** — Europa 397 · Noord-Amerika 171 · Oost-Azië 22 · Afrika/MO 20 · Oceanië 20 ·
+Zuid-Amerika 11. Posities: Europa **73,9%**, Noord-Amerika 16,7%, en **Zuid-Azië + de Golf
+samen 163 berichten = 0,0%**.
+
+**Wat dat betekent voor de graaf.** Van de 3.963 havens heeft **1.169 (29,5%) varend
+verkeer** — alleen dáár valt een spoor náár de kade te bouwen; stilliggers geven een
+ligplaats, geen route. **Nul havens met varend verkeer** in Chili (47), Peru (28), de VAE
+(22), Egypte (18), Nigeria (18), Roemenië (16), Angola (12), Iran (12), de Filipijnen (58) en
+Vietnam (21) — dus het koperbeen, Hormuz, Lobito, Constanța en Suez **blijven op MARNET + het
+density-raster**. Wél uit tracks te bouwen: NW-Europa, Noord-Amerika (Meren + Seaway +
+kusten), Japan/Korea, Australië/NZ, Singapore/Malakka.
+
+**Werkwijze die dit vastlegt:** de scan bewaart naast het raster het volledige ruwe uur, en
+`ais_wereldscan.py --herbereken` bouwt het raster daaruit opnieuw op. De Class A/B-uitsplitsing
+per cel kostte zo **geen nieuwe meettijd** — hetzelfde principe waarom de collector dom is.
 
 ## Stand 2026-07-26 (nacht) — de debuglaag staat, de dekkingskaart is gemeten
 
