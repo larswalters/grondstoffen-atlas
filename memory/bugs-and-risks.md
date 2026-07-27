@@ -1,5 +1,18 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-27 (M28 fase 1-3: knip-lek gefixt; New Orleans-coördinaat en bestandsgroei open)*
+*Last updated: 2026-07-27 (avond: stroomtests — snap-zonder-limiet en marktcentroïden erbij)*
+
+## ⚠️ OPEN — `regressie`-snap heeft geen limiet, dus een VOOR-pad kan misleiden
+`snap_halte` snapt naar de dichtstbijzijnde halte hoe ver ook: bij de stroomtests gaf
+"VOOR" (alleen track-graaf) formeel een pad vanuit Nacala en Newcastle — na een snap van
+**14.390 resp. 26.881 km** naar de VS-corridor. De gerapporteerde snap-afstand ontmaskert
+het, maar wie alleen "pad gevonden" leest trekt de verkeerde conclusie. Cosmetisch, geen
+routeringsfout (NA-routes zijn correct). **Fix-kandidaat:** een snap-maximum of expliciete
+"snap > X km = betekenisloos"-waarschuwing in de uitvoer.
+
+## ⚠️ OPEN — marktcentroïden zijn te grof voor snap-eisen (zelfde klasse als New Orleans)
+`gr-mkt-us` (battery belt) snapt op 11,65 km — het is een regio-centroïde (TN/KY), geen
+fabriek of laadspoor. Zelfde klasse als de New Orleans-stadscentroïde hieronder. Voor
+stroom-rendering is dat oké (markt = gebied), voor snap-acceptatie-eisen niet.
 
 ## ✅ OPGELOST 2026-07-27 — het knip-lek: de snelheidsguard was scale-blind
 `bouw_tracks.py` kende het dubbel-MMSI-geval wél (de header noemt het) maar

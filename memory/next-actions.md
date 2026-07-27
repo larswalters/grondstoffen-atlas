@@ -1,11 +1,28 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-27 (M28 fase 1-3 af: vijf bronnen, track-graaf, MARNET, live ?v=090)*
+*Last updated: 2026-07-27 (avond: eerste stroomtests geslaagd — zee → binnenvaart → spoor end-to-end)*
 
-## 🔴 START HIER — de visuele check, en daarna de losse eindjes
+## ✅ AFGEROND 2026-07-27 (avond) — DE EERSTE ECHTE STROOMTESTS
+
+Vier tests, alle geslaagd (zie `session-summaries.md`): Nacala→Vidalia 17.371,5 km
+(16.936 MARNET + 1 connector + 435 km tracks, Kaap-route) · Newcastle AU→Vidalia
+17.488 km (Panama) · New Orleans→Baton Rouge vóór==ná byte-identiek · spoor
+Vidalia→battery belt 1.036 km + Long Beach→Fort Worth 2.312 km (nieuw tool
+`toets_spoorroute.mjs`). **De grafietketen Balama→battery belt is meetbaar over drie
+netten.** Marnet-extractie staat klaar in `build-cache/marnet-preais/`.
+
+## 🔴 START HIER — de losse eindjes
 
 **M28 fase 1-3 is af en staat live op `?v=090`** (gepusht `c0c2b73..ed24837`). De
 track-graaf staat (`bouw_trackgraaf.py`), MARNET hecht erop (`hecht_marnet.py`), en de
 bol draagt vijf bronnen. Wat nu openstaat:
+
+0. **De stroom zichtbaar maken op de bol** — precies wat Lars miste bij `?v=090`: de
+   MARNET-hechting bestaat als data maar geen laag tekent MARNET, de connectors of een
+   geroutete stroom. Kandidaten: connectors + MARNET-zee als (debug)laag, of de
+   route-geometrie van een stroom (Nacala→Vidalia ligt klaar) als stroomlaag-preview.
+   Spoorroutes liggen al als GeoJSON in `build-cache/ais/graaf/spoorroute-*.geojson`.
+   Klein bijpunt uit de tests: `regressie` rapporteert een VOOR-pad ook na een snap van
+   26.881 km — de snap-afstand ontmaskert het, maar een snap-maximum zou eerlijker zijn.
 
 1. ~~**Visuele check van Lars op `?v=090`**~~ — **GEDAAN, go binnen** (2026-07-27):
    *"ziet er goed uit zo, we hebben veel kustgebieden, goeie haven-aansluitingen nu."*

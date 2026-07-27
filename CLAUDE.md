@@ -1,6 +1,25 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (M28 fase 1-3: vijf bronnen, de track-graaf, MARNET via raakpunt, live ?v=090)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (avond: eerste end-to-end stroomtests geslaagd — zee → binnenvaart → spoor)*
+
+> **🧪 M28 · DE EERSTE ECHTE STROOMTESTS — DE KETEN DRAAGT (2026-07-27, avond, LAATSTE).**
+> Vier tests, alle geslaagd. **Grafiet Nacala→Vidalia = 17.371,5 km**: 16.936 km MARNET-zee
+> (Kaap-route, zoals de echte stroom) + **één connector van 0,154 km** bij de rivierdelta +
+> 435 km echte Mississippi-tracks — geometrie-bewijs 1.570/1.570 routepunten letterlijk uit de
+> bron, lengte-invariant +0,089 km. **Newcastle (AU)→Vidalia 17.488 km** (vermoedelijk Panama;
+> start snapt op een MARNET-zeeknoop op 44,7 km — de AU-binnenkant heeft bewust geen graaf,
+> AMSA = corridorlaag). **New Orleans→Baton Rouge 217,6 km, vóór==ná byte-identiek.** En het
+> spoor draagt de VS-benen via het nieuwe **`v2/tools/toets_spoorroute.mjs`** (Dijkstra over
+> spoor-edges, snap op hoofdnet ≥ 1.000 km, GeoJSON-dump): Vidalia→battery belt **1.036 km**
+> (het echte rail-been uit graphite.js) · Long Beach→Fort Worth **2.312 km** (REE-rondreis-
+> landbeen) · Vidalia→Chattanooga 845 km. **De grafietketen Balama→battery belt is daarmee
+> voor het eerst meetbaar over drie netten.**
+> ⚠️ Wat er nog NIET is: beeld — geen bol-laag tekent MARNET, de connectors of een geroutete
+> stroom (vandaar Lars' "ik zie het niet"). ⚠️ Klein: `regressie` rapporteert een VOOR-pad ook
+> na een snap van 26.881 km (snap-afstand ontmaskert; overweeg een maximum), en `gr-mkt-us`
+> snapt op 11,65 km = marktcentroïde-klasse. Marnet-extractie klaar in
+> `build-cache/marnet-preais/`; spoorroutes in `build-cache/ais/graaf/spoorroute-*.geojson`.
+> **→ VOLGENDE:** de stroom zichtbaar op de bol.
 
 > **🗺️ M28 FASE 1-3 · VIER BRONNEN ERBIJ, DE TRACK-GRAAF STAAT, VIJF BRONNEN OP DE BOL
 > (2026-07-27, LAATSTE).** Live **`?v=090`** (gepusht `c0c2b73..ed24837`), **visuele go van

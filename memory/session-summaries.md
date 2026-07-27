@@ -1472,3 +1472,24 @@ Besluiten Lars: geen bundeling (track-graaf met echte geometrie) · open zee = M
 4-wekenvenster. Vier research-agents naar open AIS-bronnen wereldwijd gestart.
 Commits `1739398`·`1c2a94f`·`fa68cdd`·`7301eeb`·`1aa39c8`·`d5500e4`.
 Vault: [[2026-07-27-grondstoffen-atlas-m28-marinecadastre-vs-tracks]]
+
+## 2026-07-27 (avond) — M28: de eerste echte stroomtests, zee → binnenvaart → spoor
+Aanleiding: Lars miste de MARNET-koppeling op de bol (die bestaat als data: 99+18
+connectors, maar wordt niet getekend) en vroeg echte stromen naar Amerika te testen.
+Vier tests, alle geslaagd (workflow, 4 agents; marnet opnieuw uit tag `pre-ais-net`
+naar `build-cache/marnet-preais/`):
+- **Nacala→Vidalia** (grafiet, de echte stroom): **17.371,5 km** = 16.936 MARNET +
+  1 connector (0,154 km) + 435 km echte Mississippi-tracks; Kaap-route; 1.570/1.570
+  routepunten letterlijk uit de bron; lengte-invariant +0,089 km.
+- **Newcastle AU→Vidalia**: 17.488 km (MARNET 17.110, vermoedelijk Panama); startsnap
+  op MARNET-zeeknoop 44,7 km — de AU-binnenkant heeft bewust geen graaf (AMSA=corridor).
+- **New Orleans→Baton Rouge**: 217,6 km, vóór==ná byte-identiek.
+- **Spoor** (nieuw `v2/tools/toets_spoorroute.mjs`): Vidalia→battery belt 1.036 km
+  (het echte rail-been), Long Beach→Fort Worth 2.312 km (REE-rondreis-landbeen),
+  Vidalia→Chattanooga 845 km; alle in het VS-component van 262.702 km; GeoJSONs in
+  `build-cache/ais/graaf/spoorroute-*.geojson`.
+**De grafietketen Balama→battery belt is voor het eerst meetbaar over drie netten.**
+Vondsten (bewust geen fixes): snap zonder limiet maakt VOOR-paden misleidend; Nacala-
+startsnap 122 km (MARNET dun bij Mozambique); battery belt = marktcentroïde-klasse.
+Volgende: de stroom zichtbaar maken op de bol.
+Vault: [[2026-07-27-grondstoffen-atlas-m28-eerste-stroomtests]]

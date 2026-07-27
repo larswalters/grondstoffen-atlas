@@ -1,5 +1,21 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-27 (M28 fase 1-3: vijf bronnen, de track-graaf staat, MARNET hecht via raakpunt)*
+*Last updated: 2026-07-27 (avond: eerste stroomtests — de keten track→connector→MARNET draagt echte stromen)*
+
+## Stand 2026-07-27 (late avond) — de eerste end-to-end stroomtests
+
+**De architectuur is gevalideerd met echte stromen.** Grafiet Nacala→Vidalia routeert
+als 16.936 km MARNET-zee (Kaap-route, zoals de echte stroom) + **één** connector van
+0,154 km + 435 km echte Mississippi-trackgeometrie — alle track-routepunten letterlijk
+uit de brontracks. Newcastle (AU)→Vidalia werkt idem (start snapt op een MARNET-zeeknoop;
+de Australische binnenkant heeft bewust geen graaf). New Orleans→Baton Rouge is vóór en
+ná de aanhechting byte-identiek. En het spoor draagt de VS-benen: Vidalia→battery belt
+1.036 km, Long Beach→Fort Worth 2.312 km (nieuw: `toets_spoorroute.mjs`, snap op
+hoofdnet-component ≥ 1.000 km). **Daarmee is de grafietketen Balama→battery belt voor
+het eerst meetbaar over drie netten: zee → binnenvaart → spoor.**
+
+Wat er nog niet is: **beeld**. Geen enkele bol-laag tekent MARNET, de connectors of een
+geroutete stroom — vandaar Lars' terechte "ik zie het niet". Dat is de logische
+volgende stap.
 
 ## Stand 2026-07-27 (avond) — vijf bronnen, de track-graaf, en MARNET erop
 
