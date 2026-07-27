@@ -1,5 +1,23 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-27 (avond: eerste stroomtests geslaagd — zee → binnenvaart → spoor end-to-end)*
+*Last updated: 2026-07-28 (routebrief grafiet gestuurd de kaart in — live ?v=092)*
+
+## ✅ AFGEROND 2026-07-28 — ROUTEBRIEF GRAFIET + KAART AFGEWERKT (`?v=092`)
+
+Brief: `v2/design/routebrieven/grafiet-balama-vidalia.md` (~60 punten, DOE/EA-2181).
+Kaart brief-gestuurd: zeeschip via Southwest Pass · barge belading Port Allen · los
+Port of Vidalia mijl 359 · gestippelde last mile · **spoorbeen geschrapt (bestaat
+niet — uitgaand is truck)**. graphite.js: 4 centroïdes → kades/fabriek (het
+New Orleans-kade-punt hieronder is daarmee afgewerkt), rail→road, volumes EA-regime.
+
+**Nieuwe open punten uit de brief:**
+- **MARNET-startgat Nacala (124 km)** — geen zeeknoop dichterbij; kandidaat: een
+  haven-aanloop tekenen of accepteren (zelfde klasse als de AU-kant).
+- **Uitgaand been tekenen?** Pas als er een gedocumenteerde bestemming is
+  (Tesla-locatie onbekend; Lucid→Panasonic De Soto KS is het meest aannemelijk).
+- **Mozambique-truckbeen** (Balama→Nacala, brief-been 1) als verhalende landlijn.
+- **Golf-toegang** (Yucatán vs Straat Florida) blijft onzeker in de brief.
+- Volgende stromen: per stroom eerst een brief (werkwijze bevestigd), dan de
+  MARKER_NAAM/OVERSLAG_NAAM-tabel in `hecht_marnet.py` aanvullen.
 
 ## ✅ AFGEROND 2026-07-27 (avond) — DE EERSTE ECHTE STROOMTESTS
 

@@ -1,8 +1,34 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (late avond: de stroom staat op de bol — live ?v=091)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (routebrief grafiet stuurt de stroom — live ?v=092)*
 
-> **🌊 M28 · DE STROOM OP DE BOL — LIVE `?v=091` (2026-07-27, late avond, LAATSTE).**
+> **📋 M28 · DE ROUTEBRIEF CORRIGEERT DE KAART — GRAFIETSTROOM BRIEF-GESTUURD, LIVE `?v=092`
+> (2026-07-28, LAATSTE).** Op Lars' vier `?v=091`-observaties eerst de **routebrief**
+> geschreven (`v2/design/routebrieven/grafiet-balama-vidalia.md` — ~60 punten, 4
+> research-agents; kerndocument **DOE/EA-2181**), toen de kaart punt voor punt afgewerkt
+> (commits `b4fb9e5`·`74ed9f8`·`56402f1`).
+> **⚠️ DE GROOTSTE BRIEFVONDST: HET SPOORBEEN BESTAAT NIET.** Uitgaand AAM gaat per
+> **truck** (EA: 45-55 ritten/mnd); er is geen actief spoor in Concordia Parish (Louisiana
+> Midland † 1985) en geen spoorbrug over de Mississippi tussen Baton Rouge en Vicksburg.
+> Afnemers: Tesla (leverlocatie nooit publiek) en Lucid→Panasonic (De Soto, Kansas) — de
+> battery-belt-TN/KY-centroïde klopt niet voor deze stroom. De "omdraaiende trein" bij
+> Jackson was een router-artefact (gemeten: 0 keerpunten in het hele been) op een been dat
+> er überhaupt niet hoort.
+> **De keten op de bol is nu:** zeeschip Nacala → **Southwest Pass** → Napoleon Ave →
+> containerbarge (belading **Port Allen**/IRMT, SEACOR-train) → **Port of Vidalia, rivier-
+> mijl 359** → gestippelde last mile (truck) naar de fabriek. De verklikker ving live dat
+> MARNET's delta-zone via **South Pass** binnenkwam (negatief anker!) → gefixt met een
+> SW-Pass-via-punt over echte tracks: South Pass-venster 0 · Leeville 0 · SWP 67 punten.
+> **Gereedschap:** `hecht_marnet.py route` is **been-gestuurd** (--been/--stippel/--marker;
+> elk been apart geroutet, modaliteit uit de vlag — de Leeville-les: overslag hoort op
+> aangewezen punten, niet op het eerste gratis raakpunt). Stroomlaag: versie-2-contract
+> met stippel-benen (LineDashedMaterial + computeLineDistances). `data/graphite.js`: vier
+> centroïdes → echte kades/fabriek, rail→road, volumes EA-regime; build-standalone groen.
+> **Open (in de brief):** Nacala-startgat 124 km · Golf-toegang (Yucatán/Florida) onzeker ·
+> uitgaand been + Mozambique-truckbeen bewust nog niet getekend · modus NOLA→Port Allen
+> onbevestigd. **→ VOLGENDE:** Lars' visuele check `?v=092` · volgende stroom = eerst brief.
+
+> **🌊 M28 · DE STROOM OP DE BOL — LIVE `?v=091` (2026-07-27, late avond, eerder).**
 > Op Lars' go de stroomtests meteen zichtbaar gemaakt (commit `e1811de`): HUD-laag
 > **"Stroom: grafiet Balama → VS (preview)"**, standaard aan — de geroutete keten
 > kleur-per-modaliteit (zee `#5aa7ff` MARNET · barge `#35e0c0` echte Mississippi-tracks ·

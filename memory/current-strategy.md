@@ -1,5 +1,21 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-27 (avond: eerste stroomtests — de keten track→connector→MARNET draagt echte stromen)*
+*Last updated: 2026-07-28 (de routebrief stuurt de stroom: brief eerst, dan punt voor punt de kaart)*
+
+## Stand 2026-07-28 — de routebrief-werkwijze werkt intercontinentaal
+
+**Werkwijze bevestigd door Lars:** vóór het uitwerken van een grondstofstroom eerst
+een **routebrief** (de echte corridor uit bronnen, punt voor punt met status), dan de
+kaart daartegen afwerken. De tweede brief (grafiet Balama→Vidalia, kerndocument
+DOE/EA-2181) corrigeerde in één klap vier kaartfouten én een dataverhaal: de overslag
+lag niet bij Leeville maar in New Orleans/Port Allen, de losplek is de Port of
+Vidalia (mijl 359), en **het spoorbeen bestond helemaal niet** — uitgaand AAM gaat
+per truck, de "omdraaiende trein" bij Jackson was een artefact op een been dat er
+niet hoort. De verklikker-toets ving bovendien live dat MARNET's delta-geometrie via
+South Pass binnenkomt; gefixt met een Southwest Pass-via-punt over echte tracks.
+
+**De stroom-machinerie is nu been-gestuurd:** `hecht_marnet.py route` routeert per
+been (--been/--stippel/--marker), de laag tekent kleur-per-modaliteit inclusief
+gestippelde eigen verbindingen. Live `?v=092`.
 
 ## Stand 2026-07-27 (late avond) — de eerste end-to-end stroomtests
 

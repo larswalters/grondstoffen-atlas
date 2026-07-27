@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-27 (avond: stroomtests — snap-zonder-limiet en marktcentroïden erbij)*
+*Last updated: 2026-07-28 (routebrief: New Orleans-kade en Vidalia-coördinaat opgelost; spoorbeen bleek onbestaand)*
+
+## ✅ OPGELOST 2026-07-28 — de vier grafiet-centroïdes (incl. de New Orleans-kade)
+De routebrief grafiet-balama-vidalia leverde de echte coördinaten: Balama-plant
+(-13.310/38.660, lag 13 km te ver west) · Nacala-kade (-14.531/40.652) ·
+**New Orleans → Napoleon Avenue Container Terminal (29.9165/-90.1105)** — het punt
+dat hieronder open stond · Syrah-fabriek (31.5466/-91.4887; het oude 31.57/-91.42
+was het Terral-fleeting-punt, blijft in `PUNTEN` als AIS-toetsreferentie). Flow
+rail→road (er is géén spoor in Concordia Parish), volumes naar EA-regime. Commit
+`56402f1`.
 
 ## ⚠️ OPEN — `regressie`-snap heeft geen limiet, dus een VOOR-pad kan misleiden
 `snap_halte` snapt naar de dichtstbijzijnde halte hoe ver ook: bij de stroomtests gaf

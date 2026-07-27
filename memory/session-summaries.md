@@ -1502,3 +1502,18 @@ Direct vervolg op de stroomtests, op Lars' go. Nieuw `route`-subcommando in
 CDP-lessen: renderOrder 7,5 bóven het landnet (spoorbeen volgt exact een
 landnet-lijn) · toneMapped uit (ACES bleekte de kleuren). Geverifieerd in echte
 headless Chrome: 0 fouten, screenshots delta/rivier/spoor. Commit `e1811de`, live.
+
+## 2026-07-28 — routebrief grafiet Balama→Vidalia + kaart punt voor punt afgewerkt (`?v=092`)
+Op Lars' vier ?v=091-observaties: eerst de routebrief (4 research-agents, ~60 punten;
+kerndocument DOE/EA-2181), toen afwerken. **Briefvondst: het spoorbeen bestaat niet**
+(uitgaand = truck; geen spoor in Concordia Parish, geen spoorbrug Natchez-Vidalia;
+afnemers Tesla/onbekend + Lucid→Panasonic KS — TN/KY-centroïde klopt niet). Jackson-
+"omdraai" = router-artefact (0 keerpunten gemeten). Kaart nu brief-gestuurd: zeeschip
+via **Southwest Pass** (via-punt na een gefaalde eerste bake — MARNET kwam via South
+Pass binnen; nu SP-venster 0/Leeville 0/SWP 67), barge belading **Port Allen**, los
+**Port of Vidalia mijl 359**, gestippelde last mile. `hecht_marnet.py route` been-
+gestuurd (--been/--stippel/--marker). graphite.js: 4 centroïdes → kades/fabriek,
+rail→road, volumes EA-regime. CDP: 0 fouten. Commits `b4fb9e5`·`74ed9f8`·`56402f1`.
+Open: Nacala-startgat 124 km · Golf-toegang onzeker · uitgaand/Mozambique-been niet
+getekend. Brief: `v2/design/routebrieven/grafiet-balama-vidalia.md`.
+Vault: [[2026-07-28-grondstoffen-atlas-m28-routebrief-grafiet]]
