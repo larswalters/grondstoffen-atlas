@@ -199,7 +199,7 @@ function haalAisTracks() {
 // zichtbaar is; gestippeld = schematische verbinding. Klein bestand
 // (< 300 KB), dus eager zoals het landnet — niet het lazy aistracks-patroon.
 let STROOMROUTE = null;
-laadStroomroute(CONFIG.radius, "093", GLOBE.klemOpHorizon)
+laadStroomroute(CONFIG.radius, "094", GLOBE.klemOpHorizon)
   .then((s) => {
     STROOMROUTE = s;
     GLOBE.globeGroup.add(s.groep);   // standaard aan: dít is wat er te zien is

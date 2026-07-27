@@ -148,8 +148,8 @@ REGISTER({
 
     // ================================================================ HAVENS
     { id: "gr-port-nacala", type: "port", name: "Nacala", country: "Mozambique",
-      lat: -14.531, lon: 40.652, tier: 2,
-      note: "Diepwaterhaven aan het einde van de Nacala-corridor; het Balama-vlok gaat hier de Indische Oceaan op (China) of rond de Kaap (Vidalia/VS). Containers via Grindrods Cross Dock; Pemba is sinds 2022 het tweede (breakbulk-)kanaal. Coördinaat = de kade (routebrief)." },
+      lat: -14.5383, lon: 40.6673, tier: 2,
+      note: "Diepwaterhaven aan het einde van de Nacala-corridor; het Balama-vlok gaat hier de Indische Oceaan op (China) of rond de Kaap (Vidalia/VS). Containers via Grindrods Cross Dock; Pemba is sinds 2022 het tweede (breakbulk-)kanaal. Coördinaat = de containerterminal op de oostoever, satelliet-gelegd (routebrief; de kolen-jetty op de westoever hoort NIET bij deze stroom)." },
     { id: "gr-port-toamasina", type: "port", name: "Toamasina (Tamatave)", country: "Madagaskar",
       lat: -18.15, lon: 49.41, tier: 3,
       note: "Grootste haven van Madagaskar; het vlok van Molo de Indische Oceaan op richting Azië." },

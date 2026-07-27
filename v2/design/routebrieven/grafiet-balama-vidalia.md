@@ -66,7 +66,7 @@ oost over de N1/EN106, ~250–265 km totaal [M1][M9].
 | 11 | ~418 | Monapo | passage | -14.916, 40.297 | [M16] | bevestigd |
 | 12 | ~480 | Nacala buitenwijk-vork — linker tak direct omlaag naar de haven (vermijdt het centrum) | passage | — | [M1] | aannemelijk |
 | 13 | ~480 | **Grindrod Cross Dock Facility** — zak → container (60.000 m², 3.500 TEU-yard) | overslag | — | [M4][M5] | bevestigd |
-| 14 | ~485 | **Porto de Nacala** — containerkade, oostoever van de baai | overslag / eindpunt been | -14.531, 40.652 | [M16] | bevestigd |
+| 14 | ~485 | **Porto de Nacala** — containerterminal, oostoever van de baai | overslag / eindpunt been | -14.5383, 40.6673 | [M16] + satelliet | bevestigd |
 | 15 | — | **Nacala-a-Velha kolenterminal** (wéstoever, Vale) hoort NIET bij deze stroom | referentie (niet aan lijn) | -14.533, 40.624 | [M16] | bevestigd |
 | 16 | — | **Nacala-spoorlijn** (Moatize–Nampula–Nacala) wordt NIET gebruikt — Grindrod-contract is expliciet wegtransport; geen bron noemt spoor voor het vlok | referentie (niet aan lijn) | — | [M1][M6] | bevestigd |
 | 17 | ~160→250 | *Pemba-variant:* Metoro → Pemba (N1/EN106 via Mieze; stadsroute Av. do Chai → Av. da Marginal) | passage | — | [M1] | bevestigd |
@@ -75,7 +75,12 @@ oost over de N1/EN106, ~250–265 km totaal [M1][M9].
 **Opmerkingen been 1:** de mijn-coördinaat in `data/graphite.js` (-13.29, 38.53)
 ligt **~13 km te ver west** (bij Balama-dorp); de echte site ligt op ~38.66 O
 (OSM: industrieterrein, pits, Syrah's zonnepark). De haven-coördinaat (-14.54,
-40.67) is een **stadscentroïde**; de kade ligt op -14.531, 40.652. De corridor was
+40.67) is een **stadscentroïde**. ⚠️ Correctie 2026-07-28 (visuele check Lars +
+satelliet-grid): het onderzoekspunt -14.531, 40.652 bleek óók fout — dat is open
+water bij de kolen-jetty op de wéstoever (precies het terminal dat als "niet aan
+lijn" in deze brief staat). De containerterminal waar de trucks aankomen ligt op
+de oostoever bij de stad: **-14.5383, 40.6673** (satelliet-gelegd, Esri z16 met
+0,01°-grid — de Tongling-werkwijze). De corridor was
 2024-2025 verstoord bij de **mijnpoort** (boerenprotesten, stilstand dec 2024 →
 medio juni 2025), niet op de weg; de Cabo Delgado-insurgentie raakte deze route
 niet aantoonbaar [M14].
@@ -86,7 +91,7 @@ Conform de werkwijze: kade→kade + sanity-ankers; de zeerouter doet de rest.
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | **Nacala containerkade** (vertrek) | laadplek | -14.531, 40.652 | [M16] | bevestigd |
+| 1 | 0 | **Nacala containerterminal** (vertrek, oostoever) | laadplek | -14.5383, 40.6673 | [M16] + satelliet | bevestigd |
 | 2 | — | **Durban** — transshipment-hub van het containerbeen (MSC-rotatie Durban–…–Nacala–Durban) | overslag | -29.87, 31.02 | [Z18] | aannemelijk |
 | 3 | ~2.500 | **Kaap de Goede Hoop / Agulhas-ronding** — vanaf Durban per definitie om de Kaap, NIET Suez | passage | -34.83, 20.0 | [Z18] | aannemelijk |
 | 4 | — | **Golf-toegang: Yucatánkanaal óf Straat Florida** — hangt af van de rederijrotatie; ONS `wp-florida` IS EEN GOK | passage | — | [Z-analyse] | onzeker |
@@ -164,7 +169,7 @@ nauwelijks fysiek** [S13].
 | # | wat | nu | hoort te zijn | bron |
 |---|---|---|---|---|
 | 1 | `gr-mozambique` (mijn) | -13.29, 38.53 (bij het dorp) | **-13.310, 38.660** (de plant) | [M16] |
-| 2 | `gr-port-nacala` | -14.54, 40.67 (stadscentroïde) | **-14.531, 40.652** (kade) | [M16] |
+| 2 | `gr-port-nacala` | -14.54, 40.67 (stadscentroïde) | **-14.5383, 40.6673** (containerterminal oostoever, satelliet-gelegd; het onderzoekspunt -14.531/40.652 lag in het water bij de west-jetty) | [M16] + satelliet |
 | 3 | `gr-port-neworleans` | 29.95, -90.07 (stadscentroïde; bekende M28-vondst) | **29.9165, -90.1105** (Napoleon Ave) | [B25] |
 | 4 | `gr-ref-vidalia` | 31.57, -91.42 (fleeting-punt/stad) | **31.5466, -91.4887** (fabriek) | [B1] |
 | 5 | flow `gr-mozambique → gr-ref-vidalia`, note "per barge vanuit New Orleans" | barge vanaf NOLA | barge wordt in **Port Allen** beladen; praktijk t/m 2024 was truck | [B1][Z10] |
