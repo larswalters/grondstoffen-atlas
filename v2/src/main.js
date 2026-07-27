@@ -21,6 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
+import { laadStroomroute } from "./stroomroute.js?v=091";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -189,6 +190,34 @@ function haalAisTracks() {
   return aistracksBezig;
 }
 
+// --- de stroom-preview: grafiet Balama → VS (M28) ---------------------------
+// De eerste echte grondstofstroom end-to-end op de bol, als keten over drie
+// netten: zee = MARNET (Kaap-route) → binnenvaart = echte Mississippi-tracks →
+// spoor = landnet (getest 2026-07-27). Kleur = modaliteit, zodat de overgang
+// tussen de netten zichtbaar is. Klein bestand (< 300 KB), dus eager zoals het
+// landnet — niet het lazy aistracks-patroon.
+let STROOMROUTE = null;
+laadStroomroute(CONFIG.radius, "091", GLOBE.klemOpHorizon)
+  .then((s) => {
+    STROOMROUTE = s;
+    GLOBE.globeGroup.add(s.groep);   // standaard aan: dít is wat er te zien is
+    window.STROOMROUTE = s;          // diagnose-handvat
+    console.log(
+      `[atlas v2] stroomroute: ${s.titel} · ` +
+      s.benen.map((b) =>
+        `${b.modaliteit} ${Math.round(b.km).toLocaleString("nl")} km (${b.punten.toLocaleString("nl")} punten)`
+      ).join(" · ")
+    );
+    const noot = document.getElementById("stroomNoot");
+    if (noot) {
+      const naam = { zee: "zee", binnenvaart: "barge", spoor: "spoor" };
+      noot.textContent = s.benen.map((b) =>
+        `${naam[b.modaliteit] || b.modaliteit} ${Math.round(b.km).toLocaleString("nl")} km`
+      ).join(" · ");
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] stroomroute niet geladen (nog niet gebakken?):", e.message));
+
 // --- de AIS-drukte als gloed (M27) -----------------------------------------
 // Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
 // gloed van zes jaar scheepvaart, additief per pilotvenster — dít is het
@@ -331,6 +360,9 @@ wireButtons(".atBtn", "at", (mode) => {
   } else if (aistracksAan) {
     haalAisTracks();                        // eerste keer: nu pas ophalen
   }
+});
+wireButtons(".srBtn", "sr", (mode) => {
+  if (STROOMROUTE) STROOMROUTE.groep.visible = (mode === "aan");
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");

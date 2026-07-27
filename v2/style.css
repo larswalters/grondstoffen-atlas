@@ -249,14 +249,19 @@ html, body {
 
 /* --- legenda bij de havenlaag -------------------------------------------- */
 
-#havenLegenda {
+/* #stroomLegenda deelt bewust de haven-styling via de selector-lijst i.p.v.
+   een derde element met id="havenLegenda" — dubbele id's zijn ongeldig HTML
+   en getElementById zou er stil de eerste van pakken. */
+#havenLegenda,
+#stroomLegenda {
   margin-top: 6px;
   font-size: 10px;
   color: var(--ink-dim);
   line-height: 1.5;
 }
 
-#havenLegenda span { display: block; }
+#havenLegenda span,
+#stroomLegenda span { display: block; }
 
 #havenNoot {
   margin-top: 4px;
@@ -274,6 +279,7 @@ html, body {
    havensectie viel eronder van het scherm. */
 #gloedNoot,
 #pingNoot,
+#stroomNoot,
 #tracksNoot,
 #aisNoot,
 #landNoot {
@@ -296,7 +302,8 @@ html, body {
 #tracksBronnen span { display: block; }
 #tracksBronnen b { color: var(--ink); font-weight: 600; }
 
-#havenLegenda i {
+#havenLegenda i,
+#stroomLegenda i {
   display: inline-block;
   width: 7px;
   height: 7px;

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=090" />
+<link rel="stylesheet" href="style.css?v=091" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -59,6 +59,23 @@
          AIS-density (corridor-first, brief = ankers, AIS = geul). De oude
          stand mét waternet, route-test, keten-router en stromen staat op
          git-tag `pre-ais-net` (?v=082). -->
+
+    <!-- De stroom-preview (M28): de eerste echte grondstofstroom end-to-end
+         over drie netten — grafiet van Balama (Mozambique) via de Kaap-route
+         en de Mississippi naar de VS battery belt, getest 2026-07-27. MARNET
+         zelf staat niet op de bol: dit is de GEROUTETE stroom (zee → barge →
+         spoor), kleur = modaliteit zodat je de overgang tussen de netten ziet. -->
+    <div class="hudLabel">Stroom: grafiet Balama → VS (preview)</div>
+    <div class="btnRow">
+      <button class="srBtn is-on" data-sr="aan">aan</button>
+      <button class="srBtn" data-sr="uit">uit</button>
+    </div>
+    <div id="stroomLegenda">
+      <span><i style="background:#5aa7ff"></i>zee (MARNET)</span>
+      <span><i style="background:#35e0c0"></i>binnenvaart (barge)</span>
+      <span><i style="background:#ffb04d"></i>spoor</span>
+    </div>
+    <div id="stroomNoot"></div>
 
     <!-- De AIS-drukte als GLOED (M27): het dichtheidsveld zélf op de bol,
          additief per pilotvenster — dít is het beeld (besluit Lars 2026-07-25). -->
@@ -191,6 +208,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=090"></script>
+<script type="module" src="src/main.js?v=091"></script>
 </body>
 </html>

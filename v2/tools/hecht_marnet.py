@@ -1059,6 +1059,180 @@ def eiland_toets(graaf, cache, m, z, conn, args):
               f"{'GESLAAGD' if goed else 'TWIJFEL'}")
 
 
+# ── subcommando `route`: één stroom bakken tot statisch databestand ───────
+# De bol tekent (nog) geen MARNET, geen connectors en geen geroutete stroom —
+# daarom wordt de eerste zichtbare stroom BUILD-TIME gebakken tot een klein
+# JSON-contract: punten [lon, lat] op 5 decimalen (de ruwe AIS-korrel), benen
+# in reisvolgorde, markers op de overslagpunten. De route komt uit exact
+# dezelfde laad- en routeerroutines als `regressie` (NA-kant); dit subcommando
+# voegt alleen het OPDELEN in benen toe. Een spoorbeen komt niet uit deze
+# graaf maar uit een aangeleverde GeoJSON (toets_spoorroute.mjs) en wordt als
+# los been achteraan gezet.
+
+# Weergavenamen voor de markers. De router kent alleen coördinaten en
+# PUNTEN-sleutels (bouw_trackgraaf.PUNTEN zegt "vidalia", de bol wil
+# "Vidalia (Syrah)"); dat is redactie, geen meting — vandaar een expliciete
+# tabel i.p.v. iets afleiden. Sleutel = de --van/--naar-spec zoals meegegeven;
+# onbekende specs vallen terug op de parse_punt-naam.
+MARKER_NAAM = {
+    "-14.54,40.67": "Nacala",      # uitvoerhaven van Balama-grafiet (Mozambique)
+    "vidalia": "Vidalia (Syrah)",  # gr-ref-vidalia, data/graphite.js
+}
+# Naam van het overslagpunt zee <-> binnenvaart, per stroom (het connectorpunt
+# wordt pas tijdens het routeren gevonden, dus zijn naam kan nergens anders
+# vandaan komen dan uit deze redactietabel).
+OVERSLAG_NAAM = {
+    "grafiet-balama-vs": "New Orleans-delta",
+}
+# Hoe een modaliteit in de overslag-markertekst heet ("overslag zee → barge").
+OVERSLAG_WOORD = {"zee": "zee", "binnenvaart": "barge"}
+
+
+def _spoor_been(pad):
+    """Het spoorbeen uit een GeoJSON (LineString/MultiLineString, coördinaten
+    al [lon, lat]). km = som van de segmentlengtes PER DEEL, zodat een gat
+    tussen twee MultiLineString-delen niet als gevaren afstand meetelt."""
+    d = json.loads(Path(pad).read_text(encoding="utf-8"))
+    delen = []
+    for ft in d["features"]:
+        g = ft["geometry"]
+        if g["type"] == "LineString":
+            delen.append(g["coordinates"])
+        elif g["type"] == "MultiLineString":
+            delen.extend(g["coordinates"])
+    punten, km_tot = [], 0.0
+    for deel in delen:
+        arr = np.asarray(deel, dtype=np.float64)
+        if len(arr) > 1:
+            km_tot += float(seg_km_wrap(arr[:, 1], arr[:, 0]).sum())
+        punten.extend((float(lo), float(la)) for lo, la in arr)
+    return punten, km_tot
+
+
+def cmd_route(args):
+    """Zoek de route over het gecombineerde net en schrijf haar als benen +
+    markers naar een statisch databestand voor de bol.
+
+    Opdeel-regel: aaneengesloten MARNET-punten worden modaliteit "zee",
+    aaneengesloten trackpunten "binnenvaart". Het CONNECTOR-punt sluit het
+    lopende been af én opent het volgende — beide benen dragen dat punt, dus
+    de getekende lijn is aaneengesloten en de connector-km valt in het been
+    dat hij afsluit (niets valt tussen wal en schip). De km per been is de
+    lengte van de GETEKENDE lijn (seg_km_wrap over de beenpunten), dezelfde
+    grootheid als overal in dit bestand — niet de som van edge-km, want die
+    dekt een richtingsfout af (zie route_geometrie_comb)."""
+    graaf, cache, m, z = _laad(args)
+    router = G.bouw_router(graaf, cache, overstap_boete=args.overstap_boete,
+                           stil=False)
+    conn, _, _ = bouw_connectors(graaf, router, z, args.eps, ne_map=args.ne)
+    comb = bouw_gecombineerd(graaf, cache, router, z, conn,
+                             boete_connector=args.boete_connector, stil=False)
+    conn_km = {(mi, gk): d for mi, gk, d in conn}
+
+    lat_a, lon_a, na, _ = G.parse_punt(args.van)
+    lat_b, lon_b, nb, _ = G.parse_punt(args.naar)
+    ha, da, _ = G.snap_halte(comb, lat_a, lon_a)
+    hb, db, _ = G.snap_halte(comb, lat_b, lon_b)
+    print(f"\n═══ ROUTE {na} -> {nb} ═══")
+    print(f"  snap A: {da:.3f} km · snap B: {db:.3f} km")
+    pad, d1 = G.zoek_route(comb, ha, hb)
+    if pad is None:
+        sys.exit("GEEN PAD over het gecombineerde net — niets gebakken")
+    r = route_geometrie_comb(graaf, cache, m, comb, pad)
+    print(f"  {len(r['edges'])} track-edges · {r['n_marnet_edge']} "
+          f"MARNET-edges · {r['n_connector']} connectors · "
+          f"{len(r['punten'])} punten · {r['km']:.1f} km "
+          f"(track {r['km_track']:.1f} · MARNET {r['km_marnet']:.1f} · "
+          f"connector {r['km_connector']:.3f})")
+    print(f"  lengte-invariant: getekende lijn {r['km']:.3f} vs som edge-km "
+          f"{r['km_edges']:.3f} = {r['km']-r['km_edges']:+.3f} km (= de naden)")
+
+    # ── opdelen in benen; punten intern (lat, lon) zoals de router ze geeft ─
+    benen, overslagen = [], []
+    huidig, huidig_mod = [], None
+    for p, h in zip(r["punten"], r["herkomst"]):
+        if h[0] == "CONNECTOR":
+            if huidig:
+                huidig.append(p)
+                benen.append({"modaliteit": huidig_mod, "punten": huidig})
+            overslagen.append((p, conn_km.get((h[1], h[2]), 0.0),
+                               len(benen) - 1))
+            huidig, huidig_mod = [p], None
+            continue
+        mod = "zee" if h[0] == "MARNET" else "binnenvaart"
+        if huidig_mod is None:
+            huidig_mod = mod
+        elif mod != huidig_mod:
+            # hoort niet voor te komen (elke wissel loopt over een connector);
+            # als het tóch gebeurt: eerlijk splitsen i.p.v. stil doorplakken
+            print(f"  ⚠️ modaliteitswissel zonder connector bij punt "
+                  f"({p[0]:.5f}, {p[1]:.5f})")
+            benen.append({"modaliteit": huidig_mod, "punten": huidig})
+            huidig = [huidig[-1]]
+            huidig_mod = mod
+        huidig.append(p)
+    if huidig:
+        benen.append({"modaliteit": huidig_mod, "punten": huidig})
+    for b in benen:
+        la = np.array([q[0] for q in b["punten"]])
+        lo = np.array([q[1] for q in b["punten"]])
+        b["km"] = float(seg_km_wrap(la, lo).sum()) if len(la) > 1 else 0.0
+
+    # ── markers: start zeebeen · elk connectorpunt · einde laatste been ────
+    van_naam = MARKER_NAAM.get(args.van, na)
+    naar_naam = MARKER_NAAM.get(args.naar, nb)
+    overslag_naam = OVERSLAG_NAAM.get(args.stroom, "overslag")
+
+    def marker(naam, lat, lon):
+        return {"naam": naam, "lon": round(lon, 5), "lat": round(lat, 5)}
+
+    p0 = benen[0]["punten"][0]
+    markers = [marker(f"{van_naam} — start zeebeen (MARNET-knoop)",
+                      p0[0], p0[1])]
+    for p, dkm, ix in overslagen:
+        mv = benen[ix]["modaliteit"] if 0 <= ix < len(benen) else "?"
+        mn = (benen[ix + 1]["modaliteit"] if ix + 1 < len(benen) else "?")
+        markers.append(marker(
+            f"{overslag_naam} — overslag {OVERSLAG_WOORD.get(mv, mv)} → "
+            f"{OVERSLAG_WOORD.get(mn, mn)} (connector "
+            f"{f'{dkm:.2f}'.replace('.', ',')} km)", p[0], p[1]))
+    p_eind = benen[-1]["punten"][-1]
+    markers.append(marker(
+        f"{naar_naam} — overslag naar spoor" if args.spoor_geojson
+        else naar_naam, p_eind[0], p_eind[1]))
+
+    # ── uitvoer volgens het contract: [lon, lat] op 5 decimalen ────────────
+    uit_benen = [{"modaliteit": b["modaliteit"], "km": round(b["km"], 1),
+                  "punten": [[round(q[1], 5), round(q[0], 5)]
+                             for q in b["punten"]]} for b in benen]
+    if args.spoor_geojson:
+        sp_punten, sp_km = _spoor_been(args.spoor_geojson)
+        uit_benen.append({"modaliteit": "spoor", "km": round(sp_km, 1),
+                          "punten": [[round(lo, 5), round(la, 5)]
+                                     for lo, la in sp_punten]})
+        markers.append(marker(args.spoor_naam,
+                              sp_punten[-1][1], sp_punten[-1][0]))
+
+    doc = {"versie": 1, "stroom": args.stroom, "titel": args.titel,
+           "gemaakt": time.strftime("%Y-%m-%dT%H:%M:%S"),
+           "punt_formaat": "lonlat", "benen": uit_benen, "markers": markers}
+    uit = Path(args.uit)
+    uit.parent.mkdir(parents=True, exist_ok=True)
+    uit.write_text(json.dumps(doc, ensure_ascii=False,
+                              separators=(",", ":")), encoding="utf-8")
+
+    print("\n── STROOMROUTE GEBAKKEN ──")
+    for b in uit_benen:
+        print(f"  {b['modaliteit']:<12} {b['km']:>9,.1f} km · "
+              f"{len(b['punten']):>5,} punten")
+    print(f"  totaal       {sum(b['km'] for b in uit_benen):>9,.1f} km · "
+          f"{sum(len(b['punten']) for b in uit_benen):,} punten · "
+          f"{len(markers)} markers")
+    for mk in markers:
+        print(f"  marker: {mk['naam']}  ({mk['lat']}, {mk['lon']})")
+    print(f"geschreven: {uit} · {uit.stat().st_size/1024:.1f} KB")
+
+
 # ── STAP 1 · de overlapzone MÉTEN i.p.v. aannemen ──────────────────────────
 
 def _ringen_uit(paden):
@@ -1278,6 +1452,23 @@ def main():
                    help="punt in de ANDERE arm — zonder dit vindt de toets een "
                         "parallelle doorvaart in dezelfde geul")
     s.set_defaults(fn=cmd_regressie)
+
+    s = sub.add_parser("route", help="één stroom bakken tot een statisch "
+                                     "databestand voor de bol")
+    gedeeld(s)
+    s.add_argument("--van", required=True)
+    s.add_argument("--naar", required=True)
+    s.add_argument("--uit", required=True, help="uitvoerpad (JSON-contract)")
+    s.add_argument("--stroom", required=True, help="stroom-id, bv. "
+                                                   "grafiet-balama-vs")
+    s.add_argument("--titel", required=True)
+    s.add_argument("--spoor-geojson", default=None,
+                   help="GeoJSON met een LineString/MultiLineString van het "
+                        "spoorbeen ([lon,lat]; uit toets_spoorroute.mjs) — "
+                        "wordt als los been 'spoor' achteraan gezet")
+    s.add_argument("--spoor-naam", default="spoor-eindpunt",
+                   help="markernaam voor het eindpunt van het spoorbeen")
+    s.set_defaults(fn=cmd_route)
 
     args = ap.parse_args()
     args.fn(args)
