@@ -188,11 +188,23 @@ interessant (ze worden de terminal-nodes in LAR-531).
 ## De ruwe data naar de PC (LAR-530)
 
 `v2/tools/haal_ais_data.py` trekt de afgesloten `.jsonl.gz`-dagen naar
-`v2/build-cache/ais/tracks/`. Trekken in plaats van duwen, omdat de PC niet altijd
+`v2/build-cache/ais/vps/`. Trekken in plaats van duwen, omdat de PC niet altijd
 aan staat en geen inkomende toegang heeft; de bestaande SSH-sleutel doet het werk.
 De dag van vandaag wordt overgeslagen (die groeit nog). Met `--opruimen` gaat een dag
 ná een op grootte gecontroleerde kopie van de VPS af — nodig, want daar is maar
 ~22 GB vrij.
+
+⚠️ **`.../ais/vps/` is de BRONmap, `.../ais/tracks/` de UITVOERmap** van
+`bouw_tracks.py`. Het script wees tot 2026-07-27 naar `tracks/`; daardoor zou een
+opgehaalde dag in de map met de gebakken tracksets landen en werd
+`bouw_tracks.py --bron` zelfverwijzend. Gecorrigeerd naar `vps/` — de map waar de
+eerder met de hand gekopieerde dagen al stonden.
+
+⚠️ **De groottevergelijking is geen formaliteit.** Bij het ophalen op 2026-07-27 bleek
+de lokale `2026-07-26.jsonl.gz` **312,7 MB** tegen **348,9 MB** op de VPS: een eerdere
+kopie was afgebroken en 36,2 MB (10,4%) ontbrak stil. Het script haalde hem daarom
+opnieuw op. Vergelijk dus altijd op bytes, en ruim nooit op na een kopie die niet
+exact klopt.
 
 ## Verwerking gebeurt hier NIET
 

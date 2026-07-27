@@ -26,7 +26,13 @@ from pathlib import Path
 VPS = "root@187.124.169.172"
 OP_VPS = "/var/lib/ais-collector/ais"
 HIER = Path(__file__).resolve().parent
-LOKAAL = HIER.parent / "build-cache" / "ais" / "tracks"
+# ⚠️ Stond op .../ais/tracks — dat is de UITVOERmap van bouw_tracks.py
+# (vs-landelijk.jsonl.gz, wereld-collector.jsonl.gz). Ruwe collector-dagen daarin
+# zetten maakt `bouw_tracks.py --bron` zelfverwijzend (bron en uitvoer in dezelfde
+# map) en liet de slottelling 669 MB aan tracks meetellen als "opgehaald".
+# De drie dagen die er al stonden waren met de hand naar .../ais/vps gekopieerd;
+# dát is de bron-map die bouw_tracks.py met --bron krijgt. Pad gelijkgetrokken.
+LOKAAL = HIER.parent / "build-cache" / "ais" / "vps"
 
 
 def ssh(*args: str) -> str:
