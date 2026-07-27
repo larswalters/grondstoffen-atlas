@@ -1493,3 +1493,12 @@ Vondsten (bewust geen fixes): snap zonder limiet maakt VOOR-paden misleidend; Na
 startsnap 122 km (MARNET dun bij Mozambique); battery belt = marktcentroïde-klasse.
 Volgende: de stroom zichtbaar maken op de bol.
 Vault: [[2026-07-27-grondstoffen-atlas-m28-eerste-stroomtests]]
+
+## 2026-07-27 (late avond) — de stroom op de bol, live `?v=091`
+Direct vervolg op de stroomtests, op Lars' go. Nieuw `route`-subcommando in
+`hecht_marnet.py` (benen zee/binnenvaart/spoor + overslagmarkers →
+`v2/data/stroomroute-pilot.json`, 73,9 KB) + `v2/src/stroomroute.js` + HUD-sectie
+"Stroom: grafiet Balama → VS (preview)" (kleur-per-modaliteit, standaard aan).
+CDP-lessen: renderOrder 7,5 bóven het landnet (spoorbeen volgt exact een
+landnet-lijn) · toneMapped uit (ACES bleekte de kleuren). Geverifieerd in echte
+headless Chrome: 0 fouten, screenshots delta/rivier/spoor. Commit `e1811de`, live.

@@ -1,8 +1,23 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (avond: eerste end-to-end stroomtests geslaagd — zee → binnenvaart → spoor)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (late avond: de stroom staat op de bol — live ?v=091)*
 
-> **🧪 M28 · DE EERSTE ECHTE STROOMTESTS — DE KETEN DRAAGT (2026-07-27, avond, LAATSTE).**
+> **🌊 M28 · DE STROOM OP DE BOL — LIVE `?v=091` (2026-07-27, late avond, LAATSTE).**
+> Op Lars' go de stroomtests meteen zichtbaar gemaakt (commit `e1811de`): HUD-laag
+> **"Stroom: grafiet Balama → VS (preview)"**, standaard aan — de geroutete keten
+> kleur-per-modaliteit (zee `#5aa7ff` MARNET · barge `#35e0c0` echte Mississippi-tracks ·
+> spoor `#ffb04d` landnet) met 4 witte overslagmarkers (Nacala-MARNET-knoop ·
+> delta-connector · Vidalia · battery belt). Data uit het nieuwe **`hecht_marnet.py route`**-
+> subcommando → `v2/data/stroomroute-pilot.json` (73,9 KB; [lon,lat] 5 decimalen; nieuwe
+> stromen vragen een regel in de MARKER_NAAM/OVERSLAG_NAAM-tabel). ⚠️ **Twee CDP-lessen**
+> (in de kop van `stroomroute.js`): renderOrder **7,5 bóven het landnet (7)** — het
+> spoorbeen volgt per definitie exact een landnet-lijn en was op 6,7 onzichtbaar precies
+> waar het loopt; en **toneMapped uit** — ACES bleekte de drie kleuren naar bijna wit
+> waardoor de legenda loog. Geverifieerd in echte headless Chrome via CDP (0 fouten,
+> `?v=091` bevestigd, screenshots delta/rivier/spoor). **→ VOLGENDE:** Lars' visuele check ·
+> meer stromen bakken.
+
+> **🧪 M28 · DE EERSTE ECHTE STROOMTESTS — DE KETEN DRAAGT (2026-07-27, avond, eerder).**
 > Vier tests, alle geslaagd. **Grafiet Nacala→Vidalia = 17.371,5 km**: 16.936 km MARNET-zee
 > (Kaap-route, zoals de echte stroom) + **één connector van 0,154 km** bij de rivierdelta +
 > 435 km echte Mississippi-tracks — geometrie-bewijs 1.570/1.570 routepunten letterlijk uit de

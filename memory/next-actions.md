@@ -16,11 +16,14 @@ netten.** Marnet-extractie staat klaar in `build-cache/marnet-preais/`.
 track-graaf staat (`bouw_trackgraaf.py`), MARNET hecht erop (`hecht_marnet.py`), en de
 bol draagt vijf bronnen. Wat nu openstaat:
 
-0. **De stroom zichtbaar maken op de bol** — precies wat Lars miste bij `?v=090`: de
-   MARNET-hechting bestaat als data maar geen laag tekent MARNET, de connectors of een
-   geroutete stroom. Kandidaten: connectors + MARNET-zee als (debug)laag, of de
-   route-geometrie van een stroom (Nacala→Vidalia ligt klaar) als stroomlaag-preview.
-   Spoorroutes liggen al als GeoJSON in `build-cache/ais/graaf/spoorroute-*.geojson`.
+0. ~~**De stroom zichtbaar maken op de bol**~~ — **GEDAAN (2026-07-27, avond, `?v=091`,
+   commit `e1811de`):** HUD-laag "Stroom: grafiet Balama → VS (preview)", standaard aan —
+   `hecht_marnet.py route` bakt de benen + overslagmarkers naar
+   `v2/data/stroomroute-pilot.json`, `stroomroute.js` tekent kleur-per-modaliteit.
+   ⚠️ Twee CDP-lessen in de file-kop: renderOrder 7,5 bóven het landnet (het spoorbeen
+   volgt exact een landnet-lijn) en toneMapped uit (ACES bleekte de legenda-kleuren).
+   Vervolgkandidaten: meer stromen bakken (de MARKER_NAAM/OVERSLAG_NAAM-tabel in
+   hecht_marnet.py per stroom aanvullen) · wacht op Lars' visuele check.
    Klein bijpunt uit de tests: `regressie` rapporteert een VOOR-pad ook na een snap van
    26.881 km — de snap-afstand ontmaskert het, maar een snap-maximum zou eerlijker zijn.
 

@@ -13,9 +13,13 @@ ná de aanhechting byte-identiek. En het spoor draagt de VS-benen: Vidalia→bat
 hoofdnet-component ≥ 1.000 km). **Daarmee is de grafietketen Balama→battery belt voor
 het eerst meetbaar over drie netten: zee → binnenvaart → spoor.**
 
-Wat er nog niet is: **beeld**. Geen enkele bol-laag tekent MARNET, de connectors of een
-geroutete stroom — vandaar Lars' terechte "ik zie het niet". Dat is de logische
-volgende stap.
+**En het beeld is er nu ook (zelfde avond, `?v=091`):** de HUD-laag *"Stroom: grafiet
+Balama → VS (preview)"* tekent de geroutete keten kleur-per-modaliteit (zee #5aa7ff ·
+barge #35e0c0 · spoor #ffb04d) met witte overslagmarkers, standaard aan. De data komt
+uit het nieuwe `hecht_marnet.py route`-subcommando (`v2/data/stroomroute-pilot.json`).
+Twee CDP-lessen zitten in de file-kop van `stroomroute.js`: renderOrder 7,5 **bóven het
+landnet** (het spoorbeen volgt per definitie een landnet-lijn en was er anders precies
+onder onzichtbaar) en **toneMapped uit** (ACES bleekte de legenda-kleuren naar wit).
 
 ## Stand 2026-07-27 (avond) — vijf bronnen, de track-graaf, en MARNET erop
 
