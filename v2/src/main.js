@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=091";
+import { laadStroomroute } from "./stroomroute.js?v=092";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -191,30 +191,33 @@ function haalAisTracks() {
 }
 
 // --- de stroom-preview: grafiet Balama → VS (M28) ---------------------------
-// De eerste echte grondstofstroom end-to-end op de bol, als keten over drie
-// netten: zee = MARNET (Kaap-route) → binnenvaart = echte Mississippi-tracks →
-// spoor = landnet (getest 2026-07-27). Kleur = modaliteit, zodat de overgang
-// tussen de netten zichtbaar is. Klein bestand (< 300 KB), dus eager zoals het
-// landnet — niet het lazy aistracks-patroon.
+// De eerste echte grondstofstroom end-to-end op de bol, routebrief-gestuurd
+// (v2/design/routebrieven/grafiet-balama-vidalia.md): zeeschip Kaap-route →
+// barge via Port Allen → Port of Vidalia (mijl 359) → last mile per truck
+// (gestippeld). Kleur = modaliteit, zodat de overgang tussen de netten
+// zichtbaar is. Klein bestand (< 300 KB), dus eager zoals het landnet — niet
+// het lazy aistracks-patroon.
 let STROOMROUTE = null;
-laadStroomroute(CONFIG.radius, "091", GLOBE.klemOpHorizon)
+laadStroomroute(CONFIG.radius, "092", GLOBE.klemOpHorizon)
   .then((s) => {
     STROOMROUTE = s;
     GLOBE.globeGroup.add(s.groep);   // standaard aan: dít is wat er te zien is
     window.STROOMROUTE = s;          // diagnose-handvat
-    console.log(
-      `[atlas v2] stroomroute: ${s.titel} · ` +
-      s.benen.map((b) =>
-        `${b.modaliteit} ${Math.round(b.km).toLocaleString("nl")} km (${b.punten.toLocaleString("nl")} punten)`
-      ).join(" · ")
-    );
-    const noot = document.getElementById("stroomNoot");
-    if (noot) {
-      const naam = { zee: "zee", binnenvaart: "barge", spoor: "spoor" };
-      noot.textContent = s.benen.map((b) =>
-        `${naam[b.modaliteit] || b.modaliteit} ${Math.round(b.km).toLocaleString("nl")} km`
-      ).join(" · ");
+    // Korte naam per MODALITEIT in noot én console — zelfde labels als de
+    // legenda. Benen met dezelfde modaliteit (het zeebeen is gesplitst op het
+    // Southwest Pass-via-punt uit de routebrief) tellen op tot één regel.
+    const label = { zee: "zeeschip", binnenvaart: "barge", truck: "last mile", spoor: "spoor" };
+    const perModaliteit = new Map();
+    for (const b of s.benen) {
+      const k = label[b.modaliteit] || b.naam || b.modaliteit;
+      perModaliteit.set(k, (perModaliteit.get(k) || 0) + b.km);
     }
+    const regel = [...perModaliteit].map(([k, km]) =>
+      `${k} ${Math.round(km).toLocaleString("nl")} km`
+    ).join(" · ");
+    console.log(`[atlas v2] stroomroute: ${s.titel} · ${regel}`);
+    const noot = document.getElementById("stroomNoot");
+    if (noot) noot.textContent = regel;
   })
   .catch((e) => console.warn("[atlas v2] stroomroute niet geladen (nog niet gebakken?):", e.message));
 

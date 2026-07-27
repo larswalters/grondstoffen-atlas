@@ -1062,18 +1062,32 @@ def eiland_toets(graaf, cache, m, z, conn, args):
 # ── subcommando `route`: één stroom bakken tot statisch databestand ───────
 # De bol tekent (nog) geen MARNET, geen connectors en geen geroutete stroom —
 # daarom wordt de eerste zichtbare stroom BUILD-TIME gebakken tot een klein
-# JSON-contract: punten [lon, lat] op 5 decimalen (de ruwe AIS-korrel), benen
-# in reisvolgorde, markers op de overslagpunten. De route komt uit exact
-# dezelfde laad- en routeerroutines als `regressie` (NA-kant); dit subcommando
-# voegt alleen het OPDELEN in benen toe. Een spoorbeen komt niet uit deze
-# graaf maar uit een aangeleverde GeoJSON (toets_spoorroute.mjs) en wordt als
-# los been achteraan gezet.
+# JSON-contract (versie 2): punten [lon, lat] op 5 decimalen (de ruwe
+# AIS-korrel), benen in reisvolgorde, markers op de aangewezen punten. De
+# route komt uit exact dezelfde laad- en routeerroutines als `regressie`
+# (NA-kant).
+#
+# TWEE MODI:
+#   * BEEN-GESTUURD (--been/--stippel/--marker) — de standaard sinds de
+#     routebrief grafiet-balama-vidalia. Elk been wordt APART geroutet tussen
+#     zijn eigen, uit de routebrief aangewezen eindpunten; de modaliteit komt
+#     uit de vlag. Zie de docstring van cmd_route voor het waarom (de
+#     Leeville-les).
+#   * VRIJ (--van/--naar zonder --been) — één route over het hele
+#     gecombineerde net; benen afgeleid uit de herkomst (MARNET = zee,
+#     track = binnenvaart). Blijft bestaan voor verkenning: hij laat zien wat
+#     de graaf ZELF zou kiezen, en dat verschil met de routebrief is
+#     informatie (zo werd Leeville überhaupt gevonden).
+#
+# Een spoorbeen komt niet uit deze graaf maar uit een aangeleverde GeoJSON
+# (toets_spoorroute.mjs) en wordt als los been achteraan gezet.
 
-# Weergavenamen voor de markers. De router kent alleen coördinaten en
-# PUNTEN-sleutels (bouw_trackgraaf.PUNTEN zegt "vidalia", de bol wil
-# "Vidalia (Syrah)"); dat is redactie, geen meting — vandaar een expliciete
-# tabel i.p.v. iets afleiden. Sleutel = de --van/--naar-spec zoals meegegeven;
-# onbekende specs vallen terug op de parse_punt-naam.
+# Weergavenamen voor de markers — ALLEEN gebruikt in de vrije modus (in de
+# been-modus vervangt --marker de afleiding volledig). De router kent alleen
+# coördinaten en PUNTEN-sleutels (bouw_trackgraaf.PUNTEN zegt "vidalia", de
+# bol wil "Vidalia (Syrah)"); dat is redactie, geen meting — vandaar een
+# expliciete tabel i.p.v. iets afleiden. Sleutel = de --van/--naar-spec zoals
+# meegegeven; onbekende specs vallen terug op de parse_punt-naam.
 MARKER_NAAM = {
     "-14.54,40.67": "Nacala",      # uitvoerhaven van Balama-grafiet (Mozambique)
     "vidalia": "Vidalia (Syrah)",  # gr-ref-vidalia, data/graphite.js
@@ -1109,33 +1123,85 @@ def _spoor_been(pad):
     return punten, km_tot
 
 
-def cmd_route(args):
-    """Zoek de route over het gecombineerde net en schrijf haar als benen +
-    markers naar een statisch databestand voor de bol.
+def _parse_been_spec(spec):
+    """'MODALITEIT|NAAM|VAN_LAT,VAN_LON|NAAR_LAT,NAAR_LON' → 4 velden.
+    VAN/NAAR mogen ook een PUNTEN-sleutel zijn (G.parse_punt regelt beide)."""
+    delen = [d.strip() for d in spec.split("|")]
+    if len(delen) != 4 or not all(delen):
+        sys.exit(f"--been/--stippel verwacht 'MODALITEIT|NAAM|VAN_LAT,VAN_LON|"
+                 f"NAAR_LAT,NAAR_LON', kreeg: {spec!r}")
+    return delen[0], delen[1], delen[2], delen[3]
 
-    Opdeel-regel: aaneengesloten MARNET-punten worden modaliteit "zee",
-    aaneengesloten trackpunten "binnenvaart". Het CONNECTOR-punt sluit het
-    lopende been af én opent het volgende — beide benen dragen dat punt, dus
-    de getekende lijn is aaneengesloten en de connector-km valt in het been
-    dat hij afsluit (niets valt tussen wal en schip). De km per been is de
-    lengte van de GETEKENDE lijn (seg_km_wrap over de beenpunten), dezelfde
-    grootheid als overal in dit bestand — niet de som van edge-km, want die
-    dekt een richtingsfout af (zie route_geometrie_comb)."""
-    graaf, cache, m, z = _laad(args)
-    router = G.bouw_router(graaf, cache, overstap_boete=args.overstap_boete,
-                           stil=False)
-    conn, _, _ = bouw_connectors(graaf, router, z, args.eps, ne_map=args.ne)
-    comb = bouw_gecombineerd(graaf, cache, router, z, conn,
-                             boete_connector=args.boete_connector, stil=False)
-    conn_km = {(mi, gk): d for mi, gk, d in conn}
 
+def _parse_marker_spec(spec):
+    """'NAAM|LAT,LON' → (naam, lat, lon)."""
+    delen = [d.strip() for d in spec.split("|")]
+    if len(delen) != 2 or not all(delen):
+        sys.exit(f"--marker verwacht 'NAAM|LAT,LON', kreeg: {spec!r}")
+    try:
+        lat, lon = (float(x) for x in delen[1].split(","))
+    except ValueError:
+        sys.exit(f"--marker: coördinaat niet leesbaar in {spec!r}")
+    return delen[0], lat, lon
+
+
+def _marker(naam, lat, lon):
+    return {"naam": naam, "lon": round(lon, 5), "lat": round(lat, 5)}
+
+
+def _route_been(args, graaf, cache, m, comb, mod, naam, van, naar):
+    """Eén been apart routeren over het gecombineerde net. De modaliteit komt
+    uit de vlag; de km-uitsplitsing (track/MARNET/connector) en de
+    snap-afstanden gaan naar de console — dat blijft de eerlijkheid van het
+    gereedschap: de vlag bepaalt hoe het been HEET, de uitsplitsing laat zien
+    waar de geometrie werkelijk vandaan komt."""
+    lat_a, lon_a, na, _ = G.parse_punt(van)
+    lat_b, lon_b, nb, _ = G.parse_punt(naar)
+    ha, da, _ = G.snap_halte(comb, lat_a, lon_a)
+    hb, db, _ = G.snap_halte(comb, lat_b, lon_b)
+    print(f"\n═══ BEEN [{mod}] {naam} ═══")
+    print(f"  van {na} · snap {da:.3f} km — naar {nb} · snap {db:.3f} km")
+    pad, _ = G.zoek_route(comb, ha, hb)
+    if pad is None:
+        sys.exit(f"GEEN PAD voor been '{naam}' ({na} -> {nb}) — niets gebakken")
+    r = route_geometrie_comb(graaf, cache, m, comb, pad)
+    print(f"  {len(r['edges'])} track-edges · {r['n_marnet_edge']} "
+          f"MARNET-edges · {r['n_connector']} connectors · "
+          f"{len(r['punten'])} punten")
+    print(f"  km-uitsplitsing: totaal {r['km']:.1f} = track {r['km_track']:.1f}"
+          f" · MARNET {r['km_marnet']:.1f} · connector {r['km_connector']:.3f}")
+    print(f"  lengte-invariant: getekende lijn {r['km']:.3f} vs som edge-km "
+          f"{r['km_edges']:.3f} = {r['km']-r['km_edges']:+.3f} km (= de naden)")
+    return {"modaliteit": mod, "naam": naam, "km": r["km"],
+            "punten": r["punten"]}
+
+
+def _stippel_been(mod, naam, van, naar):
+    """Een been dat NIET geroutet wordt: een eigen verbinding (zoals de last
+    mile kade → fabriek) als rechte lijn van precies twee punten,
+    "stippel": true in de uitvoer."""
+    lat_a, lon_a, na, _ = G.parse_punt(van)
+    lat_b, lon_b, nb, _ = G.parse_punt(naar)
+    km = float(seg_km_wrap(np.array([lat_a, lat_b]),
+                           np.array([lon_a, lon_b])).sum())
+    print(f"\n═══ STIPPEL [{mod}] {naam} ═══")
+    print(f"  {na} -> {nb} · rechte lijn (eigen verbinding, niet geroutet) · "
+          f"{km:.3f} km · 2 punten")
+    return {"modaliteit": mod, "naam": naam, "stippel": True, "km": km,
+            "punten": [(lat_a, lon_a), (lat_b, lon_b)]}
+
+
+def _route_vrij(args, graaf, cache, m, comb, conn_km):
+    """De oude vrije modus: één route --van → --naar, benen afgeleid uit de
+    HERKOMST van de punten (MARNET = zee, track = binnenvaart). Retourneert
+    (benen, auto_markers)."""
     lat_a, lon_a, na, _ = G.parse_punt(args.van)
     lat_b, lon_b, nb, _ = G.parse_punt(args.naar)
     ha, da, _ = G.snap_halte(comb, lat_a, lon_a)
     hb, db, _ = G.snap_halte(comb, lat_b, lon_b)
-    print(f"\n═══ ROUTE {na} -> {nb} ═══")
+    print(f"\n═══ ROUTE (vrij) {na} -> {nb} ═══")
     print(f"  snap A: {da:.3f} km · snap B: {db:.3f} km")
-    pad, d1 = G.zoek_route(comb, ha, hb)
+    pad, _ = G.zoek_route(comb, ha, hb)
     if pad is None:
         sys.exit("GEEN PAD over het gecombineerde net — niets gebakken")
     r = route_geometrie_comb(graaf, cache, m, comb, pad)
@@ -1177,54 +1243,136 @@ def cmd_route(args):
         la = np.array([q[0] for q in b["punten"]])
         lo = np.array([q[1] for q in b["punten"]])
         b["km"] = float(seg_km_wrap(la, lo).sum()) if len(la) > 1 else 0.0
+        b["naam"] = f"{b['modaliteit']} (afgeleid uit herkomst)"
 
     # ── markers: start zeebeen · elk connectorpunt · einde laatste been ────
     van_naam = MARKER_NAAM.get(args.van, na)
     naar_naam = MARKER_NAAM.get(args.naar, nb)
     overslag_naam = OVERSLAG_NAAM.get(args.stroom, "overslag")
-
-    def marker(naam, lat, lon):
-        return {"naam": naam, "lon": round(lon, 5), "lat": round(lat, 5)}
-
     p0 = benen[0]["punten"][0]
-    markers = [marker(f"{van_naam} — start zeebeen (MARNET-knoop)",
-                      p0[0], p0[1])]
+    markers = [_marker(f"{van_naam} — start zeebeen (MARNET-knoop)",
+                       p0[0], p0[1])]
     for p, dkm, ix in overslagen:
         mv = benen[ix]["modaliteit"] if 0 <= ix < len(benen) else "?"
         mn = (benen[ix + 1]["modaliteit"] if ix + 1 < len(benen) else "?")
-        markers.append(marker(
+        markers.append(_marker(
             f"{overslag_naam} — overslag {OVERSLAG_WOORD.get(mv, mv)} → "
             f"{OVERSLAG_WOORD.get(mn, mn)} (connector "
             f"{f'{dkm:.2f}'.replace('.', ',')} km)", p[0], p[1]))
     p_eind = benen[-1]["punten"][-1]
-    markers.append(marker(
+    markers.append(_marker(
         f"{naar_naam} — overslag naar spoor" if args.spoor_geojson
         else naar_naam, p_eind[0], p_eind[1]))
+    return benen, markers
 
-    # ── uitvoer volgens het contract: [lon, lat] op 5 decimalen ────────────
-    uit_benen = [{"modaliteit": b["modaliteit"], "km": round(b["km"], 1),
-                  "punten": [[round(q[1], 5), round(q[0], 5)]
-                             for q in b["punten"]]} for b in benen]
+
+def cmd_route(args):
+    """Bak één stroom als benen + markers naar een statisch databestand voor
+    de bol (contract versie 2).
+
+    ── WAAROM DE BEEN-MODUS ERBIJ IS GEKOMEN (de Leeville-les) ──
+    De vrije modus routeert één pad --van → --naar en leidt de benen af uit de
+    HERKOMST van de punten (MARNET = zee, track = binnenvaart). De overslag
+    ligt daarmee per constructie op het eerste GRATIS raakpunt tussen de twee
+    netten — en dat is een graaf-eigenschap, geen haven. Bij grafiet
+    Balama → Vidalia legde de vrije modus de zee→barge-overslag zo bij
+    Leeville (Bayou Lafourche): Belle Pass is 23-27 ft, gebouwd voor
+    offshore-supplyvaart naar Port Fourchon — daar komt geen containerschip
+    voor NOLA doorheen (routebrief grafiet-balama-vidalia, negatieve ankers
+    been 2 [Z15]). De routebrief zegt: overslag hoort op AANGEWEZEN punten
+    (zeeschip-eind Napoleon Ave · barge-belading Port Allen · losplek Port of
+    Vidalia mijl 359), niet waar de netten elkaar toevallig het eerst raken.
+
+    Daarom de been-modus: elk --been wordt APART geroutet over het
+    gecombineerde net (eigen snap van/naar, eigen zoek_route +
+    route_geometrie_comb) en de modaliteit komt uit de vlag, niet uit de
+    herkomst — het zeeschip vaart immers óók het 50-ft-channel de rivier op
+    tot mijl 100, en dat stuk hoort bij het zeebeen. Per been blijft de
+    km-uitsplitsing (track/MARNET/connector) en de snap-afstand op de console
+    staan: de vlag bepaalt de naam, de meting blijft zichtbaar.
+    --stippel = een eigen verbinding (last mile kade → fabriek): niet
+    geroutet, rechte lijn, "stippel": true. --marker vervangt de automatische
+    marker-afleiding volledig zodra er één is opgegeven.
+
+    De km per been is de lengte van de GETEKENDE lijn (seg_km_wrap over de
+    beenpunten), dezelfde grootheid als overal in dit bestand — niet de som
+    van edge-km, want die dekt een richtingsfout af (zie
+    route_geometrie_comb)."""
+    if not args.keten and not (args.van and args.naar):
+        sys.exit("geef óf --been/--stippel (been-gestuurd) óf --van én --naar "
+                 "(vrije modus)")
+    graaf, cache, m, z = _laad(args)
+    router = G.bouw_router(graaf, cache, overstap_boete=args.overstap_boete,
+                           stil=False)
+    conn, _, _ = bouw_connectors(graaf, router, z, args.eps, ne_map=args.ne)
+    comb = bouw_gecombineerd(graaf, cache, router, z, conn,
+                             boete_connector=args.boete_connector, stil=False)
+    conn_km = {(mi, gk): d for mi, gk, d in conn}
+
+    auto_markers = []
+    if args.keten:
+        # ── been-gestuurd: elk been apart, in de volgorde van de vlaggen ──
+        if args.van or args.naar:
+            print("  (--van/--naar worden in de been-modus genegeerd)")
+        benen = []
+        for soort, spec in args.keten:
+            mod, naam, van, naar = _parse_been_spec(spec)
+            if soort == "been":
+                benen.append(_route_been(args, graaf, cache, m, comb,
+                                         mod, naam, van, naar))
+            else:
+                benen.append(_stippel_been(mod, naam, van, naar))
+        # terugval-markers (alleen gebruikt zónder --marker): eindpunten
+        p0 = benen[0]["punten"][0]
+        auto_markers = [_marker(f"start · {benen[0]['naam']}", p0[0], p0[1])]
+        for b in benen:
+            pe = b["punten"][-1]
+            auto_markers.append(_marker(f"eind · {b['naam']}", pe[0], pe[1]))
+    else:
+        benen, auto_markers = _route_vrij(args, graaf, cache, m, comb, conn_km)
+
+    # ── markers: expliciet (--marker) vervangt de afleiding volledig ──────
+    if args.marker:
+        markers = [_marker(naam, lat, lon)
+                   for naam, lat, lon in map(_parse_marker_spec, args.marker)]
+    else:
+        markers = auto_markers
+
+    # ── uitvoer volgens het contract (versie 2): [lon, lat], 5 decimalen ──
+    uit_benen = []
+    for b in benen:
+        d = {"modaliteit": b["modaliteit"], "naam": b["naam"]}
+        if b.get("stippel"):
+            d["stippel"] = True
+        d["km"] = round(b["km"], 1)
+        d["punten"] = [[round(q[1], 5), round(q[0], 5)] for q in b["punten"]]
+        uit_benen.append(d)
     if args.spoor_geojson:
         sp_punten, sp_km = _spoor_been(args.spoor_geojson)
-        uit_benen.append({"modaliteit": "spoor", "km": round(sp_km, 1),
+        uit_benen.append({"modaliteit": "spoor", "naam": args.spoor_naam,
+                          "km": round(sp_km, 1),
                           "punten": [[round(lo, 5), round(la, 5)]
                                      for lo, la in sp_punten]})
-        markers.append(marker(args.spoor_naam,
-                              sp_punten[-1][1], sp_punten[-1][0]))
+        if not args.marker:
+            markers.append(_marker(args.spoor_naam,
+                                   sp_punten[-1][1], sp_punten[-1][0]))
 
-    doc = {"versie": 1, "stroom": args.stroom, "titel": args.titel,
-           "gemaakt": time.strftime("%Y-%m-%dT%H:%M:%S"),
-           "punt_formaat": "lonlat", "benen": uit_benen, "markers": markers}
+    doc = {"versie": 2, "stroom": args.stroom, "titel": args.titel}
+    if args.routebrief:
+        doc["routebrief"] = args.routebrief
+    doc.update({"gemaakt": time.strftime("%Y-%m-%dT%H:%M:%S"),
+                "punt_formaat": "lonlat", "benen": uit_benen,
+                "markers": markers})
     uit = Path(args.uit)
     uit.parent.mkdir(parents=True, exist_ok=True)
     uit.write_text(json.dumps(doc, ensure_ascii=False,
                               separators=(",", ":")), encoding="utf-8")
 
-    print("\n── STROOMROUTE GEBAKKEN ──")
+    print("\n── STROOMROUTE GEBAKKEN (contract versie 2) ──")
     for b in uit_benen:
+        stip = " · stippel" if b.get("stippel") else ""
         print(f"  {b['modaliteit']:<12} {b['km']:>9,.1f} km · "
-              f"{len(b['punten']):>5,} punten")
+              f"{len(b['punten']):>5,} punten{stip} · {b['naam']}")
     print(f"  totaal       {sum(b['km'] for b in uit_benen):>9,.1f} km · "
           f"{sum(len(b['punten']) for b in uit_benen):,} punten · "
           f"{len(markers)} markers")
@@ -1398,6 +1546,19 @@ def cmd_overlap(args):
     print(f"\ngeschreven: {args.uit} · totaal {time.monotonic()-t0:.0f}s")
 
 
+class _KetenActie(argparse.Action):
+    """--been en --stippel delen ÉÉN lijst (dest='keten'), in de volgorde van
+    de commandoregel — want de benen-volgorde in de uitvoer ís de
+    reisvolgorde, en met twee losse append-lijsten zou een stippel-been
+    (last mile) nooit tússen twee geroutete benen kunnen liggen."""
+
+    def __call__(self, parser, namespace, values, option_string=None):
+        lst = getattr(namespace, self.dest, None) or []
+        lst.append(("stippel" if option_string == "--stippel" else "been",
+                    values))
+        setattr(namespace, self.dest, lst)
+
+
 def main():
     ap = argparse.ArgumentParser(description="MARNET-aanhechting op echte "
                                              "trackgeometrie")
@@ -1456,8 +1617,28 @@ def main():
     s = sub.add_parser("route", help="één stroom bakken tot een statisch "
                                      "databestand voor de bol")
     gedeeld(s)
-    s.add_argument("--van", required=True)
-    s.add_argument("--naar", required=True)
+    s.add_argument("--van", default=None,
+                   help="vrije modus (alleen zonder --been): startpunt")
+    s.add_argument("--naar", default=None,
+                   help="vrije modus (alleen zonder --been): eindpunt")
+    s.add_argument("--been", dest="keten", action=_KetenActie, default=None,
+                   metavar="MOD|NAAM|VAN_LAT,VAN_LON|NAAR_LAT,NAAR_LON",
+                   help="herhaalbaar: één been, APART geroutet over het "
+                        "gecombineerde net; modaliteit uit de vlag (routebrief-"
+                        "modus — overslag op aangewezen punten)")
+    s.add_argument("--stippel", dest="keten", action=_KetenActie,
+                   metavar="MOD|NAAM|VAN_LAT,VAN_LON|NAAR_LAT,NAAR_LON",
+                   help="herhaalbaar: been dat NIET geroutet wordt — rechte "
+                        "lijn tussen de twee punten, 'stippel': true (eigen "
+                        "verbinding, zoals de last mile kade → fabriek)")
+    s.add_argument("--marker", action="append", default=None,
+                   metavar="NAAM|LAT,LON",
+                   help="herhaalbaar: expliciete marker; zodra er één is "
+                        "opgegeven vervangt de lijst de automatische "
+                        "afleiding volledig")
+    s.add_argument("--routebrief", default=None,
+                   help="pad van de routebrief die deze keten voorschrijft; "
+                        "gaat als veld het contract in")
     s.add_argument("--uit", required=True, help="uitvoerpad (JSON-contract)")
     s.add_argument("--stroom", required=True, help="stroom-id, bv. "
                                                    "grafiet-balama-vs")

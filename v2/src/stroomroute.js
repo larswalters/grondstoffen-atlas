@@ -1,39 +1,48 @@
-// stroomroute.js — de eerste stroom-preview: één echte grondstofstroom als
-// keten over drie netten (M28).
+// stroomroute.js — de stroom-preview: één echte grondstofstroom als keten
+// op de bol (M28), sinds het versie-2-contract ROUTEBRIEF-gestuurd.
 //
-// Tekent de gebakken route van de grafietstroom Balama → VS battery belt uit
-// data/stroomroute-pilot.json: het zeebeen over MARNET (de Kaap-route, zoals
-// de echte stroom vaart), het binnenvaartbeen over échte Mississippi-AIS-tracks
-// (New Orleans-delta → Vidalia) en het spoorbeen over het landnet (Vidalia →
-// battery belt TN/KY). MARNET zelf staat niet op de bol — wat je hier ziet is
-// de GEROUTETE stroom, niet het net waarover gerouteerd is.
+// De benen komen uit data/stroomroute-pilot.json (versie 2), en dát bestand
+// volgt de routebrief v2/design/routebrieven/grafiet-balama-vidalia.md:
+// zeeschip Nacala → New Orleans (de Kaap-route, zoals de echte stroom vaart),
+// containerbarge via Port Allen (IRMT) → Port of Vidalia (rivier-mijl 359),
+// en een last mile per truck naar de Syrah-fabriek. Het spoorbeen is
+// geschrapt — er ligt geen spoor in Concordia Parish. De laag tekent wat de
+// benen zeggen: per been "modaliteit" (kleur), "naam", en optioneel
+// "stippel": true = een eigen verbinding (niet gerouteerd over een net) →
+// gestippeld getekend. MARNET zelf staat niet op de bol — wat je hier ziet
+// is de GEROUTETE stroom, niet het net waarover gerouteerd is.
 //
 // ⚠️ KLEUR = MODALITEIT — bewust anders dan aistracks (daar is kleur richting).
 //   Het punt van deze laag is de OVERGANG tussen de netten zichtbaar maken:
-//   waar de zee ophoudt en de barge begint, en waar de kade het spoor wordt —
+//   waar de zee ophoudt en de barge begint, en waar de kade de weg wordt —
 //   dat zijn precies de overslagpunten waar de hele keten om draait. Binnen
 //   één stroom is richting geen signaal (alle lading reist dezelfde kant op),
 //   dus die as is vrij en de modaliteit mag hem dragen.
 //
-// Verder exact de tekendiscipline van aistracks.js: één LineSegments per been,
-// klemOpHorizon op het materiaal, frustumCulled uit. De vier overslag-/eind-
-// punten als THREE.Points in schermpixels (de LAR-480-les).
+// Verder exact de tekendiscipline van aistracks.js: één lijnobject per been
+// (LineSegments doorgetrokken, THREE.Line gestippeld), klemOpHorizon op het
+// materiaal, frustumCulled uit. De overslag-/eindpunten als THREE.Points in
+// schermpixels (de LAR-480-les).
 //
-// ⚠️ Twee keuzes die uit de eerste CDP-verificatie kwamen, niet uit de spec:
-//   * renderOrder 7,5 — BOVEN het landnet (7). Het spoorbeen volgt per
-//     definitie exact een landnet-lijn; op 6,7 tekende het witte landnet er
-//     dus overheen en was het been onzichtbaar precies waar het loopt.
-//   * toneMapped uit — door ACES bleekten alle drie de kleuren naar bijna
-//     wit, waardoor de legenda loog. Zonder tone mapping ís de getekende
-//     kleur de legenda-kleur.
+// ⚠️ Twee keuzes die uit de eerste CDP-verificatie kwamen, niet uit de spec —
+//   ze blijven gelden:
+//   * renderOrder 7,5 — BOVEN het landnet (7). Een been dat een landnet-lijn
+//     volgt was op 6,7 onzichtbaar precies waar het loopt, omdat het witte
+//     landnet eroverheen tekende.
+//   * toneMapped uit — door ACES bleekten de kleuren naar bijna wit,
+//     waardoor de legenda loog. Zonder tone mapping ís de getekende kleur
+//     de legenda-kleur.
 
 import * as THREE from "three";
 
-// Kleur per modaliteit — dezelfde drie netten als de keten-tests van 2026-07-27.
+// Kleur per modaliteit. Spoor blijft in de tabel voor latere stromen — de
+// laag tekent gewoon wat de benen zeggen; de grafietstroom heeft geen
+// spoorbeen meer (zie de routebrief).
 const KLEUR = {
-  zee: 0x5aa7ff,          // MARNET-zeebeen
+  zee: 0x5aa7ff,          // MARNET-zeebeen (zeeschip)
   binnenvaart: 0x35e0c0,  // echte AIS-tracks (barge)
-  spoor: 0xffb04d,        // landnet
+  truck: 0xffffff,        // last mile — komt als stippel-been binnen
+  spoor: 0xffb04d,        // landnet (geen been in deze stroom)
 };
 
 function opBol(lonDeg, latDeg, r, uit, o) {
@@ -46,9 +55,39 @@ function opBol(lonDeg, latDeg, r, uit, o) {
   uit[o + 2] = -r * c * Math.sin(lon);
 }
 
-function maakBeen(punten, radius, kleur, klemOpHorizon) {
+function maakBeen(been, radius, kleur, klemOpHorizon) {
+  const punten = been.punten || [];
+  if (punten.length < 2) return null;   // een been zonder lijnstuk: niets tekenen
+
+  if (been.stippel) {
+    // Stippel-been = een eigen verbinding (niet gerouteerd over een net),
+    // gestippeld getekend als THREE.Line (doorlopende lijn met 2+ punten,
+    // géén LineSegments). dash/gap zijn geijkt op de bolschaal: straal 2,4
+    // → een been van ~1 km is ~0,0004 scene-eenheden, dus dash/gap ruim
+    // daaronder zodat er meerdere streepjes op passen.
+    const pos = new Float32Array(punten.length * 3);
+    for (let i = 0; i < punten.length; i++) {
+      // Punten zijn [lon, lat] (GeoJSON-volgorde) — zie het datacontract.
+      opBol(punten[i][0], punten[i][1], radius, pos, i * 3);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+    const mat = new THREE.LineDashedMaterial({
+      color: kleur, transparent: true, opacity: 0.95,
+      dashSize: 0.00008, gapSize: 0.00005,
+      toneMapped: false,     // legenda-kleur = getekende kleur (zie de kop)
+    });
+    klemOpHorizon(mat);
+    const lijn = new THREE.Line(geo, mat);
+    // ⚠️ Verplicht bij LineDashedMaterial: zonder computeLineDistances()
+    // tekent een dashed lijn gewoon doorgetrokken.
+    lijn.computeLineDistances();
+    lijn.renderOrder = 7.5;  // boven het landnet (7) — zie de kop
+    lijn.frustumCulled = false;
+    return lijn;
+  }
+
   const n = punten.length - 1;
-  if (n < 1) return null;   // een been zonder lijnstuk: niets tekenen
   const pos = new Float32Array(n * 6);
   let o = 0;
   for (let i = 0; i < n; i++) {
@@ -104,7 +143,7 @@ export async function laadStroomroute(radius, versie, klemOpHorizon) {
   const benen = [];
   for (const been of d.benen || []) {
     const seg = maakBeen(
-      been.punten || [], radius,
+      been, radius,
       KLEUR[been.modaliteit] ?? 0xffffff, klemOpHorizon
     );
     if (seg) {
@@ -113,6 +152,8 @@ export async function laadStroomroute(radius, versie, klemOpHorizon) {
     }
     benen.push({
       modaliteit: been.modaliteit,
+      naam: been.naam,
+      stippel: !!been.stippel,
       km: been.km,
       punten: (been.punten || []).length,
     });
