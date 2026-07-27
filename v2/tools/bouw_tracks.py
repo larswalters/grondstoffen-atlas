@@ -52,6 +52,7 @@ KNIP_MIN = 30        # minuten zonder énige ping -> nieuwe track (datagat)
 STIL_MAX = 90        # minuten stilliggen die een track overleeft; langer = aangelegd
 VARE_GRENS = 0.5     # knopen; onder = stilliggend
 MAX_KNOPEN = 40      # sneller = GPS-uitschieter of dubbel-MMSI
+GAT_MAX_KM = 25.0    # max koorde over een datagat > KNIP_MIN; ruimer = valse las
 MIN_PUNTEN = 8
 MIN_KM = 2.0
 N_BUCKETS = 64
@@ -67,6 +68,23 @@ def km(lat1, lon1, lat2, lon2):
     dlat = math.radians(lat2 - lat1)
     dlon = math.radians(lon2 - lon1) * math.cos(math.radians((lat1 + lat2) / 2))
     return 6371.0 * math.hypot(dlat, dlon)
+
+
+def knip_op_gaten(punten):
+    """Splits een puntenreeks op elk segment dat én een datagat (> KNIP_MIN) én
+    een echte afstand (> GAT_MAX_KM) overbrugt. Twee toetsen samen, want elk
+    apart is onschuldig: een sluisstop geeft 66 min over 0,04 km, en een lange
+    rechte zeevaart geeft km zonder gat. Alleen de combinatie is een las over
+    geometrie die we niet hebben gezien."""
+    stukken = []
+    begin = 0
+    for i in range(1, len(punten)):
+        dt = punten[i][2] - punten[i - 1][2]
+        if dt > KNIP_MIN and km(*punten[i - 1][:2], *punten[i][:2]) > GAT_MAX_KM:
+            stukken.append(punten[begin:i])
+            begin = i
+    stukken.append(punten[begin:])
+    return stukken
 
 
 # ── pass 1: bron -> buckets ────────────────────────────────────────────────
@@ -221,24 +239,54 @@ def bouw_bucket(pad: Path):
                 if 0 < i < len(punten) - 1 and te_snel(i - 1) and te_snel(i + 1):
                     continue
                 gefilterd.append((lat, lon, t))
-            lengte = sum(km(*gefilterd[i][:2], *gefilterd[i + 1][:2])
-                         for i in range(len(gefilterd) - 1))
-            if len(gefilterd) >= MIN_PUNTEN and lengte >= MIN_KM:
-                yield {"mmsi": mmsi_, "km": round(lengte, 1),
-                       "dlat": round(gefilterd[-1][0] - gefilterd[0][0], 4),
-                       "dlon": round(gefilterd[-1][1] - gefilterd[0][1], 4),
-                       "punten": [[round(la, 5), round(lo, 5), t]
-                                  for la, lo, t in gefilterd]}
+            # Na-conditie op de uitvoer: geen enkel segment mag én een datagat
+            # (> KNIP_MIN) én een echte afstand (> GAT_MAX_KM) overbruggen. De
+            # snelheidsguard hierboven laat dat namelijk door -- hij rekent
+            # km/uur, en over een lang gat is élke afstand plausibel: de ergste
+            # gemeten las was 4.392 km in 61 uur = 38,9 kn, nét onder MAX_KNOPEN.
+            # Zo'n las is een dubbel-MMSI (San Francisco naast Rhode Island in
+            # één "track"), geen gevaren lijn, en een router kiest zo'n rechte
+            # koorde juist als sluipweg. Gemeten vóór deze regel: VS 1.529 lassen
+            # / 107.801 km · DK 610 / 45.486 · NO 15 / 1.018 · collector 60 /
+            # 2.826 -- steeds ~0,4% van de km, maar met koorden tot 4.392 km.
+            # De regel spaart per constructie de korte stop waar STIL_MAX voor
+            # bedoeld is: een sluispassage van 66 min legt 0,04 km af.
+            for stuk in knip_op_gaten(gefilterd):
+                lengte = sum(km(*stuk[i][:2], *stuk[i + 1][:2])
+                             for i in range(len(stuk) - 1))
+                if len(stuk) >= MIN_PUNTEN and lengte >= MIN_KM:
+                    yield {"mmsi": mmsi_, "km": round(lengte, 1),
+                           "dlat": round(stuk[-1][0] - stuk[0][0], 4),
+                           "dlon": round(stuk[-1][1] - stuk[0][1], 4),
+                           "punten": [[round(la, 5), round(lo, 5), t]
+                                      for la, lo, t in stuk]}
 
 
 def main():
+    global KNIP_MIN, STIL_MAX, GAT_MAX_KM
     p = argparse.ArgumentParser(description="Pings -> scheepstracks (LAR-530)")
     p.add_argument("--bron", type=Path, help="map met collector-JSONL(.gz)")
     p.add_argument("--csv", type=Path, help="map met MarineCadastre ais-*.csv.zst")
     p.add_argument("--venster", help=f"optioneel: {', '.join(VENSTERS)} of 'z,w,n,o'")
     p.add_argument("--uit", type=Path, required=True,
                    help=".jsonl.gz — één track per regel")
+    # De knip-regels zijn geijkt op terrestrische bronnen (VS/DK/NO/collector:
+    # 0,25-0,45 km tussen twee pings). Een bron met een grovere eigen korrel
+    # vraagt andere waarden: AMSA dunt zelf naar 1 positie per schip per uur
+    # (mediaan 20,4 km per stap, varend 21,5), en met de defaults hieronder
+    # levert die bron 0 tracks uit 7,75 mln pings — gemeten. Daarom instelbaar
+    # i.p.v. hardcoded: de bron bepaalt de korrel, niet het recept.
+    p.add_argument("--knip-min", type=int, default=KNIP_MIN,
+                   help=f"minuten zonder ping -> nieuwe track (default {KNIP_MIN})")
+    p.add_argument("--stil-max", type=int, default=STIL_MAX,
+                   help=f"minuten stilliggen die een track overleeft (default {STIL_MAX})")
+    p.add_argument("--gat-max-km", type=float, default=GAT_MAX_KM,
+                   help=f"max koorde over een datagat (default {GAT_MAX_KM})")
     args = p.parse_args()
+
+    KNIP_MIN, STIL_MAX, GAT_MAX_KM = args.knip_min, args.stil_max, args.gat_max_km
+    print(f"knip-regels: gat >{KNIP_MIN} min · stil <={STIL_MAX} min · "
+          f"koorde <={GAT_MAX_KM} km", flush=True)
     if not args.bron and not args.csv:
         sys.exit("geef --bron en/of --csv")
 
