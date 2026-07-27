@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-28 (routebrief grafiet gestuurd de kaart in — live ?v=092)*
+*Last updated: 2026-07-28 (de keten begint bij de mijn — live ?v=093)*
 
 ## ✅ AFGEROND 2026-07-28 — ROUTEBRIEF GRAFIET + KAART AFGEWERKT (`?v=092`)
 
@@ -9,12 +9,15 @@ Port of Vidalia mijl 359 · gestippelde last mile · **spoorbeen geschrapt (best
 niet — uitgaand is truck)**. graphite.js: 4 centroïdes → kades/fabriek (het
 New Orleans-kade-punt hieronder is daarmee afgewerkt), rail→road, volumes EA-regime.
 
+**✅ Zelfde dag afgewerkt (`?v=093`):** het Mozambique-truckbeen ligt er met échte
+N380/N1-geometrie (`maak_stroombeen_weg.py`, +2,0% t.o.v. de brief) en het
+MARNET-startgat is een gestippelde haven-aanloop — **de keten begint bij de mijn.**
+
 **Nieuwe open punten uit de brief:**
-- **MARNET-startgat Nacala (124 km)** — geen zeeknoop dichterbij; kandidaat: een
-  haven-aanloop tekenen of accepteren (zelfde klasse als de AU-kant).
 - **Uitgaand been tekenen?** Pas als er een gedocumenteerde bestemming is
   (Tesla-locatie onbekend; Lucid→Panasonic De Soto KS is het meest aannemelijk).
-- **Mozambique-truckbeen** (Balama→Nacala, brief-been 1) als verhalende landlijn.
+- **Ankerstukjes plant/kade** (3,8 + 2,6 km recht): geen OSM-weg binnen 0,2 km
+  van de ankers — evt. later verfijnen met satelliet-gelegde punten.
 - **Golf-toegang** (Yucatán vs Straat Florida) blijft onzeker in de brief.
 - Volgende stromen: per stroom eerst een brief (werkwijze bevestigd), dan de
   MARKER_NAAM/OVERSLAG_NAAM-tabel in `hecht_marnet.py` aanvullen.
