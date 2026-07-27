@@ -59,6 +59,13 @@ en verzamelt; er is dus dagelijks meer materiaal, en wachten kost niets.
   4. **track-bundeling** — meerdere doorvaarten middelen tot één centerline per vaarbaan.
      ⚠️ Bundel-afstand **kleiner dan de eiland-schaal**, anders smelten twee geulen om een
      eiland samen tot één lijn (de Tongling-les, ook al is Tongling zelf nu ongedekt);
+     **⚠️ VERVALLEN MÉT stap 4 — sleep deze waarschuwing NIET mee naar de track-graaf.**
+     Hij ging over *middelen tot één middellijn* over de héle lengte. In de track-graaf is de
+     eis het omgekeerde: twee geulen om een eiland zijn twee eigen edges die **boven en onder
+     het eiland juist wél in één gedeelde knoop samenkomen** — precies de vorm die Lars bij
+     Tongling goedkeurde (zuid-junctie → kade → noord-junctie op exacte vertices). Zonder die
+     samenkomst heb je twee losse parallelle netwerken en kan er niets langs routeren.
+     (Correctie Lars, 2026-07-27, nadat deze zin ten onrechte als ontwerpeis was doorgegeven.)
   5. naar graafformaat: nodes op splitsingen/samenkomsten, edges met lengte.
 * **Pilot = Rotterdam-Rijnmonding** (Tongling valt af wegens dekking). Eerst één corridor
   end-to-end vóór het generiek maken.
