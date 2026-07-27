@@ -20,7 +20,7 @@ import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
-import { laadAisTracks } from "./aistracks.js?v=088";
+import { laadAisTracks } from "./aistracks.js?v=090";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -134,32 +134,60 @@ laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
   })
   .catch((e) => console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message));
 
-// --- echte scheepstracks (M28, VS-pilot) -----------------------------------
-// De bol-toets van de track-aanpak: gevaren lijnen van individuele schepen
-// (MarineCadastre — de VS-binnenrivieren waar aisstream niets ontvangt), op-
-// en afvaart elk hun kleur. Kijk-laag; de graaf-stap (LAR-530) rekent op de
-// volledige trackset in build-cache.
+// --- echte scheepstracks (M28, vijf bronnen) -------------------------------
+// De bol-toets van de track-aanpak: gevaren lijnen van individuele schepen uit
+// vijf AIS-archieven, op- en afvaart elk hun kleur. Kijk-laag; de graaf-stap
+// (LAR-530) rekent op de volledige tracksets in build-cache.
+//
+// ⚠️ LAAT LADEN, EN DAT IS GEEN OPTIMALISATIE. Dit is met afstand het zwaarste
+// databestand van de atlas (39,5 MB, ~14 MB over de lijn). Eager ophalen liet
+// élke bezoeker die download betalen voor een laag die standaard UIT staat en
+// die de meesten nooit aanzetten. Nu wordt hij pas gehaald bij de eerste "aan".
 let AISTRACKS = null;
-laadAisTracks(CONFIG.radius, "089", GLOBE.klemOpHorizon)
-  .then((at) => {
-    AISTRACKS = at;
-    at.groep.visible = false;   // standaard uit, net als de andere debuglagen
-    GLOBE.globeGroup.add(at.groep);
-    window.AISTRACKS = at;
-    const s = at.stats;
-    console.log(
-      `[atlas v2] aistracks: ${s.lijnen.toLocaleString("nl")} tracks · ` +
-      `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
-      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
-    );
-    const noot = document.getElementById("tracksNoot");
-    if (noot) {
-      noot.textContent =
-        `heel VS, 28 dagen — ${s.lijnen.toLocaleString("nl")} doorvaarten ` +
-        `(dekkingsselectie, MarineCadastre)`;
-    }
-  })
-  .catch((e) => console.warn("[atlas v2] aistracks niet geladen (nog niet gebakken?):", e.message));
+let aistracksAan = false;
+let aistracksBezig = null;
+
+function haalAisTracks() {
+  if (aistracksBezig) return aistracksBezig;
+  const noot = document.getElementById("tracksNoot");
+  if (noot) noot.textContent = "laden… (39,5 MB, eenmalig)";
+  aistracksBezig = laadAisTracks(CONFIG.radius, "090", GLOBE.klemOpHorizon)
+    .then((at) => {
+      AISTRACKS = at;
+      at.groep.visible = aistracksAan;
+      GLOBE.globeGroup.add(at.groep);
+      window.AISTRACKS = at;
+      const s = at.stats;
+      console.log(
+        `[atlas v2] aistracks: ${s.lijnen.toLocaleString("nl")} lijnen · ` +
+        `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
+        `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms · ` +
+        s.perBron.map((b) => `${b.sleutel} ${b.lijnen}/${b.segmenten}`).join(" · ")
+      );
+      // De noot telt; de bronvermelding zelf staat statisch in index.html en in
+      // de attributiebalk — een licentie-eis hoort niet af te hangen van of een
+      // laag toevallig al geladen is.
+      if (noot) {
+        // ⚠️ Lijnen ≠ doorvaarten: de valse-lassen-knip in de bake splitst een
+        // track in meer lijnen (AMSA: 2.043 gekozen tracks → 2.272 lijnen). De
+        // noot telt daarom allebei, anders lijkt de tabel van de bake fout.
+        const gekozen = (at.bronnen || []).reduce((n, b) => n + b.gekozen, 0);
+        noot.textContent =
+          s.perBron.map((b) => `${b.sleutel} ${b.lijnen.toLocaleString("nl")}`).join(" · ") +
+          ` — ${s.lijnen.toLocaleString("nl")} lijnen` +
+          (gekozen ? ` uit ${gekozen.toLocaleString("nl")} doorvaarten` : "") +
+          ` · ${s.segmenten.toLocaleString("nl")} segmenten, dekkingsselectie`;
+      }
+      zetAttrib();
+      return at;
+    })
+    .catch((e) => {
+      aistracksBezig = null;   // volgende "aan" mag het opnieuw proberen
+      if (noot) noot.textContent = "niet geladen (nog niet gebakken?)";
+      console.warn("[atlas v2] aistracks niet geladen (nog niet gebakken?):", e.message);
+    });
+  return aistracksBezig;
+}
 
 // --- de AIS-drukte als gloed (M27) -----------------------------------------
 // Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
@@ -296,7 +324,13 @@ wireButtons(".anBtn", "an", (mode) => {
   if (AISNET) AISNET.lijnen.visible = (mode === "aan");
 });
 wireButtons(".atBtn", "at", (mode) => {
-  if (AISTRACKS) AISTRACKS.groep.visible = (mode === "aan");
+  aistracksAan = (mode === "aan");
+  if (AISTRACKS) {
+    AISTRACKS.groep.visible = aistracksAan;
+    zetAttrib();                            // bronvermelding volgt de laag
+  } else if (aistracksAan) {
+    haalAisTracks();                        // eerste keer: nu pas ophalen
+  }
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
@@ -340,6 +374,16 @@ function zetAttrib() {
   // WPI-verrijking op de havens (LAR-518): publiek domein, bron wel noemen.
   if (HAVENS && HAVENS.some((h) => h.wpiAfstandKm >= 0)) {
     delen.push("Havens: NGA World Port Index (publiek domein)");
+  }
+  // De vijf AIS-archieven, zodra hun lijnen op de bol staan. ⚠️ AMSA is
+  // CC BY-NC 3.0 AU — naamsvermelding ÉN niet-commercieel gebruik; dat is de
+  // strengste eis van de vijf en die staat daarom voluit, niet als afkorting.
+  if (AISTRACKS && AISTRACKS.groep.visible) {
+    delen.push(
+      "AIS-tracks: MarineCadastre NOAA/USACE (publiek domein) · " +
+      "DMA Denemarken · Kystdatahuset/Kystverket (NLOD) · " +
+      "© AMSA (CC BY-NC 3.0 AU, niet-commercieel) · eigen aisstream-collector"
+    );
   }
   document.getElementById("attrib").textContent = delen.join(" · ");
 }

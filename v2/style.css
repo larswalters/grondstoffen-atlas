@@ -266,6 +266,36 @@ html, body {
   line-height: 1.4;
 }
 
+/* --- de noot-regels onder de laag-knoppen --------------------------------
+   ⚠️ Deze regel is een FIX, geen opmaak. Alleen #havenNoot en #aanslNoot waren
+   gestileerd; de vijf noten die er sindsdien bij kwamen vielen terug op de
+   browser-standaard van 16px — twee keer zo groot als de labels erboven. Gemeten
+   op 1600×1000: de HUD werd er 964 px hoog van (van 1000 px scherm) en de
+   havensectie viel eronder van het scherm. */
+#gloedNoot,
+#pingNoot,
+#tracksNoot,
+#aisNoot,
+#landNoot {
+  margin-top: 4px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  opacity: 0.75;
+  line-height: 1.4;
+}
+
+/* Bronvermelding van de vijf AIS-archieven: staat altijd in beeld, ook vóór de
+   laag geladen is (licentie-eis — zie de noot in index.html). */
+#tracksBronnen {
+  margin-top: 6px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  line-height: 1.45;
+}
+
+#tracksBronnen span { display: block; }
+#tracksBronnen b { color: var(--ink); font-weight: 600; }
+
 #havenLegenda i {
   display: inline-block;
   width: 7px;
@@ -307,7 +337,20 @@ html, body {
   background: rgba(5, 7, 12, 0.55);
   border-radius: 6px;
   pointer-events: none;
-  white-space: nowrap;
+  /* ⚠️ Was `white-space: nowrap`. Met de vijf AIS-archieven erbij (AMSA eist
+     naamsvermelding) wordt deze regel te lang voor een telefoon; nowrap liet
+     hem dan links én rechts buiten het scherm steken. Nu breekt hij af binnen
+     het scherm — op een breed scherm blijft het gewoon één regel.
+     `width: max-content` is daarbij nodig, niet decoratief: een absoluut
+     gepositioneerde doos met `left: 50%` krijgt als beschikbare breedte alleen
+     de helft van het scherm (translateX verschuift pas ná de layout). Zonder
+     deze regel bleef de balk op 390 px steken op 195 px breed en werd hij
+     137 px hoog — gemeten; hij dekte dan de helft van de HUD af. */
+  width: max-content;
+  max-width: calc(100vw - 24px);
+  white-space: normal;
+  text-align: center;
+  line-height: 1.45;
 }
 
 /* --- zoomknoppen --------------------------------------------------------- */
@@ -338,4 +381,17 @@ html, body {
 @media (max-width: 640px) {
   #hud { top: 10px; left: 10px; padding: 11px 13px; min-width: 0; }
   #stats { display: none; }
+  /* Op een telefoon is dít de plek waar de licenties gelezen worden (de HUD
+     start ingeklapt). Gemeten op 390 px: gecentreerd liep de balk met de vijf
+     AIS-archieven erbij onder de zoomknoppen door — precies over
+     "© AMSA (CC BY-NC 3.0 AU…)". Daarom links uitlijnen en de knoppenkolom
+     (18 px marge + 38 px knop) vrijhouden. */
+  #attrib {
+    left: 10px;
+    right: 66px;
+    transform: none;
+    width: auto;
+    max-width: none;
+    text-align: left;
+  }
 }

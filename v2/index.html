@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=070" />
+<link rel="stylesheet" href="style.css?v=090" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -80,11 +80,12 @@
     </div>
     <div id="pingNoot"></div>
 
-    <!-- Echte scheepstracks (M28, VS-pilot): gevaren lijnen van individuele
-         schepen uit MarineCadastre (NOAA) — de bron die de VS-binnenrivieren
-         dekt waar aisstream niets ontvangt. Amber = opvaart, ijsblauw =
-         afvaart. Standaard uit; dit is de bol-toets van de track-aanpak. -->
-    <div class="hudLabel">AIS-tracks VS (pilot)</div>
+    <!-- Echte scheepstracks (M28): gevaren lijnen van individuele schepen uit
+         vijf AIS-archieven — MarineCadastre (NOAA/USACE), DMA (DK),
+         Kystdatahuset (NO), AMSA (AU) en de eigen collector. Amber = opvaart,
+         ijsblauw = afvaart. Standaard uit, en het bestand wordt PAS bij de
+         eerste "aan" opgehaald (39,5 MB). -->
+    <div class="hudLabel">AIS-tracks (5 bronnen)</div>
     <div class="btnRow">
       <button class="atBtn" data-at="aan">aan</button>
       <button class="atBtn is-on" data-at="uit">uit</button>
@@ -92,6 +93,20 @@
     <div id="havenLegenda" style="margin-bottom:6px">
       <span><i style="background:#ffd166"></i>opvaart</span>
       <span><i style="background:#7fe8ff"></i>afvaart</span>
+    </div>
+    <!-- ⚠️ BRONVERMELDING = LICENTIE-EIS, GEEN COSMETICA. Deze lijst staat hier
+         STATISCH (niet pas na het laden), want de data staat op Pages zodra de
+         site staat — of iemand de laag aanzet of niet. De sleutels vs/dk/no/au/
+         wereld zijn dezelfde als in de noot eronder en in `bron` op elke lijn.
+         AMSA is CC BY-NC 3.0 AU: die eist naamsvermelding ÉN niet-commercieel
+         gebruik; beide staan er daarom voluit. -->
+    <div id="tracksBronnen">
+      <span><b>vs</b> — MarineCadastre, NOAA/USACE (publiek domein)</span>
+      <span><b>dk</b> — DMA, Danish Maritime Authority (Denemarken)</span>
+      <span><b>no</b> — Kystdatahuset, Kystverket (NLOD)</span>
+      <span><b>au</b> — © AMSA, Australian Maritime Safety Authority —
+        CC BY-NC 3.0 AU, uitsluitend niet-commercieel gebruik</span>
+      <span><b>wereld</b> — eigen aisstream-collector</span>
     </div>
     <div id="tracksNoot"></div>
 
@@ -176,6 +191,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=089"></script>
+<script type="module" src="src/main.js?v=090"></script>
 </body>
 </html>
