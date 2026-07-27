@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=092" />
+<link rel="stylesheet" href="style.css?v=093" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -62,14 +62,17 @@
 
     <!-- De stroom-preview (M28): de eerste echte grondstofstroom end-to-end,
          sinds het versie-2-contract ROUTEBRIEF-gestuurd (v2/design/routebrieven/
-         grafiet-balama-vidalia.md) — grafiet van Balama (Mozambique) via de
-         Kaap-route naar New Orleans, per barge via Port Allen naar de losplek
-         Port of Vidalia (rivier-mijl 359), en een last mile per truck naar de
-         Syrah-fabriek. Het spoorbeen is geschrapt: het bestaat niet — EA-2181:
-         uitgaand AAM per truck; geen spoorbrug bij Natchez-Vidalia. Overslag
-         ligt bij New Orleans/Port Allen. MARNET zelf staat niet op de bol: dit
-         is de GEROUTETE stroom (zee → barge → truck), kleur = modaliteit zodat
-         je de overgang tussen de netten ziet. -->
+         grafiet-balama-vidalia.md) — de keten begint bij de Balama-MIJN
+         (routebrief been 1: truck over echte N380/N1-geometrie, via de
+         M25-wegcorridor-machinerie), gestippelde haven-aanloop bij Nacala,
+         zeeschip via de Kaap-route naar New Orleans, per barge via Port Allen
+         naar de losplek Port of Vidalia (rivier-mijl 359), en een last mile
+         per truck naar de Syrah-fabriek. Het spoorbeen is geschrapt: het
+         bestaat niet — EA-2181: uitgaand AAM per truck; geen spoorbrug bij
+         Natchez-Vidalia. Overslag ligt bij New Orleans/Port Allen. MARNET
+         zelf staat niet op de bol: dit is de GEROUTETE stroom (truck → zee →
+         barge → truck), kleur = modaliteit zodat je de overgang tussen de
+         netten ziet; gestippeld = schematische verbinding. -->
     <div class="hudLabel">Stroom: grafiet Balama → VS (preview)</div>
     <div class="btnRow">
       <button class="srBtn is-on" data-sr="aan">aan</button>
@@ -78,7 +81,8 @@
     <div id="stroomLegenda">
       <span><i style="background:#5aa7ff"></i>zee (zeeschip)</span>
       <span><i style="background:#35e0c0"></i>barge (containers)</span>
-      <span><i style="background:#ffffff"></i>last mile (truck, gestippeld)</span>
+      <span><i style="background:#ffb04d"></i>truck (weg)</span>
+      <span style="opacity:.75">gestippeld = schematische verbinding (haven-aanloop, last mile)</span>
     </div>
     <div id="stroomNoot"></div>
 
@@ -213,6 +217,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=092"></script>
+<script type="module" src="src/main.js?v=093"></script>
 </body>
 </html>

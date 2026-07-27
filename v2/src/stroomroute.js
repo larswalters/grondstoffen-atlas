@@ -3,14 +3,23 @@
 //
 // De benen komen uit data/stroomroute-pilot.json (versie 2), en dát bestand
 // volgt de routebrief v2/design/routebrieven/grafiet-balama-vidalia.md:
-// zeeschip Nacala → New Orleans (de Kaap-route, zoals de echte stroom vaart),
-// containerbarge via Port Allen (IRMT) → Port of Vidalia (rivier-mijl 359),
-// en een last mile per truck naar de Syrah-fabriek. Het spoorbeen is
-// geschrapt — er ligt geen spoor in Concordia Parish. De laag tekent wat de
-// benen zeggen: per been "modaliteit" (kleur), "naam", en optioneel
-// "stippel": true = een eigen verbinding (niet gerouteerd over een net) →
-// gestippeld getekend. MARNET zelf staat niet op de bol — wat je hier ziet
-// is de GEROUTETE stroom, niet het net waarover gerouteerd is.
+// de keten begint bij de Balama-MIJN met een truckbeen van echte
+// weggeometrie (N380/N1, via de M25-wegcorridor-machinerie — doorgetrokken),
+// dan een gestippelde haven-aanloop bij Nacala, zeeschip Nacala → New
+// Orleans (de Kaap-route, zoals de echte stroom vaart), containerbarge via
+// Port Allen (IRMT) → Port of Vidalia (rivier-mijl 359), en een last mile
+// per truck naar de Syrah-fabriek. Het spoorbeen is geschrapt — er ligt
+// geen spoor in Concordia Parish. De laag tekent wat de benen zeggen: per
+// been "modaliteit" (kleur), "naam", en optioneel "stippel": true. Stippel
+// is puur de stijl voor "schematische verbinding" — élke modaliteit kan
+// gestippeld zijn (de haven-aanloop is gestippeld zee-blauw, de last mile
+// gestippeld truck-amber). MARNET zelf staat niet op de bol — wat je hier
+// ziet is de GEROUTETE stroom, niet het net waarover gerouteerd is.
+//
+// ⚠️ TRUCK = AMBER (0xffb04d), niet meer wit: een witte doorgetrokken
+//   weglijn is in Mozambique niet te onderscheiden van het witte
+//   landnet-spoor — de Nacala-spoorcorridor loopt vlak bij de N380/N1.
+//   Amber is vrij nu het spoorbeen uit deze stroom is.
 //
 // ⚠️ KLEUR = MODALITEIT — bewust anders dan aistracks (daar is kleur richting).
 //   Het punt van deze laag is de OVERGANG tussen de netten zichtbaar maken:
@@ -39,10 +48,12 @@ import * as THREE from "three";
 // laag tekent gewoon wat de benen zeggen; de grafietstroom heeft geen
 // spoorbeen meer (zie de routebrief).
 const KLEUR = {
-  zee: 0x5aa7ff,          // MARNET-zeebeen (zeeschip)
+  zee: 0x5aa7ff,          // MARNET-zeebeen (zeeschip) + gestippelde haven-aanloop
   binnenvaart: 0x35e0c0,  // echte AIS-tracks (barge)
-  truck: 0xffffff,        // last mile — komt als stippel-been binnen
-  spoor: 0xffb04d,        // landnet (geen been in deze stroom)
+  truck: 0xffb04d,        // weg-been (echte geometrie) + last mile — amber, zie de kop
+  spoor: 0xffb04d,        // landnet (geen been in deze stroom; botst met truck —
+                          // geef spoor een eigen kleur zodra een stroom weer een
+                          // spoorbeen krijgt)
 };
 
 function opBol(lonDeg, latDeg, r, uit, o) {
@@ -60,7 +71,7 @@ function maakBeen(been, radius, kleur, klemOpHorizon) {
   if (punten.length < 2) return null;   // een been zonder lijnstuk: niets tekenen
 
   if (been.stippel) {
-    // Stippel-been = een eigen verbinding (niet gerouteerd over een net),
+    // Stippel-been = schematische verbinding (haven-aanloop, last mile),
     // gestippeld getekend als THREE.Line (doorlopende lijn met 2+ punten,
     // géén LineSegments). dash/gap zijn geijkt op de bolschaal: straal 2,4
     // → een been van ~1 km is ~0,0004 scene-eenheden, dus dash/gap ruim

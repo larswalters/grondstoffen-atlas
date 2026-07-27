@@ -1068,11 +1068,15 @@ def eiland_toets(graaf, cache, m, z, conn, args):
 # (NA-kant).
 #
 # TWEE MODI:
-#   * BEEN-GESTUURD (--been/--stippel/--marker) — de standaard sinds de
-#     routebrief grafiet-balama-vidalia. Elk been wordt APART geroutet tussen
-#     zijn eigen, uit de routebrief aangewezen eindpunten; de modaliteit komt
-#     uit de vlag. Zie de docstring van cmd_route voor het waarom (de
-#     Leeville-les).
+#   * BEEN-GESTUURD (--been/--stippel/--been-geojson/--marker) — de standaard
+#     sinds de routebrief grafiet-balama-vidalia. Elk been wordt APART
+#     geroutet tussen zijn eigen, uit de routebrief aangewezen eindpunten; de
+#     modaliteit komt uit de vlag. Zie de docstring van cmd_route voor het
+#     waarom (de Leeville-les). --been-geojson neemt een vooraf gebakken
+#     GeoJSON-lijn op als DOORGETROKKEN been (geen routering, geen stippel) —
+#     zo komt het truckbeen Balama → Nacala (maak_stroombeen_weg.py, echte
+#     N380/N1/N12-geometrie) de keten in zonder dat deze graaf een wegennet
+#     hoeft te kennen.
 #   * VRIJ (--van/--naar zonder --been) — één route over het hele
 #     gecombineerde net; benen afgeleid uit de herkomst (MARNET = zee,
 #     track = binnenvaart). Blijft bestaan voor verkenning: hij laat zien wat
@@ -1133,6 +1137,15 @@ def _parse_been_spec(spec):
     return delen[0], delen[1], delen[2], delen[3]
 
 
+def _parse_been_geojson_spec(spec):
+    """'MODALITEIT|NAAM|PAD' → 3 velden (het pad mag een | niet bevatten)."""
+    delen = [d.strip() for d in spec.split("|")]
+    if len(delen) != 3 or not all(delen):
+        sys.exit(f"--been-geojson verwacht 'MODALITEIT|NAAM|PAD', "
+                 f"kreeg: {spec!r}")
+    return delen[0], delen[1], delen[2]
+
+
 def _parse_marker_spec(spec):
     """'NAAM|LAT,LON' → (naam, lat, lon)."""
     delen = [d.strip() for d in spec.split("|")]
@@ -1174,6 +1187,29 @@ def _route_been(args, graaf, cache, m, comb, mod, naam, van, naar):
           f"{r['km_edges']:.3f} = {r['km']-r['km_edges']:+.3f} km (= de naden)")
     return {"modaliteit": mod, "naam": naam, "km": r["km"],
             "punten": r["punten"]}
+
+
+def _geojson_been(mod, naam, pad):
+    """Een vooraf gebakken been uit een GeoJSON-lijn — DOORGETROKKEN (geen
+    stippel), niet geroutet: de punten komen letterlijk uit het bestand
+    ([lon, lat]), km = som van de segmentlengtes (dezelfde leesroutine als
+    het spoorbeen, `_spoor_been`). Zo komt het truckbeen Balama → Nacala
+    (maak_stroombeen_weg.py: echte N380/N1/N12-geometrie uit de
+    Geofabrik-extract) de keten in zonder dat deze graaf een wegennet kent —
+    de weg is TEKENGEOMETRIE voor de stroomlaag, geen routeerbaar net."""
+    if not Path(pad).exists():
+        sys.exit(f"--been-geojson: bestand niet gevonden: {pad}")
+    punten, km = _spoor_been(pad)
+    if len(punten) < 2:
+        sys.exit(f"--been-geojson: minder dan 2 punten in {pad}")
+    print(f"\n═══ BEEN-GEOJSON [{mod}] {naam} ═══")
+    print(f"  {pad}")
+    print(f"  vooraf gebakken lijn (niet over deze graaf geroutet) · "
+          f"{km:.1f} km · {len(punten)} punten · "
+          f"van ({punten[0][1]:.5f}, {punten[0][0]:.5f}) "
+          f"naar ({punten[-1][1]:.5f}, {punten[-1][0]:.5f})")
+    return {"modaliteit": mod, "naam": naam, "km": km,
+            "punten": [(la, lo) for lo, la in punten]}
 
 
 def _stippel_been(mod, naam, van, naar):
@@ -1291,8 +1327,12 @@ def cmd_route(args):
     km-uitsplitsing (track/MARNET/connector) en de snap-afstand op de console
     staan: de vlag bepaalt de naam, de meting blijft zichtbaar.
     --stippel = een eigen verbinding (last mile kade → fabriek): niet
-    geroutet, rechte lijn, "stippel": true. --marker vervangt de automatische
-    marker-afleiding volledig zodra er één is opgegeven.
+    geroutet, rechte lijn, "stippel": true. --been-geojson = een vooraf
+    gebakken been (zoals het truckbeen Balama → Nacala uit
+    maak_stroombeen_weg.py): DOORGETROKKEN, de punten komen letterlijk uit
+    het bestand, geen routering — de graaf hoeft er geen wegennet voor te
+    kennen. --marker vervangt de automatische marker-afleiding volledig
+    zodra er één is opgegeven.
 
     De km per been is de lengte van de GETEKENDE lijn (seg_km_wrap over de
     beenpunten), dezelfde grootheid als overal in dit bestand — niet de som
@@ -1316,6 +1356,10 @@ def cmd_route(args):
             print("  (--van/--naar worden in de been-modus genegeerd)")
         benen = []
         for soort, spec in args.keten:
+            if soort == "geojson":
+                mod, naam, pad = _parse_been_geojson_spec(spec)
+                benen.append(_geojson_been(mod, naam, pad))
+                continue
             mod, naam, van, naar = _parse_been_spec(spec)
             if soort == "been":
                 benen.append(_route_been(args, graaf, cache, m, comb,
@@ -1547,15 +1591,18 @@ def cmd_overlap(args):
 
 
 class _KetenActie(argparse.Action):
-    """--been en --stippel delen ÉÉN lijst (dest='keten'), in de volgorde van
-    de commandoregel — want de benen-volgorde in de uitvoer ís de
-    reisvolgorde, en met twee losse append-lijsten zou een stippel-been
-    (last mile) nooit tússen twee geroutete benen kunnen liggen."""
+    """--been, --stippel en --been-geojson delen ÉÉN lijst (dest='keten'), in
+    de volgorde van de commandoregel — want de benen-volgorde in de uitvoer
+    ís de reisvolgorde, en met losse append-lijsten zou een stippel-been
+    (last mile) of een vooraf gebakken truckbeen nooit tússen twee geroutete
+    benen kunnen liggen."""
+
+    SOORT = {"--been": "been", "--stippel": "stippel",
+             "--been-geojson": "geojson"}
 
     def __call__(self, parser, namespace, values, option_string=None):
         lst = getattr(namespace, self.dest, None) or []
-        lst.append(("stippel" if option_string == "--stippel" else "been",
-                    values))
+        lst.append((self.SOORT.get(option_string, "been"), values))
         setattr(namespace, self.dest, lst)
 
 
@@ -1631,6 +1678,13 @@ def main():
                    help="herhaalbaar: been dat NIET geroutet wordt — rechte "
                         "lijn tussen de twee punten, 'stippel': true (eigen "
                         "verbinding, zoals de last mile kade → fabriek)")
+    s.add_argument("--been-geojson", dest="keten", action=_KetenActie,
+                   metavar="MOD|NAAM|PAD",
+                   help="herhaalbaar: vooraf gebakken been uit een "
+                        "GeoJSON-lijn ([lon,lat], bv. maak_stroombeen_weg.py)"
+                        " — DOORGETROKKEN opgenomen zonder routering; km = "
+                        "som van de segmentlengtes; telt gewoon mee in de "
+                        "reisvolgorde")
     s.add_argument("--marker", action="append", default=None,
                    metavar="NAAM|LAT,LON",
                    help="herhaalbaar: expliciete marker; zodra er één is "

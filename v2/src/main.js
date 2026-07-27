@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=092";
+import { laadStroomroute } from "./stroomroute.js?v=093";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -192,13 +192,14 @@ function haalAisTracks() {
 
 // --- de stroom-preview: grafiet Balama → VS (M28) ---------------------------
 // De eerste echte grondstofstroom end-to-end op de bol, routebrief-gestuurd
-// (v2/design/routebrieven/grafiet-balama-vidalia.md): zeeschip Kaap-route →
-// barge via Port Allen → Port of Vidalia (mijl 359) → last mile per truck
-// (gestippeld). Kleur = modaliteit, zodat de overgang tussen de netten
-// zichtbaar is. Klein bestand (< 300 KB), dus eager zoals het landnet — niet
-// het lazy aistracks-patroon.
+// (v2/design/routebrieven/grafiet-balama-vidalia.md): truck Balama → Nacala
+// (echte N380/N1-weggeometrie) → gestippelde haven-aanloop → zeeschip
+// Kaap-route → barge via Port Allen → Port of Vidalia (mijl 359) → last mile
+// per truck. Kleur = modaliteit, zodat de overgang tussen de netten
+// zichtbaar is; gestippeld = schematische verbinding. Klein bestand
+// (< 300 KB), dus eager zoals het landnet — niet het lazy aistracks-patroon.
 let STROOMROUTE = null;
-laadStroomroute(CONFIG.radius, "092", GLOBE.klemOpHorizon)
+laadStroomroute(CONFIG.radius, "093", GLOBE.klemOpHorizon)
   .then((s) => {
     STROOMROUTE = s;
     GLOBE.globeGroup.add(s.groep);   // standaard aan: dít is wat er te zien is
@@ -206,7 +207,7 @@ laadStroomroute(CONFIG.radius, "092", GLOBE.klemOpHorizon)
     // Korte naam per MODALITEIT in noot én console — zelfde labels als de
     // legenda. Benen met dezelfde modaliteit (het zeebeen is gesplitst op het
     // Southwest Pass-via-punt uit de routebrief) tellen op tot één regel.
-    const label = { zee: "zeeschip", binnenvaart: "barge", truck: "last mile", spoor: "spoor" };
+    const label = { zee: "zeeschip", binnenvaart: "barge", truck: "truck", spoor: "spoor" };
     const perModaliteit = new Map();
     for (const b of s.benen) {
       const k = label[b.modaliteit] || b.naam || b.modaliteit;
