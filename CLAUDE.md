@@ -3,8 +3,9 @@
 *Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (M28 fase 1-3: vijf bronnen, de track-graaf, MARNET via raakpunt, live ?v=090)*
 
 > **🗺️ M28 FASE 1-3 · VIER BRONNEN ERBIJ, DE TRACK-GRAAF STAAT, VIJF BRONNEN OP DE BOL
-> (2026-07-27, LAATSTE).** Live **`?v=090`** (gepusht `c0c2b73..ed24837`), **visuele check
-> van Lars staat uit**. Drie nieuwe archiefbronnen, alle registratievrij: **DMA** 28 dagen
+> (2026-07-27, LAATSTE).** Live **`?v=090`** (gepusht `c0c2b73..ed24837`), **visuele go van
+> Lars binnen**: *"ziet er goed uit zo, we hebben veel kustgebieden, goeie haven-aansluitingen
+> nu."* Drie nieuwe archiefbronnen, alle registratievrij: **DMA** 28 dagen
 > → 170.811 tracks (Rødby–Puttgarden −0,8%) · **Kystdatahuset** 26 van 28 dagen → 9.041
 > (géén token: swagger `security: None`; Moss–Horten −1,8%) · **AMSA** 4 maanden → 54.269.
 > Plus de collector ververst. **768k tracks / 55 mln km** over vijf sets.

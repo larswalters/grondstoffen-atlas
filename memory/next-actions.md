@@ -7,13 +7,12 @@
 track-graaf staat (`bouw_trackgraaf.py`), MARNET hecht erop (`hecht_marnet.py`), en de
 bol draagt vijf bronnen. Wat nu openstaat:
 
-1. **Visuele check van Lars op `?v=090`** — https://larswalters.github.io/grondstoffen-atlas/v2/?vers=090
-   HUD-laag "AIS-tracks" staat default uit. Kijken bij Natchez/Vidalia (bundel draden ín
-   de geul), de Maasvlakte (op-/afvaart als eigen banen), en de nieuwe gebieden:
-   Sont/Grote Belt/Kattegat, de Noorse fjorden, Newcastle/Port Hedland.
-   ⚠️ Eerlijk vooraf: in de Deense straten en de Mississippi-delta verzadigt de bundel
-   naar crème-wit en is richting niet meer afleesbaar (prijs van 0,55 opacity bij die
-   dichtheid), en Australië oogt grover — dat is AMSA's eigen korrel van 21 km per stap.
+1. ~~**Visuele check van Lars op `?v=090`**~~ — **GEDAAN, go binnen** (2026-07-27):
+   *"ziet er goed uit zo, we hebben veel kustgebieden, goeie haven-aansluitingen nu."*
+   Geen fixes uit voortgekomen. De twee bekende schoonheidspunten blijven staan en zijn
+   geen bug: in de Deense straten en de Mississippi-delta verzadigt de bundel naar
+   crème-wit (prijs van 0,55 opacity bij die dichtheid), en Australië oogt grover door
+   AMSA's eigen korrel van 21 km per stap.
 2. **De New Orleans-coördinaat is een stadscentroïde, geen kade** — daardoor faalt de
    snap-eis (0,726 tegen ≤0,5 km) terwijl geen enkele van 510.752 tracks daar binnen
    0,5 km komt. De echte loskade van het Balama-vlok opzoeken en `gr-port-neworleans` in
