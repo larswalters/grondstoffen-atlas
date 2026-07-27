@@ -1,5 +1,46 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: wereldwijde dekking gemeten; Wesel bevestigd structureel)*
+*Last updated: 2026-07-27 (M28 fase 1-3: knip-lek gefixt; New Orleans-coördinaat en bestandsgroei open)*
+
+## ✅ OPGELOST 2026-07-27 — het knip-lek: de snelheidsguard was scale-blind
+`bouw_tracks.py` kende het dubbel-MMSI-geval wél (de header noemt het) maar
+`MAX_KNOPEN=40` toetst **km/uur**, en over een lang datagat wordt élke afstand
+plausibel. **2.214 valse lassen** over vier bronnen (VS 1.529 / 107.801 km · DK 610 /
+45.486 · NO 15 / 1.018 · collector 60 / 2.826 — steeds ~0,4% van de km), en **alle**
+glipten onder de 40-knoopgrens door. Ergste geval: punt [29] in San Francisco, punt [30]
+in Providence Rhode Island — **4.392 km in 61 uur = 38,9 kn**, net onder de grens.
+Waarom dit ertoe deed: een rechte koorde van 189 km waar de rivier 250 km meandert is
+precies de sluipweg die een kortste-pad-router kiest.
+**Fix:** na-conditie op de uitvoer (`knip_op_gaten`), niet een extra tak in de
+knip-logica — een track mag geen segment bevatten dat én een gat > `KNIP_MIN` én een
+afstand > `GAT_MAX_KM` overbrugt. Twee toetsen samen, want elk apart is onschuldig: een
+sluispassage van 66 min legt 0,04 km af. Alle vier de sets herbouwd → **0**, korte stops
+blijven (VS 275.361 → 275.157), twee runs byte-identiek. Oude sets in
+`build-cache/ais/tracks-voor-knipfix/`.
+
+## ⚠️ OPEN — de New Orleans-coördinaat is een stadscentroïde, geen kade
+`gr-port-neworleans` in `data/graphite.js` staat op 29,95 / −90,07. Daar komt **geen
+enkele** van de 510.752 VS-tracks binnen 0,5 km (749 binnen 1 km, 3.459 binnen 3 km),
+dus de acceptatie-eis "snap ≤ 0,5 km" is op dat punt onhaalbaar voor élke graaf op deze
+data — de graaf haalt 0,726 km, wat de best mogelijke waarde is. Vidalia haalt wél 0,400
+km. Dit is dezelfde klasse als de eerder gevonden `data/*.js`-datafouten (Antofagasta
+i.p.v. Patache, Yangshan i.p.v. een rivierkade): te grofkorrelig voor straatniveau.
+**Fix:** de echte loskade van het Balama-vlok opzoeken en de coördinaat vervangen.
+
+## ⚠️ RISICO — de tracks-laag groeit hard in de git-history
+`v2/data/aistracks-pilot.json` ging van 21,4 → **39,5 MB** (13,9 MB gz) door de vijf
+bronnen, en groeit met elke bron erbij. De laag is lazy en default uit, dus de gewone
+paginalaadtijd verandert niet, maar dit is inmiddels de tweede 20 MB+ blob in de
+history. Voor de **pings**-laag is in M28 bewust voor een VPS-endpoint gekozen om precies
+dit te vermijden (*"geen databestanden in de git-history"*); die afweging geldt hier op
+enig moment ook. Alternatieven: puntenbudget omlaag, of dezelfde endpoint-route.
+
+## ⚠️ OPEN — laag 1 (hele-track-match) is dun voor lange reizen
+119 tracks eindigen binnen 3 km van de Syrah-kade en 133 beginnen er, maar slechts **5**
+dekken de héle reis New Orleans→Vidalia (2 binnen 3 km snap aan beide einden). Oorzaak
+is by design: `bouw_tracks.py` knipt zodra een schip écht aanlegt, dus een meerdaagse
+duwvaart met tussenstops valt in losse tracks uiteen. Voor langere ketens wordt dit
+dunner. Geen bug — maar het is de reden dat laag 2 (de graaf) nodig blijft, en het is
+het getal om in de gaten te houden als er stromen bijkomen.
 
 ## ⚠️ BEVESTIGD — het Wesel-gat is structureel (2026-07-26, hermeten)
 Het voorbehoud hieronder ("berust op 1,2 uur data") is opgeheven. Hermeten op **12,5 uur**,

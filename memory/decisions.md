@@ -3,6 +3,71 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## 2026-07-27 - GEEN BUNDELING, en een edge is een VERWIJZING (besluit Lars)
+Lars: *"veel tracks is juist de bedoeling, bundeling van de lijnen lijkt me niet nodig;
+als er hele tracks vanaf de juiste zeehaven naar de juiste fabriekshaven liggen
+gebruiken we die specifiek voor die route, dat is het mooiste."* Alle doorvaarten
+blijven bestaan. Een edge wordt opgeslagen als `(set, regelnummer, i0, i1)` + knoop-ids
++ echte km, dus de geometrie staat exact één keer in de trackset. Reden dat dit de
+juiste vorm is: het maakt niet-bundelen gratis in opslag én maakt het per constructie
+onmogelijk dat er een gemiddelde of celcentrum in een edge sluipt. Bewijs dat het klopt:
+0 van 2.726 route-coördinaten heeft meer dan 5 decimalen, terwijl de ruwe AIS-korrel er
+5 ís — elke middeling of projectie-retour zou 6+ geven.
+
+## 2026-07-27 - Twee geulen om een eiland komen boven en onder WEL samen (correctie Lars)
+De waarschuwing *"bundel-afstand kleiner dan de eiland-schaal"* uit `next-actions.md`
+hoorde bij **stap 4 (centerline-bundeling)** — de geschrapte stap — en ging over
+middelen tot één lijn over de héle lengte. In de track-graaf is de eis het omgekeerde:
+twee geulen zijn twee eigen edges die aan beide uiteinden **één gedeelde knoop** delen,
+precies de vorm die bij Tongling is goedgekeurd. Zonder die samenkomst liggen er twee
+losse parallelle netwerken en kan er niets langs routeren — en dat is de gevaarlijkste
+foutmodus, want de graaf lijkt dan compleet. Getoetst op drie eilanden: elke arm apart
+routeerbaar door de andere te blokkeren, armen delen precies 2 knopen.
+
+## 2026-07-27 - Routeren gaat over HALTES, niet over knoop-cellen
+Met de ~200 m-cel als routeerknoop is overstappen van de ene track op de andere gratis
+en telt niemand de meters die je oversteekt: gemeten 583 edges, 560 track-wissels en
+**78,6 km onverantwoorde naad (−19,6%)**. Een halte per knip-punt per track laat een
+overstap de échte meters kosten, plus een overstap-boete als routeer-voorkeur.
+
+## 2026-07-27 - Overstap-boete 25 km: een gestitchte route is zwakker bewijs
+Gemeten op Houston→Mobile: zónder prijs wint een MARNET-laan die **50,1 km langer** is
+dan de waargenomen lijn, en hij wint met 0,2 km op een dijkstra-kost van 969 — 0,02%,
+een muntworp. Oorzaak is structureel: een MARNET-laan kost niets terwijl echte
+trackgeometrie wissels kost. De boete drukt uit dat één doorvaart sterker bewijs is dan
+een gestitchte keten. Plateau van 0,25 tot ≥1000 km, dus de waarde is niet kritisch.
+
+## 2026-07-27 - MARNET hecht via een RAAKPUNT, niet via een snap
+Een MARNET-zeeknoop wordt opgenomen als er een graafknoop binnen 0,5 km ligt; **geen
+terugval** naar de dichtstbijzijnde-hoe-ver-ook. Vier gronden: er is geen fallback (dat
+is de schuine snap die Whitby/Rostock 58 km wegteleporteerde), eps ligt onder de eigen
+raak-tolerantie van de graaf, beide coördinaten blijven staan (verlengen ≠ verplaatsen,
+de EMO-flip-flop-les), en een landtoets op de connector. Gemeten gevolg: **0 van 115
+(Mississippi) en 0 van 74 (Rijn) havensnaps verschuiven**. Keten-controle: EMO-kade →
+Shanghai 19.606,0 km tegen de vastgelegde invariant 19.610 = −0,02%.
+
+## 2026-07-27 - De knip-waarden zijn bron-parameters, geen constanten
+AMSA dunt zelf naar 1 positie per schip per uur; met de defaults levert die bron **0
+tracks uit 7,75 mln pings** (gemeten). `bouw_tracks.py` kreeg `--knip-min` /
+`--stil-max` / `--gat-max-km`; AU draait op 180/360/120, de terrestrische bronnen op
+30/90/25. De bron bepaalt de korrel, niet het recept.
+
+## 2026-07-27 - AMSA gaat NIET de graaf in maar wordt corridorlaag
+Punt-tot-punt binnen tracks: DK 0,249 km · NO 0,265 · VS 0,269 · collector 0,453 ·
+**AMSA 20,43**. Op snelheid gesplitst springt een varend schip bij AMSA 21,5 km per
+stap, óók binnen de havenvakken (Newcastle 13,7 · Port Hedland 15,1) — de 2-3 km die je
+daar zonder splitsing ziet zijn wáchtende schepen. Een koorde van 20 km is aantoonbaar
+slechter dan de celcentra die al waren afgekeurd (−7,4%). AMSA levert wél uniek
+satelliet-bereik offshore dat de collector mist; voor het kade-eind is de eigen
+collector (0,453 km) de betere bron. Ze vullen elkaar aan.
+
+## 2026-07-27 - Het Wesel-gat wordt NIET overbrugd
+0 van 35.237 collector-tracks raakt lon 6,45-6,60, dus Rotterdam→Duisburg kán over
+tracks niet compleet zijn en de graaf valt daar per constructie in twee componenten.
+Opgeleverd als **diagnose** (waar breekt hij, hoe ver komt hij van elke kant), niet als
+route. Een gat dichttrekken met geleende geometrie is tegen de projectregels, en het gat
+kan nog dichtlopen zodra er een schip met ontvanger langsvaart.
+
 ## 2026-07-26 - Class B erbij in de collector (besluit Lars)
 **Besluit:** de collector abonneert op `PositionReport` · `ShipStaticData` ·
 `StandardClassBPositionReport` · `ExtendedClassBPositionReport` · `StaticDataReport`.

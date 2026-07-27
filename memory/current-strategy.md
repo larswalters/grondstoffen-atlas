@@ -1,5 +1,45 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-27 (M28: MarineCadastre = VS-bron, heel-VS-tracks op de bol, tracks = het net)*
+*Last updated: 2026-07-27 (M28 fase 1-3: vijf bronnen, de track-graaf staat, MARNET hecht via raakpunt)*
+
+## Stand 2026-07-27 (avond) — vijf bronnen, de track-graaf, en MARNET erop
+
+**Het natte net wordt nu gebouwd uit vijf AIS-bronnen** (768k tracks / 55 mln km):
+MarineCadastre (VS) · DMA (DK) · Kystdatahuset (NO) · AMSA (AU) · eigen collector.
+De eerste vier bronnen leveren edge-geometrie; AMSA niet.
+
+**De maat die alles stuurt is de punt-tot-punt-afstand binnen de tracks**, niet het
+ping-interval: DK 0,249 km · NO 0,265 · VS 0,269 · collector 0,453 · **AMSA 20,43**.
+Alleen een bron met een korrel van honderden meters beschrijft de gevaren geul; een
+bron van 20 km beschrijft een corridor. Daarom is AMSA een dekkingslaag en zijn de
+knip-waarden van `bouw_tracks.py` CLI-parameters geworden (`--knip-min` / `--stil-max`
+/ `--gat-max-km`): **de bron bepaalt de korrel, niet het recept**.
+
+**De graaf, in twee lagen** (`bouw_trackgraaf.py`):
+1. **hele-track-match** — bestaat er één track die zelf van A naar B loopt, dan ís die
+   track de route. Geen graaf, geen middeling. Dit is de mooiste uitkomst, maar dun
+   voor lange reizen: 119 tracks eindigen bij de Syrah-kade en 133 beginnen er, en
+   tóch dekken er maar **5** de hele reis New Orleans→Vidalia — een meerdaagse
+   duwvaart wordt geknipt zodra het schip echt aanlegt.
+2. **graaf op raakpunten (~200 m)** voor de rest. Een route is dan een keten van
+   track-*segmenten*.
+
+**Geen bundeling, nergens** — en dat is structureel afgedwongen, niet alleen verboden:
+een edge is een **verwijzing** `(set, regelnummer, i0, i1)` + knoop-ids + echte km. De
+geometrie staat exact één keer, in de trackset. Daardoor kost niet-bundelen geen
+opslag en is er geen plek waar een gemiddelde of celcentrum in een edge kán sluipen.
+Routeren gaat over **haltes**, niet over knoop-cellen: met cellen is overstappen gratis
+en telt niemand de naad (gemeten 78,6 km onverantwoord).
+
+**Open zee blijft MARNET, en hecht via een RAAKPUNT** (`hecht_marnet.py`): een
+MARNET-zeeknoop wordt opgenomen als er een graafknoop binnen 0,5 km ligt, met één
+connector-edge tussen twee échte coördinaten. **Geen terugval** naar "de
+dichtstbijzijnde, hoe ver ook" — dat is de schuine snap die eerder Whitby/Rostock 58 km
+wegteleporteerde. Verlengen, niet verplaatsen. MARNET zelf komt van tag `pre-ais-net`
+en gaat niet terug in `v2/data/`.
+
+**Wat de bol toont** (`?v=090`): dekkingsgedreven selectie over alle vijf bronnen,
+33.147 lijnen / 1,85 mln punten, kleur = richting (amber op / ijsblauw af), per bron
+een eigen subgroep zodat een bron los uit te zetten is zonder rebake.
 
 ## Stand 2026-07-27 (nacht) — twee bronnen, één recept, en de tracks zíjn het net
 

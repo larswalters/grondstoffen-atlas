@@ -1,6 +1,51 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-27 (dag) - M28 fase 1-3 · vier bronnen erbij, het knip-lek, de track-graaf, vijf bronnen op de bol (?v=090)
+
+**Fase 1 — bronnen.** Drie nieuwe archiefbronnen ingeladen, alle registratievrij en
+vooraf getest vóórdat er een agent op werd gezet (DK-S3 gaf 200 zonder sleutel, AMSA
+alleen `TermsAccepted` in de POST, Kystdatahuset 405-op-GET = endpoint bestaat):
+**DMA** 28 dagen → 170.811 tracks / 10,59 mln km (Rødby–Puttgarden −0,8%) · **NO** 26 van
+28 dagen → 9.041 tracks, géén token nodig (swagger `security: None`, anoniem
+geverifieerd; Moss–Horten −1,8%) · **AMSA** 4 maanden → 54.269 tracks. Plus de
+VPS-collector ververst (35.237; het lokale 26-juli-bestand bleek 10,4% afgekapt en is
+hersteld). Totaal **768k tracks / 55 mln km**.
+
+**De beslissende maat bleek de punt-tot-punt-afstand**, niet het ping-interval: DK 0,249
+km · NO 0,265 · VS 0,269 · collector 0,453 · **AMSA 20,43**. Op snelheid gesplitst
+springt een varend schip bij AMSA 21,5 km per stap, óók in de havenvakken. Lars' reactie
+(*"1 ping per uur, krijg je nooit mooie tracks toch?"*) klopte; de meting maakte het hard.
+
+**Bug gevonden en gefixt.** De snelheidsguard `MAX_KNOPEN=40` is scale-blind: 2.214 valse
+lassen, alle onder de grens door, ergste 4.392 km in 61 uur = 38,9 kn (San Francisco
+naast Rhode Island = dubbel-MMSI). Fix als na-conditie op de uitvoer; alle sets herbouwd
+→ 0. Zie `bugs-and-risks.md`.
+
+**Fase 2 — de track-graaf**, halverwege door Lars omgegooid: geen bundeling, hele-track-
+match als primaire route, en een edge is een **verwijzing**. Vidalia **+0,3%** (432,3 km),
+alle 1.363 routepunten letterlijk uit de bron, en de toets die echt kon weerleggen: 0 van
+2.726 coördinaten heeft >5 decimalen. Drie eilanden getoetst met elke arm apart
+routeerbaar. Rotterdam→Duisburg als **diagnose** opgeleverd (breekt bij Wesel), geen brug.
+
+**MARNET** hecht via raakpunt, geen snap: 0 van 115 en 0 van 74 havensnaps verschuiven;
+Arkansas City 349,5 → 0,342 km, Waalhaven 1,79 → 0,044. Keten-controle **EMO-kade →
+Shanghai 19.606,0 km tegen de invariant 19.610 = −0,02%**. De overlapzone uit de spec
+(40-80 km) klopte voor geen enkele bron.
+
+**Fase 3 — de bol.** `?v=090`, 33.147 lijnen / 1,85 mln punten / 39,5 MB, lazy en default
+uit; kleur blijft richting, per bron een eigen subgroep. Attributies als licentie-eis
+(NOAA/USACE · DMA · Kystverket NLOD · AMSA CC BY-NC · eigen collector). Lokaal
+geverifieerd in een echte headless Chrome via CDP omdat de Browser-pane geen frames
+composit: 0 console-fouten, toggle werkt, 60 fps.
+
+**Accounts.** EuRIS blijkt niet nodig (geen historie-endpoint; de auth-endpoints geven je
+eigen schepen; 14 van 1.842 tracks hebben MMSI ≠ 0). GFW wel — token staat buiten git en
+is getoetst. Bonus: de EuRIS-ArcGIS-laag ligt anoniem open met 7.122 vaarwegsecties incl.
+CEMT én max diepgang.
+
+**Gepusht** `c0c2b73..ed24837` in vijf commits. **Open:** visuele check van Lars.
+
 ## 2026-07-26 (middag) - M28 · wereldwijde dekkingsmeting, Class B-vondst, collector op wereldabonnement
 Lars: *"de dekking van de AISstream pings lijkt wel een heel stuk slechter dan op hun website
 omschreven."* Half waar — en dat onderscheid was de sessie. **Het meeste zwart op de bol was

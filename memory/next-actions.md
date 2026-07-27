@@ -1,27 +1,44 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-27 (M28: heel-VS-tracks live, volgende = de TRACK-GRAAF)*
+*Last updated: 2026-07-27 (M28 fase 1-3 af: vijf bronnen, track-graaf, MARNET, live ?v=090)*
 
-## 🔴 START HIER — M28 · LAR-530 in zijn NIEUWE vorm: de track-graaf
+## 🔴 START HIER — de visuele check, en daarna de losse eindjes
 
-**⚠️ Besluit Lars 2026-07-27: GEEN centerline-bundeling** — stap 4 van het oude
-issue-plan hieronder vervalt. De tracks zelf zijn het net:
+**M28 fase 1-3 is af en staat live op `?v=090`** (gepusht `c0c2b73..ed24837`). De
+track-graaf staat (`bouw_trackgraaf.py`), MARNET hecht erop (`hecht_marnet.py`), en de
+bol draagt vijf bronnen. Wat nu openstaat:
 
-1. **Track-graaf bouwen** — knopen waar tracks elkaar raken (~200 m gekwantiseerd),
-   edge-geometrie = de échte gevaren lijn (géén celcentra: dat gaf −7,4% en hoekigheid;
-   de echte lijn gaf −0,1% op de Vidalia-toets). Op-/afvaart als eigen banen
-   (`dlat`/`dlon` zit al op elke track). VS eerst (data compleet: 28 dagen,
-   `build-cache/ais/tracks/vs-landelijk.jsonl.gz`, 510.510 tracks).
-   **Acceptatie: New Orleans→Vidalia** (snap ≤0,5 km, lengte ±paar %, via echte
-   geometrie) **en R'dam→Duisburg** op de collector-set.
-2. **MARNET-aanhechting** in de overlapzone (tracks lopen 40-80 km de zee op — daar
-   liggen MARNET-knopen; hecht op echte geometrie i.p.v. een 50 km-schuine snap).
-3. **Terminal-nodes (LAR-531)** uit de track-eindpunten: "einde been = aangelegd"
-   clustert al zichtbaar op de dokken (Memphis President's Island, Syrah Vidalia 55×).
-4. **Europa wekelijks meebakken** (collector dikt ~850 MB/dag aan; zelfde
-   `bouw_tracks.py --bron`).
-5. **Agent-rapporten verwerken** (4 agents: Europa/Scandinavië · Canada/Oceanië ·
-   Azië · Z-Amerika/Afrika/globaal) → per regio bronbesluit: eigen archief /
-   collector / MARNET+density.
+1. **Visuele check van Lars op `?v=090`** — https://larswalters.github.io/grondstoffen-atlas/v2/?vers=090
+   HUD-laag "AIS-tracks" staat default uit. Kijken bij Natchez/Vidalia (bundel draden ín
+   de geul), de Maasvlakte (op-/afvaart als eigen banen), en de nieuwe gebieden:
+   Sont/Grote Belt/Kattegat, de Noorse fjorden, Newcastle/Port Hedland.
+   ⚠️ Eerlijk vooraf: in de Deense straten en de Mississippi-delta verzadigt de bundel
+   naar crème-wit en is richting niet meer afleesbaar (prijs van 0,55 opacity bij die
+   dichtheid), en Australië oogt grover — dat is AMSA's eigen korrel van 21 km per stap.
+2. **De New Orleans-coördinaat is een stadscentroïde, geen kade** — daardoor faalt de
+   snap-eis (0,726 tegen ≤0,5 km) terwijl geen enkele van 510.752 tracks daar binnen
+   0,5 km komt. De echte loskade van het Balama-vlok opzoeken en `gr-port-neworleans` in
+   `data/graphite.js` vervangen. Zelfde klasse als de eerdere `data/*.js`-datafouten.
+3. **Terminal-nodes (LAR-531)** uit de track-eindpunten — het dok-bewijs ligt er al:
+   119 tracks eindigen en 133 beginnen binnen 3 km van de Syrah-kade, en elke
+   track-uiteinde-cel is al een knoop in de graaf.
+4. **GFW uitwerken voor de nul-dekking-corridors** (Chili/koperbeen, Hormuz, Lobito,
+   Suez, Constanța). Token staat in `~/.claude/grondstoffen-atlas.env` en is getoetst
+   (rooktest 200; presence-rapport Patache–Antofagasta 3.577 rijen / 27.741
+   aanwezigheidsuren). ⚠️ Korrel is 1 positie/uur → corridorlaag, geen geul; en gebruik
+   `datasets%5B0%5D=` in de URL, want bash leest `[0]` als glob.
+5. **De EuRIS-vaarweglaag verwerken** — 7.122 secties met CEMT **én max diepgang** van de
+   beheerder zelf, al anoniem binnengehaald in `build-cache/ais/euris/`. Dat is de echte
+   diepgang-meting die LAR-514 eiste. De Donau valt in 8 componenten uiteen met gaten van
+   3 m tot 2 km = de bekende LAR-520-klasse; de bestaande twee-traps heal volstaat.
+6. **Overweeg een VPS-endpoint voor de tracks-laag** — `aistracks-pilot.json` ging van
+   21,4 naar 39,5 MB en groeit met elke bron. Voor de pings-laag is die keuze al gemaakt
+   (*"geen databestanden in de git-history"*); hier komt hetzelfde punt in zicht.
+7. **De graaf op de andere corridors draaien** — nu bewezen op Mississippi en Rijn.
+   Let op: connectors zijn corridor-gebonden, dus elke nieuwe corridor vraagt een eigen
+   `hecht`-run. Globale bovengrens al gemeten: 1.211 van 9.633 MARNET-zeeknopen hebben
+   over alle bronnen een trackpunt binnen 0,5 km.
+8. **Collector blijft aandikken** — wekelijks `haal_ais_data.py` + `bouw_tracks.py --bron`.
+   VPS-schijf: 21 GB vrij, ~844 MB/dag = ~24 dagen marge.
 
 ## Ouder (deels vervallen) — het oorspronkelijke LAR-530-plan
 

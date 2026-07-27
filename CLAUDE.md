@@ -1,9 +1,102 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (M28: MarineCadastre = VS-bron, heel-VS-tracks op de bol, tracks = het net)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-27 (M28 fase 1-3: vijf bronnen, de track-graaf, MARNET via raakpunt, live ?v=090)*
+
+> **🗺️ M28 FASE 1-3 · VIER BRONNEN ERBIJ, DE TRACK-GRAAF STAAT, VIJF BRONNEN OP DE BOL
+> (2026-07-27, LAATSTE).** Live **`?v=090`** (gepusht `c0c2b73..ed24837`), **visuele check
+> van Lars staat uit**. Drie nieuwe archiefbronnen, alle registratievrij: **DMA** 28 dagen
+> → 170.811 tracks (Rødby–Puttgarden −0,8%) · **Kystdatahuset** 26 van 28 dagen → 9.041
+> (géén token: swagger `security: None`; Moss–Horten −1,8%) · **AMSA** 4 maanden → 54.269.
+> Plus de collector ververst. **768k tracks / 55 mln km** over vijf sets.
+>
+> **⚠️ DE KORREL PER BRON IS DE MAAT DIE ALLES STUURT, niet het ping-interval.**
+> Punt-tot-punt binnen de tracks: DK 0,249 km · NO 0,265 · VS 0,269 · collector 0,453 ·
+> **AMSA 20,43**. Op snelheid gesplitst springt een varend schip bij AMSA 21,5 km per
+> stap, óók binnen de havenvakken (Newcastle 13,7 · Port Hedland 15,1) — de 2-3 km die je
+> daar zonder die splitsing ziet zijn wáchtende schepen op de ankerplaats. Lars zag het
+> meteen (*"1 ping per uur, krijg je nooit mooie tracks toch?"*). Gevolg: **AMSA gaat niet
+> de graaf in** maar wordt corridor-/dekkingslaag, en de knip-waarden zijn **CLI-parameters**
+> geworden — de bron bepaalt de korrel, niet het recept.
+>
+> **⚠️ BUG: DE SNELHEIDSGUARD IS SCALE-BLIND.** `MAX_KNOPEN=40` rekent km/uur, dus over een
+> lang datagat wordt élke afstand plausibel. **2.214 valse lassen** (VS 1.529 / 107.801 km ·
+> DK 610 · NO 15 · collector 60), **alle** eronderdoor geglipt; de ergste met punt [29] in
+> San Francisco en punt [30] in Providence Rhode Island — **4.392 km in 61 uur = 38,9 kn**,
+> een dubbel-MMSI. Waarom het ertoe deed: een rechte koorde van 189 km waar de rivier 250 km
+> meandert is precies de sluipweg die een kortste-pad-router kiest. **Fix = na-conditie op de
+> uitvoer** (`knip_op_gaten`), niet een extra tak: een track mag geen segment bevatten dat
+> én een gat > `KNIP_MIN` én een afstand > `GAT_MAX_KM` overbrugt. Twee toetsen samen, want
+> elk apart is onschuldig — een sluispassage van 66 min legt 0,04 km af. Alle sets herbouwd
+> → **0**, korte stops intact, twee runs byte-identiek.
+>
+> **✅ BESLUIT LARS — GEEN BUNDELING, EN EEN EDGE IS EEN VERWIJZING.** *"Veel tracks is juist
+> de bedoeling… als er hele tracks vanaf de juiste zeehaven naar de juiste fabriekshaven
+> liggen gebruiken we die specifiek voor die route, dat is het mooiste."* Twee lagen:
+> **laag 1** = hele-track-match (die track ís de route), **laag 2** = graaf op raakpunten
+> (~200 m) voor reizen die geen enkele track dekt. Een edge = `(set, regelnummer, i0, i1)`
+> + knoop-ids + echte km, dus de geometrie staat **exact één keer** in de trackset:
+> niet-bundelen kost geen opslag én er is per constructie **geen plek waar een gemiddelde of
+> celcentrum in een edge kán sluipen**. Bewijs: Vidalia **+0,3%** (432,3 km), alle 1.363
+> routepunten letterlijk gelijk aan het brontrackpunt, en de toets die écht kon weerleggen —
+> **0 van 2.726 coördinaten heeft meer dan 5 decimalen** terwijl de ruwe AIS-korrel er 5 ís.
+> Niet-gebundeld is apart gemeten: op 9 proefpunten exact evenveel verschillende tracks
+> binnen 200 m in de ruwe data als in de graaf (367/367, 1.403/1.403).
+>
+> **✅ CORRECTIE LARS — twee geulen om een eiland komen boven en onder juist WÉL samen** in
+> één gedeelde knoop. De waarschuwing *"bundel-afstand kleiner dan de eiland-schaal"* hoorde
+> bij de **geschrapte** centerline-stap en wees de verkeerde kant op; zonder die samenkomst
+> liggen er twee losse parallelle netwerken en kan er niets langs routeren — de gevaarlijkste
+> foutmodus, want de graaf lijkt dan compleet. Getoetst op drie eilanden: elke arm apart
+> routeerbaar door de andere te blokkeren, armen delen precies 2 knopen.
+>
+> **⚠️ ROUTEREN GAAT OVER HALTES, niet over knoop-cellen** — met cellen is overstappen gratis
+> en telt niemand de naad: gemeten **78,6 km onverantwoord (−19,6%)**. En een gratis
+> aanhechting is niet neutraal: zónder overstap-prijs wint een MARNET-laan die **50,1 km
+> langer** is dan de waargenomen lijn, met 0,02% verschil — een muntworp.
+>
+> **MARNET HECHT VIA EEN RAAKPUNT, GEEN SNAP** (`hecht_marnet.py`): opnemen alleen als er een
+> graafknoop binnen 0,5 km ligt, **geen terugval** naar de dichtstbijzijnde-hoe-ver-ook (dat
+> is de schuine snap die Whitby/Rostock 58 km wegteleporteerde). Verlengen, niet verplaatsen:
+> **0 van 115 (Mississippi) en 0 van 74 (Rijn) havensnaps verschuiven**. Winst: Arkansas City
+> 349,5 → 0,342 km · Vidalia 177,5 → 0,400 · Nijmegen 79,1 → 1,85 · Waalhaven 1,79 → **0,044**.
+> Scherpste keten-controle: **EMO-kade → Shanghai 19.606,0 km tegen de invariant 19.610 =
+> −0,02%**, vanaf een ándere kade en dwars door de aanhechting heen. ⚠️ De **overlapzone uit
+> de spec (40-80 km) klopt voor geen enkele bron** — VS loopt tot 2.045 km de oceaan op, DK
+> 389, collector 852, NO nergens verder dan 20,8 — en de bruikbare overlap zit **bij de kust**,
+> waar MARNET zijn havenknopen heeft. Eigen defect dat de agent zelf mat: *"MARNET-zee =
+> soort 0"* knipt **Suez en Panama doormidden** — geen foutmelding, alleen een lengte
+> (R'dam→Shanghai 25.020 i.p.v. 19.610).
+>
+> **⚠️ WESEL BLIJFT OPEN, BEWUST.** 0 van 35.237 collector-tracks raakt lon 6,45-6,60, dus
+> R'dam→Duisburg **kán** niet compleet zijn. Opgeleverd als **diagnose**, niet als route; drie
+> onafhankelijke controles dat er geen edge overheen loopt. En de **New Orleans-snap faalt**
+> (0,726 tegen ≤0,5) omdat `gr-port-neworleans` in `data/graphite.js` een **stadscentroïde is,
+> geen kade** — geen enkele van 510.752 tracks komt daar binnen 0,5 km.
+>
+> **DE BOL:** dekkingsgedreven selectie over vijf bronnen, 33.147 lijnen / 1,85 mln punten /
+> 39,5 MB (13,9 gz), lazy en default uit. Kleur blijft **richting** (de bronnen zijn
+> geografisch bijna disjunct, dus kleuren-op-bron kost het enige signaal); wel per bron een
+> eigen subgroep zodat een bron los uit te zetten is zonder rebake. Attributies zijn
+> licentie-eis: NOAA/USACE · DMA · Kystverket NLOD · **AMSA CC BY-NC 3.0 AU (niet-commercieel)**
+> · eigen collector. Lokaal geverifieerd in een **echte headless Chrome via CDP** (de
+> Browser-pane composit geen frames — canvas 1×1, de M22-valkuil): 0 console-fouten, lazy
+> laden, toggle werkt, 60 fps, `?v=090` geverifieerd via `performance.getEntriesByType`.
+>
+> **ACCOUNTS:** EuRIS is **niet nodig** — de Tracks-API v3 heeft vier endpoints en de twee die
+> auth eisen (`followed`/`owned`) geven je eígen schepen; er is geen historie-endpoint, en de
+> privacyklasse is een instelling van de schipper (14 van 1.842 tracks hebben MMSI ≠ 0). Wel
+> anoniem binnengehaald: de **EuRIS-ArcGIS-laag met 7.122 vaarwegsecties incl. CEMT én max
+> diepgang** = de echte meting die LAR-514 eiste (Donau-lengtetoets +2,4%). **GFW** vraagt wél
+> een account; token staat in `~/.claude/grondstoffen-atlas.env` (buiten git) en is getoetst.
+> Correctie op de brief ná meting: GFW is géén anoniem raster maar levert rijen **mét MMSI,
+> scheepsnaam en type** per cel van 0,01° per uur — korrel blijft 1 positie/uur, dus
+> corridorlaag.
+> **→ VOLGENDE:** visuele check `?v=090` · New Orleans-coördinaat naar de echte kade ·
+> terminal-nodes LAR-531 · GFW voor de nul-dekking-corridors · EuRIS-vaarweglaag verwerken ·
+> overweeg een VPS-endpoint voor de tracks-laag (21,4 → 39,5 MB en groeiend).
 
 > **🇺🇸 M28 · MARINECADASTRE = DE TWEEDE BRON — HEEL-VS-TRACKS OP DE BOL, EN DE TRACKS ZÍJN
-> HET NET (2026-07-27, LAATSTE).** Live **`?v=089`** (commits t/m `d5500e4`), HUD-laag
+> HET NET (2026-07-27, eerder).** Live **`?v=089`** (commits t/m `d5500e4`), HUD-laag
 > **"AIS-tracks VS (pilot)"**: 18.609 doorvaarten, amber = opvaart / ijsblauw = afvaart.
 >
 > **DE BRON.** Op Lars' vraag naar extra bronnen bleek **MarineCadastre (NOAA/USACE)**
@@ -2043,6 +2136,27 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-27 · Geen bundeling; een edge is een VERWIJZING (besluit Lars)** — alle
+  doorvaarten blijven; een edge = `(set, regelnummer, i0, i1)` + knoop-ids + echte km, dus de
+  geometrie staat exact één keer in de trackset. Maakt niet-bundelen gratis in opslag én
+  onmogelijk dat er een gemiddelde of celcentrum in sluipt (bewijs: 0 van 2.726 coördinaten
+  heeft >5 decimalen, de ruwe AIS-korrel ís 5).
+- **2026-07-27 · Twee geulen om een eiland komen boven en onder WEL samen (correctie Lars)** —
+  de "niet samensmelten"-waarschuwing hoorde bij de geschrapte centerline-stap. Zonder
+  gedeelde junctieknopen liggen er twee losse parallelle netwerken en kan er niets langs.
+- **2026-07-27 · Routeren over HALTES, niet over knoop-cellen** — met cellen is overstappen
+  gratis en telt niemand de naad: 78,6 km onverantwoord (−19,6%).
+- **2026-07-27 · MARNET hecht via een raakpunt, geen snap** — opnemen alleen bij een graafknoop
+  binnen 0,5 km, geen terugval naar de dichtstbijzijnde-hoe-ver-ook. Verlengen ≠ verplaatsen:
+  0 van 115 en 0 van 74 havensnaps verschuiven. EMO→Shanghai 19.606 tegen invariant 19.610.
+- **2026-07-27 · De knip-waarden zijn bron-parameters, geen constanten** — AMSA levert met de
+  defaults 0 tracks uit 7,75 mln pings; `--knip-min`/`--stil-max`/`--gat-max-km` toegevoegd.
+- **2026-07-27 · AMSA gaat niet de graaf in maar wordt corridorlaag** — korrel 20,43 km per
+  stap (varend 21,5, ook in de havenvakken); een koorde van 20 km is slechter dan de al
+  afgekeurde celcentra. Voor het kade-eind is de eigen collector de betere bron.
+- **2026-07-27 · Het Wesel-gat wordt niet overbrugd** — 0 van 35.237 tracks raakt de strook;
+  opgeleverd als diagnose, niet als route. Geleende geometrie is tegen de projectregels en het
+  gat kan nog dichtlopen.
 - **2026-07-26 · Class B erbij in de collector (besluit Lars)** — `PositionReport` is
   uitsluitend Class A (msg 1/2/3); Class B komt binnen als `StandardClassB-`/
   `ExtendedClassBPositionReport` en `StaticDataReport`. Gemeten wereldwijd: 9.655 ber/min en
