@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laatst: vier visuele bevindingen van Lars, alle gemeten)*
+*Last updated: 2026-07-29 (nieuw: Cerrejón-cokesblend niet gedocumenteerd)*
+
+## ⚠️ OPEN 2026-07-29 — Cerrejón in de Schwelgern-cokesblend is niet gedocumenteerd
+Uit de fase D/E-research van de kolen-brief (A–E-omzetting): de gedocumenteerde
+Cerrejón→Duitsland-stroom is **krachtwerkkool** (RWE/STEAG/EnBW, ±31% importaandeel);
+geen enkele bron legt Cerrejón-kool expliciet in de cokesblend van de Kokerei
+Schwelgern. De keten pier→kokerei→hoogovens→OSW 1 klopt fysiek (één tk-terrein), maar
+de grondstof-koppeling voor dít been is een open punt (§5 van de brief). Uitzoeken vóór
+de Cerrejón→Ruhr-stroom op de bol gebakken wordt — anders tekent de atlas een stroom
+waarvan het laatste been niet bij deze mijn hoort.
 
 ## ✅ OPGELOST 2026-07-28 (laatst) — vier dingen die Lars op de bol zag
 Alle vier eerst gemeten, toen pas gefixt. Ze horen bij elkaar want ze verklaren waarom

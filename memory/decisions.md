@@ -1,7 +1,37 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-26 (M28: wereldabonnement + Class B in de collector)*
+*Last updated: 2026-07-29 (routebrief: mijn→eindproduct + toetsbaarheidsregels)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-29 - De routebrief loopt van mijn tot EINDPRODUCT (besluit Lars)
+Fasen A–E met doorlopende been-ids; na de raffinaderij komt de fabriek en daarna wat daar
+nog op volgt, met dezelfde bewijslast. Verwerkingsknopen (smelter/fabriek) krijgen een
+eigen blok met anker-id, eigenaar, volume-in/uit en bijproduct — zo is controleerbaar of
+de volumes over de knoop kloppen. Eén brief = één streng: een gedeeld been wordt in één
+brief uitgeschreven, de andere verwijst (anders lopen twee versies stil uit elkaar).
+Het stoppunt van fase E wordt beargumenteerd; een markt-centroïde is expliciet géén anker.
+Sjabloon: `v2/design/routebrieven/_template.md`.
+
+## 2026-07-29 - Zelfverificatie is het doel; de productvraag is een verplichte ladder
+Lars: *"het idee van de brief is dat het zo smooth mogelijk gaat zonder dat ik hoef te
+checken."* Dus: satelliet-gelegd = de máker keek zelf op de stitch (bewezen werkbaar bij
+de ankercheck: 10 van 16 fouten zelf gevonden); Lars' blik is een realisme-check; alleen
+§5-openstaande punten gaan expliciet naar hem terug. De productvraag staat als 6-staps
+ladder (product → faciliteit → partijen → déze stroom → kade → coördinaat+satelliet) bij
+élke laad-/overslag-/losplek, mét uitsluitingen — die leveren meteen de negatieve ankers.
+
+## 2026-07-29 - Toetsbaarheidsregels na tegenspraak (zes stuks, elk met bewijs)
+(1) Vaste notatie **lat, lon** met decimale punt, ankers 5 decimalen — de eerste
+Collahuasi-versie had lat,lon- én lon,lat-regels in dezelfde kolom; daar struikelt elke
+controle. (2) Negatieve ankers als tabel mét coördinaat + **verbodsstraal** — "niet via
+Yangshan" is anders niet meetbaar. (3) **Marge per punt** instelbaar — de geslaagde
+Beilun→Guixi-toets raakte corridorpunten op 0,8–6,4 km; een vaste 2 km had die correcte
+route afgekeurd. (4) **Routeerpunt naast anker** + max snap per been-uiteinde — anders is
+een goede snap niet van een foute te onderscheiden (Beilun: berth in het water, spoor
+eindigt bij het ertsveld — 1,3 km is dáár correct). (5) Overslag = **elke drager-wissel**,
+óók transshipment (deepsea→feeder) en lightering binnen dezelfde modaliteit. (6)
+**been-ids** + het reële alternatief (Zhangjiagang-klasse) als eigen punt-type met
+aandeel — geen referentie, geen negatief anker.
 
 ## 2026-07-28 - Een bron-coördinaat is een KANDIDAAT; pas satelliet-gelegd is het een anker
 Werkwijze §2 krijgt een status bóven *bevestigd*: **satelliet-gelegd**, verplicht voor

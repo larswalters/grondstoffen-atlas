@@ -1,5 +1,28 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laat: de anker-check — de corridors kloppen, de uiteinden niet)*
+*Last updated: 2026-07-29 (routebrieven van mijn tot eindproduct: sjabloon + vijf brieven omgezet)*
+
+## Stand 2026-07-29 — de brief dekt de hele keten, en verifieert zichzelf
+
+**De routebrief loopt nu van mijn tot eindproduct** (besluit Lars): fasen A–E met
+doorlopende been-ids, verwerkingsknopen met volume-in/uit, en één brief = één streng.
+Na kathode komt de fabriek (folie, walsdraad, cellen) en dat vervolgbeen draagt dezelfde
+bewijslast als fase A–C. De **productvraag** is geen losse tip meer maar een verplichte
+6-staps ladder per laad-/overslag-/losplek, mét de uitsluitingen (die leveren meteen de
+negatieve ankers). En het doel staat expliciet in §1: **zelfverificatie** — de maker doet
+de satellietpass zelf; Lars' check is een realisme-blik, geen bug-jacht.
+
+**Een tegenspraak-ronde (op Lars' vraag "dekken we alle situaties?") ving zes
+toetsbaarheids-gaten**, elk met bewijs uit eigen werk: vaste lat,lon-notatie (de
+Collahuasi-brief mixte lat,lon én lon,lat in één kolom), negatieve ankers mét
+verbodsstraal, marge per punt (vaste 2 km had de bewezen-goede Beilun→Guixi-route
+afgekeurd), routeerpunt naast anker, overslag = elke drager-wissel (óók
+transshipment/lightering), been-ids + het reële alternatief als eigen klasse.
+
+**De omzetting van de vijf bestaande brieven ging per ultracode-workflow** (12 agents:
+5 omzetters + 5 toetsers + 2 herstellers, alle toetsen geslaagd) — en de eigen review
+daarna bevestigde: geen status-inflatie (elke satelliet-gelegd-status is een van de
+zeven ankercheck-correcties; kolen eerlijk op nul), niets uit de oude brieven verloren.
+Nieuwe D/E-ankers wachten expliciet op hun z16-pass (per brief in §5).
 
 ## Stand 2026-07-28 (laat) — de fout zit stelselmatig in kop en staart
 

@@ -1571,3 +1571,22 @@ water bij de kolen-jetty → containerterminal oostoever satelliet-gelegd
 de echte toegangsweg/havenstraten (ankerstukjes 0,39/0,12 km). Visuele go:
 *"oke ziet er goed uit."* Werkwijze-les in memory: bron-coördinaat ≠ anker tot hij
 op satelliet gelegd is (2× bewezen). Commits `97feb2e` · `231577d`.
+
+## 2026-07-29 — routebrieven van mijn tot eindproduct (A–E): sjabloon + vijf brieven omgezet
+Besluit Lars: een brief stopt niet bij kathode — fasen A–E, doorlopende been-ids,
+verwerkingsknopen met volume-in/uit, één brief = één streng. Productvraag = verplichte
+6-staps ladder per laad-/overslag-/losplek mét uitsluitingen; zelfverificatie expliciet
+(satelliet-gelegd = de maker keek zelf; Lars = realisme-blik). Tegenspraak-ronde ving zes
+toetsbaarheids-gaten (lat,lon-notatie — de Collahuasi-brief mixte beide volgordes;
+verbodsstralen; marge per punt, want 2 km vast had de goede Beilun→Guixi-route afgekeurd;
+routeerpunt naast anker; drager-wissel = overslag óók bij transshipment/lightering;
+been-ids + reëel alternatief als klasse). Sjabloon `_template.md` + werkwijze: commit
+`a54f0c9`. Omzetting via ultracode-workflow, 12 agents (5+5+2), alle toetsen geslaagd:
+fase D/E per stroom met bronnen — Collahuasi → 铜冠铜箔-folie (zelfde 经开区) · Escondida →
+JCC-walsdraad (eigen complex) · Lobito → Deutsche Giessdraht Emmerich (ongedocumenteerd →
+2 varianten, niet tekenen) · grafiet → Panasonic De Soto → Lucid AMP-1 (Tesla stopt aan de
+poort) · kolen → Kokerei → hoogovens → OSW 1 (één tk-terrein). Commit `2ba6d55`. Eigen
+review: geen status-inflatie, niets verloren. ⚠️ Open: Cerrejón-cokesblend-bron ontbreekt
+(gedocumenteerde stroom = krachtwerkkool). Volgende: z16-passes D/E-ankers · route-toets
+D/E-benen · kolen-ankers satelliet-leggen.
+Vault: [[2026-07-29-grondstoffen-atlas-routebrieven-mijn-tot-eindproduct]]

@@ -1,4 +1,47 @@
-> **🚢 VIER STROMEN OP DE EXACTE KADES — LIVE `?v=099` (2026-07-28, LAATSTE).**
+> **📖 DE ROUTEBRIEF LOOPT NU VAN MIJN TOT EINDPRODUCT — SJABLOON + 5 BRIEVEN OMGEZET
+> (2026-07-29, LAATSTE).** Commits `a54f0c9` (spec + `v2/design/routebrieven/_template.md`)
+> · `2ba6d55` (vijf brieven), docs-only, geen `?v=`-bump.
+>
+> **Besluit Lars: een brief stopt niet bij kathode.** Fasen **A–E** (mijn→zeehaven · zee ·
+> aanlanding→smelter · raffinaat→fabriek · fabriek→eindproduct), doorlopende been-ids,
+> verwerkingsknopen met volume-in/uit, **één brief = één streng** (gedeeld been in één
+> brief uitgeschreven, de ander verwijst). De **productvraag** is een verplichte 6-staps
+> ladder per laad-/overslag-/losplek mét uitsluitingen, en het doel is **zelfverificatie**:
+> satelliet-gelegd = de maker keek zelf op de stitch; Lars' check = realisme-blik.
+>
+> **Na tegenspraak zes toetsbaarheids-regels erbij** (werkwijze §2/§2b/§4): vaste
+> **lat,lon-notatie** met decimale punt (de Collahuasi-brief mixte lat,lon én lon,lat in
+> één kolom!) · negatieve ankers als tabel **mét verbodsstraal** · **marge per punt**
+> (vaste 2 km had de bewezen-goede Beilun→Guixi-route afgekeurd — punten geraakt op
+> 0,8–6,4 km) · **routeerpunt naast anker** + max snap per been-uiteinde · overslag =
+> **elke drager-wissel**, óók transshipment (deepsea→feeder) en lightering ·
+> **been-ids** (`<stroom-id>-b<n>`) + het reële alternatief (Zhangjiagang-klasse) als
+> eigen punt-type. Machine toetst lengte/volgorde/verboden/plausibiliteit; de
+> juiste-pier-vraag blijft productvraag + satelliet + eigen oog (de Waalhaven-klasse is
+> niet meetkundig te vangen).
+>
+> **De omzetting: ultracode-workflow met 12 agents** (5 omzetters + 5 toetsers + 2
+> herstellers; alle toetsen geslaagd; ~3,46M subagent-tokens, ~41 min; les: workflow-`args`
+> kan als JSON-string binnenkomen → in het script normaliseren vóór `pipeline()`).
+> Fase D/E per stroom, alles met bronnen: **Collahuasi** → 铜冠铜箔-koperfolie in dezelfde
+> 经开区 (stop bij de foliefabriek; afnemers alleen op bedrijfsniveau) · **Escondida** →
+> JCC-walsdraadfabriek op hetzelfde Guixi-complex (spooruitvoer 贵溪北 = markt-vertakking)
+> · **Lobito** → Deutsche Giessdraht Emmerich als enige corridor-kandidaat (koppeling
+> ongedocumenteerd → twee varianten, niet tekenen) · **grafiet** → Panasonic De Soto
+> (Lucid-contract) → cellen naar Lucid AMP-1 Casa Grande; Tesla-streng stopt beargumenteerd
+> aan de poort · **kolen** → Werkshafen → Kokerei → hoogovens → OSW 1 Bruckhausen, één
+> tk-terrein (benen gestippeld: eigen terrein/werkspoor).
+> **Eigen review vóór de commit: géén status-inflatie** — elke satelliet-gelegd-status in
+> de statuskolommen is een van de zeven doorgevoerde ankercheck-correcties (kolen eerlijk
+> op nul), tabelrijen ~3–5× gegroeid zonder verlies, ladders overal (in variantvormen).
+> **⚠️ Kolen-bevinding uit de D/E-research:** de gedocumenteerde Cerrejón→DE-stroom is
+> **krachtwerkkool** (RWE/STEAG, ±31% importaandeel); een bron die Cerrejón in de
+> Schwelgern-cokesblend legt ontbreekt → open punt vóór de Cerrejón→Ruhr-stroom.
+> **→ VOLGENDE:** z16-passes voor de nieuwe D/E-ankers (per brief §5 gelijst) ·
+> route-toets (dekking/verklikker) voor de D/E-benen zodra die stromen gebakken worden ·
+> de vier kolen-ankers satelliet-leggen + de cokesblend-bron.
+
+> **🚢 VIER STROMEN OP DE EXACTE KADES — LIVE `?v=099` (2026-07-28, eerder).**
 > De zeven goedgekeurde ankercorrecties zijn **doorgevoerd** (de zes koper-ankers in
 > `v2/tools/maak_aansluitingen.py` = de redactionele lijst die `aansluitingen.json`
 > genereert, plus `gr-port-neworleans` in `data/graphite.js`), de grafietketen is
@@ -75,7 +118,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (laat: de anker-check — 10 van 16 kop/staart-ankers fout, live ?v=097)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (routebrieven van mijn tot eindproduct: sjabloon + 5 brieven omgezet)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2352,6 +2395,19 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-29 · De routebrief loopt van mijn tot EINDPRODUCT (besluit Lars)** — fasen A–E
+  met doorlopende been-ids; verwerkingsknopen met volume-in/uit; één brief = één streng
+  (gedeeld been in één brief uitgeschreven, de ander verwijst — anders lopen twee versies
+  van dezelfde corridor stil uit elkaar). Leeg sjabloon: `v2/design/routebrieven/_template.md`.
+- **2026-07-29 · De productvraag is een verplichte ladder, en de brief verifieert zichzelf** —
+  6 stappen per laad-/overslag-/losplek incl. uitsluitingen; *satelliet-gelegd* = de maker
+  keek zelf op de stitch (Lars' check = realisme-blik; alleen §5-openstaande punten gaan
+  naar hem terug).
+- **2026-07-29 · Toetsbaarheidsregels na tegenspraak** — vaste notatie lat, lon met decimale
+  punt (ankers 5 decimalen); negatieve ankers als tabel mét verbodsstraal; toets-marge per
+  punt instelbaar (vaste 2 km had de goede Beilun→Guixi-route afgekeurd); routeerpunt + max
+  snap bij elk been-uiteinde; overslag = elke drager-wissel (óók transshipment/lightering);
+  been-ids + het reële alternatief als eigen punt-klasse naast referentie/negatief anker.
 - **2026-07-28 · Een bron-coördinaat is een KANDIDAAT; pas satelliet-gelegd is het een anker** —
   werkwijze §2 krijgt een status bóven *bevestigd*, verplicht voor laadplek/overslag/losplek,
   op z16 (route-uiteinden zijn kleiner dan de z13-korrel). Bij de eerste systematische

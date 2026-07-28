@@ -1,5 +1,30 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laatst: correcties doorgevoerd + herbakt, `toets_ankers.py` staat)*
+*Last updated: 2026-07-29 (routebrieven A–E omgezet; z16-passes voor de D/E-ankers open)*
+
+## 🔴 NIEUW 2026-07-29 — na de routebrief-omzetting naar mijn→eindproduct
+
+1. **z16-satellietpasses voor de nieuwe fase D/E-ankers** — per brief gelijst in §5.
+   O.a.: 铜冠铜箔-foliefabriek (Tongling 经开区) · JCC-walsdraadfabriek (Guixi-complex) ·
+   Deutsche Giessdraht Emmerich (OSM-terrein 51.82811, 6.26387) · Panasonic De Soto
+   (38.93815, -95.00240) · Lucid AMP-1 Casa Grande (32.85685, -111.77844) · de
+   tk-terreinankers (Werkshafen/Kokerei/hoogovens/OSW 1). Statussen zijn nu eerlijk
+   bevestigd/aannemelijk — pas na de pass worden het ankers.
+2. **Route-toets voor de D/E-benen op de bol** zodra die stromen gebakken worden —
+   checklist §8 dekt A–E, maar dekking/verklikker zijn voor de nieuwe benen nog niet
+   gedraaid (de stromen op de bol eindigen nu nog bij de smelter).
+3. **Kolen vóór de Cerrejón→Ruhr-stroom:** de vier kolen-ankers satelliet-leggen (de
+   brief noteert eerlijk nul satelliet-gelegd) én de **cokesblend-bron** uitzoeken —
+   de gedocumenteerde Cerrejón→DE-stroom is krachtwerkkool (zie `bugs-and-risks.md`).
+4. **Lobito fase D:** de Deutsche Giessdraht-koppeling documenteren, of de
+   twee-varianten-vorm (Ruhrort-entrepot vs rechtstreeks Emmerich) bewust laten staan
+   — de brief tekent hem nu terecht niet.
+
+## ✅ AFGEROND 2026-07-29 — sjabloon + werkwijze A–E + vijf brieven omgezet
+
+Werkwijze §1a/§1b/§2a/§2b + `_template.md` (commit `a54f0c9`); 12-agent-workflow zette
+alle vijf brieven om mét fase D/E-research (commit `2ba6d55`). Details:
+`session-summaries.md` en de vault-samenvatting
+[[2026-07-29-grondstoffen-atlas-routebrieven-mijn-tot-eindproduct]].
 
 ## ✅ AFGEROND 2026-07-28 (laatst) — de zeven correcties + de herbake + de opruiming
 
