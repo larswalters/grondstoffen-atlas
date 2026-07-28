@@ -6,6 +6,11 @@ voorbij de haven, vier fouten per sessie). Zijn formulering: "wat is de echte ro
 in het echt maken, met elk dorp, regio of stad waar die doorheen rijdt — zodat je zelf
 doorhebt dat het goed of fout is."*
 
+*Aangescherpt 2026-07-28 na de eerste volledige keten (grafiet Balama→Vidalia). De brief
+droeg de corridor goed — de fouten zaten in **kop en staart**. Toegevoegd: de status
+**satelliet-gelegd** (§2), de last mile als eigen been (§3.4) en de stippellijn-conventie
+waar het net niet reikt (§7).*
+
 ---
 
 ## 1 · Wat een routebrief is
@@ -31,13 +36,29 @@ plaats van dat de fout pas bij Lars' visuele check bovenkomt.
 - **type**: laadplek · passage · station · kruising · rivierkruising · passeerspoor ·
   sluis/kering · vaarweg-overgang · overslag · losplek · **referentie (niet aan lijn)**.
 - **status**, met vaste betekenis:
+  - **satelliet-gelegd** — het punt is visueel gecontroleerd op een gestitchte
+    satellietoverlay (Esri World Imagery, **z16** met 0,01°-grid) en zo nodig verschoven.
+    **Verplicht voor elk punt van het type laadplek, overslag of losplek**: zo'n punt is
+    pas een anker ná deze stap, hoeveel bronnen er ook achter staan.
   - **bevestigd** — twee onafhankelijke bronnen, of OSM + één bron;
   - **aannemelijk** — één bron;
   - **onzeker** — genoteerd, nog niet gestaafd.
+
 - **Negatieve ankers zijn ook feiten.** Een plaats waar de route juist NIET langskomt
   terwijl bronnen dat suggereren (wegbeschrijvingen noemen vaak knooppunten die 3 km naast
   het spoor liggen) krijgt een eigen regel als *referentie (niet aan lijn)*. De getekende
   lijn mag zo'n punt niet raken.
+
+> ⚠️ **Waarom de satellietregel er staat: twee "bevestigde" onderzoekspunten bleken
+> visueel fout.** De New Orleans-"kade" was een stadscentroïde (van 510.752 VS-tracks
+> kwam er géén binnen 0,5 km), en het Nacala-kadepunt −14,531 / 40,652 lag in open water
+> bij de **kólen**-jetty op de **wéstoever** — terwijl de containerterminal waar de trucks
+> aankomen op de oostoever ligt (−14,5383 / 40,6673). Beide werden gevonden door Lars' oog
+> op de bol, niet door de brief. Een bron- of OSM-coördinaat is dus een *kandidaat*, geen
+> anker. Werkwijze (Tongling-ronde): tegels stitchen met PIL uit
+> `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}`,
+> grid + kandidaatpunt erover tekenen, schuiven tot het zichtbaar op de kade/laadplek ligt.
+> Route-uiteinden vragen z16 — een haven of fabriek is kleiner dan de z13-korrel.
 
 ## 3 · Kalibratie — welke punten erin horen
 
@@ -47,6 +68,13 @@ Niet elk gehucht. Wél:
    eerstvolgende bevestigde punt ná de splitsing (dat punt pint de gekozen tak).
 2. Om de **±25–50 km een genoemd anker**, zodat er maar één plausibel pad door de punten past.
 3. De **exacte kop en staart** (kade, laadspoor, pier) op ~50 m.
+4. **De last mile aan beide uiteinden, als eigen been.** Niet alleen "de mijn" en "de
+   kade", maar: laadplek op het terrein → poort → de openbare weg waar de corridor begint,
+   en aan de andere kant: kade/losspoor → havenstraat → fabriekspoort → losplek. Dit is
+   waar de grafietketen zijn laatste correctie kreeg — door kleine wegklassen
+   (`residential`/`service`/`tertiary`/`unclassified`) mee te nemen binnen 12 km van plant
+   en kade krompen de rechte ankerstukjes van **3,8 / 2,6 km naar 0,39 / 0,12 km**. Een
+   rechte stub naar het dichtstbijzijnde net is geen last mile.
 
 ## 4 · De toets is tweezijdig
 
@@ -73,7 +101,27 @@ brief-punt naar brief-punt. Twee gevolgen:
   overheen te routeren; de brief bepaalt de corridor, het net levert alleen de geometrie
   tussen de brief-punten.
 
-## 7 · Relatie met het komende AIS-net (corridor-first)
+## 7 · Waar het net niet reikt: de stippellijn (besluit Lars, 2026-07-28)
+
+Niet elke laad- of losplek hangt aan een net. Waar geen havenspoor, geen kade-aansluiting
+en geen tracks liggen, wordt dat stuk **gestippeld getekend mét de reden erbij** — het
+wordt niet dichtgemaakt met geleende of beredeneerde geometrie. De stippellijn betekent
+precies één ding: *hier reikt het net niet.*
+
+- Zo staan in de grafietketen de **haven-aanloop van Nacala** (~122 km: MARNET-knopen dun
+  bij Mozambique, geen AIS-tracks) en de **last mile Port of Vidalia → Syrah-fabriek**
+  (~1 km, geen net) erin.
+- **Reken erop dat dit terugkomt.** Gemeten over de hele wereldscan hebben Chili
+  (Patache/Antofagasta = het koperbeen), Lobito, Hormuz, Suez en Constanța **nul havens
+  met varend AIS-verkeer**. Voor die stromen is de stippellijn de **eindvorm**, geen
+  tussenstand — daar hoeft niet op gewacht of voor gebouwd te worden.
+- De brief noteert bij zo'n been de **reden** en, waar bekend, de werkelijke modaliteit
+  (short-haul truck, sleepboot, transportband, pijp). Daarmee blijft de kaart eerlijk over
+  wat gemeten is en wat geraden — dezelfde regel als "geen pad mét reden".
+- Doorgetrokken = we weten waar de lijn ligt. Gestippeld = eigen verbinding of geen net.
+  Die twee betekenissen mogen niet vervagen.
+
+## 8 · Relatie met het komende AIS-net (corridor-first)
 
 Voor het natte deel (havenaanloop + binnenwater) wordt de graaf niet langer uit
 dataset-verzoening opgebouwd maar **corridor-first**: de brief zegt *welke plekken in welke
