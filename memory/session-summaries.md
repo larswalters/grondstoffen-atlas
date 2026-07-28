@@ -1517,3 +1517,14 @@ rail→road, volumes EA-regime. CDP: 0 fouten. Commits `b4fb9e5`·`74ed9f8`·`56
 Open: Nacala-startgat 124 km · Golf-toegang onzeker · uitgaand/Mozambique-been niet
 getekend. Brief: `v2/design/routebrieven/grafiet-balama-vidalia.md`.
 Vault: [[2026-07-28-grondstoffen-atlas-m28-routebrief-grafiet]]
+
+## 2026-07-28 (eindstand) — keten mijn→fabriek compleet, go van Lars (`?v=094`)
+Na de routebrief-ronde (`?v=092`) dezelfde dag: (1) **keten begint bij de mijn**
+(`?v=093`): truckbeen Balama→Nacala over echte N380/N1 (`maak_stroombeen_weg.py`,
+M25-machinerie hergebruikt, +2,0% t.o.v. de brief), haven-aanloop gestippeld,
+truck amber. (2) **Lars' satelliet-check** (`?v=094`): Nacala-anker lag in het
+water bij de kolen-jetty → containerterminal oostoever satelliet-gelegd
+(-14.5383/40.6673); kleine wegklassen binnen 12 km van de ankers → last mile over
+de echte toegangsweg/havenstraten (ankerstukjes 0,39/0,12 km). Visuele go:
+*"oke ziet er goed uit."* Werkwijze-les in memory: bron-coördinaat ≠ anker tot hij
+op satelliet gelegd is (2× bewezen). Commits `97feb2e` · `231577d`.

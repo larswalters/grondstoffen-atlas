@@ -1,9 +1,27 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (routebrief grafiet stuurt de stroom — live ?v=092)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (einde dag: keten mijn→fabriek brief-gestuurd, live ?v=094, visuele go Lars)*
+
+> **✅ EINDE DAG 2026-07-28 — DE GRAFIETKETEN STAAT VAN MIJN TOT FABRIEK, GO VAN LARS
+> (`?v=094`, LAATSTE).** *"oke ziet er goed uit, we zijn klaar voor vandaag."* Na de
+> routebrief (banner hieronder) zijn dezelfde dag nog twee rondes gedraaid: **(1) de keten
+> begint bij de mijn** (`?v=093`, `97feb2e`) — truckbeen Balama→Nacala over échte
+> N380/N1-geometrie via nieuw `maak_stroombeen_weg.py` (hergebruik M25-wegcorridor-machinerie;
+> 494,7 km = +2,0% t.o.v. de brief), `--been-geojson` in `hecht_marnet route`, het 124 km-
+> MARNET-startgat als gestippelde haven-aanloop, truck = amber; **(2) last mile over de echte
+> weg + kade naar de containerterminal** (`?v=094`, `231577d`, op Lars' satelliet-check) — het
+> research-kadepunt lag in open water bij de kólen-jetty (westoever!), nieuw anker
+> satelliet-gelegd op de containerterminal oostoever (-14.5383/40.6673); kleine wegklassen
+> (residential/service/tertiary/unclassified) doen mee **binnen 12 km van plant/kade** →
+> toegangsweg + havenstraten gevolgd, ankerstukjes 3,8/2,6 → **0,39/0,12 km**; middenbenen
+> op 0,1 km ongewijzigd. ⚠️ **Werkwijze-les (2× bewezen):** een bron-/OSM-coördinaat is pas
+> een anker nadat hij op satelliet gelegd is (New Orleans-centroïde, Nacala-west-jetty) —
+> route-uiteinden verdienen een z16-stitch. **→ VOLGENDE:** volgende stroom = eerst brief
+> (kandidaten: REE-rondreis Long Beach→Fort Worth · kolen Cerrejón→Ruhr, brief bestaat al) ·
+> uitgaand been pas bij gedocumenteerde bestemming · GFW-corridors · EuRIS-laag · LAR-531.
 
 > **📋 M28 · DE ROUTEBRIEF CORRIGEERT DE KAART — GRAFIETSTROOM BRIEF-GESTUURD, LIVE `?v=092`
-> (2026-07-28, LAATSTE).** Op Lars' vier `?v=091`-observaties eerst de **routebrief**
+> (2026-07-28, eerder).** Op Lars' vier `?v=091`-observaties eerst de **routebrief**
 > geschreven (`v2/design/routebrieven/grafiet-balama-vidalia.md` — ~60 punten, 4
 > research-agents; kerndocument **DOE/EA-2181**), toen de kaart punt voor punt afgewerkt
 > (commits `b4fb9e5`·`74ed9f8`·`56402f1`).

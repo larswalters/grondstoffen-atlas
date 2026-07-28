@@ -1,7 +1,7 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-28 (de keten begint bij de mijn — live ?v=093)*
+*Last updated: 2026-07-28 (einde dag: keten mijn→fabriek af, ?v=094, visuele go Lars)*
 
-## ✅ AFGEROND 2026-07-28 — ROUTEBRIEF GRAFIET + KAART AFGEWERKT (`?v=092`)
+## ✅ AFGEROND 2026-07-28 — ROUTEBRIEF GRAFIET + KETEN MIJN→FABRIEK (`?v=092`→`?v=094`, GO LARS)
 
 Brief: `v2/design/routebrieven/grafiet-balama-vidalia.md` (~60 punten, DOE/EA-2181).
 Kaart brief-gestuurd: zeeschip via Southwest Pass · barge belading Port Allen · los
