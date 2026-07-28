@@ -1,5 +1,32 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-28 (de routebrief stuurt de stroom: brief eerst, dan punt voor punt de kaart)*
+*Last updated: 2026-07-28 (laat: de anker-check — de corridors kloppen, de uiteinden niet)*
+
+## Stand 2026-07-28 (laat) — de fout zit stelselmatig in kop en staart
+
+**De werkwijze is aangescherpt op de plek waar hij lekte.** De routebrief vroeg het
+detail al (elke splitsing, elk dorp, kop en staart op ~50 m) en leverde dat ook — maar
+de fouten die Lars ving zaten niet in de corridor, ze zaten in de **uiteinden**. Daarom
+staat er nu in `v2/design/routebrief-werkwijze.md`: **§2 status `satelliet-gelegd`**
+(elk laadplek-/overslag-/losplek-punt eerst op een gestitchte Esri-overlay op z16,
+vóórdat het anker heet), **§3.4 de last mile als eigen been** aan beide uiteinden, en
+**§7 de stippellijn-conventie** — waar geen havenspoor of kade-aansluiting ligt wordt
+het been gestippeld **mét reden** getekend, en voor Chili/Patache, Lobito, Hormuz, Suez
+en Constanța is dat de **eindvorm**, geen tussenstand.
+
+**De uitslag rechtvaardigt de regel: 10 van 16 ankers over vier stromen stond fout**,
+van 42 m tot 4,5 km. Escondida stond ín de open put, de Waalhaven op de dijk bij een
+woonwijk. **Het net bleek intussen beter dan gedacht:** het spoorbeen Beilun→Guixi, dat
+ik eerst als corridor-fout meldde, meet hermeten 550,5 km en slaagt volledig voor de
+tweezijdige toets van §4.
+
+**Het scherpste gereedschap is een vraag, geen tool** (Lars): *"welk product is dat, dan
+kun je toch checken waar ze dat verwerken of overslaan"*. Kathode is LME-leverbaar →
+LME-erkend entrepot → RHB aan Waalhaven Noordzijde 4. Die vraag hoort bij élke kade.
+
+**Gevolg voor de aanpak:** de satellietcheck per hand schaalt niet naar honderden
+punten. De volgende stap is een **verdachtenlijst** die mechanisch scoort (kade op
+water of land, afstand tot een OSM-pier, laadplek binnen het industrievlak,
+snap-afstand tot het eigen net) zodat het oog alleen naar de kop van die lijst gaat.
 
 ## Stand 2026-07-28 — de routebrief-werkwijze werkt intercontinentaal
 

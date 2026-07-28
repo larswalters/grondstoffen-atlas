@@ -1,6 +1,68 @@
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (einde dag: keten mijn→fabriek brief-gestuurd, live ?v=094, visuele go Lars)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (laat: de anker-check — 10 van 16 kop/staart-ankers fout, live ?v=097)*
+
+> **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
+> Live `?v=097` (commits `7890253` → `1424ffa`).
+>
+> **Werkwijze aangescherpt** in `v2/design/routebrief-werkwijze.md`: **§2 status
+> `satelliet-gelegd`** — elk laadplek-/overslag-/losplek-punt moet eerst op een gestitchte
+> Esri-overlay (z16, 0,01°-grid) zijn gelegd vóórdat het een anker heet, hoeveel bronnen er
+> ook achter staan · **§3.4 de last mile als eigen been** aan beide uiteinden (laadplek →
+> poort → openbare weg; kade → havenstraat → fabriekspoort) · **§7 de stippellijn-conventie**
+> (besluit Lars): geen havenspoor of kade-aansluiting → gestippeld **mét reden**, niet
+> dichtgemaakt met geleende geometrie, en voor Chili/Patache, Lobito, Hormuz, Suez en
+> Constanța is dat de **eindvorm**.
+>
+> **Drie nieuwe koper-routebrieven** (LAR-527, alle in `v2/design/routebrieven/`):
+> `koper-escondida-guixi.md` · `koper-collahuasi-tongling.md` · `koper-lobito-duisburg.md`.
+>
+> **⚠️ DE UITSLAG: 10 VAN 16 KOP/STAART-ANKERS STOND FOUT**, van 42 m tot 4,5 km, over vier
+> stromen. Escondida stond **ín de open put** (1,5 km van de concentrator waar de
+> slurryleiding begint) · Coloso op de kustweg bij het dorp (409 m) · Beilun waar de
+> transportband aan land komt i.p.v. op de losberth (1,2 km) · Patache op de wal (286 m) ·
+> **de Waalhaven op de dijk bij de woonwijk Heijplaat (4,5 km)** · Ruhrort net in het bekken
+> (42 m) · Napoleon Avenue aan de landzijde vóór het rangeerterrein (489 m). **Check
+> doorstaan:** Guixi (op z18 de spoorbundel met wagons en twee portaalkranen over een
+> losbunker), Tongling, Collahuasi, Balama-plant, Nacala, Syrah-fabriek. **Open** (ligplaats
+> niet aanwijsbaar op deze tegels): Lobito, Port Allen, Vidalia. **Lars keurde alle zeven
+> voorstellen goed — doorvoeren staat nog open** (zie `memory/next-actions.md`).
+>
+> **✅ DE PRODUCTVRAAG IS HET SCHERPSTE GEREEDSCHAP** (Lars): *"welk product is dat, dan kun
+> je toch checken waar ze dat verwerken of overslaan."* Kathode is LME-leverbaar metaal → dus
+> een LME-erkend entrepot → Rotterdam heeft daar een handvol partijen voor (Steinweg, RHB,
+> Metaal Transport, Access World) → **RHB Stevedoring & Warehousing, Waalhaven Noordzijde 4**
+> (1.060 m kade, non-ferro, LME-kwaliteit, colli tot 300 t) → kade satelliet-gelegd op
+> **51,8935 / 4,4585**. Die vraag hoort voortaan bij élke kade in een routebrief.
+>
+> **⚠️ CORRECTIE — HET SPOORBEEN BEILUN→GUIXI KLOPT WÉL.** Ik meldde het eerst als
+> corridor-fout (883 km tegen ~628 volgens de brief). Hermeten met `toets_spoorroute.mjs`:
+> **550,5 km** over 143 edges (verhouding 1,13 op de grootcirkel), **identiek met de oude én
+> de satelliet-gelegde ankers** omdat beide op dezelfde hoofdnet-knoop snappen. De tweezijdige
+> toets van §4 slaagt **volledig**: alle corridor-B-punten geraakt binnen 0,8–6,4 km (Ningbo,
+> Yunlong, Fenghua, Shengzhou, Dongyang, Yiwu, Jinhua, Longyou, Quzhou, Jiangshan, Yushan,
+> Shangrao, Hengfeng, Yiyang), alle corridor-A-punten gemeden (**Hangzhou 87,4 km ernaast**,
+> Shaoxing 56,5, Yuyao 45,9, Zhuji 31,2) en alle drie de negatieve ankers gemeden (Yingtan
+> 14,6 · Jingdezhen 98,5 · Nanchang 136,4 km). 550,5 tegen de brief-corridor ~556 km =
+> **−1,0%** → de router rijdt de **甬金-vrachtlijn** (Ningbo–Yiwu, 188,3 km, geopend
+> 2023-12-31, vracht vanaf 2024-01-10), precies zoals de brief uit bronnen afleidde. De 883 km
+> kwam uit de heal-ronde van 24 juli, op een ouder netstadium en tussen andere punten.
+> **Werkregel eruit: noem bij een lengtemeting altijd het gereedschap, beide eindpunten en het
+> netstadium — anders wordt een oud getal een nieuwe conclusie.**
+>
+> **De les van deze ronde:** het net is beter dan gedacht en de ankers slechter — de fouten
+> zitten stelselmatig in **kop en staart**, niet in de corridors ertussen.
+>
+> **Nieuw gereedschap** (scratchpad): `sat_check.py` (Esri-tegels stitchen + graden-grid +
+> kruis op het kandidaatpunt, met tegelcache) en `toets_corridor.py` (dekkings- en
+> verklikkertoets van een gemeten route tegen de brief-punten).
+> **⚠️ TIJDELIJK:** `v2/src/ankercheck.js` + `v2/data/ankercheck.json` + de HUD-sectie zijn een
+> **kijklaag voor één beoordelingsronde**. Zodra de correcties zijn doorgevoerd moet die weg —
+> een rode stip op een al gecorrigeerd punt liegt.
+> **→ VOLGENDE:** (1) de zeven correcties doorvoeren + de grafietketen herbakken · (2)
+> **`toets_ankers.py`** als verdachtenlijst (kade op water/land, afstand tot OSM-pier,
+> laadplek binnen het industrievlak, snap-afstand) · (3) de drie open ligplaatsen via de
+> productvraag.
 
 > **✅ EINDE DAG 2026-07-28 — DE GRAFIETKETEN STAAT VAN MIJN TOT FABRIEK, GO VAN LARS
 > (`?v=094`, LAATSTE).** *"oke ziet er goed uit, we zijn klaar voor vandaag."* Na de
@@ -2215,6 +2277,21 @@ Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); 
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 
+- **2026-07-28 · Een bron-coördinaat is een KANDIDAAT; pas satelliet-gelegd is het een anker** —
+  werkwijze §2 krijgt een status bóven *bevestigd*, verplicht voor laadplek/overslag/losplek,
+  op z16 (route-uiteinden zijn kleiner dan de z13-korrel). Bij de eerste systematische
+  toepassing stond **10 van 16** fout, van 42 m tot 4,5 km.
+- **2026-07-28 · De stippellijn is de EINDVORM waar het net niet reikt (besluit Lars)** —
+  gestippeld mét reden i.p.v. dichtgemaakt met geleende geometrie; voor Chili/Patache, Lobito,
+  Hormuz, Suez en Constanța (nul havens met varend AIS-verkeer) is dat geen tussenstand.
+- **2026-07-28 · "Welk product is dit?" is het gereedschap dat de kade vindt (Lars)** — kathode
+  = LME-leverbaar → LME-erkend entrepot → RHB, Waalhaven Noordzijde 4. Scherper dan zoeken op
+  havennaam, en scherper dan inzoomen. Hoort bij élke kade in een routebrief.
+- **2026-07-28 · De last mile is een eigen been, geen rechte stub** (§3.4) — gemeten:
+  ankerstukjes 3,8 / 2,6 km → **0,39 / 0,12 km** door kleine wegklassen binnen 12 km mee te nemen.
+- **2026-07-28 · Noem bij een lengtemeting altijd gereedschap + beide eindpunten + netstadium** —
+  de "883 km" van het spoorbeen Beilun→Guixi werd zo ten onrechte een corridor-fout; hermeten
+  is het 550,5 km en slaagt de toets volledig.
 - **2026-07-27 · Geen bundeling; een edge is een VERWIJZING (besluit Lars)** — alle
   doorvaarten blijven; een edge = `(set, regelnummer, i0, i1)` + knoop-ids + echte km, dus de
   geometrie staat exact één keer in de trackset. Maakt niet-bundelen gratis in opslag én

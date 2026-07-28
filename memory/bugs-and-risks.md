@@ -1,5 +1,48 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-28 (routebrief: New Orleans-kade en Vidalia-coördinaat opgelost; spoorbeen bleek onbestaand)*
+*Last updated: 2026-07-28 (laat: 10 van 16 kop/staart-ankers stond fout)*
+
+## 🔴 OPEN — 10 van 16 kop/staart-ankers staat fout (goedgekeurd, nog niet doorgevoerd)
+Systematisch, niet incidenteel: over vier stromen stond **10 van de 16** laadplek-/
+overslag-/losplek-ankers verkeerd, van **42 m tot 4,5 km**. Lars keurde alle zeven
+voorstellen goed op 2026-07-28; ze staan nog **niet** in `aansluitingen.json` /
+`data/graphite.js`.
+
+| anker | nu | hoort te zijn |
+|---|---|---|
+| `cu-escondida-laad` | -69,07169 / -24,27004 (ín de open put) | **-69,0600 / -24,2620** (concentrator + indikkers) |
+| `cu-coloso-kade` | -70,46332 / -23,76015 (kustweg bij het dorp) | **-70,4652 / -23,7569** (kop laadsteiger) |
+| `cu-beilun-kade` | 121,87573 / 29,92742 (transportband aan land) | **121,8830 / 29,9364** (losberth met ertslossers) |
+| `cu-patache-kade` | -70,19773 / -20,80503 (wal) | **-70,1989 / -20,8027** (ligplaats) |
+| `cu-rotterdam-kade` | 4,39341 / 51,89369 (dijk bij Heijplaat) | **4,4585 / 51,8935** (RHB-kade, Waalhaven Noordzijde 4) |
+| `cu-duisburg-kade` | 6,7559 / 51,45187 (in het bekken) | **6,7565 / 51,4518** (kade met stukgoedstapels) |
+| `gr-port-neworleans` | -90,1105 / 29,9165 (landzijde vóór het rangeerterrein) | **-90,1120 / 29,9123** (containerkade) |
+
+⚠️ **Napoleon Ave schuift 490 m en dát is de zee→barge-overslag** — doorvoeren vraagt dus
+ook een herbake van de grafietketen, niet alleen een coördinaatwissel.
+
+## ⚠️ OPEN — drie ligplaatsen niet aanwijsbaar op de beschikbare tegels
+**Lobito** (er ís een mineralenterminal van Lobito Atlantic Railway, eerste schip
+12-07-2024, maar de Esri-beelden dateren vermoedelijk van vóór de bouw) · **Port Allen
+(IRMT)** (huidig punt staat in een veld, ~300 m van het water; wélke ligplaats de
+container-op-barge doet is niet vastgesteld) · **Port of Vidalia** (huidig punt staat in
+het bos op de batture — dat is de plek van de *geplande* slack-water slip, in aanbouw
+sinds Q1 2025). Aanpak: eerst de productvraag stellen, dan pas opnieuw inzoomen.
+
+## ✅ OPGELOST 2026-07-28 (laat) — de "883 km" van het spoorbeen Beilun→Guixi was een verkeerde conclusie
+De brief stelde dat de atlas dit been op 883 km mat tegen ~628 km volgens de bronnen, en
+dus op een verkeerde corridor lag. **Hermeten met `toets_spoorroute.mjs`: 550,5 km** over
+143 edges (verhouding 1,13 op de grootcirkel), identiek met de oude én de satelliet-
+gelegde ankers omdat beide op dezelfde hoofdnet-knoop snappen. De tweezijdige toets van
+werkwijze §4 slaagt volledig. De 883 km komt uit de heal-ronde van 2026-07-24, op een
+ouder netstadium en tussen andere punten. **Les: noem bij een lengtemeting altijd het
+gereedschap, de twee eindpunten en het netstadium — anders wordt een oud getal een nieuwe
+conclusie.**
+
+## ⚠️ RISICO — de ankercheck-laag mag niet blijven staan
+`v2/src/ankercheck.js` + `v2/data/ankercheck.json` zijn bewust **tijdelijk**. Zodra de
+correcties zijn doorgevoerd liegt het rood (een gecorrigeerd punt dat nog als fout
+getekend staat). De waarschuwing staat in de bestandskop, in de HUD-comment en in het
+commitbericht — maar de opruiming is nog niet gedaan.
 
 ## ✅ OPGELOST 2026-07-28 — de vier grafiet-centroïdes (incl. de New Orleans-kade)
 De routebrief grafiet-balama-vidalia leverde de echte coördinaten: Balama-plant

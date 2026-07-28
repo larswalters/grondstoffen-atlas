@@ -3,6 +3,38 @@
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 
+## 2026-07-28 - Een bron-coördinaat is een KANDIDAAT; pas satelliet-gelegd is het een anker
+Werkwijze §2 krijgt een status bóven *bevestigd*: **satelliet-gelegd**, verplicht voor
+elk punt van het type laadplek/overslag/losplek, gecontroleerd op een gestitchte Esri
+World Imagery-overlay op **z16** (route-uiteinden zijn kleiner dan de z13-korrel).
+Reden: het is twee keer eerder misgegaan (New Orleans-stadscentroïde, Nacala-kadepunt in
+open water bij de kolen-jetty op de wéstoever) en bij de eerste systematische toepassing
+bleek **10 van 16** ankers fout te staan, van 42 m tot 4,5 km. Hoeveel bronnen er achter
+een coördinaat staan zegt niets over of hij op de kade ligt.
+
+## 2026-07-28 - De stippellijn is de EINDVORM waar het net niet reikt (besluit Lars)
+Geen havenspoor, geen kade-aansluiting, geen tracks → dat been wordt **gestippeld
+getekend mét de reden erbij**, niet dichtgemaakt met geleende of beredeneerde geometrie.
+Voor Chili/Patache, Lobito, Hormuz, Suez en Constanța (gemeten: nul havens met varend
+AIS-verkeer) is dat geen tussenstand maar het eindbeeld — daar hoeft niet op gewacht of
+voor gebouwd te worden. Doorgetrokken = we weten waar de lijn ligt; gestippeld = eigen
+verbinding of geen net. Die twee betekenissen mogen niet vervagen.
+
+## 2026-07-28 - "Welk product is dit?" is het gereedschap dat de kade vindt (Lars)
+Lars bij de Waalhaven: *"welk product is dat en dan kun je toch checken waar ze dat
+verwerken of overslaan."* Voor kathode volgt de rest vanzelf: LME-leverbaar metaal →
+LME-erkend entrepot → Rotterdam heeft daar een handvol partijen voor → **RHB
+Stevedoring & Warehousing, Waalhaven Noordzijde 4** (1.060 m kade, non-ferro,
+LME-kwaliteit). Zo werd in één stap gevonden wat als "een pier in de Waalhaven" 4,5 km
+mis stond. Deze vraag hoort bij élke kade in een routebrief — hij is scherper dan zoeken
+op havennaam, en scherper dan inzoomen.
+
+## 2026-07-28 - De last mile is een eigen been, geen rechte stub
+Werkwijze §3.4: niet "de mijn" en "de kade", maar laadplek → poort → openbare weg, en
+kade → havenstraat → fabriekspoort → losplek. Gemeten bewijs uit de grafietketen: door
+kleine wegklassen mee te nemen binnen 12 km van plant en kade krompen de rechte
+ankerstukjes van 3,8 / 2,6 km naar **0,39 / 0,12 km**.
+
 ## 2026-07-27 - GEEN BUNDELING, en een edge is een VERWIJZING (besluit Lars)
 Lars: *"veel tracks is juist de bedoeling, bundeling van de lijnen lijkt me niet nodig;
 als er hele tracks vanaf de juiste zeehaven naar de juiste fabriekshaven liggen

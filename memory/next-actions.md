@@ -1,5 +1,45 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-28 (einde dag: keten mijn→fabriek af, ?v=094, visuele go Lars)*
+*Last updated: 2026-07-28 (laat: anker-check gedaan, 7 correcties goedgekeurd)*
+
+## 🔴 START HIER — de zeven goedgekeurde correcties doorvoeren
+
+Lars keurde op 2026-07-28 **alle zeven** correctievoorstellen goed. Ze staan nog niet in
+de data. Volgorde:
+
+1. **Coördinaten wisselen** — de zes koper-ankers in `v2/data/aansluitingen.json` en
+   `gr-port-neworleans` in `data/graphite.js`. Exacte oud/nieuw-paren staan in
+   `memory/bugs-and-risks.md` en in `v2/data/ankercheck.json`.
+2. **Grafietketen herbakken** — Napoleon Ave schuift **490 m** en dat is precies het punt
+   waar het zeeschip overgaat op de barge, dus de overslag verplaatst mee
+   (`hecht_marnet.py route`, zie de banner in `CLAUDE.md`).
+3. **De ankercheck-laag opruimen** — `v2/src/ankercheck.js`, `v2/data/ankercheck.json`,
+   de HUD-sectie in `index.html`, de `#ankerLijst`/`#ankerLegenda`-CSS en de wiring in
+   `main.js`. Eventueel laten staan voor uitsluitend de drie open ligplaatsen.
+
+## 🟠 DAARNA — `toets_ankers.py`, de verdachtenlijst
+
+10 van 16 is systematisch, en de atlas heeft honderden van zulke punten (`aansluitingen.
+json` + alle nodes in `data/*.js`). Handmatig satelliet-leggen kost ~5 min per punt en
+schaalt dus niet. Mechanisch te trieren, en alle vier de missers van deze ronde zouden
+bovenaan zijn gekomen:
+
+- ligt een punt met rol `overslag`/`losplek` **op water of op land**?
+- afstand tot de dichtstbijzijnde OSM `man_made=pier` / `harbour` / kade-polygoon;
+- ligt een `laadplek` binnen het `landuse=industrial`/`quarry`-vlak van zijn site?
+- hoe ver snapt het punt naar zijn **eigen** net (>0,5 km = verdacht).
+
+Uitvoer: een gerangschikte verdachtenlijst, zodat het oog alleen naar de kop gaat.
+
+## 🟡 DE DRIE OPEN LIGPLAATSEN — via de productvraag, niet via inzoomen
+
+- **Port Allen (IRMT)** — wie doet daar container-op-barge, en aan welke ligplaats?
+- **Lobito** — welke berth is de mineralenterminal van Lobito Atlantic Railway
+  (eerste schip 12-07-2024)? De tegels dateren vermoedelijk van vóór de bouw.
+- **Port of Vidalia** — waar ligt de *bestaande* cargo ramp / t-dock? Het huidige punt is
+  de geplande slack-water slip (bouw sinds Q1 2025).
+
+Ook nog: **de productvraag promoveren** van de Lobito-brief naar `routebrief-werkwijze.md`
+zelf — hij hoort bij elke kade, niet bij één stroom.
 
 ## ✅ AFGEROND 2026-07-28 — ROUTEBRIEF GRAFIET + KETEN MIJN→FABRIEK (`?v=092`→`?v=094`, GO LARS)
 

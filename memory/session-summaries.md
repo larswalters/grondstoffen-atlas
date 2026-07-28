@@ -1,6 +1,49 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-28 (laat) - De anker-check: de corridors kloppen, de uiteinden niet (?v=095→097)
+
+**Aanleiding.** Lars vroeg of de routebrief per stroom nóg gedetailleerder moest
+(laadplek bij de mijn, echte overslagkade, alle dorpen ertussen, exacte losplek) of
+dat er eerst iets aan het fundament moest. Diagnose: de spec vróég dat detail al en de
+grafietbrief leverde het ook — de fouten die hij ving zaten in **kop en staart**.
+
+**Werkwijze aangescherpt** (`v2/design/routebrief-werkwijze.md`): §2 status
+**`satelliet-gelegd`** (verplicht voor laadplek/overslag/losplek, z16-overlay), §3.4
+**de last mile als eigen been**, §7 **de stippellijn-conventie** (besluit Lars).
+
+**Drie nieuwe koper-routebrieven** (LAR-527): `koper-escondida-guixi.md`,
+`koper-collahuasi-tongling.md`, `koper-lobito-duisburg.md`.
+
+**⚠️ 10 van 16 ankers fout, 42 m tot 4,5 km.** Escondida ín de open put (1,5 km van de
+concentrator waar de leiding begint) · Coloso op de kustweg bij het dorp (409 m) ·
+Beilun op de transportband i.p.v. de losberth (1,2 km) · Patache op de wal (286 m) ·
+**Waalhaven op de dijk bij Heijplaat (4,5 km)** · Ruhrort net in het bekken (42 m) ·
+Napoleon Ave landzijde vóór het rangeerterrein (489 m). Goed: Guixi (spoorbundel met
+portaalkranen op z18), Tongling, Collahuasi, Balama-plant, Nacala, Syrah-fabriek.
+Open: Lobito, Port Allen, Vidalia. **Lars keurde alle zeven voorstellen goed.**
+
+**De productvraag loste de Waalhaven op** (Lars): kathode = LME-leverbaar → LME-erkend
+entrepot → RHB Stevedoring & Warehousing, Waalhaven Noordzijde 4 (1.060 m kade,
+non-ferro, LME-kwaliteit) → satelliet-gelegd op 51,8935 / 4,4585.
+
+**⚠️ Correctie op mezelf: het spoorbeen Beilun→Guixi klopt wél.** Eerst gemeld als
+corridor-fout (883 km tegen ~628). Hermeten met `toets_spoorroute.mjs`: **550,5 km**
+over 143 edges, identiek met oude én nieuwe ankers (zelfde hoofdnet-knoop). Tweezijdige
+toets §4 volledig geslaagd — alle corridor-B-punten geraakt (0,8–6,4 km), alle
+corridor-A-punten gemeden (Hangzhou 87,4 km ernaast), alle drie de negatieve ankers
+gemeden (Yingtan 14,6 · Jingdezhen 98,5 · Nanchang 136,4), −1,0% op de brief. De router
+rijdt de 甬金-vrachtlijn (geopend 2023-12-31). De 883 km kwam uit de heal-ronde van
+24 juli op een ouder netstadium.
+
+**Live `?v=097`:** tijdelijke laag "Anker-check koper (routebrieven)" — rood/groen/
+blauw/geel + verplaatsingslijntje + 16 vlieg-knoppen (`GLOBE.vliegNaar`, 2 km).
+Nieuw gereedschap in de scratchpad: `sat_check.py` (tegels stitchen + grid + kruis) en
+`toets_corridor.py` (dekkings-/verklikkertoets op een gemeten route).
+
+**Bijvangst:** Firecrawl gaf HTTP 402 (credits op) → teruggevallen op de ingebouwde
+websearch.
+
 ## 2026-07-27 (dag) - M28 fase 1-3 · vier bronnen erbij, het knip-lek, de track-graaf, vijf bronnen op de bol (?v=090)
 
 **Fase 1 — bronnen.** Drie nieuwe archiefbronnen ingeladen, alle registratievrij en
