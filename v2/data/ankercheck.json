@@ -113,6 +113,72 @@
       "status": "fout",
       "afstandM": 42,
       "wat": "staat net in het bekken; hoort op de kade met de stukgoedstapels ernaast — precies de ~50 m die §2 bedoelt. Lars: correctie akkoord voor nu (welk product er precies over die kade gaat is nog niet vastgesteld)"
+    },
+    {
+      "id": "gr-balama-plant",
+      "naam": "Balama",
+      "volledig": "Balama — Syrah-plant, truckbelading",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [38.66, -13.31],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: ligt op het plantterrein, tussen de put met de tailings en de bezinkvijver, bij de procesgebouwen. De exacte zakkenhal is op deze korrel niet aan te wijzen, maar het is de plant en niet het dorp"
+    },
+    {
+      "id": "gr-nacala-kade",
+      "naam": "Nacala",
+      "volledig": "Porto de Nacala — containerterminal oostoever",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [40.6673, -14.5383],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "al satelliet-gelegd op 2026-07-28 na jouw check — het onderzoekspunt lag toen in open water bij de kolen-jetty op de wéstoever"
+    },
+    {
+      "id": "gr-napoleon-kade",
+      "naam": "Napoleon Ave",
+      "volledig": "Port of New Orleans — Napoleon Avenue Container Terminal",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-90.1105, 29.9165],
+      "nieuw": [-90.112, 29.9123],
+      "status": "fout",
+      "afstandM": 489,
+      "wat": "staat aan de landzijde vóór het rangeerterrein, tegen de woonwijk aan. De containerkade met de blauwe portaalkranen en het afgemeerde schip ligt ~490 m zuidelijker aan de rivier"
+    },
+    {
+      "id": "gr-portallen-kade",
+      "naam": "Port Allen",
+      "volledig": "Port Allen (IRMT) — belading containerbarge",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.222, 30.432],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "staat in een veld bij een klein gebouw, ~300 m van het water; geen kade of ligplaats aanwijsbaar op dit beeld. Zelfde categorie als Lobito — eerst uitzoeken wélke ligplaats de container-op-barge doet"
+    },
+    {
+      "id": "gr-vidalia-losplek",
+      "naam": "Vidalia",
+      "volledig": "Port of Vidalia — losplek rivier-mijl 359",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.485, 31.538],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "staat in het bos op de batture. Dit is de plek van de GEPLANDE slack-water slip (in aanbouw sinds Q1 2025) en de tegels dateren van vóór die bouw; de bestaande cargo ramp/t-dock ligt elders aan de oever"
+    },
+    {
+      "id": "gr-syrah-fabriek",
+      "naam": "Syrah",
+      "volledig": "Syrah AAM — fabriek Vidalia",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.4887, 31.5466],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: precies op de fabriek — de grote hal met het procesterrein, tanks en verharding op de hoek van de twee wegen"
     }
   ]
 }

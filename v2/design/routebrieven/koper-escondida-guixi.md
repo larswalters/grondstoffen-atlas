@@ -8,11 +8,25 @@ Puerto Coloso, ~170 km, eigen verbinding) → **zee** (Coloso → Ningbo-Zhousha
 router) → **spoor** (Beilun-ertsterminal → Guixi, ~550–630 km) → **last mile**
 (贵溪站-专uslijn → de ertslosbundel op het smelterterrein).*
 
-*Toets-doel: dit is de stroom die LAR-527 "de zware" noemt — het China-spoorbeen heeft
-het grootste risico op een verkeerde corridor. Deze brief levert dat risico ook meteen op:
-de atlas mat het spoorbeen in de heal-ronde op **883 km**, terwijl de brief-corridor op
-**~628 km** (klassiek) of **~556 km** (sinds 2024) uitkomt. Dat is 41–59% te veel — de
-getekende lijn ligt vrijwel zeker op een andere corridor.*
+*Toets-doel: dit is de stroom die LAR-527 "de zware" noemt — het China-spoorbeen heeft het
+grootste risico op een verkeerde corridor.*
+
+> **✅ UITSLAG (gemeten 2026-07-28): het spoorbeen KLOPT.** Over het huidige spoornet meet
+> Beilun-ertsterminal → Guixi **550,5 km** (143 edges, verhouding 1,13 op de grootcirkel),
+> en de tweezijdige toets van §4 slaagt volledig: de lijn raakt élk brief-punt van
+> **corridor B** — Ningbo, Yunlong, Fenghua, Shengzhou, Dongyang, Yiwu, Jinhua, Longyou,
+> Quzhou, Jiangshan, Yushan, Shangrao, Hengfeng, Yiyang, Guixi — binnen 0,8–6,4 km, mijdt
+> alle punten die alléén op corridor A liggen (**Hangzhou 87,4 km** ernaast, Shaoxing 56,5,
+> Yuyao 45,9, Zhuji 31,2) en raakt géén van de drie negatieve ankers (Yingtan 14,6 km,
+> Jingdezhen 98,5, Nanchang 136,4). 550,5 tegen de brief-corridor van ~556 km is **−1,0%**.
+> De router rijdt dus over de **Yong-Jin-vrachtlijn**, precies zoals de brief voorspelde.
+>
+> ⚠️ **Correctie op een eerdere versie van deze brief.** Die stelde dat de atlas dit been op
+> **883 km** mat en dat de lijn daarom op een andere corridor lag. Dat getal komt uit de
+> heal-ronde van 2026-07-24 en is **niet** met dit gereedschap tussen deze twee kades
+> gemeten; met beide ankersets (oud én satelliet-gelegd) snapt de route op dezelfde
+> hoofdnet-knoop en komt er 550,5 km uit. De 883 km hoort bij een andere meting op een
+> ouder netstadium — er was hier dus geen corridor-fout.
 
 ---
 
@@ -145,9 +159,12 @@ Daarmee vervalt de omweg over Hangzhou: 云龙 → 义乌 188,3 km, dan 沪昆 w
    **贵溪北站** vertrekken juist de producten (elektrolytkoper, zwavelzuur, slak — sinds
    2013 gemiddeld ~3 mln ton/jaar) [C5][C7]. Ingevoerd concentraat uit Ningbo hoort daar
    niet overheen.
-3. **De 883 km-meting van de atlas past op geen van beide corridors** (+41% op A, +59% op
-   B). Dat is de verklikker: de huidige lijn loopt ergens anders — kandidaat-verdachten
-   zijn een omweg via Yingtan/Nanchang of via de Wan-Gan-as.
+3. **Nanchang** (28,68 / 115,89) en **Jingdezhen** (29,29 / 117,21, aan de Wan-Gan-as) —
+   de twee omwegen waarop een router zou kunnen uitkomen. Gemeten: de route blijft er
+   136,4 resp. 98,5 km vandaan. ✅
+
+**Gemeten uitslag (2026-07-28, `toets_spoorroute.mjs`):** 550,5 km, corridor B, alle
+bevestigde punten geraakt, alle negatieve ankers gemeden. Zie het kader bovenaan.
 
 ## Been 4 · last mile — 贵溪站-aansluitspoor → ertslosbundel op het smelterterrein
 
@@ -172,7 +189,7 @@ de vier ankers van deze stroom is dit de enige die de check ongewijzigd doorstaa
 | 2 | `cu-coloso-kade` | -23.76015 / -70.46332 (kustweg bij het dorp) | **-23.7569 / -70.4652** (kop laadsteiger); filterfabriek -23.7590 / -70.4670 | satelliet z17 |
 | 3 | `cu-beilun-kade` | 121.87573 / 29.92742 (waar de transportband aan land komt) | **121.8830 / 29.9364** (losberth met ertslossers); het bandpunt blijft als begin van de last mile | satelliet z16 |
 | 4 | flow `cu-escondida → cu-ref-jiangxi`, `via: [cu-port-antofagasta, cu-port-ningbo]` | via de haven Antofagasta | via **Coloso** (Escondida's eigen terminal, 12 km zuidelijker) | [E3] |
-| 5 | spoorbeen Beilun→Guixi | gemeten **883 km** | **~628 km** (corridor A) of **~556 km** (corridor B) | [C1][C2][C3][C4] |
+| 5 | ~~spoorbeen Beilun→Guixi~~ | ~~gemeten 883 km~~ | **VERVALLEN** — hermeten op 550,5 km over corridor B, toets §4 geslaagd | meting 2026-07-28 |
 | 6 | leiding-been Escondida→Coloso | ontbreekt / recht | **gestippeld mét reden** (~170 km, eigen verbinding, geen OSM-tracé) | [E1] + werkwijze §7 |
 
 ## Wat de kaart moet tekenen (voorstel)
@@ -181,9 +198,9 @@ de vier ankers van deze stroom is dit de enige die de check ongewijzigd doorstaa
    -23,7590/-70,4670. Label: *slurryleiding ~170 km — eigen verbinding, geen net.*
 2. **Zeebeen** (zeeschip): kop laadsteiger Coloso → Beilun-losberth. Router vrij; de
    Antofagasta-via eruit.
-3. **Spoorbeen**: Beilun-ertsterminal → 贵溪站, via-punt→via-punt langs de brief. **Kies
-   corridor A tot er een bron voor B is** — A is de historische lijn en B is pas sinds
-   2024 open; noteer het verschil (628 vs 556 km) in de noot.
+3. **Spoorbeen**: Beilun-ertsterminal → 贵溪站. **Corridor B** — dat is wat het net al
+   rijdt (550,5 km, gemeten) en het klopt met de brief; corridor A blijft in deze brief
+   staan als de historische variant en als toetsmateriaal.
 4. **Last mile** (stippel, kort): 贵溪站 → ertslosbundel 117,2260/28,3271.
 5. **Niet tekenen:** de tak Escondida → Chuquicamata (aparte flow) en het uitgaande
    product uit Guixi (andere keten).
