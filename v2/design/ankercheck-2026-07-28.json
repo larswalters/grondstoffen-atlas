@@ -1,0 +1,184 @@
+{
+  "versie": 1,
+  "titel": "Anker-check koper — de kop- en staartpunten van drie routebrieven",
+  "toelichting": "Elk laadplek-/overslag-/losplek-anker van de stromen Escondida→Guixi, Collahuasi→Tongling en Copperbelt→Lobito→Duisburg, gelegd op een gestitchte Esri-satellietoverlay (z15–z18) volgens routebrief-werkwijze §2. 'oud' = wat er nu in aansluitingen.json staat, 'nieuw' = het satelliet-gelegde voorstel. Rood = fout, groen = voorstel, blauw = check doorstaan, geel = nog niet bekeken. Niets hiervan is in aansluitingen.json doorgevoerd; dit is de kijklaag voor Lars' oordeel.",
+  "bron": "Esri World Imagery (tegels), overlay-script scratchpad/sat_check.py, 2026-07-28",
+  "ankers": [
+    {
+      "id": "cu-escondida-laad",
+      "naam": "Escondida",
+      "volledig": "Escondida — kop van de slurryleiding",
+      "stroom": "Escondida→Guixi",
+      "oud": [-69.07169, -24.27004],
+      "nieuw": [-69.06, -24.262],
+      "status": "fout",
+      "afstandM": 1485,
+      "wat": "staat op een bank ín de open put; hoort op de concentrator met de rij ronde indikkers — dáár gaat de slurry de pijp in"
+    },
+    {
+      "id": "cu-coloso-kade",
+      "naam": "Coloso",
+      "volledig": "Puerto Coloso — laadsteiger Escondida",
+      "stroom": "Escondida→Guixi",
+      "oud": [-70.46332, -23.76015],
+      "nieuw": [-70.4652, -23.7569],
+      "status": "fout",
+      "afstandM": 409,
+      "wat": "staat op de kustweg bij het dorp Coloso; de laadsteiger steekt noordwestelijker de zee in, met de bulkcarrier eraan"
+    },
+    {
+      "id": "cu-beilun-kade",
+      "naam": "Beilun",
+      "volledig": "Ningbo-Zhoushan — Beilun ertsterminal",
+      "stroom": "Escondida→Guixi",
+      "oud": [121.87573, 29.92742],
+      "nieuw": [121.883, 29.9364],
+      "status": "fout",
+      "afstandM": 1219,
+      "wat": "staat waar de transportband aan land komt bij het ertsveld; de losberth met de rode ertslossers ligt noordoostelijker in het water"
+    },
+    {
+      "id": "cu-guixi-spoor",
+      "naam": "Guixi",
+      "volledig": "Jiangxi Copper Guixi — ertslosbundel",
+      "stroom": "Escondida→Guixi",
+      "oud": [117.226, 28.3271],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: op z18 liggen hier de parallelle sporen met wagons en twee portaalkranen over een losbunker"
+    },
+    {
+      "id": "cu-collahuasi-laad",
+      "naam": "Collahuasi",
+      "volledig": "Collahuasi — pompstation, kop van de slurryleiding",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [-68.64395, -20.97783],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan — Lars: staat al precies op de plek naast de basins waar de slurry de leiding in gaat"
+    },
+    {
+      "id": "cu-patache-kade",
+      "naam": "Patache",
+      "volledig": "Puerto Patache — Collahuasi-concentraatpier",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [-70.19773, -20.80503],
+      "nieuw": [-70.1989, -20.8027],
+      "status": "fout",
+      "afstandM": 286,
+      "wat": "kleinste correctie: staat op de walkant van de steiger, de ligplaats van het schip ligt aan de kop ervan"
+    },
+    {
+      "id": "cu-tongling-kade",
+      "naam": "Tongling",
+      "volledig": "Tongling Nonferrous — kade van de TNMG-smelter",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [117.7718, 30.98656],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan — dit punt heb je in juli zelf al satelliet-gelegd (?v=077)"
+    },
+    {
+      "id": "cu-lobito-kade",
+      "naam": "Lobito",
+      "volledig": "Porto do Lobito — mineralenkade",
+      "stroom": "Lobito→Duisburg",
+      "oud": [13.549, -12.34709],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "ligt in het water van de baai. Er ís een eigen mineralenterminal (Lobito Atlantic Railway, eerste schip 12 juli 2024, kathode naar Baltimore), maar op deze tegels — mogelijk van vóór de bouw — is de ligplaats niet aan te wijzen. Blijft open; geen verzonnen coördinaat"
+    },
+    {
+      "id": "cu-rotterdam-kade",
+      "naam": "Waalhaven",
+      "volledig": "Rotterdam — Waalhaven, stukgoedkade",
+      "stroom": "Lobito→Duisburg",
+      "oud": [4.39341, 51.89369],
+      "nieuw": [4.4585, 51.8935],
+      "status": "fout",
+      "afstandM": 4472,
+      "wat": "lag op de dijk bij Heijplaat, 4,5 km ten westen van de Waalhaven. Product = koperkathode, dus LME-entrepot: RHB Stevedoring & Warehousing, Waalhaven Noordzijde 4 — 1.060 m kade, non-ferro, LME-kwaliteit. Nieuw punt ligt op die kade, naast een afgemeerd schip"
+    },
+    {
+      "id": "cu-duisburg-kade",
+      "naam": "Ruhrort",
+      "volledig": "Duisburg — Duisport Ruhrort, Becken A",
+      "stroom": "Lobito→Duisburg",
+      "oud": [6.7559, 51.45187],
+      "nieuw": [6.7565, 51.4518],
+      "status": "fout",
+      "afstandM": 42,
+      "wat": "staat net in het bekken; hoort op de kade met de stukgoedstapels ernaast — precies de ~50 m die §2 bedoelt. Lars: correctie akkoord voor nu (welk product er precies over die kade gaat is nog niet vastgesteld)"
+    },
+    {
+      "id": "gr-balama-plant",
+      "naam": "Balama",
+      "volledig": "Balama — Syrah-plant, truckbelading",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [38.66, -13.31],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: ligt op het plantterrein, tussen de put met de tailings en de bezinkvijver, bij de procesgebouwen. De exacte zakkenhal is op deze korrel niet aan te wijzen, maar het is de plant en niet het dorp"
+    },
+    {
+      "id": "gr-nacala-kade",
+      "naam": "Nacala",
+      "volledig": "Porto de Nacala — containerterminal oostoever",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [40.6673, -14.5383],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "al satelliet-gelegd op 2026-07-28 na jouw check — het onderzoekspunt lag toen in open water bij de kolen-jetty op de wéstoever"
+    },
+    {
+      "id": "gr-napoleon-kade",
+      "naam": "Napoleon Ave",
+      "volledig": "Port of New Orleans — Napoleon Avenue Container Terminal",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-90.1105, 29.9165],
+      "nieuw": [-90.112, 29.9123],
+      "status": "fout",
+      "afstandM": 489,
+      "wat": "staat aan de landzijde vóór het rangeerterrein, tegen de woonwijk aan. De containerkade met de blauwe portaalkranen en het afgemeerde schip ligt ~490 m zuidelijker aan de rivier"
+    },
+    {
+      "id": "gr-portallen-kade",
+      "naam": "Port Allen",
+      "volledig": "Port Allen (IRMT) — belading containerbarge",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.222, 30.432],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "staat in een veld bij een klein gebouw, ~300 m van het water; geen kade of ligplaats aanwijsbaar op dit beeld. Zelfde categorie als Lobito — eerst uitzoeken wélke ligplaats de container-op-barge doet"
+    },
+    {
+      "id": "gr-vidalia-losplek",
+      "naam": "Vidalia",
+      "volledig": "Port of Vidalia — losplek rivier-mijl 359",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.485, 31.538],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "staat in het bos op de batture. Dit is de plek van de GEPLANDE slack-water slip (in aanbouw sinds Q1 2025) en de tegels dateren van vóór die bouw; de bestaande cargo ramp/t-dock ligt elders aan de oever"
+    },
+    {
+      "id": "gr-syrah-fabriek",
+      "naam": "Syrah",
+      "volledig": "Syrah AAM — fabriek Vidalia",
+      "stroom": "grafiet Balama→Vidalia",
+      "oud": [-91.4887, 31.5466],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: precies op de fabriek — de grote hal met het procesterrein, tanks en verharding op de hoek van de twee wegen"
+    }
+  ]
+}

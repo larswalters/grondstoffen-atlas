@@ -74,14 +74,20 @@ AANSLUITINGEN = [
               "mijnterrein 2,3 km verderop. Daar loopt de slurry de pijp in; dáár begint de "
               "stroom. MODI IS LEEG en dat is het antwoord op de netvraag: de leiding is een "
               "eigen verbinding, geen gedeeld net (zie design/stroom-aansluiting.md §4a). "
-              "Aanwijzen op 'weg' zou een vrachtwagen tekenen waar een pijp ligt."),
+              "Aanwijzen op 'weg' zou een vrachtwagen tekenen waar een pijp ligt. "
+              "✅ SATELLIET-CHECK DOORSTAAN 2026-07-28 (z16, Esri): staat precies naast "
+              "de basins waar de slurry de leiding in gaat — Lars bevestigde."),
     dict(id="cu-patache-kade", grondstof="copper", fase="erts", rol="overslag",
-         naam="Puerto Patache — Collahuasi-concentraatpier",
-         plek=[-70.19773, -20.80503], modi=["zee"], knooppunt=None,
-         bron="OSM way man_made=pier bij 'Puerto Patache Collahuasi' (ODbL)",
+         naam="Puerto Patache — Collahuasi-concentraatpier (ligplaats)",
+         plek=[-70.19890, -20.80270], modi=["zee"], knooppunt=None,
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28); herkomst "
+              "OSM way man_made=pier bij 'Puerto Patache Collahuasi' (ODbL)",
          noot="De EIGEN terminal van Collahuasi. data/copper.js stuurt deze stroom via "
               "Antofagasta, 120 km noordelijker; de node-noot zegt zelf al 'Patache/"
-              "Collahuasi-haven'. Eerste gat dat het routeren blootlegt."),
+              "Collahuasi-haven'. Eerste gat dat het routeren blootlegt. "
+              "⚠️ 286 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring Lars): "
+              "het OSM-punt lag op de WALKANT van de steiger, de ligplaats van het schip "
+              "ligt aan de kop ervan. Kleinste correctie van de ronde."),
     dict(id="cu-shanghai-kade", grondstof="copper", fase="erts", rol="overslag",
          naam="Shanghai/Luojing — Baogang-bulkpier aan de Yangtze",
          plek=[121.47618, 31.42704], modi=["zee", "binnen"], knooppunt="shanghai",
@@ -104,31 +110,55 @@ AANSLUITINGEN = [
               "ligt op de oostgeul bij het begin van de splitsing (noordpunt van het "
               "eiland); het schip komt van benedenstrooms de hoofdgeul af, gaat bij de "
               "noordpunt de oostgeul in en zakt naar de kade — zie de oostgeul-lijn in "
-              "data/vaarwegen-handmatig.geojson."),
+              "data/vaarwegen-handmatig.geojson. "
+              "✅ SATELLIET-CHECK DOORSTAAN 2026-07-28 (z16, Esri): ongewijzigd."),
 
     # ======================================================================
     # STROOM B — koperconcentraat Escondida → Jiangxi/Guixi (zee → spoor)
     # ======================================================================
     dict(id="cu-escondida-laad", grondstof="copper", fase="erts", rol="laadplek",
-         naam="Escondida — Rajo Escondida (start slurry-pijpleiding)",
-         plek=[-69.07169, -24.27004], modi=[],
-         bron="OSM way 'Rajo Escondida', landuse=quarry resource=copper (ODbL)",
+         naam="Escondida — concentrator/indikkers (kop van de slurryleiding)",
+         plek=[-69.06000, -24.26200], modi=[],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de rij ronde "
+              "indikkers naast de concentrator; herkomst OSM way 'Rajo Escondida', "
+              "landuse=quarry resource=copper (ODbL)",
          noot="Zelfde verhaal als Collahuasi: concentraat per ±166 km slurry-pijp naar "
               "Coloso. Het spoor Antofagasta–Salta ligt op 6 km, maar rijdt dit "
-              "concentraat niet — aanwijzen zou een trein tekenen die er niet is."),
+              "concentraat niet — aanwijzen zou een trein tekenen die er niet is. "
+              "⚠️ 1.485 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring "
+              "Lars): het OSM-punt lag op een bank ÍN de open put. Een put is geen "
+              "laadplek — de slurry gaat de pijp in bij de indikkers achter de "
+              "concentrator, en dáár begint de stroom (zelfde regel als Collahuasi)."),
     dict(id="cu-coloso-kade", grondstof="copper", fase="erts", rol="overslag",
-         naam="Puerto Coloso — Escondida-concentraatpier",
-         plek=[-70.46332, -23.76015], modi=["zee"], knooppunt="antofagasta",
-         bron="OSM way 'Coloso', man_made=pier (ODbL)",
+         naam="Puerto Coloso — Escondida-concentraatpier (laadsteiger)",
+         plek=[-70.46520, -23.75690], modi=["zee"], knooppunt="antofagasta",
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de "
+              "laadsteiger met de bulkcarrier eraan; herkomst OSM way 'Coloso', "
+              "man_made=pier (ODbL)",
          noot="Escondida's eigen terminal, ±12 km ten zuiden van de haven Antofagasta "
               "waar data/copper.js hem heen stuurt. Hangt wél aan het aangewezen "
-              "knooppunt Antofagasta — dáár zit de overslag naar het spoor."),
+              "knooppunt Antofagasta — dáár zit de overslag naar het spoor. "
+              "⚠️ 409 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring Lars): "
+              "het OSM-punt lag op de KUSTWEG bij het dorp Coloso; de laadsteiger steekt "
+              "noordwestelijker de zee in."),
     dict(id="cu-beilun-kade", grondstof="copper", fase="erts", rol="overslag",
-         naam="Ningbo-Zhoushan — Beilun ertsterminal (北仑矿石码头)",
-         plek=[121.87573, 29.92742], modi=["zee", "spoor"],
-         bron="OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
+         naam="Ningbo-Zhoushan — Beilun ertsterminal, losberth (北仑矿石码头)",
+         plek=[121.88300, 29.93640], modi=["zee", "spoor"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de losberth "
+              "met de rode ertslossers; herkomst OSM node '北仑矿石码头', "
+              "seamark:type=harbour (ODbL)",
          noot="De ertsterminal zelf, niet de containerkades ernaast — precies het "
-              "onderscheid waarvoor deze laag bestaat."),
+              "onderscheid waarvoor deze laag bestaat. "
+              "⚠️ 1.219 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring "
+              "Lars): het OSM-punt lag waar de TRANSPORTBAND aan land komt bij het "
+              "ertsveld — het eind van de terminal, niet de plek waar het schip ligt. "
+              "De losberth ligt noordoostelijker in het water. "
+              "⚠️ PRIJS VAN DIE CORRECTIE, GEMETEN: de zee-snap wordt beter (2,4 → "
+              "1,3 km) maar de SPOOR-snap slechter (0,2 → 1,3 km) — logisch, want de "
+              "berth ligt in het water en het havenspoor eindigt bij het ertsveld. Eén "
+              "punt kan niet tegelijk ligplaats én laadspoor zijn; als de spooraanhechting "
+              "hier gaat knellen hoort dat een eigen aansluiting te worden (§3.4: de last "
+              "mile is een eigen been), niet een compromis-coördinaat tussen de twee."),
     # ======================================================================
     # STROOM C — koperkathode Lobito → Rotterdam → Rijn → Duisburg
     # ======================================================================
@@ -136,25 +166,43 @@ AANSLUITINGEN = [
          naam="Lobito — Porto do Lobito, kade van de Lobito-corridor",
          plek=[13.54900, -12.34709], modi=["zee"], knooppunt="lobito",
          bron="OSM way 'Porto do Lobito', industrial=port landuse=harbour (ODbL)",
-         noot="Het zee-eind van de Lobito-corridor; de Benguela-spoorlijn (CFB) ligt er "
+         noot="⚠️ OPEN — NIET SATELLIET-GELEGD. Bij de anker-check van 2026-07-28 bleek "
+              "dit punt in het WATER van de baai te liggen. Er ís een eigen "
+              "mineralenterminal (Lobito Atlantic Railway, eerste schip 12-07-2024, "
+              "kathode naar Baltimore), maar op deze tegels — vermoedelijk van vóór de "
+              "bouw — is de ligplaats niet aan te wijzen. Bewust géén verzonnen "
+              "coördinaat; blijft staan tot de ligplaats bekend is. "
+              "Het zee-eind van de Lobito-corridor; de Benguela-spoorlijn (CFB) ligt er "
               "1,1 km vandaan. Kathode gaat hier recht de Atlantische Oceaan op — zonder "
               "Kaap en zonder Malakka."),
     dict(id="cu-rotterdam-kade", grondstof="copper", fase="raffinaat", rol="overslag",
-         naam="Rotterdam — Waalhaven, stukgoedkade",
-         plek=[4.39341, 51.89369], modi=["zee", "binnen"], knooppunt="rotterdam",
-         bron="OSM way man_made=pier in de Waalhaven (ODbL)",
-         noot="⚠️ OSM tagt deze pier NIET met wat er wordt overgeslagen; de redactionele "
-              "keuze steunt op de buren binnen 1 km (ArcelorMittal Staalhandel, "
-              "Metaalhandel Ketting, Dutch Trading Consortium) — dit is de metaalhoek van "
-              "de Waalhaven. Wat telt voor deze pilot: hij ligt ~30 km van de kolenkade op "
-              "de Maasvlakte en hecht op een ándere binnenknoop."),
+         naam="Rotterdam — RHB Stevedoring, Waalhaven Noordzijde 4",
+         plek=[4.45850, 51.89350], modi=["zee", "binnen"], knooppunt="rotterdam",
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de kade van "
+              "RHB Stevedoring & Warehousing, Waalhaven Noordzijde 4, naast een "
+              "afgemeerd schip; aangewezen via de PRODUCTVRAAG (kathode = LME-leverbaar "
+              "→ LME-erkend entrepot, 1.060 m kade, non-ferro, colli tot 300 t)",
+         noot="⚠️ 4.472 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring "
+              "Lars) — de grootste misser van de ronde. Het oude punt lag op de DIJK bij "
+              "de woonwijk Heijplaat, 4,5 km ten westen van de Waalhaven, en steunde op "
+              "'de buren binnen 1 km'. De productvraag loste in één stap op wat vier jaar "
+              "'een pier in de Waalhaven' fout stond: kathode is LME-leverbaar metaal, "
+              "dus het gaat naar een LME-erkend entrepot, en dat is in de Waalhaven RHB. "
+              "Wat voor de pilot telt blijft gelden: ~30 km van de kolenkade op de "
+              "Maasvlakte, en een ándere binnenknoop."),
     dict(id="cu-duisburg-kade", grondstof="copper", fase="raffinaat", rol="losplek",
-         naam="Duisburg — Duisport Ruhrort, Becken A",
-         plek=[6.75590, 51.45187], modi=["binnen"],
-         bron="OSM way 'Becken A', harbour=yes (ODbL)",
+         naam="Duisburg — Duisport Ruhrort, Becken A (kade)",
+         plek=[6.75650, 51.45180], modi=["binnen"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de kade met "
+              "de stukgoedstapels; herkomst OSM way 'Becken A', harbour=yes (ODbL)",
          noot="Stukgoedbekken van de grootste binnenhaven ter wereld. OSM zegt niet welk "
               "bekken non-ferro doet; het onderscheid dat hier telt is dat kolen 7 km "
-              "noordelijker lossen, aan de Schwelgern-pier bij het staalbedrijf."),
+              "noordelijker lossen, aan de Schwelgern-pier bij het staalbedrijf. "
+              "⚠️ 42 m VERPLAATST bij de anker-check van 2026-07-28: het punt stond net "
+              "ín het bekken i.p.v. op de kade — precies de ~50 m die §2 van de "
+              "routebrief-werkwijze bedoelt. Lars: correctie akkoord voor nu; wélk "
+              "product er over déze kade gaat is nog niet vastgesteld (de productvraag "
+              "staat hier dus nog open, anders dan bij de Waalhaven)."),
 
     # ======================================================================
     # STROOM D — steenkool Cerrejón → Puerto Bolívar → Rotterdam → Ruhr
@@ -191,12 +239,19 @@ AANSLUITINGEN = [
               "gaat hier naar de hoogoven, niet naar een stukgoedbekken."),
 
     dict(id="cu-guixi-spoor", grondstof="copper", fase="erts", rol="losplek",
-         naam="Jiangxi Copper — smelter Guixi (贵溪冶炼厂)",
-         plek=[117.22570, 28.33380], modi=["spoor"],
-         bron="OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
+         naam="Jiangxi Copper Guixi — ertslosbundel (贵溪冶炼厂)",
+         plek=[117.22600, 28.32710], modi=["spoor"],
+         bron="SATELLIET-BEVESTIGD op Esri World Imagery (z18, 2026-07-28): parallelle "
+              "sporen met wagons en twee portaalkranen over een losbunker; herkomst "
+              "OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
          noot="De grootste kopersmelter ter wereld. Ligt 3,8 km noordelijker dan de "
               "node-coördinaat in data/copper.js (28,30 / 117,20) — op wereldniveau "
-              "onzichtbaar, op straatniveau het verschil tussen smelter en veld."),
+              "onzichtbaar, op straatniveau het verschil tussen smelter en veld. "
+              "⚠️ DRIFT HERSTELD 2026-07-28: commit 73cf5d2 verplaatste dit punt van het "
+              "polygoon-middelpunt naar de ertslosbundel, maar alleen in het GEGENEREERDE "
+              "aansluitingen.json — deze lijst bleef op 117,2257/28,3338 staan, 741 m "
+              "ernaast. Een regeneratie zou het satelliet-bevestigde punt stil hebben "
+              "teruggedraaid; daarom staat de waarheid nu hier."),
 ]
 
 MODI = ("zee", "binnen", "spoor", "weg")
@@ -301,7 +356,10 @@ def main():
             "vervangt het niet — een stroom zonder aansluiting valt terug op de "
             "generieke aanhechting van zijn knooppunt. Zie design/stroom-aansluiting.md."
         ),
-        "bron": "coördinaten uit OpenStreetMap (ODbL) via verken_terminals.py",
+        "bron": ("coördinaten uit OpenStreetMap (ODbL) via verken_terminals.py; "
+                 "de punten met 'SATELLIET-GELEGD' in hun `bron` zijn daarna op "
+                 "Esri World Imagery (z16-z18) verlegd volgens routebrief-"
+                 "werkwijze §2 — de OSM-herkomst blijft per punt vermeld"),
         "aansluitingen": uit,
     }
     print(f"\n{len(uit)} aansluitingen · "

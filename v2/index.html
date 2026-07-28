@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=097" />
+<link rel="stylesheet" href="style.css?v=099" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -60,47 +60,55 @@
          stand mét waternet, route-test, keten-router en stromen staat op
          git-tag `pre-ais-net` (?v=082). -->
 
-    <!-- De stroom-preview (M28): de eerste echte grondstofstroom end-to-end,
-         sinds het versie-2-contract ROUTEBRIEF-gestuurd (v2/design/routebrieven/
-         grafiet-balama-vidalia.md) — de keten begint bij de Balama-MIJN
-         (routebrief been 1: truck over echte N380/N1-geometrie, via de
-         M25-wegcorridor-machinerie), gestippelde haven-aanloop bij Nacala,
-         zeeschip via de Kaap-route naar New Orleans, per barge via Port Allen
-         naar de losplek Port of Vidalia (rivier-mijl 359), en een last mile
-         per truck naar de Syrah-fabriek. Het spoorbeen is geschrapt: het
-         bestaat niet — EA-2181: uitgaand AAM per truck; geen spoorbrug bij
-         Natchez-Vidalia. Overslag ligt bij New Orleans/Port Allen. MARNET
-         zelf staat niet op de bol: dit is de GEROUTETE stroom (truck → zee →
-         barge → truck), kleur = modaliteit zodat je de overgang tussen de
-         netten ziet; gestippeld = schematische verbinding. -->
-    <div class="hudLabel">Stroom: grafiet Balama → VS (preview)</div>
+    <!-- VIER STROMEN (M28), elk ROUTEBRIEF-gestuurd en elk vertrekkend en
+         aankomend op een SATELLIET-GELEGDE kade (werkwijze §2) — dat is precies
+         waarom de anker-check van 2026-07-28 nodig was:
+           · grafiet Balama → Vidalia — truck (echte N380/N1) → zee (Kaap,
+             Southwest Pass) → barge via Port Allen → last mile per truck.
+           · koper Escondida → Guixi — slurryleiding (stippel, géén net) →
+             zee Coloso → Beilun-losberth → trein over de 甬金-vrachtlijn.
+           · koper Collahuasi → Tongling — slurryleiding over ECHTE OSM-
+             geometrie (192,4 km) → zee → Yangtze naar de TNMG-kade.
+           · koper Lobito → Duisburg — zee → Waalhaven (RHB) → Rijn over echte
+             AIS-tracks, mét het Wesel-vak gestippeld want daar ligt geen enkele
+             track (0 van 35.237, structureel gemeten).
+         Kleur = MODALITEIT, niet grondstof: het punt van deze laag is de
+         overgang tussen de netten zichtbaar maken. Gestippeld = schematische
+         verbinding OF een gedocumenteerd gat — nooit geleende geometrie.
+         MARNET zelf staat niet op de bol; dit is de GEROUTETE stroom. -->
+    <div class="hudLabel">Stromen (op de exacte kades)</div>
     <div class="btnRow">
-      <button class="srBtn is-on" data-sr="aan">aan</button>
-      <button class="srBtn" data-sr="uit">uit</button>
+      <button class="srBtn is-on" data-sr="grafiet">grafiet Balama→VS</button>
+      <button class="srBtn is-on" data-sr="cu-eg">koper Escondida→Guixi</button>
+    </div>
+    <div class="btnRow">
+      <button class="srBtn is-on" data-sr="cu-ct">koper Collahuasi→Tongling</button>
+      <button class="srBtn is-on" data-sr="cu-ld">koper Lobito→Duisburg</button>
     </div>
     <div id="stroomLegenda">
       <span><i style="background:#5aa7ff"></i>zee (zeeschip)</span>
-      <span><i style="background:#35e0c0"></i>barge (containers)</span>
+      <span><i style="background:#35e0c0"></i>binnenvaart (barge / rivier)</span>
       <span><i style="background:#ffb04d"></i>truck (weg)</span>
-      <span style="opacity:.75">gestippeld = schematische verbinding (haven-aanloop, last mile)</span>
+      <span><i style="background:#ff7ab8"></i>trein (spoor)</span>
+      <span><i style="background:#9b8cff"></i>slurryleiding — eigen verbinding, geen net</span>
+      <span style="opacity:.75">gestippeld = schematische verbinding of gedocumenteerd gat (haven-aanloop, last mile, Wesel-vak)</span>
     </div>
     <div id="stroomNoot"></div>
 
-    <!-- Anker-check (2026-07-28, tijdelijk): de kop- en staartpunten van de drie
-         koper-routebrieven, gelegd op satellietbeeld volgens werkwijze §2.
-         Rood = staat er nu en is fout · groen = het satelliet-gelegde voorstel ·
-         blauw = check doorstaan · geel = nog niet bekeken. Elke knop vliegt naar
-         het punt. Deze sectie verdwijnt zodra de correcties zijn doorgevoerd. -->
-    <div class="hudLabel">Anker-check koper (routebrieven)</div>
+    <!-- Open ligplaatsen (rest van de anker-check van 2026-07-28). De zeven
+         goedgekeurde correcties staan inmiddels ín de data en de zes
+         goedgekeurde punten hoeven niet meer bekeken; die zijn hier weg, want
+         een rode stip op een al gecorrigeerd punt liegt. Wat blijft zijn de drie
+         plekken waar de ligplaats niet aanwijsbaar was — rood, mét de reden.
+         Elke knop vliegt erheen. Weg zodra ze alle drie een kade hebben. -->
+    <div class="hudLabel">Open ligplaatsen (3)</div>
     <div class="btnRow">
       <button class="akBtn is-on" data-ak="aan">aan</button>
       <button class="akBtn" data-ak="uit">uit</button>
     </div>
     <div id="ankerLegenda">
-      <span><i style="background:#ff3b30"></i>staat er nu — fout</span>
-      <span><i style="background:#3ddc84"></i>voorstel (satelliet-gelegd)</span>
-      <span><i style="background:#5aa7ff"></i>check doorstaan</span>
-      <span><i style="background:#ffd23b"></i>nog niet bekeken</span>
+      <span><i style="background:#ff3b30"></i>ligplaats nog niet aanwijsbaar</span>
+      <span style="opacity:.75">de productvraag is beantwoord (operator + terminal bekend), de kade niet</span>
     </div>
     <div id="ankerLijst"></div>
     <div id="ankerNoot"></div>
@@ -236,6 +244,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=097"></script>
+<script type="module" src="src/main.js?v=099"></script>
 </body>
 </html>

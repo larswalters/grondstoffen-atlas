@@ -279,6 +279,10 @@ html, body {
    browser-standaard van 16px — twee keer zo groot als de labels erboven. Gemeten
    op 1600×1000: de HUD werd er 964 px hoog van (van 1000 px scherm) en de
    havensectie viel eronder van het scherm. */
+/* #stroomNoot draagt sinds de vier stromen één REGEL PER STROOM; zonder
+   pre-line plakken die aan elkaar tot één onleesbare zin. */
+#stroomNoot { white-space: pre-line; }
+
 #gloedNoot,
 #pingNoot,
 #stroomNoot,
@@ -305,10 +309,14 @@ html, body {
 #tracksBronnen span { display: block; }
 #tracksBronnen b { color: var(--ink); font-weight: 600; }
 
-/* --- anker-check: vlieg-knoppen per punt (tijdelijk, 2026-07-28) ---------
-   Eén knop per anker; de kleur van de rand zegt de status, zodat de lijst
-   zonder legenda al leesbaar is. Wrap i.p.v. .btnRow-flex: tien knoppen naast
-   elkaar persen zou ze onleesbaar smal maken op een telefoon. */
+/* --- open ligplaatsen: vlieg-knoppen per punt (rest van de anker-check) ---
+   Eén knop per punt; de kleur van de rand zegt de status, zodat de lijst
+   zonder legenda al leesbaar is. Wrap i.p.v. .btnRow-flex: knoppen naast
+   elkaar persen zou ze onleesbaar smal maken op een telefoon.
+   De statusklassen `is-fout`/`is-goed`/`is-ongecontroleerd` staan er nog: die
+   hoorden bij de beoordelingsronde van 2026-07-28 en komen terug zodra er weer
+   een voorstel-vs-huidig-vergelijking op de bol moet. Nu draagt alleen
+   `is-onbepaald` iets. */
 #ankerLijst {
   display: flex;
   flex-wrap: wrap;

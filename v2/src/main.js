@@ -21,8 +21,8 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=093";
-import { laadAnkercheck } from "./ankercheck.js?v=095";
+import { laadStroomroute } from "./stroomroute.js?v=099";
+import { laadAnkercheck } from "./ankercheck.js?v=098";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -199,40 +199,75 @@ function haalAisTracks() {
 // per truck. Kleur = modaliteit, zodat de overgang tussen de netten
 // zichtbaar is; gestippeld = schematische verbinding. Klein bestand
 // (< 300 KB), dus eager zoals het landnet — niet het lazy aistracks-patroon.
-let STROOMROUTE = null;
-laadStroomroute(CONFIG.radius, "094", GLOBE.klemOpHorizon)
-  .then((s) => {
-    STROOMROUTE = s;
-    GLOBE.globeGroup.add(s.groep);   // standaard aan: dít is wat er te zien is
-    window.STROOMROUTE = s;          // diagnose-handvat
-    // Korte naam per MODALITEIT in noot én console — zelfde labels als de
-    // legenda. Benen met dezelfde modaliteit (het zeebeen is gesplitst op het
-    // Southwest Pass-via-punt uit de routebrief) tellen op tot één regel.
-    const label = { zee: "zeeschip", binnenvaart: "barge", truck: "truck", spoor: "spoor" };
-    const perModaliteit = new Map();
-    for (const b of s.benen) {
-      const k = label[b.modaliteit] || b.naam || b.modaliteit;
-      perModaliteit.set(k, (perModaliteit.get(k) || 0) + b.km);
-    }
-    const regel = [...perModaliteit].map(([k, km]) =>
-      `${k} ${Math.round(km).toLocaleString("nl")} km`
-    ).join(" · ");
-    console.log(`[atlas v2] stroomroute: ${s.titel} · ${regel}`);
-    const noot = document.getElementById("stroomNoot");
-    if (noot) noot.textContent = regel;
-  })
-  .catch((e) => console.warn("[atlas v2] stroomroute niet geladen (nog niet gebakken?):", e.message));
+// ⚠️ VIER STROMEN sinds 2026-07-28, elk met een eigen bestand, een eigen groep
+// en een eigen knop. Ze delen bewust één kleurtabel (kleur = MODALITEIT, niet
+// grondstof): het punt van deze laag is de overgang tussen de netten laten
+// zien, en die overgang moet in elke stroom hetzelfde lezen. Welke stroom je
+// ziet zeg je met de knoppen, niet met de kleur.
+const STROMEN = [
+  { sleutel: "grafiet", bestand: "stroomroute-pilot.json", aan: true },
+  { sleutel: "cu-eg", bestand: "stroomroute-koper-escondida-guixi.json", aan: true },
+  { sleutel: "cu-ct", bestand: "stroomroute-koper-collahuasi-tongling.json", aan: true },
+  { sleutel: "cu-ld", bestand: "stroomroute-koper-lobito-duisburg.json", aan: true },
+];
+const STROOMROUTES = new Map();
+let STROOMROUTE = null;              // de eerste, als diagnose-handvat
 
-// --- anker-check: de kop/staart-punten van de routebrieven ------------------
-// Tijdelijke kijklaag (2026-07-28) bij routebrief-werkwijze §2: rood = waar een
-// anker nu staat, groen = waar de satelliet zegt dat het hoort, wit lijntje
-// ertussen. Bedoeld voor één beoordelingsronde met Lars; wég zodra de
-// correcties in aansluitingen.json staan — een blijvende rode stip die al
-// gecorrigeerd is, liegt.
+const STROOM_LABEL = {
+  zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
+  spoor: "trein", leiding: "leiding",
+};
+
+function stroomRegel(s) {
+  // Benen met dezelfde modaliteit tellen op tot één regel — een zeebeen dat op
+  // een via-punt uit de routebrief gesplitst is, blijft één zeeschip.
+  const per = new Map();
+  for (const b of s.benen) {
+    const k = STROOM_LABEL[b.modaliteit] || b.naam || b.modaliteit;
+    per.set(k, (per.get(k) || 0) + b.km);
+  }
+  return [...per].map(([k, km]) =>
+    `${k} ${Math.round(km).toLocaleString("nl")} km`).join(" · ");
+}
+
+function toonStroomNoot() {
+  const noot = document.getElementById("stroomNoot");
+  if (!noot) return;
+  const regels = [];
+  for (const { sleutel } of STROMEN) {
+    const s = STROOMROUTES.get(sleutel);
+    if (s && s.groep.visible) regels.push(`${s.titel} — ${stroomRegel(s)}`);
+  }
+  noot.textContent = regels.length ? regels.join("\n") : "geen stroom aan";
+}
+
+for (const def of STROMEN) {
+  laadStroomroute(CONFIG.radius, "099", GLOBE.klemOpHorizon, def.bestand)
+    .then((s) => {
+      s.groep.visible = def.aan;
+      STROOMROUTES.set(def.sleutel, s);
+      STROOMROUTE = STROOMROUTE || s;
+      GLOBE.globeGroup.add(s.groep);
+      window.STROOMROUTES = STROOMROUTES;   // diagnose-handvat
+      console.log(`[atlas v2] stroom ${def.sleutel}: ${s.titel} · ${stroomRegel(s)}`);
+      toonStroomNoot();
+    })
+    .catch((e) => console.warn(
+      `[atlas v2] stroom ${def.sleutel} niet geladen (nog niet gebakken?):`, e.message));
+}
+
+// --- open ligplaatsen: wat er van de anker-check over is --------------------
+// De beoordelingsronde van 2026-07-28 is afgerond: zeven correcties zijn
+// goedgekeurd en doorgevoerd, zes punten doorstonden de check. Die dertien zijn
+// uit `ankercheck.json` gehaald — een rode stip op een al gecorrigeerd punt
+// liegt. Wat blijft zijn de DRIE waar de ligplaats niet aanwijsbaar was
+// (Lobito · Port Allen · Vidalia); voor alle drie is de productvraag wél
+// beantwoord, alleen de kade nog niet. Het rood/groen-mechanisme blijft staan,
+// zodat een voorstel voor die drie meteen te beoordelen is.
 // Elke knop vliegt naar het punt: op een telefoon is dat de enige werkbare
-// manier om tien plekken op straatniveau na te lopen.
+// manier om zo'n plek op straatniveau na te lopen.
 let ANKERCHECK = null;
-laadAnkercheck(CONFIG.radius, "097", GLOBE.klemOpHorizon)
+laadAnkercheck(CONFIG.radius, "098", GLOBE.klemOpHorizon)
   .then((a) => {
     ANKERCHECK = a;
     GLOBE.globeGroup.add(a.groep);
@@ -257,10 +292,15 @@ laadAnkercheck(CONFIG.radius, "097", GLOBE.klemOpHorizon)
         lijst.appendChild(knop);
       }
     }
-    const fout = a.ankers.filter((x) => x.status === "fout" || x.status === "onbepaald").length;
+    const open = a.ankers.filter((x) => x.status === "onbepaald" && !x.nieuw).length;
     const noot = document.getElementById("ankerNoot");
-    if (noot) noot.textContent = `${fout} van ${a.ankers.length} ankers klopt niet`;
-    console.log(`[atlas v2] ankercheck: ${a.titel} · ${fout}/${a.ankers.length} fout`);
+    if (noot) {
+      noot.textContent = open === a.ankers.length
+        ? `${open} ligplaats${open === 1 ? "" : "en"} nog niet aanwijsbaar — `
+          + `operator en terminal zijn bekend, de kade niet`
+        : `${open} van ${a.ankers.length} nog open; de rest heeft een voorstel`;
+    }
+    console.log(`[atlas v2] ankercheck: ${a.titel} · ${open}/${a.ankers.length} open`);
   })
   .catch((e) => console.warn("[atlas v2] ankercheck niet geladen:", e.message));
 
@@ -407,9 +447,19 @@ wireButtons(".atBtn", "at", (mode) => {
     haalAisTracks();                        // eerste keer: nu pas ophalen
   }
 });
-wireButtons(".srBtn", "sr", (mode) => {
-  if (STROOMROUTE) STROOMROUTE.groep.visible = (mode === "aan");
-});
+// Eén knop per stroom (data-sr = de sleutel uit STROMEN) — geen aan/uit-paar
+// maar een schakelaar per stroom, want met vier stromen tegelijk op de bol is
+// "welke wil ik nu zien" de vraag, niet "laag aan of uit".
+for (const knop of document.querySelectorAll(".srBtn")) {
+  knop.addEventListener("click", () => {
+    const sleutel = knop.dataset.sr;
+    const s = STROOMROUTES.get(sleutel);
+    if (!s) return;
+    s.groep.visible = !s.groep.visible;
+    knop.classList.toggle("is-on", s.groep.visible);
+    toonStroomNoot();
+  });
+}
 wireButtons(".akBtn", "ak", (mode) => {
   if (ANKERCHECK) ANKERCHECK.groep.visible = (mode === "aan");
 });

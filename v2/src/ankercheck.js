@@ -1,19 +1,23 @@
-// ankercheck.js — de kop- en staartankers van de routebrieven als KIJKLAAG.
+// ankercheck.js — de OPEN LIGPLAATSEN als kijklaag (rest van de anker-check).
 //
 // Waarom deze laag bestaat: routebrief-werkwijze §2 eist sinds 2026-07-28 dat
 // elk laadplek-/overslag-/losplek-punt satelliet-gelegd is vóórdat het een
-// anker wordt. Bij de eerste toepassing (drie koperstromen) bleken 7 van de 9
-// gecontroleerde ankers fout te staan, van 42 m tot 1,5 km. Die uitslag is met
-// woorden slecht over te brengen — vandaar deze laag: rood = waar het punt nu
-// staat, groen = waar het volgens de satelliet hoort, met een lijntje ertussen
-// zodat de verplaatsing zichtbaar is. Blauw = check doorstaan, geel = nog niet
-// bekeken.
+// anker wordt. Bij de eerste toepassing stond 10 van de 16 fout, van 42 m tot
+// 4,5 km. Die uitslag is met woorden slecht over te brengen — vandaar deze
+// laag: rood = waar het punt nu staat, groen = waar de satelliet zegt dat het
+// hoort, met een lijntje ertussen zodat de verplaatsing afleesbaar is.
 //
-// ⚠️ DEZE LAAG WIJZIGT NIETS. `aansluitingen.json` blijft ongemoeid tot Lars
-//   zijn oordeel heeft gegeven; dit is uitsluitend het kijkmateriaal daarvoor.
-//   Zodra de correcties zijn doorgevoerd hoort deze laag te verdwijnen (of te
-//   vervallen tot een historische noot) — laat hem niet stil blijven staan met
-//   verouderde "oude" punten, want dan liegt het rood.
+// ⚠️ STAND 2026-07-28 (later die dag): de zeven goedgekeurde correcties zijn
+//   DOORGEVOERD en `data/ankercheck.json` is teruggebracht tot de DRIE punten
+//   waar de ligplaats niet aanwijsbaar was (Lobito · Port Allen · Vidalia).
+//   Dat is bewust: een rode stip op een al gecorrigeerd punt liegt. De laag
+//   zelf blijft ongewijzigd bruikbaar — zodra er voor die drie een voorstel
+//   ligt, krijgt het bestand weer `nieuw`-coördinaten en tekent hij vanzelf de
+//   rood→groen-paren met het witte lijntje. Weg zodra ze alle drie een kade
+//   hebben.
+//
+// ⚠️ DEZE LAAG WIJZIGT NIETS. Hij leest `ankercheck.json` en tekent; het
+//   oordeel en het doorvoeren gebeuren buiten de browser.
 //
 // Tekendiscipline exact als stroomroute.js: punten als THREE.Points in
 // SCHERMpixels (sizeAttenuation uit — de LAR-480-les: wat je op elke hoogte

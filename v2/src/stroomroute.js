@@ -49,11 +49,15 @@ import * as THREE from "three";
 // spoorbeen meer (zie de routebrief).
 const KLEUR = {
   zee: 0x5aa7ff,          // MARNET-zeebeen (zeeschip) + gestippelde haven-aanloop
-  binnenvaart: 0x35e0c0,  // echte AIS-tracks (barge)
+  binnenvaart: 0x35e0c0,  // echte AIS-tracks (barge) óf riviergeometrie uit de bulklaag
   truck: 0xffb04d,        // weg-been (echte geometrie) + last mile — amber, zie de kop
-  spoor: 0xffb04d,        // landnet (geen been in deze stroom; botst met truck —
-                          // geef spoor een eigen kleur zodra een stroom weer een
-                          // spoorbeen krijgt)
+  spoor: 0xff7ab8,        // landnet — EIGEN kleur sinds 2026-07-28. Hij deelde amber
+                          // met truck zolang geen enkele stroom een spoorbeen had; de
+                          // koperstroom Escondida → Guixi heeft er nu wél een, en twee
+                          // modaliteiten in één kleur maakt de legenda onwaar.
+  leiding: 0x9b8cff,      // slurryleiding — een EIGEN VERBINDING, geen net (besluit
+                          // Lars 2026-07-23). Altijd te onderscheiden van de vier
+                          // netten, want dit been kan per definitie niet herrouteren.
 };
 
 function opBol(lonDeg, latDeg, r, uit, o) {
@@ -143,13 +147,20 @@ function maakMarkers(markers, radius, klemOpHorizon) {
   return points;
 }
 
-export async function laadStroomroute(radius, versie, klemOpHorizon) {
-  const r = await fetch(`data/stroomroute-pilot.json?v=${versie}`);
-  if (!r.ok) throw new Error(`stroomroute-pilot.json: HTTP ${r.status}`);
+export async function laadStroomroute(radius, versie, klemOpHorizon,
+                                      bestand = "stroomroute-pilot.json") {
+  // ⚠️ Sinds 2026-07-28 draagt deze laag MEER DAN ÉÉN stroom, en daarom is de
+  // bestandsnaam een parameter geworden in plaats van vast. Elke stroom is een
+  // eigen bestand en een eigen groep, zodat hij los aan/uit kan — precies het
+  // patroon van de vijf tracksets in aistracks.js. Eén gedeeld bestand zou de
+  // stromen aan elkaar vastklinken en elke nieuwe stroom een herbake van alle
+  // andere kosten.
+  const r = await fetch(`data/${bestand}?v=${versie}`);
+  if (!r.ok) throw new Error(`${bestand}: HTTP ${r.status}`);
   const d = await r.json();
 
   const groep = new THREE.Group();
-  groep.name = "stroomroute";
+  groep.name = `stroomroute-${d.stroom || bestand}`;
 
   const benen = [];
   for (const been of d.benen || []) {
@@ -178,5 +189,7 @@ export async function laadStroomroute(radius, versie, klemOpHorizon) {
     benen,                                        // stats per been
     markers: (d.markers || []).map((m) => m.naam),
     titel: d.titel,
+    stroom: d.stroom || bestand,
+    routebrief: d.routebrief || null,
   };
 }

@@ -97,7 +97,7 @@ Conform de werkwijze: kade→kade + sanity-ankers; de zeerouter doet de rest.
 | 4 | — | **Golf-toegang: Yucatánkanaal óf Straat Florida** — hangt af van de rederijrotatie; ONS `wp-florida` IS EEN GOK | passage | — | [Z-analyse] | onzeker |
 | 5 | mijl −20 | **Southwest Pass** — jetty-einde; dé deep-draft-aanloop (50 ft Ship Channel sinds 2022) | passage | 28.91, -89.43 | [Z13][Z14] | bevestigd |
 | 6 | mijl 0 | Head of Passes (referentie rivier-mijl 0 AHP) | referentie (niet aan lijn) | 29.15, -89.25 | [Z13] | bevestigd |
-| 7 | ±mijl 100 | **Port of New Orleans — Napoleon Avenue Container Terminal** (enige containerterminal; 45 ft) | losplek / eindpunt zeebeen | 29.9165, -90.1105 | [Z19][B25] | aannemelijk |
+| 7 | ±mijl 100 | **Port of New Orleans — Napoleon Avenue Container Terminal** (enige containerterminal; 45 ft) — de containerkade met de portaalkranen aan de rivier | losplek / eindpunt zeebeen | 29.9123, -90.1120 | [Z19][B25] + satelliet z16 | **satelliet-gelegd** |
 
 **Negatieve ankers been 2:** géén Suez [Z18, routelogica] · géén South Pass/Pass a
 Loutre [Z13] · en — bevestigd met havenfeiten — **géén Bayou Lafourche/Leeville**:
@@ -119,7 +119,7 @@ km-kolom = officiële USACE-rivier-mijlen (AHP).
 
 | # | mijl | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | ±100 | **Napoleon Avenue Container Terminal** — aankomst zeecontainers | overslag | 29.9165, -90.1105 | [B25][B26] | bevestigd |
+| 1 | ±100 | **Napoleon Avenue Container Terminal** — aankomst zeecontainers, overgang zeeschip → barge | overslag | 29.9123, -90.1120 | [B25][B26] + satelliet z16 | **satelliet-gelegd** |
 | 2 | 102,8 | Carrollton-gage (New Orleans) | referentie | 29.945, -90.135 | [B7] | bevestigd |
 | 3 | 121,6 | Hale Boggs Memorial Bridge (Luling–Destrehan) | passage | 29.937, -90.377 | [B22] | bevestigd |
 | 4 | 138,7 | Reserve | passage | 30.052, -90.552 | [B8] | bevestigd |
@@ -127,13 +127,13 @@ km-kolom = officiële USACE-rivier-mijlen (AHP).
 | 6 | 173,6 | Donaldsonville | passage | 30.101, -90.985 | [B9] | bevestigd |
 | 7 | ±208,5 | Plaquemine | passage | 30.288, -91.233 | [B28] | aannemelijk |
 | 8 | 228,3–228,4 | **Port Allen Lock** + Baton Rouge-gage — afslag GIWW; de ENIGE sluis in de keten (GIWW-zijde, niet de rivier) | kruising / sluis | 30.4415, -91.2075 | [B10][B12] | bevestigd |
-| 9 | — | **IRMT Port Allen** — beladingspunt van de Vidalia-barge (container-op-barge) | overslag | 30.432, -91.222 | [B13][B14] | bevestigd |
+| 9 | — | **IRMT Port Allen** — beladingspunt van de Vidalia-barge (container-op-barge) | overslag | 30.432, -91.222 | [B13][B14] | terminal bevestigd, **kade nog niet** |
 | 10 | 232,4 | Deep-draft-grens (einde 50-ft Ship Channel; daarboven 12-ft duwvaart) | referentie | 30.46, -91.19 | [B16][B17] | bevestigd |
 | 11 | ±265,5 | St. Francisville / Bayou Sara | passage | 30.776, -91.375 | [B28] | aannemelijk |
 | 12 | 302,4 | Red River Landing | referentie | 30.96, -91.66 | [B11] | bevestigd |
 | 13 | 304 | **Old River Lock** — ingang zijkanaal Atchafalaya/Red; wordt GEPASSEERD, niet geschut | passage | 31.077, -91.668 | [B18] | bevestigd |
 | 14 | 311–319 | Old River Control-complex (rechteroever) | passage | 31.076, -91.599 | [B19] | bevestigd |
-| 15 | **359** | **Port of Vidalia** — gedocumenteerde losplek (cargo ramp + t-dock; slack-water slip 31.53788/-91.48535 in aanbouw sinds Q1 2025) | losplek | 31.538, -91.485 | [B1][B3][B4] | bevestigd |
+| 15 | **359** | **Port of Vidalia** — gedocumenteerde losplek (cargo ramp + t-dock; slack-water slip 31.53788/-91.48535 in aanbouw sinds Q1 2025) | losplek | 31.538, -91.485 | [B1][B3][B4] | haven bevestigd, **kade nog niet** |
 | 16 | ±363–364 | **Terral RiverService-fleeting** (ex-Vidalia Dock & Storage), boven de brug — het punt waar onze AIS-toets en `?v=091` nu eindigen; barge-activiteit reëel, maar NIET de gedocumenteerde Syrah-losplek | referentie (niet aan lijn) | 31.568, -91.416 | [B23][B24] | aannemelijk |
 | 17 | ±363 | Natchez–Vidalia Bridge / Natchez-gage 363,3 | passage | 31.559, -91.413 | [B28] | bevestigd |
 | 18 | — | **Syrah-fabriek Vidalia** — ~4 km landinwaarts (NW-hoek D.A. Biglane Rd × LA-131); last mile per short-haul truck | losplek (keten-eind) | 31.5466, -91.4887 | [B1] | bevestigd |
@@ -142,6 +142,35 @@ km-kolom = officiële USACE-rivier-mijlen (AHP).
 tot boven St. Louis) [B20][B21] · géén Atchafalaya-kortsluiting [B18][B19] · géén
 zeeschepen boven mijl 232,4 [B16] · het grafiet reist als **containers**, geen
 bulktransload [B1] · de fabriek ligt NIET aan de rivier [B1].
+
+### De productvraag op punt 9 en 15 (2026-07-28)
+
+Beide punten zakten bij de anker-check als *onbepaald* — de ligplaats was op de
+tegels niet aan te wijzen. In plaats van nóg een keer inzoomen is de productvraag
+gesteld: **wie doet dit product hier, en waar?**
+
+* **Punt 9 · Port Allen.** Container-op-barge op deze corridor is **SEACOR AMH**,
+  gevestigd op de **Inland Rivers Marine Terminal** van de Port of Greater Baton
+  Rouge: 84 acre aan een **bargekanaal langs de GIWW** bij de kruising met de
+  Mississippi, met een **bargekade van 200 ft**, een containeryard van 9 acre,
+  een ro/ro-ramp en een spooraansluiting; de barge-train Port Allen ↔ Memphis
+  rijdt er al. De terminal staat daarmee vast, de **meter kade niet** — de
+  port-eigen pagina geeft geen adres of coördinaat.
+* **Punt 15 · Port of Vidalia.** De haven ligt aan LA-131, ~2,5 mijl ten zuiden
+  van de stad, mijl 359 AHP, vaardiepte 12 ft, 75 acre binnen een industriepark
+  van 275 acre. De **bestaande** eerste fase is een **cargo ramp voor aggregaat**
+  plus een **t-dock met transportband voor droge bulk**.
+  ⚠️ **Dat is een spanning die de productvraag zichtbaar maakt, geen detail:**
+  deze stroom is containervormig [B1], en een t-dock met transportband voor
+  droge bulk lost geen containers. Ofwel de containers gaan over de cargo
+  ramp/ro-ro, ofwel de werkelijke losplek is een andere kade aan die oever.
+  Dat is een vraag aan de brief, niet aan de satelliet.
+
+**Beide punten liggen binnen de bbox van de AIS-track-graaf** ([29,4 -92,2 32,2
+-89,4]), dus de volgende stap is het dok-bewijs uit de trackuiteinden — dezelfde
+toets die bij de Syrah-kade 55 eindigende tracks vond — en níet een nieuwe
+z16-ronde. Tot die er is staan ze als **open ligplaats** op de bol
+(`v2/data/ankercheck.json`).
 
 ## Been 4 · uitgaand AAM — truck, prospectief
 
@@ -170,7 +199,7 @@ nauwelijks fysiek** [S13].
 |---|---|---|---|---|
 | 1 | `gr-mozambique` (mijn) | -13.29, 38.53 (bij het dorp) | **-13.310, 38.660** (de plant) | [M16] |
 | 2 | `gr-port-nacala` | -14.54, 40.67 (stadscentroïde) | **-14.5383, 40.6673** (containerterminal oostoever, satelliet-gelegd; het onderzoekspunt -14.531/40.652 lag in het water bij de west-jetty) | [M16] + satelliet |
-| 3 | `gr-port-neworleans` | 29.95, -90.07 (stadscentroïde; bekende M28-vondst) | **29.9165, -90.1105** (Napoleon Ave) | [B25] |
+| 3 | `gr-port-neworleans` | 29.95, -90.07 (stadscentroïde; bekende M28-vondst) | **29.9123, -90.1120** (Napoleon Ave, containerkade — satelliet-gelegd 2026-07-28; de eerste correctie naar 29.9165/-90.1105 lag nog 489 m landinwaarts vóór het rangeerterrein) | [B25] + satelliet z16 |
 | 4 | `gr-ref-vidalia` | 31.57, -91.42 (fleeting-punt/stad) | **31.5466, -91.4887** (fabriek) | [B1] |
 | 5 | flow `gr-mozambique → gr-ref-vidalia`, note "per barge vanuit New Orleans" | barge vanaf NOLA | barge wordt in **Port Allen** beladen; praktijk t/m 2024 was truck | [B1][Z10] |
 | 6 | flow `gr-ref-vidalia → gr-mkt-us` | mode **rail**, 45 kt/j, naar TN/KY | mode **road**, prospectief, afnemers NV/TX/CA + KS | [S1][S9][S14] |

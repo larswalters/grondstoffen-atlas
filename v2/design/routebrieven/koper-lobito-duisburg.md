@@ -155,6 +155,22 @@ hebben. Dat is geen tekortkoming van de brief maar een echte lacune — hij staa
 | 4 | `cu-duisburg-kade` (Ruhrort Becken A) | 6,7559 / 51,45187 — ~50 m in het bekken | **51,4518 / 6,7565** — op de kade met de stukgoedstapels (akkoord Lars 2026-07-28) | satelliet z16 |
 | 5 | Wesel-vak | — | **gestippeld mét reden** (0 tracks, structureel) | [K2] + §7 |
 
+> **✅ 3 en 4 zijn DOORGEVOERD** (2026-07-28, na goedkeuring van Lars) in
+> `v2/tools/maak_aansluitingen.py` + het gegenereerde `v2/data/aansluitingen.json`.
+> De Waalhaven-correctie is meteen te controleren aan de snap: zee 1,79 → **0,70
+> km**, binnen 0,40 → **0,20**, spoor 1,1 → **0,0** — drie netten die allemaal
+> dichterbij komen is precies wat je verwacht als het punt van een dijk naar een
+> kade verhuist.
+> **1 staat nog open** (welke ligplaats binnen de LAR-mineralenterminal). De
+> productvraag is intussen wél beantwoord: het product is kathode, de terminal is
+> de mineralenterminal onder de LAR-concessie (Trafigura/Mota-Engil/Vecturis,
+> eerste schip 12-07-2024), en de eerste VS-lading vertrok 22-08-2024 op de **MSC
+> SAMU — een containerschip**, dus de kathode gaat gecontaineriseerd weg. Wat
+> ontbreekt is uitsluitend de kade zelf; geen enkele bron noemt een kadenummer,
+> en Angola heeft in onze meting nul havens met varend AIS-verkeer, dus ook de
+> trackdata kan hier niets aanwijzen. Het punt staat als open ligplaats op de bol
+> (`v2/data/ankercheck.json`).
+
 ## Wat de kaart moet tekenen (voorstel)
 
 1. **Spoorbeen** Kolwezi/Tenke → Lobito langs de stationslijst; grens Dilolo/Luau als

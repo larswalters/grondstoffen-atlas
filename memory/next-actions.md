@@ -1,42 +1,93 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laat: anker-check gedaan, 7 correcties goedgekeurd)*
+*Last updated: 2026-07-28 (laatst: correcties doorgevoerd + herbakt, `toets_ankers.py` staat)*
 
-## 🔴 START HIER — de zeven goedgekeurde correcties doorvoeren
+## ✅ AFGEROND 2026-07-28 (laatst) — de zeven correcties + de herbake + de opruiming
 
-Lars keurde op 2026-07-28 **alle zeven** correctievoorstellen goed. Ze staan nog niet in
-de data. Volgorde:
+1. **Coördinaten gewisseld** — de zes koper-ankers in `v2/tools/maak_aansluitingen.py`
+   (de redactionele lijst = bron van waarheid) en daaruit `v2/data/aansluitingen.json`
+   opnieuw gegenereerd mét verse snap-metingen; `gr-port-neworleans` in
+   `data/graphite.js`. Onderweg een **drift** gevonden en hersteld: `cu-guixi-spoor`
+   stond in de uitvoer al goed maar in de generator nog 741 m ernaast.
+2. **Grafietketen herbakken** (`?v=098`) — zeeschip SWP → New Orleans 193,2 → **191,1
+   km**, barge-start verhuist mee, keten 18.072,3 → **18.070,3 km**. De overslagmarker
+   ligt nu 56 m van het geroutete overslagpunt in plaats van ~490 m.
+3. **De kijklaag opgeruimd** — `ankercheck.json` terug tot de **drie open ligplaatsen**,
+   HUD-sectie heet "Open ligplaatsen (3)". Het proefwerk van de beoordelingsronde staat
+   bevroren in `v2/design/ankercheck-2026-07-28.json`.
+4. **`toets_ankers.py` gebouwd** (zie hieronder) + de drie routebrieven bijgewerkt met
+   wat er is doorgevoerd en wat open blijft.
 
-1. **Coördinaten wisselen** — de zes koper-ankers in `v2/data/aansluitingen.json` en
-   `gr-port-neworleans` in `data/graphite.js`. Exacte oud/nieuw-paren staan in
-   `memory/bugs-and-risks.md` en in `v2/data/ankercheck.json`.
-2. **Grafietketen herbakken** — Napoleon Ave schuift **490 m** en dat is precies het punt
-   waar het zeeschip overgaat op de barge, dus de overslag verplaatst mee
-   (`hecht_marnet.py route`, zie de banner in `CLAUDE.md`).
-3. **De ankercheck-laag opruimen** — `v2/src/ankercheck.js`, `v2/data/ankercheck.json`,
-   de HUD-sectie in `index.html`, de `#ankerLijst`/`#ankerLegenda`-CSS en de wiring in
-   `main.js`. Eventueel laten staan voor uitsluitend de drie open ligplaatsen.
+## ✅ AFGEROND 2026-07-28 (laatst) — VIER STROMEN OP DE EXACTE KADES (`?v=099`)
 
-## 🟠 DAARNA — `toets_ankers.py`, de verdachtenlijst
+De hele reden voor de anker-check: stromen die vertrekken en aankomen op een
+satelliet-gelegde kade. Ze staan er, elk met een eigen bestand, eigen groep en
+eigen knop (`STROMEN` in `main.js`).
 
-10 van 16 is systematisch, en de atlas heeft honderden van zulke punten (`aansluitingen.
-json` + alle nodes in `data/*.js`). Handmatig satelliet-leggen kost ~5 min per punt en
-schaalt dus niet. Mechanisch te trieren, en alle vier de missers van deze ronde zouden
-bovenaan zijn gekomen:
+| stroom | keten | totaal |
+|---|---|---|
+| grafiet Balama → Vidalia | truck 504 → zee 17.162 → barge 404 → last mile | 18.070 km |
+| koper Escondida → Guixi | leiding 154 (stippel) → zee 19.104 → **trein 551** | 19.809 km |
+| koper Collahuasi → Tongling | leiding **193 (echte OSM-geometrie)** → zee 18.590 → Yangtze 517 | 19.299 km |
+| koper Lobito → Duisburg | zee 9.705 → Rijn 216 (echte AIS-tracks, Wesel gestippeld) | 9.920 km |
 
-- ligt een punt met rol `overslag`/`losplek` **op water of op land**?
-- afstand tot de dichtstbijzijnde OSM `man_made=pier` / `harbour` / kade-polygoon;
-- ligt een `laadplek` binnen het `landuse=industrial`/`quarry`-vlak van zijn site?
-- hoe ver snapt het punt naar zijn **eigen** net (>0,5 km = verdacht).
+**Twee nieuwe stukken gereedschap** die dit mogelijk maakten:
+* **`maak_rivierbeen.py`** — een rivierbeen als TEKENGEOMETRIE uit de
+  MARNET-bulklaag (Yangtze Shanghai → Tongling, 516,6 km over 72 edges). De
+  Yangtze heeft geen AIS-dekking (Tongling 0 berichten), dus tracks kunnen dit
+  been niet leveren. ⚠️ Het pad wordt éénmalig gezocht en als GeoJSON
+  weggeschreven; de routeergraaf van `hecht_marnet route` blijft per constructie
+  ongewijzigd, dus geen enkele zeeroute kan stiekem een rivier-sluipweg nemen
+  (de Donau-ring-fout).
+* de slurryleiding Collahuasi → Patache uit `pijpleidingen.json` als
+  `--been-geojson` — 192,4 km echte OSM-geometrie in plaats van een rechte lijn.
 
-Uitvoer: een gerangschikte verdachtenlijst, zodat het oog alleen naar de kop gaat.
+**Kleur = modaliteit, en spoor + leiding kregen een eigen kleur** (`spoor`
+deelde amber met truck zolang geen stroom een spoorbeen had; nu wel).
+Gestippeld betekent nu twee dingen die allebei eerlijk zijn: schematische
+verbinding (haven-aanloop, last mile) **of een gedocumenteerd gat** — het
+Wesel-vak, 0 van 35.237 tracks, structureel gemeten.
 
-## 🟡 DE DRIE OPEN LIGPLAATSEN — via de productvraag, niet via inzoomen
+**Volgende stromen:** kolen Cerrejón → Ruhr (brief bestaat al) — maar **eerst de
+vier kolen-ankers satelliet-leggen**, die zijn nooit gecheckt.
 
-- **Port Allen (IRMT)** — wie doet daar container-op-barge, en aan welke ligplaats?
-- **Lobito** — welke berth is de mineralenterminal van Lobito Atlantic Railway
-  (eerste schip 12-07-2024)? De tegels dateren vermoedelijk van vóór de bouw.
-- **Port of Vidalia** — waar ligt de *bestaande* cargo ramp / t-dock? Het huidige punt is
-  de geplande slack-water slip (bouw sinds Q1 2025).
+## 🟠 `toets_ankers.py` — de verdachtenlijst STAAT; wat er nog mee moet gebeuren
+
+Vier toetsen per ankerpunt (Lars' eigen lijst): **T1** afstand tot de waterrand + water
+of land · **T2** afstand tot pier/kade/haven-object · **T3** wat er ónder het punt ligt
+(een kade ligt nooit in een woonwijk, een laadplek hoort in het industrie-/mijnvlak) ·
+**T4** snap naar het eigen net. Score = rangorde, mét de reden per punt.
+
+⚠️ **Twee ontwerpkeuzes die je moet kennen voor je eraan draait:**
+* **De zee-snap wordt gemeten maar NIET gescoord.** MARNET is grof en houdt op bij de
+  kust (Patache 78 km, Coloso 85 km); daar is ver een meetresultaat, geen fout. Binnen,
+  spoor en weg zijn wél dekkend en tellen dus wél mee.
+* **De bron is de LOKALE Geofabrik-extract, niet Overpass** — omgekeerd aan
+  `verken_terminals.py`, en met reden: de kosten stijgen met het aantal LANDEN in plaats
+  van het aantal punten, en de publieke Overpass-mirrors gaven op de bouwdag 504's en
+  daarna 429. Wat de extract-pass mist zijn multipolygoon-relaties (`--osm overpass` als
+  controle op één punt). De regiokeuze gaat via de echte Geofabrik-regiopolygonen, niet
+  via de bestands-bbox — op de bbox koos hij voor Puerto Coloso het Argentijnse extract.
+
+**Volgende stappen:** `--bron js` over alle `data/*.js`-knopen draaien (dat is de eigenlijke
+oogst: honderden punten) · de kop van die lijst satelliet-leggen · drempels bijstellen als
+de zelftoets erom vraagt.
+
+## 🟡 DE DRIE OPEN LIGPLAATSEN — productvraag beantwoord, kade nog niet
+
+De productvraag heeft voor alle drie de **operator en de terminal** opgeleverd (details in
+`memory/bugs-and-risks.md` en in de routebrieven):
+- **Port Allen** — SEACOR AMH op de Inland Rivers Marine Terminal van de Port of Greater
+  Baton Rouge: bargekanaal langs de GIWW, 200 ft bargekade, 9 acre containeryard.
+- **Lobito** — de mineralenterminal van Porto do Lobito onder de LAR-concessie
+  (Trafigura/Mota-Engil/Vecturis); kathode gaat er **gecontaineriseerd** weg (MSC SAMU,
+  22-08-2024). Geen bron noemt een kade; Angola heeft nul havens met varend AIS-verkeer.
+- **Vidalia** — mijl 359, 12 ft; bestaande fase = cargo ramp (aggregaat) + t-dock met
+  transportband (droge bulk). ⚠️ Dat lost geen containers, terwijl deze stroom
+  containervormig is — een vraag aan de brief, niet aan de satelliet.
+
+**→ Volgende stap voor Port Allen en Vidalia is het DOK-BEWIJS uit de AIS-trackuiteinden,
+niet opnieuw inzoomen.** Beide liggen binnen de bbox van de track-graaf, en die toets
+vond bij de Syrah-kade al 55 eindigende tracks. Lobito blijft vermoedelijk open.
 
 Ook nog: **de productvraag promoveren** van de Lobito-brief naar `routebrief-werkwijze.md`
 zelf — hij hoort bij elke kade, niet bij één stroom.

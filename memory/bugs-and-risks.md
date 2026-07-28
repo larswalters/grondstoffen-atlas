@@ -1,13 +1,37 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laat: 10 van 16 kop/staart-ankers stond fout)*
+*Last updated: 2026-07-28 (laatst: de zeven correcties doorgevoerd + herbakt)*
 
-## 🔴 OPEN — 10 van 16 kop/staart-ankers staat fout (goedgekeurd, nog niet doorgevoerd)
+## ✅ OPGELOST 2026-07-28 (laatst) — de zeven goedgekeurde ankercorrecties zijn DOORGEVOERD
 Systematisch, niet incidenteel: over vier stromen stond **10 van de 16** laadplek-/
 overslag-/losplek-ankers verkeerd, van **42 m tot 4,5 km**. Lars keurde alle zeven
-voorstellen goed op 2026-07-28; ze staan nog **niet** in `aansluitingen.json` /
-`data/graphite.js`.
+voorstellen goed op 2026-07-28 en ze staan nu in de data.
 
-| anker | nu | hoort te zijn |
+**Waar:** de zes koper-ankers in `v2/tools/maak_aansluitingen.py` (de redactionele
+lijst = bron van waarheid) → daaruit `v2/data/aansluitingen.json` opnieuw gegenereerd
+mét verse snap-metingen; `gr-port-neworleans` in `data/graphite.js`; de grafietketen
+herbakken (`hecht_marnet.py route` → `v2/data/stroomroute-pilot.json`), live `?v=098`.
+
+**Onafhankelijke bevestiging uit de snap-meting** (die is niet gestuurd door het oog
+dat de kade aanwees): Waalhaven zee **1,79 → 0,70 km**, binnen 0,40 → **0,20**, spoor
+1,1 → **0,0** · Guixi spoor 0,1 → **0,0** · Beilun zee 2,4 → **1,3**.
+
+⚠️ **Eén meting werd slechter, en dat hoort hier te staan:** Beilun's SPOOR-snap ging
+van 0,2 naar **1,3 km**. Logisch — de berth ligt in het water, het havenspoor eindigt
+bij het ertsveld — maar het laat zien dat één aansluiting niet tegelijk ligplaats én
+laadspoor kan zijn. Gaat dat knellen, dan hoort er een tweede aansluiting te komen
+(werkwijze §3.4: de last mile is een eigen been), geen compromis-coördinaat ertussenin.
+
+⚠️ **Drift gevonden en hersteld tijdens het doorvoeren:** `cu-guixi-spoor` stond in
+`aansluitingen.json` op de satelliet-bevestigde ertslosbundel (117,226/28,3271, commit
+`73cf5d2`) maar in de GENERATOR nog op het oude polygoon-middelpunt
+(117,2257/28,3338) — 741 m ernaast. Een regeneratie zou het goede punt stil hebben
+teruggedraaid. De generator is nu de waarheid. **Les: als een gegenereerd bestand met
+de hand wordt bijgewerkt, loopt de generator stil uit de pas — controleer bij elke
+regeneratie eerst het verschil generator↔uitvoer.**
+
+De doorgevoerde paren, voor de historie:
+
+| anker | stond op | staat nu op |
 |---|---|---|
 | `cu-escondida-laad` | -69,07169 / -24,27004 (ín de open put) | **-69,0600 / -24,2620** (concentrator + indikkers) |
 | `cu-coloso-kade` | -70,46332 / -23,76015 (kustweg bij het dorp) | **-70,4652 / -23,7569** (kop laadsteiger) |
@@ -17,16 +41,38 @@ voorstellen goed op 2026-07-28; ze staan nog **niet** in `aansluitingen.json` /
 | `cu-duisburg-kade` | 6,7559 / 51,45187 (in het bekken) | **6,7565 / 51,4518** (kade met stukgoedstapels) |
 | `gr-port-neworleans` | -90,1105 / 29,9165 (landzijde vóór het rangeerterrein) | **-90,1120 / 29,9123** (containerkade) |
 
-⚠️ **Napoleon Ave schuift 490 m en dát is de zee→barge-overslag** — doorvoeren vraagt dus
-ook een herbake van de grafietketen, niet alleen een coördinaatwissel.
+⚠️ **Napoleon Ave schoof 490 m en dát is de zee→barge-overslag** — daarom is de keten
+herbakken. Gemeten gevolg: het zeeschip-been Southwest Pass → New Orleans 193,2 →
+**191,1 km**, de barge-start verhuist mee (beide benen delen exact hetzelfde punt), en
+de overslagmarker ligt nu **56 m** van het geroutete overslagpunt in de vaargeul in
+plaats van ~490 m. De keten als geheel 18.072,3 → **18.070,3 km**. Het routeerpunt zelf
+schuift maar 154 m, want een schip vaart in de geul en niet tegen de kade — dat verschil
+tussen ANKER en ROUTEERPUNT hoort men te kennen vóór men zich verbaast over "maar 154 m".
 
 ## ⚠️ OPEN — drie ligplaatsen niet aanwijsbaar op de beschikbare tegels
-**Lobito** (er ís een mineralenterminal van Lobito Atlantic Railway, eerste schip
-12-07-2024, maar de Esri-beelden dateren vermoedelijk van vóór de bouw) · **Port Allen
-(IRMT)** (huidig punt staat in een veld, ~300 m van het water; wélke ligplaats de
-container-op-barge doet is niet vastgesteld) · **Port of Vidalia** (huidig punt staat in
-het bos op de batture — dat is de plek van de *geplande* slack-water slip, in aanbouw
-sinds Q1 2025). Aanpak: eerst de productvraag stellen, dan pas opnieuw inzoomen.
+**Lobito** · **Port Allen (IRMT)** · **Port of Vidalia**. Staan als enige nog in
+`v2/data/ankercheck.json` (HUD-sectie "Open ligplaatsen (3)"); de dertien afgehandelde
+punten zijn eruit gehaald, want een rode stip op een gecorrigeerd punt liegt.
+
+**De productvraag is 2026-07-28 wél beantwoord voor alle drie** — wat ontbreekt is
+uitsluitend de meter kade:
+* **Lobito** — product = koperkathode; terminal = de mineralenterminal van Porto do
+  Lobito onder de 30-jarige LAR-concessie (Trafigura/Mota-Engil/Vecturis), eerste schip
+  12-07-2024 (MV Lindsaylou, 40.500 t zwavel, ingaand). De eerste VS-lading vertrok
+  22-08-2024 op de **MSC SAMU — een containerschip**, dus kathode gaat gecontaineriseerd
+  weg. Geen bron noemt een kadenummer; Angola heeft nul havens met varend AIS-verkeer,
+  dus ook de trackdata kan hier niets aanwijzen. **Dit blijft vermoedelijk open.**
+* **Port Allen** — container-op-barge = **SEACOR AMH** op de **Inland Rivers Marine
+  Terminal** van de Port of Greater Baton Rouge: 84 acre aan een bargekanaal langs de
+  GIWW, **200 ft bargekade**, 9 acre containeryard, ro/ro-ramp, spooraansluiting.
+* **Vidalia** — de haven ligt aan LA-131, mijl 359 AHP, 12 ft; de **bestaande** fase is
+  een cargo ramp voor aggregaat + een t-dock met transportband voor droge bulk.
+  ⚠️ **Spanning:** deze stroom is containervormig, en een t-dock met transportband lost
+  geen containers. Vraag aan de brief, niet aan de satelliet.
+
+**Volgende stap voor Port Allen en Vidalia is NIET opnieuw inzoomen** maar het
+dok-bewijs uit de AIS-trackuiteinden — beide liggen binnen de bbox van de track-graaf,
+en die toets vond bij de Syrah-kade al 55 eindigende tracks.
 
 ## ✅ OPGELOST 2026-07-28 (laat) — de "883 km" van het spoorbeen Beilun→Guixi was een verkeerde conclusie
 De brief stelde dat de atlas dit been op 883 km mat tegen ~628 km volgens de bronnen, en
@@ -38,11 +84,13 @@ ouder netstadium en tussen andere punten. **Les: noem bij een lengtemeting altij
 gereedschap, de twee eindpunten en het netstadium — anders wordt een oud getal een nieuwe
 conclusie.**
 
-## ⚠️ RISICO — de ankercheck-laag mag niet blijven staan
-`v2/src/ankercheck.js` + `v2/data/ankercheck.json` zijn bewust **tijdelijk**. Zodra de
-correcties zijn doorgevoerd liegt het rood (een gecorrigeerd punt dat nog als fout
-getekend staat). De waarschuwing staat in de bestandskop, in de HUD-comment en in het
-commitbericht — maar de opruiming is nog niet gedaan.
+## ✅ OPGELOST 2026-07-28 (laatst) — de ankercheck-laag is teruggebracht tot de drie open punten
+`v2/data/ankercheck.json` bevat nog uitsluitend Lobito, Port Allen en Vidalia; de HUD
+heet "Open ligplaatsen (3)". `v2/src/ankercheck.js` blijft ongewijzigd staan — het
+rood→groen-mechanisme met het witte verplaatsingslijntje werkt nog en is meteen bruikbaar
+zodra er voor die drie een voorstel ligt. Het gelabelde proefwerk van de beoordelingsronde
+(16 punten mét oordeel en verplaatsing) staat bevroren in
+`v2/design/ankercheck-2026-07-28.json` en is de testverzameling van `toets_ankers.py`.
 
 ## ✅ OPGELOST 2026-07-28 — de vier grafiet-centroïdes (incl. de New Orleans-kade)
 De routebrief grafiet-balama-vidalia leverde de echte coördinaten: Balama-plant

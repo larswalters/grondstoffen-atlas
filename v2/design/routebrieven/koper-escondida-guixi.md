@@ -192,6 +192,16 @@ de vier ankers van deze stroom is dit de enige die de check ongewijzigd doorstaa
 | 5 | ~~spoorbeen Beilun→Guixi~~ | ~~gemeten 883 km~~ | **VERVALLEN** — hermeten op 550,5 km over corridor B, toets §4 geslaagd | meting 2026-07-28 |
 | 6 | leiding-been Escondida→Coloso | ontbreekt / recht | **gestippeld mét reden** (~170 km, eigen verbinding, geen OSM-tracé) | [E1] + werkwijze §7 |
 
+> **✅ 1, 2 en 3 zijn DOORGEVOERD** (2026-07-28, na goedkeuring van Lars): de
+> coördinaten staan in `v2/tools/maak_aansluitingen.py` (de redactionele lijst =
+> bron van waarheid) en in het daaruit gegenereerde `v2/data/aansluitingen.json`,
+> mét de verplaatsing en de reden in de `noot`. Gemeten neveneffect bij Beilun:
+> de zee-snap verbetert (2,4 → 1,3 km) en de spoor-snap verslechtert (0,2 →
+> 1,3 km) — de berth ligt in het water, het havenspoor eindigt bij het ertsveld.
+> Eén punt kan niet allebei zijn; als dat gaat knellen hoort er een tweede
+> aansluiting te komen (§3.4), geen compromis-coördinaat.
+> **4 en 6 staan nog open.**
+
 ## Wat de kaart moet tekenen (voorstel)
 
 1. **Leidingbeen** (stippel, amber): concentrator -24,2620/-69,0600 → Coloso-filterfabriek

@@ -44,7 +44,7 @@ referentie in de brief.*
 | 5 | ~192,4 | **Espesadores (indikkers) Patache** — hier mondt de leiding uit | overslag | *nog te leggen (z18)* | [P2] | **onzeker** |
 | 6 | — | planta de molibdeno → planta de filtro → stockpile | passage (terreinproces) | — | [P2] | aannemelijk |
 | 7 | — | **Terminalgebouwen + wal-einde van de laadsteiger** | overslag | -20.80503, -70.19773 | [P1] + satelliet z16 | **satelliet-gelegd** |
-| 8 | — | **Kop van de laadsteiger — ligplaats bulkcarrier** | laadplek zee | -20.8027, -70.1989 | satelliet z16 | **satelliet-gelegd** |
+| 8 | — | **Kop van de laadsteiger — ligplaats bulkcarrier** ⟵ **DIT IS SINDS 2026-07-28 HET ANKER** `cu-patache-kade` (286 m verplaatst vanaf punt 7, de walkant; goedkeuring Lars, doorgevoerd) | laadplek zee | -20.8027, -70.1989 | satelliet z16 | **satelliet-gelegd** |
 | 9 | — | Tweede, noordelijker pier bij Patache (aparte terminal, o.a. de kolencentrale) hoort NIET bij deze stroom | referentie (niet aan lijn) | ~-20.7985, -70.1955 | satelliet z16 | aannemelijk |
 
 **Opmerkingen been 1.** ⚠️ **Openstaand punt, nu scherper te formuleren.** Het punt

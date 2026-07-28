@@ -1,3 +1,78 @@
+> **🚢 VIER STROMEN OP DE EXACTE KADES — LIVE `?v=099` (2026-07-28, LAATSTE).**
+> De zeven goedgekeurde ankercorrecties zijn **doorgevoerd** (de zes koper-ankers in
+> `v2/tools/maak_aansluitingen.py` = de redactionele lijst die `aansluitingen.json`
+> genereert, plus `gr-port-neworleans` in `data/graphite.js`), de grafietketen is
+> **herbakken**, de kijklaag is teruggebracht tot de **drie open ligplaatsen**, en
+> daarbovenop staan er nu **vier stromen** op de bol die allemaal vertrekken en
+> aankomen op een satelliet-gelegd punt — dat was de hele reden voor de check.
+>
+> | stroom | keten | totaal |
+> |---|---|---|
+> | grafiet Balama → Vidalia | truck 504 → zee 17.162 → barge 404 → last mile | 18.070 km |
+> | koper Escondida → Guixi | leiding 154 (stippel) → zee 19.104 → **trein 551** | 19.809 km |
+> | koper Collahuasi → Tongling | leiding **193 (echte OSM-geometrie)** → zee 18.590 → Yangtze 517 | 19.299 km |
+> | koper Lobito → Duisburg | zee 9.705 → Rijn 216 (echte AIS-tracks) | 9.920 km |
+>
+> **De correcties bewijzen zichzelf in de snap-meting**, die niet gestuurd wordt door
+> het oog dat de kade aanwees: Waalhaven zee **1,79 → 0,70 km**, binnen 0,40 → **0,20**,
+> spoor 1,1 → **0,0**; Guixi spoor 0,1 → **0,0**. ⚠️ Eén ging omlaag: Beilun's SPOOR-snap
+> 0,2 → **1,3 km** — de berth ligt in het water, het havenspoor eindigt bij het ertsveld.
+> Eén aansluiting kan niet tegelijk ligplaats én laadspoor zijn; wordt dat een probleem,
+> dan hoort er een tweede aansluiting te komen (§3.4), geen compromis-coördinaat.
+> ⚠️ **Drift gevonden en hersteld:** `cu-guixi-spoor` stond in het GEGENEREERDE
+> `aansluitingen.json` al goed (commit `73cf5d2`) maar in de generator nog 741 m ernaast
+> — regenereren zou het satelliet-bevestigde punt stil hebben teruggedraaid.
+> **Werkregel: als een gegenereerd bestand met de hand is bijgewerkt, loopt de generator
+> stil uit de pas — vergelijk generator↔uitvoer vóór elke regeneratie.**
+>
+> **Napoleon Ave schoof 490 m en dát is de zee→barge-overslag**, dus de grafietketen is
+> herbakken: zeeschip SWP → New Orleans 193,2 → **191,1 km**, barge-start verhuist exact
+> mee, keten 18.072,3 → **18.070,3 km**, de overslagmarker ligt nu **56 m** van het
+> geroutete overslagpunt in plaats van ~490 m. Het routeerpunt zelf schuift maar 154 m:
+> een schip vaart in de geul, niet tegen de kade — **anker ≠ routeerpunt**.
+>
+> **NIEUW GEREEDSCHAP.** `v2/tools/maak_rivierbeen.py` — een rivierbeen als
+> TEKENGEOMETRIE uit de MARNET-bulklaag (Yangtze Shanghai → Tongling, 516,6 km over 72
+> edges). De Yangtze heeft geen AIS-dekking (Tongling 0 berichten), dus tracks kunnen dit
+> been niet leveren, en de bulklaag staat bewust buiten de routeergraaf. Deze tool zoekt
+> het pad **één keer** en schrijft een GeoJSON; `hecht_marnet route` ziet daarna alleen
+> een `--been-geojson`. De routeergraaf blijft per constructie ongewijzigd, dus er is geen
+> run waarin een zeeroute een rivier-sluipweg kan nemen (de Donau-ring-fout).
+> `v2/tools/toets_ankers.py` — de **verdachtenlijst**: vier toetsen per anker (waterrand ·
+> haveninfra · terrein onder het punt · snap), leest `aansluitingen.json` én alle **510
+> knopen uit `data/*.js`** (alle 510 vallen in een extract dat al op schijf staat). Bron =
+> de **lokale Geofabrik-extracts**, omgekeerd aan `verken_terminals.py` en met reden: de
+> kosten stijgen met het aantal LANDEN in plaats van punten, en de publieke
+> Overpass-mirrors gaven op de bouwdag 504's en daarna 429.
+>
+> **⚠️ DE ZELFTOETS IS EERLIJK GEZAKT, EN DAT IS DE WAARDEVOLSTE UITSLAG VAN DE DAG.**
+> Tegen het gelabelde proefwerk (`v2/design/ankercheck-2026-07-28.json`, 16 punten mét
+> oordeel) is de rangorde **niet scheidend**: Napoleon Ave staat op 1, maar **Waalhaven op
+> 8 en Coloso op 14**. Reden, gemeten: op de dijk bij Heijplaat vindt OSM water op **3 m**
+> en een haven-object op **0 m**; bij Coloso 18 m en 0 m. Die twee ankers waren niet
+> *geometrisch* fout maar **semantisch** fout — een plausibele kade, alleen de verkeerde.
+> **Geen meetkundige toets vangt die klasse; alleen de productvraag doet dat.** Twee
+> scorefouten zijn wél repareerbaar en staan in `memory/next-actions.md`: de spoor/weg-snap
+> wordt gescoord alsof die netten overal dekkend zijn (Collahuasi 49 km, Balama 178 km naar
+> spoor zijn meetresultaten, geen fouten — dezelfde nuance die voor de zee-snap al gold),
+> en "geen OSM-object binnen de straal" telt als verdenking, wat een dunne kaart straft in
+> plaats van het anker.
+>
+> **DE PRODUCTVRAAG IS VOOR ALLE DRIE DE OPEN LIGPLAATSEN BEANTWOORD** — wat ontbreekt is
+> uitsluitend de meter kade. **Port Allen**: container-op-barge = SEACOR AMH op de Inland
+> Rivers Marine Terminal van de Port of Greater Baton Rouge (bargekanaal langs de GIWW,
+> 200 ft bargekade, 9 acre containeryard). **Lobito**: de mineralenterminal onder de
+> LAR-concessie (Trafigura/Mota-Engil/Vecturis); de eerste VS-lading vertrok op de **MSC
+> SAMU — een containerschip**, dus kathode gaat gecontaineriseerd weg; geen bron noemt een
+> kade en Angola heeft nul havens met varend AIS-verkeer, dus dit blijft vermoedelijk open.
+> **Vidalia**: mijl 359, 12 ft; de bestaande fase is een cargo ramp (aggregaat) + een
+> t-dock met transportband (droge BULK) — ⚠️ dat lost geen containers terwijl deze stroom
+> containervormig is. Vraag aan de brief, niet aan de satelliet. Port Allen en Vidalia
+> liggen bínnen de bbox van de track-graaf → **volgende stap is dok-bewijs uit
+> trackuiteinden, niet opnieuw inzoomen**.
+> **→ VOLGENDE:** de twee scorefouten in `toets_ankers.py` · `--bron js` over alle 510
+> knopen · de vier **kolen**-ankers satelliet-leggen, dán de stroom Cerrejón → Ruhr.
+
 # Grondstoffen Atlas — project spec
 
 *Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-28 (laat: de anker-check — 10 van 16 kop/staart-ankers fout, live ?v=097)*
