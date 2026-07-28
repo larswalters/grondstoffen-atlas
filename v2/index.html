@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=094" />
+<link rel="stylesheet" href="style.css?v=095" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -85,6 +85,25 @@
       <span style="opacity:.75">gestippeld = schematische verbinding (haven-aanloop, last mile)</span>
     </div>
     <div id="stroomNoot"></div>
+
+    <!-- Anker-check (2026-07-28, tijdelijk): de kop- en staartpunten van de drie
+         koper-routebrieven, gelegd op satellietbeeld volgens werkwijze §2.
+         Rood = staat er nu en is fout · groen = het satelliet-gelegde voorstel ·
+         blauw = check doorstaan · geel = nog niet bekeken. Elke knop vliegt naar
+         het punt. Deze sectie verdwijnt zodra de correcties zijn doorgevoerd. -->
+    <div class="hudLabel">Anker-check koper (routebrieven)</div>
+    <div class="btnRow">
+      <button class="akBtn is-on" data-ak="aan">aan</button>
+      <button class="akBtn" data-ak="uit">uit</button>
+    </div>
+    <div id="ankerLegenda">
+      <span><i style="background:#ff3b30"></i>staat er nu — fout</span>
+      <span><i style="background:#3ddc84"></i>voorstel (satelliet-gelegd)</span>
+      <span><i style="background:#5aa7ff"></i>check doorstaan</span>
+      <span><i style="background:#ffd23b"></i>nog niet bekeken</span>
+    </div>
+    <div id="ankerLijst"></div>
+    <div id="ankerNoot"></div>
 
     <!-- De AIS-drukte als GLOED (M27): het dichtheidsveld zélf op de bol,
          additief per pilotvenster — dít is het beeld (besluit Lars 2026-07-25). -->
@@ -217,6 +236,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=094"></script>
+<script type="module" src="src/main.js?v=095"></script>
 </body>
 </html>

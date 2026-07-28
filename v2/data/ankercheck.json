@@ -1,0 +1,118 @@
+{
+  "versie": 1,
+  "titel": "Anker-check koper — de kop- en staartpunten van drie routebrieven",
+  "toelichting": "Elk laadplek-/overslag-/losplek-anker van de stromen Escondida→Guixi, Collahuasi→Tongling en Copperbelt→Lobito→Duisburg, gelegd op een gestitchte Esri-satellietoverlay (z15–z18) volgens routebrief-werkwijze §2. 'oud' = wat er nu in aansluitingen.json staat, 'nieuw' = het satelliet-gelegde voorstel. Rood = fout, groen = voorstel, blauw = check doorstaan, geel = nog niet bekeken. Niets hiervan is in aansluitingen.json doorgevoerd; dit is de kijklaag voor Lars' oordeel.",
+  "bron": "Esri World Imagery (tegels), overlay-script scratchpad/sat_check.py, 2026-07-28",
+  "ankers": [
+    {
+      "id": "cu-escondida-laad",
+      "naam": "Escondida",
+      "volledig": "Escondida — kop van de slurryleiding",
+      "stroom": "Escondida→Guixi",
+      "oud": [-69.07169, -24.27004],
+      "nieuw": [-69.06, -24.262],
+      "status": "fout",
+      "afstandM": 1485,
+      "wat": "staat op een bank ín de open put; hoort op de concentrator met de rij ronde indikkers — dáár gaat de slurry de pijp in"
+    },
+    {
+      "id": "cu-coloso-kade",
+      "naam": "Coloso",
+      "volledig": "Puerto Coloso — laadsteiger Escondida",
+      "stroom": "Escondida→Guixi",
+      "oud": [-70.46332, -23.76015],
+      "nieuw": [-70.4652, -23.7569],
+      "status": "fout",
+      "afstandM": 409,
+      "wat": "staat op de kustweg bij het dorp Coloso; de laadsteiger steekt noordwestelijker de zee in, met de bulkcarrier eraan"
+    },
+    {
+      "id": "cu-beilun-kade",
+      "naam": "Beilun",
+      "volledig": "Ningbo-Zhoushan — Beilun ertsterminal",
+      "stroom": "Escondida→Guixi",
+      "oud": [121.87573, 29.92742],
+      "nieuw": [121.883, 29.9364],
+      "status": "fout",
+      "afstandM": 1219,
+      "wat": "staat waar de transportband aan land komt bij het ertsveld; de losberth met de rode ertslossers ligt noordoostelijker in het water"
+    },
+    {
+      "id": "cu-guixi-spoor",
+      "naam": "Guixi",
+      "volledig": "Jiangxi Copper Guixi — ertslosbundel",
+      "stroom": "Escondida→Guixi",
+      "oud": [117.226, 28.3271],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan: op z18 liggen hier de parallelle sporen met wagons en twee portaalkranen over een losbunker"
+    },
+    {
+      "id": "cu-collahuasi-laad",
+      "naam": "Collahuasi",
+      "volledig": "Collahuasi — pompstation, kop van de slurryleiding",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [-68.64395, -20.97783],
+      "nieuw": null,
+      "status": "ongecontroleerd",
+      "afstandM": 0,
+      "wat": "overlay staat gerenderd maar is nog niet bekeken — dit is het enige anker van de drie stromen zonder oordeel"
+    },
+    {
+      "id": "cu-patache-kade",
+      "naam": "Patache",
+      "volledig": "Puerto Patache — Collahuasi-concentraatpier",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [-70.19773, -20.80503],
+      "nieuw": [-70.1989, -20.8027],
+      "status": "fout",
+      "afstandM": 286,
+      "wat": "kleinste correctie: staat op de walkant van de steiger, de ligplaats van het schip ligt aan de kop ervan"
+    },
+    {
+      "id": "cu-tongling-kade",
+      "naam": "Tongling",
+      "volledig": "Tongling Nonferrous — kade van de TNMG-smelter",
+      "stroom": "Collahuasi→Tongling",
+      "oud": [117.7718, 30.98656],
+      "nieuw": null,
+      "status": "goed",
+      "afstandM": 0,
+      "wat": "check doorstaan — dit punt heb je in juli zelf al satelliet-gelegd (?v=077)"
+    },
+    {
+      "id": "cu-lobito-kade",
+      "naam": "Lobito",
+      "volledig": "Porto do Lobito — mineralenkade",
+      "stroom": "Lobito→Duisburg",
+      "oud": [13.549, -12.34709],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "ligt in het water van de baai. De kade ligt westelijker, maar OSM zegt niet wélke ligplaats het mineralenverkeer doet — daarom nog geen voorstel"
+    },
+    {
+      "id": "cu-rotterdam-kade",
+      "naam": "Waalhaven",
+      "volledig": "Rotterdam — Waalhaven, stukgoedkade",
+      "stroom": "Lobito→Duisburg",
+      "oud": [4.39341, 51.89369],
+      "nieuw": null,
+      "status": "onbepaald",
+      "afstandM": 0,
+      "wat": "ligt op de dijk bij de woonwijk Heijplaat, niet op een kade. Welke ligplaats non-ferro doet staat niet in OSM — daarom nog geen voorstel"
+    },
+    {
+      "id": "cu-duisburg-kade",
+      "naam": "Ruhrort",
+      "volledig": "Duisburg — Duisport Ruhrort, Becken A",
+      "stroom": "Lobito→Duisburg",
+      "oud": [6.7559, 51.45187],
+      "nieuw": [6.7565, 51.4518],
+      "status": "fout",
+      "afstandM": 42,
+      "wat": "staat net in het bekken; hoort op de kade met de stukgoedstapels ernaast — dit is precies de ~50 m die §2 bedoelt"
+    }
+  ]
+}

@@ -22,6 +22,7 @@ import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=093";
+import { laadAnkercheck } from "./ankercheck.js?v=095";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -222,6 +223,47 @@ laadStroomroute(CONFIG.radius, "094", GLOBE.klemOpHorizon)
   })
   .catch((e) => console.warn("[atlas v2] stroomroute niet geladen (nog niet gebakken?):", e.message));
 
+// --- anker-check: de kop/staart-punten van de routebrieven ------------------
+// Tijdelijke kijklaag (2026-07-28) bij routebrief-werkwijze §2: rood = waar een
+// anker nu staat, groen = waar de satelliet zegt dat het hoort, wit lijntje
+// ertussen. Bedoeld voor één beoordelingsronde met Lars; wég zodra de
+// correcties in aansluitingen.json staan — een blijvende rode stip die al
+// gecorrigeerd is, liegt.
+// Elke knop vliegt naar het punt: op een telefoon is dat de enige werkbare
+// manier om tien plekken op straatniveau na te lopen.
+let ANKERCHECK = null;
+laadAnkercheck(CONFIG.radius, "095", GLOBE.klemOpHorizon)
+  .then((a) => {
+    ANKERCHECK = a;
+    GLOBE.globeGroup.add(a.groep);
+    window.ANKERCHECK = a;           // diagnose-handvat
+    const lijst = document.getElementById("ankerLijst");
+    if (lijst) {
+      for (const anker of a.ankers) {
+        const knop = document.createElement("button");
+        const merk = anker.status === "goed" ? "✓"
+          : anker.status === "ongecontroleerd" ? "?"
+          : anker.afstandM >= 1000 ? `${(anker.afstandM / 1000).toFixed(1).replace(".", ",")} km`
+          : anker.afstandM > 0 ? `${anker.afstandM} m`
+          : "✕";
+        knop.textContent = `${anker.naam} · ${merk}`;
+        knop.className = `ankerKnop is-${anker.status}`;
+        knop.title = anker.wat;
+        // Vlieg naar het NIEUWE punt waar dat bestaat — dan valt het oude punt
+        // vanzelf in beeld ernaast; andersom kan het voorstel buiten beeld
+        // vallen bij de grote correcties (Escondida 1,5 km).
+        const doel = anker.nieuw || anker.oud;
+        knop.addEventListener("click", () => GLOBE.vliegNaar(doel[0], doel[1], 2));
+        lijst.appendChild(knop);
+      }
+    }
+    const fout = a.ankers.filter((x) => x.status === "fout" || x.status === "onbepaald").length;
+    const noot = document.getElementById("ankerNoot");
+    if (noot) noot.textContent = `${fout} van ${a.ankers.length} ankers klopt niet`;
+    console.log(`[atlas v2] ankercheck: ${a.titel} · ${fout}/${a.ankers.length} fout`);
+  })
+  .catch((e) => console.warn("[atlas v2] ankercheck niet geladen:", e.message));
+
 // --- de AIS-drukte als gloed (M27) -----------------------------------------
 // Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
 // gloed van zes jaar scheepvaart, additief per pilotvenster — dít is het
@@ -367,6 +409,9 @@ wireButtons(".atBtn", "at", (mode) => {
 });
 wireButtons(".srBtn", "sr", (mode) => {
   if (STROOMROUTE) STROOMROUTE.groep.visible = (mode === "aan");
+});
+wireButtons(".akBtn", "ak", (mode) => {
+  if (ANKERCHECK) ANKERCHECK.groep.visible = (mode === "aan");
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");

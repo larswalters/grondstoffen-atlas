@@ -253,7 +253,8 @@ html, body {
    een derde element met id="havenLegenda" — dubbele id's zijn ongeldig HTML
    en getElementById zou er stil de eerste van pakken. */
 #havenLegenda,
-#stroomLegenda {
+#stroomLegenda,
+#ankerLegenda {
   margin-top: 6px;
   font-size: 10px;
   color: var(--ink-dim);
@@ -261,7 +262,8 @@ html, body {
 }
 
 #havenLegenda span,
-#stroomLegenda span { display: block; }
+#stroomLegenda span,
+#ankerLegenda span { display: block; }
 
 #havenNoot {
   margin-top: 4px;
@@ -280,6 +282,7 @@ html, body {
 #gloedNoot,
 #pingNoot,
 #stroomNoot,
+#ankerNoot,
 #tracksNoot,
 #aisNoot,
 #landNoot {
@@ -302,8 +305,39 @@ html, body {
 #tracksBronnen span { display: block; }
 #tracksBronnen b { color: var(--ink); font-weight: 600; }
 
+/* --- anker-check: vlieg-knoppen per punt (tijdelijk, 2026-07-28) ---------
+   Eén knop per anker; de kleur van de rand zegt de status, zodat de lijst
+   zonder legenda al leesbaar is. Wrap i.p.v. .btnRow-flex: tien knoppen naast
+   elkaar persen zou ze onleesbaar smal maken op een telefoon. */
+#ankerLijst {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+#ankerLijst .ankerKnop {
+  padding: 4px 7px;
+  font: inherit;
+  font-size: 10px;
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-left-width: 3px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+
+#ankerLijst .ankerKnop:hover { color: var(--ink); background: rgba(255, 255, 255, 0.09); }
+#ankerLijst .is-fout { border-left-color: #ff3b30; }
+#ankerLijst .is-onbepaald { border-left-color: #ff3b30; }
+#ankerLijst .is-goed { border-left-color: #5aa7ff; }
+#ankerLijst .is-ongecontroleerd { border-left-color: #ffd23b; }
+
 #havenLegenda i,
-#stroomLegenda i {
+#stroomLegenda i,
+#ankerLegenda i {
   display: inline-block;
   width: 7px;
   height: 7px;
