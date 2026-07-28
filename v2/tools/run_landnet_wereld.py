@@ -43,8 +43,15 @@ def main():
         ways = fl.land_laad(sleutels, "spoor")
         ketens = fl.vouw_ketens(ways)
         fl.keten_invariant(ways, ketens)
+        # ⚠️ DE JUNCTIESET MOET HIER OOK MEE — dit pad loopt NIET door het
+        # __main__-blok van fetch_landnet. Vergeten kostte een volle wereldrun
+        # van 40 minuten die precies dezelfde getallen opleverde als ervoor
+        # (2026-07-29). Twee aanroepplekken voor dezelfde stap is de valkuil;
+        # de identieke uitkomst was het enige signaal.
+        junctie = fl.junctie_coordinaten(ways)
+        print(f"  junctieknopen (OSM-graad >= 3): {len(junctie):,}", flush=True)
         del ways
-        ketens, rap = fl.dedup_parallel(ketens)
+        ketens, rap = fl.dedup_parallel(ketens, junctie)
         ketens = fl.heel_naden(ketens)
         ketens = fl.herstel_verbindingen(ketens, rap["verwijderd"])
         ketens = fl.snoei_componenten(ketens)

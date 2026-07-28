@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=101";
+import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
@@ -93,7 +93,7 @@ laadHavens()
 // meebumpen met de code dwingt elke bezoeker ~5 MB opnieuw te downloaden voor
 // een bit-identiek bestand. Bump deze alleen bij een echte bake.
 let LANDNET = null;
-laadLandnet(VECTOR_R, "101", GLOBE.klemOpHorizon)
+laadLandnet(VECTOR_R, "102", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -249,7 +249,7 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "101", GLOBE.klemOpHorizon, def.bestand)
+  laadStroomroute(VECTOR_R, "102", GLOBE.klemOpHorizon, def.bestand)
     .then((s) => {
       s.groep.visible = def.aan;
       STROOMROUTES.set(def.sleutel, s);

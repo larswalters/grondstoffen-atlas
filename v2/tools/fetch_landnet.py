@@ -911,8 +911,84 @@ def _snijd(pts, van_km, tot_km):
     return uit
 
 
-def dedup_parallel(ketens):
+JUNCTIE_M = 30.0     # hoe dicht een monster bij een junctieknoop mag liggen
+
+
+def junctie_coordinaten(ways):
+    """De coördinaten van OSM-knopen met GRAAD >= 3 — de echte vertakkingen.
+
+    ⚠️ WAAROM DIT BESTAAT (gemeten 2026-07-28, na Lars' *"hij maakt een bocht die
+    niet kan; er ligt wel spoor in de juiste bocht en dat is op meer plekken zo"*).
+    Van de **106.092** echte OSM-vertakkingen wereldwijd overleefde er nog maar
+    **20,5%** als gedeelde knoop in ons net; **49,5%** stond ontkoppeld — het
+    spoor lag er, maar er was geen knoop. Een A/B op precies dat criterium wees
+    één schuldige aan: alles ná de dedup (heal, snoei, simplify, bake) kost samen
+    7,4 procentpunt, de dedup kost er **76,0**.
+
+    En de reden is meetkundig onvermijdelijk: een junctie ÍS de plek waar twee
+    sporen binnen 15 m in vrijwel dezelfde richting samenkomen — precies de cel
+    en de richtingsbak waarop `dedup_parallel` "dubbelspoor" concludeert. Hij at
+    dus systematisch de laatste tientallen meters van elke invoegende tak op, en
+    daarna plakte de heal het gat dicht met een las onder een onmogelijke hoek.
+    Die las was het verband, niet de wond.
+
+    ⚠️ DE KM-IJKING IS HIER BLIND VOOR, en dat is de eigenlijke les. Nederland
+    (−3,7% tegen ProRail) en Polen (+1,2% tegen PKP-PLK) zijn precies de twee
+    regio's waarop onze meetlat klopt — terwijl daar 86-88% van de topologie weg
+    was. Lengte meet niet of het net nog een NET is; deze telling wel.
+
+    Graad = het aantal aanliggende way-segmenten. Interieur van één way geeft 2,
+    een doorloop tussen twee ways ook 2; pas bij >= 3 takt er echt iets af.
+    De scan-cache draagt `refs` naast `pts` in dezelfde volgorde, dus dit kost
+    GEEN nieuwe pass over de extracts."""
+    graad = defaultdict(int)
+    coord = {}
+    for w in ways:
+        refs, pts = w.get("refs"), w.get("pts")
+        if not refs or not pts or len(refs) != len(pts):
+            continue
+        n = len(refs)
+        for i, r in enumerate(refs):
+            graad[r] += (1 if i > 0 else 0) + (1 if i < n - 1 else 0)
+            coord[r] = pts[i]
+    return {(round(coord[r][0], 6), round(coord[r][1], 6))
+            for r, g in graad.items() if g >= 3 and r in coord}
+
+
+def _junctie_index(junctie):
+    """Rasterindex op ~JUNCTIE_M zodat 'ligt hier een junctie vlakbij' O(1) is."""
+    dlat = JUNCTIE_M / 111320.0
+    idx = set()
+    for lo, la in junctie:
+        dlon = dlat / max(0.05, math.cos(math.radians(la)))
+        idx.add((int(round(la / dlat)), int(round(lo / dlon))))
+    return idx, dlat
+
+
+def _bij_junctie(idx, dlat, lo, la):
+    dlon = dlat / max(0.05, math.cos(math.radians(la)))
+    cy, cx = int(round(la / dlat)), int(round(lo / dlon))
+    for dy in (-1, 0, 1):
+        for dx in (-1, 0, 1):
+            if (cy + dy, cx + dx) in idx:
+                return True
+    return False
+
+
+def dedup_parallel(ketens, junctie=None):
     """Vouwt parallel dubbelspoor samen. Beslissing PER MONSTER, niet per keten.
+
+    ⚠️ JUNCTIE-BEWUST sinds 2026-07-28 (zie `junctie_coordinaten` voor het
+    waarom en de meting). Een monster dat binnen ~30 m van een echte
+    OSM-vertakking ligt wordt NOOIT als gedekt gemarkeerd, en een bewaard stuk
+    dat zo'n vertakking draagt overleeft ook als het korter is dan
+    DEDUP_SNIPPER_KM. Dat tweede is niet optioneel: zonder die uitzondering
+    houdt de eerste regel een stomp van 20-40 m over die de snipper-regel
+    vervolgens alsnog opruimt — dan heb je de junctie nog steeds niet.
+
+    Dit is exact de behandeling die `_simplify_met_knopen` al kreeg, en om
+    dezelfde reden: een kale filter die aanhechtvertices wegneemt laat een net
+    achter dat er compleet uitziet en het niet is.
 
     ⚠️ WAAROM PER MONSTER. Een drempel over de hele keten faalt meetbaar op
     lange ketens: na het vouwen is de langste Chinese keten 2.780 km en die
@@ -986,14 +1062,32 @@ def dedup_parallel(ketens):
         raak = uniek[pos] == buur
         gedekt |= raak & (beste[pos] < pri)
 
+    # ── REGEL 1: een monster bij een echte OSM-vertakking is NOOIT gedekt ────
+    # Zonder deze regel eet de dedup de junctie zelf op — zie de kop van
+    # `junctie_coordinaten`: wereldwijd overleefde er nog maar 20,5% van.
+    n_beschermd = 0
+    beschermd_monster = np.zeros(len(key), dtype=bool)
+    if junctie:
+        j_idx, j_dlat = _junctie_index(junctie)
+        p = 0
+        for i, k in enumerate(ketens):
+            for (_km_langs, lo, la, _az) in monsters_per_keten[i]:
+                if _bij_junctie(j_idx, j_dlat, lo, la):
+                    beschermd_monster[p] = True
+                p += 1
+        n_beschermd = int(beschermd_monster.sum())
+        gedekt &= ~beschermd_monster
+
     keten_arr = np.array(kolom_keten, dtype=np.int64)
     km_arr = np.array(kolom_km, dtype=np.float64)
     uit, weggevouwen, verwijderd = [], [], []
     km_voor = sum(k["km"] for k in ketens)
+    n_snipper_gered = 0
     for i, k in enumerate(ketens):
         masker = keten_arr == i
         vlaggen = gedekt[masker]
         kms = km_arr[masker]
+        beschermd_hier = beschermd_monster[masker]
         if not vlaggen.any():
             uit.append(k)
             continue
@@ -1003,20 +1097,29 @@ def dedup_parallel(ketens):
             continue
         # runs van ONgedekte monsters
         run_start = None
+        run_junctie = False
         stukken = []
         for j, vlag in enumerate(vlaggen):
             if not vlag and run_start is None:
-                run_start = kms[j]
+                run_start, run_junctie = kms[j], bool(beschermd_hier[j])
+            elif not vlag and run_start is not None:
+                run_junctie = run_junctie or bool(beschermd_hier[j])
             elif vlag and run_start is not None:
-                stukken.append((run_start, kms[j]))
-                run_start = None
+                stukken.append((run_start, kms[j], run_junctie))
+                run_start, run_junctie = None, False
         if run_start is not None:
-            stukken.append((run_start, kms[-1]))
+            stukken.append((run_start, kms[-1], run_junctie))
         bewaard = 0.0
         gehouden_iv = []
-        for van, tot in stukken:
+        for van, tot, heeft_junctie in stukken:
+            # ── REGEL 2: een stuk dat een vertakking draagt overleeft de
+            # snipper-regel. Zonder deze uitzondering redt regel 1 alleen een
+            # stomp van 20-40 m, die hier alsnog als "wisselconfetti" sneuvelt —
+            # en dan is de junctie er nog steeds niet.
             if tot - van < DEDUP_SNIPPER_KM:
-                continue
+                if not heeft_junctie:
+                    continue
+                n_snipper_gered += 1
             pts = _snijd(k["pts"], van, tot)
             if len(pts) < 2:
                 continue
@@ -1042,6 +1145,10 @@ def dedup_parallel(ketens):
     print(f"  dedup: {km_voor:,.0f} → {km_na:,.0f} km "
           f"({100 * (1 - km_na / max(km_voor, 1e-9)):.1f}% gevouwen) · "
           f"{len(ketens):,} → {len(uit):,} ketens")
+    if junctie:
+        print(f"    junctie-bescherming: {len(junctie):,} OSM-vertakkingen · "
+              f"{n_beschermd:,} monsters beschermd · "
+              f"{n_snipper_gered:,} korte stukken van de snipper-regel gered")
     per_gauge_voor, per_gauge_na = defaultdict(float), defaultdict(float)
     for k in ketens:
         per_gauge_voor[k["gauge"]] += k["km"]
@@ -1853,7 +1960,11 @@ if __name__ == "__main__":
     ketens = vouw_ketens(ways)
     keten_invariant(ways, ketens)
     if not a.geen_dedup:
-        ketens, rap = dedup_parallel(ketens)
+        # ⚠️ De junctieset komt uit de scan-cache (`refs` naast `pts`), dus
+        # dit kost geen nieuwe pass over de extracts.
+        junctie = junctie_coordinaten(ways)
+        print(f"  junctieknopen (OSM-graad >= 3): {len(junctie):,}")
+        ketens, rap = dedup_parallel(ketens, junctie)
         ketens = heel_naden(ketens)
         ketens = herstel_verbindingen(ketens, rap["verwijderd"])
     else:
