@@ -11,7 +11,7 @@
 // AIS-net ze kan dragen. Havens, knooppunten en aansluitingen blijven bestaan
 // als AANHECHTPUNTEN voor het nieuwe net.
 
-import { createGlobe, CONFIG } from "./globe.js?v=070";
+import { createGlobe, CONFIG } from "./globe.js?v=100";
 import { laadVectorWereld } from "./world.js?v=070";
 import { createTileLayer } from "./tiles.js?v=070";
 import { laadHavens } from "./marnet.js?v=077";
@@ -21,10 +21,17 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=099";
+import { laadStroomroute } from "./stroomroute.js?v=100";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
+
+// ⚠️ ALLE VECTORLAGEN OP DE SCHIL VAN DE DIEPSTE TEGELS, niet op `radius`.
+// Zie de toelichting bij CONFIG.vectorLift in globe.js: de detailtegels liggen
+// 130 m boven `radius`, en een lijn eronder verschuift schuin bekeken zichtbaar.
+// Eén constante voor alle lagen, zodat ze onderling per constructie niet uit
+// elkaar kunnen lopen.
+const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 
 // --- satelliettegels -------------------------------------------------------
 // Streamt Esri World Imagery op het detailniveau dat bij je kijkhoogte past —
@@ -39,7 +46,7 @@ GLOBE.onTick((dt) => TEGELS.tick(dt));
 let wereldStats = null;
 let kustlijn = null;
 
-laadVectorWereld(CONFIG.radius, GLOBE.klemOpHorizon)
+laadVectorWereld(VECTOR_R, GLOBE.klemOpHorizon)
   .then(({ lijnen, stats }) => {
     GLOBE.globeGroup.add(lijnen);
     kustlijn = lijnen;
@@ -63,7 +70,7 @@ let HAVENLAAG = null;
 laadHavens()
   .then((havens) => {
     HAVENS = havens;
-    HAVENLAAG = bouwHavenLaag(havens, CONFIG.radius);
+    HAVENLAAG = bouwHavenLaag(havens, VECTOR_R);
     GLOBE.globeGroup.add(HAVENLAAG.punten);
     koppelHavenLabel(GLOBE, HAVENLAAG, HAVENLAAG.getoond, document.getElementById("havenLabel"));
     window.HAVENLAAG = HAVENLAAG;   // diagnose-handvat
@@ -86,7 +93,7 @@ laadHavens()
 // meebumpen met de code dwingt elke bezoeker ~5 MB opnieuw te downloaden voor
 // een bit-identiek bestand. Bump deze alleen bij een echte bake.
 let LANDNET = null;
-laadLandnet(CONFIG.radius, "082", GLOBE.klemOpHorizon)
+laadLandnet(VECTOR_R, "082", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -113,7 +120,7 @@ laadLandnet(CONFIG.radius, "082", GLOBE.klemOpHorizon)
 // Patache · Shanghai. Kijk-laag: eerst moet de lijn in de echte geul liggen,
 // dan pas wordt dit een graaf met knopen en haven-aanhechting.
 let AISNET = null;
-laadAisnet(CONFIG.radius, "085", GLOBE.klemOpHorizon)
+laadAisnet(VECTOR_R, "085", GLOBE.klemOpHorizon)
   .then((an) => {
     AISNET = an;
     // standaard UIT (besluit Lars 2026-07-25): het beeld komt van de gloed-
@@ -153,7 +160,7 @@ function haalAisTracks() {
   if (aistracksBezig) return aistracksBezig;
   const noot = document.getElementById("tracksNoot");
   if (noot) noot.textContent = "laden… (39,5 MB, eenmalig)";
-  aistracksBezig = laadAisTracks(CONFIG.radius, "090", GLOBE.klemOpHorizon)
+  aistracksBezig = laadAisTracks(VECTOR_R, "090", GLOBE.klemOpHorizon)
     .then((at) => {
       AISTRACKS = at;
       at.groep.visible = aistracksAan;
@@ -242,7 +249,7 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(CONFIG.radius, "099", GLOBE.klemOpHorizon, def.bestand)
+  laadStroomroute(VECTOR_R, "100", GLOBE.klemOpHorizon, def.bestand)
     .then((s) => {
       s.groep.visible = def.aan;
       STROOMROUTES.set(def.sleutel, s);
@@ -267,7 +274,7 @@ for (const def of STROMEN) {
 // Elke knop vliegt naar het punt: op een telefoon is dat de enige werkbare
 // manier om zo'n plek op straatniveau na te lopen.
 let ANKERCHECK = null;
-laadAnkercheck(CONFIG.radius, "098", GLOBE.klemOpHorizon)
+laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
   .then((a) => {
     ANKERCHECK = a;
     GLOBE.globeGroup.add(a.groep);

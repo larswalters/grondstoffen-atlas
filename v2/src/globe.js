@@ -12,6 +12,19 @@ export const CONFIG = {
   radius: 2.4,
   segments: 128,
 
+  // ⚠️ WAAROM VECTORLAGEN OP EEN EIGEN SCHIL LIGGEN (gemeten 2026-07-28, op
+  // Lars' "als ik over de bol beweeg ligt het spoor er vaak naast omdat ik niet
+  // recht van boven kom"). De tegels liggen NIET allemaal op `radius`: de
+  // basisschil op 1,0 · de middenring op `ringLift` 1,00001 · de detailpatch op
+  // `detailLift` 1,00002 (tiles.js). Bij inzoomen kijk je dus naar beeld dat
+  // **130 m boven** de vectorlijnen ligt, en 130 m hoogteverschil projecteert
+  // schuin bekeken als een zijdelingse verschuiving van dezelfde orde — recht
+  // van boven zie je er niets van, precies wat Lars beschrijft.
+  // De lijnen gaan daarom op DEZELFDE schil als de diepste tegels. Niet hoger:
+  // dan draaien we het probleem om (dat was v1's `shellLift: 1.0016` = 3,8 km,
+  // waar je op 1 km hoogte onderuit kwam).
+  vectorLift: 1.00002,
+
   // ZOOM WERKT IN HOOGTE BOVEN HET OPPERVLAK, niet in afstand tot het
   // middelpunt. Dat is het verschil tussen "tot 930 km" en "tot straatniveau":
   // 1 eenheid = 2.655 km (want 2,4 eenheden = 6.371 km aardstraal).

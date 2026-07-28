@@ -126,11 +126,89 @@ function snapSpoor(p, etiket) {
 }
 const snapVan = snapSpoor(van, "van "), snapNaar = snapSpoor(naar, "naar");
 
-// --- Dijkstra over spoor-edges op edgeKm ---
+// --- richting per edge-uiteinde: waar wijst de rail als je hier wegrijdt? -----
+// Nodig voor de bochtstraf hieronder. `uitA[e]` = de peiling waarmee je knoop A
+// verlaat langs edge e (uit de EERSTE geometrie-segmenten, niet uit de rechte
+// lijn knoop-naar-knoop: een edge van 1,5 km met een bocht erin zou anders een
+// richting krijgen die hij nergens heeft). Idem `uitB[e]` vanaf knoop B.
+const MIN_SEG_M = 5;    // korter dan dit zegt niets over richting (dubbele vertex)
+
+function peilingUitGeom(e, vanafA) {
+  const start = geomStart[e], nV = geomN[e];
+  const lees = (j) => {
+    const i = start + (vanafA ? j : nV - 1 - j);
+    const x = posities[i * 3], y = posities[i * 3 + 1], z = posities[i * 3 + 2];
+    return [Math.atan2(-z, x) / rad,
+            Math.asin(Math.max(-1, Math.min(1, y / STRAAL))) / rad];
+  };
+  const [lo0, la0] = lees(0);
+  for (let j = 1; j < nV; j++) {
+    const [lo1, la1] = lees(j);
+    const dx = (lo1 - lo0) * Math.cos((la0 + la1) / 2 * rad) * 111320;
+    const dy = (la1 - la0) * 110574;
+    if (Math.hypot(dx, dy) >= MIN_SEG_M) return Math.atan2(dx, dy) / rad;
+  }
+  return NaN;   // edge zonder bruikbare lengte: geen richting, geen straf
+}
+const uitA = new Float64Array(edgeKm.length);
+const uitB = new Float64Array(edgeKm.length);
+for (let e = 0; e < edgeKm.length; e++) {
+  if (edgeModus[e] === 2) { uitA[e] = uitB[e] = NaN; continue; }
+  uitA[e] = peilingUitGeom(e, true);
+  uitB[e] = peilingUitGeom(e, false);
+}
+const peilingUit = (e, k) => (edgeA[e] === k ? uitA[e] : uitB[e]);
+
+// --- de bochtstraf: waarom een kale Dijkstra hier niet volstaat --------------
+// ⚠️ GEMETEN, NIET BEDACHT (2026-07-28, op Lars' observatie "de trein maakt 2
+// bochten die niet kunnen"). Zonder draaikosten is OMKEREN GRATIS, en dan doet
+// het kortste pad precies wat een trein niet kan: het rijdt een aftakking op en
+// meteen weer terug als dat een paar meter scheelt, en het zigzagt door de
+// wissels van een emplacement. Gemeten op Beilun → Guixi (551 km): zeven
+// vertices met een richtingswissel ≥ 60°, waarvan vijf KEERPUNTEN van 158-176°
+// met boogstralen van **27, 35, 80, 159 en 554 m**. Een vrachtlijn heeft geen
+// boog van 27 meter; dat is geen route maar een graaf-artefact.
+//
+// De straf is bewust in KILOMETERS uitgedrukt en niet als verbod, want een
+// echte kopmaak-beweging bestáát (bij Guixi rangeert de trein aantoonbaar op
+// het station). Een verbod zou die route onmogelijk maken en "geen pad" geven;
+// een prijs laat hem alleen winnen als er werkelijk geen alternatief is.
+//
+// De drempels volgen de meetkunde, niet de smaak: bij een boogstraal onder
+// ~150 m ontspoort een goederentrein fysiek, en een wissel op een vrije baan
+// buigt zelden meer dan ~30° af. Vandaar: tot 45° gratis, daarboven oplopend,
+// en een omkering (≥150°) kost het meest.
+const KEERSTRAF_KM = Number(
+  (process.argv.find((a) => a.startsWith("--keerstraf=")) || "").split("=")[1] || 25);
+const BOCHT_STRAF_KM = [
+  [150, KEERSTRAF_KM],   // omkering — alleen met kopmaken/rangeren, dus fors
+  [110, Math.min(8, KEERSTRAF_KM / 3)],  // scherpe knik = emplacement-zigzag
+  [ 75, Math.min(3, KEERSTRAF_KM / 8)],
+  [ 45, Math.min(0.6, KEERSTRAF_KM / 40)],
+];
+
+function bochtStrafKm(eIn, eUit, k) {
+  if (eIn < 0) return 0;                      // eerste stap: geen inkomende richting
+  const a = peilingUit(eIn, k), b = peilingUit(eUit, k);
+  if (Number.isNaN(a) || Number.isNaN(b)) return 0;
+  // Aankomstrichting = tegengesteld aan "wegrijden langs eIn"; de draai is het
+  // verschil tussen die aankomstrichting en de nieuwe wegrijrichting.
+  let d = Math.abs(((b - a - 180) % 360 + 540) % 360 - 180);
+  for (const [grens, straf] of BOCHT_STRAF_KM) if (d >= grens) return straf;
+  return 0;
+}
+
+// --- Dijkstra over GERICHTE EDGE-TOESTANDEN (edge, richting) -----------------
+// ⚠️ De toestand moet de edge zijn en niet de knoop: een bochtstraf hangt af
+// van waar je VANDAAN komt, en die informatie bestaat niet in een knoop-
+// toestand. Kosten: 2 × aantal spooredges toestanden (~519k) — ruim binnen wat
+// deze heap aankan, en het is dezelfde truc als de haltes in de track-graaf.
 function dijkstra(bron, doel) {
-  const dist = new Float64Array(n).fill(Infinity);
-  const prevEdge = new Int32Array(n).fill(-1);
-  const prevKnoop = new Int32Array(n).fill(-1);
+  const nE = edgeKm.length;
+  const dist = new Float64Array(2 * nE).fill(Infinity);
+  const prevStaat = new Int32Array(2 * nE).fill(-1);
+  const staatKm = new Float64Array(2 * nE).fill(Infinity);   // km zónder straf
+  const eindKnoop = (s) => ((s & 1) === 0 ? edgeB[s >> 1] : edgeA[s >> 1]);
   const hK = [], hD = [];                       // binaire min-heap met lazy deletes
   const push = (k, d) => {
     let i = hK.length; hK.push(k); hD.push(d);
@@ -149,23 +227,41 @@ function dijkstra(bron, doel) {
     }
     return [k, d];
   };
-  dist[bron] = 0; push(bron, 0);
+  // startzetten: elke spooredge die de bronknoop raakt, in de wegrijrichting
+  for (let i = adjStart[bron]; i < adjStart[bron + 1]; i++) {
+    const e = adjEdge[i];
+    if (edgeModus[e] === 2) continue;
+    const s = (edgeA[e] === bron) ? (e << 1) : ((e << 1) | 1);
+    if (edgeKm[e] < dist[s]) {
+      dist[s] = edgeKm[e]; staatKm[s] = edgeKm[e]; push(s, edgeKm[e]);
+    }
+  }
+  let beste = -1, besteD = Infinity;
   while (hK.length) {
-    const [k, d] = pop();
-    if (d > dist[k]) continue;
-    if (k === doel) break;
+    const [s, d] = pop();
+    if (d > dist[s]) continue;
+    const k = eindKnoop(s);
+    if (k === doel) { if (d < besteD) { besteD = d; beste = s; } break; }
+    const eIn = s >> 1;
     for (let i = adjStart[k]; i < adjStart[k + 1]; i++) {
       const e = adjEdge[i];
       if (edgeModus[e] === 2) continue;         // spoor-only
-      const buur = adjKnoop[i], nd = d + edgeKm[e];
-      if (nd < dist[buur]) { dist[buur] = nd; prevEdge[buur] = e; prevKnoop[buur] = k; push(buur, nd); }
+      const s2 = (edgeA[e] === k) ? (e << 1) : ((e << 1) | 1);
+      const nd = d + edgeKm[e] + bochtStrafKm(eIn, e, k);
+      if (nd < dist[s2]) {
+        dist[s2] = nd;
+        staatKm[s2] = staatKm[s] + edgeKm[e];
+        prevStaat[s2] = s;
+        push(s2, nd);
+      }
     }
   }
-  return { dist, prevEdge, prevKnoop };
+  return { dist, prevStaat, staatKm, beste, besteD, eindKnoop };
 }
-const { dist, prevEdge, prevKnoop } = dijkstra(snapVan.knoop, snapNaar.knoop);
+const { dist, prevStaat, staatKm, beste, eindKnoop } =
+  dijkstra(snapVan.knoop, snapNaar.knoop);
 
-if (!Number.isFinite(dist[snapNaar.knoop])) {
+if (beste < 0) {
   const rv = find(snapVan.knoop), rn = find(snapNaar.knoop);
   console.log(`GEEN PAD: van-component ${Math.round(compKm.get(rv) || 0).toLocaleString("nl-NL")} km ` +
     `(root ${rv}) · naar-component ${Math.round(compKm.get(rn) || 0).toLocaleString("nl-NL")} km ` +
@@ -174,9 +270,12 @@ if (!Number.isFinite(dist[snapNaar.knoop])) {
 }
 
 // --- pad terugbouwen + lijngeometrie in de looprichting ---
+// De toestand draagt de richting al: even = van A naar B, oneven = van B naar A.
 const pad = [];                                 // { e, van } in volgorde bron→doel
-for (let k = snapNaar.knoop; k !== snapVan.knoop; k = prevKnoop[k])
-  pad.push({ e: prevEdge[k], van: prevKnoop[k] });
+for (let s = beste; s >= 0; s = prevStaat[s]) {
+  const e = s >> 1;
+  pad.push({ e, van: (s & 1) === 0 ? edgeA[e] : edgeB[e] });
+}
 pad.reverse();
 
 const coords = [];
@@ -192,8 +291,43 @@ for (const stap of pad) {
   }
 }
 
+// --- wat er NA de straf nog aan scherpe bochten overblijft -------------------
+// ⚠️ Dit hoort in de uitvoer en niet in een logbestand: een keerpunt dat de
+// straf overleeft is óf een echte kopmaak-beweging (het spoor loopt dood, de
+// trein moet terug) óf een rest-artefact — en dat verschil kan alleen een mens
+// beoordelen. Wegmoffelen zou de indruk wekken dat het probleem weg is; het
+// getal erbij (boogstraal) maakt het beoordeelbaar: onder ~150 m bestaat er
+// geen vrachtboog, dus dan is het een omkering en geen bocht.
+{
+  const bochten = [];
+  for (let i = 1; i < coords.length - 1; i++) {
+    const a = coords[i - 1], b = coords[i], c = coords[i + 1];
+    const seg = (p, q) => {
+      const dx = (q[0] - p[0]) * Math.cos((p[1] + q[1]) / 2 * rad) * 111.32;
+      const dy = (q[1] - p[1]) * 110.57;
+      return [Math.hypot(dx, dy), Math.atan2(dx, dy) / rad];
+    };
+    const [d1, p1] = seg(a, b), [d2, p2] = seg(b, c);
+    if (d1 < 0.005 || d2 < 0.005) continue;
+    const hoek = Math.abs(((p2 - p1 + 180) % 360 + 360) % 360 - 180);
+    if (hoek < 60) continue;
+    const s = Math.sin(hoek / 2 * rad);
+    bochten.push({ hoek, straalM: ((d1 + d2) / 2 * 1000) / (2 * s), b });
+  }
+  bochten.sort((x, y) => y.hoek - x.hoek);
+  console.log(`bochten >= 60 graden na de straf (keerstraf ${KEERSTRAF_KM} km): ` +
+    `${bochten.length}`);
+  for (const q of bochten.slice(0, 6)) {
+    console.log(`  ${q.hoek.toFixed(1).padStart(6)} graden · boogstraal ` +
+      `~${Math.round(q.straalM).toString().padStart(6)} m · ` +
+      `${q.b[1].toFixed(5)},${q.b[0].toFixed(5)} · ` +
+      (q.hoek >= 150 ? "OMKERING — alleen echt als hier kopgemaakt wordt"
+                     : "scherpe bocht"));
+  }
+}
+
 // --- sanity: route-km tegen de grootcirkel tussen de twee ruwe punten ---
-const routeKm = dist[snapNaar.knoop];
+const routeKm = staatKm[beste];   // ECHTE km — de bochtstraf zit niet in de lengte
 const dLat = (naar.lat - van.lat) * rad, dLon = (naar.lon - van.lon) * rad;
 const h = Math.sin(dLat / 2) ** 2 +
   Math.cos(van.lat * rad) * Math.cos(naar.lat * rad) * Math.sin(dLon / 2) ** 2;

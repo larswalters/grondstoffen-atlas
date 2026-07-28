@@ -70,8 +70,50 @@ function opBol(lonDeg, latDeg, r, uit, o) {
   uit[o + 2] = -r * c * Math.sin(lon);
 }
 
+/** Verdicht een been langs de GROOTCIRKEL zodat het op het oppervlak blijft.
+ *
+ * ⚠️ WAAROM DIT MOET (gemeten 2026-07-28, op Lars' "ik zie geen leiding bij
+ * Escondida"): twee punten worden in 3D verbonden met een RECHTE KOORDE, en een
+ * koorde van 153 km duikt in het midden ~0,46 km ónder het boloppervlak. Een
+ * schematisch been van twee punten — de slurryleiding, elke haven-aanloop, het
+ * Wesel-vak — ligt dus niet op de kaart maar er dwars doorheen, en verdwijnt bij
+ * inzoomen precies daar waar je kijkt. Hetzelfde als de tegel-koorde die de bol
+ * eronder liet doorprikken (M22), alleen andersom.
+ *
+ * De stap van 5 km is geijkt op de zakking: over 5 km is die 0,5 m, ruim onder
+ * de 130 m waarop de tegels liggen — kleiner verdichten kost punten zonder dat
+ * je het ziet.
+ */
+function verdicht(punten, maxKm = 5) {
+  const R = 6371;
+  const uit = [punten[0]];
+  for (let i = 1; i < punten.length; i++) {
+    const [lo1, la1] = punten[i - 1], [lo2, la2] = punten[i];
+    const p1 = [la1 * Math.PI / 180, lo1 * Math.PI / 180];
+    const p2 = [la2 * Math.PI / 180, lo2 * Math.PI / 180];
+    const d = 2 * Math.asin(Math.sqrt(
+      Math.sin((p2[0] - p1[0]) / 2) ** 2 +
+      Math.cos(p1[0]) * Math.cos(p2[0]) * Math.sin((p2[1] - p1[1]) / 2) ** 2));
+    const n = Math.ceil((d * R) / maxKm);
+    if (n > 1 && d > 1e-9) {
+      for (let k = 1; k < n; k++) {
+        const f = k / n;
+        const a = Math.sin((1 - f) * d) / Math.sin(d);
+        const b = Math.sin(f * d) / Math.sin(d);
+        const x = a * Math.cos(p1[0]) * Math.cos(p1[1]) + b * Math.cos(p2[0]) * Math.cos(p2[1]);
+        const y = a * Math.cos(p1[0]) * Math.sin(p1[1]) + b * Math.cos(p2[0]) * Math.sin(p2[1]);
+        const z = a * Math.sin(p1[0]) + b * Math.sin(p2[0]);
+        uit.push([Math.atan2(y, x) * 180 / Math.PI,
+                  Math.atan2(z, Math.hypot(x, y)) * 180 / Math.PI]);
+      }
+    }
+    uit.push(punten[i]);
+  }
+  return uit;
+}
+
 function maakBeen(been, radius, kleur, klemOpHorizon) {
-  const punten = been.punten || [];
+  const punten = verdicht(been.punten || []);
   if (punten.length < 2) return null;   // een been zonder lijnstuk: niets tekenen
 
   if (been.stippel) {
