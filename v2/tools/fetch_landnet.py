@@ -64,7 +64,20 @@ RAIL_HOUD = {"rail", "narrow_gauge"}
 # eis sloopt precies Afrika en Zuidoost-Azië. Ontbrekende tag = houden.
 RAIL_USAGE_WEG = {"tourism", "military"}
 
-KETEN_SIMPLIFY_KM = 0.10     # ná het vouwen, op de hele keten
+# ⚠️ DE SIMPLIFY-TOLERANTIE IS DE MAXIMALE SAGITTA, EN DUS DIRECT DE VORM VAN
+# EEN BOOG. Douglas-Peucker houdt een punt zodra de afwijking tot de koorde de
+# tolerantie overschrijdt; op een boog betekent dat: de getekende koorde wijkt
+# tot `tolerantie` van de echte lijn af. Bij 100 m is dat op straatniveau een
+# zichtbare knik — Lars, 2026-07-28: *"een ronde bocht is echt hoekig van
+# dichtbij, dat is overal op de wereld zo."* De boog wordt dus niet rond door
+# punten bíj te tekenen (die zijn er niet meer), maar door ze niet weg te
+# gooien.
+# Rekenregel: een boog met straal R getekend met koorden van lengte L heeft
+# sagitta L²/(8R). Omgekeerd geeft tolerantie t bij straal R koorden van
+# L = sqrt(8·R·t) — bij R = 500 m gaf 100 m dus koorden van 630 m (één punt per
+# 630 m op een bocht van 500 m straal: zichtbaar een veelhoek), en geeft 10 m
+# koorden van 200 m. Op 2,6 km kijkhoogte is 10 m sub-pixel.
+KETEN_SIMPLIFY_KM = 0.010    # ná het vouwen, op de hele keten (was 0,10)
 # ⚠️ CEL EN STAP ZIJN GEIJKT, NIET GEKOZEN. Twee onafhankelijke gepubliceerde
 # meetlatten, tweezijdig (dubbelspoor moet omlaag, enkelspoor mag niet zakken):
 #   cel/stap   NL (ProRail 3.223)   Polen (PKP-PLK ~19.300)
@@ -1768,12 +1781,24 @@ if __name__ == "__main__":
     ap.add_argument("--monster-m", type=float, help="bemonsteringsstap in meter (ijken)")
     ap.add_argument("--schrijf", action="store_true", help="schrijf de geojson weg")
     ap.add_argument("--suffix", default="", help="achtervoegsel voor de uitvoer")
+    ap.add_argument("--simplify-km", type=float, default=None,
+                    help="Douglas-Peucker-tolerantie in km = de maximale "
+                         "afwijking van de echte lijn, en dus hoe rond een boog "
+                         "getekend wordt (zie KETEN_SIMPLIFY_KM). "
+                         "⚠️ zit BEWUST niet in de cachevingerafdruk: de ruwe "
+                         "osmium-scan verandert er niet van, dus een andere "
+                         "tolerantie hergebruikt die scan en kost geen nieuwe "
+                         "pass over de 74 GB extracts — alleen vouwen, dedup, "
+                         "heal en simplify draaien opnieuw.")
     a = ap.parse_args()
 
     if a.cel_m:
         DEDUP_CEL_M = a.cel_m
     if a.monster_m:
         DEDUP_MONSTER_M = a.monster_m
+    if a.simplify_km is not None:
+        KETEN_SIMPLIFY_KM = a.simplify_km
+        print(f"simplify-tolerantie: {KETEN_SIMPLIFY_KM * 1000:.0f} m")
 
     if a.download:
         download_extra()

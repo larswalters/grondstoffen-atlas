@@ -146,18 +146,22 @@ function peilingUitGeom(e, vanafA) {
     const [lo1, la1] = lees(j);
     const dx = (lo1 - lo0) * Math.cos((la0 + la1) / 2 * rad) * 111320;
     const dy = (la1 - la0) * 110574;
-    if (Math.hypot(dx, dy) >= MIN_SEG_M) return Math.atan2(dx, dy) / rad;
+    const d = Math.hypot(dx, dy);
+    if (d >= MIN_SEG_M) return [Math.atan2(dx, dy) / rad, d];
   }
-  return NaN;   // edge zonder bruikbare lengte: geen richting, geen straf
+  return [NaN, 0];   // edge zonder bruikbare lengte: geen richting, geen straf
 }
 const uitA = new Float64Array(edgeKm.length);
 const uitB = new Float64Array(edgeKm.length);
+const lenA = new Float64Array(edgeKm.length);   // lengte van het eerste segment
+const lenB = new Float64Array(edgeKm.length);
 for (let e = 0; e < edgeKm.length; e++) {
   if (edgeModus[e] === 2) { uitA[e] = uitB[e] = NaN; continue; }
-  uitA[e] = peilingUitGeom(e, true);
-  uitB[e] = peilingUitGeom(e, false);
+  [uitA[e], lenA[e]] = peilingUitGeom(e, true);
+  [uitB[e], lenB[e]] = peilingUitGeom(e, false);
 }
 const peilingUit = (e, k) => (edgeA[e] === k ? uitA[e] : uitB[e]);
+const segLenUit = (e, k) => (edgeA[e] === k ? lenA[e] : lenB[e]);
 
 // --- de bochtstraf: waarom een kale Dijkstra hier niet volstaat --------------
 // ⚠️ GEMETEN, NIET BEDACHT (2026-07-28, op Lars' observatie "de trein maakt 2
@@ -187,15 +191,38 @@ const BOCHT_STRAF_KM = [
   [ 45, Math.min(0.6, KEERSTRAF_KM / 40)],
 ];
 
+// ⚠️ DE HOEK ALLEEN IS NIET GENOEG — de BOOGSTRAAL is het echte criterium, en
+// dat verschil is gemeten. Na de eerste ronde bleef bij Guixi een knik over van
+// 77° met segmenten van 15 m aan weerszijden: dat is een boogstraal van ~10 m,
+// een wissel-spike waar de lijn 15 m uitwijkt en terugkomt. Dezelfde 77° met
+// segmenten van 400 m is een boogstraal van 250 m — een krappe maar echte
+// aansluitboog. Op de hoek zijn die twee niet te onderscheiden; op de straal
+// wel. Vandaar: R = ((L1+L2)/2) / (2·sin(θ/2)), en onder de fysieke ondergrens
+// van een goederenboog (~150 m) is het per definitie geen bocht maar een
+// artefact.
+const MIN_BOOG_M = 150;
+const SPIKE_STRAF_KM = 15.0;
+
 function bochtStrafKm(eIn, eUit, k) {
   if (eIn < 0) return 0;                      // eerste stap: geen inkomende richting
   const a = peilingUit(eIn, k), b = peilingUit(eUit, k);
   if (Number.isNaN(a) || Number.isNaN(b)) return 0;
   // Aankomstrichting = tegengesteld aan "wegrijden langs eIn"; de draai is het
   // verschil tussen die aankomstrichting en de nieuwe wegrijrichting.
-  let d = Math.abs(((b - a - 180) % 360 + 540) % 360 - 180);
-  for (const [grens, straf] of BOCHT_STRAF_KM) if (d >= grens) return straf;
-  return 0;
+  const d = Math.abs(((b - a - 180) % 360 + 540) % 360 - 180);
+  let straf = 0;
+  for (const [grens, s] of BOCHT_STRAF_KM) { if (d >= grens) { straf = s; break; } }
+  if (d >= 30 && d < 150) {
+    // ⚠️ De KORTSTE van de twee segmenten, niet het gemiddelde. Gemeten bij
+    // Guixi: 15 m aan de ene kant en 993 m aan de andere; het gemiddelde geeft
+    // dan een boogstraal van 400 m en de spike glipt erdoor, terwijl de lijn in
+    // werkelijkheid 15 m opzij stapt en meteen terug. Wat de knik onmogelijk
+    // maakt is de KORTE kant — daar moet de trein de hele draai in maken.
+    const L = Math.min(segLenUit(eIn, k), segLenUit(eUit, k));
+    const R = L / (2 * Math.sin(d / 2 * rad));
+    if (R < MIN_BOOG_M) straf = Math.max(straf, SPIKE_STRAF_KM);
+  }
+  return straf;
 }
 
 // --- Dijkstra over GERICHTE EDGE-TOESTANDEN (edge, richting) -----------------
@@ -289,6 +316,56 @@ for (const stap of pad) {
     const lat = Math.asin(Math.max(-1, Math.min(1, y / STRAAL))) / rad;
     coords.push([+lon.toFixed(6), +lat.toFixed(6)]);
   }
+}
+
+// --- spike-schoonmaak op de GETEKENDE lijn -----------------------------------
+// ⚠️ DIT IS EEN ANDER PROBLEEM DAN DE BOCHTSTRAF, en het onderscheid is precies
+// waar de grens ligt tussen "routeren" en "tekenen". De bochtstraf kiest tussen
+// edges; een knik BINNEN één OSM-way is geen keuze — daar valt niets te
+// routeren, die zigzag staat gewoon zo in de bron.
+//
+// Zichtbaar geworden door de fijnere simplify (2026-07-28): op 100 m tolerantie
+// veegde Douglas-Peucker elke uitstulping onder 100 m weg, inclusief OSM's eigen
+// fouten; op 10 m blijven ze staan. Gemeten na de herbake: knikken van ~95° met
+// een boogstraal van 46 m, midden in een way.
+//
+// De schoonmaak haalt een punt weg als het ALLEBEI waar is:
+//   * de knik is groter dan 60° — geen enkele vrachtboog draait zo scherp, en
+//   * het punt steekt minder dan 25 m uit de lijn tussen zijn buren.
+// Die twee samen selecteren een spike en laten een echte boog met rust: in een
+// dichte boog is de knik per punt maar een paar graden, dus de eerste eis vangt
+// hem niet. Wat we verplaatsen is hooguit 25 m, en dat is minder dan de
+// tolerantie waarmee de lijn sowieso getekend is.
+{
+  const offset = (a, b, c) => {
+    const sx = Math.cos((a[1] + c[1]) / 2 * rad) * 111.32;
+    const ax = a[0] * sx, ay = a[1] * 110.57;
+    const bx = b[0] * sx, by = b[1] * 110.57;
+    const cx = c[0] * sx, cy = c[1] * 110.57;
+    const vx = cx - ax, vy = cy - ay;
+    const L2 = vx * vx + vy * vy;
+    if (L2 < 1e-12) return Math.hypot(bx - ax, by - ay) * 1000;
+    const t = Math.max(0, Math.min(1, ((bx - ax) * vx + (by - ay) * vy) / L2));
+    return Math.hypot(bx - ax - t * vx, by - ay - t * vy) * 1000;
+  };
+  const hoekVan = (a, b, c) => {
+    const p = (u, v) => Math.atan2((v[0] - u[0]) * Math.cos((u[1] + v[1]) / 2 * rad),
+                                   v[1] - u[1]) / rad;
+    return Math.abs(((p(b, c) - p(a, b) + 180) % 360 + 360) % 360 - 180);
+  };
+  let weg = 0;
+  for (let ronde = 0; ronde < 3; ronde++) {
+    let veranderd = false;
+    for (let i = coords.length - 2; i >= 1; i--) {
+      const a = coords[i - 1], b = coords[i], c = coords[i + 1];
+      if (hoekVan(a, b, c) > 60 && offset(a, b, c) < 25) {
+        coords.splice(i, 1); weg++; veranderd = true;
+      }
+    }
+    if (!veranderd) break;
+  }
+  if (weg) console.log(`spike-schoonmaak: ${weg} punten weg (knik >60 graden ` +
+    `terwijl het punt <25 m uit de lijn steekt — OSM-zigzag, geen bocht)`);
 }
 
 // --- wat er NA de straf nog aan scherpe bochten overblijft -------------------

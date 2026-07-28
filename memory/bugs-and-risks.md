@@ -1,5 +1,42 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-28 (laatst: de zeven correcties doorgevoerd + herbakt)*
+*Last updated: 2026-07-28 (laatst: vier visuele bevindingen van Lars, alle gemeten)*
+
+## ✅ OPGELOST 2026-07-28 (laatst) — vier dingen die Lars op de bol zag
+Alle vier eerst gemeten, toen pas gefixt. Ze horen bij elkaar want ze verklaren waarom
+een lijn "er net naast" of "onmogelijk" oogt terwijl de route klopt.
+
+1. **Bochten die een trein niet kan maken.** De Dijkstra in `toets_spoorroute.mjs` kende
+   geen draaikosten, dus omkeren was gratis: het pad reed een aftakking op en meteen
+   terug als dat meters scheelde. Gemeten op Beilun→Guixi: 7 knikken ≥60°, waarvan vijf
+   keerpunten van 158-176° met boogstralen van **27, 35, 80, 159 en 554 m**. Nu routeert
+   hij over GERICHTE edge-toestanden met een bochtstraf (`--keerstraf`, default 25 km).
+   ⚠️ **De hoek alleen volstond niet:** een knik van 77° met segmenten van 15 en 993 m
+   heeft op het gemiddelde een boogstraal van 400 m (lijkt echt) maar op de KORTSTE kant
+   10 m (een wissel-spike). Sinds de kortste kant telt: 7 → **3** knikken, en die drie
+   zijn omkeringen op precies de plekken waar een trein kopmaakt (Ningbo Oost, Guixi
+   station, het doodlopende fabrieksspoor — die laatste overleeft ook een straf van
+   120 km). Route 550,5 → **553,7 km** tegen ~556 km in de brief.
+2. **Een been van twee punten liep dwars door de aarde.** Twee punten worden in 3D een
+   rechte KOORDE, en over 153 km duikt die **0,46 km onder het oppervlak** — daarom zag
+   Lars geen leiding bij Escondida. `stroomroute.js` verdicht benen nu langs de
+   grootcirkel (5 km): 2 → 32 punten, zakking 460 → **0 m**.
+3. **130 m parallax.** De tegels liggen niet op `radius`: basisschil 1,0 · middenring
+   1,00001 · **detailpatch 1,00002** (tiles.js). Je keek dus naar beeld 130 m bóven de
+   vectorlijnen, en schuin bekeken projecteert dat als zijdelingse verschuiving — recht
+   van boven niet zichtbaar. Alle vectorlagen staan nu op `CONFIG.vectorLift`, exact de
+   schil van de diepste tegels.
+4. **De Lobito-stroom begon aan de kust** terwijl het koper uit de Copperbelt komt.
+   Spoorbeen Kamoa-Kakula → Lobito erbij: **1.688,8 km** tegen de operator-waarde
+   ~1.750 km (−3,5%), plus 12,6 km gestippelde aanvoer mijn→railhead.
+
+## ⚠️ OPEN — het tracé van de Escondida-leiding staat niet in OSM
+Gemeten, niet aangenomen: **0 ways met `substance=slurry`**, en een Dijkstra over
+**1.319 weg-ways in een corridor van 8 km** vindt géén doorlopend pad terwijl beide
+uiteinden op 50 m snappen. Wel 13,9 km óngetagde pipeline aan de Coloso-kant
+(way/1530915724 + way/1530915728) — kandidaat, maar zonder substance-tag geen bewijs.
+Het been blijft dus gestippeld mét de reden in het label. Wie het exact wil: satelliet-
+tracen zoals de Tongling-oostgeul (~166 km handwerk). ⚠️ Bij **Collahuasi** is dit géén
+probleem: die leiding ligt al exact op 192,4 km echte OSM-geometrie.
 
 ## ✅ OPGELOST 2026-07-28 (laatst) — de zeven goedgekeurde ankercorrecties zijn DOORGEVOERD
 Systematisch, niet incidenteel: over vier stromen stond **10 van de 16** laadplek-/

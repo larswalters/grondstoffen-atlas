@@ -50,6 +50,28 @@ Wesel-vak, 0 van 35.237 tracks, structureel gemeten.
 **Volgende stromen:** kolen Cerrejón → Ruhr (brief bestaat al) — maar **eerst de
 vier kolen-ankers satelliet-leggen**, die zijn nooit gecheckt.
 
+## 🔵 HET LANDNET IS OP 10 m SIMPLIFY HERBAKT — wat je daarvan moet weten
+
+Lars, kijkend op straatniveau: *"een ronde bocht is echt hoekig van dichtbij, dat is
+overal op de wereld zo."* Terecht, en het is de **simplify-tolerantie**, niet de bron.
+
+`KETEN_SIMPLIFY_KM` in `fetch_landnet.py` stond op **0,10 km**. Die tolerantie ÍS de
+maximale afwijking van de echte lijn, dus op een boog van straal R krijg je koorden van
+`sqrt(8·R·t)`: bij R = 500 m en t = 100 m is dat **630 m** — één rechte streep door de
+hele bocht. Gemeten op China: mediaan segment **1.095 m**, 0,70 punten/km.
+
+Op **0,010 km** (10 m): mediaan segment **305 m**, 1,68 punten/km, en de netlengte gaat
+186.876 → 187.560 km (+0,37%) omdat de bochten hun echte lengte terugkrijgen.
+
+⚠️ **Dit kost GEEN nieuwe pass over de 74 GB extracts.** De ruwe osmium-scan zit in
+`build-cache/land/` (1,8 GB, 550 bestanden) en de simplify-tolerantie zit bewust niet in
+die vingerafdruk — alleen vouwen, dedup, heal en simplify draaien opnieuw. De hele wereld
+is daarmee ~25 minuten in plaats van uren. Nieuwe vlag: `--simplify-km`.
+
+⚠️ **De prijs is bestandsgrootte** (~2,4× de punten). Als `landnet.bin` daarmee te zwaar
+wordt voor de telefoon is de volgende stap hem LAZY te laden zoals `aistracks` — níet de
+tolerantie weer omhoog, want dan is de bocht weer een veelhoek.
+
 ## 🟠 `toets_ankers.py` — de verdachtenlijst STAAT; wat er nog mee moet gebeuren
 
 Vier toetsen per ankerpunt (Lars' eigen lijst): **T1** afstand tot de waterrand + water

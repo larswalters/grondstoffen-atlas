@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=100";
+import { laadStroomroute } from "./stroomroute.js?v=101";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
@@ -93,7 +93,7 @@ laadHavens()
 // meebumpen met de code dwingt elke bezoeker ~5 MB opnieuw te downloaden voor
 // een bit-identiek bestand. Bump deze alleen bij een echte bake.
 let LANDNET = null;
-laadLandnet(VECTOR_R, "082", GLOBE.klemOpHorizon)
+laadLandnet(VECTOR_R, "101", GLOBE.klemOpHorizon)
   .then((ln) => {
     LANDNET = ln;
     GLOBE.globeGroup.add(ln.lijnen);
@@ -249,7 +249,7 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "100", GLOBE.klemOpHorizon, def.bestand)
+  laadStroomroute(VECTOR_R, "101", GLOBE.klemOpHorizon, def.bestand)
     .then((s) => {
       s.groep.visible = def.aan;
       STROOMROUTES.set(def.sleutel, s);
@@ -316,7 +316,7 @@ laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
 // gloed van zes jaar scheepvaart, additief per pilotvenster — dít is het
 // beeld; de lijnen hierboven zijn het graaf-zaad.
 let AISGLOED = null;
-laadAisgloed(CONFIG.radius, "086", GLOBE.klemOpHorizon)
+laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
   .then((g) => {
     AISGLOED = g;
     GLOBE.globeGroup.add(g.groep);
@@ -351,7 +351,7 @@ function toonPingNoot() {
     `${s.punten.toLocaleString("nl")} pings · ${s.schepen.toLocaleString("nl")} schepen · ` +
     `laatste ${vers} geleden · ${s.uren} u venster, korrel ${s.korrelMin} min`;
 }
-laadAisPings(CONFIG.radius)
+laadAisPings(VECTOR_R)
   .then((p) => {
     AISPINGS = p;
     GLOBE.globeGroup.add(p.punten);
@@ -375,7 +375,7 @@ laadAisPings(CONFIG.radius)
 // zichtbaar is, zodat een dichtgeklapte HUD geen verkeer veroorzaakt.
 setInterval(() => {
   if (!AISPINGS || !AISPINGS.punten.visible) return;
-  ververspings(AISPINGS, CONFIG.radius)
+  ververspings(AISPINGS, VECTOR_R)
     .then(toonPingNoot)
     .catch((e) => console.warn("[atlas v2] aispings verversen mislukt:", e.message));
 }, 5 * 60 * 1000);
@@ -479,7 +479,7 @@ wireButtons(".apBtn", "ap", (mode) => {
   // Bij aanzetten meteen de verste stand ophalen: de laag kan uren uit hebben
   // gestaan en dan is de zichtbare data ouder dan het venster suggereert.
   if (mode === "aan") {
-    ververspings(AISPINGS, CONFIG.radius)
+    ververspings(AISPINGS, VECTOR_R)
       .then(toonPingNoot)
       .catch(() => {});
   }
