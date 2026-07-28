@@ -232,7 +232,7 @@ laadStroomroute(CONFIG.radius, "094", GLOBE.klemOpHorizon)
 // Elke knop vliegt naar het punt: op een telefoon is dat de enige werkbare
 // manier om tien plekken op straatniveau na te lopen.
 let ANKERCHECK = null;
-laadAnkercheck(CONFIG.radius, "095", GLOBE.klemOpHorizon)
+laadAnkercheck(CONFIG.radius, "096", GLOBE.klemOpHorizon)
   .then((a) => {
     ANKERCHECK = a;
     GLOBE.globeGroup.add(a.groep);

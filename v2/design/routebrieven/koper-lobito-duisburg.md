@@ -33,6 +33,13 @@ op de satelliet **in het water**.*
    kade (Waalhaven i.p.v. EMO/Maasvlakte) en eindigt op een ándere kade (Ruhrort i.p.v.
    Schwelgern). De Beerkanaal-vondst uit de kolenbrief geldt hier dus **niet**: die zit
    op de Maasvlakte-uitvaart, en Waalhaven ligt aan de Nieuwe Maas [K1].
+5. **⚠️ DE VRAAG DIE DE KADE VINDT IS "WELK PRODUCT IS DIT?"** (Lars, 2026-07-28). Voor
+   kathode volgt de rest vanzelf: kathode is LME-leverbaar metaal, dus het gaat naar een
+   **LME-erkend entrepot**, en Rotterdam heeft daar een handvol partijen voor (Steinweg,
+   **RHB**, Metaal Transport, Access World) [D2][D3]. Zo werd de Waalhaven-kade in één
+   stap vindbaar terwijl "een pier in de Waalhaven" jarenlang 4,5 km mis stond. Deze
+   vraag hoort voortaan bij elke kade in een routebrief — hij is scherper dan zoeken op
+   havennaam.
 
 ## Been 1 · spoor — Kolwezi/Tenke → Porto do Lobito (~1.750 km)
 
@@ -64,21 +71,25 @@ op de satelliet **in het water**.*
 | 24 | — | **Cubal** | station | — | [B1] | bevestigd |
 | 25 | ~30 | **Benguela** | station | — | [B1] | bevestigd |
 | 26 | ~1,1 | Aansluiting CFB op het havenemplacement (rangeerbundel zichtbaar op satelliet, ZW van de kade) | kruising | ~13.5390, -12.3520 | satelliet z16 | **satelliet-gelegd** |
-| 27 | 0 | **Porto do Lobito — mineralenkade** | overslag / eind spoorbeen | *correctie nodig, zie onder* | [D1] + satelliet z16 | ⚠️ **fout** |
+| 27 | 0 | **Porto do Lobito — mineralenterminal van Lobito Atlantic Railway** (eerste schip 12 juli 2024) | overslag / eind spoorbeen | *ligplaats nog niet aan te wijzen* | [B2] + satelliet z15/z16 | ⚠️ **onzeker** |
 
 **Opmerkingen been 1.** ⚠️ **Satelliet-vondst: `cu-lobito-kade` (13,549 / -12,34709) ligt
-in het water van de baai**, ~100 m buiten de kadelijn. Op de tegels is te zien dat het
-havencomplex uit twee delen bestaat: de **lange kade met loodsen op de landtong**
-(NW-ZO, ten noordwesten van het punt) en het **stukgoed-/containerterrein** direct ten
-zuidwesten ervan, met daarachter een groot **rangeeremplacement** — het spooreinde van de
-Benguela-lijn. Het anker hoort op de kadelijn tussen die twee te liggen (~13,548 /
--12,347), maar **wélke ligplaats het mineralenverkeer doet** (de bestaande stukgoedkade of
-de nieuwe mineralenterminal van de concessiehouder) is met de gebruikte bronnen niet hard
-te maken. → punt 27 blijft **onzeker** tot dat is uitgezocht; de reden staat erbij, zoals
-werkwijze §7 vraagt.
-**Lengte-toets been 1:** Lobito→Luau 1.866 km [B1] + Dilolo→Kolwezi ~400 km, dus
-Kolwezi→Lobito ≈ **1.750 km** over de doorgaande as. Wijkt de getekende lijn daar sterk
-van af, dan zit hij op een andere corridor (of via de zuidelijke Durban-route).
+in het water van de baai.** De havenkades liggen op de **binnenzijde van de Restinga**, de
+zandtong die vanaf de stad noordoostwaarts loopt, met daarachter het **rangeeremplacement**
+waar de Benguela-lijn eindigt. Er ís sinds 2024 een **eigen mineralenterminal**: het
+LAR-consortium exploiteert hem, het eerste schip meerde er af op **12 juli 2024**, en in
+augustus 2024 vertrok er kathode naar Baltimore [B2]. Maar op de beschikbare Esri-tegels —
+die mogelijk van vóór de bouw dateren — is die ligplaats niet met zekerheid aan te wijzen.
+→ punt 27 blijft **onzeker**; er komt hier bewust géén verzonnen coördinaat, conform §2.
+Nog te doen: recentere beelden, of een havenplan van LAR/Porto do Lobito.
+
+**Lengte-toets been 1, met een conflict.**
+> [!warning] Conflict: lengte van de as
+> De **operator** geeft 1.300 km Lobito → Luau plus een verlenging van 450 km naar Kolwezi
+> = **~1.750 km** [B2]; **Wikipedia** geeft 1.866 km als "total line length" voor de
+> Benguela-lijn plus ~400 km in de DRC [B1]. Vermoedelijk meet de tweede het hele
+> CFB-netwerk inclusief zijtakken en de eerste de doorgaande corridor. Voor de toets van de
+> getekende lijn geldt de operator-waarde: **Kolwezi → Lobito ≈ 1.750 km**.
 
 ## Been 2 · zee — Porto do Lobito → Rotterdam
 
@@ -89,7 +100,7 @@ Kade→kade + sanity-ankers (werkwijze §6).
 | 1 | **Lobito — mineralenkade** (vertrek) | laadplek | *zie been 1, punt 27* | [D1] | onzeker |
 | 2 | Zuid-Atlantische Oceaan, noordwaarts langs de West-Afrikaanse kust | passage | — | [Z1] | aannemelijk |
 | 3 | Golf van Biskaje / Kanaal | passage | — | [Z1] | aannemelijk |
-| 4 | **Rotterdam — Waalhaven, stukgoedkade** (aankomst) | overslag | *correctie nodig, zie been 3* | [D1] + satelliet z16 | ⚠️ **fout** |
+| 4 | **Rotterdam — RHB-kade, Waalhaven Noordzijde** (aankomst) | overslag | 51.8935, 4.4585 | [D2] + satelliet z17 | **satelliet-gelegd** |
 
 **Negatieve ankers been 2.** **Géén Kaap de Goede Hoop** · **géén Suez** · **géén
 Malakka** — dat is de kern van deze route en meteen de scherpste verklikker: raakt de
@@ -105,7 +116,7 @@ punten die **afwijken**, plus de hoofdankers.
 
 | # | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|
-| 1 | **Waalhaven** — vertrek; ligt aan de **Nieuwe Maas**, niet op de Maasvlakte | laadplek | *correctie nodig* | [D1] + satelliet z16 | ⚠️ **fout** |
+| 1 | **RHB-kade, Waalhaven Noordzijde 4** — vertrek; 1.060 m kade, non-ferro + LME-kwaliteit entrepot, stukgoed tot 300 t per collo | laadplek | 51.8935, 4.4585 | [D2] + satelliet z17 | **satelliet-gelegd** |
 | 2 | Nieuwe Maas → **Oude Maas** (de Beerkanaal/Hartelkanaal-kwestie uit de kolenbrief speelt hier NIET) | vaarweg-overgang | — | [K1] | bevestigd |
 | 3 | Dordrecht / Beneden-Merwede | passage | — | [K1] | bevestigd |
 | 4 | Boven-Merwede → **Waal** (Gorinchem, Zaltbommel) | passage | — | [K1] | bevestigd |
@@ -140,8 +151,8 @@ hebben. Dat is geen tekortkoming van de brief maar een echte lacune — hij staa
 |---|---|---|---|---|
 | 1 | `cu-lobito-kade` | 13,549 / -12,34709 — **ligt in het water** | de kadelijn (~13,548 / -12,347); wélke ligplaats = uit te zoeken | satelliet z16 |
 | 2 | Spoorbeen Copperbelt→Lobito | niet als puntenlijst | **via-punt→via-punt** langs de 25 stations hierboven | [B1] |
-| 3 | `cu-rotterdam-kade` (Waalhaven) | 4,39341 / 51,89369 — **ligt op de dijk bij de woonwijk Heijplaat**, niet op een kade in de Waalhaven | een kade in de Waalhaven; welke ligplaats non-ferro doet is nog niet vastgesteld (OSM tagt het niet) | satelliet z16 |
-| 4 | `cu-duisburg-kade` (Ruhrort Becken A) | 6,7559 / 51,45187 — ~50 m in het bekken | **51,4518 / 6,7565** — op de kade met de stukgoedstapels | satelliet z16 |
+| 3 | `cu-rotterdam-kade` (Waalhaven) | 4,39341 / 51,89369 — **op de dijk bij Heijplaat**, 4,5 km ten westen van de Waalhaven | **4,4585 / 51,8935** — de RHB-kade aan Waalhaven Noordzijde (grootste correctie van de hele ronde) | [D2] + satelliet z17 |
+| 4 | `cu-duisburg-kade` (Ruhrort Becken A) | 6,7559 / 51,45187 — ~50 m in het bekken | **51,4518 / 6,7565** — op de kade met de stukgoedstapels (akkoord Lars 2026-07-28) | satelliet z16 |
 | 5 | Wesel-vak | — | **gestippeld mét reden** (0 tracks, structureel) | [K2] + §7 |
 
 ## Wat de kaart moet tekenen (voorstel)
@@ -154,7 +165,11 @@ hebben. Dat is geen tekortkoming van de brief maar een echte lacune — hij staa
 
 ## Bronnen
 
-**Spoor [B..]:** B1 Benguela railway (wikipedia) — 1.866 km, spoorwijdte 1.067 mm,
+**Spoor [B..]:** B2 Trafigura / Lobito Atlantic Railway — persberichten: 30-jarige
+concessie (Trafigura 49,5% · Mota-Engil 49,5% · Vecturis 1%), **1.300 km Lobito → Luau +
+450 km naar Kolwezi**, **eerste schip aan de mineralenterminal van Porto do Lobito op
+12 juli 2024**, eerste kathode-lading per trein aangekomen 19 augustus 2024 en verscheept
+naar Baltimore; transittijd Kolwezi → kade ~7 dagen · B1 Benguela railway (wikipedia) — 1.866 km, spoorwijdte 1.067 mm,
 stations Lobito → Benguela → Cubal → Ganda → Chinjenje → Ucuma → Longonjo → Caála →
 Huambo → Chinguar → Cunhinga → Cuíto → Catabola → Camacupa → Cuemba → Luena → Léua →
 Cameia → Luacano → Luau; Congolese tak Dilolo → Divuma → Kasaji → Mutshatsha → Kolwezi →
@@ -166,7 +181,14 @@ volledige keten van het project.
 
 **Rotterdam/Duisburg [D..]:** D1 `v2/data/aansluitingen.json` (`cu-lobito-kade`,
 `cu-rotterdam-kade` Waalhaven, `cu-duisburg-kade` Ruhrort Becken A, `coal-duisburg-kade`
-Schwelgern) + OpenStreetMap (ODbL) + eigen satelliet-overlay Esri z16, 2026-07-28.
+Schwelgern) + OpenStreetMap (ODbL) + eigen satelliet-overlay Esri z15–z17, 2026-07-28 ·
+**D2 RHB Stevedoring & Warehousing** — Waalhaven Noordzijde 4, 3087 BL Rotterdam
+(havennummer 2157): 1.060 m kade, korte zeeverbinding zonder bruggen of sluizen, non-ferro
+metalen en ferro-alloys, colli tot ±300 t, douane-transito + BTW-entrepot van **LME-
+kwaliteit**; coördinaat via OSM/Nominatim, kade satelliet-gelegd op z17 · D3 C. Steinweg-
+Handelsveem (hoofdkantoor Rotterdam, 12 locaties, (strategische) LME-opslag van non-ferro)
+en Metaal Transport BV (LME- en MMTA-gecertificeerd) als de overige Rotterdamse
+LME-partijen — de officiële LME-entrepotlijst zelf zit achter een login.
 
 **Rijn [K..]:** K1 `routebrieven/kolen-cerrejon-ruhr.md` — Rijnbeen 93 punten,
 operator-bron thyssenkrupp Veerhaven, 240 km sluisvrij, Schwelgern Rijn-km 790,20 ·

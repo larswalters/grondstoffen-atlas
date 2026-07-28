@@ -55,9 +55,9 @@
       "stroom": "Collahuasi→Tongling",
       "oud": [-68.64395, -20.97783],
       "nieuw": null,
-      "status": "ongecontroleerd",
+      "status": "goed",
       "afstandM": 0,
-      "wat": "overlay staat gerenderd maar is nog niet bekeken — dit is het enige anker van de drie stromen zonder oordeel"
+      "wat": "check doorstaan — Lars: staat al precies op de plek naast de basins waar de slurry de leiding in gaat"
     },
     {
       "id": "cu-patache-kade",
@@ -90,7 +90,7 @@
       "nieuw": null,
       "status": "onbepaald",
       "afstandM": 0,
-      "wat": "ligt in het water van de baai. De kade ligt westelijker, maar OSM zegt niet wélke ligplaats het mineralenverkeer doet — daarom nog geen voorstel"
+      "wat": "ligt in het water van de baai. Er ís een eigen mineralenterminal (Lobito Atlantic Railway, eerste schip 12 juli 2024, kathode naar Baltimore), maar op deze tegels — mogelijk van vóór de bouw — is de ligplaats niet aan te wijzen. Blijft open; geen verzonnen coördinaat"
     },
     {
       "id": "cu-rotterdam-kade",
@@ -98,10 +98,10 @@
       "volledig": "Rotterdam — Waalhaven, stukgoedkade",
       "stroom": "Lobito→Duisburg",
       "oud": [4.39341, 51.89369],
-      "nieuw": null,
-      "status": "onbepaald",
-      "afstandM": 0,
-      "wat": "ligt op de dijk bij de woonwijk Heijplaat, niet op een kade. Welke ligplaats non-ferro doet staat niet in OSM — daarom nog geen voorstel"
+      "nieuw": [4.4585, 51.8935],
+      "status": "fout",
+      "afstandM": 4472,
+      "wat": "lag op de dijk bij Heijplaat, 4,5 km ten westen van de Waalhaven. Product = koperkathode, dus LME-entrepot: RHB Stevedoring & Warehousing, Waalhaven Noordzijde 4 — 1.060 m kade, non-ferro, LME-kwaliteit. Nieuw punt ligt op die kade, naast een afgemeerd schip"
     },
     {
       "id": "cu-duisburg-kade",
@@ -112,7 +112,7 @@
       "nieuw": [6.7565, 51.4518],
       "status": "fout",
       "afstandM": 42,
-      "wat": "staat net in het bekken; hoort op de kade met de stukgoedstapels ernaast — dit is precies de ~50 m die §2 bedoelt"
+      "wat": "staat net in het bekken; hoort op de kade met de stukgoedstapels ernaast — precies de ~50 m die §2 bedoelt. Lars: correctie akkoord voor nu (welk product er precies over die kade gaat is nog niet vastgesteld)"
     }
   ]
 }
