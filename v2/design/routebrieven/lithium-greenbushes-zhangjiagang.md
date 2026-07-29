@@ -242,7 +242,9 @@ Bridgetown, en via Maranup Ford Road naar de mijn.
 | 8 | ±53 | **Boyanup** | passage | −33.4844, 115.7289 | OSM + corridorvia [C1] | **bevestigd** |
 | 9 | ±73 | **Picton** (aansluiting havengebied Bunbury) | kruising | −33.3525, 115.6941 | OSM place=suburb | aannemelijk |
 | 10 | ±85 | Vittoria (haven-industriegebied) | passage | −33.3202, 115.6734 | OSM place=suburb | aannemelijk |
-| 11 | ±90 | **Havenpoort Bunbury binnenhaven** | poort | nog te leggen | — | onzeker |
+| 10b | ±88 | **Estuary Drive → Estuary Drive Rotary** | kruising | −33.32794, 115.67394 | OSM (secondary) | **bevestigd** |
+| 10c | ±89 | **Willinge Drive** (toegangsweg haventerrein) | passage | −33.32799, 115.67423 | OSM (secondary) | **bevestigd** |
+| 11 | ±90 | **Havenpoort Bunbury binnenhaven** | poort | nog te leggen — ligt aan Willinge Drive | — | onzeker |
 | 12 | ±91 | **Shed 8-8 — losplek truck** | losplek | nog te leggen (§5) | [K1, S1] | **aannemelijk** |
 
 **Opmerkingen been 2.** Punten 2–8 liggen op één rechte streng langs de South Western Highway; er is maar
