@@ -25,11 +25,19 @@ from PIL import Image, ImageDraw
 
 TEGEL = ("https://server.arcgisonline.com/ArcGIS/rest/services/"
          "World_Imagery/MapServer/tile/{z}/{y}/{x}")
+# Esri Wayback: hetzelfde beeld, maar per ARCHIEFVERSIE. Nodig omdat een pass ook kan
+# falen doordat de opname OUDER is dan de infrastructuur (Bunbury Shed 8-8, 2026-07-29).
+# Releaselijst: https://s3-us-west-2.amazonaws.com/config.maptiles.arcgis.com/waybackconfig.json
+TEGEL_WAYBACK = ("https://wayback.maptiles.arcgis.com/arcgis/rest/services/"
+                 "World_Imagery/WMTS/1.0.0/default028mm/MapServer/tile/{rel}/{z}/{y}/{x}")
+WAYBACK_CONFIG = ("https://s3-us-west-2.amazonaws.com/config.maptiles.arcgis.com/"
+                  "waybackconfig.json")
 UA = {"User-Agent": "grondstoffen-atlas/1.0 (routebrief anker-check)"}
 TS = 256
 WORTEL = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # …/v2
 UIT = os.path.join(WORTEL, "build-cache", "satcheck")
 CACHE = os.path.join(UIT, "tegelcache")
+RELEASE = None      # None = de huidige (live) World Imagery-laag
 
 
 def tegel_xy(lon, lat, z):
@@ -48,14 +56,28 @@ def lon_lat(x, y, z):
 
 
 def haal(z, x, y):
-    pad = os.path.join(CACHE, str(z), str(y))
+    tak = "live" if RELEASE is None else f"wb{RELEASE}"
+    pad = os.path.join(CACHE, tak, str(z), str(y))
     os.makedirs(pad, exist_ok=True)
     bestand = os.path.join(pad, f"{x}.jpg")
     if not os.path.exists(bestand):
-        req = urllib.request.Request(TEGEL.format(z=z, x=x, y=y), headers=UA)
+        url = (TEGEL.format(z=z, x=x, y=y) if RELEASE is None
+               else TEGEL_WAYBACK.format(rel=RELEASE, z=z, x=x, y=y))
+        req = urllib.request.Request(url, headers=UA)
         with urllib.request.urlopen(req, timeout=30) as r, open(bestand, "wb") as f:
             f.write(r.read())
     return Image.open(bestand).convert("RGB")
+
+
+def wayback_lijst(n=12):
+    """Print de n nieuwste Wayback-releases (id + datum)."""
+    import json
+    req = urllib.request.Request(WAYBACK_CONFIG, headers=UA)
+    with urllib.request.urlopen(req, timeout=60) as r:
+        js = json.loads(r.read())
+    rijen = sorted((v.get("itemTitle", ""), k) for k, v in js.items())
+    for titel, rel in rijen[-n:]:
+        print(f"  {rel:>7}  {titel}")
 
 
 def overlay(naam, lat, lon, z=16, tegels=5, grid=0.005):
@@ -101,12 +123,14 @@ def overlay(naam, lat, lon, z=16, tegels=5, grid=0.005):
     d.ellipse([px - 8, py - 8, px + 8, py + 8], outline=(255, 40, 40), width=3)
 
     mpp = 156543.03392 * math.cos(math.radians(lat)) / (2 ** z)
-    d.rectangle([6, beeld.height - 30, 360, beeld.height - 6], fill=(0, 0, 0))
+    merk = "live" if RELEASE is None else f"wayback {RELEASE}"
+    d.rectangle([6, beeld.height - 30, 430, beeld.height - 6], fill=(0, 0, 0))
     d.text((12, beeld.height - 24),
-           f"{naam}  {lat:.5f},{lon:.5f}  z{z}  {mpp:.2f} m/px  grid {grid}deg",
+           f"{naam}  {lat:.5f},{lon:.5f}  z{z}  {mpp:.2f} m/px  grid {grid}deg  {merk}",
            fill=(255, 255, 255))
 
-    pad = os.path.join(UIT, f"sat-{naam}.png")
+    achter = "" if RELEASE is None else f"-wb{RELEASE}"
+    pad = os.path.join(UIT, f"sat-{naam}{achter}.png")
     beeld.save(pad)
     print(f"{pad}  ({mpp:.2f} m/px, beeld {beeld.width}px = "
           f"{beeld.width * mpp / 1000:.2f} km breed)")
@@ -123,7 +147,17 @@ def main():
     p.add_argument("--tegels", type=int, default=5)
     p.add_argument("--grid", type=float, default=0.005)
     p.add_argument("--lijst", help="bestand met regels: naam lat lon [z] [tegels]")
+    p.add_argument("--wayback", help="Esri Wayback-release-id i.p.v. de live laag")
+    p.add_argument("--wayback-lijst", action="store_true",
+                   help="toon de nieuwste Wayback-releases (id + datum) en stop")
     a = p.parse_args()
+
+    if a.wayback_lijst:
+        wayback_lijst()
+        return
+    if a.wayback:
+        global RELEASE
+        RELEASE = a.wayback
 
     if a.lijst:
         with open(a.lijst, encoding="utf-8") as f:
