@@ -1,5 +1,45 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (laatst: de junctie-fix, de bochtstraf en de tekenschil)*
+*Last updated: 2026-07-29 (laatst: spoorroutering op OSM 1-op-1)*
+
+## 2026-07-29 (laatst) — OSM 1-op-1 als routeergraaf
+
+- **2026-07-29 · DE OSM-SPOORDATA GAAT 1-OP-1 DE ROUTEERGRAAF IN (besluit Lars)** —
+  *"daar is door hun al tijd in gestoken dus die sporen kloppen wel"*. Geen filter, geen
+  dedup, geen heal, geen guards. OSM's topologie is exact (verbonden ⟺ gedeelde node) en
+  op **rauwe** punten draagt een gedeelde node in beide ways dezelfde double, dus de
+  bestaande exacte las in `bouw()` reproduceert OSM zonder één drempel. Aanleiding: het
+  filter dropt álle `service=`-ways — over de 184 extracts geteld ~**de helft van alle
+  spoor-ways** (Oezbekistan 75%, Tennessee 60%, Saksen 43%), en dat is juist het
+  bindweefsel (wissels, sidings, overloopsporen) tussen parallelle sporen.
+- **2026-07-29 · DE VOLGORDE IS DE FIX: eerst knopen, dán vereenvoudigen** — oud was
+  filteren → dedup → simplify → *daarna* knopen zoeken, waardoor de gedeelde knopen al
+  verschoven waren en heal-passes ze met drempels moesten terugraden. Nu: knopen zoeken
+  op de rauwe punten, daarna pas de geometrie **binnen** elke edge verlichten met de
+  uiteinden vast. Vereenvoudigen kan de graaf dan per constructie niet meer breken. Dat
+  was de hele bestaansreden van de heal-machinerie.
+- **2026-07-29 · DE BOCHTSTRAF IS EEN TIE-BREAK, GEEN REPARATIE** — met dubbelspoor
+  1-op-1 liggen twee bijna even lange sporen naast elkaar en springt de zoeker
+  willekeurig heen en weer; een lichte straf breekt dat gelijkspel. Gemeten: correcte
+  topologie + straf 100 = **1** omkering, verzonnen topologie + straf 25 = **2**. Straf
+  500 is te veel (route 775 km, ratio 1,59).
+- **2026-07-29 · ROUTEREN EN TEKENEN ZIJN ONTKOPPELD** — het 1-op-1-net (43 MB / 28,7
+  gz) blijft op schijf en routeert bij het bakken; de browser tekent het bestaande
+  landnet (9,9 MB, ongewijzigd). De bol routeert niet zelf (stromen zijn gebakken
+  bestanden), dus dit kost géén byte op mobiel. **Simplify hoort op de tekenlaag, nooit
+  op de graaf.** Zelfde patroon als vorm↔vaarsnelheid↔baanklem uit M18.
+- **2026-07-29 · DOODLOPENDE TAKKEN SNOEIEN IS VEILIG** — een blad kan per definitie
+  nooit deel zijn van een pad tússen twee punten. Ankers binnen 3 km beschermd (dat is
+  het laadspoor waar een stroom het net op komt). 4,16 → 3,26 mln edges.
+- **2026-07-29 · MEET HET GEBAKKEN EINDPRODUCT, NIET JE MEETLAT** — de melding "7 → 2
+  knikken" van 28-07 was gemeten aan `toets_spoorroute.mjs` terwijl de bol
+  `stroomroute-*.json` tekent; dat beide op 2 uitkwamen maakte het onzichtbaar.
+  `toets_knikken.py` telt nu de omkeringen in de gebakken stromen.
+- **2026-07-29 · Eén been vervangen i.p.v. de stroom herbakken** — `hecht_marnet route`
+  opnieuw draaien routeert álle benen en zou ook de al goedgekeurde zee-/rivierbenen
+  veranderen. `vervang_spoorbeen.py` vervangt gericht één been en **weigert** als een
+  uiteinde >500 m schuift (dan hoort de overslagmarker mee te verhuizen).
+  **Gemeten en teruggedraaid:** een verhouding-regel (omweg/gat i.p.v. absoluut 5 km) in
+  `vind_omweg_connectoren` — +6.000 naden, +23.000 km netwerk en één omkering **méér**.
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
 

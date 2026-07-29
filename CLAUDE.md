@@ -1,4 +1,77 @@
-> **🛤️ DE DEDUP AT DE JUNCTIES OP — 20,5% → 88,0%, LIVE `?v=102` (2026-07-29, LAATSTE).**
+> **🚆 DE TREIN NEEMT DE BOCHT — SPOOR OP OSM 1-OP-1, LIVE `?v=103` (2026-07-29, LAATSTE,
+> VISUELE GO VAN LARS).** Commit `76fd530`.
+>
+> **⚠️ DE ONMOGELIJKE BOCHTEN KWAMEN NIET UIT DE ROUTER MAAR UIT ONZE EIGEN PIJPLIJN.**
+> Lars zag ná de junctie-fix exact dezelfde bocht. Wortel in drie metingen: (1) het
+> spoorfilter dropt **álle `service=`-ways** — over de 184 extracts geteld ruwweg **de
+> helft van alle spoor-ways** (Oezbekistan 75%, Tennessee 60%, Saksen 43%), en dat is
+> juist het bindweefsel: wissels, sidings, overloopsporen; (2) `bouw()` last op **exacte**
+> coördinaatgelijkheid, maar dedup en simplify verschuiven de punten dáárvóór, dus de
+> gedeelde OSM-knopen zijn weg; (3) de heal-passes raden ze terug — bij Guixi met een
+> `spoor-heal`-edge van **40 m waar in OSM geen enkele way loopt**, en **díe naad ÍS de
+> omkering** (166,3° in de graaf). De pijplijn verzon dus de beweging die een trein niet
+> kan maken.
+>
+> **✅ BESLUIT LARS — OSM 1-OP-1 WORDT DE ROUTEERGRAAF.** *"Kan je die OSM rail data niet
+> gewoon 1 op 1 overnemen zonder allemaal filters? Daar is door hun al tijd in gestoken
+> dus die sporen kloppen wel."* OSM's topologie is exact (**verbonden ⟺ gedeelde node**),
+> en op **rauwe** punten draagt een gedeelde node in beide ways dezelfde double — dus de
+> bestaande exacte las reproduceert OSM zonder één drempel. Geen filter, geen dedup, geen
+> heal, geen guards.
+>
+> **⚠️ DE VOLGORDE IS DE EIGENLIJKE FIX.** Oud: filteren → dedup → simplify → *daarna*
+> knopen zoeken. Nu: **knopen zoeken op de rauwe punten → dáárna pas de geometrie BINNEN
+> elke edge verlichten**, uiteinden vast. Vereenvoudigen kan de graaf dan per constructie
+> niet meer breken — en dat was de hele bestaansreden van de heal-machinerie.
+>
+> **DE BOCHTSTRAF DEUGT WÉL, MAAR ALS TIE-BREAK.** Met dubbelspoor 1-op-1 liggen twee
+> bijna even lange sporen naast elkaar en springt de zoeker willekeurig heen en weer; een
+> lichte straf breekt dat gelijkspel. **Correcte topologie + straf 100 = 1 omkering;
+> verzonnen topologie + straf 25 = 2.** Straf 500 is te veel (775 km, ratio 1,59).
+>
+> **ROUTEREN EN TEKENEN ONTKOPPELD** (het vorm↔vaarsnelheid↔baanklem-patroon opnieuw):
+> het 1-op-1-net (**2,74 mln unieke ways · 3,62 mln knopen · 4,16 mln edges · 2,10 mln km
+> · 43 MB / 28,7 gz**) blijft op schijf en **routeert**; de browser **tekent** het
+> bestaande landnet (9,9 MB, **ongewijzigd**). De bol routeert niet zelf — stromen zijn
+> gebakken bestanden — dus dit kost **geen byte** op de telefoon. **Simplify hoort op de
+> tekenlaag, nooit op de graaf.** Bladsnoei (een doodlopende tak kan nooit deel zijn van
+> een pad tússen twee punten; ankers binnen 3 km beschermd) haalt 4,16 → **3,26 mln edges**.
+>
+> **GEMETEN:** Beilun→Guixi **558,6 km / 2 omkeringen → 563,5 km / 1**; de omkering bij
+> **Ningbo (29.8464/121.6097) weg**; vier gebakken stromen **13 → 12**; gebakken spoorbeen
+> 559,5 km / 724 pt → 565,8 km / 1.264 pt. Browsercontrole op het live bestand: **0 punten
+> bij de oude omkering, 7 op de bocht**, geen console-fouten. Alleen het been Beilun→Guixi
+> vervangen — Kamoa→Lobito had al 0 omkeringen en is niet aangeraakt.
+>
+> **⚠️ DE VERIFICATIEFOUT VAN 28-07, WANT DIE KOSTTE EEN DAG.** "7 → 2 knikken" was
+> gemeten aan `toets_spoorroute.mjs` — het **meetgereedschap** — terwijl de bol
+> `stroomroute-*.json` tekent (gebakken door `hecht_marnet.py`). Dat beide toevallig op 2
+> uitkwamen maakte het onzichtbaar. **Meet het eindproduct, niet je meetlat** →
+> `v2/tools/toets_knikken.py`.
+>
+> **⚠️ DRIE DOODLOPENDE SPOREN, want die waren duur.** (1) *"De bochtstraf is nooit bij de
+> baker aangekomen"* — weerlegd door meting: de route van het gereedschap is **punt voor
+> punt identiek** aan het gebakken been (724 punten, 0,0 m); conclusie getrokken uit een
+> grep in plaats van een meting. (2) *"Die bocht bestaat niet in OSM"* — fout lijnenpaar
+> bekeken (verbindingslijn × 杭深线) terwijl het **宁波北环线** er in een vloeiende boog
+> naast ligt; Lars had die graaf de dag ervóór al op twee screenshots gestuurd. (3) Een
+> **verhouding-regel** in `vind_omweg_connectoren` (omweg/gat i.p.v. absolute 5 km):
+> gebouwd, wereldwijd gemeten, **teruggedraaid** — +6.000 naden, +23.000 km en één
+> omkering méér.
+>
+> **NIEUW GEREEDSCHAP:** `fetch_spoor_1op1.py` (spoor 1-op-1 uit 184 extracts / 70 GB,
+> hervatbaar per regio, 3 werkers ~40 min) · `bak_spoor_1op1.py` (graaf op rauwe punten →
+> bladsnoei → in-edge simplify) · `vervang_spoorbeen.py` (één been in een gebakken stroom
+> vervangen zonder de andere te raken; **weigert** bij >500 m verschuiving van een
+> uiteinde) · `toets_knikken.py` (omkeringen in de **gebakken** stromen).
+>
+> **→ VOLGENDE:** de laatste omkering bij Guixi (28.3429/117.1975 — tweede spoor 6–16 m
+> naast de hoofdlijn over 5,3 km) · de 11 omkeringen in zee-/rivier-/truckbenen (andere
+> bronnen, eigen ronde) · **de bak-commando's van de vier stromen vastleggen** (staan
+> nergens — de generator-driftklasse) · `hecht_marnet` zélf op het 1-op-1-net laten
+> routeren, want nu draait alleen het losse spoorbeen erop.
+
+> **🛤️ DE DEDUP AT DE JUNCTIES OP — 20,5% → 88,0%, LIVE `?v=102` (2026-07-29, eerder).**
 > Commits `27c495d` (junctie-fix + wereldbake) · `4c4223f` (simplify 10 m) · `7e9efc8`
 > (bochtstraf, verdichten, parallax) · `94f8728` (vier stromen op de exacte kades).
 >
@@ -217,7 +290,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (laatst: de dedup at de juncties op — 20,5% → 88,0%, live ?v=102)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (laatst: de trein neemt de bocht — spoor op OSM 1-op-1, live ?v=103)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2491,6 +2564,23 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-07-29 · DE OSM-SPOORDATA GAAT 1-OP-1 DE ROUTEERGRAAF IN (besluit Lars)** — geen
+  filter, geen dedup, geen heal, geen guards. OSM's topologie is exact (verbonden ⟺
+  gedeelde node) en op rauwe punten reproduceert de bestaande exacte las die zonder één
+  drempel. Aanleiding: het filter dropt álle `service=`-ways = ~de helft van alle
+  spoor-ways, en dat is juist het bindweefsel tussen parallelle sporen.
+- **2026-07-29 · DE VOLGORDE IS DE FIX: eerst knopen, dán vereenvoudigen** — simplify
+  vóór het knopen zoeken verschoof de gedeelde punten, waarna heal-passes ze moesten
+  raden (Guixi: een naad van 40 m die in OSM niet bestaat, en díe naad dwong de omkering
+  af). In-edge simplify met vaste uiteinden kan de graaf per constructie niet breken.
+- **2026-07-29 · De bochtstraf is een TIE-BREAK tussen parallelle sporen**, geen
+  reparatie van een kapotte graaf: correcte topologie + straf 100 = 1 omkering, verzonnen
+  topologie + straf 25 = 2.
+- **2026-07-29 · Routeren (43 MB, op schijf) en tekenen (9,9 MB, browser) zijn
+  ONTKOPPELD** — de bol routeert niet zelf, dus 1-op-1 kost geen byte op mobiel. Simplify
+  hoort op de tekenlaag, nooit op de graaf.
+- **2026-07-29 · Meet het GEBAKKEN eindproduct, niet je meetlat** — "7 → 2 knikken" van
+  28-07 was aan het meetgereedschap gemeten; `toets_knikken.py` telt nu de stromen zelf.
 - **2026-07-29 · `dedup_parallel` is JUNCTIE-BEWUST** — een junctie ís de plek waar twee
   sporen binnen 15 m in vrijwel dezelfde richting samenkomen, precies wat de dedup
   "dubbelspoor" noemt; wereldwijd leefde nog 20,5% van 105.393 OSM-vertaktingen → 88,0%

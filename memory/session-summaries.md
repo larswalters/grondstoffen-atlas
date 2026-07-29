@@ -1,6 +1,41 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-29 (laatst) - De trein neemt de bocht: spoorroutering op OSM 1-op-1 (?v=103)
+
+Lars zag ná de junctie-fix **exact dezelfde** onmogelijke bocht. Hij had gelijk, en de
+oorzaak lag niet in de router.
+
+**Verificatiefout van 28-07, die dit een dag kostte.** "7 → 2 knikken" was gemeten aan
+`toets_spoorroute.mjs` — het meetgereedschap — terwijl de bol `stroomroute-*.json`
+tekent. Dat beide toevallig op 2 uitkwamen maakte het onzichtbaar.
+
+**Drie doodlopende sporen, want die waren duur.** (1) "De bochtstraf bereikte de baker
+niet" — weerlegd: de route van het gereedschap is punt voor punt identiek aan het
+gebakken been (724 punten, 0,0 m). Ik trok die conclusie uit een grep in plaats van een
+meting. (2) "Die bocht bestaat niet in OSM" — fout lijnenpaar bekeken; Lars had de
+graaf de dag ervóór al op twee screenshots gestuurd. (3) Een verhouding-regel in
+`vind_omweg_connectoren`: gebouwd, wereldwijd gemeten, **teruggedraaid** (+6.000 naden,
++23.000 km, één omkering méér).
+
+**Lars' correctie kantelde het:** *"je praat over bochtstraf terwijl hij gewoon die ronde
+binnenbocht moet maken — dat is overigens gewoon de kortste weg ook."* Ligt de bocht er
+en is hij korter, dan pakt een kale Dijkstra hem vanzelf; dat hij dat niet doet bewijst
+dat de graaf kapot is.
+
+**De wortel:** het filter dropt álle `service=`-ways (~de helft van alle spoor-ways) ·
+dedup en simplify verschuiven de punten vóór het lassen, dus de gedeelde OSM-knopen
+sneuvelen · de heal raadt ze terug, bij Guixi met een naad van 40 m die in OSM niet
+bestaat — **en die naad dwong de omkering af**.
+
+**Fix (idee van Lars): OSM 1-op-1**, met de volgorde omgedraaid — eerst knopen op de
+rauwe punten, daarna pas in-edge simplify. Beilun→Guixi **2 → 1** omkering (558,6 →
+563,5 km), Ningbo weg, vier stromen 13 → 12. Browsercontrole: 0 punten bij de oude
+omkering, 7 op de bocht. Alleen dat ene been vervangen; Kamoa→Lobito was al schoon.
+
+Nieuw: `fetch_spoor_1op1.py` · `bak_spoor_1op1.py` · `vervang_spoorbeen.py` ·
+`toets_knikken.py`. Commit `76fd530`, live `?v=103`, visuele go van Lars.
+
 ## 2026-07-29 (laat) - Van ankercorrectie naar de wortel: de dedup at de juncties op (?v=098 → ?v=102)
 
 **De zeven correcties doorgevoerd (?v=098).** Zes koper-ankers in

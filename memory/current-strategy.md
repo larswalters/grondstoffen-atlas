@@ -1,5 +1,36 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-29 (routebrieven van mijn tot eindproduct: sjabloon + vijf brieven omgezet)*
+*Last updated: 2026-07-29 (laatst: spoorroutering op OSM 1-op-1 — de pijplijn verzon de bochten)*
+
+## Stand 2026-07-29 (laat) — de routeergraaf is OSM 1-op-1, en routeren staat los van tekenen
+
+**De onmogelijke spoorbochten kwamen uit onze eigen pijplijn, niet uit de router.** Drie
+dingen samen: het filter dropt álle `service=`-ways (~de helft van alle spoor-ways —
+juist de wissels, sidings en overloopsporen), `bouw()` last op **exacte**
+coördinaatgelijkheid terwijl dedup en simplify de punten dáárvóór verschuiven, en de
+heal-passes raden de verdwenen knopen daarna terug. Bij Guixi leverde dat een
+`spoor-heal`-edge van 40 m op waar in OSM geen way loopt — en die naad ÍS de omkering.
+
+**Nu: OSM 1-op-1 als routeergraaf.** OSM's topologie is exact (verbonden ⟺ gedeelde
+node), en op rauwe punten draagt een gedeelde node in beide ways dezelfde double, dus
+de bestaande exacte las reproduceert OSM zonder één drempel. **De volgorde is de fix:**
+eerst knopen zoeken op de rauwe punten, dán pas de geometrie binnen elke edge
+verlichten met de uiteinden vast — vereenvoudigen kan de graaf per constructie niet
+meer breken.
+
+**Routeren en tekenen zijn ontkoppeld** (hetzelfde patroon als vorm↔vaarsnelheid↔klem).
+Het 1-op-1-net (2,74 mln ways · 3,62 mln knopen · 2,10 mln km · 43 MB) blijft op schijf
+en routeert bij het bakken; de browser tekent het bestaande landnet (9,9 MB,
+ongewijzigd). De bol routeert niet zelf — stromen zijn gebakken bestanden — dus dit
+kost geen byte op de telefoon. **Simplify hoort op de tekenlaag, nooit op de graaf.**
+
+**De bochtstraf blijft, maar met een andere rol:** tie-break tussen twee parallelle
+sporen, niet reparatie van een kapotte graaf. Correcte topologie + straf 100 = 1
+omkering; verzonnen topologie + straf 25 = 2.
+
+> [!warning] Meet het eindproduct, niet je meetlat
+> Op 28-07 werd "7 → 2 knikken" gemeld uit `toets_spoorroute.mjs` terwijl de bol
+> `stroomroute-*.json` tekent. `v2/tools/toets_knikken.py` telt nu de omkeringen in de
+> **gebakken** stromen.
 
 ## Stand 2026-07-29 — de brief dekt de hele keten, en verifieert zichzelf
 

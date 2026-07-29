@@ -1,5 +1,29 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-29 (nieuw: Cerrejón-cokesblend niet gedocumenteerd)*
+*Last updated: 2026-07-29 (nieuw: de bak-commando's van de stromen staan nergens)*
+
+## ⚠️ OPEN 2026-07-29 — de bak-commando's van de vier stromen zijn nergens vastgelegd
+`hecht_marnet route` is been-gestuurd (`--been` / `--stippel` / `--been-geojson` /
+`--marker`), maar wélke vlaggen er per stroom zijn gebruikt leeft uitsluitend in een
+shell-historie. Wie een stroom wil herbakken moet het commando reconstrueren uit de
+routebrief en het gebakken JSON. Dezelfde klasse als de generator-drift van
+`cu-guixi-spoor` (741 m): een gegenereerd artefact waarvan het recept niet is vastgelegd
+loopt stil uit de pas. Vastleggen als scriptje naast de routebrieven vóór de volgende
+herbake.
+
+## ⚠️ OPEN 2026-07-29 — 12 omkeringen over de vier stromen, waarvan 11 buiten het spoor
+`toets_knikken.py` telt ze in de **gebakken** stromen. Na de 1-op-1-omzetting staat het
+spoorbeen Beilun→Guixi op **1** (28.3429/117.1975 — tweede spoor 6–16 m naast de
+hoofdlijn over 5,3 km). De overige **11 zitten in zee-, rivier- en truckbenen** en komen
+dus uit heel andere bronnen (MARNET, AIS-tracks, wegcorridors): 180° op het
+grafiet-truckbeen bij −14.9147/40.2954, vier op het zeebeen Southwest Pass → New
+Orleans, twee op het Rijnbeen. Eigen ronde per bron; niet met de spoorfix mee te nemen.
+
+## ⚠️ RISICO 2026-07-29 — de oude machinerie staat nog naast de nieuwe
+`dedup_parallel`, de heal-passes en `vind_omweg_connectoren` bestaan alléén om schade te
+repareren die de oude volgorde (simplify vóór knopen) aanrichtte. Zolang `hecht_marnet`
+nog op zijn eigen graaf routeert en alleen het losse spoorbeen op 1-op-1 draait, staan
+er **twee netten met verschillende topologie** naast elkaar. Niet schrappen vóór de
+baker zelf op 1-op-1 draait — maar ook niet vergeten dat ze er staan.
 
 ## ⚠️ OPEN 2026-07-29 — Cerrejón in de Schwelgern-cokesblend is niet gedocumenteerd
 Uit de fase D/E-research van de kolen-brief (A–E-omzetting): de gedocumenteerde

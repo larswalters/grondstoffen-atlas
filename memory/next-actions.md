@@ -1,7 +1,31 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (laatst: junctie-fix `?v=102`; daarvóór de routebrieven A–E)*
+*Last updated: 2026-07-29 (laatst: spoor op OSM 1-op-1, `?v=103`)*
 
-## 🔴 NIEUW 2026-07-29 (laatst) — na de junctie-fix
+## 🔴 NIEUW 2026-07-29 (laatst) — na de 1-op-1-omzetting
+
+1. **De laatste omkering bij Guixi** (28.3429/117.1975). Daar ligt een tweede spoor
+   6–16 m naast de hoofdlijn over ~5,3 km; met straf 100 springt de router er één keer
+   op over. Zelfde klasse als Ningbo was, maar nu mét correcte topologie — dus dit is
+   een tie-break-vraag, geen graafvraag.
+2. **De 11 overgebleven omkeringen zitten NIET in het spoor** maar in zee-, rivier- en
+   truckbenen (MARNET, AIS-tracks, wegcorridors). Eigen ronde, eigen bronnen. De
+   grootste: 180° op het grafiet-truckbeen bij −14.9147/40.2954 en vier op het zeebeen
+   Southwest Pass → New Orleans. `toets_knikken.py` telt ze.
+3. **De bak-commando's van de vier stromen vastleggen.** `hecht_marnet route` is
+   been-gestuurd, maar welke vlaggen er per stroom zijn gebruikt leeft alleen in een
+   shell-historie. Dezelfde klasse als de generator-drift van `cu-guixi-spoor` (741 m):
+   een gegenereerd bestand waarvan het recept niet is vastgelegd loopt stil uit de pas.
+   Zet ze als scriptje naast de routebrieven — vóór de volgende herbake.
+4. **`hecht_marnet` zelf op het 1-op-1-net laten routeren.** Nu draait alléén het losse
+   spoorbeen erop (via `toets_spoorroute.mjs` + `vervang_spoorbeen.py`); de baker
+   gebruikt nog zijn eigen graaf. Zolang dat zo is moet elk nieuw spoorbeen handmatig
+   door dezelfde twee stappen.
+5. **Overweeg de oude machinerie te schrappen** zodra 1-op-1 het volledig overneemt:
+   `dedup_parallel`, de heal-passes, `vind_omweg_connectoren` en hun guards bestaan
+   alléén om schade te repareren die de oude volgorde aanrichtte. ⚠️ Niet doen vóór de
+   baker zelf op 1-op-1 draait — anders staat er niets meer onder.
+
+## 🟠 2026-07-29 (eerder) — na de junctie-fix
 
 1. **De twee scorefouten in `toets_ankers.py`.** De zelftoets is eerlijk gezakt en de
    diagnose staat er al bij:
