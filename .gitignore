@@ -1,3 +1,7 @@
 # Gegenereerde single-file build (maak met: python build-standalone.py)
 # Modulair = bron van waarheid; dit artefact niet in git.
 atlas-standalone.html
+
+# Proef-/tussenartefact van de 1-op-1 spoorbake (43 MB) — reproduceerbaar
+# met v2/tools/fetch_spoor_1op1.py + bak_spoor_1op1.py, hoort niet in git.
+v2/data/landnet-raw.*
