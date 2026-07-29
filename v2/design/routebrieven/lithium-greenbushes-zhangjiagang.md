@@ -430,14 +430,18 @@ niet bevestigd, en staat als eerste in §5.
 | 1 | 0 | Laadplek LG Chem Wuxi | laadplek | nog te leggen | [L1] | aannemelijk |
 | 2 | ±60 | Changzhou | passage | 31.8123, 119.9692 | OSM place=city | **bevestigd** |
 | 3 | ±175 | Qixia (Nanjing Economic & Technological Development Zone) | passage | 32.0985, 118.9042 | OSM place=city | **bevestigd** |
-| 4 | ±180 | **LG Energy Solution Nanjing — celfabriek** | losplek | zie hieronder | [L1, L2, L6] | **aannemelijk** |
+| 4 | ±180 | **乐金化学新能源电池有限公司 — celfabriek, Nanjing NEDZ** | losplek | **32.16300, 118.87900** | OSM way 621624910 + eigen satellietpass z16 | **satelliet-gelegd** |
 
-**⚠️ LG ES heeft twee campussen in Nanjing en het is niet vastgesteld welke de 2170-lijn draait:**
+**⚠️ LG heeft twee campussen in Nanjing; deze brief kiest de New Port-campus, met reden:**
 
 | campus | ligging | bron | status |
 |---|---|---|---|
-| Jiangning / Binjiang-ontwikkelingszone | **31.85052, 118.56654** | OSM/Nominatim "LG新能源", 江宁街道 | **bevestigd als LG-locatie**, lijn onbekend |
-| Qixia / New Port (NEDZ) — 恒毅路 17 号 | ±32.158, 118.878 (straat 恒谊路 in OSM) | vrachtdocumenten "HENGYI RD NO.17, NANJING ECONOMY"; LGES China-hoofdkantoor zit in de NEDZ | aannemelijk |
+| **Qixia / New Port (NEDZ)** — 恒毅路 17 号 | **32.16145, 118.87958** en 32.15027, 118.88596 (twee percelen van dezelfde naam) | OSM `landuse=industrial` **乐金化学新能源电池有限公司** (= LG Chem New Energy Battery, de naam van vóór de afsplitsing van LGES) + vrachtdocumenten "HENGYI RD NO.17, NANJING ECONOMY" | **satelliet-gelegd** — grote productiehallen, eigen poorten, logistiek terrein |
+| Jiangning / Binjiang | 31.85052, 118.56654 | OSM/Nominatim "LG新能源", 江宁街道 | bevestigd als LG-locatie, lijn onbekend |
+
+*In dezelfde NEDZ-cluster staan ook LG Display Nanjing (32.15593, 118.88780), LG Electronics
+(32.15434, 118.86556), LG Magna e-Powertrain (32.15740, 118.86575) en het LG-personeelsflatgebouw —
+het is één LG-terreincomplex, wat de keuze voor deze campus verder steunt.*
 
 ## Been 8 · weg — Nanjing → Tesla Giga Shanghai
 
@@ -477,8 +481,8 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 | 2 | b4/b5 | **Welke ligplaats in Zhangjiagang** | Het kandidaatgebied is gevonden (hoofdhavenkade 31.970–31.975 / 120.410–120.440), maar geen bron wijst een ligplaats aan; het chemiepark bij de fabriek heeft alleen vloeistofsteigers | Een z16-pass over die kade (welk vak heeft stapelvelden i.p.v. containers) + zo mogelijk een terminalbron |
 | 3 | overslag Bunbury | **Shed 8-8 staat niet op de Esri-opname** | De opname is ouder dan de loods. ⚠️ **Esri Wayback is geprobeerd** (release 32246 = 2026-06-30, de nieuwste van 195): dat beeld is voor Bunbury **identiek aan de live laag** — Esri heeft de binnenhaven sindsdien niet ververst, dus dit is niet met Esri op te lossen | Een andere bron: Sentinel-2 (10 m toont een loods van 55.000 t als rechthoek, genoeg om de plek te bepalen, niet om te ankeren) of een havenplattegrond van Southern Ports |
 | 4 | b1 | **De mijnpoort** en de exacte terreinroute | Talison publiceert geen terreinplattegrond | De eerste wegcorridor-run: het punt waar de terreinweg de South Western Highway raakt valt er vanzelf uit |
-| 5 | b5/b6/b7 | **Drie Chinese fabrieken hebben een ADRES maar nog geen coördinaat** — Tianqi 东新路 5 号 · LG Chem/Huayou 锡梅路 167 号 · LG ES 恒毅路 17 号 | OSM kent in China geen huisnummers (`addr:street`-query levert 0) en Nominatim vindt de bedrijfsnamen niet; de straten zelf zijn wél bekend | Eén geocodeerslag op een Chinese kaartdienst (Amap/Baidu, API-sleutel nodig), daarna per punt een z16-pass. Dit is één handeling voor alle drie |
-| 5b | b7 | **Welke LG ES-campus in Nanjing draait de 2170-lijn** | LGES heeft negen fabrieken op vijf locaties in twee zones (Jiangning/Binjiang én Qixia/New Port) | Een bron die de cilindercel-lijn aan één campus koppelt |
+| 5 | b5/b6 | **Twee Chinese fabrieken hebben een ADRES maar nog geen coördinaat** — Tianqi 东新路 5 号 · LG Chem/Huayou 锡梅路 167 号 | OSM kent in China geen huisnummers (`addr:street`-query levert 0) en Nominatim vindt de bedrijfsnamen niet; de straten zelf zijn wél bekend. ⚠️ Een volledige scan over de china-extract vond ze ook niet — OSM heeft ze simpelweg niet (de LG-cluster in Nanjing vond hij wél) | Eén geocodeerslag op een Chinese kaartdienst (Amap/Baidu, API-sleutel nodig), daarna per punt een z16-pass |
+| 5b | b7 | **Welke LG-lijn in Nanjing de 2170-cellen maakt** | De New Port-campus is gelegd, maar LGES heeft negen fabrieken op vijf locaties in twee zones; welke hal de cilindercel-lijn draait staat nergens | Een bron die de cilinderlijn aan één campus/hal koppelt — of accepteren op campusniveau (dat is voor de kaart genoeg) |
 | 6 | b2 | **Aandeel Fremantle** t.o.v. Bunbury | Albemarle's rapport noemt beide havens zonder verdeling | Een exportstatistiek per haven (Southern Ports vs Fremantle Ports) |
 | 7 | b3 | **Lombok of Soenda** | Beide routes worden gevaren; geen bron per reis | AIS-tracks van bulkcarriers Bunbury→Yangtze (de collector dekt dit gebied niet, dus: laag prioriteit) |
 
@@ -510,8 +514,8 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 
 - [x] **Notatie:** alle coördinaten lat, lon met decimale punt; ankers op 5 decimalen
 - [x] Elk been heeft een **been-id**; ankers dragen een id (nog te registreren in `aansluitingen.json`)
-- [ ] Elke laadplek, overslag en losplek heeft status **satelliet-gelegd** — **2 van 9 gelegd**
-      (Greenbushes-loods, Berth 8); de rest staat in §5
+- [ ] Elke laadplek, overslag en losplek heeft status **satelliet-gelegd** — **4 van 9 gelegd**
+      (Greenbushes-loods, Berth 8, LG-celfabriek Nanjing, Tesla-poort via OSM); de rest staat in §5
 - [x] Elke laad-/los-/overslagplek heeft een ingevulde **productvraag** (§2a) inclusief uitsluitingen
 - [x] Elke overslag heeft **twee ankers** + de terreinstappen ertussen
 - [x] **Routeerpunt + max snap** genoteerd bij elk been-uiteinde op water
