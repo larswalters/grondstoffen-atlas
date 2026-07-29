@@ -1,6 +1,74 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-29 (laat) - Van ankercorrectie naar de wortel: de dedup at de juncties op (?v=098 → ?v=102)
+
+**De zeven correcties doorgevoerd (?v=098).** Zes koper-ankers in
+`v2/tools/maak_aansluitingen.py` (de redactionele lijst = bron van waarheid) +
+`gr-port-neworleans` in `data/graphite.js`; grafietketen herbakken. De snap-meting
+bevestigt ze langs een weg die niets met het oog te maken heeft: Waalhaven zee
+1,79 → 0,70 km, binnen 0,40 → 0,20, spoor 1,1 → 0,0; Guixi spoor 0,1 → 0,0.
+⚠️ Beilun's SPOOR-snap ging juist omhoog (0,2 → 1,3 km) — de berth ligt in het water,
+het havenspoor eindigt bij het ertsveld; één aansluiting kan niet tegelijk ligplaats
+én laadspoor zijn (§3.4: dan hoort er een tweede te komen, geen compromis-coördinaat).
+⚠️ Drift hersteld: `cu-guixi-spoor` stond in het GEGENEREERDE JSON al goed maar in de
+generator nog 741 m ernaast — regenereren had het satelliet-bevestigde punt stil
+teruggedraaid. **Napoleon Ave schoof 490 m maar het routeerpunt maar 154 m** (een schip
+vaart in de geul, niet tegen de kade): anker ≠ routeerpunt.
+
+**Vier stromen op satelliet-gelegde kades (?v=099).** grafiet 18.070 · Escondida→Guixi
+19.809 · Collahuasi→Tongling 19.299 · Copperbelt→Lobito→Duisburg 11.622 km. Die laatste
+begon aan de kust terwijl het koper uit de Copperbelt komt → spoorbeen Kamoa-Kakula →
+Lobito over de Benguela-lijn, 1.688,8 km = −3,5% op de operator-waarde. Kijklaag terug
+tot de drie open ligplaatsen; het proefwerk bevroren in
+`v2/design/ankercheck-2026-07-28.json`.
+
+**Nieuw gereedschap.** `toets_ankers.py` (verdachtenlijst: waterrand · haveninfra ·
+terrein onder het punt · snap; leest ook alle 510 `data/*.js`-knopen; bron = de lokale
+Geofabrik-extracts want de publieke Overpass-mirrors gaven 504's en daarna 429) en
+`maak_rivierbeen.py` (Yangtze Shanghai→Tongling 516,6 km uit de MARNET-bulklaag als
+tekengeometrie; het pad wordt éénmalig gezocht, de routeergraaf blijft ongewijzigd).
+⚠️ De zelftoets van `toets_ankers.py` is EERLIJK GEZAKT: Napoleon Ave staat op 1, maar
+Waalhaven op 8 en Coloso op 14 — op de dijk bij Heijplaat vindt OSM water op 3 m en een
+haven-object op 0 m. Die twee waren niet geometrisch maar SEMANTISCH fout: een
+plausibele kade, alleen de verkeerde. Geen meetkundige toets vangt die klasse.
+
+**Lars' visuele checks — drie tekenfouten, alle eerst gemeten.** (1) Bochten die een
+trein niet kan maken: de Dijkstra kende geen draaikosten, 7 knikken ≥60° met
+boogstralen van 27/35/80/159/554 m → gerichte edge-toestanden met bochtstraf, en de
+straf kijkt naar de KORTSTE van twee segmenten (77° met 15 en 993 m lijkt op het
+gemiddelde 400 m straal, op de korte kant 10 m). (2) "Ik zie geen leiding bij
+Escondida": een been van twee punten is in 3D een rechte koorde die over 153 km 0,46 km
+ónder het oppervlak duikt → verdichten langs de grootcirkel. (3) 130 m parallax doordat
+de detailtegels op 1,00002 liggen en de vectorlagen op 1,0 → alles op `CONFIG.vectorLift`.
+
+**Het hoekige railnet was de simplify.** 100 m tolerantie = één punt per kilometer; op
+een boog van 500 m straal één rechte streep van 630 m. Naar 10 m: mediaan segment
+1.095 → 305 m. Lars' scherpere observatie klopte ook: de flauwe Z'en werden volledig
+weggefilterd — richtingswissels +61% en de mediane zijwaartse zet van een overlevende Z
+283 → 29 m. Kost 2,4× de punten maar 1,56× de bytes; geen nieuwe scan nodig.
+
+**En toen de wortel.** Vier hypotheses parallel getoetst, elk met een tegenspreker:
+`dedup_parallel` vernietigde de echte OSM-juncties. Een junctie ÍS de plek waar twee
+sporen binnen 15 m in vrijwel dezelfde richting samenkomen — precies de cel en
+richtingsbak waarop de dedup "dubbelspoor" concludeert; de heal plakte het gat daarna
+dicht met een las onder een onmogelijke hoek (het verband, niet de wond). Wereldwijd
+leefde nog 20,5% van 105.393 vertakkingen → **88,0%** (plafond zonder dedup 92,6% maar
++41% km). Netlengte +0,99%, dedup blijft 29,0% vouwen, geen spoorwijdte scheef.
+Beilun→Guixi: knikken 7 → 2 (beide echte kopmaak-plekken), route 558,6 km tegen ~556 in
+de brief. Kamoa→Lobito: 100 → 0.
+
+⚠️ **De km-ijking is blind voor junctieverlies.** NL (−3,7% ProRail) en Polen (+1,2%
+PKP-PLK) zijn precies de twee regio's waarop onze meetlat klopt terwijl daar 86-88% van
+de topologie weg was. De junctie-telling (35 s) hoort vanaf nu naast de lengte-ijking.
+
+**Eigen fouten.** De junctie-fix zat eerst maar op één van de twee aanroepplekken —
+`run_landnet_wereld.py` roept `dedup_parallel` rechtstreeks aan — wat een wereldrun van
+40 min kostte die exact dezelfde getallen opleverde; er kwam geen foutmelding, het
+identieke resultaat was het enige signaal. En de diagnose liet vijf test-geojsons in
+`build-cache/` achter die `laad_lijnen()` zou meegloben (91.198 features / 1.143.366 km,
+bijna een verdubbeling van het wereldnet) — verplaatst naar `build-cache/diagnose-spoorboog/`.
+
 ## 2026-07-28 (laat) - De anker-check: de corridors kloppen, de uiteinden niet (?v=095→097)
 
 **Aanleiding.** Lars vroeg of de routebrief per stroom nóg gedetailleerder moest

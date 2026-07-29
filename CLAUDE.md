@@ -1,3 +1,102 @@
+> **🛤️ DE DEDUP AT DE JUNCTIES OP — 20,5% → 88,0%, LIVE `?v=102` (2026-07-29, LAATSTE).**
+> Commits `27c495d` (junctie-fix + wereldbake) · `4c4223f` (simplify 10 m) · `7e9efc8`
+> (bochtstraf, verdichten, parallax) · `94f8728` (vier stromen op de exacte kades).
+>
+> **De zeven goedgekeurde ankercorrecties staan in de data** (`?v=098`): zes koper-ankers
+> in `v2/tools/maak_aansluitingen.py` — de redactionele lijst is de bron van waarheid en
+> `aansluitingen.json` wordt eruit gegenereerd — plus `gr-port-neworleans` in
+> `data/graphite.js`; grafietketen herbakken. De snap-meting bevestigt ze langs een
+> onafhankelijke weg: **Waalhaven zee 1,79 → 0,70 km**, binnen 0,40 → 0,20, spoor 1,1 →
+> 0,0; Guixi spoor 0,1 → 0,0. ⚠️ Eén ging omláág: **Beilun's SPOOR-snap 0,2 → 1,3 km** —
+> de berth ligt in het water, het havenspoor eindigt bij het ertsveld; één aansluiting
+> kan niet tegelijk ligplaats én laadspoor zijn (§3.4). ⚠️ **Drift hersteld:**
+> `cu-guixi-spoor` stond in het GEGENEREERDE json al goed maar in de generator nog 741 m
+> ernaast — regenereren had het satelliet-bevestigde punt stil teruggedraaid.
+> **Werkregel: vergelijk generator↔uitvoer vóór elke regeneratie.**
+> **Anker ≠ routeerpunt:** Napoleon Ave schoof 490 m, het geroutete overslagpunt 154 m.
+>
+> **VIER STROMEN OP SATELLIET-GELEGDE KADES** (`?v=099`): grafiet Balama→Vidalia 18.070 ·
+> koper Escondida→Guixi 19.809 · Collahuasi→Tongling 19.299 · **Copperbelt→Lobito→
+> Duisburg 11.622 km**. Elk een eigen bestand, groep en knop (`STROMEN` in `main.js`);
+> kleur = modaliteit, spoor en leiding kregen een eigen kleur. Nieuw:
+> **`maak_rivierbeen.py`** — een rivierbeen als TEKENGEOMETRIE uit de MARNET-bulklaag
+> (Yangtze Shanghai→Tongling 516,6 km); het pad wordt éénmalig gezocht en als GeoJSON
+> weggeschreven, de routeergraaf blijft per constructie ongewijzigd (de Donau-ring-fout).
+>
+> **⚠️ DE WORTEL: `dedup_parallel` VERNIETIGDE DE ECHTE OSM-JUNCTIES.** Een junctie ÍS
+> per definitie de plek waar twee sporen binnen 15 m in vrijwel dezelfde richting
+> samenkomen — precies de cel + richtingsbak waarop de dedup "dubbelspoor" concludeert.
+> Hij at systematisch de laatste tientallen meters van elke invoegende tak op, en de heal
+> plakte het gat daarna dicht met een las onder een onmogelijke hoek: **het verband, niet
+> de wond.** Gemeten over 182 extracts: van **105.393** vertakkingen (graad ≥3) leefde er
+> nog **20,5%** als gedeelde knoop, 49,5% stond ontkoppeld. A/B: alles ná de dedup (heal,
+> snoei, simplify, bake) kost samen 7,4 procentpunt, de dedup kost er **76,0**.
+> **Fix = junctie-bewust vouwen**, dezelfde behandeling die `_simplify_met_knopen` al
+> kreeg: (1) een monster binnen 30 m van een echte vertakking wordt nooit als gedekt
+> gemarkeerd; (2) een bewaard stuk dat een vertakking draagt overleeft ook
+> `DEDUP_SNIPPER_KM` — zonder die tweede regel houdt regel 1 een stomp van 20-40 m over
+> die alsnog als wisselconfetti sneuvelt. Junctieset uit de scan-cache (`refs` naast
+> `pts`) → **geen nieuwe pass over de 74 GB extracts**. Uitslag: **20,5% → 88,0%**
+> (plafond zonder dedup 92,6% maar +41% km), netlengte 1.177.007 → 1.188.631 km
+> (+0,99%), dedup blijft 29,0% vouwen, geen spoorwijdte zakt scheef weg.
+>
+> **⚠️ EN DE EIGENLIJKE LES ZIT IN DE MEETLAT: de km-ijking is BLIND voor junctieverlies.**
+> Nederland (−3,7% tegen ProRail) en Polen (+1,2% tegen PKP-PLK) zijn precies de twee
+> regio's waarop onze meetlat klopt — terwijl daar 86-88% van de topologie weg was.
+> Kilometers meten niet of het net nog een NET is. **De junctie-telling (35 s: OSM-refs
+> met graad ≥3 uit de scan-cache tegen de gebakken geojson) hoort vanaf nu naast de
+> lengte-ijking in elke landnet-run.**
+>
+> **DRIE TEKENFOUTEN uit Lars' visuele checks, alle eerst gemeten.** (1) *"De trein maakt
+> bochten die niet kunnen"* — de Dijkstra kende geen draaikosten, dus omkeren was gratis:
+> 7 knikken ≥60° met boogstralen van **27, 35, 80, 159 en 554 m**. `toets_spoorroute.mjs`
+> routeert nu over **gerichte edge-toestanden** met een bochtstraf (`--keerstraf`, default
+> 25 km) ⚠️ die naar de **KORTSTE** van twee segmenten kijkt: 77° met 15 en 993 m geeft op
+> het gemiddelde 400 m straal (lijkt echt) en op de korte kant 10 m (wissel-spike). Plus
+> een spike-schoonmaak op de getekende lijn (knik >60° én punt <25 m uit de lijn = OSM-
+> zigzag). Beilun→Guixi 7 → **2** knikken (beide echte kopmaak-plekken), 558,6 km tegen
+> ~556 in de brief; Kamoa→Lobito 100 → **0**. (2) *"Ik zie geen leiding bij Escondida"* —
+> een been van twee punten is in 3D een rechte **koorde** die over 153 km **0,46 km ónder
+> het oppervlak** duikt; `stroomroute.js` verdicht benen nu langs de grootcirkel (5 km).
+> (3) *"Het spoor ligt ernaast als ik niet recht van boven kom"* — de tegels liggen niet
+> op `radius`: basisschil 1,0 · middenring 1,00001 · **detailpatch 1,00002**, dus je keek
+> naar beeld **130 m bóven** de lijnen. Alle vectorlagen staan nu op `CONFIG.vectorLift`.
+>
+> **HET RAILNET IS WERELDWIJD OP 10 m SIMPLIFY HERBAKT.** `KETEN_SIMPLIFY_KM` stond op
+> 0,10 km, en die tolerantie ÍS de maximale afwijking van de echte lijn: op straal R mag
+> de koorde `sqrt(8·R·t)` zijn, dus bij R = 500 m één rechte streep van 630 m door de hele
+> bocht (mediaan segment 1.095 m). Op 10 m: **305 m**. ⚠️ Lars' scherpere observatie
+> klopte óók: *"de flauwe Z die een spoor maakt filtert hij er soms helemaal uit"* — alles
+> wat minder ver opzij ging dan de tolerantie verdween volledig; richtingswissels
+> **+61%** en de mediane zijwaartse zet van een overlevende Z **283 → 29 m**. Kost 2,4×
+> de punten maar **1,56×** de bytes (varint-delta wordt korter naarmate punten dichter
+> liggen); `landnet.bin` 4.884 → **9.894 KB**, laden 342 ms. Geen nieuwe pass over de
+> extracts — de tolerantie zit bewust niet in de cachevingerafdruk (`--simplify-km`).
+>
+> **`v2/tools/toets_ankers.py` — de verdachtenlijst.** Vier toetsen per anker (waterrand ·
+> haveninfra · terrein onder het punt · snap), leest `aansluitingen.json` én alle **510**
+> knopen uit `data/*.js`; bron = de **lokale Geofabrik-extracts** (omgekeerd aan
+> `verken_terminals.py`: de kosten stijgen met het aantal LANDEN i.p.v. punten, en de
+> publieke Overpass-mirrors gaven 504's en daarna 429). ⚠️ **De zelftoets is EERLIJK
+> GEZAKT** tegen het bevroren proefwerk `v2/design/ankercheck-2026-07-28.json`: Napoleon
+> Ave staat op 1, maar **Waalhaven op 8 en Coloso op 14** — op de dijk bij Heijplaat vindt
+> OSM water op 3 m en een haven-object op 0 m. Die twee waren niet *geometrisch* maar
+> **semantisch** fout: een plausibele kade, alleen de verkeerde. **Geen meetkundige toets
+> vangt die klasse; alleen de productvraag doet dat.**
+>
+> **⚠️ TWEE EIGEN FOUTEN, want die horen hier.** (1) De junctie-fix zat eerst maar op
+> **één van de twee aanroepplekken** — `run_landnet_wereld.py` roept `dedup_parallel`
+> rechtstreeks aan en gaat niet door het `__main__`-blok van `fetch_landnet`. Dat kostte
+> een volle wereldrun van 40 minuten die **exact dezelfde getallen** opleverde; er kwam
+> geen foutmelding, het identieke resultaat was het enige signaal. (2) De diagnose liet
+> vijf test-geojsons in `build-cache/` achter en `bake_landnet.laad_lijnen()` filtert
+> alleen op `-proef` — een herbake had er **91.198 features / 1.143.366 km** bij gegooid,
+> bijna een verdubbeling van het wereldnet. Verplaatst naar `build-cache/diagnose-spoorboog/`.
+>
+> **→ VOLGENDE:** de twee scorefouten in `toets_ankers.py` (spoor/weg-snap scoren alsof
+> die netten overal dekken; "geen OSM-object" telt als verdenking) · `--bron js` over alle
+> 510 knopen · kolen-ankers satelliet-leggen · junctie-telling als vaste regressietoets.
+
 > **📖 DE ROUTEBRIEF LOOPT NU VAN MIJN TOT EINDPRODUCT — SJABLOON + 5 BRIEVEN OMGEZET
 > (2026-07-29, LAATSTE).** Commits `a54f0c9` (spec + `v2/design/routebrieven/_template.md`)
 > · `2ba6d55` (vijf brieven), docs-only, geen `?v=`-bump.
@@ -118,7 +217,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (routebrieven van mijn tot eindproduct: sjabloon + 5 brieven omgezet)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (laatst: de dedup at de juncties op — 20,5% → 88,0%, live ?v=102)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2391,7 +2490,25 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 
 ## D - Decisions
 
-Zie `memory/decisions.md`. Kernbesluiten: geen bundler (globals + script-tags); A\* over een
+Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-07-29 · `dedup_parallel` is JUNCTIE-BEWUST** — een junctie ís de plek waar twee
+  sporen binnen 15 m in vrijwel dezelfde richting samenkomen, precies wat de dedup
+  "dubbelspoor" noemt; wereldwijd leefde nog 20,5% van 105.393 OSM-vertaktingen → 88,0%
+  na de fix, voor +0,99% km. De heal-las die het gat dichtplakte was het verband, niet de wond.
+- **2026-07-29 · De junctie-telling is de TWEEDE MEETLAT** — NL en Polen kloppen op de
+  km-ijking (−3,7% / +1,2%) terwijl daar 86-88% van de topologie weg was.
+- **2026-07-29 · Simplify 100 → 10 m** — de tolerantie ÍS de maximale afwijking; alles wat
+  minder ver opzij ging verdween volledig (zijwaartse zet van een Z 283 → 29 m).
+- **2026-07-29 · Spoorrouter op gerichte edge-toestanden met bochtstraf**, die naar de
+  KORTSTE van twee segmenten kijkt (77° met 15/993 m = 10 m straal, geen 400).
+- **2026-07-29 · Schematische benen verdicht langs de grootcirkel** — een koorde van 153 km
+  duikt 0,46 km ónder het oppervlak.
+- **2026-07-29 · Alle vectorlagen op `CONFIG.vectorLift` (1,00002)** = de schil van de
+  diepste tegels; anders 130 m parallax bij schuin kijken.
+- **2026-07-29 · Anker ≠ routeerpunt** — 490 m ankerverplaatsing gaf 154 m routeerpunt.
+- **2026-07-29 · Vergelijk generator↔uitvoer vóór elke regeneratie** — een met de hand
+  bijgewerkt gegenereerd bestand laat zijn generator stil achter (Guixi, 741 m).
+ geen bundler (globals + script-tags); A\* over een
 1440×720 land/zee-raster voor echte routes; knelpunten worden als water geforceerd; één `data/<grondstof>.js`
 per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
 

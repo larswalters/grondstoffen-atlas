@@ -1,7 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (routebrieven A–E omgezet; z16-passes voor de D/E-ankers open)*
+*Last updated: 2026-07-29 (laatst: junctie-fix `?v=102`; daarvóór de routebrieven A–E)*
 
-## 🔴 NIEUW 2026-07-29 — na de routebrief-omzetting naar mijn→eindproduct
+## 🔴 NIEUW 2026-07-29 (laatst) — na de junctie-fix
+
+1. **De twee scorefouten in `toets_ankers.py`.** De zelftoets is eerlijk gezakt en de
+   diagnose staat er al bij:
+   - de **spoor/weg-snap wordt gescoord alsof die netten overal dekkend zijn** —
+     Collahuasi 49 km en Balama 178 km naar spoor zijn meetresultaten (daar ís geen
+     spoor), geen fouten. Dezelfde nuance die voor de zee-snap al gold, doortrekken.
+   - **"geen OSM-object binnen de straal" telt als verdenking**, wat een dunne kaart
+     straft (Mozambique, de batture bij Vidalia) in plaats van het anker.
+   ⚠️ Wat *niet* repareerbaar is: Waalhaven en Coloso waren **semantisch** fout, niet
+   geometrisch (OSM vindt daar water op 3 m en een haven-object op 0 m). Voor die klasse
+   is de productvraag het enige gereedschap — niet nóg een meetkundige toets.
+2. **`toets_ankers.py --bron js` over alle 510 `data/*.js`-knopen** — dat is de
+   eigenlijke oogst; alle 510 vallen in een extract dat al op schijf staat (108 passes).
+3. **De junctie-telling als vaste regressietoets** naast de km-ijking zetten. Zie de
+   waarschuwing hieronder: lengte meet niet of het net nog een *net* is.
+4. **Overweeg `landnet.bin` lazy te laden** zoals `aistracks` — hij is 9,9 MB (laden
+   342 ms). ⚠️ Níet de simplify-tolerantie terugdraaien; dan is de bocht weer een
+   veelhoek en verdwijnen de flauwe Z'en opnieuw.
+
+> [!warning] De km-ijking is blind voor junctieverlies
+> Nederland (−3,7% tegen ProRail) en Polen (+1,2% tegen PKP-PLK) zijn precies de twee
+> regio's waarop onze meetlat klopt — terwijl daar 86-88% van de topologie weg was.
+> Kilometers meten niet of het net nog een NET is. De junctie-telling draait in 35 s
+> (OSM-refs met graad ≥3 uit de scan-cache tegen de gebakken geojson) en hoort vanaf nu
+> naast de lengte-ijking in elke landnet-run.
+
+## 🔴 NIEUW 2026-07-29 (eerder) — na de routebrief-omzetting naar mijn→eindproduct
 
 1. **z16-satellietpasses voor de nieuwe fase D/E-ankers** — per brief gelijst in §5.
    O.a.: 铜冠铜箔-foliefabriek (Tongling 经开区) · JCC-walsdraadfabriek (Guixi-complex) ·

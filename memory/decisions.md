@@ -1,7 +1,54 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (routebrief: mijn→eindproduct + toetsbaarheidsregels)*
+*Last updated: 2026-07-29 (laatst: de junctie-fix, de bochtstraf en de tekenschil)*
 
 Vastgelegde keuzes (nieuwste boven). Elk: besluit + korte reden.
+
+## 2026-07-29 (laatst) — de junctie-fix en de tekenlaag
+
+- **2026-07-29 · `dedup_parallel` wordt JUNCTIE-BEWUST** — een junctie ís per definitie
+  de plek waar twee sporen binnen 15 m in vrijwel dezelfde richting samenkomen, precies
+  de cel + richtingsbak waarop de dedup "dubbelspoor" concludeert. Hij at daardoor de
+  laatste tientallen meters van elke invoegende tak op; de heal plakte het gat daarna
+  dicht met een las onder een onmogelijke hoek — het verband, niet de wond. Twee regels:
+  een monster binnen 30 m van een echte OSM-vertakking wordt nooit als gedekt gemarkeerd,
+  én een bewaard stuk dat een vertakking draagt overleeft ook `DEDUP_SNIPPER_KM` (zonder
+  die tweede regel blijft er een stomp van 20-40 m over die alsnog als wisselconfetti
+  sneuvelt). Gemeten: wereldwijd 20,5% → 88,0% van 105.393 vertakkingen, netlengte
+  +0,99%, dedup blijft 29,0% vouwen, geen spoorwijdte scheef. Junctieset komt uit de
+  scan-cache (`refs` naast `pts`) → geen nieuwe pass over de 74 GB extracts.
+  **Gemeten en afgeschoten:** `--cel-m` 5 (16,6 → 26,7% maar +53.346 km) · `--monster-m` 5
+  (slechter) · keerstraf verhogen · gatenguard verruimen (876.582 gaten) · dedup uit (+41%).
+- **2026-07-29 · De junctie-telling is de TWEEDE MEETLAT, naast de km-ijking** — NL
+  (−3,7% ProRail) en Polen (+1,2% PKP-PLK) klopten precies terwijl daar 86-88% van de
+  topologie weg was. Lengte meet niet of het net nog een net is.
+- **2026-07-29 · Simplify-tolerantie 100 → 10 m** (`KETEN_SIMPLIFY_KM`, nieuwe vlag
+  `--simplify-km`). De tolerantie ÍS de maximale afwijking van de echte lijn: op straal R
+  mag de koorde `sqrt(8·R·t)` zijn, dus bij R = 500 m en t = 100 m één rechte streep van
+  630 m door de hele bocht. Belangrijker nog: alles wat minder ver opzij ging dan de
+  tolerantie verdween volledig — de mediane zijwaartse zet van een overlevende Z ging van
+  283 naar 29 m. Kost 2,4× de punten maar 1,56× de bytes (varint-delta), en geen nieuwe
+  scan (de tolerantie zit bewust niet in de cachevingerafdruk).
+- **2026-07-29 · De spoorrouter routeert over GERICHTE edge-toestanden met een bochtstraf**
+  (`toets_spoorroute.mjs`, `--keerstraf` default 25 km). Zonder draaikosten is omkeren
+  gratis en rijdt het kortste pad een aftakking op en meteen terug. ⚠️ De hoek alleen
+  volstaat niet: 77° met segmenten van 15 en 993 m geeft op het gemiddelde een boogstraal
+  van 400 m (lijkt echt) en op de KORTSTE kant 10 m (wissel-spike) — de korte kant telt.
+  Daarnaast een spike-schoonmaak op de getekende lijn (knik >60° én punt <25 m uit de
+  lijn tussen zijn buren = OSM-zigzag, geen bocht).
+- **2026-07-29 · Schematische benen worden verdicht langs de grootcirkel (5 km)** — twee
+  punten worden in 3D een rechte koorde die over 153 km 0,46 km ónder het boloppervlak
+  duikt; het been ligt dan niet op de kaart maar er dwars doorheen.
+- **2026-07-29 · Alle vectorlagen op `CONFIG.vectorLift` (1,00002)** = exact de schil van
+  de diepste tegels. De tegels liggen niet op `radius`: basisschil 1,0 · middenring
+  1,00001 · detailpatch 1,00002, dus je keek naar beeld 130 m bóven de lijnen en dat
+  projecteert schuin als zijdelingse verschuiving. Niet hóger — dat was v1's `shellLift`
+  van 3,8 km waar je op 1 km hoogte onderuit kwam.
+- **2026-07-29 · Anker ≠ routeerpunt** — Napoleon Ave schoof 490 m, het geroutete
+  overslagpunt maar 154 m: een schip vaart in de geul, niet tegen de kade.
+- **2026-07-29 · Een gegenereerd bestand dat met de hand is bijgewerkt laat zijn
+  generator stil achter** — `cu-guixi-spoor` stond in `aansluitingen.json` goed maar in
+  `maak_aansluitingen.py` 741 m ernaast; regenereren had het satelliet-bevestigde punt
+  stil teruggedraaid. Vergelijk generator↔uitvoer vóór elke regeneratie.
 
 ## 2026-07-29 - De routebrief loopt van mijn tot EINDPRODUCT (besluit Lars)
 Fasen A–E met doorlopende been-ids; na de raffinaderij komt de fabriek en daarna wat daar
