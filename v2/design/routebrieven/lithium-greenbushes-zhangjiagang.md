@@ -219,7 +219,10 @@ anker — precies waar een mijnpoort hoort te liggen. De last mile is daarmee ko
 
 **been-id:** `li-gz-b2`
 **Modaliteit:** truck (roadtrain), openbare weg
-**Lengte:** gepubliceerd **±90 km** (mijn ligt "90 km southeast of the port of Bunbury") — te meten
+**Lengte:** **gemeten 83,1 km** over echte OSM-weggeometrie (`maak_stroombeen_weg.py`, profiel
+`lithium-greenbushes-bunbury`, 2026-07-29) tegen gepubliceerd ±90 km = **−7,9 %** [binnen ±10 %].
+Ankerstukjes: loods → weg **0,06 km**, weg → kade **0,08 km** — beide ankers liggen dus praktisch op
+het wegennet.
 **Net / bron geometrie:** OSM-wegcorridor
 **Stippel:** nee
 **Corridor bij naam:** **Maranup Ford Road → Stanifer Street → South Western Highway** (ref 1). Dit is
@@ -295,7 +298,9 @@ punt fout is, maar ook omdat de *opname ouder is dan de infrastructuur*. Zie §5
 **been-id:** `li-gz-b3`
 **Modaliteit:** bulkcarrier (Handysize/Supramax; Berth 8 geeft 250 m × 11,6 m als bovengrens)
 **Router:** zee = **vrij geroutet** (werkwijze §6)
-**Lengte:** grootcirkel **7.229 km**; verwachte gerouteerde lengte 8.000–8.500 km (verhouding ±1,15) — te meten
+**Lengte:** **gemeten 7.606,6 km** over MARNET (46 edges, 785 punten) tegen grootcirkel 7.229 km =
+verhouding **1,052**. Dat is laag voor een intercontinentale reis, en het klopt: Bunbury ligt vrijwel
+recht ten zuiden van Straat Lombok, dus de route is bijna een rechte noordwaartse lijn.
 **Routeerpunt kop / staart:** −33.31930, 115.66230 · 31.4000, 121.5000 — max snap 2 km
 
 | # | punt | type | lat, lon | bron | status |
@@ -322,7 +327,12 @@ aandeel onbekend, daarom als alternatief genoteerd en niet als negatief anker.
 **been-id:** `li-gz-b4`
 **Modaliteit:** hetzelfde zeeschip (géén drager-wissel; Zhangjiagang is zeehaven aan de rivier)
 **Brief-gestuurd** (werkwijze §6: binnenwater niet vrij routeren)
-**Lengte:** ±130 km — te meten op de MARNET-bulklaag met `maak_rivierbeen.py`
+**Lengte:** **gemeten 128,7 km** over de MARNET-bulklaag (18 edges, 659 punten, `maak_rivierbeen.py`);
+snap naar de bulklaag 2,20 km aan de monding en 1,36 km bij Zhangjiagang.
+⚠️ **Vóór dit been ligt een gestippeld stuk van 8,6 km:** MARNET's laatste zeeknoop ligt op
+31.51000, 121.41870 en de bulklaag begint pas op 31.45120, 121.47690. Dat gat is *gemeten*, niet
+overbrugd met geleende geometrie — precies de conventie van §7 (zoals het Nacala-startgat en het
+Wesel-vak).
 **Stippel:** nee — deze stretch heeft gebakken riviergeometrie (dezelfde bulklaag als Shanghai→Tongling)
 **Routeerpunt kop / staart:** 31.4000, 121.5000 · nog te bepalen — max snap 1.500 m
 
@@ -501,6 +511,33 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 | 4 | `data/lithium.js` flow `li-greenbushes → li-ref-jiangxi` | via `li-port-ningbo` (Ningbo-Zhoushan) | déze streng landt in **Zhangjiagang**, niet in Ningbo; Ningbo hoort bij een andere raffinaderij-streng | [Q1] |
 | 5 | `aansluitingen.json` | geen lithium-aansluitingen | vier nieuwe: `li-gb-laadplek`, `li-bun-berth8`, `li-zjg-kade`, `li-zjg-tianqi` | deze brief |
 
+## 6a · Wat er GEBAKKEN is (live `?v=104`, 2026-07-29)
+
+`v2/data/stroomroute-lithium-greenbushes-zhangjiagang.json` · HUD-knop *lithium
+Greenbushes→Zhangjiagang* · **7.827,0 km over 2.540 punten**:
+
+| been | modaliteit | km | punten | bron geometrie |
+|---|---|---|---|---|
+| b1+b2 | truck | **83,1** | 1.094 | OSM-wegcorridor (`maak_stroombeen_weg.py --profiel lithium-greenbushes-bunbury`) |
+| b3 | zee | **7.606,6** | 785 | MARNET, vrij geroutet |
+| — | zee, **gestippeld** | 8,6 | 2 | overgang zeenet → bulklaag, gemeten gat |
+| b4 | binnenvaart | **128,7** | 659 | MARNET-bulklaag (`maak_rivierbeen.py`) |
+
+**De keten stopt bewust in de vaargeul vóór Zhangjiagang.** Benen 5–8 (last mile → Tianqi → Wuxi →
+Nanjing → Tesla) worden pas getekend als de twee ontbrekende fabrieksankers gelegd zijn (§5, punt 5):
+liever een lijn die ophoudt waar het bewijs ophoudt dan een lijn naar een plausibel-maar-ongelegd punt.
+
+> **Bevinding uit het bakken: een via-punt op een zijtak levert een 180°-keerpunt.**
+> De dorpsknopen uit OSM liggen 23–143 m náást de highway; de router rijdt zo'n punt in en er weer uit.
+> Gemeten: 180,0° bij Balingup, Picton en de Willinge Drive-knoop. Weglaten kan niet (dan valt de lijn
+> naar 83 km via een sluipweg), verplaatsen lost telkens één geval op. Daarom twee dingen: de dorpen
+> zijn op de dichtstbijzijnde trunk/primary-vertex geprojecteerd, én `maak_stroombeen_weg.py` snoeit
+> heen-en-weer-uitstapjes nu weg op de getekende lijn (`snoei_keerlussen`, 14 stuks, waarvan Picton
+> 101 punten / 5,01 km). ⚠️ Dat betekende ook dat de **lengtetoets vóór de snoei liep** en 88,1 km
+> rapporteerde terwijl de lijn 82,9 km is: 5 km dubbel gereden. Meet het eindproduct, niet je meetlat.
+> `toets_knikken.py`: **0 omkeringen** in het truckbeen (7 knikken ≥60° zijn echte bochten op
+> kruisingen en in het havengebied).
+
 ## 7 · Wat de kaart moet tekenen
 
 1. **b1 + b2** (doorgetrokken, truck-amber): concentraatloods → poort → South Western Highway → Bunbury,
@@ -524,10 +561,10 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 - [x] Elke laad-/los-/overslagplek heeft een ingevulde **productvraag** (§2a) inclusief uitsluitingen
 - [x] Elke overslag heeft **twee ankers** + de terreinstappen ertussen
 - [x] **Routeerpunt + max snap** genoteerd bij elk been-uiteinde op water
-- [ ] **Dekking:** nog niet gedraaid — er is nog geen gebakken stroom
-- [ ] **Verklikker:** idem
-- [ ] Geen enkel **negatief anker** binnen zijn verbodsstraal geraakt — nog niet gedraaid
-- [ ] Lengte per been binnen de tolerantie — alleen been 2 heeft een gepubliceerde waarde (±90 km)
+- [x] **Dekking:** benen 1-4 gebakken en gemeten; de dorpen liggen per constructie op de lijn
+- [x] **Verklikker:** geen plaats geraakt die niet in de brief staat (de lijn volgt de highway)
+- [x] Geen enkel **negatief anker** geraakt: Yangshan 44,9 km (straal 20) · Port Hedland 511,7 km (30) · Jiangyin 10,9 km (10 — krap, de rivierstaart is daarna teruggehaald naar de bonded zone). Sanity-ankers: Lombok 4,7 km · Taiwanstraat 50,8 km ✓; ⚠️ het SCS-punt (114, 15) ligt 609 km van de lijn — de route gaat oostelijker; dat punt is dus een oriëntatiepunt, geen dekkingspunt
+- [x] Lengte per been binnen de tolerantie: truck 83,1 km tegen ~90 = -7,9% [OK]; zee/rivier hebben geen gepubliceerde waarde (verhouding zee 1,052 op de grootcirkel)
 - [x] Volumes sluiten aan over de verwerkingsknoop (110 kt → 17 kt = 6,47:1, §2)
 - [x] Elke stippellijn draagt een reden; elk reëel alternatief heeft een aandeel of een openstaand punt
 - [x] De keten loopt door tot het eindproduct (fase E eindigt beargumenteerd bij de autofabriek)

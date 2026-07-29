@@ -216,6 +216,11 @@ const STROMEN = [
   { sleutel: "cu-eg", bestand: "stroomroute-koper-escondida-guixi.json", aan: true },
   { sleutel: "cu-ct", bestand: "stroomroute-koper-collahuasi-tongling.json", aan: true },
   { sleutel: "cu-ld", bestand: "stroomroute-koper-lobito-duisburg.json", aan: true },
+  // ⚠️ Deze stroom eindigt bewust in de vaargeul vóór Zhangjiagang en niet bij
+  // de fabriek: de losplek en de twee Chinese fabrieksankers staan nog open in
+  // de routebrief (§5). Liever een been dat ophoudt waar het bewijs ophoudt dan
+  // een lijn naar een plausibel-maar-ongelegd punt (de Waalhaven-klasse).
+  { sleutel: "li-gz", bestand: "stroomroute-lithium-greenbushes-zhangjiagang.json", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat

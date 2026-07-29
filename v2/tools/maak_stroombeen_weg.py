@@ -86,21 +86,80 @@ sys.path.insert(0, HERE)
 import fetch_landnet as fl  # noqa: E402 — weg_houden/venster/corridor_keten
 import fetch_waterways as fw  # noqa: E402 — km()
 
-# Routebrief been 1, in reisvolgorde; coördinaten (lon, lat) zoals overal in
-# fetch_landnet.CORRIDORS. Namen alleen voor de rapportage.
-VIA_PUNTEN = [
-    ("Balama-plant",        (38.660,  -13.310)),
-    ("Montepuez",           (39.0017, -13.1253)),
-    ("Metoro (N380×N1)",    (39.873,  -13.104)),
-    ("Ocua / Lúrio-brug",   (39.793,  -13.6451)),
-    ("Namialo (N1×N12)",    (39.9882, -14.9231)),
-    ("Monapo",              (40.2972, -14.9155)),
-    # ⚠️ Satelliet-gelegd op de containerterminal-OOSToever (Esri z16,
-    # 0,01°-grid) — correctie Lars: het onderzoekspunt (40.652, -14.531) bleek
-    # in het water bij de kolen-jetty op de westoever te liggen (het terminal
-    # dat per routebrief NIET bij deze stroom hoort). Hier komen de trucks aan.
-    ("Nacala-kade",         (40.6673, -14.5383)),
-]
+# ── PROFIELEN ─────────────────────────────────────────────────────────────
+# Eén profiel per truckbeen uit een routebrief. Kies met --profiel; de default
+# is het oorspronkelijke grafietbeen, zodat een herbake daarvan onveranderd
+# blijft. Coördinaten (lon, lat) zoals overal in fetch_landnet.CORRIDORS;
+# namen alleen voor de rapportage. Zet een nieuw been HIER neer en niet in een
+# kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
+# generator-driftles van cu-guixi-spoor, 741 m).
+PROFIELEN = {
+    "grafiet-balama-nacala": {
+        "via": [
+            ("Balama-plant",        (38.660,  -13.310)),
+            ("Montepuez",           (39.0017, -13.1253)),
+            ("Metoro (N380×N1)",    (39.873,  -13.104)),
+            ("Ocua / Lúrio-brug",   (39.793,  -13.6451)),
+            ("Namialo (N1×N12)",    (39.9882, -14.9231)),
+            ("Monapo",              (40.2972, -14.9155)),
+            # ⚠️ Satelliet-gelegd op de containerterminal-OOSToever (Esri z16,
+            # 0,01°-grid) — correctie Lars: het onderzoekspunt (40.652,
+            # -14.531) bleek in het water bij de kolen-jetty op de westoever te
+            # liggen (het terminal dat per routebrief NIET bij deze stroom
+            # hoort). Hier komen de trucks aan.
+            ("Nacala-kade",         (40.6673, -14.5383)),
+        ],
+        "id": "gr-balama-nacala",
+        "naam": "Balama-plant → Porto de Nacala (N380/N1/N12)",
+        "extracts": ["mozambique"],
+        # Zachte voorkeur (factor 3), géén filter: de brief noemt N380
+        # (ex-EN242), N1 en EN8/N12; OSM-Mozambique wisselt tussen N- en
+        # EN-schrijfwijzen en draagt op Balama–Montepuez de hernummerde ref N14.
+        "refs": ["N380", "N14", "EN242", "N1", "EN1", "N12", "EN8", "N8"],
+        "gepubliceerdKm": 485,
+        "bronnoot": "ESIA-som; gepubliceerd 490-515",
+        "vensterKm": 40,
+        "uit": "stroombeen-balama-nacala.geojson",
+    },
+    # Routebrief lithium-greenbushes-zhangjiagang, benen 1 + 2. ⚠️ De trucks
+    # gaan eerst NOORDWAARTS over Maranup Ford Road en Stanifer Street dwars
+    # door het dorp Greenbushes; de South Western Highway loopt ÓÓSTELIJK langs
+    # de mijn, niet westelijk (OSM way 850831840 e.v.). Dat komt overeen met
+    # Talisons eigen routebeschrijving.
+    "lithium-greenbushes-bunbury": {
+        # ⚠️ DE DORPEN STAAN OP DE WEG GEPROJECTEERD, NIET OP HUN CENTRUM.
+        # Met de plaatsknoop uit OSM (23-143 m náást de highway) rijdt de router
+        # het dorp in en weer uit: gemeten in de eerste bake 180,0° keerpunten
+        # bij Balingup en Picton. Ze helemaal weglaten kan ook niet — dan valt
+        # de lijn van 88,2 naar 83,1 km omdat de Dijkstra een kortere sluipweg
+        # pakt langs de N-weg. Dus: dezelfde dorpen, geprojecteerd op de
+        # dichtstbijzijnde trunk/primary-vertex uit de eigen wegscan.
+        # (Een dorp blijft in de brief een DEKKINGSpunt met marge; dit is de
+        # tekenvariant ervan — de Taicang/Changshu-les, andere kant op.)
+        "via": [
+            ("Greenbushes concentraatloods", (116.05505, -33.86495)),
+            ("Mijnpoort / Maranup Ford Rd",  (116.05413, -33.86376)),
+            ("Stanifer St × South Western Hwy", (116.06491, -33.84210)),
+            ("Balingup (op de highway)",     (115.98442, -33.78616)),
+            ("Mullalyup (op de highway)",    (115.94523, -33.74287)),
+            ("Kirup (op de highway)",        (115.89294, -33.70584)),
+            ("Donnybrook (op de highway)",   (115.82594, -33.57660)),
+            ("Boyanup (op de highway)",      (115.72791, -33.48365)),
+            ("Picton (op de highway)",       (115.69414, -33.35121)),
+            ("Willinge Drive (haventoegang)", (115.67423, -33.32799)),
+            ("Bunbury Berth 8 — kade",       (115.66385, -33.31995)),
+        ],
+        "id": "li-greenbushes-bunbury",
+        "naam": "Greenbushes-concentraatloods → Bunbury Berth 8 "
+                "(Maranup Ford Rd → Stanifer St → South Western Hwy)",
+        "extracts": ["australie"],
+        "refs": ["1", "20"],           # South Western Highway draagt ref=1
+        "gepubliceerdKm": 90,
+        "bronnoot": "Talison/NS Energy: mijn ligt 90 km ZO van de haven",
+        "vensterKm": 40,
+        "uit": "stroombeen-greenbushes-bunbury.geojson",
+    },
+}
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).
 # weg_houden() krijgt alleen tags, dus de straal-beperking gebeurt geometrisch
@@ -108,26 +167,92 @@ VIA_PUNTEN = [
 EIND_KLASSEN = ("residential", "service", "tertiary", "unclassified")
 EIND_STRAAL_KM = 12.0
 
-CORRIDOR = {
-    "id": "gr-balama-nacala",
-    "naam": "Balama-plant → Porto de Nacala (N380/N1/N12)",
-    "van": VIA_PUNTEN[0][1],
-    "naar": VIA_PUNTEN[-1][1],
-    "via": [p for _, p in VIA_PUNTEN[1:-1]],
-    "extracts": ["mozambique"],
-    # Zachte voorkeur (factor 3), géén filter: de brief noemt N380 (ex-EN242),
-    # N1 en EN8/N12; OSM-Mozambique wisselt tussen N- en EN-schrijfwijzen en
-    # draagt op Balama–Montepuez de hernummerde ref N14 (gemeten in de scan).
-    "refs": ["N380", "N14", "EN242", "N1", "EN1", "N12", "EN8", "N8"],
-    "gepubliceerdKm": 485,          # ESIA-som; gepubliceerd 490-515
-    "vensterKm": 40,
-}
+TOLERANTIE = 0.10                   # de brief-toets: ±10%
 
-TOLERANTIE = 0.10                   # de brief-toets: ±10% om 485
-UIT = os.path.join(fl.CACHE, "ais", "graaf", "stroombeen-balama-nacala.geojson")
+# Worden in main() gezet uit het gekozen profiel.
+VIA_PUNTEN = []
+CORRIDOR = {}
+UIT = ""
+
+
+def snoei_keerlussen(pts, drempel_m=25.0):
+    """Haal HEEN-EN-WEER-uitstapjes uit een gerouteerde lijn.
+
+    ⚠️ WAAROM DIT NODIG IS. `corridor_keten` routeert van via-punt naar
+    via-punt. Valt een via-punt op een ZIJTAK (een dorpsknoop naast de
+    doorgaande weg, een rotonde-lus, een havenstraat die oostwaarts begint),
+    dan rijdt de route die tak in en er weer uit — op de kaart een 180°-
+    keerpunt dat een truck nooit maakt. Gemeten in de eerste lithium-bake:
+    180,0° bij Balingup, Picton en de Willinge Drive-knoop.
+
+    Een via-punt verplaatsen lost telkens één geval op en verschuift het
+    probleem; en het via-punt wéglaten kost de corridor (83,1 i.p.v. 88,2 km,
+    want dan pakt de Dijkstra een sluipweg). Daarom hier, ná het routeren, op
+    de GETEKENDE lijn: waar de lijn zichzelf terugloopt, houd je één keer over.
+
+    Werking: bij elk punt waar het pad terugkeert, groeit een palindroom-venster
+    zolang de punten links en rechts binnen `drempel_m` van elkaar liggen; het
+    heen-en-weer-stuk valt weg en het keerpunt zelf blijft staan als doorgang.
+    Conservatief: raakt niets waar de lijn níet over zichzelf heen loopt (een
+    echte haarspeldbocht in een bergweg heeft geen samenvallende armen).
+    """
+    if len(pts) < 5:
+        return pts, []
+    drempel = drempel_m / 1000.0
+    weg = [False] * len(pts)
+    gesnoeid = []
+    i = 1
+    while i < len(pts) - 1:
+        if weg[i]:
+            i += 1
+            continue
+        k = 1
+        while (i - k >= 0 and i + k < len(pts)
+               and fw.km(pts[i - k], pts[i + k]) <= drempel):
+            k += 1
+        k -= 1
+        if k >= 2:                       # ≥2 punten aan weerszijden = uitstapje
+            km_lus = sum(fw.km(pts[j], pts[j + 1]) for j in range(i - k, i + k))
+            for j in range(i - k + 1, i + k):
+                weg[j] = True
+            gesnoeid.append((pts[i][0], pts[i][1], 2 * k - 1, km_lus))
+            i += k
+        else:
+            i += 1
+    return [p for p, w in zip(pts, weg) if not w], gesnoeid
+
+
+def _kies_profiel(naam):
+    """Zet de moduleglobals uit een profiel. Eén plek, zodat de rest van het
+    bestand (en de bestaande grafiet-bake) letterlijk ongewijzigd blijft."""
+    global VIA_PUNTEN, CORRIDOR, UIT
+    p = PROFIELEN[naam]
+    VIA_PUNTEN = p["via"]
+    CORRIDOR = {
+        "id": p["id"],
+        "naam": p["naam"],
+        "van": VIA_PUNTEN[0][1],
+        "naar": VIA_PUNTEN[-1][1],
+        "via": [q for _, q in VIA_PUNTEN[1:-1]],
+        "extracts": p["extracts"],
+        "refs": p["refs"],
+        "gepubliceerdKm": p["gepubliceerdKm"],
+        "bronnoot": p.get("bronnoot", ""),
+        "vensterKm": p["vensterKm"],
+    }
+    UIT = os.path.join(fl.CACHE, "ais", "graaf", p["uit"])
 
 
 def main():
+    import argparse
+    ap = argparse.ArgumentParser(
+        description="truckbeen uit een routebrief als GeoJSON-tekengeometrie")
+    ap.add_argument("--profiel", default="grafiet-balama-nacala",
+                    choices=sorted(PROFIELEN),
+                    help="welk truckbeen uit welke routebrief")
+    _kies_profiel(ap.parse_args().profiel)
+    print(f"profiel: {CORRIDOR['id']} — {CORRIDOR['naam']}")
+
     # ⚠️ RUNTIME-ONLY (1/3): CORRIDORS wordt vervangen door alléén dit been,
     # zodat het scanvenster (en dus de graaf) niet ook de Beira-/Zimbabwe-
     # corridors door Mozambique meeneemt. Omdat we precies één extract scannen
@@ -181,13 +306,19 @@ def main():
 
     fl._raakt_venster = _raakt_venster_bbox
 
-    pad_extract = fl.extract_pad("mozambique")
-    if not os.path.exists(pad_extract):
-        raise SystemExit(f"extract ontbreekt: {pad_extract} — "
-                         "haal hem met fetch_landnet.py --download")
+    # ⚠️ De extracts komen uit het PROFIEL, niet uit een vaste naam: de eerste
+    # lithium-run scande stil Mozambique en meldde "geen wegen in het venster"
+    # — een lege uitvoer zonder foutmelding, precies de klasse fout die dit
+    # bestand elders bewaakt.
+    extracts = CORRIDOR["extracts"]
+    for naam in extracts:
+        pad_extract = fl.extract_pad(naam)
+        if not os.path.exists(pad_extract):
+            raise SystemExit(f"extract ontbreekt: {pad_extract} — "
+                             "haal hem met fetch_landnet.py --download")
 
-    fl.land_scan(["mozambique"], "weg", workers=1)
-    ways = fl.land_laad(["mozambique"], "weg")
+    fl.land_scan(extracts, "weg", workers=1)
+    ways = fl.land_laad(extracts, "weg")
 
     # ── de 12-km-beperking: kleine klassen ALLEEN bij plant en kade ────────
     # Corridor-breed zou elk dorpsspoor het venster in trekken; hier vallen
@@ -210,6 +341,19 @@ def main():
     keten, rap = fl.corridor_keten(ways, CORRIDOR)
     if keten is None:
         raise SystemExit(f"⚠️ corridor niet gerouteerd: {rap.get('fout')}")
+
+    # ⚠️ SNOEIEN VÓÓR ELKE METING. Zie snoei_keerlussen(): een via-punt op een
+    # zijtak levert een heen-en-weer-uitstapje op, en dat telt zijn kilometers
+    # twee keer mee. Meet het eindproduct, niet je meetlat.
+    keten["pts"], gesnoeid = snoei_keerlussen(list(keten["pts"]))
+    if gesnoeid:
+        km_voor = rap["km"]
+        rap["km"] = sum(fw.km(keten["pts"][i], keten["pts"][i + 1])
+                        for i in range(len(keten["pts"]) - 1))
+        print(f"  keerlussen gesnoeid: {len(gesnoeid)} · lengte "
+              f"{km_voor:,.1f} → {rap['km']:,.1f} km (dubbel gereden stukken)")
+        for lo, la, n, k in sorted(gesnoeid, key=lambda x: -x[3])[:5]:
+            print(f"    {la:.5f},{lo:.5f} · {n} punten · {k:.2f} km")
 
     # ── wegklasse per vertex (voor de eindrapportage: waarover loopt de
     # first/last mile werkelijk?) — zelfde 6-decimalenkorrel als de graaf ────
@@ -245,7 +389,7 @@ def main():
     afw = rap["km"] / CORRIDOR["gepubliceerdKm"] - 1.0
     vlag = "OK" if abs(afw) <= TOLERANTIE else "⚠️ BUITEN ±10% — bevinding"
     print(f"\n  lengtetoets (weggeometrie): {rap['km']:,.1f} km tegen "
-          f"~{CORRIDOR['gepubliceerdKm']} (ESIA-som; gepubliceerd 490-515) "
+          f"~{CORRIDOR['gepubliceerdKm']} ({CORRIDOR['bronnoot']}) "
           f"= {100 * afw:+.1f}%  [{vlag}]")
 
     # ── anker-verbindingsstukken (zie kop): plant → eerste wegpunt en laatste
