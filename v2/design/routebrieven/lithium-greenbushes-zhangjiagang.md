@@ -129,6 +129,17 @@ gevonden worden op een nieuwere opname.
 noordzijde — dus **niet** direct aan de rivieroever. Er is dus een echte last mile tussen kade en poort;
 een rechte stub van kade naar fabriek zou fout zijn.
 
+**(5) Losplek fabriek — kathode, Wuxi**
+
+| stap | vraag | antwoord |
+|---|---|---|
+| 1 | Welk product? | Lithiumhydroxide/-carbonaat in (gepalletiseerd), **ternair (NCM) kathodepoeder** uit |
+| 2 | Welke soort faciliteit? | Kathodefabriek: gesloten menglijnen, calcineerovens, droge ruimtes — geen bulkopslag |
+| 3 | Welke partijen? | **乐友新能源材料（无锡）有限公司** — JV van LG Chem en Huayou Cobalt (华友钴业), opgericht 29-06-2018, geplaatst kapitaal US$ 285,4 mln |
+| 4 | Welke hoort bij déze stroom? | LG Chems enige kathodefabriek in China; het contract Tianqi–LG Chem loopt 2023–2026 |
+| 5 | Welk adres? | **无锡市新吴区锡梅路 167 号** (Ximei Road 167, Xinwu-district, Wuxi) |
+| 6 | Coördinaat + satellietbevestiging | **nog te leggen** — 锡梅路 loopt volgens OSM van 31.5426, 120.4051 tot 31.5135, 120.4914; huisnummers staan niet in OSM (§5) |
+
 ### 2b · De overslagregel
 
 Vier drager-wissels, elk **twee ankers**:
@@ -377,7 +388,7 @@ Taicang-haven en Changshu-haven er als échte passages bij).
 |---|---|---|---|---|---|---|
 | 1 | 0 | Laadplek Tianqi (uitgaand product) | laadplek | nog te leggen | [Q1] | aannemelijk |
 | 2 | ±25 | Zhangjiagang stad | passage | 31.8783, 120.5515 | OSM place=city | **bevestigd** |
-| 3 | ±70 | **LG Chem kathodefabriek Wuxi** (乐友新能源材料) | losplek | nog te leggen (§5) | [L1, L4] | **aannemelijk** |
+| 3 | ±70 | **乐友新能源材料（无锡）— LG Chem/Huayou kathodefabriek**, 锡梅路 167 号, Xinwu, Wuxi | losplek | nog te leggen (§5) | [L1, L4, L5] | **aannemelijk** |
 
 **Waarom déze fabriek** (de zwakste schakel van de brief, expliciet):
 * Tianqi's dochter (成都天齐) heeft een **lopend leveringscontract met LG Chem voor lithiumhydroxide,
@@ -419,7 +430,14 @@ niet bevestigd, en staat als eerste in §5.
 | 1 | 0 | Laadplek LG Chem Wuxi | laadplek | nog te leggen | [L1] | aannemelijk |
 | 2 | ±60 | Changzhou | passage | 31.8123, 119.9692 | OSM place=city | **bevestigd** |
 | 3 | ±175 | Qixia (Nanjing Economic & Technological Development Zone) | passage | 32.0985, 118.9042 | OSM place=city | **bevestigd** |
-| 4 | ±180 | **LG Energy Solution Nanjing — celfabriek** | losplek | nog te leggen (§5) | [L1, L2] | **aannemelijk** |
+| 4 | ±180 | **LG Energy Solution Nanjing — celfabriek** | losplek | zie hieronder | [L1, L2, L6] | **aannemelijk** |
+
+**⚠️ LG ES heeft twee campussen in Nanjing en het is niet vastgesteld welke de 2170-lijn draait:**
+
+| campus | ligging | bron | status |
+|---|---|---|---|
+| Jiangning / Binjiang-ontwikkelingszone | **31.85052, 118.56654** | OSM/Nominatim "LG新能源", 江宁街道 | **bevestigd als LG-locatie**, lijn onbekend |
+| Qixia / New Port (NEDZ) — 恒毅路 17 号 | ±32.158, 118.878 (straat 恒谊路 in OSM) | vrachtdocumenten "HENGYI RD NO.17, NANJING ECONOMY"; LGES China-hoofdkantoor zit in de NEDZ | aannemelijk |
 
 ## Been 8 · weg — Nanjing → Tesla Giga Shanghai
 
@@ -459,7 +477,8 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 | 2 | b4/b5 | **Welke ligplaats in Zhangjiagang** | Het kandidaatgebied is gevonden (hoofdhavenkade 31.970–31.975 / 120.410–120.440), maar geen bron wijst een ligplaats aan; het chemiepark bij de fabriek heeft alleen vloeistofsteigers | Een z16-pass over die kade (welk vak heeft stapelvelden i.p.v. containers) + zo mogelijk een terminalbron |
 | 3 | overslag Bunbury | **Shed 8-8 staat niet op de Esri-opname** | De opname is ouder dan de loods (gebouwd ná de laatste capture) | Een nieuwere opname (Esri Wayback / Sentinel-2 / havenplattegrond) — en de werkwijze-notitie dat een pass ook op de opnamedatum kan stuklopen |
 | 4 | b1 | **De mijnpoort** en de exacte terreinroute | Talison publiceert geen terreinplattegrond | De eerste wegcorridor-run: het punt waar de terreinweg de South Western Highway raakt valt er vanzelf uit |
-| 5 | b6/b7 | **Coördinaten LG Chem Wuxi en LG ES Nanjing** | Beide fabrieken staan niet als benoemd object in OSM; Overpass gaf 429/504 op de naam-zoekopdrachten | z16-pass op basis van het industriepark + een Chinese adresbron |
+| 5 | b5/b6/b7 | **Drie Chinese fabrieken hebben een ADRES maar nog geen coördinaat** — Tianqi 东新路 5 号 · LG Chem/Huayou 锡梅路 167 号 · LG ES 恒毅路 17 号 | OSM kent in China geen huisnummers (`addr:street`-query levert 0) en Nominatim vindt de bedrijfsnamen niet; de straten zelf zijn wél bekend | Eén geocodeerslag op een Chinese kaartdienst (Amap/Baidu, API-sleutel nodig), daarna per punt een z16-pass. Dit is één handeling voor alle drie |
+| 5b | b7 | **Welke LG ES-campus in Nanjing draait de 2170-lijn** | LGES heeft negen fabrieken op vijf locaties in twee zones (Jiangning/Binjiang én Qixia/New Port) | Een bron die de cilindercel-lijn aan één campus koppelt |
 | 6 | b2 | **Aandeel Fremantle** t.o.v. Bunbury | Albemarle's rapport noemt beide havens zonder verdeling | Een exportstatistiek per haven (Southern Ports vs Fremantle Ports) |
 | 7 | b3 | **Lombok of Soenda** | Beide routes worden gevaren; geen bron per reis | AIS-tracks van bulkcarriers Bunbury→Yangtze (de collector dekt dit gebied niet, dus: laag prioriteit) |
 
@@ -538,7 +557,12 @@ The Elec / Batteries News (LG ES Nanjing maakt 2170-cellen voor Tesla Model Y, g
 Shanghai; LGES China-hoofdkantoor in de Nanjing Economic & Technological Development Zone; negen
 fabrieken op vijf locaties) · L3 Baidu Baike / SMM over LG Energy Solution · L4 CnEVPost +
 SMM (27-06-2022: 成都天齐 tekent hydroxideleveringscontract met LG Chem, 01-01-2023 t/m 31-12-2026;
-volumes niet openbaar) + cnstock/nbd (24-06-2022: carbonaatcontract met 德方纳米, jul 2022 – dec 2024).
+volumes niet openbaar) + cnstock/nbd (24-06-2022: carbonaatcontract met 德方纳米, jul 2022 – dec 2024) ·
+L5 bedrijfsregisters (企典/外企查) + Huayou-persbericht: 乐友新能源材料（无锡）有限公司, opgericht
+29-06-2018, JV LG Chem × 华友钴业, kapitaal US$ 285,36 mln, **无锡市新吴区锡梅路167号**, productie en
+verkoop van **三元电池正极材料** (ternair kathodemateriaal) · L6 vrachtdocumentatie (Panjiva/ImportGenius):
+*Lg Energy Solution (Nanjing) Co. Ltd., HENGYI RD NO.17, Nanjing Economic Development Zone*; Invest
+Nanjing + Pandaily over de twee campussen (Qixia/New Port en Jiangning/Binjiang).
 
 **Eigen metingen [C..]:** C1 eigen satellietpass Esri World Imagery z14–z18 op 2026-07-29 met
 `v2/tools/sat_check.py` (Greenbushes-loods, Bunbury Berth 8, Zhangjiagang-waterkant; **z19 is bij
