@@ -189,24 +189,24 @@ breed is, dus daar hoort een ruimere maximale snap (≤ 1.500 m) dan aan een bin
 
 **been-id:** `li-gz-b1`
 **Modaliteit:** truck (roadtrain), terreinweg
-**Lengte:** geschat 1,5–2,5 km — te meten bij de wegcorridor-run
+**Lengte:** **±0,2 km** (gemeten tussen de twee ankers) — de loods ligt vlak bij de poort
 **Net / bron geometrie:** OSM-wegcorridor (kleine wegklassen meenemen binnen 12 km, werkwijze §3.4)
 **Stippel:** nee
-**Corridor bij naam:** terreinwegen Talison → aansluiting South Western Highway
-**Routeerpunt kop / staart:** −33.86495, 116.05505 · nog te bepalen — max snap 200 m
+**Corridor bij naam:** terreinweg Talison → **Maranup Ford Road** (zuidelijk uiteinde van de openbare weg)
+**Routeerpunt kop / staart:** −33.86495, 116.05505 · −33.86376, 116.05413 — max snap 200 m
 **Toets-marge:** 100 m kop/staart
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
 | 1 | 0 | **Concentraatloods / load-out** | laadplek | −33.86495, 116.05505 | eigen satellietpass z18 + [C1] | **satelliet-gelegd** |
-| 2 | ±0,3 | Weegbrug / terreinlus | verwerkingsstap | — | — | onzeker |
-| 3 | ±1,5 | **Mijnpoort op de South Western Highway** | poort | ±−33.8620, 116.0530 | afgeleid uit de tegels | onzeker |
+| 2 | ±0,1 | Weegbrug / terreinlus | verwerkingsstap | — | — | onzeker |
+| 3 | ±0,2 | **Mijnpoort = einde openbare weg (Maranup Ford Road)** | poort | **−33.86376, 116.05413** | OSM way 850829446 (uiteinde) | **bevestigd** |
 
 **Opmerkingen been 1.** De loods is op de stitch herkend aan de **vorm** (overdekte opslag + hardstand +
-truckloop), niet aan een label: Talison publiceert geen terreinplattegrond. Onafhankelijke steun: de
-corridor `li-greenbushes-kemerton` in `v2/tools/fetch_landnet.py` begint op (−33.86455, 116.05406) — dat
-ligt **102 m** van dit anker, dus twee onafhankelijke keuzes komen op dezelfde plek uit. De poort is nog
-niet gelegd; die valt bij de eerste wegcorridor-run vanzelf op het punt waar de terreinweg de highway raakt.
+truckloop), niet aan een label: Talison publiceert geen terreinplattegrond. Twee onafhankelijke steunen:
+(1) de corridor `li-greenbushes-kemerton` in `v2/tools/fetch_landnet.py` begint op (−33.86455, 116.05406),
+**102 m** hiervandaan; (2) het zuidelijke uiteinde van de openbare Maranup Ford Road ligt **157 m** van het
+anker — precies waar een mijnpoort hoort te liggen. De last mile is daarmee kort en niet gespeculeerd.
 
 **Negatieve ankers been 1:**
 
@@ -222,15 +222,18 @@ niet gelegd; die valt bij de eerste wegcorridor-run vanzelf op het punt waar de 
 **Lengte:** gepubliceerd **±90 km** (mijn ligt "90 km southeast of the port of Bunbury") — te meten
 **Net / bron geometrie:** OSM-wegcorridor
 **Stippel:** nee
-**Corridor bij naam:** **South Western Highway** (toegang tot de mijn loopt volgens Talison via de
-verharde South Western Highway tussen Bunbury en Bridgetown, en via Maranup Ford Road naar de mijn)
-**Routeerpunt kop / staart:** mijnpoort · havenpoort — max snap 200 m
+**Corridor bij naam:** **Maranup Ford Road → Stanifer Street → South Western Highway** (ref 1). Dit is
+exact Talisons eigen routebeschrijving: toegang via de verharde South Western Highway tussen Bunbury en
+Bridgetown, en via Maranup Ford Road naar de mijn.
+**Routeerpunt kop / staart:** −33.86376, 116.05413 · havenpoort Bunbury — max snap 200 m
 **Toets-marge:** default 2 km op passages; de plaatsknopen liggen ín de dorpen die de weg doorkruist
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | Mijnpoort South Western Highway | poort | ±−33.8620, 116.0530 | [C1] | onzeker |
-| 2 | ±1,5 | **Greenbushes** (dorp, mijn ligt eraan vast) | passage | −33.8494, 116.0596 | OSM place=town | **bevestigd** |
+| 1 | 0 | **Mijnpoort / zuidkop Maranup Ford Road** | poort | −33.86376, 116.05413 | OSM way 850829446 | **bevestigd** |
+| 1b | ±1,4 | Maranup Ford Road → **Stanifer Street** (Greenbushes) | kruising | −33.85019, 116.05643 | OSM ways 850829447 / 127609365 | **bevestigd** |
+| 1c | ±2,9 | **Stanifer Street → South Western Highway** (ref 1) | kruising | −33.84210, 116.06491 | OSM way 1060420087 + corridorvia [C1] (116.06491, −33.84210) | **bevestigd** |
+| 2 | ±3,0 | **Greenbushes** (dorp; de trucks rijden er dwars doorheen) | passage | −33.8494, 116.0596 | OSM place=town | **bevestigd** |
 | 3 | ±9 | **Balingup** | passage | −33.7861, 115.9832 | OSM + corridorvia [C1] | **bevestigd** |
 | 4 | ±15 | **Mullalyup** | passage | −33.7431, 115.9452 | OSM place=village | **bevestigd** |
 | 5 | ±20 | **Kirup** | passage | −33.7058, 115.8927 | OSM place=town | **bevestigd** |
@@ -480,7 +483,7 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 | 1 | b6 | **Welke kathodefabriek krijgt de Zhangjiagang-hydroxide?** | Het Tianqi–LG Chem-contract is bedrijfs-naar-bedrijf; geen bron koppelt de Zhangjiagang-lijn aan de Wuxi-fabriek | Een leverbron per fabriek, óf een besluit van Lars om de brief bij de fabriekspoort van Tianqi te laten stoppen |
 | 2 | b4/b5 | **Welke ligplaats in Zhangjiagang** | Het kandidaatgebied is gevonden (hoofdhavenkade 31.970–31.975 / 120.410–120.440), maar geen bron wijst een ligplaats aan; het chemiepark bij de fabriek heeft alleen vloeistofsteigers | Een z16-pass over die kade (welk vak heeft stapelvelden i.p.v. containers) + zo mogelijk een terminalbron |
 | 3 | overslag Bunbury | **Shed 8-8 staat niet op de Esri-opname** | De opname is ouder dan de loods. ⚠️ **Esri Wayback is geprobeerd** (release 32246 = 2026-06-30, de nieuwste van 195): dat beeld is voor Bunbury **identiek aan de live laag** — Esri heeft de binnenhaven sindsdien niet ververst, dus dit is niet met Esri op te lossen | Een andere bron: Sentinel-2 (10 m toont een loods van 55.000 t als rechthoek, genoeg om de plek te bepalen, niet om te ankeren) of een havenplattegrond van Southern Ports |
-| 4 | b1 | **De mijnpoort** en de exacte terreinroute | Talison publiceert geen terreinplattegrond | De eerste wegcorridor-run: het punt waar de terreinweg de South Western Highway raakt valt er vanzelf uit |
+| ~~4~~ | ~~b1~~ | ~~De mijnpoort~~ — **opgelost 2026-07-29**: de poort is het zuidelijke uiteinde van de openbare Maranup Ford Road, −33.86376, 116.05413 (157 m van de loods). ⚠️ Onderweg gecorrigeerd: de South Western Highway loopt **oostelijk** langs Greenbushes, niet westelijk — de trucks rijden dus eerst noordwaarts via Maranup Ford Road en Stanifer Street dwars **door het dorp** naar de highway | | |
 | 5 | b5/b6 | **Twee Chinese fabrieken hebben een ADRES maar nog geen coördinaat** — Tianqi 东新路 5 号 · LG Chem/Huayou 锡梅路 167 号 | OSM kent in China geen huisnummers (`addr:street`-query levert 0) en Nominatim vindt de bedrijfsnamen niet; de straten zelf zijn wél bekend. ⚠️ Een volledige scan over de china-extract vond ze ook niet — OSM heeft ze simpelweg niet (de LG-cluster in Nanjing vond hij wél) | Eén geocodeerslag op een Chinese kaartdienst (Amap/Baidu, API-sleutel nodig), daarna per punt een z16-pass |
 | 5b | b7 | **Welke LG-lijn in Nanjing de 2170-cellen maakt** | De New Port-campus is gelegd, maar LGES heeft negen fabrieken op vijf locaties in twee zones; welke hal de cilindercel-lijn draait staat nergens | Een bron die de cilinderlijn aan één campus/hal koppelt — of accepteren op campusniveau (dat is voor de kaart genoeg) |
 | 6 | b2 | **Aandeel Fremantle** t.o.v. Bunbury | Albemarle's rapport noemt beide havens zonder verdeling | Een exportstatistiek per haven (Southern Ports vs Fremantle Ports) |
@@ -514,7 +517,7 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 
 - [x] **Notatie:** alle coördinaten lat, lon met decimale punt; ankers op 5 decimalen
 - [x] Elk been heeft een **been-id**; ankers dragen een id (nog te registreren in `aansluitingen.json`)
-- [ ] Elke laadplek, overslag en losplek heeft status **satelliet-gelegd** — **4 van 9 gelegd**
+- [ ] Elke laadplek, overslag en losplek heeft status **satelliet-gelegd** — **4 van 9 gelegd** (+ mijnpoort en 3 kruisingen uit OSM)
       (Greenbushes-loods, Berth 8, LG-celfabriek Nanjing, Tesla-poort via OSM); de rest staat in §5
 - [x] Elke laad-/los-/overslagplek heeft een ingevulde **productvraag** (§2a) inclusief uitsluitingen
 - [x] Elke overslag heeft **twee ankers** + de terreinstappen ertussen
