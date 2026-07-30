@@ -106,9 +106,9 @@ alumina-laadsysteem). Dit zijn dus **negatieve ankers**, zie been 2.
 | 1 | Welk product, welke vorm? | Droge bulk uit het scheepsruim, ±110 kt/j voor déze fabriek |
 | 2 | Welke soort faciliteit? | Rivierkade met grijperkranen en open/overdekte stockyard — géén chemie-jetty (die is voor vloeistof) |
 | 3 | Welke partijen ter plaatse? | Zhangjiagang-havenbedrijven in en om de bonded port area; het chemiepark heeft eigen **vloeistof**-steigers |
-| 4 | Welke hoort bij déze stroom? | Nog niet vastgesteld — de bedrijfsdocumentatie zegt alleen dat de fabriek "毗邻海运码头" (grenst aan zeekades) ligt |
-| 5 | Welke kade? | **Kandidaatgebied vastgesteld**: de doorgaande kade van de hoofdhaven Zhangjiagang, ±31.970–31.975 / 120.410–120.440 (portaalkranen, stapelvelden, ±6 km van de fabriek). **Niet** het chemiepark bij de fabriek zelf: daar staan alleen T-steigers voor vloeistof |
-| 6 | Coördinaat + satellietbevestiging | kandidaat **31.97200, 120.42000** — Esri z15: doorgaande kade met kranen en stapelvelden. **Nog niet op z16 gelegd op een specifieke ligplaats** → §5 |
+| 4 | Welke hoort bij déze stroom? | **张家港港务集团有限公司 (Zhangjiagang Port Group)** — het oudste en grootste *publieke* kadebedrijf van Suzhou: 16 ligplaatsen van 10.000 ton, schepen tot **50.000 ton**, 300+ stukken overslagmaterieel, >40 Mt/j. Kernladingen: containers, **hout**, staal, kolen, **矿石 (ertsen)**, PTA, cement — een spodumeenlading van Handysize-formaat hoort precies in dat rijtje |
+| 5 | Welke kade? | De doorgaande publieke kade op de zuidoever, lon 120.414–120.428 op lat ≈ 31.9680: portaalkranen langs de hele lijn, **bulkstapels direct achter de apron** (donkere hopen), containerstacks westelijk, houtstapels oostelijk |
+| 6 | Coördinaat + satellietbevestiging | **31.96800, 120.42050** — Esri z18, 2026-07-29: kraanlijn, bulkstapels op de apron, general-cargoschip langszij. ⚠️ Wélke van de 16 ligplaatsen déze lading krijgt is niet gepubliceerd — het anker ligt op de bulk-sectie van de kade |
 
 **Wat de productvorm UITSLUIT:** de T-vormige steigers van het chemiepark (vloeibare bulk, leidingtrestle,
 geen stockyard) en de containerterminals. Een grijperkade met stockyard is visueel eenduidig; die moet dus
@@ -327,8 +327,15 @@ aandeel onbekend, daarom als alternatief genoteerd en niet als negatief anker.
 **been-id:** `li-gz-b4`
 **Modaliteit:** hetzelfde zeeschip (géén drager-wissel; Zhangjiagang is zeehaven aan de rivier)
 **Brief-gestuurd** (werkwijze §6: binnenwater niet vrij routeren)
-**Lengte:** **gemeten 128,7 km** over de MARNET-bulklaag (18 edges, 659 punten, `maak_rivierbeen.py`);
-snap naar de bulklaag 2,20 km aan de monding en 1,36 km bij Zhangjiagang.
+**Lengte:** **gemeten 135,2 km** over de MARNET-bulklaag (693 punten, `maak_rivierbeen.py`), inclusief de
+**zuidgeul langs Shuangshan-eiland**; de lijn komt tot **590 m** van de kade en is daar afgeknipt, met een
+gestippelde ligplaats-aanloop van 0,6 km erachter (anker ≠ routeerpunt).
+⚠️ **Twee dingen gemeten en verworpen.** (1) Routeren op MARNET-zee tot Zhangjiagang: dat kán (MARNET
+loopt de Yangtze op tot 32.0512, 120.4610) maar de laatste knoop ligt **10 km** van de kade en een rechte
+aanloop daarvandaan **kruist land** (390 m over de kop van Shuangshan-eiland; met shapely tegen
+`ne_10m_land` getoetst, en geen enkel twee-segments-alternatief bleef droog). (2) Naar de dichtstbijzijnde
+bulk-KNOOP routeren: die ligt 2,5 km landinwaarts in het Zhangjiagang-kanaal. De oplossing was routeren naar
+de knoop **wést** van de kade (31.9715, 120.3812), want dán loopt het pad per constructie door de zuidgeul.
 ⚠️ **Vóór dit been ligt een gestippeld stuk van 8,6 km:** MARNET's laatste zeeknoop ligt op
 31.51000, 121.41870 en de bulklaag begint pas op 31.45120, 121.47690. Dat gat is *gemeten*, niet
 overbrugd met geleende geometrie — precies de conventie van §7 (zoals het Nacala-startgat en het
@@ -341,7 +348,8 @@ Wesel-vak).
 | 1 | 0 | Wusongkou / Baoshan | vaarweg-overgang | 31.4074, 121.4848 | OSM | **bevestigd** |
 | 2 | ±35 | Taicang (stad) | referentie (niet aan lijn) | 31.4590, 121.1265 | OSM place=city | **bevestigd** |
 | 3 | ±90 | Changshu (stad) | referentie (niet aan lijn) | 31.6500, 120.7500 | OSM, bij benadering | aannemelijk |
-| 4 | ±130 | **Zhangjiagang — droge-bulkkade (kandidaat)** | losplek | 31.97200, 120.42000 | eigen satellietpass z15 + [Q3] | **onzeker** |
+| 4 | ±100 | **Zuidgeul langs Shuangshan-eiland** (双山岛) — het schip vaart NIET om de noordkant | passage | 31.9750, 120.4300 | MARNET-bulklaag + eigen satellietpass | **bevestigd** |
+| 5 | ±135 | **Zhangjiagang — kade Zhangjiagang Port Group** | losplek | **31.96800, 120.42050** | eigen satellietpass z18 + [Q3, Q4] | **satelliet-gelegd** |
 
 ⚠️ **Punt 2 en 3 zijn oriëntatiepunten, geen dekkingspunten.** Taicang en Changshu liggen als stad
 10–25 km ten zuiden van de vaargeul; wie ze als passage in de dekkingstoets zet, keurt een correcte route
@@ -368,7 +376,7 @@ Taicang-haven en Changshu-haven er als échte passages bij).
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | Kade / stapelveld Zhangjiagang (kandidaat) | losplek | 31.97200, 120.42000 | eigen satellietpass z15 | **onzeker** |
+| 1 | 0 | Kade / stapelveld Zhangjiagang Port Group | losplek | 31.96800, 120.42050 | eigen satellietpass z18 | **satelliet-gelegd** |
 | 2 | | 东新路 (Dongxin Road) | passage | 32.0121, 120.4566 | OSM way 432043510 | **bevestigd** |
 | 3 | | **Poort Tianqi Lithium (Jiangsu), 东新路 5** | poort | nog te leggen (§5) | [Q1] | aannemelijk |
 | 4 | | **Ertsopslag op het terrein** (max. 20.000 t, band) | losplek | nog te leggen | [Q1] | aannemelijk |
@@ -493,7 +501,7 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 | # | been | wat | waarom onzeker | wat het zou oplossen |
 |---|---|---|---|---|
 | 1 | b6 | **Welke kathodefabriek krijgt de Zhangjiagang-hydroxide?** | Het Tianqi–LG Chem-contract is bedrijfs-naar-bedrijf; geen bron koppelt de Zhangjiagang-lijn aan de Wuxi-fabriek | Een leverbron per fabriek, óf een besluit van Lars om de brief bij de fabriekspoort van Tianqi te laten stoppen |
-| 2 | b4/b5 | **Welke ligplaats in Zhangjiagang** | Het kandidaatgebied is gevonden (hoofdhavenkade 31.970–31.975 / 120.410–120.440), maar geen bron wijst een ligplaats aan; het chemiepark bij de fabriek heeft alleen vloeistofsteigers | Een z16-pass over die kade (welk vak heeft stapelvelden i.p.v. containers) + zo mogelijk een terminalbron |
+| ~~2~~ | ~~b4/b5~~ | ~~De droge-bulkkade in Zhangjiagang~~ — **opgelost 2026-07-29**: 张家港港务集团 (Zhangjiagang Port Group), publieke kade 31.96800, 120.42050, satelliet-gelegd op z18. Wat rest is welke van hun 16 ligplaatsen; dat is voor de kaart niet nodig. ⚠️ Onderweg gecorrigeerd: de **bonded-zone-kade bij de fabriek is géén ladingkade** maar een patrouille-/marinabekken met helipad, en de steigers van het chemiepark zijn voor vloeistof | | |
 | 3 | overslag Bunbury | **Shed 8-8 staat niet op de Esri-opname** | De opname is ouder dan de loods. ⚠️ **Esri Wayback is geprobeerd** (release 32246 = 2026-06-30, de nieuwste van 195): dat beeld is voor Bunbury **identiek aan de live laag** — Esri heeft de binnenhaven sindsdien niet ververst, dus dit is niet met Esri op te lossen | Een andere bron: Sentinel-2 (10 m toont een loods van 55.000 t als rechthoek, genoeg om de plek te bepalen, niet om te ankeren) of een havenplattegrond van Southern Ports |
 | ~~4~~ | ~~b1~~ | ~~De mijnpoort~~ — **opgelost 2026-07-29**: de poort is het zuidelijke uiteinde van de openbare Maranup Ford Road, −33.86376, 116.05413 (157 m van de loods). ⚠️ Onderweg gecorrigeerd: de South Western Highway loopt **oostelijk** langs Greenbushes, niet westelijk — de trucks rijden dus eerst noordwaarts via Maranup Ford Road en Stanifer Street dwars **door het dorp** naar de highway | | |
 | 5 | b5/b6 | **Twee Chinese fabrieken hebben een ADRES maar nog geen coördinaat** — Tianqi 东新路 5 号 · LG Chem/Huayou 锡梅路 167 号 | OSM kent in China geen huisnummers (`addr:street`-query levert 0) en Nominatim vindt de bedrijfsnamen niet; de straten zelf zijn wél bekend. ⚠️ Een volledige scan over de china-extract vond ze ook niet — OSM heeft ze simpelweg niet (de LG-cluster in Nanjing vond hij wél) | Eén geocodeerslag op een Chinese kaartdienst (Amap/Baidu, API-sleutel nodig), daarna per punt een z16-pass |
