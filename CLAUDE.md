@@ -46,9 +46,19 @@
 > toeval.** En Jiangxi klópt inhoudelijk óók: §1 van de brief zegt zelf dat het **Albemarle-deel
 > (≤50%) naar Kemerton / Meishan / Xinyu** gaat en Xinyu ligt in Jiangxi; de Tianqi-helft gaat naar
 > Zhangjiagang (Jiangsu) en Shehong (Sichuan). Wat de atlas mist zijn dus **twee KNOPEN** (haven
-> Zhangjiagang + raffinaderij Tianqi Jiangsu), geen andere `via`. Drie varianten met aanbeveling in
-> **§6b** van de brief → **besluit bij Lars**, want het verschuift een gepubliceerd volumecijfer.
+> Zhangjiagang + raffinaderij Tianqi Jiangsu), geen andere `via`.
 > **Werkregel: controleer de eenheid vóór je een §6-punt doorvoert.**
+>
+> **✅ BESLUIT LARS — VARIANT 1, VASTGELEGD EN KLAAR OM TE BOUWEN (nog niet uitgevoerd).** Recept
+> in **§6b** van de brief + `memory/next-actions.md`: node **`li-port-zhangjiagang`** (31.96800 /
+> 120.42050) + node **`li-ref-jiangsu`** (Tianqi Jiangsu) erbij, nieuwe flow
+> `li-greenbushes → li-ref-jiangsu` van **17 kt LCE** (110 kt SC6.0 × 6,0 % Li2O × 2,473 = 16,3;
+> de brief noemt zelf 17 kt Li2CO3 uit — beide wegen geven ~17), en
+> `li-greenbushes → li-ref-sichuan` **55 → 38**. De aftrek zit bij Sichuan omdat het
+> Albemarle-deel naar Xinyu (Jiangxi) gaat en de Sichuan-flow vandaag de héle Tianqi-helft draagt;
+> die helft blijft even groot (55 = 38 + 17). ⚠️ **Niet geblokkeerd op de satellietpass** — het
+> register mag op stadsniveau staan, de poort 东新路 5 wordt pas de *aansluiting* `li-zjg-tianqi`.
+> Register-laag, dus **geen `?v=`-bump** en niets in de browser te toetsen.
 >
 > **⚠️ BIJVANGST — EEN TOOL DIE ALLEEN DRAAIT ALS JE EEN PROJECTREGEL OVERTREEDT, IS KAPOT.**
 > `maak_aansluitingen.py` las `marnet.bin`/`marnet.json` uit **`v2/data/`**, precies waar ze sinds
@@ -2640,6 +2650,11 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-07-30 · ✅ BESLUIT LARS — §6b VARIANT 1** (vastgelegd, nog niet uitgevoerd): de atlas
+  krijgt `li-port-zhangjiagang` + `li-ref-jiangsu` als knopen en een eigen flow van **17 kt LCE**,
+  afgetrokken van de Sichuan-flow (55 → 38, want die draagt vandaag de héle Tianqi-helft terwijl
+  het Albemarle-deel naar Xinyu/Jiangxi gaat). Enige variant waarin atlas en routebrief dezelfde
+  werkelijkheid vertellen. Recept in §6b van de brief.
 - **2026-07-30 · CONTROLEER DE EENHEID VÓÓR JE EEN §6-CONFLICT DOORVOERT** — de "110" van de
   lithiumbrief is kt **concentraat** (≈17 kt LCE), de `value: 110` in `data/lithium.js` is kt
   **LCE**: factor 7,7, dus de gelijke getallen waren toeval. Doorvoeren had een macro-streng

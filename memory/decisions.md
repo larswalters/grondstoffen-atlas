@@ -3,6 +3,19 @@
 
 ## 2026-07-30 (laatst) — de afwerklijst §6 van de lithiumbrief
 
+- **2026-07-30 · ✅ BESLUIT LARS — §6b VARIANT 1: DE ATLAS KRIJGT DE ZHANGJIAGANG-STRENG ERBIJ**
+  (vastgelegd, nog niet uitgevoerd; recept in §6b van de brief + `next-actions.md`). Twee knopen
+  erbij — `li-port-zhangjiagang` (31.96800 / 120.42050) en `li-ref-jiangsu` (Tianqi Jiangsu) —
+  plus een eigen flow van **17 kt LCE**, met die tonnage afgetrokken van
+  `li-greenbushes → li-ref-sichuan` (55 → 38). Gekozen boven "alleen knopen" (geeft een
+  raffinaderijstip zonder stroom) en "wachten op M26", omdat dit de enige variant is waarin atlas
+  en routebrief dezelfde werkelijkheid vertellen. De aftrek zit bij Sichuan en niet bij Jiangxi
+  omdat het Albemarle-deel naar Xinyu (Jiangxi) gaat en de Sichuan-flow vandaag de héle
+  Tianqi-helft draagt (zijn `note` zegt dat zelf); de Tianqi-helft blijft even groot: 55 = 38 + 17.
+  ⚠️ **Niet geblokkeerd op de satellietpass** — dat volgt uit het rolverdeling-besluit hieronder:
+  een raffinaderijstip mag op stadsniveau staan, de poort 东新路 5 wordt pas de *aansluiting*
+  `li-zjg-tianqi`.
+
 - **2026-07-30 · EEN HAVENSTIP IN OPEN WATER IS EEN FOUT; EEN MIJNCENTROÏDE IS EEN
   ROLVERDELING** — `li-port-bunbury` stond 2,2 km westelijker in zee vóór de strandkust en is
   naar Berth 8 verplaatst, terwijl `li-greenbushes` juist **wél** de mijncentroïde blijft met de

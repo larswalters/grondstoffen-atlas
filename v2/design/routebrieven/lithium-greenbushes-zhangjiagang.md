@@ -580,6 +580,39 @@ als de brief, en de aftrek bij Sichuan is geen verzinsel maar een herverdeling b
 bucket die nu aantoonbaar te veel draagt. ⚠️ Maar het verschuift een gepubliceerd
 volume-cijfer, en dat is redactie — vandaar dit punt bij Lars en niet in een commit.
 
+### ✅ BESLUIT LARS 2026-07-30 — VARIANT 1. Nog niet uitgevoerd; dit is het recept.
+
+Vier wijzigingen in `data/lithium.js`, allemaal register-laag (M26-data, vandaag niet zichtbaar
+op de v2-bol → **geen `?v=`-bump, niets in de browser te verifiëren**):
+
+| # | wat | waarde |
+|---|---|---|
+| 1 | **node `li-port-zhangjiagang`** (`type: "port"`, China, tier 2) | lat **31.96800**, lon **120.42050** — de satelliet-gelegde kade; valt samen met aansluiting `li-zjg-kade`, net als bij Bunbury (een echte kade, dus register en aansluiting mogen hier samenvallen) |
+| 2 | **node `li-ref-jiangsu`** — 天齐锂业（江苏）/ Tianqi Lithium (Jiangsu), Zhangjiagang (`type: "refinery"`, tier 2) | ⚠️ **stadsniveau-coördinaat volstaat**, zie hieronder |
+| 3 | **nieuwe flow** `li-greenbushes → li-ref-jiangsu` | `value: 17`, `mode: "ship"`, `stage: "erts"`, `via: ["li-port-bunbury", "wp-lombok", "wp-makassar", "wp-scs", "wp-taiwan", "li-port-zhangjiagang"]` |
+| 4 | **bestaande flow** `li-greenbushes → li-ref-sichuan` | `value: 55` → **38** |
+
+**Waarom 17.** De brief traceert 110 kt SC6.0-concentraat in bij Tianqi Jiangsu. 110 kt × 6,0 %
+Li2O = 6,6 kt Li2O × 2,473 = **16,3 kt LCE**; de brief noemt zelf 17 kt Li2CO3 uit (§2), en
+Li2CO3 ís de LCE-eenheid. Beide wegen komen op ~17 uit — dat is de waarde, niet de 110.
+
+**Waarom de aftrek bij Sichuan en niet bij Jiangxi.** Talison is een JV en de twee helften gaan
+naar verschillende raffinaderijen: het Albemarle-deel naar Kemerton / Meishan / **Xinyu
+(Jiangxi)** — dus `li-ref-jiangxi` (110 kt LCE) blijft ongemoeid — en de Tianqi-helft naar
+**Zhangjiagang (Jiangsu)** én **Shehong (Sichuan)**. De Sichuan-flow draagt vandaag die héle
+Tianqi-helft; zijn eigen `note` zegt letterlijk *"via Tianqi's eigen raffinaderijen"*. De 17 kt
+komt daar dus uit, en de Tianqi-helft blijft in totaal even groot (55 = 38 + 17).
+
+⚠️ **Dit is NIET geblokkeerd op de satellietpass** — en dat volgt uit het besluit van dezelfde
+dag (§6.1): het **register draagt de plek op wereldschaal, de aansluiting op straatniveau**. Een
+raffinaderijstip op stadsniveau in Zhangjiagang is dus correct en volstaat voor `li-ref-jiangsu`;
+de precieze fabriekspoort (东新路 5) wordt pas de **aansluiting** `li-zjg-tianqi` zodra hij
+gelegd is (§5, punt 5). Zet die keuze — net als bij `li-greenbushes` — **mét reden in de
+node-`note`**, anders wordt hij later "gecorrigeerd".
+
+Na uitvoering: dit punt in §6 op ✅ zetten en §6b inkorten tot het besluit + het waarom van de
+eenheden-botsing (dat blijft de leesbare les).
+
 ## 6a · Wat er GEBAKKEN is (live `?v=104`, 2026-07-29)
 
 `v2/data/stroomroute-lithium-greenbushes-zhangjiagang.json` · HUD-knop *lithium

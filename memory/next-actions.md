@@ -1,25 +1,34 @@
 # Next actions — Grondstoffen Atlas
 *Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief, commit `6c7a454`)*
 
-## 🔴 BESLUIT VOOR LARS 2026-07-30 (laatst) — §6b van de lithiumbrief
+## 🟢 KLAAR OM TE BOUWEN 2026-07-30 (laatst) — §6b variant 1, besluit Lars
 
-**Punt 4 van de afwerklijst is géén coördinaatfout maar een eenheden-botsing**, dus het is
-redactie en geen commit. De "110" van de brief is 110 kt spodumeen**concentraat** (≈17 kt LCE;
-de brief geeft zelf 110 → 17 = 6,47:1), de `value: 110` in `data/lithium.js` is kt **LCE**
-(`unit: kt LCE/jaar`) — factor 7,7, dus de gelijke getallen waren toeval. Bestemming Jiangxi
-klópt inhoudelijk óók: §1 van de brief zegt zelf dat het **Albemarle-deel (≤50%) naar Kemerton /
-Meishan / Xinyu** gaat en Xinyu ligt in Jiangxi; de Tianqi-helft gaat naar Zhangjiagang (Jiangsu)
-en Shehong (Sichuan). Wat de atlas mist zijn dus **twee knopen**, niet een andere `via`:
+**Punt 4 van de afwerklijst was géén coördinaatfout maar een eenheden-botsing.** De "110" van de
+brief is 110 kt spodumeen**concentraat** (≈17 kt LCE), de `value: 110` in `data/lithium.js` is kt
+**LCE** — factor 7,7, dus de gelijke getallen waren toeval. De atlas mist **twee knopen**, geen
+andere `via`. **Lars koos variant 1**; het volledige recept mét onderbouwing staat in §6b van
+`v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md`. Vier wijzigingen in
+`data/lithium.js`, allemaal register-laag (**geen `?v=`-bump**, niets in de browser te toetsen):
 
-1. **Variant 1 (aanbeveling).** `li-port-zhangjiagang` + `li-ref-jiangsu` (Tianqi) toevoegen en
-   de brief-streng als eigen flow van ~17 kt LCE opvoeren, met die tonnage **afgetrokken van
-   `li-greenbushes → li-ref-sichuan`** (55 kt) — want díe flow draagt nu de héle Tianqi-helft en
-   zijn `note` zegt letterlijk "via Tianqi's eigen raffinaderijen". Enige variant waarin atlas en
-   brief dezelfde werkelijkheid vertellen. ⚠️ Verschuift een gepubliceerd volumecijfer.
-2. **Variant 2.** Alleen de twee knopen toevoegen, macro-flows onaangeroerd. Goedkoopst, maar
-   dan staat er een raffinaderijstip zonder stroom op de kaart.
-3. **Variant 3.** Niets doen tot **M26** de 14 grondstoffen op de v2-bol terugzet en dit
-   meenemen in die ronde — de flows uit `data/*.js` zijn vandaag toch niet zichtbaar.
+1. **node `li-port-zhangjiagang`** — `type:"port"`, China, tier 2, lat **31.96800** / lon
+   **120.42050** (de satelliet-gelegde kade; valt samen met aansluiting `li-zjg-kade`, net als bij
+   Bunbury — het is een echte kade, dus samenvallen mag).
+2. **node `li-ref-jiangsu`** — 天齐锂业（江苏）/ Tianqi Lithium (Jiangsu), Zhangjiagang,
+   `type:"refinery"`, tier 2. ⚠️ **Stadsniveau-coördinaat volstaat en dit is NIET geblokkeerd op
+   de satellietpass**: het register draagt de plek op wereldschaal, de aansluiting op
+   straatniveau (§6.1-besluit van dezelfde dag). De poort 东新路 5 wordt pas de **aansluiting**
+   `li-zjg-tianqi` zodra hij gelegd is. Zet die keuze **mét reden in de node-`note`**.
+3. **nieuwe flow** `li-greenbushes → li-ref-jiangsu`: `value: 17`, `mode:"ship"`, `stage:"erts"`,
+   `via: ["li-port-bunbury","wp-lombok","wp-makassar","wp-scs","wp-taiwan","li-port-zhangjiagang"]`.
+   *Waarom 17:* 110 kt × 6,0 % Li2O = 6,6 kt Li2O × 2,473 = **16,3 kt LCE**, en de brief noemt
+   zelf 17 kt Li2CO3 uit — Li2CO3 ís de LCE-eenheid. Beide wegen geven ~17.
+4. **bestaande flow** `li-greenbushes → li-ref-sichuan`: `value: 55` → **38**.
+   *Waarom Sichuan en niet Jiangxi:* het Albemarle-deel gaat naar Xinyu (Jiangxi), dus
+   `li-ref-jiangxi` blijft ongemoeid; de Sichuan-flow draagt vandaag de héle Tianqi-helft en zijn
+   `note` zegt letterlijk "via Tianqi's eigen raffinaderijen". De Tianqi-helft blijft in totaal
+   even groot: 55 = 38 + 17.
+
+Na uitvoering: §6 punt 4 op ✅, §6b inkorten tot besluit + de eenheden-les.
 
 ## 🔴 NIEUW 2026-07-30 — de lithiumketen afmaken
 
