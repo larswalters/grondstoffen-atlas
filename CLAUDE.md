@@ -2564,6 +2564,17 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-07-30 · EEN VIA-PUNT OP EEN ZIJTAK LEVERT EEN 180°-KEERPUNT** — OSM-dorpsknopen
+  liggen 23–143 m náást de highway; projecteer via-punten op de dichtstbijzijnde
+  trunk/primary-vertex, en `maak_stroombeen_weg.py` snoeit heen-en-weer-uitstapjes weg
+  (`snoei_keerlussen`, 25 m). De lengtetoets meet de **gesnoeide** lijn.
+- **2026-07-30 · EEN SATELLIETPASS KAN OOK FALEN OP DE OPNAMEDATUM** — een punt kan
+  onvindbaar zijn omdat het gebouw jonger is dan de capture (Shed 8-8, Bunbury).
+  `sat_check.py` kan Wayback-releases ophalen; een negatieve uitslag is een **uitsluiting**
+  en hoort in §5 van de brief.
+- **2026-07-30 · EEN BRIEF STOPT WAAR HET BEWIJS STOPT** — de lithiumketen eindigt op de
+  kade van Zhangjiagang; benen 5–8 worden pas getekend als de twee fabrieksankers gelegd
+  zijn. Geen lijn naar een plausibel-maar-ongelegd punt (de Waalhaven-klasse).
 - **2026-07-29 · DE OSM-SPOORDATA GAAT 1-OP-1 DE ROUTEERGRAAF IN (besluit Lars)** — geen
   filter, geen dedup, geen heal, geen guards. OSM's topologie is exact (verbonden ⟺
   gedeelde node) en op rauwe punten reproduceert de bestaande exacte las die zonder één

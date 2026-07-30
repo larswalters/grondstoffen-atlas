@@ -1,5 +1,19 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (laatst: spoor op OSM 1-op-1, `?v=103`)*
+*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang, `?v=105`)*
+
+## 🔴 NIEUW 2026-07-30 (laatst) — de lithiumketen afmaken
+
+1. **Twee Chinese fabrieksadressen geocoderen — Lars zoekt ze op.** 东新路 5 号 (Tianqi
+   Jiangsu, Zhangjiagang) en 锡梅路 167 号 (乐友新能源材料 / LG Chem–Huayou, Wuxi). OSM heeft
+   ze niet: een volledige scan over de china-extract vond ze niet, terwijl hij de LG-cluster
+   in Nanjing wél vond. Zodra de coördinaten er zijn: **z16-pass** per punt, dan **benen 5–8
+   bakken** (Zhangjiagang-kade → Tianqi → Wuxi → Nanjing → Giga Shanghai).
+2. **Shed 8-8 in Bunbury vraagt een andere bron dan Esri.** De nieuwste Wayback-release
+   (2026-06-30) is identiek aan de live laag, dus de loods staat op geen enkele Esri-capture.
+   Sentinel-2 of een havenplattegrond van Southern Ports.
+3. **Welke van de 16 Zhangjiagang-ligplaatsen déze lading krijgt** is niet gepubliceerd. Voor
+   de kaart niet nodig — het anker ligt op een satelliet-gelegde bulkkade van dezelfde
+   operator; alleen noteren als open punt in §5.
 
 ## 🔴 NIEUW 2026-07-29 (laatst) — na de 1-op-1-omzetting
 

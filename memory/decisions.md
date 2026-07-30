@@ -1,5 +1,49 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-29 (laatst: spoorroutering op OSM 1-op-1)*
+*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang)*
+
+## 2026-07-30 (laatst) — lithium Greenbushes → Zhangjiagang
+
+- **2026-07-30 · EEN VIA-PUNT OP EEN ZIJTAK LEVERT EEN 180°-KEERPUNT** — de OSM-dorpsknopen
+  liggen 23–143 m náást de highway; de router rijdt zo'n punt in en er weer uit (gemeten
+  180,0° bij Balingup, Picton en de Willinge Drive-knoop). Weglaten kan niet: dan valt de lijn
+  van 88 naar 83 km via een sluipweg. Dus **projecteer via-punten op de dichtstbijzijnde
+  trunk/primary-vertex**, en `maak_stroombeen_weg.py` snoeit heen-en-weer-uitstapjes weg op de
+  getekende lijn (`snoei_keerlussen`, palindroomvenster 25 m) — 14 stuks, Picton alleen al
+  101 punten / 5,01 km. Algemene bevinding, niet lithium-specifiek.
+- **2026-07-30 · ⚠️ DE LENGTETOETS MEET DE GESNOEIDE LIJN** — hij liep vóór de snoei en
+  rapporteerde 88,1 km terwijl de lijn 82,9 km is: 5 km dubbel gereden telde mee. *Meet het
+  eindproduct, niet je meetlat* — de `toets_knikken`-les van 28-07, nu op de lengtekant.
+- **2026-07-30 · EEN SATELLIETPASS KAN OOK FALEN OP DE OPNAMEDATUM** — Shed 8-8 (Bunbury)
+  staat niet op de Esri-capture omdat de loods later gebouwd is. `sat_check.py` haalt nu
+  Wayback-releases op (`--wayback`, `--wayback-lijst`, 195 releases). Uitslag voor Bunbury
+  **negatief maar bruikbaar**: de nieuwste release (2026-06-30) is identiek aan de live laag →
+  niet met Esri op te lossen, er is een andere bron nodig. **Een uitsluiting is ook een
+  resultaat** en hoort in §5 van de brief.
+- **2026-07-30 · DE ZUIDGEUL FORCEREN DOOR NAAR DE KNOOP WÉST VAN DE KADE TE ROUTEREN** — een
+  rechte aanloop van MARNET's laatste knoop kruist 390 m land over de kop van Shuangshan-eiland
+  (getoetst met shapely tegen `ne_10m_land`; geen twee-segments-alternatief bleef droog), en de
+  dichtstbijzijnde bulklaag-**knoop** ligt 2,5 km landinwaarts terwijl de bulklaag-**geometrie**
+  op 590 m langs de kade loopt (`maak_rivierbeen.py` snapt alleen op knopen, elke ~15 km).
+  Oplossing: routeer naar de knoop wést van de kade — dan loopt het pad per constructie door de
+  geul — en knip het been af op zijn dichtste punt, met 0,6 km gestippelde ligplaats-aanloop
+  erachter. **Anker ≠ routeerpunt.**
+- **2026-07-30 · DE KETEN STOPT BEWUST IN ZHANGJIAGANG** — benen 5–8 (Tianqi → Wuxi → Nanjing
+  → Tesla) worden pas getekend als de twee ontbrekende fabrieksankers gelegd zijn. Liever een
+  lijn die ophoudt waar het bewijs ophoudt dan een lijn naar een plausibel-maar-ongelegd punt
+  (de Waalhaven-klasse).
+- **2026-07-30 · GEREEDSCHAP HOORT IN DE REPO, NIET IN EEN SCRATCHPAD** — `sat_check.py`
+  gepromoveerd naar `v2/tools/` (CLI + `--lijst` + Wayback); `maak_stroombeen_weg.py` is
+  **profiel-gestuurd** geworden i.p.v. hardgecodeerd op Balama→Nacala, **mét de extracts uit
+  het profiel**: de eerste lithiumrun scande stil Mozambique en meldde "geen wegen in het
+  venster" — een lege uitvoer zonder foutmelding.
+- **2026-07-30 · NOOIT NAAR STDOUT PRINTEN NA EEN LANGE SCAN** — de China-OSM-scan deed 89
+  minuten werk en klapte toen op **cp1252** bij het eerste Chinese teken; alle treffers waren
+  weg. Schrijf naar een bestand met expliciete `utf-8` en zet alleen een ASCII-samenvatting op
+  het scherm.
+- **2026-07-30 · Een negatieve satelliet-uitslag sluit óók iets uit** — het "kadebekken" naast
+  de Tianqi-fabriek is een **patrouille-/marinabekken** (helipad, tennisbanen) en de steigers
+  van het chemiepark zelf zijn vloeistof-T-steigers. Beide uitgesloten en genoteerd, niet stil
+  overgeslagen.
 
 ## 2026-07-29 (laatst) — OSM 1-op-1 als routeergraaf
 

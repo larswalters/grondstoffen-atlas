@@ -1,5 +1,35 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-29 (nieuw: de bak-commando's van de stromen staan nergens)*
+*Last updated: 2026-07-30 (nieuw: lege-uitvoer-zonder-foutmelding, stdout-crash na lange scan)*
+
+## ⚠️ GEFIXT 2026-07-30 — een hardgecodeerd profiel gaf een LEGE uitvoer zonder foutmelding
+`maak_stroombeen_weg.py` stond hardgecodeerd op Balama→Nacala **inclusief de extract-lijst**
+(`["mozambique"]`). De eerste lithiumrun scande dus Mozambique en meldde keurig "0 km, geen
+wegen in het venster" — geen exception, geen exitcode, alleen een leeg been. Nu profiel-gestuurd
+(`PROFIELEN` + `--profiel`) met `extracts = CORRIDOR["extracts"]`. **Klasse:** een generator die
+op de verkeerde invoer draait en dat als een geldig-maar-leeg resultaat rapporteert.
+
+## ⚠️ GEFIXT 2026-07-30 — de lengtetoets liep vóór de keerlus-snoei
+Gemeld 88,1 km op een lijn die 82,9 km is: de 5 km die de router heen-en-weer reed telde mee.
+De snoei staat nu vóór de toets en `rap["km"]` wordt herberekend op de gesnoeide punten.
+**Klasse:** dezelfde als de `toets_spoorroute.mjs`-fout van 28-07 — meet het eindproduct, niet
+je meetlat.
+
+## ⚠️ GEFIXT 2026-07-30 — 89 minuten scanwerk weggegooid door een print naar stdout
+De China-OSM-scan crashte op `UnicodeEncodeError: 'charmap' codec` (Windows-console = cp1252)
+bij het eerste Chinese teken, ná 89 minuten werk; alle treffers waren weg. `vind_osm.py`
+schrijft resultaten nu naar een bestand met expliciete `utf-8` en print alleen een
+ASCII-samenvatting. **Risico blijft** voor elk script dat niet-ASCII naar de console schrijft.
+
+## ⚠️ OPEN 2026-07-30 — Shed 8-8 (Bunbury) is met Esri niet te leggen
+De loods is jonger dan élke Esri-capture: de nieuwste Wayback-release (2026-06-30, van 195) is
+identiek aan de live laag. Dit is een **nieuwe faalmodus van de satellietpass**: niet "verkeerd
+gezocht" maar "de opname is ouder dan de infrastructuur". Vraagt Sentinel-2 of een
+havenplattegrond. Zelfde risico geldt voor elk recent gebouwd anker.
+
+## ⚠️ OPEN 2026-07-30 — twee Chinese fabrieksankers ontbreken, benen 5–8 daarom niet getekend
+东新路 5 号 (Tianqi, Zhangjiagang) en 锡梅路 167 号 (LG Chem–Huayou, Wuxi) staan niet in OSM; een
+volledige scan over de china-extract vond ze niet (de LG-cluster in Nanjing wél). De lithiumketen
+stopt daarom op de kade van Zhangjiagang. Bewuste keuze, geen bug — maar wel een open eind.
 
 ## ⚠️ OPEN 2026-07-29 — de bak-commando's van de vier stromen zijn nergens vastgelegd
 `hecht_marnet route` is been-gestuurd (`--been` / `--stippel` / `--been-geojson` /

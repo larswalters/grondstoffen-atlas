@@ -1,5 +1,31 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-29 (laatst: spoorroutering op OSM 1-op-1 — de pijplijn verzon de bochten)*
+*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang, zesde routebrief + vijfde stroom)*
+
+## Stand 2026-07-30 — een brief per grondstof, en de lijn stopt waar het bewijs stopt
+
+**De werkwijze staat en is nu zes keer gedraaid.** Routebrief eerst (fases A–E, been-ids,
+productvraag-ladder per laad-/overslag-/losplek mét uitsluitingen, negatieve ankers mét
+verbodsstraal), dan pas bakken. Lithium Greenbushes → Zhangjiagang is de eerste **nieuwe
+grondstof** in dat formaat: 8 benen op papier, 4 gebakken (**7.834,1 km / 2.576 punten**),
+`toets_knikken.py` **0 omkeringen**.
+
+**De keten stopt bewust in Zhangjiagang.** Benen 5–8 (Tianqi → Wuxi → Nanjing → Tesla) zijn
+niet getekend omdat twee fabrieksankers ontbreken: liever een lijn die ophoudt waar het bewijs
+ophoudt dan een lijn naar een plausibel-maar-ongelegd punt (de Waalhaven-klasse). Dat is nu de
+staande regel voor elke brief.
+
+**Twee dingen aan het gereedschap veranderd, allebei uit een stille fout.**
+`maak_stroombeen_weg.py` is **profiel-gestuurd** (`PROFIELEN` + `--profiel`) i.p.v.
+hardgecodeerd op Balama→Nacala, **mét de extracts uit het profiel** — de eerste lithiumrun
+scande stil Mozambique en meldde "geen wegen in het venster": een lege uitvoer zonder
+foutmelding. En `sat_check.py` is uit de scratchpad naar `v2/tools/` gepromoveerd, met CLI,
+`--lijst` en **Esri Wayback** (195 releases) erbij. Gereedschap hoort in de repo.
+
+**De satellietpass heeft een tweede faalmodus gekregen: de opnamedatum.** Een punt kan
+"onvindbaar" zijn omdat het gebouw jonger is dan de capture (Shed 8-8, Bunbury). Wayback is de
+eerste tegenzet; als die negatief is (nieuwste release identiek aan live) is dat een
+**uitsluiting**, en die hoort in §5 van de brief.
+
 
 ## Stand 2026-07-29 (laat) — de routeergraaf is OSM 1-op-1, en routeren staat los van tekenen
 

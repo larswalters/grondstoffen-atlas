@@ -1,6 +1,64 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-07-30 (laatst) - Lithium van Greenbushes tot de kade van Zhangjiagang (?v=104 → ?v=105)
+
+Lars wilde een **nieuwe grondstof, helemaal van begin tot eind**, in het nieuwe A–E-formaat.
+Dat werd lithium: Greenbushes-concentraatloods → Bunbury Berth 8 → zee → Zhangjiagang →
+Tianqi → LG Chem Wuxi → LG ES Nanjing → Tesla Giga Shanghai, acht benen.
+
+**De brief.** `v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md`. Vier dingen die de
+lijn bepalen: (1) **er is géén spoor, en dat is uitgezocht én verworpen** — 78 km ligt buiten
+gebruik, de gezamenlijke studie van Talison en de WA-regering vond 38 km volledig te vervangen
+spoor en 76 overwegen en concludeerde *"not economically feasible at this time"*; gevolg
+1,5 Mt/j = **±135 truckbewegingen per dag** over de South Western Highway (groeit naar ±200).
+(2) **Bunbury is 's werelds grootste lithium-exporthaven** (Southern Ports' eigen PCCC-notulen);
+Berth 8 = 250 m / 11,6 m met scheepslader 2.000 t/h, gevoed door Talisons eigen Shed 8-8.
+(3) **Tianqi's eigen calamiteitenplan was de sterkste bron**: adres 东新路 5, terrein
+96.533 m², 110 kt/j spodumeen → 17 kt/j Li2CO3, bijproduct 51.062 t natriumsulfaat, buren aan
+alle vier de zijden en een **dorp** aan de noordkant — dus de fabriek ligt níet aan de oever en
+er is een echte last mile; sinds 25-09-2025 daarnaast 30 kt/j LiOH. Volumecontrole: 6,47 t
+concentraat per t carbonaat = de goede orde voor SC6.0. (4) **Fase E is documenteerbaar tot in
+de auto**: het volledige kathodevolume van LG Chem Wuxi (乐友新能源材料, JV met Huayou,
+锡梅路 167) gaat naar LG ES Nanjing en Wrocław, en de 2170-cellen uit Nanjing naar Giga Shanghai.
+
+**De stroom.** Gebakken tot de kade: **7.834,1 km / 2.576 punten** — truck 83,1 (−7,9% op de
+~90 gepubliceerd, 1.094 pt) · zee 7.606,6 (1,052× grootcirkel, 785 pt) · overgang MARNET →
+bulklaag gestippeld 8,6 · binnenvaart Yangtze + zuidgeul 135,2 (693 pt) · ligplaats-aanloop
+gestippeld 0,6. Ankerstukjes op de mijn: loods → weg 0,06 km, weg → kade 0,08 km.
+`toets_knikken.py`: **0 omkeringen**. Negatieve ankers gehaald (Yangshan 44,9 km bij straal 20 ·
+Port Hedland 511,7 bij 30 · Jiangyin 10,9 bij 10 — krap).
+
+**Twee algemene bevindingen.** *Een via-punt op een zijtak levert een 180°-keerpunt* — de
+OSM-dorpsknopen liggen 23–143 m náást de highway (180,0° bij Balingup, Picton, Willinge Drive),
+weglaten kan niet want dan valt de lijn via een sluipweg terug; fix = projecteren op de
+dichtstbijzijnde trunk/primary-vertex + `snoei_keerlussen` (14 lussen, Picton alleen al 101 pt /
+5,01 km). En *een satellietpass kan ook falen op de opnamedatum* — Shed 8-8 bestond nog niet op
+de capture; `sat_check.py` kan nu Wayback-releases ophalen (195), uitslag negatief maar
+bruikbaar: nieuwste release identiek aan live → niet met Esri op te lossen.
+⚠️ De **lengtetoets liep vóór de snoei** (88,1 gemeld op een lijn van 82,9 km).
+
+**Lars' twee observaties op `?v=104` stuurden de tweede helft.** *"Erg kort tot de Chinese
+haven"* — nagemeten en het klopt: Lombok 4,7 km → Makassar → Celebeszee → Sulusee → Straat
+Mindoro → Zuid-Chinese Zee → Straat Taiwan, alle segmenten ≤10 km dus geen koorde over land;
+Australië ligt simpelweg dichter bij China (**7.607 km tegen 18.500 voor Chili**). *"Daar staat
+de stip midden in het water"* — dát was wél een gat. Operator gevonden: **张家港港务集团**
+(Zhangjiagang Port Group), 16 ligplaatsen van 10.000 t, schepen tot 50.000 t, >40 Mt/j, met
+**矿石** expliciet in de kernladingen; anker satelliet-gelegd op z18 (31.96800, 120.42050):
+kraanlijn, bulkstapels direct achter de apron, general-cargoschip langszij. Uitgesloten: het
+"kadebekken" naast de Tianqi-fabriek is een patrouille-/marinabekken (helipad, tennisbanen), en
+de steigers van het chemiepark zelf zijn vloeistof-T-steigers.
+
+**De weg naar die kade was de eigenlijke puzzel: Shuangshan-eiland (双山岛).** MARNET's laatste
+knoop ligt 10 km van de kade en een rechte aanloop kruist **390 m land** over de kop van het
+eiland; de dichtstbijzijnde bulklaag-knóóp ligt 2,5 km landinwaarts in het Zhangjiagang-kanaal
+terwijl de geometrie op 590 m langs de kade loopt. Opgelost door naar de knoop **wést** van de
+kade te routeren (dwingt de zuidgeul af) en het been af te knippen op zijn dichtste punt.
+
+**Open:** twee Chinese adressen geocoderen (Lars zoekt ze op) → dan z16-passes en benen 5–8;
+Shed 8-8 vraagt een niet-Esri-bron. Commits `409be35` · `d5e4157` · `98a3a0f` · `f86cc79` ·
+`f4c358f` · `fa8b9ca` · `2362b30` · `95535c6`, live `?v=105`.
+
 ## 2026-07-29 (laatst) - De trein neemt de bocht: spoorroutering op OSM 1-op-1 (?v=103)
 
 Lars zag ná de junctie-fix **exact dezelfde** onmogelijke bocht. Hij had gelijk, en de
