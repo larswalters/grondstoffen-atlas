@@ -1,6 +1,35 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-07-30 (nieuw: lege-uitvoer-zonder-foutmelding, stdout-crash na lange scan)*
 
+## ⚠️ GEFIXT 2026-07-30 (laatst) — `maak_aansluitingen.py` kon alleen draaien door een projectregel te overtreden
+
+De generator las `marnet.bin`/`marnet.json` uit **`v2/data/`** — precies waar ze sinds de
+schone-bol-bake van 24-07 **niet mogen staan**, want de bol mag het waternet niet laden.
+`hecht_marnet.py` schrijft dat in zijn eigen bestandskop en levert daarom een `--marnet`-vlag
+die naar `v2/build-cache/marnet-preais` wijst. De regeneratie van 28-07 kan dus alleen met een
+tijdelijke kopie in `v2/data/` zijn gedaan.
+
+**Waarom dit erger is dan een ontbrekend pad:** het is één laag boven de `cu-guixi-spoor`-drift
+van 741 m. Daar liep de *data* uit de pas met haar generator; hier liep het **gereedschap** uit
+de pas met de architectuur — en het lek werd pas zichtbaar op het moment dat iemand hem twee
+sessies later weer nodig had. Een tool die alleen draait als je een projectregel overtreedt is
+kapot, ook als hij toevallig het goede antwoord gaf.
+
+**Fix:** dezelfde `--marnet`-vlag als `hecht_marnet.py`, default `v2/build-cache/marnet-preais`,
+plus een leesbare fout mét het herstelcommando (`git show pre-ais-net:v2/data/marnet.json > …`).
+
+⚠️ **Zoek dezelfde klasse elders:** elk gereedschap dat na de schone-bol-bake nog een pad in
+`v2/data/` hardcodeert naar een verwijderd bestand faalt pas bij gebruik, niet bij de bake.
+
+## ⚠️ RISICO 2026-07-30 — een gegenereerd bestand kan ouder zijn dan zijn invoer
+
+`aansluitingen.json` was van 28-07, het landnet van 29-07 (junctie-fix + 10 m-simplify). Bij de
+regeneratie veranderde daardoor één snap: `coal-bolivar-kade` spoor **0,67 → 0,28 km**. Geen bug
+— het `gemeten`-blok is per ontwerp een **rapport** — maar wel een val bij het lezen: een
+snap-getal uit een gegenereerd bestand hoort bij het netstadium van zijn generatiemoment, niet
+bij het huidige. Noem bij een snap-vergelijking dus altijd de bake-datum, net zoals de werkregel
+van 28-07 dat voor lengtemetingen eist (gereedschap + beide eindpunten + netstadium).
+
 ## ⚠️ GEFIXT 2026-07-30 — een hardgecodeerd profiel gaf een LEGE uitvoer zonder foutmelding
 `maak_stroombeen_weg.py` stond hardgecodeerd op Balama→Nacala **inclusief de extract-lijst**
 (`["mozambique"]`). De eerste lithiumrun scande dus Mozambique en meldde keurig "0 km, geen

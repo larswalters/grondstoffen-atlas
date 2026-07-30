@@ -1,7 +1,36 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang)*
+*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief)*
 
-## 2026-07-30 (laatst) — lithium Greenbushes → Zhangjiagang
+## 2026-07-30 (laatst) — de afwerklijst §6 van de lithiumbrief
+
+- **2026-07-30 · EEN HAVENSTIP IN OPEN WATER IS EEN FOUT; EEN MIJNCENTROÏDE IS EEN
+  ROLVERDELING** — `li-port-bunbury` stond 2,2 km westelijker in zee vóór de strandkust en is
+  naar Berth 8 verplaatst, terwijl `li-greenbushes` juist **wél** de mijncentroïde blijft met de
+  satelliet-gelegde loods als aansluiting `li-gb-laadplek` (de `cu-guixi-spoor`-rolverdeling:
+  register op wereldschaal, aansluiting op straatniveau). ⚠️ Die keuze hoort **expliciet in de
+  node-`note`**, want zonder reden erbij leest een centroïde als slordigheid en wordt hij bij de
+  volgende ronde "gecorrigeerd" — dan verliest het register zijn wereldschaal-functie.
+- **2026-07-30 · EEN TOOL DIE ALLEEN DRAAIT ALS JE EEN PROJECTREGEL OVERTREEDT, IS KAPOT** —
+  `maak_aansluitingen.py` las marnet uit `v2/data/`, precies waar het sinds de schone-bol-bake
+  van 24-07 niet mag staan (de bol mag het waternet niet laden; `hecht_marnet.py` zegt dat in
+  zijn eigen kop en heeft daarom `--marnet`). De regeneratie van 28-07 kan dus alleen met een
+  tijdelijke kopie zijn gedaan. Eén laag boven de `cu-guixi-spoor`-drift: daar liep de **data**
+  uit de pas met haar generator, hier het **gereedschap** met de architectuur — en dat lek werd
+  pas zichtbaar toen iemand hem twee sessies later weer nodig had. Nu dezelfde vlag + default
+  `v2/build-cache/marnet-preais` + herstelcommando in de foutmelding.
+- **2026-07-30 · CONTROLEER DE EENHEID VÓÓR JE EEN "CONFLICT" DOORVOERT** — punt 4 van de
+  afwerklijst leek een verkeerde `via` (Ningbo i.p.v. Zhangjiagang), maar de brief rekent in kt
+  **concentraat** en het register in kt **LCE**: 110 kt concentraat ≈ 17 kt LCE, factor 7,7, dus
+  de gelijke "110" was toeval. Bovendien klopt Jiangxi inhoudelijk (het Albemarle-deel van
+  Greenbushes gaat naar Xinyu). Wat de atlas mist zijn **twee knopen**, geen andere route.
+  Doorvoeren zou een macro-streng 7,7× te klein hebben gemaakt. Zie §6b van de brief; het
+  verschuift een gepubliceerd volumecijfer → **redactie, geen commit**.
+- **2026-07-30 · EEN AANSLUITING OP EEN NIET-GELEGD PUNT WORDT NIET AANGEMAAKT** —
+  `li-zjg-tianqi` staat bewust niet in `aansluitingen.json`: de coördinaat is nog niet gelegd, en
+  een aansluiting die plausibel oogt en kilometers mis staat ís de Waalhaven-klasse. Liever een
+  ontbrekende aansluiting dan een verzonnen.
+
+## 2026-07-30 — lithium Greenbushes → Zhangjiagang
 
 - **2026-07-30 · EEN VIA-PUNT OP EEN ZIJTAK LEVERT EEN 180°-KEERPUNT** — de OSM-dorpsknopen
   liggen 23–143 m náást de highway; de router rijdt zo'n punt in en er weer uit (gemeten

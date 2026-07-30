@@ -1,7 +1,27 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang, `?v=105`)*
+*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief, commit `6c7a454`)*
 
-## 🔴 NIEUW 2026-07-30 (laatst) — de lithiumketen afmaken
+## 🔴 BESLUIT VOOR LARS 2026-07-30 (laatst) — §6b van de lithiumbrief
+
+**Punt 4 van de afwerklijst is géén coördinaatfout maar een eenheden-botsing**, dus het is
+redactie en geen commit. De "110" van de brief is 110 kt spodumeen**concentraat** (≈17 kt LCE;
+de brief geeft zelf 110 → 17 = 6,47:1), de `value: 110` in `data/lithium.js` is kt **LCE**
+(`unit: kt LCE/jaar`) — factor 7,7, dus de gelijke getallen waren toeval. Bestemming Jiangxi
+klópt inhoudelijk óók: §1 van de brief zegt zelf dat het **Albemarle-deel (≤50%) naar Kemerton /
+Meishan / Xinyu** gaat en Xinyu ligt in Jiangxi; de Tianqi-helft gaat naar Zhangjiagang (Jiangsu)
+en Shehong (Sichuan). Wat de atlas mist zijn dus **twee knopen**, niet een andere `via`:
+
+1. **Variant 1 (aanbeveling).** `li-port-zhangjiagang` + `li-ref-jiangsu` (Tianqi) toevoegen en
+   de brief-streng als eigen flow van ~17 kt LCE opvoeren, met die tonnage **afgetrokken van
+   `li-greenbushes → li-ref-sichuan`** (55 kt) — want díe flow draagt nu de héle Tianqi-helft en
+   zijn `note` zegt letterlijk "via Tianqi's eigen raffinaderijen". Enige variant waarin atlas en
+   brief dezelfde werkelijkheid vertellen. ⚠️ Verschuift een gepubliceerd volumecijfer.
+2. **Variant 2.** Alleen de twee knopen toevoegen, macro-flows onaangeroerd. Goedkoopst, maar
+   dan staat er een raffinaderijstip zonder stroom op de kaart.
+3. **Variant 3.** Niets doen tot **M26** de 14 grondstoffen op de v2-bol terugzet en dit
+   meenemen in die ronde — de flows uit `data/*.js` zijn vandaag toch niet zichtbaar.
+
+## 🔴 NIEUW 2026-07-30 — de lithiumketen afmaken
 
 1. **Twee Chinese fabrieksadressen geocoderen — Lars zoekt ze op.** 东新路 5 号 (Tianqi
    Jiangsu, Zhangjiagang) en 锡梅路 167 号 (乐友新能源材料 / LG Chem–Huayou, Wuxi). OSM heeft

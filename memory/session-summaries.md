@@ -1,7 +1,51 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
-## 2026-07-30 (laatst) - Lithium van Greenbushes tot de kade van Zhangjiagang (?v=104 → ?v=105)
+## 2026-07-30 (laatst) - De afwerklijst van de lithiumbrief, en de "110" die twee dingen betekende
+
+Lars' vraag was open: *"wat denk jij dat een logische volgende stap is."* Stand nagelezen, drie
+kandidaten — de infrastructuurschuld (`hecht_marnet` op het 1-op-1-spoornet), de meetronde
+(`toets_ankers.py --bron js` over 510 knopen) en het afmaken van de lithiumstreng. Advies: de
+**lithiumstreng**, want die staat op één blokkeerpunt van de eerste stroom die de A–E-belofte
+helemaal waarmaakt, en de 1-op-1-baker bijt daar niet (benen 6–8 zijn weg, geen spoor). Lars koos
+de **afwerklijst §6** als eerste stap.
+
+**Vier van de vijf conflicten dicht** (commit `6c7a454`, géén `?v=`-bump):
+
+- `li-port-bunbury` stond **2,2 km westelijker in zee** vóór de strandkust → Berth 8
+  (−33.31995, 115.66385). `li-greenbushes` blijft juist **wél** de mijncentroïde, met de
+  satelliet-gelegde loods als aansluiting `li-gb-laadplek` — een havenstip in open water is een
+  **fout**, een mijncentroïde een **rolverdeling**; die reden staat nu expliciet in de node-`note`.
+- Corridor `li-greenbushes-kemerton` in `fetch_landnet.py` geconvergeerd op datzelfde anker
+  (stond 102 m ernaast). Werkt pas door bij de volgende landnet-bake; die is er niet voor gedraaid.
+- `aansluitingen.json` **15 → 18 aansluitingen / 21 aanhechtingen**. Snaps: Greenbushes **weg
+  2,70** · Berth 8 **zee 4,93** · Zhangjiagang **binnen 2,56 km** (vergelijkbaar met
+  `cu-shanghai-kade` 2,7). De 2,70 km is de **knoop-korrel** van het landnet, niet de afstand tot
+  de weg. `li-zjg-tianqi` bewust niet toegevoegd — coördinaat nog niet gelegd.
+- **Regressie:** generator↔uitvoer vóóraf 15/15 op 0,0 m; erna geen `plek` verschoven en één snap
+  veranderd (`coal-bolivar-kade` spoor 0,67 → 0,28 km = winst uit de junctie-fix, want het json
+  was ouder dan het landnet).
+
+**De vondst — punt 4 was een eenheden-botsing, geen coördinaatfout.** De "110" van de brief is kt
+spodumeen**concentraat** (≈17 kt LCE, ratio 6,47:1), de `value: 110` van het register is kt
+**LCE** → factor 7,7, de gelijke getallen waren toeval. En Jiangxi klopt inhoudelijk: §1 van de
+brief zegt zelf dat het Albemarle-deel naar Xinyu (Jiangxi) gaat, de Tianqi-helft naar
+Zhangjiagang + Shehong. De atlas mist dus **twee knopen**, geen andere `via`. Drie varianten in
+§6b van de brief; verschuift een gepubliceerd volumecijfer → besluit bij Lars.
+
+**Bijvangst:** `maak_aansluitingen.py` kon niet meer draaien — hij las marnet uit `v2/data/`, waar
+het sinds de schone-bol-bake van 24-07 niet mag staan. Nu dezelfde `--marnet`-vlag als
+`hecht_marnet.py`. Een tool die alleen draait als je een projectregel overtreedt, is kapot.
+
+**Geen `?v=`-bump, gemeten:** de v2-bol tekent gebakken `stroomroute-*.json`, laadt
+`data/lithium.js` niet en importeert `stromen.js` — de enige browser-lezer van
+`aansluitingen.json` — sinds `?v=083` niet meer. Niets te verifiëren in de browser.
+
+⚠️ **Werkwijze:** tijdens deze sessie draaide een **andere agent** de wrapup van de lithiumsessie
+(06:55–06:59, vault `d5744fd` + project `422e5ec`, vóór mijn commit). Geen conflict, maar wel het
+scenario waar de wrapup-skill voor waarschuwt. Signaal: mtimes jonger dan je eigen eerste read.
+
+## 2026-07-30 - Lithium van Greenbushes tot de kade van Zhangjiagang (?v=104 → ?v=105)
 
 Lars wilde een **nieuwe grondstof, helemaal van begin tot eind**, in het nieuwe A–E-formaat.
 Dat werd lithium: Greenbushes-concentraatloods → Bunbury Berth 8 → zee → Zhangjiagang →

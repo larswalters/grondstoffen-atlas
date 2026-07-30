@@ -1,5 +1,30 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: lithium Greenbushes → Zhangjiagang, zesde routebrief + vijfde stroom)*
+*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief)*
+
+## Stand 2026-07-30 (laatst) — de brief is de bron van waarheid, dus §6 is een werklijst
+
+De routebrieven dragen sinds de A–E-omzetting een **§6 "conflicten met de projectdata"**: elke
+plek waar de brief en `data/*.js` / de generatoren uit de pas lopen. Bij lithium is die lijst voor
+het eerst afgewerkt, en dat leverde drie regels op die voor élke volgende brief gelden:
+
+1. **Niet elk conflict is een fout.** Punt 4 leek een verkeerde `via` maar was een
+   **eenheden-botsing** (kt concentraat vs kt LCE, factor 7,7). Doorvoeren zou een macro-streng
+   7,7× te klein hebben gemaakt. **Controleer de eenheid vóór je een §6-punt doorvoert**, en zet
+   het punt bij twijfel als redactiebesluit in de brief in plaats van in een commit.
+2. **Register en aansluiting hebben verschillende rollen, en dat moet leesbaar zijn.** Een
+   mijncentroïde in `data/*.js` is correct zolang de precieze plek als aansluiting bestaat — maar
+   die keuze hoort **met reden in de node-`note`**, anders wordt hij later "gecorrigeerd". Een
+   havenstip in open water is géén centroïde maar een fout.
+3. **Een §6-punt kan een gereedschapsdefect blootleggen.** De regeneratie van
+   `aansluitingen.json` viel om op een pad dat sinds de schone-bol-bake niet meer bestaat. Ook
+   hier geldt de generator↔uitvoer-discipline, één laag hoger: **een tool die alleen draait als je
+   een projectregel overtreedt, is kapot.**
+
+De aansluitingenlaag staat nu op **18 aansluitingen / 21 aanhechtingen** over vier grondstoffen
+(koper, kolen, grafiet-via-graphite.js, lithium). ⚠️ `aansluitingen.json` is momenteel **geen
+browser-asset**: `main.js` importeert `stromen.js` sinds `?v=083` niet meer, dus het bestand is
+invoer voor het gereedschap (`hecht_marnet`, `toets_ankers.py`, de bakers). Dat verandert weer
+zodra M26 de stromenlaag terugzet.
 
 ## Stand 2026-07-30 — een brief per grondstof, en de lijn stopt waar het bewijs stopt
 

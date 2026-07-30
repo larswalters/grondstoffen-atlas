@@ -1,4 +1,80 @@
-> **🚆 DE TREIN NEEMT DE BOCHT — SPOOR OP OSM 1-OP-1, LIVE `?v=103` (2026-07-29, LAATSTE,
+> **🔋 LITHIUM STAAT OP DE BOL TOT DE KADE VAN ZHANGJIAGANG, EN DE AFWERKLIJST IS AF —
+> LIVE `?v=105` (2026-07-30, LAATSTE).** Commits `409be35`…`95535c6` (de stroom) + `6c7a454`
+> (de afwerklijst, géén `?v=`-bump).
+>
+> **De zesde routebrief en de eerste nieuwe grondstof in het A–E-formaat:** lithium van de
+> Greenbushes-concentraatloods tot Tesla Giga Shanghai in 8 benen, gebakken tot de kade van
+> Zhangjiagang — **7.834,1 km / 2.576 punten** (truck 83,1 · zee 7.606,6 · stippel 8,6 ·
+> binnenvaart 135,2 · stippel 0,6). Er is **géén spoor** en dat is uitgezocht én verworpen
+> (Talison + WA-regering: 38 km volledig te vervangen, 76 overwegen, *"not economically feasible
+> at this time"*) → ±135 truckbewegingen/dag over de South Western Highway. **De keten stopt
+> bewust in Zhangjiagang**: benen 5–8 worden pas getekend als de twee Chinese fabrieksankers
+> gelegd zijn. Volledig verhaal: `memory/session-summaries.md` +
+> [[2026-07-30-grondstoffen-atlas-lithium-greenbushes-zhangjiagang]].
+>
+> **⚠️ EEN VIA-PUNT OP EEN ZIJTAK LEVERT EEN 180°-KEERPUNT** — OSM-dorpsknopen liggen 23–143 m
+> náást de highway (gemeten 180,0° bij Balingup, Picton, Willinge Drive). Weglaten kan niet (dan
+> valt de lijn via een sluipweg van 88 naar 83 km) → projecteer via-punten op de dichtstbijzijnde
+> trunk/primary-vertex + `snoei_keerlussen` in `maak_stroombeen_weg.py`. ⚠️ **De lengtetoets liep
+> vóór die snoei** en rapporteerde 88,1 km terwijl de lijn 82,9 is: *meet het eindproduct, niet je
+> meetlat*, nu op de lengtekant.
+>
+> **⚠️ EEN SATELLIETPASS KAN OOK FALEN OP DE OPNAMEDATUM** — Shed 8-8 staat op geen enkele
+> Esri-capture omdat de loods later is gebouwd; `sat_check.py` haalt nu Wayback-releases op en de
+> negatieve uitslag (nieuwste release identiek aan live) is **een uitsluiting, dus een resultaat**.
+>
+> **DE AFWERKLIJST §6 — VIER VAN DE VIJF CONFLICTEN DICHT.** `li-port-bunbury` stond **2,2 km
+> westelijker IN ZEE** vóór de strandkust → Berth 8 (−33.31995, 115.66385), terwijl
+> `li-greenbushes` juist **wél** de mijncentroïde blijft met de satelliet-gelegde loods als
+> aansluiting `li-gb-laadplek`: **een havenstip in open water is een FOUT, een mijncentroïde is
+> een ROLVERDELING** (register op wereldschaal, aansluiting op straatniveau) — en die keuze staat
+> nu expliciet in de node-`note`, want zonder reden erbij wordt hij later "gecorrigeerd". Corridor
+> `li-greenbushes-kemerton` geconvergeerd op datzelfde anker (stond 102 m ernaast; werkt pas door
+> bij de volgende landnet-bake). `aansluitingen.json` **15 → 18 aansluitingen / 21 aanhechtingen**
+> — snaps Greenbushes **weg 2,70** · Berth 8 **zee 4,93** · Zhangjiagang **binnen 2,56 km**
+> (vergelijkbaar met `cu-shanghai-kade` 2,7; de 2,70 km is de **knoop-korrel** van het landnet,
+> niet de afstand tot de weg). `li-zjg-tianqi` bewust **niet** toegevoegd: die coördinaat is nog
+> niet gelegd, en een aansluiting op een ongelegd punt ís de Waalhaven-klasse. **Regressie:**
+> generator↔uitvoer vóóraf 15/15 op **0,0 m**, erna geen enkele `plek` verschoven en één snap
+> veranderd — `coal-bolivar-kade` spoor **0,67 → 0,28 km** = winst uit de junctie-fix +
+> 10 m-simplify, want het json was van 28-07 en het landnet van 29-07.
+>
+> **⚠️ DE VONDST — PUNT 4 WAS GEEN COÖRDINAATFOUT MAAR EEN EENHEDEN-BOTSING.** De reflex was de
+> `via` van `li-greenbushes → li-ref-jiangxi` van Ningbo naar Zhangjiagang zetten. Fout: de brief
+> bedoelt **110 kt spodumeenCONCENTRAAT** (≈17 kt LCE; de brief geeft zelf 110 → 17 = 6,47:1), het
+> register rekent in **kt LCE** (`unit: kt LCE/jaar`) — **factor 7,7, dus de gelijke 110 was
+> toeval.** En Jiangxi klópt inhoudelijk óók: §1 van de brief zegt zelf dat het **Albemarle-deel
+> (≤50%) naar Kemerton / Meishan / Xinyu** gaat en Xinyu ligt in Jiangxi; de Tianqi-helft gaat naar
+> Zhangjiagang (Jiangsu) en Shehong (Sichuan). Wat de atlas mist zijn dus **twee KNOPEN** (haven
+> Zhangjiagang + raffinaderij Tianqi Jiangsu), geen andere `via`. Drie varianten met aanbeveling in
+> **§6b** van de brief → **besluit bij Lars**, want het verschuift een gepubliceerd volumecijfer.
+> **Werkregel: controleer de eenheid vóór je een §6-punt doorvoert.**
+>
+> **⚠️ BIJVANGST — EEN TOOL DIE ALLEEN DRAAIT ALS JE EEN PROJECTREGEL OVERTREEDT, IS KAPOT.**
+> `maak_aansluitingen.py` las `marnet.bin`/`marnet.json` uit **`v2/data/`**, precies waar ze sinds
+> de schone-bol-bake van 24-07 **niet mogen staan** (de bol mag het waternet niet laden;
+> `hecht_marnet.py` schrijft dat in zijn eigen kop en heeft daarom `--marnet`). De regeneratie van
+> 28-07 kan dus alleen met een tijdelijke kopie zijn gedaan. Nu dezelfde vlag, default
+> `v2/build-cache/marnet-preais`, met het herstelcommando in de foutmelding. **Eén laag boven de
+> `cu-guixi-spoor`-drift van 741 m:** daar liep de *data* uit de pas met haar generator, hier het
+> **gereedschap** met de architectuur — en dat lek werd pas zichtbaar toen iemand hem twee sessies
+> later weer nodig had. ⚠️ Zoek dezelfde klasse elders: elk gereedschap dat nog een pad in
+> `v2/data/` hardcodeert naar een verwijderd bestand faalt pas bij gebruik.
+>
+> **GEEN `?v=`-BUMP VOOR DE AFWERKLIJST, en dat is gemeten en niet aangenomen:** geen van de
+> aangeraakte bestanden is een browser-asset — de v2-bol tekent gebakken `stroomroute-*.json`,
+> laadt `data/lithium.js` niet (v1-registerdata voor M26) en importeert `stromen.js` — de enige
+> browser-lezer van `aansluitingen.json` — sinds `?v=083` niet meer.
+>
+> **→ VOLGENDE:** **de twee Chinese fabrieksankers** zijn het blokkeerpunt voor fase C/D/E
+> (东新路 5 Zhangjiagang · 锡梅路 167 Wuxi; OSM heeft ze niet, een volledige china-scan vond ze
+> niet, de LG-cluster in Nanjing wél) — voorstel: **z18-pass langs die bekende straten**, dezelfde
+> methode die de Zhangjiagang-kade opleverde, en pas als dát faalt een Amap/Baidu-sleutel; daarna
+> **benen 5–8 bakken** (allemaal weg, dus de 1-op-1-spoorbaker is hier niet nodig) → lithium is dan
+> de eerste stroom die A–E helemaal waarmaakt · **besluit §6b** · Shed 8-8 vraagt een niet-Esri-bron
+> · **de bak-commando's van de stromen vastleggen** (staan nergens — de generator↔uitvoer-driftklasse).
+
+> **🚆 DE TREIN NEEMT DE BOCHT — SPOOR OP OSM 1-OP-1, LIVE `?v=103` (2026-07-29, EERDER,
 > VISUELE GO VAN LARS).** Commit `76fd530`.
 >
 > **⚠️ DE ONMOGELIJKE BOCHTEN KWAMEN NIET UIT DE ROUTER MAAR UIT ONZE EIGEN PIJPLIJN.**
@@ -290,7 +366,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-29 (laatst: de trein neemt de bocht — spoor op OSM 1-op-1, live ?v=103)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-30 (laatst: lithium tot de kade van Zhangjiagang, live ?v=105, + de afwerklijst §6 van die brief)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2564,6 +2640,21 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-07-30 · CONTROLEER DE EENHEID VÓÓR JE EEN §6-CONFLICT DOORVOERT** — de "110" van de
+  lithiumbrief is kt **concentraat** (≈17 kt LCE), de `value: 110` in `data/lithium.js` is kt
+  **LCE**: factor 7,7, dus de gelijke getallen waren toeval. Doorvoeren had een macro-streng
+  7,7× te klein gemaakt. Bij twijfel: als redactiebesluit in de brief (§6b), niet in een commit.
+- **2026-07-30 · EEN HAVENSTIP IN OPEN WATER IS EEN FOUT; EEN MIJNCENTROÏDE IS EEN ROLVERDELING**
+  — `li-port-bunbury` 2,2 km uit zee gehaald, `li-greenbushes` blijft juist centroïde mét
+  aansluiting. ⚠️ Die keuze hoort **met reden in de node-`note`**, anders wordt hij later
+  "gecorrigeerd" en verliest het register zijn wereldschaal-functie.
+- **2026-07-30 · EEN AANSLUITING OP EEN NIET-GELEGD PUNT WORDT NIET AANGEMAAKT** —
+  `li-zjg-tianqi` bewust weggelaten; liever een ontbrekende aansluiting dan een verzonnen
+  (de Waalhaven-klasse).
+- **2026-07-30 · EEN TOOL DIE ALLEEN DRAAIT ALS JE EEN PROJECTREGEL OVERTREEDT, IS KAPOT** —
+  `maak_aansluitingen.py` las marnet uit `v2/data/` waar het sinds 24-07 niet mag staan; nu
+  dezelfde `--marnet`-vlag als `hecht_marnet.py`. De generator↔uitvoer-discipline één laag
+  hoger: niet de data liep uit de pas maar het gereedschap.
 - **2026-07-30 · EEN VIA-PUNT OP EEN ZIJTAK LEVERT EEN 180°-KEERPUNT** — OSM-dorpsknopen
   liggen 23–143 m náást de highway; projecteer via-punten op de dichtstbijzijnde
   trunk/primary-vertex, en `maak_stroombeen_weg.py` snoeit heen-en-weer-uitstapjes weg
