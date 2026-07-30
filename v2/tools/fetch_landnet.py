@@ -261,7 +261,10 @@ CORRIDORS = [
     {
         "id": "li-greenbushes-kemerton",
         "naam": "Talison Greenbushes lithiummijn → Albemarle Kemerton lithiumhydroxidefabriek",
-        "van": (116.054060, -33.864550),
+        # ⚠️ 2026-07-30: geconvergeerd op de satelliet-gelegde concentraatloods/load-out
+        # (aansluiting `li-gb-laadplek`, routebrief lithium §6.3). Stond 102 m ernaast op
+        # (116.054060, -33.864550) — één redactionele waarde per plek, anders drift.
+        "van": (116.05505, -33.86495),
         "naar": (115.757970, -33.208500),
         "via": [(116.064910, -33.842100), (115.983160, -33.786080), (115.825130, -33.577380), (115.728910, -33.484360), (115.685950, -33.387520), (115.752220, -33.265140), (115.722320, -33.215760)],
         "extracts": ["australie"],

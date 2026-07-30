@@ -511,13 +511,74 @@ er is dus (nog) niets dat in twee brieven dubbel uitgeschreven wordt.
 
 ## 6 · Conflicten met de projectdata (afwerklijst)
 
-| # | wat | nu | hoort te zijn | bron |
-|---|---|---|---|---|
-| 1 | `li-greenbushes` in `data/lithium.js` | lat −33.86, lon 116.06 (mijncentroïde) | laadplek −33.86495, 116.05505 (of expliciet als centroïde laten staan mét eigen aansluiting) | eigen satellietpass |
-| 2 | `li-port-bunbury` in `data/lithium.js` | lat −33.32, lon 115.64 | Berth 8: −33.31995, 115.66385 — het huidige punt ligt **2,2 km** westelijker, in zee vóór de strandkust | eigen satellietpass |
-| 3 | corridor `li-greenbushes-kemerton` in `fetch_landnet.py` | van (116.054060, −33.864550) | 102 m van het nieuwe anker; converge op één redactionele waarde | vergelijk generator↔uitvoer vóór regeneratie |
-| 4 | `data/lithium.js` flow `li-greenbushes → li-ref-jiangxi` | via `li-port-ningbo` (Ningbo-Zhoushan) | déze streng landt in **Zhangjiagang**, niet in Ningbo; Ningbo hoort bij een andere raffinaderij-streng | [Q1] |
-| 5 | `aansluitingen.json` | geen lithium-aansluitingen | vier nieuwe: `li-gb-laadplek`, `li-bun-berth8`, `li-zjg-kade`, `li-zjg-tianqi` | deze brief |
+**Doorgevoerd 2026-07-30** — punten 1, 2, 3 en 5 zijn af; punt 4 is een redactiebesluit
+en staat hieronder apart, want het bleek géén coördinaatfout maar een **eenheden-botsing**.
+
+| # | wat | nu | hoort te zijn | bron | status |
+|---|---|---|---|---|---|
+| ~~1~~ | `li-greenbushes` in `data/lithium.js` | lat −33.86, lon 116.06 (mijncentroïde) | **centroïde blijft staan** mét eigen aansluiting `li-gb-laadplek` (−33.86495, 116.05505); keuze nu expliciet in de node-`note` — dezelfde rolverdeling als `cu-guixi-spoor`: het register draagt de plek op wereldschaal, de aansluiting op straatniveau | eigen satellietpass | ✅ **2026-07-30** |
+| ~~2~~ | `li-port-bunbury` in `data/lithium.js` | lat −33.32, lon 115.64 | Berth 8: −33.31995, 115.66385 — het oude punt lag **2,2 km** westelijker, in zee vóór de strandkust | eigen satellietpass | ✅ **2026-07-30** — verplaatst; register en aansluiting `li-bun-berth8` vallen hier dus samen (anders dan bij Greenbushes, want een havenstip in open zee is geen centroïde maar een fout) |
+| ~~3~~ | corridor `li-greenbushes-kemerton` in `fetch_landnet.py` | van (116.054060, −33.864550) | 102 m van het nieuwe anker; converge op één redactionele waarde | vergelijk generator↔uitvoer vóór regeneratie | ✅ **2026-07-30** — `van` = (116.05505, −33.86495), mét reden in de code. ⚠️ Werkt pas door bij de **volgende landnet-bake**; die is niet gedraaid voor 102 m |
+| 4 | `data/lithium.js` flow `li-greenbushes → li-ref-jiangxi` | via `li-port-ningbo` (Ningbo-Zhoushan) | zie **§6b** — dit is een redactiebesluit, geen fout die je doorvoert | [Q1] | ⏸️ **open, besluit Lars** |
+| ~~5~~ | `aansluitingen.json` | geen lithium-aansluitingen | vier nieuwe: `li-gb-laadplek`, `li-bun-berth8`, `li-zjg-kade`, `li-zjg-tianqi` | deze brief | ✅ **2026-07-30** — **drie** doorgevoerd + geregenereerd (15 → 18 aansluitingen, 21 aanhechtingen). `li-zjg-tianqi` bewust NIET: die coördinaat is nog niet gelegd (§5, punt 5), en een aansluiting op een ongelegd punt ís de Waalhaven-klasse |
+
+**Snap-metingen van de drie nieuwe aansluitingen** (meetresultaat, geen oordeel):
+Greenbushes laadplek **weg 2,7 km** · Berth 8 **zee 4,93 km** · Zhangjiagang-kade
+**binnen 2,56 km** (vergelijkbaar met `cu-shanghai-kade` op 2,7). De 2,7 km bij
+Greenbushes is de bekende knoop-korrel, niet een afstand tot de weg: het landnet zet
+knopen op kruisingen en uiteinden + elke 10 km, en de corridor loopt wél door dit punt.
+
+**Regressie op de 15 bestaande aansluitingen:** geen enkele `plek` verschoof, en één
+snap veranderde — `coal-bolivar-kade` spoor **0,67 → 0,28 km**. Dat is winst uit de
+junctie-fix + 10 m-simplify: `aansluitingen.json` was van 28-07 en het landnet van
+29-07, dus dit getal liep achter. Generator↔uitvoer was vóór de regeneratie 15/15 op
+0,0 m — geen drift, dus veilig om te herschrijven.
+
+⚠️ **Bijvangst — `maak_aansluitingen.py` kon niet meer draaien.** Hij las `marnet.bin`/
+`marnet.json` uit `v2/data/`, precies waar ze sinds de schone-bol-bake van 24-07 **niet
+mogen staan** (de bol mag het waternet niet laden; `hecht_marnet.py` zegt dat in zijn
+eigen kop). De vorige regeneratie kan dus alleen met een tijdelijke kopie zijn gedaan.
+Nu heeft de tool dezelfde `--marnet`-vlag als `hecht_marnet.py`, met
+`v2/build-cache/marnet-preais` als default en een leesbare fout mét herstelcommando.
+
+**Geen `?v=`-bump.** Geen van deze bestanden is een browser-asset: de v2-bol tekent
+gebakken `stroomroute-*.json`, laadt `data/lithium.js` niet (dat is v1-registerdata voor
+M26) en importeert `stromen.js` — de enige lezer van `aansluitingen.json` in de browser —
+sinds `?v=083` niet meer. `aansluitingen.json` is nu invoer voor het gereedschap
+(`hecht_marnet`, `toets_ankers.py`, de bakers), niet voor het beeld.
+
+### 6b · Punt 4: de "110" van deze brief is NIET de 110 van `data/lithium.js`
+
+De reflex is `li-port-ningbo` in de `via` vervangen door een Zhangjiagang-knoop. Dat is
+fout, en de meting laat zien waarom: **de twee getallen staan in verschillende eenheden.**
+
+| | `data/lithium.js` | deze brief |
+|---|---|---|
+| `value: 110` / "110 kt" | **kt LCE per jaar** (de eenheid van het hele register, `unit: kt LCE/jaar`) | **kt spodumeenconcentraat per jaar** ingaand bij Tianqi Jiangsu (§2, fase C) |
+| omgerekend | ≈ 850 kt concentraat | 110 kt concentraat ≈ **17 kt LCE** (§2 geeft zelf 110 → 17 = 6,47:1) |
+
+De gelijke "110" is dus toeval. De atlas-stroom `li-greenbushes → li-ref-jiangxi` is een
+**macro-streng** (~7,7× groter dan wat deze brief traceert) en de bestemming klopt ook
+inhoudelijk: Talison is een JV, en de brief zegt in §1 zelf dat het **Albemarle-deel
+(≤50%) naar Kemerton / Meishan / Xinyu** gaat — en Xinyu ligt in **Jiangxi**. De
+Tianqi-helft gaat naar Zhangjiagang (Jiangsu) en Shehong (Sichuan).
+
+Wat de atlas dus mist is niet een verkeerde `via` maar **twee ontbrekende knopen**: de
+haven Zhangjiagang en de raffinaderij Tianqi Jiangsu. Drie manieren om dat te sluiten:
+
+1. **Knopen toevoegen + de brief-streng als eigen flow** (~17 kt LCE, via een nieuwe
+   `li-port-zhangjiagang`), en die tonnage aftrekken van `li-greenbushes → li-ref-sichuan`
+   (55 kt) — want díe flow draagt nu de héle Tianqi-helft; zijn `note` zegt letterlijk
+   "via Tianqi's eigen raffinaderijen", en Zhangjiagang is er één van.
+2. **Alleen de knopen toevoegen** en de macro-flows onaangeroerd laten; de brief blijft de
+   fijnmazige laag. Goedkoopst, maar dan staat er een raffinaderijstip zonder stroom.
+3. **Niets doen** tot M26 de 14 grondstoffen op de v2-bol terugzet, en dit meenemen in die
+   ronde — de flows zijn vandaag toch niet zichtbaar.
+
+**Aanbeveling: 1.** Het is de enige variant waarin de atlas dezelfde werkelijkheid vertelt
+als de brief, en de aftrek bij Sichuan is geen verzinsel maar een herverdeling binnen een
+bucket die nu aantoonbaar te veel draagt. ⚠️ Maar het verschuift een gepubliceerd
+volume-cijfer, en dat is redactie — vandaar dit punt bij Lars en niet in een commit.
 
 ## 6a · Wat er GEBAKKEN is (live `?v=104`, 2026-07-29)
 

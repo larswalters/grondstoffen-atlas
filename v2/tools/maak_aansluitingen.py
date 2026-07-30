@@ -37,6 +37,14 @@ import maak_knooppunten as mk  # noqa: E402 — Lezer/lees_knopen/dichtstbij her
 
 DATA = HIER.parent / "data"
 
+# ⚠️ marnet.bin/json staan BEWUST niet in v2/data — de bol mag het waternet niet
+# laden (zie de kop van hecht_marnet.py, en de schone-bol-bake van 2026-07-24).
+# Deze tool leest ze daarom uit de build-cache, net als hecht_marnet.py doet via
+# --marnet. Ontbreekt de map, dan terugzetten uit de tag:
+#     git show pre-ais-net:v2/data/marnet.json > <map>/marnet.json
+#     git show pre-ais-net:v2/data/marnet.bin  > <map>/marnet.bin
+MARNET_STD = HIER.parent / "build-cache" / "marnet-preais"
+
 try:
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 except Exception:
@@ -252,6 +260,48 @@ AANSLUITINGEN = [
               "aansluitingen.json — deze lijst bleef op 117,2257/28,3338 staan, 741 m "
               "ernaast. Een regeneratie zou het satelliet-bevestigde punt stil hebben "
               "teruggedraaid; daarom staat de waarheid nu hier."),
+
+    # ======================================================================
+    # STROOM E — spodumeenconcentraat Greenbushes → Zhangjiagang (weg → zee → Yangtze)
+    # Routebrief: v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md
+    # ⚠️ De VIERDE aansluiting uit §6.5 — `li-zjg-tianqi` (poort Tianqi Lithium
+    #    Jiangsu, 东新路 5) — staat hier BEWUST NIET: die coördinaat is nog niet
+    #    gelegd (§5, punt 5). Een aansluiting zonder satelliet-gelegde plek haalt
+    #    precies de Waalhaven-klasse binnen die de werkwijze uitsluit.
+    # ======================================================================
+    dict(id="li-gb-laadplek", grondstof="lithium", fase="erts", rol="laadplek",
+         naam="Greenbushes — concentraatloods / load-out (Talison)",
+         plek=[116.05505, -33.86495], modi=["weg"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z18, 2026-07-29): loods met "
+              "load-out naast de mijnpoort; herkomst OSM-terrein Talison Greenbushes (ODbL)",
+         noot="Waar het SC6-concentraat de roadtrain in gaat; 157 m van de mijnpoort "
+              "(zuidkop Maranup Ford Road, -33,86376/116,05413 = OSM way 850829446). "
+              "Het register houdt `li-greenbushes` bewust op de mijncentroïde — dit is de "
+              "plek op straatniveau (de cu-guixi-spoor-rolverdeling). ⚠️ De wegcorridor "
+              "`li-greenbushes-kemerton` in fetch_landnet.py stond 102 m hiervandaan en is "
+              "2026-07-30 op deze waarde geconvergeerd (§6.3) — één redactionele waarde per plek."),
+    dict(id="li-bun-berth8", grondstof="lithium", fase="erts", rol="overslag",
+         naam="Bunbury — Berth 8, scheepslader (Southern Ports)",
+         plek=[115.66385, -33.31995], modi=["zee"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z18, 2026-07-29): scheepslader aan "
+              "de kade van de binnenhaven; herkomst havenbron Southern Ports Bunbury",
+         noot="Truck → zeeschip; hier komt de outload-band (2.000 t/h) van Shed 8-8 uit. "
+              "⚠️ `li-port-bunbury` in data/lithium.js stond 2,2 km westelijker IN ZEE vóór "
+              "de strandkust en is 2026-07-30 naar dit punt verplaatst (§6.2) — register en "
+              "aansluiting vallen hier dus samen, anders dan bij Greenbushes. ⚠️ De "
+              "bijbehorende LOSPLEK (Shed 8-8) is niet te leggen: het gebouw is jonger dan "
+              "de Esri-opname, ook in de nieuwste Wayback-release (§5, punt 3)."),
+    dict(id="li-zjg-kade", grondstof="lithium", fase="erts", rol="overslag",
+         naam="Zhangjiagang — droge-bulkkade Zhangjiagang Port Group (张家港港务集团)",
+         plek=[120.42050, 31.96800], modi=["binnen"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z18, 2026-07-29): droge-bulkkade met "
+              "kranen en stapelveld aan de zuidoever van de Yangtze",
+         noot="Yangtze-schip → truck: einde van been 4, begin van de last mile naar Tianqi "
+              "Lithium (Jiangsu). Welke van hun 16 ligplaatsen het is doet voor de kaart niet "
+              "mee. ⚠️ Twee uitsluitingen uit de productvraag, want beide zijn plausibel én "
+              "fout: de bonded-zone-kade bij de fabriek is GEEN ladingkade (patrouille-/"
+              "marinabekken met helipad), en de steigers van het chemiepark zijn voor "
+              "VLOEISTOF, niet voor droge bulk."),
 ]
 
 MODI = ("zee", "binnen", "spoor", "weg")
@@ -260,13 +310,23 @@ MODI = ("zee", "binnen", "spoor", "weg")
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--schrijf", action="store_true", help="aansluitingen.json wegschrijven")
+    ap.add_argument("--marnet", type=Path, default=MARNET_STD,
+                    help="map met marnet.bin + marnet.json (default: "
+                         "v2/build-cache/marnet-preais; ze horen NIET in v2/data)")
     args = ap.parse_args()
+
+    if not (args.marnet / "marnet.json").exists():
+        print(f"⚠️ geen marnet.json in {args.marnet}\n"
+              f"   terugzetten met:  git show pre-ais-net:v2/data/marnet.json > "
+              f"{args.marnet / 'marnet.json'}", file=sys.stderr)
+        return 1
 
     ports = json.loads((DATA / "ports.json").read_text(encoding="utf-8"))
     zee_knopen = ports["zeeKnopen"]
 
     print("marnet lezen…", flush=True)
-    m_meta, m_lon, m_lat = mk.lees_knopen(DATA / "marnet.json", DATA / "marnet.bin")
+    m_meta, m_lon, m_lat = mk.lees_knopen(args.marnet / "marnet.json",
+                                          args.marnet / "marnet.bin")
     m_vec = mk.eenheidsvectoren(m_lon, m_lat)
     idx = {
         "zee": np.arange(0, zee_knopen),

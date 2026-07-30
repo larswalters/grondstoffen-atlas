@@ -48,7 +48,10 @@ REGISTER({
       lat: -33.86, lon: 116.06, share: 15, tier: 1,
       operator: "Talison (Tianqi/Albemarle/IGO)", status: "actief",
       capacity: "±1.400 kt concentraat ≈ 185 kt LCE/j",
-      note: "Grootste hardrock-lithiummijn ter wereld, en het rijkste erts (±2% Li2O). Export via de haven van Bunbury." },
+      note: "Grootste hardrock-lithiummijn ter wereld, en het rijkste erts (±2% Li2O). Export via de haven van Bunbury. " +
+            "⚠️ Deze coördinaat is BEWUST de mijncentroïde, geen laadplek — de concentraatloods/load-out is " +
+            "satelliet-gelegd op -33.86495 / 116.05505 en leeft als aansluiting `li-gb-laadplek` (dezelfde " +
+            "rolverdeling als cu-guixi-spoor: het register draagt de plek op wereldschaal, de aansluiting op straatniveau)." },
     { id: "li-pilgangoora", type: "mine", name: "Pilgangoora", country: "Australië",
       lat: -20.98, lon: 118.90, share: 8, tier: 1,
       operator: "Pilbara Minerals", status: "actief",
@@ -142,8 +145,11 @@ REGISTER({
     // De plekken waar het erts de zee op gaat of aan land komt. Zonder deze
     // punten zou het concentraat "over land" naar zijn bestemming reizen.
     { id: "li-port-bunbury", type: "port", name: "Bunbury", country: "Australië",
-      lat: -33.32, lon: 115.64, tier: 2,
-      note: "Exporthaven van Greenbushes; het concentraat gaat per vrachtwagen ±90 km naar de kade." },
+      lat: -33.31995, lon: 115.66385, tier: 2,
+      note: "Exporthaven van Greenbushes; het concentraat gaat per vrachtwagen ±90 km naar de kade. " +
+            "⚠️ VERPLAATST 2026-07-30 (routebrief §6): stond op -33.32 / 115.64 = 2,2 km westelijker, in zee " +
+            "vóór de strandkust. Dit is Berth 8 zelf (scheepslader, satelliet-gelegd z18) — de kade waar de " +
+            "outload-band van Shed 8-8 op uitkomt." },
     { id: "li-port-hedland", type: "port", name: "Port Hedland", country: "Australië",
       lat: -20.31, lon: 118.58, tier: 2,
       note: "Grootste bulkhaven ter wereld (vooral ijzererts); ook al het Pilbara-lithium vertrekt hier." },
