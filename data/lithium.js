@@ -168,6 +168,14 @@ REGISTER({
     { id: "li-port-ningbo", type: "port", name: "Ningbo-Zhoushan", country: "China",
       lat: 29.87, lon: 121.54, tier: 2,
       note: "Aanloophaven voor concentraat; vandaar per spoor/weg naar Jiangxi en Sichuan." },
+    { id: "li-port-zhangjiagang", type: "port", name: "Zhangjiagang", country: "China",
+      lat: 31.96800, lon: 120.42050, tier: 2,
+      note: "Yangtze-bulkhaven (张家港港务集团; 16 ligplaatsen, erts in de kernladingen) waar het " +
+            "Tianqi-concentraat aan land komt. Coördinaat = de satelliet-gelegde bulkkade op z18 " +
+            "(kraanlijn, bulkstapels achter de apron) en valt samen met aansluiting `li-zjg-kade` — " +
+            "net als bij Bunbury: een echte kade, dus register en aansluiting mógen hier samenvallen. " +
+            "⚠️ Uitgesloten: het bekken pal naast de Tianqi-fabriek is een patrouille-/marinabekken " +
+            "(helipad, tennisbanen), geen laadkade." },
     { id: "li-port-charleston", type: "port", name: "Charleston", country: "VS",
       lat: 32.78, lon: -79.93, tier: 2,
       note: "Atlantische aanlanding voor de Amerikaanse lithiumchemie in de Carolinas." },
@@ -189,6 +197,16 @@ REGISTER({
     { id: "li-ref-sichuan", type: "refinery", name: "Sichuan (Suining/Yibin)", country: "China",
       lat: 30.50, lon: 105.60, tier: 1,
       note: "Tweede Chinese cluster, direct gekoppeld aan kathodefabrieken. Draait vooral op geïmporteerd spodumeen." },
+    { id: "li-ref-jiangsu", type: "refinery", name: "Tianqi Jiangsu (Zhangjiagang)", country: "China",
+      lat: 32.01218, lon: 120.45771, tier: 2, operator: "天齐锂业（江苏）",
+      note: "Verwerkt 110 kt spodumeenconcentraat tot ~17 kt Li2CO3 (东新路 5, terrein 96.533 m²). " +
+            "Coördinaat = de FABRIEKSPOORT, satelliet-gelegd op z18 en bevestigd door het nationale " +
+            "emissievergunningregister van het Chinese milieuministerie. ⚠️ Die registerwaarde staat in " +
+            "CGCS2000 ≈ WGS-84 en is bewust NIET omgerekend — alleen Chinese kaartdiensten (Amap/Baidu) " +
+            "vragen conversie; blind omrekenen legt dit punt 485 m NW in een akker. Terreincentrum ligt " +
+            "~220 m ZZW; de poort is het punt waar de last mile op aanhecht. " +
+            "⚠️ De +30 kt LiOH sinds 25-09-2025 hoort NIET bij dit terrein maar bij een aparte " +
+            "rechtspersoon op een eigen kavel ~5 km ZO, die nog niet gelegd is — hang dat volume hier niet aan." },
     { id: "li-ref-qinghai", type: "refinery", name: "Qinghai-raffinage", country: "China",
       lat: 36.80, lon: 98.50, tier: 2,
       note: "Verwerkt lokale pekel tot carbonaat: goedkoop, maar lagere zuiverheid." },
@@ -250,9 +268,19 @@ REGISTER({
     { from: "li-greenbushes", to: "li-ref-jiangxi", value: 110, mode: "ship", stage: "erts",
       via: ["li-port-bunbury", "wp-lombok", "wp-makassar", "wp-scs", "wp-taiwan", "li-port-ningbo"],
       note: "Greenbushes → Jiangxi: de dikste lithiumstroom ter wereld. Per truck naar Bunbury, dan door de Straat van Lombok en Makassar naar de Chinese oostkust." },
-    { from: "li-greenbushes", to: "li-ref-sichuan", value: 55, mode: "ship", stage: "erts",
+    { from: "li-greenbushes", to: "li-ref-sichuan", value: 38, mode: "ship", stage: "erts",
       via: ["li-port-bunbury", "wp-lombok", "wp-makassar", "wp-scs", "wp-taiwan", "li-port-ningbo"],
-      note: "Greenbushes → Sichuan, via Tianqi's eigen raffinaderijen; laatste stuk per spoor de Yangtze op." },
+      note: "Greenbushes → Sichuan, via Tianqi's eigen raffinaderijen; laatste stuk per spoor de Yangtze op. " +
+            "⚠️ 55 → 38 (routebrief §6b, besluit 2026-07-30): deze flow droeg de héle Tianqi-helft, maar " +
+            "daar zit ook Zhangjiagang in — die 17 kt staat nu als eigen streng naar `li-ref-jiangsu`. " +
+            "De Tianqi-helft blijft even groot: 55 = 38 + 17. Het Albemarle-deel gaat naar Xinyu (Jiangxi) " +
+            "en raakt deze splitsing niet." },
+    { from: "li-greenbushes", to: "li-ref-jiangsu", value: 17, mode: "ship", stage: "erts",
+      via: ["li-port-bunbury", "wp-lombok", "wp-makassar", "wp-scs", "wp-taiwan", "li-port-zhangjiagang"],
+      note: "De streng die de routebrief traceert: 110 kt SC6.0 in Zhangjiagang → ~17 kt LCE uit " +
+            "(110 × 6,0 % Li2O × 2,473 = 16,3 kt LCE; de brief noemt zelf 17 kt Li2CO3, en Li2CO3 ÍS de " +
+            "LCE-eenheid — beide wegen geven ~17). ⚠️ Het register rekent in kt LCE, de brief in kt " +
+            "concentraat: de gelijke 110 was toeval, factor 7,7. Controleer de eenheid vóór je hier iets aanpast." },
     { from: "li-greenbushes", to: "li-ref-kwinana", value: 20, mode: "road", stage: "erts",
       note: "Het kleine deel dat Australië zélf raffineert; de rest verlaat het land ongeraffineerd." },
     { from: "li-pilgangoora", to: "li-ref-jiangxi", value: 80, mode: "ship", stage: "erts",
