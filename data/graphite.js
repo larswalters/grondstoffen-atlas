@@ -132,7 +132,18 @@ REGISTER({
     { id: "gr-ref-vidalia", type: "refinery", name: "Syrah Resources — Vidalia", country: "VS (Louisiana)",
       lat: 31.5466, lon: -91.4887, tier: 1, operator: "Syrah Resources",
       capacity: "≈ 11,25 kt/j (fase 1)",
-      note: "Actief sferisch grafiet uit Balama-vlok (Mozambique) — de zeldzame niet-Chinese natuurlijke-anodeknoop. IRA-FEOC-conform; offtakes Tesla (2021) en Lucid/Panasonic (2025). Coördinaat = de fabriek (D.A. Biglane Rd × LA-131); de barge lost bij de Port of Vidalia (rivier-mijl 359), laatste ~4 km per truck (DOE/EA-2181, routebrief)." },
+      note: "Actief sferisch grafiet uit Balama-vlok (Mozambique) — de zeldzame niet-Chinese natuurlijke-anodeknoop. IRA-FEOC-conform; offtakes Tesla (2021) en Lucid/Panasonic (2025). Coördinaat = de fabriek; de barge lost bij de Port of Vidalia (rivier-mijl 359). ⚠️ GECORRIGEERD 2026-08-04: het terrein grenst aan D.A. BIGLANE ROAD, niet aan LA-131, en de last mile is gemeten 2,3 km (grindweg → LA-131 → D.A. Biglane Rd), niet ~4 km — die waarde uit EA-2181 is op geen enkele route reproduceerbaar. Emballage = supersacks (EA-2181 §2.2)." },
+    // ⚠️ TWEE KNOPEN ERBIJ 2026-08-04 — fase D en E van de routebrief. Ze worden
+    // getekend terwijl er VANDAAG NIETS STROOMT (besluit Lars): Balama ligt stil,
+    // "Graphite Shipped to Vidalia" was in 2025 nul en t/m Q2 2026 zijn er alleen
+    // ~150 t kwalificatiemonsters geleverd. De weg is gemeten, de lading nog niet.
+    { id: "gr-fab-desoto", type: "refinery", name: "Panasonic Energy Kansas — De Soto", country: "VS (Kansas)",
+      lat: 38.93815, lon: -95.00240, tier: 2, operator: "Panasonic Energy",
+      capacity: "≈ 32 GWh/j (2170-cellen)",
+      note: "Celfabriek in Astra Enterprise Park (het voormalige Sunflower Army Ammunition Plant); massaproductie sinds 14-07-2025. ⚠️ DIT IS EEN TERREIN-/GEBOUWANKER, GEEN DOCK: op de nieuwste Esri-opname (Wayback 32246) staat het terrein nog in de bouwfase en is geen dockdeur of marshalling-yard aanwijsbaar — dezelfde faalmodus als Shed 8-8 in Bunbury, waar de opnamedatum het probleem was en niet de plek. Niet promoveren tot laad-/losplek zonder een opname van ná juli 2025. De keten hecht aan op het ROUTEERPUNT (rotonde Energy Way × Astra Parkway, 38.94196 / -95.00748); het terrein zelf is over de weg niet bereikbaar, dus de lijn eindigt 443 m ervoor. ⚠️ Volume vandaag nul." },
+    { id: "gr-fab-amp1", type: "market", name: "Lucid AMP-1 — Casa Grande", country: "VS (Arizona)",
+      lat: 32.85724, lon: -111.78008, tier: 2, operator: "Lucid Motors",
+      note: "Voertuig-/packfabriek: het eind van de keten, en daarmee de eerste stroom van de atlas die tot een consumentenproduct loopt. ⚠️ HET ANKER IS DE INKOMENDE DOCKRIJ AAN DE WESTGEVEL (satelliet-gelegd z19: een rij opleggers kont-aan-gevel over ~330 m), NIET de gebouwcentroïde — die ligt 159 m oostelijker. De uitgaande autoparking aan de zuidkant is bewust géén anker. Geen spoor op het terrein, wat truck boven intermodaal spoor ondersteunt. ⚠️ Volume vandaag nul." },
     { id: "gr-ref-novonix", type: "refinery", name: "Novonix — Chattanooga", country: "VS (Tennessee)",
       lat: 35.05, lon: -85.30, tier: 3, operator: "Novonix",
       capacity: "≈ opschalend",
@@ -256,8 +267,16 @@ REGISTER({
     { from: "gr-ref-shandong", to: "gr-mkt-eu", value: 160, mode: "ship", stage: "product",
       via: ["wp-scs", "wp-singapore", "wp-malakka", "wp-bab", "wp-rode-zee", "wp-suez", "wp-gibraltar", "gr-port-rotterdam"],
       note: "Chinees anode -> de EU-gigafabrieken via Suez en Rotterdam: de Europese afhankelijkheid waar de CRMA tegen wil bouwen." },
-    { from: "gr-ref-vidalia", to: "gr-mkt-us", value: 11, mode: "road", stage: "product",
-      note: "Syrah's US anode -> de afnemers, per long-haul truck (DOE/EA-2181: 45-55 ritten/mnd; er is géén spoor in Concordia Parish en geen spoorbrug bij Natchez-Vidalia). Afnemers: Tesla (leverlocatie onbekend, cellen NV/TX/CA) en Lucid via Panasonic (De Soto, Kansas) — gr-mkt-us is hier een markt-abstractie. Waarde = fase-1-nameplate 11,25 kt/j; prospectief (t/m Q2 2026 alleen kwalificatiemonsters). Zie routebrief." },
+    // ⚠️ HERRICHT 2026-08-04. Deze flow wees naar gr-mkt-us (36.50 / -86.60) —
+    // de battery-belt-centroïde die de routebrief zélf als NEGATIEF ANKER met een
+    // verbodsstraal van 150 km voert. Een stroom naar een punt waar hij per brief
+    // niet mag komen is de Waalhaven-klasse. De keten loopt nu naar de twee echte
+    // fabrieken. gr-mkt-us blijft bestaan voor Novonix/Québec: die strengen zijn
+    // wél markt-abstracties, deze niet meer.
+    { from: "gr-ref-vidalia", to: "gr-fab-desoto", value: 2.3, mode: "road", stage: "product",
+      note: "AAM -> Panasonic De Soto (Kansas), ~1.113 km per long-haul truck over US-84/US-425 → I-530 → I-40 → I-49 → I-435 → K-10 (DOE/EA-2181: 45-55 ritten/mnd bij vol bedrijf, gesloten trailers; géén spoor in Concordia Parish en geen spoorbrug bij Natchez-Vidalia). Waarde ≈ het Lucid-contract (~7 kt over 3 jaar), niet de fase-1-nameplate. ⚠️ VOLUME VANDAAG NUL — prospectief getekend op besluit van 2026-08-04. ⚠️ Geen bron documenteert deze rit; de corridor is AFGELEID uit het aangewezen vrachtnet en de brugbeperkingen. Het reële alternatief (US-65 door de Ozarks) is 6% korter en bewust verworpen — zie de routebrief." },
+    { from: "gr-fab-desoto", to: "gr-fab-amp1", value: 2.3, mode: "road", stage: "product",
+      note: "2170-cellen -> Lucid AMP-1 (Arizona), ~2.270 km over K-10/K-7 → I-35 → I-40 → I-17 → I-10 → I-8. ⚠️ VOLUME VANDAAG NUL. ⚠️ De MODALITEIT is een werkaanname: truck is aannemelijk, intermodaal spoor niet uitgesloten (BNSF bij De Soto, UP bij Casa Grande — twee maatschappijen, dus een interchange). Slaat dat om, dan vervangt het de héle lijn in plaats van hem te verschuiven. Ondersteunend negatief bewijs: geen spoorstomp komt het Lucid-terrein op." },
     { from: "gr-ref-novonix", to: "gr-mkt-us", value: 100, mode: "road", stage: "product",
       note: "Novonix synthetisch anode -> de Amerikaanse cellenfabrieken." },
     { from: "gr-ref-quebec", to: "gr-mkt-us", value: 40, mode: "road", stage: "product",
@@ -315,8 +334,8 @@ REGISTER({
 
     { id: "gr-t-west-buildout", type: "concentratie", title: "De ex-China buildout: dun tegenover de trechter",
       lat: 40.0, lon: -60.0,
-      nodes: ["gr-ref-vidalia", "gr-ref-sweden", "gr-ref-novonix", "gr-ref-quebec", "gr-ref-korea"],
-      flows: ["gr-mozambique>gr-ref-vidalia", "gr-ref-vidalia>gr-mkt-us", "gr-ref-sweden>gr-mkt-eu"],
+      nodes: ["gr-ref-vidalia", "gr-fab-desoto", "gr-fab-amp1", "gr-ref-sweden", "gr-ref-novonix", "gr-ref-quebec", "gr-ref-korea"],
+      flows: ["gr-mozambique>gr-ref-vidalia", "gr-ref-vidalia>gr-fab-desoto", "gr-fab-desoto>gr-fab-amp1", "gr-ref-sweden>gr-mkt-eu"],
       metric: "Syrah Vidalia (VS) · Talga (SE) · Novonix (VS) · NMG (CA) · POSCO (KR) — samen nog een fractie",
       note: "Onder IRA-FEOC (VS) en de CRMA (EU) racet het Westen om eigen anodecapaciteit. Syrah Vidalia (Balama-vlok, in Louisiana verwerkt) is de emblematische niet-Chinese knoop; Talga (volledig Europees), Novonix (synthetisch, VS), NMG (Canada) en POSCO (Korea) bouwen mee. Samen vormen ze nog een fractie van de Chinese capaciteit — de trechter is voorlopig niet omzeild." },
 

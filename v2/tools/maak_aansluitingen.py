@@ -302,6 +302,87 @@ AANSLUITINGEN = [
               "fout: de bonded-zone-kade bij de fabriek is GEEN ladingkade (patrouille-/"
               "marinabekken met helipad), en de steigers van het chemiepark zijn voor "
               "VLOEISTOF, niet voor droge bulk."),
+
+    # ======================================================================
+    # GRAFIET — Balama → Nacala → New Orleans → Vidalia → De Soto → Casa Grande
+    # De eerste keten van de atlas die van de mijn tot het eindproduct loopt.
+    # ⚠️ Fase D/E dragen VANDAAG NUL VOLUME (besluit Lars 2026-08-04): de weg
+    # is gemeten, de lading nog niet. Dat staat in de brief en in de node-noten,
+    # niet in de lijnstijl.
+    # ======================================================================
+    dict(id="gr-balama-laadplek", grondstof="graphite", fase="erts", rol="laadplek",
+         naam="Balama — bagging + truckbelading op de plant",
+         plek=[38.66000, -13.31000], modi=["weg"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28, ankercheck) + "
+              "OSM industrieterrein/pits (ODbL)",
+         noot="Begin van de keten. Uitgaand vlokconcentraat in 1-t-zakken; het spoor naar "
+              "Nacala wordt aantoonbaar NIET gebruikt (Grindrod pit-to-port is expliciet weg)."),
+    dict(id="gr-nacala-kade", grondstof="graphite", fase="erts", rol="overslag",
+         naam="Porto de Nacala — containerterminal oostoever",
+         plek=[40.66730, -14.53830], modi=["zee", "weg"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28)",
+         noot="Truck → zeeschip. ⚠️ Het onderzoekspunt (-14.531, 40.652) lag in OPEN WATER "
+              "bij de kolen-jetty op de WESToever — nota bene de terminal die volgens de "
+              "routebrief niet bij deze stroom hoort. Tweede 'bevestigde' punt dat visueel "
+              "fout bleek; alleen een gestitchte pass loste het op. ⚠️ Het Grindrod Cross "
+              "Dock (waar de zakken in containers gaan) heeft géén gepubliceerde coördinaat "
+              "en is bewust NIET gelegd."),
+    dict(id="gr-nola-napoleon", grondstof="graphite", fase="erts", rol="overslag",
+         naam="Port of New Orleans — Napoleon Avenue Container Terminal",
+         plek=[-90.11200, 29.91230], modi=["zee", "binnen"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28); 489 m verplaatst "
+              "vanaf de stadscentroïde",
+         noot="Zeeschip → binnenvaart. De oude centroïde werd langs een onafhankelijke weg "
+              "ontmaskerd: van 510.752 VS-AIS-tracks kwam er GEEN binnen 0,5 km. Na de "
+              "correctie schoof het anker 490 m en het geroutete punt maar 154 m — de "
+              "gemeten demonstratie van anker ≠ routeerpunt."),
+    dict(id="gr-portallen-kade", grondstof="graphite", fase="erts", rol="overslag",
+         naam="Port Allen — IRMT 200-ft bargekade (Slack Water Canal)",
+         plek=[-91.24383, 30.43313], modi=["binnen"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z19, 2026-08-04): kadefront 59 m ≈ de "
+              "gepubliceerde 200 ft; bevestigd door 51 MarineCadastre-pings binnen 50 m",
+         noot="⚠️ DE VONDST VAN DEZE RONDE: de terminal ligt NIET aan de doorgaande vaarweg "
+              "maar aan een DOODLOPEND ZIJKANAAL dat er enkele km westelijker vanaf takt. "
+              "Daarom moest de ankercheck van 2026-07-28 wel mislukken — die zocht langs de "
+              "GIWW. Het oude punt stond 2,08 km fout en hing als losse marker naast de lijn. "
+              "Aankomst (been 3) en vertrek (been 4) vallen hier fysiek samen: er is precies "
+              "één bargeligplaats — géén compromis-coördinaat maar een gemeten feit. "
+              "Routeerpunt in de vaargeul: 30.43293 / -91.24385 (22 m). ⚠️ Voorwaardelijk: "
+              "blijft de modus New Orleans → Port Allen truck in plaats van shuttle-barge, "
+              "dan is het aankomstanker de terminalpoort en die is niet gelegd."),
+    dict(id="gr-vidalia-kade", grondstof="graphite", fase="erts", rol="overslag",
+         naam="Port of Vidalia — apron achter de cargo ramp (rivier-mijl 359)",
+         plek=[-91.48255, 31.53645], modi=["binnen", "weg"],
+         bron="SATELLIET-GELEGD op Esri Wayback-release 22252 (2026-01-29), gelegd 2026-08-04",
+         noot="Binnenvaart → truck. ⚠️ Het oude briefpunt (31.538, -91.485) ligt in "
+              "BATTURE-BOS: geen kade, geen ramp, geen verharding. De echte faciliteit ligt "
+              "~290 m ZO. Alleen een wolkenvrije Wayback-opname toonde dat; op het live beeld "
+              "was het niet te zien. Ramp-/transportbandkop = routeerpunt 31.53530 / -91.48090; "
+              "max snap 0,45 km (dichtstbijzijnde graafknoop 444 m). ⚠️ Open vraag aan de "
+              "brief, niet aan de tegels: deze stroom is CONTAINERvormig terwijl de bestaande "
+              "havenfase een cargo ramp + t-dock voor droge BULK is."),
+    dict(id="gr-vidalia-fabriek", grondstof="graphite", fase="raffinaat", rol="losplek",
+         naam="Syrah Technologies — AAM-fabriek Vidalia",
+         plek=[-91.48870, 31.54660], modi=["weg"],
+         bron="SATELLIET-GELEGD 2026-07-28 (ankercheck) + DOE/EA-2181 Fig. 1 'Project Center' "
+              "31.54653 / -91.48868 (8 m — onafhankelijke tweede bron)",
+         noot="Einde fase C, begin fase D. Routeerpunt = de fabriekspoort 31.54796 / -91.48743 "
+              "(EA-2181 'Front Gate' + OSM-knoop op 6 m). ⚠️ Het terrein grenst aan D.A. "
+              "BIGLANE ROAD, niet aan LA-131 zoals de brief zei. ⚠️ Het UITGAANDE AAM-laaddock "
+              "is NIET gelegd: z19 is de fijnste Esri-korrel en toont geen perron. Been 6 "
+              "begint daarom bij de poort, niet bij het dock."),
+    dict(id="gr-amp1-dock", grondstof="graphite", fase="product", rol="losplek",
+         naam="Lucid AMP-1 Casa Grande — inkomende dockrij westgevel",
+         plek=[-111.78008, 32.85724], modi=["weg"],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z19, 2026-08-04): rij opleggers "
+              "kont-aan-gevel over ~330 m + truck-apron; Wayback 32246 identiek aan live",
+         noot="Het eind van de keten — de eerste stroom van de atlas die tot een "
+              "consumentenproduct loopt. Anker = het MIDDEN van een dockrij van ~330 m, geen "
+              "aangewezen deur; welke deuren inkomend zijn is niet publiek. Routeerpunt = "
+              "westpoort West Selma Highway 32.85035 / -111.78238. UITGESLOTEN: de autoparking "
+              "aan de zuidkant is de UITGAANDE kant, de oostgevel is personeelsparking, het "
+              "noordblok is nog in aanbouw. Geen spoor op het terrein (dichtstbijzijnde stomp "
+              "193 m buiten de terreingrens) — ondersteunt truck boven intermodaal spoor."),
 ]
 
 MODI = ("zee", "binnen", "spoor", "weg")

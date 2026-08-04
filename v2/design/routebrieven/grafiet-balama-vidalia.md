@@ -1,9 +1,64 @@
 # Routebrief · grafiet (vlokconcentraat → AAM → cel) — Balama → Vidalia → De Soto / Casa Grande (VS)
 
 **stroom-id:** `grafiet-balama-vidalia`  ·  **geschreven:** 2026-07-28 · **omgezet naar het
-mijn-tot-eindproduct-sjabloon + fase D/E:** 2026-07-29  ·  **status brief:** fase A–C in toets
-(de keten staat op de bol, `?v=099`) · fase D–E concept (prospectief — de uitstroom bestaat
-fysiek nog nauwelijks, zie kernfeit 4)
+mijn-tot-eindproduct-sjabloon + fase D/E:** 2026-07-29  ·  **status brief:** fase A–E **GETEKEND** — de
+keten staat compleet op de bol (`?v=106`, 2026-08-05). ⚠️ Fase D en E dragen **volume nul**;
+zie het blok hieronder.
+
+---
+
+> [!important] BIJGEWERKT 2026-08-05 — DE KETEN LOOPT NU VAN DE MIJN TOT HET EINDPRODUCT
+>
+> **De weg is echt, de lading nog niet.** Fase D en E (Vidalia → De Soto → Casa Grande) zijn
+> getekend op **besluit van Lars (2026-08-04)** terwijl er vandaag niets stroomt: Balama ligt
+> stil, "Graphite Shipped to Vidalia" was in 2025 **nul**, en t/m Q2 2026 zijn er alleen
+> ~150 t kwalificatiemonsters geleverd. Dat verschil hoort in deze tekst en in de node-noten
+> te staan — **niet in de lijnstijl**. D en E zijn daarom **doorgetrokken** getekend: ze
+> liggen op echt, gemeten wegnet. Een stippel betekent in dit project precies één ding, en
+> dat is *hier reikt het net niet* (werkwijze §7).
+>
+> **Drie ankers stonden fout, en de scherpste was een geografische vergissing:**
+> - **IRMT Port Allen** stond op `30.432, -91.222` = **2,08 km mis**, en hing als losse marker
+>   naast de lijn. De terminal ligt **niet aan de doorgaande GIWW maar aan een doodlopend
+>   zijkanaal** ("Slack Water Canal") dat er enkele km westelijker vanaf takt. Daarom móest de
+>   ankercheck van 2026-07-28 mislukken: die zocht langs de hoofdvaarweg. Nieuw:
+>   **30.43313, -91.24383**, satelliet-gelegd op z19 (kadefront 59 m ≈ de gepubliceerde
+>   200 ft) en bevestigd door **51 AIS-pings binnen 50 m**.
+> - **Port of Vidalia** stond op `31.538, -91.485` — **in batture-bos**: geen kade, geen ramp,
+>   geen verharding. De echte apron ligt ~290 m ZO op **31.53645, -91.48255**, alleen zichtbaar
+>   op een **wolkenvrije Wayback-opname** (release 22252); het live beeld toonde het niet.
+> - **Port Allen Lock** stond **1,18 km** te ver noord (op de I-10-knoop). Nieuw:
+>   **30.43085, -91.20823** (OSM way 1465620640, satelliet-gelegd + 876 AIS-pings <50 m).
+>
+> **Drie plekken zijn NIET gevonden en worden niet verzonnen:** het uitgaande AAM-laaddock bij
+> Syrah (z19 is de fijnste Esri-korrel en toont geen perron — been 6 begint daarom bij de
+> **poort**), en **beide docks bij Panasonic De Soto**. Die laatste faalden op de
+> **opnamedatum**, niet op het zoekwerk: de nieuwste opname is nog de bouwfase terwijl de
+> fabriek sinds juli 2025 draait — de **Shed 8-8-klasse**. De Soto krijgt dus **één
+> terreinanker** in plaats van de twee ankers die §2b eist, en de lijn eindigt **443 m** vóór
+> het terrein op het routeerpunt (rotonde Astra Parkway), want over de weg is het terrein niet
+> bereikbaar. Dat is anker ≠ routeerpunt, geen tekortkoming — maar het is er ook geen losplek
+> door geworden.
+>
+> **Wat de kaart nu tekent:** 10 benen · **21.478 km** · 32.630 punten · 9 markers.
+> Been 3 en 4 zijn eindelijk **gesplitst** (waren samengeklapt tot één binnenvaartbeen van
+> 404 km zonder overslag); de barge vaart nu aantoonbaar door de sluis het zijkanaal in —
+> gemeten: 13 m van het routeerpunt, 18 m langs de sluis. Been 5 verliest zijn stippel: de
+> last mile ligt op echte weg (**2,3 km**, niet de ~4 km uit EA-2181 — die waarde is op geen
+> enkele route reproduceerbaar).
+>
+> **Corridors b7 en b8 zijn AFGELEID, niet gedocumenteerd.** Geen bron beschrijft deze ritten.
+> Ze zijn afgeleid uit het aangewezen vrachtnet en de brugbeperkingen — welke route een 53-ft
+> trailer legaal én fysiek kan rijden. Voor b7 blijft een **reëel alternatief** staan dat 6%
+> **korter** is (US-65 door de Ozarks); dat is verworpen op de vrachtnet-aanwijzing en niet op
+> lengte. Voor b8 is de **modaliteit zelf** een werkaanname: intermodaal spoor is niet
+> uitgesloten, en als dat omslaat vervangt het de héle lijn.
+>
+> **Bak-recept vastgelegd** in `v2/tools/bak_stromen.sh` — het openstaande projectpunt "de
+> bak-commando's staan nergens" is voor deze stroom dicht. Meteen bleek waarom dat nodig was:
+> het wegbeen Balama→Nacala op schijf was **niet meer wat zijn eigen generator maakt**
+> (502,7 → 497,9 km; `snoei_keerlussen` kwam er op 30-07 bij en raakt ook dit been).
+
 
 **Keten in één zin:** vlokconcentraat in 1-t-zakken per **truck** van de Balama-plant over de
 N380/N1 naar Nacala (containerisering bij Grindrod), per **containerschip** om de Kaap (hub
@@ -356,8 +411,8 @@ IRMT-ligplaats vaststaat
 | 5 | ±160,8 | Gramercy — Veterans Memorial Bridge | passage | 30.058, -90.698 | [B-afgeleid] | aannemelijk |
 | 6 | 173,6 | Donaldsonville | passage | 30.101, -90.985 | [B9] | bevestigd |
 | 7 | ±208,5 | Plaquemine | passage | 30.288, -91.233 | [B28] | aannemelijk |
-| 8 | 228,3–228,4 | **Port Allen Lock** + Baton Rouge-gage — afslag GIWW; de ENIGE sluis in de keten (GIWW-zijde, niet de rivier) | kruising / sluis | 30.4415, -91.2075 | [B10][B12] | bevestigd |
-| 9 | — | **IRMT Port Allen** — losplek been 3 = beladingspunt been 4 (container-op-barge); GIWW-kanaalzijde direct west van de Port Allen Lock | overslag | 30.432, -91.222 | [B13][B14] | terminal bevestigd, **kade nog niet (§5)** |
+| 8 | 228,3–228,4 | **Port Allen Lock** + Baton Rouge-gage — afslag GIWW; de ENIGE sluis in de keten (GIWW-zijde, niet de rivier) | kruising / sluis | 30.43085, -91.20823 | [B10][B12] | bevestigd |
+| 9 | — | **IRMT Port Allen** — losplek been 3 = beladingspunt been 4 (container-op-barge); GIWW-kanaalzijde direct west van de Port Allen Lock | overslag | 30.43313, -91.24383 | [B13][B14] | terminal bevestigd, **kade nog niet (§5)** |
 
 **Negatieve ankers been 3** (gelden ook voor been 4):
 
@@ -383,13 +438,13 @@ rivier [B1].
 | 3 | Partijen op deze plek | **SEACOR AMH**, gevestigd op de **Inland Rivers Marine Terminal** van de Port of Greater Baton Rouge: 84 acre aan een bargekanaal langs de GIWW bij de kruising met de Mississippi, **bargekade van 200 ft**, containeryard van 9 acre, ro/ro-ramp, spooraansluiting [B13][B14] |
 | 4 | Welke hoort bij déze stroom | SEACOR AMH — de barge-train Port Allen ↔ Memphis rijdt er al; EA-2181 wijst dit beladingspunt aan [B1][B14] |
 | 5 | Welke kade | **de terminal staat vast, de meter kade niet** — de port-eigen pagina geeft geen adres of coördinaat |
-| 6 | Coördinaat + satelliet | 30.432, -91.222 (terrein-niveau). Het punt ligt bínnen de bbox van de AIS-track-graaf [29.4, -92.2, 32.2, -89.4] → volgende stap is het **dok-bewijs uit trackuiteinden** (dezelfde toets die bij de Syrah-kade 55 eindigende tracks vond), níet een nieuwe z16-ronde. Tot die er is: **open ligplaats** op de bol (`v2/data/ankercheck.json`) |
+| 6 | Coördinaat + satelliet | 30.43313, -91.24383 (terrein-niveau). Het punt ligt bínnen de bbox van de AIS-track-graaf [29.4, -92.2, 32.2, -89.4] → volgende stap is het **dok-bewijs uit trackuiteinden** (dezelfde toets die bij de Syrah-kade 55 eindigende tracks vond), níet een nieuwe z16-ronde. Tot die er is: **open ligplaats** op de bol (`v2/data/ankercheck.json`) |
 
 | # | rol | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | aankomst been 3 | IRMT — kade (shuttle-barge of truckgate) | losplek | 30.432, -91.222 | [B13][B14] | terminal bevestigd, kade open (§5) |
+| 1 | aankomst been 3 | IRMT — kade (shuttle-barge of truckgate) | losplek | 30.43313, -91.24383 | [B13][B14] | terminal bevestigd, kade open (§5) |
 | 2 | terrein | containeryard 9 acre + ro/ro-ramp | verwerkingsstap | — | [B13] | bevestigd |
-| 3 | vertrek been 4 | IRMT — bargekade 200 ft (SEACOR-train) | laadplek | 30.432, -91.222 | [B13][B14] | terminal bevestigd, kade open (§5) |
+| 3 | vertrek been 4 | IRMT — bargekade 200 ft (SEACOR-train) | laadplek | 30.43313, -91.24383 | [B13][B14] | terminal bevestigd, kade open (§5) |
 
 **Wat de productvorm uitsluit:** deepsea-kades (boven mijl 232,4 komt geen zeeschip [B16]);
 de graanelevators van Baton Rouge (bulk).
@@ -407,14 +462,14 @@ rivier-routeerpunt bij mijl 359, snap ~0,40 km (meting `hecht_marnet`: Vidalia 1
 
 | # | mijl | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | — | **IRMT Port Allen** — vertrek barge-train (zie overslag O4) | laadplek | 30.432, -91.222 | [B13][B14] | terminal bevestigd, kade open |
-| 2 | 228,3–228,4 | **Port Allen Lock** — terug de rivier op (zelfde, enige sluis) | sluis | 30.4415, -91.2075 | [B10][B12] | bevestigd |
+| 1 | — | **IRMT Port Allen** — vertrek barge-train (zie overslag O4) | laadplek | 30.43313, -91.24383 | [B13][B14] | terminal bevestigd, kade open |
+| 2 | 228,3–228,4 | **Port Allen Lock** — terug de rivier op (zelfde, enige sluis) | sluis | 30.43085, -91.20823 | [B10][B12] | bevestigd |
 | 3 | 232,4 | Deep-draft-grens (einde 50-ft Ship Channel; daarboven 12-ft duwvaart) | referentie | 30.46, -91.19 | [B16][B17] | bevestigd |
 | 4 | ±265,5 | St. Francisville / Bayou Sara | passage | 30.776, -91.375 | [B28] | aannemelijk |
 | 5 | 302,4 | Red River Landing | referentie | 30.96, -91.66 | [B11] | bevestigd |
 | 6 | 304 | **Old River Lock** — ingang zijkanaal Atchafalaya/Red; wordt GEPASSEERD, niet geschut | passage | 31.077, -91.668 | [B18] | bevestigd |
 | 7 | 311–319 | Old River Control-complex (rechteroever) | passage | 31.076, -91.599 | [B19] | bevestigd |
-| 8 | **359** | **Port of Vidalia** — gedocumenteerde losplek (cargo ramp + t-dock; slack-water slip 31.53788, -91.48535 in aanbouw sinds Q1 2025) | losplek | 31.538, -91.485 | [B1][B3][B4] | haven bevestigd, **kade nog niet (§5)** |
+| 8 | **359** | **Port of Vidalia** — gedocumenteerde losplek (cargo ramp + t-dock; slack-water slip 31.53788, -91.48535 in aanbouw sinds Q1 2025) | losplek | 31.53645, -91.48255 | [B1][B3][B4] | haven bevestigd, **kade nog niet (§5)** |
 | 9 | ±363–364 | **Terral RiverService-fleeting** (ex-Vidalia Dock & Storage), boven de brug — het punt waar onze AIS-toets en `?v=091` eindigden; barge-activiteit reëel, maar NIET de gedocumenteerde Syrah-losplek | referentie (niet aan lijn) | 31.568, -91.416 | [B23][B24] | aannemelijk |
 | 10 | ±363 | Natchez–Vidalia Bridge / Natchez-gage 363,3 — ligt BOVEN de losplek (mijl 359): de gedocumenteerde route passeert de brug niet, alleen de (afgewezen) fleeting-variant komt erlangs | referentie (niet aan lijn) | 31.559, -91.413 | [B28] | bevestigd |
 
@@ -429,13 +484,13 @@ rivier-routeerpunt bij mijl 359, snap ~0,40 km (meting `hecht_marnet`: Vidalia 1
 | 3 | Partijen op deze plek | **Port of Vidalia**: aan LA-131, ~2,5 mijl ten zuiden van de stad, mijl 359 AHP, vaardiepte 12 ft, 75 acre binnen een industriepark van 275 acre. De **bestaande** eerste fase is een **cargo ramp voor aggregaat** plus een **t-dock met transportband voor droge bulk** [B1][B3] |
 | 4 | Welke hoort bij déze stroom | de haven zelf; EA-2181 wijst hem aan als losplek [B1] |
 | 5 | Welke kade | ⚠️ **Dat is een spanning die de productvraag zichtbaar maakt, geen detail:** deze stroom is containervormig [B1], en een t-dock met transportband voor droge bulk lost geen containers. Ofwel de containers gaan over de cargo ramp/ro-ro, ofwel de werkelijke losplek is een andere kade aan die oever (de slip in aanbouw [B4]). Dat is een vraag aan de brief, niet aan de satelliet |
-| 6 | Coördinaat + satelliet | 31.538, -91.485 (haven-niveau) — kade open; binnen de AIS-bbox → **dok-bewijs uit trackuiteinden** (§5); tot dan open ligplaats op de bol (`v2/data/ankercheck.json`) |
+| 6 | Coördinaat + satelliet | 31.53645, -91.48255 (haven-niveau) — kade open; binnen de AIS-bbox → **dok-bewijs uit trackuiteinden** (§5); tot dan open ligplaats op de bol (`v2/data/ankercheck.json`) |
 
 | # | rol | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | aankomst been 4 | Port of Vidalia — loskade (cargo ramp / ro-ro / slip) | losplek | 31.538, -91.485 | [B1][B3][B4] | haven bevestigd, kade open (§5) |
+| 1 | aankomst been 4 | Port of Vidalia — loskade (cargo ramp / ro-ro / slip) | losplek | 31.53645, -91.48255 | [B1][B3][B4] | haven bevestigd, kade open (§5) |
 | 2 | terrein | laydown/omslag containers → chassis | verwerkingsstap | — | [B1] | aannemelijk |
-| 3 | vertrek been 5 | truckbelading haventerrein | laadplek | 31.538, -91.485 | [B1] | terrein-niveau, exacte plek open (§5) |
+| 3 | vertrek been 5 | truckbelading haventerrein | laadplek | 31.53645, -91.48255 | [B1] | terrein-niveau, exacte plek open (§5) |
 
 **Wat de productvorm uitsluit:** het t-dock met transportband (droge bulk) voor déze
 containervormige stroom; het Terral-fleeting-punt boven de brug is barge-activiteit maar
@@ -453,7 +508,7 @@ ligplaats vaststaat (§5)
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | Port of Vidalia — truckbelading (zie overslag O5) | losplek/laadplek | 31.538, -91.485 | [B1][B3] | kade open (§5) |
+| 1 | 0 | Port of Vidalia — truckbelading (zie overslag O5) | losplek/laadplek | 31.53645, -91.48255 | [B1][B3] | kade open (§5) |
 | 2 | — | LA-131 (havenuitrit → noord) | passage | — | [B1] | aannemelijk |
 | 3 | — | fabriekspoort — omgeving D.A. Biglane Rd × LA-131 (exact punt: z16-pass, §5) | poort | — | [B1] | aannemelijk |
 | 4 | ~1–4 | **Syrah-fabriek Vidalia** — losplek op het terrein; de fabriek ligt ~4 km landinwaarts van de rivier (NW-hoek D.A. Biglane Rd × LA-131) | losplek | 31.54660, -91.48870 | [B1] | bevestigd · ankercheck 2026-07-28 doorstaan |

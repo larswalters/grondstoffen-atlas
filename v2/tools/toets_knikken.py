@@ -54,8 +54,40 @@ def peiling(a, b):
         math.cos(la1) * math.sin(la2) - math.sin(la1) * math.cos(la2) * math.cos(dl)))
 
 
+# ⚠️ NIET ELKE OMKERING IS EEN FOUT — toegevoegd 2026-08-04.
+# Deze toets is geboren op SPOOR, waar een trein niet kan omkeren, dus daar is
+# elke hoek >= 150° per definitie verzonnen geometrie. Op weg en water ligt dat
+# anders: een lus op een klaverblad, een duwstel dat in een DOODLOPEND zijkanaal
+# omdraait (Port Allen IRMT) en een sluispassage zijn echte 180°-bochten. Bij de
+# grafietbake van 2026-08-04 sprongen de omkeringen 12 → 28 en dat leek een
+# regressie; gemeten bleken 3 van de 6 op de truckbenen echte artefacten en de
+# rest werkelijkheid.
+#
+# HET ONDERSCHEID IS MEETBAAR. Neem een venster van ±VENSTER punten om de knik
+# en deel de afgelegde lijn door de hemelsbrede afstand. Een echte bocht komt
+# ergens uit (verhouding ~1,0-2,0); een TERUGLOOP legt dezelfde weg terug en
+# blijft dus ter plaatse (gemeten: 3,0 bij North Little Rock, 10,2 bij Napoleon
+# Avenue). Alleen die tweede soort hoort gerepareerd te worden.
+TERUGLOOP_V = 2.2
+VENSTER = 8
+
+
+def terugloop_verhouding(punten, i, venster=VENSTER):
+    """pad / hemelsbreed over een venster om punt i. Hoog = loopt terug."""
+    s = max(0, i - venster)
+    e = min(len(punten) - 1, i + venster)
+    if e - s < 2:
+        return 1.0
+    pad = sum(gc_km(punten[j], punten[j + 1]) for j in range(s, e))
+    recht = gc_km(punten[s], punten[e])
+    return pad / recht if recht > 1e-6 else 99.0
+
+
 def knikken(punten):
-    """[(hoek, boogstraal_m, punt)] voor elke richtingswissel >= KNIK_GR."""
+    """[(hoek, boogstraal_m, punt, verhouding)] per richtingswissel >= KNIK_GR.
+
+    `verhouding` wordt alleen berekend voor echte omkeringen (duur genoeg om
+    niet voor elke spike te doen) en is 1.0 voor de rest."""
     uit = []
     for i in range(1, len(punten) - 1):
         d1 = gc_km(punten[i - 1], punten[i]) * 1000.0
@@ -70,7 +102,8 @@ def knikken(punten):
         kort = min(d1, d2)
         straal = (kort / (2.0 * math.sin(math.radians(hoek) / 2.0))
                   if hoek < 179.0 else 0.0)
-        uit.append((hoek, straal, punten[i]))
+        v = terugloop_verhouding(punten, i) if hoek >= OMKEER_GR else 1.0
+        uit.append((hoek, straal, punten[i], v))
     return uit
 
 
@@ -86,7 +119,7 @@ def main():
     if not paden:
         sys.exit("geen stroomroute-*.json in v2/data — niets te toetsen")
 
-    tot_knik = tot_omkeer = 0
+    tot_knik = tot_omkeer = tot_terug = 0
     for pad in paden:
         d = json.load(open(pad, encoding="utf-8"))
         print(f"\n=== {os.path.basename(pad)}  (gebakken {d.get('gemaakt', '?')})")
@@ -96,20 +129,26 @@ def main():
                 continue                   # een stippel is per definitie recht
             ks = knikken(pts)
             omk = [k for k in ks if k[0] >= OMKEER_GR]
+            terug = [k for k in omk if k[3] >= TERUGLOOP_V]
             tot_knik += len(ks)
             tot_omkeer += len(omk)
-            vlag = "  <-- OMKERING" if omk else ""
+            tot_terug += len(terug)
+            vlag = "  <-- TERUGLOOP" if terug else ""
             print(f"  [{been['modaliteit']:<12}] {been.get('km', 0):8.1f} km · "
                   f"{len(pts):5d} pt · knikken {len(ks)} · omkeringen "
-                  f"{len(omk)}{vlag}")
-            for hoek, straal, p in sorted(ks, key=lambda x: -x[0]):
-                soort = ("OMKERING" if hoek >= OMKEER_GR
-                         else "spike" if straal < MIN_BOOG_M else "krappe bocht")
+                  f"{len(omk)} (waarvan terugloop {len(terug)}){vlag}")
+            for hoek, straal, p, v in sorted(ks, key=lambda x: -x[0]):
+                if hoek >= OMKEER_GR:
+                    soort = (f"TERUGLOOP (v={v:.1f})" if v >= TERUGLOOP_V
+                             else f"scherpe bocht, echt (v={v:.1f})")
+                else:
+                    soort = "spike" if straal < MIN_BOOG_M else "krappe bocht"
                 print(f"        {hoek:5.1f} gr · R {straal:7.0f} m · "
                       f"{p[1]:.5f},{p[0]:.5f} · {soort}")
 
     print(f"\nTOTAAL: {tot_knik} knikken >= {KNIK_GR:.0f} gr, waarvan "
-          f"{tot_omkeer} omkeringen >= {OMKEER_GR:.0f} gr")
+          f"{tot_omkeer} omkeringen >= {OMKEER_GR:.0f} gr, "
+          f"waarvan {tot_terug} TERUGLOOP (de enige die gerepareerd horen te worden)")
     if args.max_omkering is not None and tot_omkeer > args.max_omkering:
         sys.exit(f"FAAL: {tot_omkeer} omkeringen, toegestaan {args.max_omkering}")
 

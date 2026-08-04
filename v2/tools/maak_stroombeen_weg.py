@@ -159,12 +159,183 @@ PROFIELEN = {
         "vensterKm": 40,
         "uit": "stroombeen-greenbushes-bunbury.geojson",
     },
+
+    # ── Routebrief grafiet-balama-vidalia, benen 5-8 (2026-08-04) ──────────
+    # De keten van mijn tot eindproduct: last mile in Vidalia, en daarna fase
+    # D en E over de weg naar Kansas en Arizona. ⚠️ Die twee lange benen
+    # worden getekend terwijl het VOLUME VANDAAG NUL is (besluit Lars): de weg
+    # is gemeten, de lading nog niet. Dat verschil hoort in de brief en de
+    # node-note te staan, NIET in de lijnstijl — stippel betekent in dit
+    # project precies één ding: hier reikt het net niet (werkwijze §7).
+    "grafiet-vidalia-lastmile": {
+        "via": [
+            ("Port of Vidalia — apron/cargo ramp", (-91.48255, 31.53645)),
+            ("Syrah AAM-fabriek",                  (-91.48870, 31.54660)),
+        ],
+        "id": "gr-vidalia-lastmile",
+        "naam": "Port of Vidalia → Syrah AAM-fabriek (haventoegangsweg → LA-131 → D.A. Biglane Rd)",
+        "extracts": ["us-louisiana"],
+        "refs": ["131"],
+        # ⚠️ `track` erbij: het beslissende eerste stuk (1,2 km havengrindweg)
+        # draagt in OSM highway=track. Zonder deze klasse houdt het wegnet op
+        # bij LA-131 en blijft er een rechte stub van ~800 m naar de kade over.
+        "eindKlassen": ("track", "residential", "service", "tertiary", "unclassified"),
+        "gepubliceerdKm": 2.34,
+        "bronnoot": "eigen Dijkstra over us-louisiana (2026-08-04); de EA-waarde ~4 km "
+                    "is niet reproduceerbaar — noch vanaf de kade, noch vanaf de apron",
+        "vensterKm": 8,
+        "uit": "stroombeen-vidalia-lastmile.geojson",
+    },
+    # ⚠️ Kop = de FABRIEKSPOORT, niet het laaddock. Dat uitgaande dock is op
+    # z19 (de fijnste Esri-korrel) niet aanwijsbaar en wordt niet verzonnen.
+    "grafiet-vidalia-us84": {
+        "via": [
+            ("Syrah fabriekspoort (front gate)", (-91.48743, 31.54796)),
+            ("D.A. Biglane Rd × LA-131",         (-91.48503, 31.54530)),
+            ("LA-131 × US-84, Vidalia",          (-91.42737, 31.56647)),
+        ],
+        "id": "gr-vidalia-us84",
+        "naam": "Syrah-poort → D.A. Biglane Rd → LA-131 → US-84 (Vidalia)",
+        "extracts": ["us-louisiana"],
+        "refs": ["131", "84", "425"],
+        "gepubliceerdKm": 6.98,
+        "bronnoot": "gemeten over de OSM-geometrie 2026-08-04; de brief-waarde '~3 km' "
+                    "klopt op geen enkele route. Alternatief Airport Road × US-84 "
+                    "(-91.49884, 31.58728) is 5,46 km maar over tertiary — welke een "
+                    "15-meter-trekker rijdt is onbekend (openstaand punt, geen stille keuze)",
+        "vensterKm": 10,
+        "uit": "stroombeen-vidalia-us84.geojson",
+    },
+    "grafiet-vidalia-desoto": {
+        "via": [
+            ("LA-131 × US-84 Vidalia",       (-91.42737, 31.56647)),
+            ("Ferriday US-84 × US-425",      (-91.55496, 31.62988)),
+            ("Clayton US-425 × US-65",       (-91.53933, 31.71575)),
+            ("Winnsboro LA",                 (-91.72011, 32.16365)),
+            ("US-425 × I-20 (Rayville)",     (-91.75873, 32.45759)),
+            ("Bastrop LA",                   (-91.91330, 32.77830)),
+            ("grens LA/AR op US-425",        (-91.85428, 33.01773)),
+            ("Hamburg AR US-425 × US-82",    (-91.79763, 33.22426)),
+            ("Monticello AR",                (-91.80229, 33.62908)),
+            ("Pine Bluff AR — US-425→I-530", (-91.97206, 34.19938)),
+            ("Little Rock I-530 × I-30",     (-92.26239, 34.75377)),
+            ("N. Little Rock — I-40 ná I-30", (-92.25901, 34.77865)),
+            ("Conway AR I-40 × US-65",       (-92.43278, 35.10847)),
+            ("Russellville AR",              (-93.13381, 35.30431)),
+            ("Alma AR I-40 × I-49",          (-94.22110, 35.48987)),
+            ("Fayetteville AR",              (-94.20248, 36.07410)),
+            ("I-49 Bella Vista Bypass",      (-94.31479, 36.42399)),
+            ("grens AR/MO op I-49",          (-94.38238, 36.49919)),
+            # ⚠️ KNOOPPUNT-VIA'S LIGGEN NÁ DE AFSLAG, NIET OP HET KRUIS.
+            # Gemeten 2026-08-04: op het kruis zelf snapt de via op de
+            # dichtstbijzijnde rijbaanvertex, en die kan ACHTER de reisrichting
+            # liggen — de router rijdt er dan voorbij en keert om (Joplin
+            # 177,1° · N. Little Rock 163,6° · Lenexa 163,4°). Geen afrit-fout
+            # (`projecteer_viapunten.py` vond de rijbaan op 17-41 m) maar een
+            # overschiet-en-terug. Punten daarom 300-500 m vóóruit gelegd op de
+            # weg waarover de reis verdergaat.
+            ("Joplin MO — I-49 ná I-44",     (-94.40691, 37.06809)),
+            ("Nevada MO",                    (-94.32405, 37.83875)),
+            ("Harrisonville MO I-49 × MO-7", (-94.35536, 38.63849)),
+            ("Kansas City I-49 → I-435",     (-94.52622, 38.87285)),
+            ("grens MO/KS op I-435",         (-94.60790, 38.93691)),
+            ("Lenexa KS — K-10 ná I-435",    (-94.77794, 38.94231)),
+            ("De Soto K-10 × Lexington Ave", (-94.96651, 38.96023)),
+            # ⚠️ DE LIJN EINDIGT OP HET ROUTEERPUNT, NIET OP HET TERREINANKER.
+            # Gemeten 2026-08-04: er is géén wegpad van deze rotonde naar
+            # (-95.00240, 38.93815) — de terreinways liggen op een eigen
+            # component achter het hek. Dat is geen tekortkoming maar de
+            # anker≠routeerpunt-regel (§2b, zoals Napoleon Ave 154 m): het
+            # De Soto-anker is een TERREINanker, want de docks zijn niet
+            # gelegd (de Esri-opname is nog de bouwfase). Het reststukje van
+            # ~0,4 km wordt als kmAanloopNaar gerapporteerd en NIET getekend.
+            ("Astra Parkway — rotonde",      (-95.00748, 38.94196)),
+        ],
+        "id": "gr-vidalia-desoto",
+        "naam": "Syrah Vidalia → Panasonic De Soto (US-84/US-425 → I-530 → I-40 → I-49 → I-435 → K-10)",
+        "extracts": ["us-louisiana", "us-arkansas", "us-missouri", "us-kansas"],
+        # ⚠️ "71" bewust NIET: die trok de eerste meetronde 26 km over het OUDE
+        #    US-71-tracé door Bella Vista i.p.v. de I-49-bypass (open sinds
+        #    01-10-2021). Verklikker na de bake: raakt de lijn (-94.27, 36.48)
+        #    binnen 4 km, dan is de ref-voorkeur er alsnog ingetrapt.
+        "refs": ["84", "425", "15", "530", "30", "40", "49", "435", "10"],
+        "gepubliceerdKm": 1160,
+        "bronnoot": "eigen corridormeting over de vier extracts 2026-08-04 (1.150,8 km net "
+                    "+ last miles); GEEN bron documenteert deze rit. Het reële alternatief "
+                    "(US-65 Ozarks + MO-13/MO-7, 1.084 km = 6% korter) is verworpen op "
+                    "NHFN-aanwijzing, wegvorm en reistijd — niet op lengte",
+        "vensterKm": 40,
+        "uit": "stroombeen-vidalia-desoto.geojson",
+    },
+    "grafiet-desoto-casagrande": {
+        "via": [
+            # ⚠️ Begint op hetzelfde ROUTEERPUNT waar b7 eindigt (zie daar):
+            # het terreinanker (-95.00240, 38.93815) is niet over de weg
+            # bereikbaar, en de keten hoort aaneengesloten te zijn op de weg,
+            # niet op de fabrieksstip.
+            ("Astra Parkway — rotonde",       (-95.00748, 38.94196)),
+            ("K-10 bij Astra Enterprise Pk",  (-95.00128, 38.96127)),
+            # ⚠️ ná de afslag op K-7 zuidwaarts, zie de noot bij b7
+            ("K-7 ná K-10 (zuidwaarts)",       (-94.85257, 38.93759)),
+            ("K-7 × I-35 Olathe",             (-94.81556, 38.85570)),
+            ("Ottawa KS",                     (-95.23252, 38.61673)),
+            ("Emporia KS",                    (-96.17126, 38.41520)),
+            ("El Dorado KS",                  (-96.88661, 37.83253)),
+            ("Wichita I-35 × I-135",          (-97.25057, 37.66449)),
+            ("grens KS/OK op I-35",           (-97.34227, 36.99998)),
+            ("Oklahoma City I-35 × I-40",     (-97.47233, 35.46346)),
+            ("El Reno OK",                    (-97.95474, 35.50142)),
+            ("Elk City OK",                   (-99.38886, 35.40230)),
+            ("grens OK/TX (Texola)",          (-100.00030, 35.22709)),
+            ("Amarillo TX",                   (-101.84663, 35.19435)),
+            ("grens TX/NM (Glenrio)",         (-103.04184, 35.18275)),
+            ("Tucumcari NM",                  (-103.72533, 35.15164)),
+            ("Santa Rosa NM",                 (-104.67828, 34.94713)),
+            ("Albuquerque — the Big I",       (-106.62715, 35.10581)),
+            ("Grants NM",                     (-107.85370, 35.14434)),
+            ("Gallup NM",                     (-108.74265, 35.53078)),
+            ("grens NM/AZ (Lupton)",          (-109.04522, 35.36509)),
+            ("Holbrook AZ",                   (-110.15960, 34.91178)),
+            ("Winslow AZ",                    (-110.68421, 35.02900)),
+            ("Flagstaff I-40 × I-17",         (-111.66233, 35.17225)),
+            ("Camp Verde AZ",                 (-111.88437, 34.57713)),
+            ("Cordes Junction AZ",            (-112.12685, 34.30821)),
+            ("Black Canyon City AZ",          (-112.14221, 34.06746)),
+            ("Phoenix — the Split I-17×I-10", (-112.04809, 33.42724)),
+            ("I-10 × I-8",                    (-111.68375, 32.81949)),
+            ("I-8 afrit 172 Thornton Road",   (-111.77458, 32.82817)),
+            ("Lucid AMP-1 — westpoort",       (-111.78238, 32.85035)),
+            ("Lucid AMP-1 — dockrij",         (-111.78008, 32.85724)),
+        ],
+        "id": "gr-desoto-casagrande",
+        "naam": "Panasonic De Soto → Lucid AMP-1 (K-10/K-7 → I-35 → I-40 → I-17 → I-10 → I-8)",
+        "extracts": ["us-kansas", "us-oklahoma", "us-texas", "us-new-mexico", "us-arizona"],
+        # ⚠️ "10" staat er twee keer in de werkelijkheid: K-10 in Kansas en I-10
+        #    in Arizona. De ref-voorkeur is zacht (factor 3), maar buigt de lijn
+        #    ergens raar af, dan is dit de eerste verdachte.
+        "refs": ["10", "7", "35", "40", "17", "8"],
+        "gepubliceerdKm": 2230,
+        "bronnoot": "eigen corridormeting 2026-08-04 (grootcirkelsom 2.147 km over 31 punten "
+                    "+ ~4%); geen bron documenteert de vervoerswijze — truck is werkaanname, "
+                    "intermodaal spoor is niet uitgesloten",
+        "vensterKm": 40,
+        "uit": "stroombeen-desoto-casagrande.geojson",
+    },
 }
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).
 # weg_houden() krijgt alleen tags, dus de straal-beperking gebeurt geometrisch
 # ná land_laad; de tag-verruiming zelf is een runtime-patch op fetch_landnet.
-EIND_KLASSEN = ("residential", "service", "tertiary", "unclassified")
+#
+# ⚠️ PER PROFIEL OVERSCHRIJFBAAR via de sleutel "eindKlassen" (2026-08-04). Nodig
+# omdat de last mile in Vidalia begint met 1,2 km havengrindweg die in OSM
+# `highway=track` heet; zonder die klasse reikt het wegnet niet tot de kade en
+# houd je een rechte stub van ~800 m over. De DEFAULT-tuple blijft ongewijzigd,
+# en dat is geen netheid maar een vereiste: het corridor-id dat de scan ziet
+# hasht de eindklassen mee (zie main()), dus een profiel zónder deze sleutel
+# houdt exact dezelfde cachevingerafdruk en levert byte-identieke uitvoer.
+EIND_KLASSEN_DEFAULT = ("residential", "service", "tertiary", "unclassified")
+EIND_KLASSEN = EIND_KLASSEN_DEFAULT     # wordt per profiel gezet in _kies_profiel
 EIND_STRAAL_KM = 12.0
 
 TOLERANTIE = 0.10                   # de brief-toets: ±10%
@@ -225,9 +396,10 @@ def snoei_keerlussen(pts, drempel_m=25.0):
 def _kies_profiel(naam):
     """Zet de moduleglobals uit een profiel. Eén plek, zodat de rest van het
     bestand (en de bestaande grafiet-bake) letterlijk ongewijzigd blijft."""
-    global VIA_PUNTEN, CORRIDOR, UIT
+    global VIA_PUNTEN, CORRIDOR, UIT, EIND_KLASSEN
     p = PROFIELEN[naam]
     VIA_PUNTEN = p["via"]
+    EIND_KLASSEN = tuple(p.get("eindKlassen", EIND_KLASSEN_DEFAULT))
     CORRIDOR = {
         "id": p["id"],
         "naam": p["naam"],
