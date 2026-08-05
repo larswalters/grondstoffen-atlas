@@ -1,7 +1,43 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet, `?v=106`)*
+*Last updated: 2026-08-05 (laatst: koper fase D op de bol, `?v=107` — en fase E blijkt niet te bestaan)*
 
-## 🔴 NIEUW 2026-08-05 (laatst) — na de eerste complete keten
+## 🔴 NIEUW 2026-08-05 (laatst, 2e sessie) — na de koper-fase-D-ronde
+
+1. **De tweede complete keten wordt NIET koper — kies lithium.** Koper Escondida→Guixi kan de
+   A–E-belofte niet waarmaken: fase D is 613 m en fase E heeft geen gedocumenteerde afnemer.
+   **Lithium benen 5–8** is de enige stroom die het wél kan: gedeblokkeerd sinds beide Chinese
+   fabrieksankers gevonden zijn (Tianqi Jiangsu 32.01218/120.45771 · LG-Huayou Wuxi
+   31.523573/120.475895), allemaal wegbenen, en de keten eindigt in **Tesla Giga Shanghai** —
+   een echte eindfabriek, zoals Lucid bij grafiet. ⚠️ Besluit ligt bij Lars; hij is er in deze
+   sessie niet aan toegekomen.
+
+2. **De kathode-expeditie bij Guixi vraagt een NIET-Esri-bron.** Dit is een **zoomplafond**
+   (Esri heeft daar geen z19), geen opnamedatum en geen zoekprobleem — Wayback heeft dat
+   uitgesloten. Kandidaten: Sentinel-2, een eigen Tianditu-token (CGCS2000 ≈ WGS-84, dus geen
+   datumval), of een bedrijfspublicatie met plattegrond. Zolang hij ontbreekt blijft het
+   procesgat van 0,584 km staan — en dat hoort zo.
+
+3. **Beslis het productconflict bij Beilun: container of bulk?** Het satelliet-gelegde laadspoor
+   is een containeremplacement (78万TEU), de brief zegt "natte bulk in open wagons". Een vraag
+   aan de brief, niet aan de satelliet — beslis hem vóórdat fase C herschreven wordt.
+
+4. **Been-ids ontbreken in álle vijf gebakken stromen** terwijl werkwijze §2 ze eist
+   (`<stroom-id>-b<n>`) en `hecht_marnet route` er geen vlag voor heeft. Daardoor is een been in
+   het gebakken bestand niet terug te vinden in zijn eigen brief. Eén vlag, vijf herbakes.
+
+5. **Dezelfde routeerpunt-behandeling voor de twee andere stromen.** "Been eindigt op zijn
+   routeerpunt en niet op zijn anker" is niet Beilun-specifiek: gemeten gaten
+   `collahuasi-tongling` **1.818 m** en `lithium-greenbushes-zhangjiagang` **4.933 m**.
+
+6. **De bak-recepten van de resterende DRIE stromen** (`collahuasi-tongling`, `lobito-duisburg`,
+   `lithium`) staan nog steeds nergens. Koper is nu dicht; grafiet was het al.
+   ⚠️ Herbak ze niet zonder eerst de huidige uitvoer te bewaren.
+
+7. **`toets_corridor.py` bestaat nog steeds niet** (zie de grafietlijst hieronder). De dekkings-
+   en verklikkertoets is deze ronde opnieuw ad hoc geschreven — nu wél met `knip_osm_been.py`
+   als precedent dat gereedschap in `v2/tools/` hoort.
+
+## 🔴 2026-08-05 (eerder) — na de eerste complete keten
 
 1. **Vraag Lars' check uit.** Zijn oordeel op `?v=106` was *"ziet er goed uit denk ik"* — mild,
    geen enthousiaste go zoals bij eerdere rondes. Vóór de volgende stroom is het de moeite waard

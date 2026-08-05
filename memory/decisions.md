@@ -1,7 +1,42 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct)*
+*Last updated: 2026-08-05 (laatst: koper fase D — en het bewijs dat fase E niet bestaat)*
 
-## 2026-08-05 (laatst) — de eerste keten van mijn tot eindproduct
+## 2026-08-05 (laatst, 2e sessie) — koper fase D
+
+- **2026-08-05 · ✅ BESLUIT LARS — FASE D WORDT GETEKEND MET EEN SUBSTITUUT-KOP.** De
+  kathode-expeditie op het Guixi-complex is niet gevonden, dus de kop van been 5 is het
+  **registerpunt van de smelter**: een verwerkingsknoop, geen laadplek. Zelfde vorm als De Soto
+  in de grafietketen (één terreinanker i.p.v. de twee die §2b eist). **Het procesgat van
+  0,584 km blijft bewust staan** — dat gat *ís* het ontbrekende anker; dichttrekken met een
+  rechte lijn zou de Waalhaven-klasse zijn. Groeit of verschuift het: er is iets mis.
+  Verdwijnt het: de expeditie is gevonden.
+- **2026-08-05 · NIET ELKE STROOM KÁN EEN KETEN TOT EINDPRODUCT WORDEN, en dat vaststellen is
+  een resultaat.** Fase E van koper Escondida→Guixi is niet tekenbaar: geen enkele afnemer van
+  het walsdraad is met naam en adres gedocumenteerd. Een bestemming verzinnen omdat de keten
+  anders kort is, doet dit project niet — een markt-centroïde is expliciet geen anker.
+  Gevolg voor de planning: de tweede complete keten wordt **lithium**, niet koper.
+- **2026-08-05 · EEN SATELLIETPASS KAN OOK FALEN OP EEN ZOOMPLAFOND.** Esri heeft bij Guixi
+  geen z19. Dat is de **derde** faalmodus naast *te nieuw* (Shed 8-8, Bunbury) en *te bewolkt*
+  (Vidalia), en hij is via Wayback expliciet van de opnamedatum onderscheiden. Een negatieve
+  uitslag om deze reden is een uitsluiting, dus een resultaat — geen open zoekopdracht.
+- **2026-08-05 · OVERSCHIET-EN-TERUG BESTAAT OOK OP HET EINDPUNT VAN EEN BEEN.** Een router die
+  op graafknopen eindigt schiet voorbij zijn bestemming zodra de way-vertices grover zijn dan het
+  been lang is (hier: 5 vertices over 2.250 m, dichtstbijzijnde knoop 179 m voorbij de fabriek).
+  Nieuw gereedschap `v2/tools/knip_osm_been.py` knipt één way tussen de projecties van twee
+  ankers — geometrie nog steeds uit OSM, niet uit een oog — en rapporteert zelf
+  **pad ÷ hemelsbreed**. ⚠️ Gebruik het álleen als het been over precies één benoemde way loopt;
+  zodra er een keuze tússen wegen bestaat hoort een Dijkstra die te maken.
+- **2026-08-05 · EEN REGISTERPUNT IS EEN VESTIGING, GEEN DEUR.** Het emissievergunningregister
+  geeft één coördinaat per rechtspersoon en zegt niet welke rol die heeft. Voor een
+  last-mile-lijn wil je de poort, voor een registerknoop het terrein — en dat onderscheid is
+  precies waar fase D van deze keten op stukliep. Opgenomen in het adres-recept.
+- **2026-08-05 · EEN GERECONSTRUEERD BAK-RECEPT ZEGT "DIT COMMANDO PRODUCEERT DAT ARTEFACT",
+  NOOIT "DIT WAS HET COMMANDO".** Vier vrijheidsgraden (`--graaf` mississippi of rijn ·
+  `--spoor-geojson` of `--been-geojson` · `--naar` op anker of routeerpunt · één stap of twee)
+  geven een byte-identiek bestand. Die zin hoort in de kop van elk gereconstrueerd recept, anders
+  leest het straks als een gearchiveerd origineel.
+
+## 2026-08-05 (eerder) — de eerste keten van mijn tot eindproduct
 
 - **2026-08-05 · ✅ BESLUIT LARS — FASE D EN E WORDEN GETEKEND HOEWEL HET VOLUME NUL IS.**
   Balama ligt stil, "Graphite Shipped to Vidalia" was in 2025 nul, t/m Q2 2026 alleen ~150 t

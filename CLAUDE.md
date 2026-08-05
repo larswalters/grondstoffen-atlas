@@ -1,5 +1,81 @@
+> **🟠 KOPER TOT DE WALSDRAADFABRIEK — EN HET BEWIJS DAT FASE E NIET BESTAAT, LIVE `?v=107`
+> (2026-08-05, LAATSTE).** Commits `24a9c8d` (bouw) · `b9fd005` (docs).
+>
+> **9 benen · 19.826,6 km · 3.233 punten · 6 markers.** De koperketen Escondida → Guixi loopt nu
+> door voorbij de smelter tot de eigen walsdraadfabriek van 江西铜业铜材有限公司. Werkorder:
+> `v2/design/werkorder-koper-guixi-de.md` (uitkomst van een ankerronde met 14 agents — zes
+> zoeklijnen, elk met een eigen weerlegger; **drie sneuvelden** en staan voluit in sectie F).
+>
+> **⚠️ DE BELANGRIJKSTE UITKOMST IS NEGATIEF: FASE E BESTAAT NIET.** Er is geen enkele afnemer van
+> dit walsdraad met naam en adres. De enige kandidaat brak bij de weerlegging op een
+> **entiteitsfout**: het gevonden CSRC-toezichtstuk documenteert een **kathode**-relatie, niet een
+> walsdraad-afzet, en de tegenpartij is een ándere rechtspersoon (江铜华东（浙江）铜材) **508 km**
+> oostwaarts in Zhejiang. Het beargumenteerde stoppunt van de brief blijft dus staan en is nu
+> **sterker** onderbouwd. **Niet elke stroom kán een keten tot eindproduct worden — dat vaststellen
+> is een resultaat, geen mislukking.** Gevolg voor de planning: de tweede complete keten wordt
+> **lithium** (benen 5–8, eindigt in Tesla Giga Shanghai), niet koper.
+>
+> **✅ BESLUIT LARS — FASE D WORDT GETEKEND MET EEN SUBSTITUUT-KOP.** De kathode-expeditie is niet
+> gevonden, dus de kop van been 5 is het **registerpunt van de smelter** (28.33227, 117.22545) en
+> de staart het registerpunt van de walsdraadfabriek (28.33180, 117.21919, 冶金大道 **19**号 —
+> niet 15, dat is het hoofdkantooradres). Zelfde vorm als De Soto in de grafietketen: één
+> terreinanker in plaats van de twee die §2b eist. **Het procesgat van 0,584 km blijft bewust
+> staan — dat gat ÍS het ontbrekende anker**; dichttrekken zou de Waalhaven-klasse zijn. Groeit of
+> verschuift het: er is iets mis. Verdwijnt het: de expeditie is gevonden.
+> **Doorgetrokken, niet gestippeld** — gemeten reikt het net tot op **8 m**.
+>
+> **⚠️ EEN SATELLIETPASS KAN OOK FALEN OP EEN ZOOMPLAFOND.** De expeditie is onvindbaar omdat
+> **Esri bij Guixi geen z19 heeft** (`Map data not yet available`, door drie agents onafhankelijk
+> gereproduceerd) — via Wayback expliciet onderscheiden van een opnamedatum-probleem. Dat is de
+> **derde** faalmodus naast *te nieuw* (Shed 8-8, Bunbury) en *te bewolkt* (Vidalia), en hij vraagt
+> een andere vervolgstap: niet een andere release maar een andere **bron**.
+>
+> **⚠️ OVERSCHIET-EN-TERUG BESTAAT OOK OP HET EINDPUNT VAN EEN BEEN — NIEUW `knip_osm_been.py`.**
+> `maak_stroombeen_weg.py` routeert over een graaf waarvan de knopen de OSM-way-vertices zijn; de
+> interne hoofdas `way/1462532976` heeft er **5 over 2.250 m**, en de dichtstbijzijnde knoop bij de
+> fabriek ligt **179 m westelijker**. De eerste bake reed dus 792 m **voorbij** de poort en keerde
+> in een rechte stub terug (1,01 km, lengtetoets **+29,0%**). Dezelfde klasse als de
+> grafiet-via-punten van één dag eerder, maar op het **eindpunt** van een been. Geen truck rijdt
+> langs de poort heen om te keren — het is de korrel van onze eigen graaf. Het nieuwe tool knipt
+> **één way tussen de projecties van twee ankers** (geometrie nog steeds uit OSM, niet uit een oog
+> — de Tongling-regel) en rapporteert zelf **pad ÷ hemelsbreed**, zodat die klasse niet meer stil
+> kan passeren. Uitkomst: **613 m**, aanlopen 43/8 m, −1,2%. ⚠️ Alleen gebruiken als het been over
+> precies één benoemde way loopt; zodra er een keuze tússen wegen bestaat hoort een Dijkstra die te
+> maken.
+>
+> **✅ DE OVERSLAG BEILUN HEEFT EINDELIJK TWEE ANKERS (werkwijze §2b).** Het gat van **2.379 m**
+> bleek geen fout uiteinde maar **één aansluiting die twee kanten op snapte**: 1.269 m de geul in
+> én 1.272 m het spoor op. Drie korte stippelbenen ertussen (haven-aanloop 1,27 · transportband
+> 1,22 · ertsveld→laadspoor 0,27 km) plus het nieuwe anker `cu-beilun-laadspoor` (北仑港站,
+> 29.92653/121.87308, z19) brengen het naar **198 m** — en dat is gewoon *anker ≠ routeerpunt*.
+> ⚠️ **Open conflict:** wat daar satelliet-gelegd is, is een **container**emplacement (78万TEU)
+> terwijl ladder L3 van de brief "natte bulk in open wagons" zegt. Geografisch waterdicht,
+> inhoudelijk voorwaardelijk — een vraag aan de brief, niet aan de satelliet.
+>
+> **HET BAK-RECEPT VAN DEZE STROOM STAAT NU VAST** (`bak_stromen.sh`, éénstaps). ⚠️ **Gereconstrueerd,
+> niet teruggevonden:** vier vrijheidsgraden geven een byte-identiek bestand (`--graaf` mississippi
+> of rijn · `--spoor-geojson` of `--been-geojson` · `--naar` op anker of routeerpunt · één stap of
+> twee). Het bewijs is *"dit commando produceert dat artefact"*, nooit *"dit was het commando"*.
+> Nog open: de recepten van `collahuasi-tongling`, `lobito-duisburg` en `lithium`.
+>
+> **GEMETEN:** gaten `0·0·0·0·0·0·0,198·0,584 km` (precies één benoemde uitzondering) · markers
+> alle **≤ 1 m** van de lijn, punt-tot-**segment** · `aansluitingen.json` 25 → **27** met geen
+> enkele bestaande plek verschoven (0,0 m) · `toets_knikken` 157 → 159 knikken, omkeringen **25**
+> en terugloop **3 ongewijzigd**, de vier andere stromen **letterlijk identiek** in de diff ·
+> `stroombeen-vidalia-lastmile.geojson` **byte-identiek** na het toevoegen van het profiel ·
+> de OSM-claim onafhankelijk nagemeten (43,1 m resp. 8,0 m van de twee registerpunten).
+> ⚠️ Correctie op de oudere banner hieronder: die noemt voor deze stroom nog *"leiding 154 → zee
+> 19.104 → trein 551 = 19.809 km"* (stand `?v=099`); sinds de 1-op-1-spoorbake van 29-07 is het
+> spoorbeen **565,8 km** en het totaal 19.823,1 → nu **19.826,6 km**.
+>
+> **→ VOLGENDE:** **lithium benen 5–8** als tweede complete keten (besluit Lars staat open) · de
+> kathode-expeditie via een niet-Esri-bron · het productconflict container-vs-bulk beslissen ·
+> **been-ids ontbreken in álle vijf** gebakken stromen (werkwijze §2 eist ze, `hecht_marnet route`
+> heeft er geen vlag voor) · dezelfde routeerpunt-behandeling voor `collahuasi-tongling` (1.818 m)
+> en `lithium` (4.933 m) · de drie ontbrekende bak-recepten.
+
 > **🔋→🚗 DE EERSTE KETEN VAN MIJN TOT EINDPRODUCT — GRAFIET BALAMA → CASA GRANDE,
-> LIVE `?v=106` (2026-08-05, LAATSTE).** Commits `48afcf4` (§6b lithium) · `a68fd0b` (de keten).
+> LIVE `?v=106` (2026-08-05, EERDER).** Commits `48afcf4` (§6b lithium) · `a68fd0b` (de keten).
 > Lars' check: *"ziet er goed uit denk ik"* — mild, geen enthousiaste go.
 >
 > **10 benen · 21.478 km · 32.630 punten · 9 markers.** Van de Balama-plant in Mozambique tot de
@@ -478,7 +554,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet Balama → Casa Grande, live ?v=106)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-05 (laatst: koper fase D op de bol, live ?v=107 — en het bewijs dat fase E van die stroom niet bestaat)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2752,6 +2828,26 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-05 (2e sessie) · ✅ BESLUIT LARS — FASE D MET EEN SUBSTITUUT-KOP** — waar de echte
+  laadplek niet te vinden is mag een been aanhechten op een satelliet-gelegd **registerpunt**,
+  mits het verschil als **procesgat** in de kaart blijft staan (koper 贵冶 584 m, grafiet De Soto
+  443 m). Dat gat *ís* het ontbrekende anker; dichttrekken is de Waalhaven-klasse.
+- **2026-08-05 (2e sessie) · NIET ELKE STROOM KÁN EEN KETEN TOT EINDPRODUCT WORDEN** — fase E van
+  koper Escondida→Guixi is niet tekenbaar (geen afnemer met naam en adres; de enige kandidaat brak
+  op een entiteitsfout). Onderzoek fase E vóórdat je een stroom als "tot eindproduct" belooft; de
+  tweede complete keten wordt daarom **lithium**, niet koper.
+- **2026-08-05 (2e sessie) · EEN SATELLIETPASS KAN FALEN OP EEN ZOOMPLAFOND** — de derde faalmodus
+  naast *te nieuw* en *te bewolkt*: Esri heeft er geen z19. Vraagt een andere **bron**, niet een
+  andere release. Via Wayback te onderscheiden van een opnamedatum-probleem.
+- **2026-08-05 (2e sessie) · OVERSCHIET-EN-TERUG BESTAAT OOK OP HET EINDPUNT VAN EEN BEEN** — een
+  router die op graafknopen eindigt schiet voorbij zodra de way-vertices grover zijn dan het been
+  lang is. Nieuw `v2/tools/knip_osm_been.py` knipt één way tussen twee projecties en rapporteert
+  pad ÷ hemelsbreed. Alleen bij één benoemde way; anders hoort een Dijkstra te kiezen.
+- **2026-08-05 (2e sessie) · EEN REGISTERPUNT IS EEN VESTIGING, GEEN DEUR** — het
+  emissievergunningregister geeft één coördinaat per rechtspersoon en zegt niet welke rol die
+  heeft. Voor een last-mile-lijn wil je de poort, voor een registerknoop het terrein.
+- **2026-08-05 (2e sessie) · EEN GERECONSTRUEERD BAK-RECEPT ZEGT "DIT COMMANDO PRODUCEERT DAT
+  ARTEFACT", NOOIT "DIT WAS HET COMMANDO"** — vier vrijheidsgraden gaven byte-identieke uitvoer.
 - **2026-08-05 · ✅ BESLUIT LARS — FASE D/E TEKENEN BIJ VOLUME NUL** — de weg is gemeten, de
   lading nog niet; het verschil hoort in de tekst en de node-noten, **niet in de lijnstijl**
   (stippel blijft voorbehouden aan *hier reikt het net niet*).

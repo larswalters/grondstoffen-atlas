@@ -1,7 +1,37 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-08-05 (nieuw: te strenge meetlat, generator-drift #3, drie terugloopjes)*
+*Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
 
-## ⚠️ OPEN 2026-08-05 (laatst) — drie terugloopjes in de grafietketen
+## ⚠️ OPEN 2026-08-05 (laatst, 2e sessie) — koper: drie punten die niet dicht zijn
+
+1. **De kathode-expeditie op het 贵冶-complex is niet gevonden — en dat is een ZOOMPLAFOND, geen
+   zoekprobleem.** Esri heeft bij Guixi geen z19 (`Map data not yet available`, drie agents
+   onafhankelijk); via Wayback is uitgesloten dat het aan de opnamedatum ligt, en geen enkele bron
+   koppelt 电解车间 of 成品库 aan een gebouw. Gevolg: de kop van been 5 is een substituut en er
+   staat een bewust **procesgat van 0,584 km**. Vervolgweg: een niet-Esri-bron (Sentinel-2,
+   Tianditu-token, of een bedrijfspublicatie met plattegrond).
+2. **PRODUCTCONFLICT BIJ BEILUN — container of bulk?** Wat op 北仑港站 satelliet-gelegd is, is een
+   **container**emplacement (78万TEU, vier rail-mounted portaalkranen, containerwagons), terwijl
+   ladder L3 van de routebrief zegt: *concentraat, natte bulk in open wagons*. Twee onafhankelijke
+   agents zagen hetzelfde beeld. `cu-beilun-laadspoor` is dus **geografisch waterdicht en
+   inhoudelijk voorwaardelijk**. Dit is een vraag aan de brief, niet aan de satelliet — beslis hem
+   vóórdat fase C herschreven wordt.
+3. **Twee tegenstrijdige kandidaten voor het terreincentrum van 铜材公司.** Het registerpunt ligt
+   tússen twee aangrenzende blokken; welk blok de walsdraadfabriek is, is op z18 niet te beslissen.
+   Voor de lijn maakt het niet uit (het aansluitpunt op de hoofdas is gelegd), voor een
+   registerknoop wel — daarom is er bewust géén node in `data/copper.js` bijgekomen.
+
+## ⚠️ OPEN 2026-08-05 — structureel, raakt alle vijf de stromen
+
+- **Been-ids ontbreken in álle vijf gebakken stromen** terwijl werkwijze §2 ze eist
+  (`<stroom-id>-b<n>`) en `hecht_marnet route` er geen vlag voor heeft. De brieven dragen ze wel,
+  de uitvoer niet — dus is een been in het gebakken bestand niet terug te vinden in zijn brief.
+- **"Been eindigt op zijn routeerpunt en niet op zijn anker" is niet Beilun-specifiek.** Gemeten
+  gaten die op dezelfde behandeling wachten: `collahuasi-tongling` **1.818 m** en
+  `lithium-greenbushes-zhangjiagang` **4.933 m**.
+- **De bak-recepten van drie stromen staan nog steeds nergens** (`collahuasi-tongling`,
+  `lobito-duisburg`, `lithium`). ⚠️ Herbak ze niet zonder eerst de huidige uitvoer te bewaren.
+
+## ⚠️ OPEN 2026-08-05 (eerder) — drie terugloopjes in de grafietketen
 
 Van de 25 omkeringen zijn er **3 een echte terugloop** (de lijn legt dezelfde weg terug):
 

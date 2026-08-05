@@ -1,8 +1,75 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-08-05 (laatst) - Koper Escondida → Guixi: fase D op de bol, en het bewijs dat fase E niet bestaat
 
-## 2026-08-05 (laatst) - De eerste keten van mijn tot eindproduct: grafiet Balama → Casa Grande
+Lars gaf de grafietketen zijn go (*"we komen bij die fabrieken aan over de weg en ik zie weinig
+foutjes... dit is zo wel goed"*) en vroeg dezelfde behandeling voor koper, *"want die gaat nu
+dacht ik tot de eerste raffinaderij"*. Dat klopte precies: fase A–C stond, fase D/E waren concept
+met **nul satelliet-gelegde ankers** — er was letterlijk niets om op te tekenen.
+
+**De ankerronde (14 agents, zes zoeklijnen met elk een eigen weerlegger) hield drie lijnen
+overeind en brak er drie.** Dat de gebroken lijnen voluit in sectie F van de werkorder staan in
+plaats van stilzwijgend te verdwijnen, is de hele reden dat die weerleggingsronde bestaat.
+
+**⚠️ DE BELANGRIJKSTE UITKOMST IS NEGATIEF: fase E bestaat niet.** Er is geen enkele afnemer
+van het Guixi-walsdraad met naam en adres. De enige kandidaat brak op een **entiteitsfout** — het
+gevonden CSRC-toezichtstuk documenteert een **kathode**-relatie, niet een walsdraad-afzet, en de
+tegenpartij is een ándere rechtspersoon (江铜华东（浙江）铜材) 508 km oostwaarts in Zhejiang.
+Daarmee is aangetoond dat **niet elke stroom een keten tot eindproduct kán worden**. Het
+beargumenteerde stoppunt van de brief blijft staan en is nu sterker onderbouwd dan voorheen.
+
+**✅ Besluit Lars: fase D wordt getekend met een substituut-kop.** De kathode-expeditie is niet
+gevonden, dus de kop van been 5 is het **registerpunt van de smelter** — zelfde vorm als De Soto
+in de grafietketen (één terreinanker i.p.v. de twee die §2b eist). Het **procesgat van 0,584 km**
+blijft bewust staan: dat gat *ís* het ontbrekende anker, en het dichttrekken zou de
+Waalhaven-klasse zijn. Doorgetrokken en niet gestippeld, want gemeten reikt het net tot op **8 m**.
+
+**⚠️ Nieuwe faalmodus van de satellietpass: een ZOOMPLAFOND.** De expeditie is niet gevonden
+omdat **Esri bij Guixi geen z19 heeft** (`Map data not yet available`, door drie agents
+onafhankelijk gereproduceerd) — via Wayback expliciet onderscheiden van een opnamedatum-probleem.
+Dat is de derde faalmodus naast *te nieuw* (Shed 8-8) en *te bewolkt* (Vidalia).
+
+**⚠️ En het bestaande gereedschap brak, op een manier die precies één dag eerder al was
+benoemd.** `maak_stroombeen_weg.py` routeert over een graaf waarvan de knopen de OSM-way-vertices
+zijn; de interne hoofdas `way/1462532976` heeft er **5 over 2.250 m**, en de dichtstbijzijnde
+knoop bij de fabriek ligt **179 m westelijker**. De eerste bake reed dus 792 m **voorbij** de
+poort en keerde in een rechte stub terug — 1,01 km, lengtetoets **+29,0%**. Dat is
+**overschiet-en-terug**, dezelfde klasse als bij de grafiet-via-punten, maar nu op het **eindpunt**
+van een been. Geen truck rijdt langs de poort heen om te keren; het is de korrel van onze eigen
+graaf. Opgelost met nieuw gereedschap **`v2/tools/knip_osm_been.py`** — één way, twee ankers, geen
+routering: beide ankers loodrecht projecteren en het stuk ertussen uitknippen. De geometrie komt
+daarmee nog steeds uit OSM en niet uit een oog (de Tongling-regel), en het tool rapporteert zelf
+**pad ÷ hemelsbreed** zodat die klasse niet meer stil kan passeren. Uitkomst: **613 m**, aanlopen
+43/8 m, −1,2%.
+
+**✅ De overslag Beilun heeft eindelijk zijn twee ankers.** Het gat van **2.379 m** bleek geen
+fout uiteinde maar één aansluiting die twee kanten op snapte: 1.269 m de geul in én 1.272 m het
+spoor op. Met drie korte stippelbenen ertussen (haven-aanloop 1,27 · transportband 1,22 ·
+ertsveld→laadspoor 0,27 km) en het nieuwe anker `cu-beilun-laadspoor` (北仑港站, z19) zakt het
+naar **198 m** — en dat is gewoon *anker ≠ routeerpunt*. ⚠️ Open conflict: wat daar
+satelliet-gelegd is, is een **container**emplacement terwijl ladder L3 "natte bulk in open wagons"
+zegt. Geografisch waterdicht, inhoudelijk voorwaardelijk — een vraag aan de brief.
+
+**Adrescorrectie:** de walsdraadfabriek staat op 冶金大道 **19**号, niet 15 (dat is het
+hoofdkantooradres van groep/beursvennootschap). Gevonden via het nationale
+emissievergunningregister — hetzelfde recept als de lithium-fabrieksankers.
+
+**Gemeten, niet aangenomen:** 9 benen / 19.826,6 km / 3.233 punten / 6 markers · gaten
+`0·0·0·0·0·0·0,198·0,584 km` met precies één benoemde uitzondering · markers alle ≤ 1 m van de
+lijn (punt-tot-**segment**) · `aansluitingen.json` 25 → 27 met geen enkele bestaande plek
+verschoven · `toets_knikken` 157 → 159 knikken, omkeringen **25** en terugloop **3 ongewijzigd**,
+de vier andere stromen letterlijk identiek in de diff · `stroombeen-vidalia-lastmile.geojson`
+byte-identiek na het toevoegen van het profiel · de OSM-claim onafhankelijk nagemeten (43,1 m
+resp. 8,0 m). Het **bak-recept** van deze stroom staat nu in `bak_stromen.sh` — met de eerlijke
+aantekening dat vier vrijheidsgraden byte-identieke uitvoer geven: **gereconstrueerd, niet
+teruggevonden**.
+
+Live `?v=107`, commits `24a9c8d` (bouw) + `b9fd005` (docs). Volledig verhaal:
+`v2/design/werkorder-koper-guixi-de.md` + [[2026-08-05-grondstoffen-atlas-koper-fase-d]].
+
+
+## 2026-08-05 (eerder) - De eerste keten van mijn tot eindproduct: grafiet Balama → Casa Grande
 
 Lars opende met *"waar waren we"*, maar zijn eigenlijke punt was schaal: niet blijven hangen in
 perfectie, door naar meerdere stromen, dán de echte visuals. Ik stelde voor de visuele laag naar

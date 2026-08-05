@@ -1,7 +1,34 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet, `?v=106`)*
+*Last updated: 2026-08-05 (laatst: koper fase D, `?v=107` — en de ontdekking dat niet elke stroom een eindproduct haalt)*
 
-## Stand 2026-08-05 (laatst) — een keten is pas af als hij bij het eindproduct uitkomt
+## Stand 2026-08-05 (laatst, 2e sessie) — niet elke stroom kán een keten tot eindproduct worden
+
+De grafietketen zette de maatstaf (*komt de lijn uit bij het ding dat je in je hand houdt*).
+De koperronde leverde het **tegenvoorbeeld**, en dat verandert hoe we stromen kiezen:
+
+1. **Onderzoek of fase E bestaat vóórdat je een stroom als "keten tot eindproduct" belooft.**
+   Koper Escondida→Guixi haalt het niet: de kathode gaat naar de walsdraadfabriek 613 m verderop,
+   en dáárna is er geen enkele afnemer met naam en adres. Dat is geen tekortkoming van het
+   zoekwerk maar een eigenschap van de markt — walsdraad waaiert uit over honderden kabelmakers.
+   **Een negatief antwoord is hier net zo bruikbaar als een lijn**, mits het onderbouwd is.
+2. **De pilotset-volgorde is hiermee gewijzigd.** "Koper is het goedkoopst" klopte qua ankerwerk,
+   maar niet qua opbrengst. De tweede complete keten wordt **lithium** (eindigt in Tesla Giga
+   Shanghai). Kolen en diamant zijn nog ongewogen op dit criterium.
+3. **Een substituut-anker mag, mits het gat blijft staan.** Waar de echte laadplek niet te vinden
+   is, mag een been op een satelliet-gelegd **registerpunt** aanhechten — maar het verschil tussen
+   dat punt en de echte laadplek wordt niet weggepoetst: het blijft als **procesgat** in de kaart
+   staan, met zijn maat in de brief. Dat gat *ís* het ontbrekende anker (grafiet: De Soto, 443 m;
+   koper: 贵冶, 584 m).
+4. **De satellietpass kent nu drie faalmodi**, en ze vragen verschillende vervolgstappen:
+   *te nieuw* (het gebouw bestaat nog niet op de opname — wacht of zoek Wayback), *te bewolkt*
+   (zoek een andere release), en nieuw: **een zoomplafond** (Esri heeft er simpelweg geen z19 —
+   dan helpt geen enkele release en moet je van bron wisselen).
+5. **Gereedschap dat op één modaliteit is geijkt, breekt op een andere schaal.** `toets_knikken`
+   was op spoor geijkt en te streng op weg; `maak_stroombeen_weg` is op corridors van honderden
+   kilometers geijkt en schiet voorbij zijn doel zodra het been korter is dan de knoop-korrel.
+   Verwacht deze klasse; meet het eindproduct, niet de meetlat.
+
+## Stand 2026-08-05 (eerder) — een keten is pas af als hij bij het eindproduct uitkomt
 
 **De grafietketen is de eerste die de A–E-belofte helemaal waarmaakt**: 10 benen, 21.478 km,
 van de Balama-plant tot de laaddeur van Lucid in Casa Grande. Daarmee verschuift de maatstaf
