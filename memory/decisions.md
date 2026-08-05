@@ -1,7 +1,41 @@
 # Decisions — Grondstoffen Atlas
 *Last updated: 2026-08-05 (laatst: koper fase D — en het bewijs dat fase E niet bestaat)*
 
-## 2026-08-05 (laatst, 3e ronde) — het leidingtracé Escondida → Coloso
+## 2026-08-05 (laatst, 4e ronde) — de verdachtenlijst afgewerkt
+
+- **2026-08-05 · "GEEN AIS" ZEGT NIETS OVER OF DE GEOMETRIE BESTAAT.** Het Wesel-vak stond als
+  rechte lijn van 47,3 km omdat er geen AIS-dekking is (0 van 35.237 tracks — gemeten, dat
+  klopt). Maar de Rijn ligt daar volledig in OSM; de rechte lijn lag er tot **7,26 km** vanaf.
+  Letterlijk dezelfde denkfout als "geen `substance=slurry`" → "geen tracé": **de afwezigheid
+  van één soort bewijs werd gelezen als de afwezigheid van alle bewijs.** Vraag bij elke
+  stippel apart: (a) reikt het NET hier niet, en (b) is de GEOMETRIE onbekend? Dat zijn twee
+  vragen.
+- **2026-08-05 · SCHEMATISCH MAG NIET DOOR LAND.** De haven-aanlopen van Nacala en Coloso liepen
+  respectievelijk **17,5 km (14%)** en **2,1 km (3%)** over land. "Schematisch" mag betekenen
+  *we kennen de vaargeul niet*; het mag niet betekenen *de lijn gaat door een schiereiland*.
+  Opgelost als kortste pad over water met de bewezen M23-machinerie
+  (`bake_marnet.detour`), niet met nieuw gebouwde routering.
+- **2026-08-05 · NIEUWE VLAG `--stippel-geojson`: BETERE GEOMETRIE, ONGEWIJZIGDE KENNISCLAIM.**
+  Een over-water berekende aanloop kruist geen land meer, maar blijft een *berekend* pad — we
+  weten dát het water is, niet waar het schip vaart. Zo'n been HOUDT zijn stippel. Zonder die
+  vlag zou een geometrische verbetering stilzwijgend een kennisclaim worden, en dat is precies
+  de vervaging die werkwijze §7 verbiedt. Wesel is het tegenvoorbeeld: die staat wél
+  doorgetrokken, want daar ÍS de lijn gekarteerd.
+- **2026-08-05 · EEN EIGEN MEETFOUT: DE DATUMGRENS.** De landkruising-toets interpoleerde
+  lineair in lengtegraad en veegde bij een ±180-sprong dwars over de wereld — het zeebeen
+  Coloso → Beilun (Chili → China over de Grote Oceaan) meldde 4,9 km "land" **bij Frankfurt**.
+  Met een doorlopend lon-frame zakt dat been van 6,37 naar 1,46 km. Zelfde valkuil als de 15
+  dubbele ±180-knopen in MARNET (M23). ⚠️ Elke toets die punten interpoleert heeft dit.
+- **2026-08-05 · `--graaf` IS NIET VRIJ BIJ koper-lobito-duisburg** — het moet `rijn` zijn. Met
+  `mississippi` snapt het Emmerich-punt 108,9 km weg en wordt het Rijnbeen 249,8 km dóór het
+  IJsselmeer i.p.v. 161,1 km over tracks. Bij escondida bleef die vrijheidsgraad open; hier is
+  hij dichtgemeten. Een gereconstrueerd recept wordt sterker naarmate je méér alternatieven
+  hebt uitgesloten.
+- **2026-08-05 · DE LANDKRUISING-TOETS GELDT ALLEEN VOOR ZEEBENEN.** Een binnenvaartbeen ligt
+  per definitie binnen het landvlak (de Mississippi-delta scoort 188 van 191 km). Zonder dat
+  onderscheid produceert de toets vals alarm op precies de benen die het goed doen.
+
+## 2026-08-05 (3e ronde) — het leidingtracé Escondida → Coloso
 
 - **2026-08-05 · ZOEK OP DE GEOMETRIE, NIET OP DE TAG DIE JE VERWACHT.** De conclusie "het
   Escondida-tracé staat niet in OSM" kwam uit een zoekactie op `substance=slurry`. Breder

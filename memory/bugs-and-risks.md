@@ -1,6 +1,23 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
 
+## ✅ OPGELOST 2026-08-05 (4e ronde) — drie van de vier verdachten
+
+`toets_rechte_benen.py` gaf vier rechte benen ≥ 25 km; **drie zijn vervangen door echte
+geometrie**, de vierde blijft terecht staan.
+
+| been | was | is | bewijs |
+|---|---|---|---|
+| Wesel-vak (Lobito→Duisburg) | 47,3 km recht | **66,6 km echte Rijnloop**, 164 punten | 12 gestikte `waterway=river`-ways op gedeelde node-ids; uiteinden op 87 en 36 m |
+| haven-aanloop Nacala (grafiet) | 122,3 km, **17,5 km over land** | **152,1 km over water**, 113 punten | 0,00 km land midden op de lijn |
+| haven-aanloop Coloso (koper) | 85,1 km, **2,1 km over land** | **87,8 km over water**, 84 punten | 0,00 km land midden op de lijn |
+| haven-aanloop Patache | 77,9 km recht | **blijft** | kruist géén land — de eerlijke eindvorm |
+
+**Wat blijft staan en waarom dat gEEN bevinding is:** de landtoets licht ook op bij benen die
+bewust een rivier op varen — Southwest Pass→New Orleans (188 van 191 km), de Maasmond bij
+Rotterdam (33,7 km) en de aanloop van Ningbo (1,5 km). Dat zijn de M23-geclassificeerde
+`binnenwater`/`aanloop`-edges: een rivier ligt per definitie binnen het landvlak.
+
 ## ⚠️ OPEN 2026-08-05 (verdachtenlijst) — drie rechte stippels die tóch werkelijkheid verbergen
 
 Uitkomst van `v2/tools/toets_rechte_benen.py`, gebouwd na de Escondida-leiding. **Goede
