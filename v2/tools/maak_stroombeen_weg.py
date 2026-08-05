@@ -321,6 +321,38 @@ PROFIELEN = {
         "vensterKm": 40,
         "uit": "stroombeen-desoto-casagrande.geojson",
     },
+
+    # ── Routebrief koper-escondida-guixi, fase D (2026-08-05) ─────────────
+    # De interne overbrenging van kathode naar de eigen walsdraadfabriek, over
+    # de as die het officiële terreinplan (赣环监字（2017）第S007号, fig. 3-1)
+    # als 物流主轴线 tekent: OSM way 1462532976, highway=service, 2.250 m,
+    # géén access-tag. Onafhankelijk nagemeten 2026-08-05 (Overpass + lokale
+    # extract): 43,1 m van het smelter-registerpunt, 8,0 m van het
+    # walsdraad-registerpunt, 613 m tussen de twee projecties.
+    # ⚠️ DE KOP IS EEN SUBSTITUUT. Het registerpunt van de smelter is NIET de
+    #    kathode-expeditie; die is niet gevonden (brief §5.5) omdat Esri bij
+    #    Guixi geen z19 heeft. Zodra ze gevonden is schuift dit via-punt
+    #    daarheen en verdwijnt het procesgat van 0,54 km naar het spoorbeen.
+    #    Dat gat IS het ontbrekende anker en wordt niet dichtgetrokken.
+    # ⚠️ eindKlassen BEWUST NIET GEZET: de default-tuple bevat `service` al, en
+    #    het corridor-id hasht de eindklassen mee — de default ongewijzigd
+    #    laten garandeert dat de vier bestaande profielen byte-identiek blijven.
+    "koper-guixi-fase-d": {
+        "via": [
+            ("贵溪冶炼厂 — registerpunt (substituut-kop)", (117.22545, 28.33227)),
+            ("江西铜业铜材有限公司 — registerpunt",         (117.21919, 28.33180)),
+        ],
+        "id": "cu-guixi-fase-d",
+        "naam": "kathode 贵冶 → walsdraadfabriek 铜材公司 (闪速大道 / 物流主轴线)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 0.62,
+        "bronnoot": "eigen meting 2026-08-05 over OSM way 1462532976 (highway=service, "
+                    "2.250 m, geen access-tag, 8,0 m resp. 43,1 m van de twee "
+                    "registerpunten); geen bron publiceert deze afstand",
+        "vensterKm": 3,
+        "uit": "stroombeen-guixi-fase-d.geojson",
+    },
 }
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).

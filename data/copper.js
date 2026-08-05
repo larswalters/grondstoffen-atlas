@@ -165,7 +165,7 @@ REGISTER({
     { id: "cu-ref-jiangxi", type: "refinery", name: "Jiangxi Copper (Guixi)", country: "China",
       lat: 28.30, lon: 117.20, tier: 1, operator: "Jiangxi Copper",
       capacity: "grootste smelter ter wereld (~1.200 kt/j)",
-      note: "De spil van de Chinese smelttrechter; draait op geïmporteerd Andes- en Indonesisch concentraat plus schroot." },
+      note: "De spil van de Chinese smelttrechter; draait op geïmporteerd Andes- en Indonesisch concentraat plus schroot. Op hetzelfde terrein (冶金大道 19号) staat de eigen walsdraadfabriek 江西铜业铜材有限公司 — 370 kt/j Φ8 mm walsdraad + 120 kt/j getrokken draad uit 贵冶牌-kathode, 615 m van het registerpunt van de smelter; dát is de eerste bestemming van de kathode (fase D van de routebrief). ⚠️ Die 370/120 kt zijn kt PRODUCT, niet kt Cu-inhoud zoals de rest van dit bestand — voor walsdraad (≥99,9% Cu) vrijwel gelijk, maar niet dezelfde eenheid. Straatniveau: aansluiting cu-guixi-walsdraad (28.33180/117.21919); dit register-punt blijft bewust op wereldschaal staan. ⚠️ Niet te verwarren met 江西铜业集团铜材有限公司, een andere rechtspersoon 1,75 km OZO." },
     { id: "cu-ref-tongling", type: "refinery", name: "Tongling", country: "China",
       lat: 30.95, lon: 117.82, tier: 1, operator: "Tongling Nonferrous",
       note: "Tweede Chinese reus (Anhui, aan de Yangtze); importeert concentraat via de oostkusthavens." },

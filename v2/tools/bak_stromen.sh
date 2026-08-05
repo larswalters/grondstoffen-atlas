@@ -73,13 +73,71 @@ bak_grafiet() {
     --titel  "Grafiet · Balama → Vidalia → De Soto → Casa Grande"
 }
 
-# ⚠️ OPENSTAAND: de recepten van de vier ANDERE stromen (koper ×3, lithium)
-# staan hier nog NIET. Die zijn gebakken vóór dit bestand bestond en hun
-# vlaggen leven nog in een shell-historie. Reconstrueer ze bij de eerstvolgende
-# herbake van elk — en herbak ze niet zonder eerst de huidige uitvoer te bewaren,
-# want net als bij Balama→Nacala kan het gereedschap intussen veranderd zijn.
+# ── koper · Escondida → Puerto Coloso → Beilun → 贵溪 → walsdraadfabriek
+# Routebrief: v2/design/routebrieven/koper-escondida-guixi.md (fasen A–D)
+# Werkorder:  v2/design/werkorder-koper-guixi-de.md
+#
+# ⚠️ GERECONSTRUEERD 2026-08-05, NIET TERUGGEVONDEN. Dit commando REPRODUCEERT
+#    de uitvoer van 29 juli; het is niet aantoonbaar hét commando van 29 juli.
+#    Vier vrijheidsgraden geven een byte-identiek bestand (--graaf mississippi
+#    of rijn · --spoor-geojson of --been-geojson · --naar op het anker of op
+#    het routeerpunt · één stap of twee). Het bestand op schijf onderscheidt ze
+#    niet. Het bewijs is "dit commando produceert dat artefact", nooit "dit was
+#    het commando".
+# ⚠️ ÉÉNSTAPS. Op 29 juli is eerst gebakken (01:43) en daarna het spoorbeen
+#    vervangen met vervang_spoorbeen.py (16:49) — zichtbaar doordat het veld
+#    `gemaakt` ouder is dan de bestandsdatum. Die tweetraps is niet nodig: het
+#    spoorbeen komt hier rechtstreeks uit de OSM-1-op-1-route als --been-geojson.
+#    ⚠️ vervang_spoorbeen.py NIET meer op deze stroom gebruiken: hij matcht op
+#    MODALITEIT, en sinds 2026-08-05 heeft deze stroom drie `leiding`-benen.
+# ⚠️ --been-geojson voor het spoorbeen en NIET --spoor-geojson: die vlag zet
+#    zijn been altijd achteraan, en dan komt fase D vóór de trein te staan.
+# ⚠️ FASE E ONTBREEKT, EN DAT IS EEN RESULTAAT: er is geen gedocumenteerde
+#    afnemer van dit walsdraad (werkorder §F4/F5). De keten stopt beargumenteerd
+#    bij de walsdraadfabriek.
+# ⚠️ DE KOP VAN FASE D IS EEN SUBSTITUUT: het registerpunt van de smelter, niet
+#    de kathode-expeditie (niet gevonden — Esri heeft bij Guixi geen z19).
+#    Daarom blijft er bewust een PROCESGAT van 0,54 km tussen het spoorbeen en
+#    fase D. Dat gat ís het ontbrekende anker en wordt niet dichtgetrokken.
+bak_koper_escondida() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel "leiding|slurryleiding Escondida → Coloso — tracé NIET in OSM (0 substance=slurry, geen doorlopende dienstweg)|-24.262,-69.06|-23.759,-70.467" \
+    --stippel "leiding|terminalverwerking Coloso (filterfabriek → laadsteiger)|-23.759,-70.467|-23.7569,-70.4652" \
+    --stippel "zee|haven-aanloop Coloso (schematisch — MARNET reikt hier niet)|-23.7569,-70.4652|-23.8,-71.3" \
+    --been    "zee|zeeschip Coloso → Beilun|-23.8,-71.3|29.9364,121.883" \
+    --stippel "zee|haven-aanloop Beilun (MARNET-knoop ligt in de geul, het schip lost aan de berth)|29.9478,121.8837|29.9364,121.883" \
+    --stippel "leiding|transportband losberth → landpunt/ertsveld (eigen terrein, geen net)|29.9364,121.883|29.92742,121.87573" \
+    --stippel "leiding|ertsveld → laadspoor 北仑港站 (eigen terrein, geen net)|29.92742,121.87573|29.92653,121.87308" \
+    --been-geojson "spoor|trein Beilun → Guixi (甬金-vrachtlijn)|$BEEN/spoorroute-nieuw-beilun-guixi.geojson" \
+    --been-geojson "truck|kathode 贵冶 → walsdraadfabriek 铜材公司 (闪速大道)|$BEEN/stroombeen-guixi-fase-d.geojson" \
+    --marker "Escondida — concentrator/indikkers|-24.26200,-69.06000" \
+    --marker "Puerto Coloso — laadsteiger|-23.75690,-70.46520" \
+    --marker "Beilun — ertsterminal, losberth|29.93640,121.88300" \
+    --marker "北仑港站 — laadspoor|29.92653,121.87308" \
+    --marker "Jiangxi Copper Guixi — ertslosbundel|28.32710,117.22600" \
+    --marker "江西铜业铜材有限公司 — walsdraadfabriek (kathode-expeditie open)|28.33180,117.21919" \
+    --routebrief v2/design/routebrieven/koper-escondida-guixi.md \
+    --uit    v2/data/stroomroute-koper-escondida-guixi.json \
+    --stroom koper-escondida-guixi \
+    --titel  "Koper · Escondida → Guixi (China)"
+}
+
+# ⚠️ OPENSTAAND: de recepten van de drie ANDERE stromen (koper Collahuasi→
+# Tongling, koper Lobito→Duisburg, lithium) staan hier nog NIET. Die zijn
+# gebakken vóór dit bestand bestond en hun vlaggen leven nog in een
+# shell-historie. Reconstrueer ze bij de eerstvolgende herbake van elk — en
+# herbak ze niet zonder eerst de huidige uitvoer te bewaren, want net als bij
+# Balama→Nacala kan het gereedschap intussen veranderd zijn.
+#
+# ⚠️ REPRODUCEERBAARHEID IS BEGRENSD DOOR v2/.gitignore (build-cache/): $GRAAF,
+# $MARNET, $NE en alle --been-geojson-bestanden zijn ONGETRACKT. Op een verse
+# clone draait geen van deze recepten. Geldt even hard voor bak_grafiet.
 
 case "${1:-}" in
-  grafiet) bak_grafiet ;;
-  *) echo "gebruik: bash v2/tools/bak_stromen.sh grafiet" >&2; exit 2 ;;
+  grafiet)         bak_grafiet ;;
+  koper-escondida) bak_koper_escondida ;;
+  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida}" >&2; exit 2 ;;
 esac

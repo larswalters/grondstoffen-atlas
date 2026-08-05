@@ -154,8 +154,7 @@
     29.9364
    ],
    "modi": [
-    "zee",
-    "spoor"
+    "zee"
    ],
    "gemeten": {
     "zee": {
@@ -164,17 +163,35 @@
       29.9478
      ],
      "snapKm": 1.27
-    },
+    }
+   },
+   "bron": "SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de losberth met de rode ertslossers; herkomst OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
+   "noot": "De ertsterminal zelf, niet de containerkades ernaast — precies het onderscheid waarvoor deze laag bestaat. ⚠️ 1.219 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring Lars): het OSM-punt lag waar de TRANSPORTBAND aan land komt bij het ertsveld — het eind van de terminal, niet de plek waar het schip ligt. De losberth ligt noordoostelijker in het water. ⚠️ PRIJS VAN DIE CORRECTIE, GEMETEN: de zee-snap wordt beter (2,4 → 1,3 km) maar de SPOOR-snap slechter (0,2 → 1,3 km) — logisch, want de berth ligt in het water en het havenspoor eindigt bij het ertsveld. Eén punt kan niet tegelijk ligplaats én laadspoor zijn; als de spooraanhechting hier gaat knellen hoort dat een eigen aansluiting te worden (§3.4: de last mile is een eigen been), niet een compromis-coördinaat tussen de twee. ⚠️ 2026-08-05: de spoorkant IS een eigen aansluiting geworden (cu-beilun-laadspoor, snap 0,198 km) — precies de tweede aansluiting die deze noot in 2026-07-28 aankondigde. Dit punt is daarmee zee-only."
+  },
+  {
+   "id": "cu-beilun-laadspoor",
+   "grondstof": "copper",
+   "fase": "erts",
+   "rol": "laadplek",
+   "naam": "北仑港站 — laadsporen van het havenstation (Ningbo-Zhoushan)",
+   "plek": [
+    121.87308,
+    29.92653
+   ],
+   "modi": [
+    "spoor"
+   ],
+   "gemeten": {
     "spoor": {
      "bij": [
       121.8738,
       29.9282
      ],
-     "snapKm": 1.27
+     "snapKm": 0.2
     }
    },
-   "bron": "SATELLIET-GELEGD op Esri World Imagery (z16, 2026-07-28) op de losberth met de rode ertslossers; herkomst OSM node '北仑矿石码头', seamark:type=harbour (ODbL)",
-   "noot": "De ertsterminal zelf, niet de containerkades ernaast — precies het onderscheid waarvoor deze laag bestaat. ⚠️ 1.219 m VERPLAATST bij de anker-check van 2026-07-28 (goedkeuring Lars): het OSM-punt lag waar de TRANSPORTBAND aan land komt bij het ertsveld — het eind van de terminal, niet de plek waar het schip ligt. De losberth ligt noordoostelijker in het water. ⚠️ PRIJS VAN DIE CORRECTIE, GEMETEN: de zee-snap wordt beter (2,4 → 1,3 km) maar de SPOOR-snap slechter (0,2 → 1,3 km) — logisch, want de berth ligt in het water en het havenspoor eindigt bij het ertsveld. Eén punt kan niet tegelijk ligplaats én laadspoor zijn; als de spooraanhechting hier gaat knellen hoort dat een eigen aansluiting te worden (§3.4: de last mile is een eigen been), niet een compromis-coördinaat tussen de twee."
+   "bron": "SATELLIET-GELEGD op Esri World Imagery (z19, 0,26 m/px, 2026-08-05): bundel van vijf parallelle sporen met VIER rode rail-mounted portaalkranen en wagons eronder; coördinaat uit zh.wikipedia 北仑港站 (29°55′35,5″N 121°52′23,1″E), 4,5 m van OSM way 1491021972 (ODbL)",
+   "noot": "HET TWEEDE ANKER VAN DE OVERSLAG BEILUN (werkwijze §2b). cu-beilun-kade is de losberth in het water, dit is het laadspoor; één punt kon niet allebei zijn. Dat stond sinds 2026-07-28 als openstaand punt §5.1 in de routebrief en is hiermee dicht. Routeerpunt = het kopeinde van de bundel 29.92820/121.87380 (landnet-knoop 326694, tevens het beginpunt van het gebakken spoorbeen); max snap 0,198 km. ⚠️ DATUMTOETS: as-is ligt het punt 4,5 m van het spoor; gelezen als GCJ-02 en omgerekend verschuift het 485 m NW naar 279,8 m van élk spoor, midden in een containerstapel. WGS-84 wint eenduidig — zelfde uitslag als bij Tianqi Jiangsu (zie v2/design/zoek-chinees-adres-recept.md). ⚠️ PRODUCTCONFLICT, OPEN: wat hier satelliet-gelegd is, is een CONTAINER-emplacement (78万TEU, 中铁联合国际集装箱宁波北仑) terwijl ladder L3 van de brief 'natte bulk in open wagons' zegt. Geografisch waterdicht, inhoudelijk voorwaardelijk — een vraag aan de brief, niet aan de satelliet."
   },
   {
    "id": "cu-lobito-kade",
@@ -402,6 +419,21 @@
    },
    "bron": "SATELLIET-BEVESTIGD op Esri World Imagery (z18, 2026-07-28): parallelle sporen met wagons en twee portaalkranen over een losbunker; herkomst OSM way '贵溪冶炼厂', industrial=processing_plant (ODbL)",
    "noot": "De grootste kopersmelter ter wereld. Ligt 3,8 km noordelijker dan de node-coördinaat in data/copper.js (28,30 / 117,20) — op wereldniveau onzichtbaar, op straatniveau het verschil tussen smelter en veld. ⚠️ DRIFT HERSTELD 2026-07-28: commit 73cf5d2 verplaatste dit punt van het polygoon-middelpunt naar de ertslosbundel, maar alleen in het GEGENEREERDE aansluitingen.json — deze lijst bleef op 117,2257/28,3338 staan, 741 m ernaast. Een regeneratie zou het satelliet-bevestigde punt stil hebben teruggedraaid; daarom staat de waarheid nu hier."
+  },
+  {
+   "id": "cu-guixi-walsdraad",
+   "grondstof": "copper",
+   "fase": "raffinaat",
+   "rol": "losplek",
+   "naam": "江西铜业铜材有限公司 — walsdraadfabriek Guixi (冶金大道 19号)",
+   "plek": [
+    117.21919,
+    28.3318
+   ],
+   "modi": [],
+   "gemeten": {},
+   "bron": "SATELLIET-GELEGD op Esri World Imagery (z18, 0,53 m/px, 2026-08-05). Coördinaat uit het nationale emissievergunningregister permit.mee.gov.cn V3.0, vergunning 913600007363561816001Q (行业类别 铜压延加工): verborgen velden longitude=117.21919 / latitude=28.33180 ÉN opelngd 117/13/9.08 + opelatd 28/19/54.48 — decimaal en DMS komen exact overeen",
+   "noot": "EINDE VAN FASE D: de eerste bestemming van de kathode is de eigen walsdraadfabriek op hetzelfde complex (370 kt/j Φ8 mm walsdraad + 120 kt/j getrokken draad uit 贵冶牌-kathode). Op z18 ligt het punt op de zuidberm van de brede oost-west interne hoofdas (闪速大道 = de 物流主轴线 uit het terreinplan in 赣环监字（2017）第S007号), op de mond van een noord-zuid inrit; ZW ervan een ommuurd blok met sheddak-hal, ZO ervan vier lange donkere hallen. Het is een AANSLUITPUNT op die as, géén poort — op z18 is geen poortgebouw, slagboom of hek-onderbreking zichtbaar. ⚠️ MODI IS BEWUST LEEG. Een weg-aanhechting is hier zinloos: het landnet heeft wereldwijd 1.883 wegknopen en de dichtstbijzijnde ligt op 341,1 km. De interne complexweg zit niet in het landnet, wél in OSM (way 1462532976, highway=service) — daar tekent het bakprofiel koper-guixi-fase-d op. Zelfde rolverdeling als cu-escondida-laad. Bijvangst: er ligt wél een landnet-SPOORknoop op 0,156 km; dat is een MEETRESULTAAT en geen bewijs dat de kathode het spoor op gaat — de modaliteit van de interne overbrenging is niet gedocumenteerd. ⚠️ ADRES: 冶金大道 19号 (registerveld 生产经营场所地址), NIET 15号 zoals de routebrief zei — 15号 is het hoofdkantooradres van groep/beursvennootschap/加工事业部. De collocatie-conclusie klopt, de onderbouwing via 15 niet. ⚠️ NEGATIEF ANKER op 1.749 m OZO: 江西铜业集团铜材有限公司 (28.32956/117.23688) is een ÁNDERE rechtspersoon (USCC 913606817442997892) met een eigen werk en eigen vergunning. Beide dragen 行业类别 铜压延加工 en beide noemen dezelfde 法定代表人 — verwar ze niet."
   },
   {
    "id": "li-gb-laadplek",
