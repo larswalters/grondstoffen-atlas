@@ -1,8 +1,53 @@
 ---
 type: recept
 datum: 2026-08-04
-status: bewezen op twee adressen
+bijgewerkt: 2026-08-05
+status: bewezen op vier adressen (Tianqi Jiangsu · LG-Huayou Wuxi · 江西铜业铜材 Guixi · 贵溪冶炼厂)
 ---
+
+> [!important] BIJGEWERKT 2026-08-05 — VIER CORRECTIES OP HET MEE-RECEPT
+>
+> Het recept is opnieuw gebruikt, nu voor de koperketen Guixi (fase D), en leverde twee nieuwe
+> ankers op: **江西铜业铜材有限公司 28.33180 / 117.21919** (vergunning 913600007363561816001Q)
+> en **贵溪冶炼厂 28.33227 / 117.22545** (vergunning 91360000X12430120H001P). Vier dingen die in
+> de vorige versie fout of onvolledig stonden:
+>
+> 1. **⚠️ HET ENDPOINT IS VERHUISD.** Het pad `xkgg!licenseInformation.action` hieronder is
+>    **dood**. Het werkt nu onder `/perxxgkinfo/`:
+>    `permit.mee.gov.cn/permitExt/**perxxgkinfo**/syssb/xkgg/xkgg!licenseInformation.action`
+>    (register V3.0). Controleer dit pad als eerste als een zoekopdracht niets teruggeeft —
+>    een verhuisd endpoint geeft geen foutmelding maar een leeg resultaat, en dat leest als
+>    "bedrijf niet gevonden".
+> 2. **Zoek op een DEELSTRING van de bedrijfsnaam, niet op de volledige naam.** Chinese
+>    vennootschapsnamen dragen invoegingen die je niet vooraf kent
+>    (江铜华东**（浙江）**铜材有限公司), en een exacte match mist die dan. ⚠️ Een deelstring
+>    geeft ook **valse treffers van naburige rechtspersonen** — bij Guixi leverde 铜材 zowel
+>    江西铜业铜材有限公司 als 江西铜业**集团**铜材有限公司 op, twee ándere bedrijven met
+>    dezelfde 行业类别 én dezelfde 法定代表人. **Controleer altijd de USCC, niet de naam.**
+> 3. **Het `副本` rendert leeg** (blijft op `loading..` staan) — dat is geen fout van jou. Het
+>    **`正本` is wél downloadbaar als PDF** via
+>    `xkgg!downloadFile.action?fileType=fbfile`, en die PDF bevat o.a. het `注册地址`. Bij
+>    Guixi was dát het stuk dat de adrescorrectie 冶金大道 15号 → **19号** hard maakte.
+> 4. **De USCC-controlecijfer-check is te scripten** en scheidt twee bijna gelijke
+>    rechtspersonen zonder mensenogen. Het 18e teken is een controlecijfer over de eerste 17,
+>    met gewichten **`Wi = 3^i mod 31`** (i = 0…16) en het tekenalfabet
+>    `0-9ABCDEFGHJKLMNPQRTUWXY` (zonder I, O, S, V, Z):
+>    `C = 31 − (Σ Wi·Vi mod 31)`, en `31` wordt `0`. Een USCC die faalt is verkeerd
+>    overgetypt; twee USCC's die slagen maar verschillen zijn **twee bedrijven**. Bijvangst
+>    die bij Guixi de doorslag gaf: de **divisiecode** in tekens 3–8 verschilt (360000 =
+>    provinciaal geregistreerd, 360681 = 贵溪市) — dat is een goedkoper onderscheid dan welke
+>    naamvergelijking ook.
+>
+> **Nog steeds waar, en opnieuw bevestigd:** het register geeft de coördinaat **decimaal én in
+> DMS** (`longitude`/`latitude` naast `opelngd/f/m` + `opelatd/f/m`), en die twee kwamen bij
+> beide Guixi-vergunningen exact overeen. En de datumregel hield opnieuw stand: as-is gelezen
+> valt het punt op het terrein, GCJ-02→WGS omgerekend 485 m NW ernaast.
+>
+> ⚠️ **Wat dit recept NIET oplost, en dat is een grens die je vooraf moet kennen:** het register
+> geeft **één punt per vergunning** en dat is de vestiging, geen installatielijst. Bij Guixi is
+> de kathode-**expeditie** daardoor onvindbaar gebleven, en bij Esri bestaat daar geen z19
+> (z19/z20 leveren 2.521 byte placeholder; Wayback-release 64001 is identiek aan live — een
+> **zoomplafond**, geen opnamedatum-probleem). Een registerpunt is een *vestiging*, geen *deur*.
 
 # Recept — een Chinees fabrieksadres naar een WGS-84-coordinaat
 
@@ -56,15 +101,18 @@ Voor de nog ontbrekende locatie (Tianqi Suzhou / LiOH-kavel) en in het algemeen:
 
 **Dit is grotendeels machinaal te doen, mits je in het Chinees zoekt en de juiste bron als eerste aanslaat.** Het handwerk zit niet in het vinden van de coördinaat, maar in de identiteitscontrole eromheen.
 
-**Zet als eerste in: het nationale emissievergunningregister (permit.mee.gov.cn).** Dat leverde het meest op en is het best automatiseerbaar. Recept: POST op `xkgg!licenseInformation.action` met veld `registerentername=<Chinese bedrijfsnaam>` → dataid → detailpagina → de verborgen HTML-velden `longitude`/`latitude` plus dezelfde waarde in DMS (`opelngd/f/m`, `opelatd/f/m`). Voordelen: nationaal dekkend voor elke vergunningplichtige installatie, uniforme veldnamen, interne consistentiecheck (DMS vs decimaal) gratis, en de semantiek is te valideren door dezelfde extractie op bekende zustervestigingen te draaien (dat is hier gedaan met Shehong en Suining — beide raak). Kosten: seconden per bedrijf.
+**Zet als eerste in: het nationale emissievergunningregister (permit.mee.gov.cn).** Dat leverde het meest op en is het best automatiseerbaar. Recept: POST op **`/perxxgkinfo/syssb/xkgg/xkgg!licenseInformation.action`** (⚠️ pad per 2026-08-05; het oude `xkgg!licenseInformation.action` zonder `perxxgkinfo` is dood en geeft geen fout maar een leeg resultaat) met veld `registerentername=<**deelstring** van de Chinese bedrijfsnaam>` → dataid → detailpagina → de verborgen HTML-velden `longitude`/`latitude` plus dezelfde waarde in DMS (`opelngd/f/m`, `opelatd/f/m`). De gedrukte vergunning zelf haal je op via `xkgg!downloadFile.action?fileType=fbfile` — dat levert het **`正本` als PDF** (mét `注册地址`); het **`副本` rendert leeg** en is geen bruikbare route. Voordelen: nationaal dekkend voor elke vergunningplichtige installatie, uniforme veldnamen, interne consistentiecheck (DMS vs decimaal) gratis, en de semantiek is te valideren door dezelfde extractie op bekende zustervestigingen te draaien (dat is hier gedaan met Shehong en Suining — beide raak). Kosten: seconden per bedrijf.
+
+**Automatiseer de identiteitscontrole met het USCC-controlecijfer.** Zoeken op een deelstring levert onvermijdelijk buurbedrijven op (bij Guixi: 江西铜业铜材有限公司 náást 江西铜业**集团**铜材有限公司 — zelfde 行业类别, zelfde 法定代表人, ándere rechtspersoon). De sociaal-kredietcode scheidt ze zonder mensenogen: teken 18 is een controlecijfer over de eerste 17 met gewichten **`Wi = 3^i mod 31`** (i = 0…16) over het alfabet `0-9ABCDEFGHJKLMNPQRTUWXY` (zonder I, O, S, V, Z), `C = 31 − (Σ Wi·Vi mod 31)` met `31 → 0`. Faalt de check, dan is de code verkeerd overgenomen; slagen twee verschillende codes, dan zijn het twee bedrijven. Goedkoop extra signaal in dezelfde string: de **divisiecode** in tekens 3–8 (360000 = provinciaal geregistreerd, 360681 = 贵溪市).
 
 **Tweede keus: lokale EIA/环评-PDF's op gemeentesites** (veld 地理坐标 in DMS). Minder uniform vindbaar, maar rijker: ze bevatten de 四至 (vier begrenzingen: wat ligt er noord/zuid/oost/west) en terreinoppervlak in 亩. Dat is precies de validatieset waarmee je een coördinaat *zonder mensenogen* kunt toetsen.
 
 **De datumvraag is te scripten en is de kern van de automatisering.** Beide registerbronnen bleken WGS-84/CGCS2000 — dus blind omrekenen zou beide punten 430-485 m hebben verpest. De werkende regel: reken alle drie de hypotheses door (as-is, GCJ-02→WGS, BD-09→WGS), meet per hypothese de afstand tot de OSM-geometrie die in de brontekst als buur genoemd wordt, en kies de lezing waarbij álle genoemde buren aan de juiste kant liggen. Bij fabriek B onderscheidde dat de hypotheses hard (GCJ zette 新鸿路 aan de verkeerde kant); bij A idem (GCJ landde in een akker). Vuistregel om vast te leggen: **Chinese overheidsregisters en EIA's staan in CGCS2000 en hoeven níet omgerekend; alleen kaartdiensten (Amap/Baidu/Tencent) wel.** En let op dat de breedtegraad-offset in de Yangtze-delta negatief is — GCJ ligt daar zuidelijker dan WGS, anders dan vaak aangenomen.
 
 **Wat handwerk blijft (en dus je echte kostenpost is):**
-1. **Identiteit.** Bij Tianqi bleek het volume over twee rechtspersonen en twee kavels verdeeld te zijn. Geen algoritme haalt dat eruit; dat kost lezen.
+1. **Identiteit.** Bij Tianqi bleek het volume over twee rechtspersonen en twee kavels verdeeld te zijn; bij Guixi staan twee gelijknamige 铜材-vennootschappen 1,7 km uit elkaar op dezelfde boulevard, met dezelfde 法定代表人. De USCC-check hierboven doet het grove werk, maar wélk volume bij wélke rechtspersoon hoort kost lezen.
 2. **Poort versus terreincentrum.** Registers geven één punt en zeggen niet welk. Voor een last-mile-lijn wil je de poort, voor een wereldknoop het centrum.
-3. **De visuele eindcontrole.** Nodig, maar alleen als de geometrische toets géén eenduidige winnaar geeft — niet standaard.
+3. **⚠️ Vestiging versus deur — en dit is de harde grens van het recept.** Het register geeft **één punt per vergunning**, geen installatielijst. Een *laadplek* binnen een terrein (expeditiehal, productmagazijn, laadperron) komt er dus principieel niet uit. Bij Guixi bleef de kathode-expeditie daardoor onvindbaar, en de satelliet kon het niet overnemen omdat Esri daar **geen z19** heeft (2.521 byte placeholder; Wayback identiek aan live = zoomplafond, geen opnamedatum-probleem). Reken erop dat dit terugkomt: een registerpunt is genoeg voor een aansluiting op een openbare of interne as, niet voor een deur.
+4. **De visuele eindcontrole.** Nodig, maar alleen als de geometrische toets géén eenduidige winnaar geeft — niet standaard.
 
 **Verdict:** met de MEE-registerroute + geautomatiseerde datumtoets schat ik dat je voor een Chinees fabrieksadres in de meeste gevallen binnen minuten op straatniveau uitkomt, met een restcategorie (nieuwe entiteiten, gesplitste terreinen, greenfield in aanbouw) die handwerk blijft. Dat is **geen blokkade voor opschalen**, mits je twee dingen eerst regelt: een eigen Tianditu-token als tweede WGS-84-bron, en OCR lokaal (veel EIA's zijn gescand). En schrap OSM-naamzoeken uit de pipeline voor China — dat kost tijd en levert structureel niets.
