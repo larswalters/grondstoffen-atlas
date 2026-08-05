@@ -1,6 +1,49 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-08-05 (laatst, 3e ronde) - Het leidingtracé Escondida → Coloso gevolgd i.p.v. rechtgetrokken
+
+Lars, kijkend naar de zojuist opgeleverde koperstroom: *"die leiding aan het begin staat er niet
+goed op."* Dat was meetbaar juist. De slurryleiding stond als **één kaarsrechte stippel van
+153,5 km** op de bol, en op de plek waar de werkelijke leiding er het verst vanaf ligt zat
+**15,41 km** ertussen. Been 1 was deze sessie niet aangeraakt — hij keek nu pas goed naar deze
+stroom en zag iets dat er al stond.
+
+**⚠️ OSM HÁD het tracé, onder een andere tag.** De brief zei "geen tracé in OSM", en dat kwam uit
+een zoekactie op `substance=slurry`. Breder gemeten op de lokale chili-extract: van de 74
+niet-gas-pipeline-ways in het venster **zijn er twee dit tracé** — `man_made=pipeline` zónder
+substance-tag, samen 13,96 km, met het concentraducto-meetstation *SFM 3C* op 8 m. **Zoek op de
+geometrie, niet op de tag die je verwacht.**
+
+**Wat er nu ligt:** 126 punten, 160,2 km, in drie stukken. Gestippeld waar niets is waargenomen
+(mijnterrein 4,8 km · La Negra→Coloso 17,7 km — SEIA noemt dat tramo deels ingegraven en een
+later project legt de leiding via twee tunnels om Caleta Coloso heen), **doorgetrokken over het
+gevolgde tracé** (137,8 km: OSM-kartering + ~116 km gevolgd op Esri z13–z17, met *Bombeo N.º 2*
+op 172 m, klepstation VS2C op 68 m en *Bombeo N.º 3* op 167 m als bevestiging). 86% is gekarteerd
+of gezien; de 14% zonder waarneming blijft recht in plaats van gladgestreken.
+
+**De lijnstijl volgt het Collahuasi-precedent, geen nieuwe regel** — die leiding staat
+doorgetrokken waar de kartering reikt en gestippeld op de laatste 736 m waar zij ophoudt. Nieuw
+is alleen dat dat **per deel van één been** mag; daarmee toont de kaart zelf welk stuk gemeten is.
+
+**⚠️ Het voorbehoud hoort erbij:** over lon −70,16 … −69,29 volgt de lijn de **as van de gedeelde
+corridor** (Ruta Minera + leiding + waterleiding + 220 kV liggen naast elkaar), niet aantoonbaar
+de concentraatbuis alléén — dwarsonzekerheid ±100–250 m, en op −69,65 … −69,47 ligt de buis
+systematisch 66–92 m ZW. Andere orde dan 15,41 km, maar geen eindstand.
+
+**De bredere les: twee juiste ankers zeggen niets over de lijn ertussen.** Beide uiteinden waren
+satelliet-gelegd en correct, en juist daardoor zag dit been er lang goed uit. **Een been van twee
+punten met omwegfactor 1,000 is een verdachte op zichzelf** (Collahuasi: 1.363 punten, factor
+1,188). Dat is nu een verdachtenlijst voor de andere stromen.
+
+Nieuw gereedschap `v2/tools/maak_leidingbeen_escondida.py` — puntenlijst in de broncode, dus als
+enige `--been-geojson` van dit project reproduceerbaar op een verse clone; het script rapporteert
+elke run zelf de twee rechte gaten mét de exacte `--stippel`-vlaggen.
+
+Live `?v=108`, commits `cbb4a90` + `b1d8aa5`. Gemeten: 11 benen · 19.833,4 km · gaten 0 op de twee
+bekende na · markers ≤ 1 m · het nieuwe leidingbeen 0 knikken / 0 omkeringen · de vier andere
+stromen letterlijk identiek in de knikken-diff.
+
 ## 2026-08-05 (laatst) - Koper Escondida → Guixi: fase D op de bol, en het bewijs dat fase E niet bestaat
 
 Lars gaf de grafietketen zijn go (*"we komen bij die fabrieken aan over de weg en ik zie weinig

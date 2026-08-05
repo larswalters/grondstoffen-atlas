@@ -1,7 +1,23 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
 
-## ⚠️ OPEN 2026-08-05 (laatst, 2e sessie) — koper: drie punten die niet dicht zijn
+## ⚠️ OPEN 2026-08-05 (3e ronde) — wat er aan het leidingtracé nog niet klopt
+
+1. **De lijn volgt de corridor-as, niet aantoonbaar de concentraatbuis.** Dwarsonzekerheid
+   **±100–250 m** over lon −70,16 … −69,29; op −69,65 … −69,47 ligt de buis systematisch
+   **66–92 m ZW** van de getekende punten. Alleen tussen −69,284 en −69,105 liggen de punten
+   aantoonbaar op de leiding zelf. Op wereldschaal onzichtbaar, op straatniveau de restfout.
+2. **Twee stukken hebben géén waarneming** en blijven bewust recht + gestippeld: het
+   mijnterrein (4,8 km, pijpenrekken door elkaar) en La Negra→Coloso (17,7 km, deels
+   ingegraven + twee tunnels volgens SEIA). Samen 14% van het been.
+3. **160,2 km tegen gepubliceerd ~170 km (−5,7%).** Het tekort zit vrijwel volledig in die
+   twee rechte overbruggingen; met een realistische omwegratio daarop komt het op ~161–162 km,
+   en de rest is vermoedelijk leidinglengte binnen de terreinen zelf. Geen actie, wel weten.
+4. **VERDACHTENLIJST die hieruit volgt:** elk ander gebakken been van **twee punten** dat
+   géén stippel-met-reden is, is een kandidaat voor dezelfde fout. Het Escondida-been zag er
+   jarenlang correct uit omdat beide ankers klopten.
+
+## ⚠️ OPEN 2026-08-05 (2e sessie) — koper: drie punten die niet dicht zijn
 
 1. **De kathode-expeditie op het 贵冶-complex is niet gevonden — en dat is een ZOOMPLAFOND, geen
    zoekprobleem.** Esri heeft bij Guixi geen z19 (`Map data not yet available`, drie agents

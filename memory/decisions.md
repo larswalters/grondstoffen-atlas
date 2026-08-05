@@ -1,7 +1,32 @@
 # Decisions — Grondstoffen Atlas
 *Last updated: 2026-08-05 (laatst: koper fase D — en het bewijs dat fase E niet bestaat)*
 
-## 2026-08-05 (laatst, 2e sessie) — koper fase D
+## 2026-08-05 (laatst, 3e ronde) — het leidingtracé Escondida → Coloso
+
+- **2026-08-05 · ZOEK OP DE GEOMETRIE, NIET OP DE TAG DIE JE VERWACHT.** De conclusie "het
+  Escondida-tracé staat niet in OSM" kwam uit een zoekactie op `substance=slurry`. Breder
+  gemeten op de lokale chili-extract dekken 74 niet-gas-pipeline-ways 18% van de
+  lengtegraad-span — en **twee daarvan ZÍJN dit tracé**, alleen zonder substance-tag
+  (`man_made=pipeline`, `location=overground`). Dezelfde klasse als het Chinese
+  karteringsgat, maar omgekeerd: daar ontbrak het object, hier ontbrak alleen het label.
+- **2026-08-05 · TWEE JUISTE ANKERS ZEGGEN NIETS OVER DE LIJN ERTUSSEN.** Beide uiteinden van
+  dit been waren satelliet-gelegd en correct; de lijn ertussen lag op zijn slechtste punt
+  **15,41 km** van de werkelijke leiding. Een been met 2 punten en omwegfactor **1,000** is
+  daarmee een verdachte op zichzelf — vergelijk met Collahuasi (1.363 punten, factor 1,188).
+  ⚠️ Zet dit op de lijst voor elk ander been van twee punten dat geen stippel-met-reden is.
+- **2026-08-05 · DOORGETROKKEN/STIPPEL MAG PER DEEL VAN EEN BEEN.** Het leidingbeen is nu
+  gestippeld waar niets is waargenomen (mijnterrein 4,8 km · La Negra→Coloso 17,7 km) en
+  doorgetrokken over het gevolgde tracé (137,8 km). Dat is geen nieuwe regel maar het
+  **Collahuasi-precedent**: die leiding staat doorgetrokken waar de kartering reikt en
+  gestippeld op de laatste 736 m waar zij ophoudt. Winst: je ziet op de kaart wélk deel
+  gemeten is, in plaats van dat één stijl het hele been dekt.
+- **2026-08-05 · EEN GEVOLGDE CORRIDOR IS NIET HETZELFDE ALS DE BUIS.** Over lon −70,16 …
+  −69,29 liggen weg, concentraatleiding, waterleiding en een 220 kV-lijn naast elkaar; de
+  getekende lijn is de **as van die corridor**, met dwarsonzekerheid ±100–250 m (en op
+  −69,65 … −69,47 ligt de buis systematisch 66–92 m ZW). Dat hoort in de brief, niet in het
+  label en niet in de lijnstijl — zelfde regel als het volume-nul-besluit bij grafiet.
+
+## 2026-08-05 (2e sessie) — koper fase D
 
 - **2026-08-05 · ✅ BESLUIT LARS — FASE D WORDT GETEKEND MET EEN SUBSTITUUT-KOP.** De
   kathode-expeditie op het Guixi-complex is niet gevonden, dus de kop van been 5 is het
