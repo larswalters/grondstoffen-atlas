@@ -8,7 +8,7 @@
 > [!important] BIJGEWERKT 2026-08-05 — FASE D STAAT OP DE BOL, EN DE OVERSLAG BEILUN IS GESPLITST
 >
 > **Wat de kaart nu tekent: 9 benen · 19.826,6 km · 3.233 punten · 6 markers** (was 5 benen /
-> 19.823,1 km / 4 markers). Lengtes in reisvolgorde: leiding **153,5** (stippel) · leiding
+> 19.823,1 km / 4 markers). ⚠️ Sinds de tracé-correctie van 2026-08-05: **11 benen · 19.833,4 km · 3.359 punten**. Lengtes in reisvolgorde: leiding **4,8** (stippel) · leiding **137,8 (doorgetrokken tracé)** · leiding **17,7** (stippel) · leiding
 > **0,3** (stippel) · zee **85,1** (stippel) · zee **19.018,4** · zee **1,3** (stippel,
 > haven-aanloop Beilun) · leiding **1,2** (stippel, transportband) · leiding **0,3** (stippel,
 > ertsveld → laadspoor) · spoor **565,8** · truck **0,7** (fase D).
@@ -332,10 +332,42 @@ Een overslag is elke **drager-wissel** en krijgt twee ankers + terreinstappen (w
 
 **been-id:** `koper-escondida-guixi-b1`
 **Modaliteit:** slurryleiding (eigen verbinding)
-**Lengte:** gepubliceerd ~170 km [E1] — de enige controle die dit been heeft, want er is geen tracé-geometrie. ⚠️ **Op de bol staat 153,5 km, en dat is niet dezelfde grootheid**: de getekende lijn is de **koorde** tussen de twee ankers (verdicht langs de grootcirkel), de gepubliceerde ~170 km is de **werkelijke leiding**. Omwegfactor **1,108**. Dat verschil staat nergens in de data of in het beenlabel — het staat hier en in §7 punt 1, en het is dus geen lengtefout die je moet "oplossen".
-**Getekende deelstukken:** dit verhalende been staat op de bol als **twee** stippelbenen — leiding 153,5 km (concentrator → filterfabriek) en leiding 0,3 km (terminalverwerking Coloso: filterfabriek → laadsteiger)
-**Net / bron geometrie:** geen — geen OSM-tracé (kernfeit 3)
-**Stippel:** ja — eigen verbinding, geen net (werkwijze §7); dit is de **eindvorm**
+**Lengte:** gepubliceerd ~170 km [E1]. Op de bol staat sinds 2026-08-05 **160,2 km** over een **gevolgd tracé** (was 153,5 km als kaarsrechte koorde). Het resterende tekort van 5,7% zit vrijwel volledig in de twee stukken die géén waarneming hebben (zie hieronder).
+
+> [!important] HERZIEN 2026-08-05 — DE RECHTE LIJN WAS EEN FOUT, GEEN VEREENVOUDIGING
+> Dit been stond als **één rechte stippel van 153,5 km** op de bol. De projecteigenaar keurde
+> dat af, en het is meetbaar: op de plek waar de werkelijke leiding het verst van die rechte
+> lijn af ligt zat er **15,41 km** tussen (bij −23.78660, −69.97163). De echte corridor loopt
+> een stuk **noordelijker** — bij lon −70,16 op lat −23,745 tegen −23,869 voor de rechte lijn.
+>
+> **Wat er nu ligt:** 126 punten, drie getekende stukken (⚠️ dus niet meer twee):
+> * **stippel 4,8 km** — op het mijnterrein zelf. Daar liggen tientallen parallelle pijpenrekken,
+>   wegen en banden door elkaar en blokkeert de open groeve de rechte lijn; op satelliet alleen
+>   niet te sluiten.
+> * **doorgetrokken 137,8 km** — het **gevolgde tracé**. Twee bronnen: OSM ways **1530915728 +
+>   1530915724** (`man_made=pipeline`, `location=overground`, 13,96 km — echte kartering, en het
+>   concentraducto-meetstation *Estación de Monitoreo SFM 3C* ligt 8 m van deze lijn), plus
+>   ~116 km die op Esri-beeld (z13–z17) is gevolgd, met onderweg *Estación de Bombeo N.º 2* op
+>   172 m, klepstation VS2C op 68 m en *Bombeo N.º 3* op 167 m als bevestiging.
+> * **stippel 17,7 km** — La Negra → Coloso. Twee onafhankelijke verklaringen waarom hier niets
+>   te zien is: SEIA noemt het tramo Coloso–La Negra deels **ingegraven**, en een later project
+>   legt de leiding via **twee tunnels** om Caleta Coloso heen.
+>
+> ⚠️ **HET VOORBEHOUD DAT ERBIJ HOORT.** Over lon −70,16 … −69,29 volgt de lijn de **as van de
+> gedeelde corridor** — Ruta Minera, concentraatleiding, waterleiding en de 220 kV-lijn liggen
+> daar naast elkaar — en niet aantoonbaar de concentraatbuis alléén. Dwarsonzekerheid
+> **±100–250 m**; op lon −69,65 … −69,47 ligt de buis systematisch **66–92 m ZW** van deze
+> punten. Dat is de resterende fout, en die is van een andere orde dan de 15,41 km die het was.
+> Alleen tussen lon −69,284 en −69,105 liggen de punten aantoonbaar op de leiding zelf: daar
+> maakt de leidingstrook zich tot 1,2 km ten zuiden van de weg los en is het pijpenrek als
+> ladder op steunen zichtbaar.
+>
+> **Recept:** `v2/tools/maak_leidingbeen_escondida.py` — de puntenlijst staat in de broncode,
+> dus dit been is als enige `--been-geojson` van dit project op een verse clone reproduceerbaar.
+
+**Getekende deelstukken:** **vier** benen op de bol — leiding 4,8 (stippel) · leiding **137,8 (doorgetrokken)** · leiding 17,7 (stippel) · leiding 0,3 km (stippel, terminalverwerking Coloso: filterfabriek → laadsteiger)
+**Net / bron geometrie:** OSM-kartering voor 13,96 km (ways 1530915728 + 1530915724, ODbL) + satelliet-gevolgd voor ~116 km. ⚠️ Kernfeit 3 hieronder blijft juist voor `substance=slurry` — het tracé is **niet** als slurryleiding gekarteerd; het is gevonden onder `man_made=pipeline` zónder substance-tag plus eigen satellietwerk.
+**Stippel:** **deels** — doorgetrokken waar het tracé gevolgd is, gestippeld op de twee stukken zónder waarneming. Zelfde regel als de Collahuasi-leiding, die doorgetrokken staat waar de kartering reikt en gestippeld op de laatste 736 m waar zij ophoudt. *Doorgetrokken = we weten waar de lijn ligt* (werkwijze §7).
 **Corridor bij naam:** Escondida-concentraatleiding (9 inch) [E1]
 **Routeerpunt kop / staart:** n.v.t. — eigen verbinding, geen net om op te routeren
 **Toets-marge:** n.v.t. (alleen de lengtetoets ~170 km)
@@ -817,7 +849,7 @@ rest is scherper geformuleerd, en er zijn vier punten bijgekomen.*
 | 3 | `cu-beilun-kade` | 29.92742, 121.87573 (waar de transportband aan land komt; in de oude tabel als lon/lat genoteerd) | **29.93640, 121.88300** (losberth met ertslossers); het bandpunt blijft als begin van de last mile | satelliet z16 |
 | 4 | flow `cu-escondida → cu-ref-jiangxi`, `via: [cu-port-antofagasta, cu-port-ningbo]` | via de haven Antofagasta | via **Coloso** (Escondida's eigen terminal, 12 km zuidelijker) | [E3] |
 | 5 | ~~spoorbeen Beilun→Guixi~~ | ~~gemeten 883 km~~ | **VERVALLEN** — corridor B bevestigd door de toets van §4; het gebakken been meet **565,8 km** | meting 2026-07-28 + bake 2026-07-29 |
-| 6 | leiding-been Escondida→Coloso | ontbreekt / recht | **gestippeld mét reden** (~170 km, eigen verbinding, geen OSM-tracé) | [E1] + werkwijze §7 |
+| 6 | leiding-been Escondida→Coloso | ~~ontbreekt / recht~~ | **✅ DOORGEVOERD 2026-08-05** — tracé gevolgd: 160,2 km in vier stukken (doorgetrokken waar gevolgd, gestippeld waar niet waargenomen). De rechte lijn lag op zijn slechtste punt 15,41 km naast de werkelijke leiding. Recept: `v2/tools/maak_leidingbeen_escondida.py` | OSM ways 1530915728+1530915724 + Esri z13–z17 |
 | 7 | `aansluitingen.json` mist fase D-ankers | keten stopt bij `cu-guixi-spoor` (ertskant) | ~~`cu-guixi-kathode-laad`~~ **en** `cu-guixi-walsdraad` | [D1][D12] |
 | 8 | `data/copper.js` heeft geen uitgaand been vanaf Guixi | keten eindigt op de smelter | fase D (been 5) toevoegen; de markt-vertakking pas bij een eigen brief | deze brief |
 | 9 | **adres walsdraadfabriek** | 冶金大道 **15**号 [D3] | **冶金大道 19号** — het veld `生产经营场所地址` van **beide** Guixi-vennootschappen in het emissievergunningregister, plus het `注册地址` in de vergunning-PDF. 15号 is het hoofdkantoor-/administratieve adres van groep/beursvennootschap/加工事业部 | [D12] |
@@ -861,12 +893,19 @@ vrijheidsgraden geven een byte-identiek bestand en het bestand op schijf ondersc
 ⚠️ De invoerbestanden liggen in `build-cache/` en zijn ongetrackt: op een verse clone draait dit
 recept niet.*
 
-1. **Been 1 — leidingbeen** (stippel, amber): concentrator -24.26200, -69.06000 →
-   Coloso-filterfabriek -23.75900, -70.46700 (**153,5 km**) → laadsteiger (**0,3 km**). Label:
-   *slurryleiding ~170 km — eigen verbinding, geen net.*
-   ⚠️ **Getekend 153,5 ≠ gepubliceerd ~170**: de lijn is de **koorde** tussen twee ankers, de
-   ~170 km is de werkelijke leiding (omwegfactor **1,108**). Dat staat nergens in de data of het
-   beenlabel, dus het staat hier — het is géén lengtefout om op te lossen.
+1. **Been 1 — leidingbeen**, sinds 2026-08-05 in **vier** getekende stukken (herzien, zie het
+   kader bij been 1): stippel **4,8** (mijnterrein) · **doorgetrokken 137,8** (het gevolgde
+   tracé) · stippel **17,7** (La Negra → Coloso, ingegraven + twee tunnels) · stippel **0,3**
+   (terminalverwerking Coloso). Totaal **160,2 km** tegen gepubliceerd ~170 (−5,7%).
+   ⚠️ **Wat hier veranderd is en waarom het ertoe deed:** dit was één rechte stippel van
+   153,5 km, en die lag op zijn slechtste punt **15,41 km** naast de werkelijke leiding. Een
+   rechte lijn was hier dus geen vereenvoudiging maar een fout. Wat er nu ligt is voor 86%
+   gekarteerd of op beeld gevolgd; de resterende 14% zijn de twee gestippelde stukken die
+   **bewust recht blijven** omdat er geen waarneming is.
+   ⚠️ **En wat er nog steeds niet klopt:** over het middenstuk volgt de lijn de as van de
+   **gedeelde corridor** (weg + leiding + waterleiding + 220 kV), niet aantoonbaar de
+   concentraatbuis alléén — dwarsonzekerheid ±100–250 m. Dat hoort in het label noch in de
+   lijnstijl thuis; het staat hier.
 2. **Been 2 — zeebeen** (zeeschip), sinds 2026-08-05 in **drie** getekende stukken: stippel
    haven-aanloop Coloso **85,1** (MARNET reikt hier niet; Chili heeft nul havens met varend
    AIS-verkeer → dit is de **eindvorm**) · geroutet **19.018,4** · stippel haven-aanloop Beilun
