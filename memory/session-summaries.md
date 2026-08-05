@@ -1,7 +1,52 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
-## 2026-08-05 (laatst, 3e ronde) - Het leidingtracé Escondida → Coloso gevolgd i.p.v. rechtgetrokken
+## 2026-08-05 (laatst, 5e ronde) - Lithium tot in de auto: de tweede keten van mijn tot eindproduct
+
+Na de koperronde lag de vraag open welke stroom de tweede complete keten zou worden. Koper
+Escondida→Guixi kan het aantoonbaar niet; lithium wel. Lars: *"ja pak die nu op."*
+
+**De keten loopt nu van de Greenbushes-concentraatloods tot poort 3 van Tesla Giga Shanghai:
+9 benen · 8.485,2 km · 7.838 punten · 10 markers** (`?v=110`, commit `20415cb`). Vier nieuwe
+wegbenen: kade→Tianqi 10,9 · Tianqi→Wuxi 68,2 · Wuxi→Nanjing 196,1 · Nanjing→Giga Shanghai
+375,9 km. Waar grafiet de eerste complete keten was maar vandaag nul volume draagt, is dit de
+eerste die écht loopt.
+
+**⚠️ Twee ankers uit de brief waren fout, allebei op een manier die je niet ziet als je niet
+kijkt.** De *"Tesla-poort 3"* bleek het **rekenkundig midden van vier OSM-bushaltenodes** —
+1,0 m van een publieke straat, aan de westkant van het kanaal, 60,9 m **buiten** de
+fabriekspolygoon; uitgerekend het laatste punt van de hele A–E-keten. En het **Nanjing-anker**
+lag **21,4 m buiten het hek** in beboste helling, terwijl het als *"satelliet-gelegd op z16"*
+stond — en z16 (2,0 m/px) **kán** dat verschil niet zien. Werkregel eruit: **een status is zo
+goed als de korrel waarop hij gelegd is; noteer het zoomniveau erbij.**
+
+**⚠️ Twee brieflengtes waren onmogelijk** en zijn gecorrigeerd vóór de lengtetoets draaide:
+"±3-5 km" terwijl kade→poort hemelsbreed al 6,04 km is, en "±300 km" wat de **grootcirkel**
+bleek (308,7 km; over de weg 375,9). Een ongecorrigeerde toets keurt dan de *juiste* lijn af.
+Zelfde klasse: de verklikker voor de Tesla-bushaltes stond op 150 m terwijl de **echte** poort er
+98 m vandaan ligt — een verbodsstraal die het goede antwoord afkeurt.
+
+**Het grootste openstaande punt is een ENTITEIT, geen coördinaat.** De LG-polygoon in Nanjing
+draagt de **pre-split naam 乐金化学 (LG Chem)**, terwijl binnen **750 m** twee expliciet
+**LGES**-genoemde genummerde percelen liggen (六工厂 698 m · 九工厂 749 m). Welk perceel de
+2170-cellen maakt is niet gedocumenteerd — en 750 m is groter dan elk procesgat dat deze keten
+bewust laat staan. Waalhaven-klasse: alleen de productvraag lost dit op.
+
+**Nieuw ijkpunt voor de terugloop-maat, zonder de drempel te verzetten.** De toets meldde 3
+nieuwe terugloopjes; nagemeten zijn het er 2 en **beide zijn werkelijkheid** — binnen 80 m liggen
+2 respectievelijk 7 `motorway_link`-ways, dus **klaverbladlussen** (1.509 m rijden om 572 m op te
+schuiven). De band 2,0-3,0 was leeg toen `TERUGLOOP_V` op 2,2 werd gezet.
+
+**Het Bunbury-gat van 4.933 m blijft open, en nu onderbouwd:** het is geen fout uiteinde, én
+`maak_havenaanloop.py` kan het daar niet oplossen omdat het **1:10M-landmasker bij Bunbury
+lokaal omgekeerd is** (varende bulkcarrier = land, barrièreduin = water).
+
+Gemeten: gaten 0·0·0·0·0·310·301 m plus het bekende Bunbury-gat · alle tien markers op 0 m ·
+aansluitingen 27 → 31 zonder verschuiving · lengtes +0,4% / −2,9% / +8,9% / −0,0% · benen 1-4
+teken voor teken gereconstrueerd. Van de vijf stromen heeft nu alleen `collahuasi-tongling` nog
+geen bak-recept.
+
+## 2026-08-05 (3e ronde) - Het leidingtracé Escondida → Coloso gevolgd i.p.v. rechtgetrokken
 
 Lars, kijkend naar de zojuist opgeleverde koperstroom: *"die leiding aan het begin staat er niet
 goed op."* Dat was meetbaar juist. De slurryleiding stond als **één kaarsrechte stippel van

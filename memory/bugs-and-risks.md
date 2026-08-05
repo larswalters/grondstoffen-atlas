@@ -1,6 +1,26 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
 
+## ⚠️ OPEN 2026-08-05 (5e ronde) — lithium: het grootste openstaande punt is een ENTITEIT
+
+1. **WELK LG-PERCEEL IN NANJING MAAKT DE 2170-CELLEN?** De polygoon waarop b8-staart en
+   b9-kop hangen draagt de **pre-split naam 乐金化学 (LG *Chem*)**, terwijl binnen **750 m**
+   twee expliciet **LGES**-genoemde, genummerde percelen liggen (六工厂 op 698 m, 九工厂 op
+   749 m) — precies de "negen fabrieken" die de brief noemt. 恒谊路 + het LG-logo bewijzen
+   *"een LG-poort"*, niet *"de poort waar de cellen uitgaan"*. **750 m is groter dan elk
+   procesgat dat deze keten bewust laat staan.** Dit is de Waalhaven-klasse: geen meetkundige
+   toets vangt hem, alleen de productvraag.
+2. **De drie uitgaande laadplekken** (Tianqi 219 m · Wuxi 310 m · Nanjing 301 m) zijn niet
+   gevonden — 28 eigen satellietpassen, het emissievergunningregister (één punt per
+   rechtspersoon, geen installatielijst), het EIA-rapport van Wuxi en Chinese zoektermen op
+   成品库 / 装卸区. ⚠️ Bij Zhangjiagang én Tianqi heeft Esri **geen z19** — zoomplafond,
+   vraagt een andere bron.
+3. **De losplek binnen Giga Shanghai** is niet gedocumenteerd; been 9 eindigt op de poort.
+4. **Het Bunbury-gat van 4.933 m** blijft open (zie decisions: omgekeerd landmasker).
+5. **Been 8 zit op +8,9% tegen de brief** — krap binnen ±10%, én zijn kop is verschoven, én
+   zijn Nanjing-aanloop heeft een niet-uitgesloten alternatief dat 6,6% korter is (via
+   Xianlin i.p.v. G2503). Eerste getal dat kantelt bij een volgende bake.
+
 ## ✅ OPGELOST 2026-08-05 (4e ronde) — drie van de vier verdachten
 
 `toets_rechte_benen.py` gaf vier rechte benen ≥ 25 km; **drie zijn vervangen door echte

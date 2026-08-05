@@ -1,7 +1,39 @@
 # Decisions — Grondstoffen Atlas
 *Last updated: 2026-08-05 (laatst: koper fase D — en het bewijs dat fase E niet bestaat)*
 
-## 2026-08-05 (laatst, 4e ronde) — de verdachtenlijst afgewerkt
+## 2026-08-05 (laatst, 5e ronde) — lithium benen 5-8: de tweede A–E-keten
+
+- **2026-08-05 · EEN STATUS IS ZO GOED ALS DE KORREL WAAROP HIJ GELEGD IS.** Het Nanjing-anker
+  stond als *"satelliet-gelegd op z16"* en lag **21,4 m buiten het hek** in beboste helling —
+  en z16 (2,0 m/px) **kán** dat verschil niet zien. Noteer bij "satelliet-gelegd" voortaan het
+  **zoomniveau**; een route-uiteinde vraagt z18/z19, niet z16.
+- **2026-08-05 · EEN OSM-COÖRDINAAT KAN EEN GEMIDDELDE ZIJN VAN IETS ANDERS.** De "Tesla-poort 3"
+  uit de brief (30.87390/121.76572) bleek het **rekenkundig midden van vier bushaltenodes**
+  (`highway=bus_stop`) — 1,0 m van een publieke straat, aan de verkeerde kant van het kanaal,
+  60,9 m **buiten** de fabriek. Het was het laatste punt van de hele keten. ⚠️ Toets bij een
+  OSM-punt niet alleen de plek maar het **type**: een halte, een adrespunt en een poort zien er
+  in een coördinatenlijst identiek uit.
+- **2026-08-05 · CORRIGEER EEN ONMOGELIJKE BRIEFLENGTE VÓÓR DE TOETS DRAAIT, NIET ERNA.** Been 5
+  stond op "±3-5 km" terwijl kade→poort **hemelsbreed al 6,04 km** is; been 8 stond op
+  "±300 km" — dat is de **grootcirkel** (308,7 km), over de weg 375,9. Een ongecorrigeerde
+  lengtetoets keurt dan de **juiste** lijn af, en dat is erger dan geen toets.
+- **2026-08-05 · EEN VERBODSSTRAAL KAN HET JUISTE ANTWOORD AFKEUREN.** De verklikker voor de
+  Tesla-bushaltes stond op 150 m, terwijl de **echte** poort er 98 m vandaan ligt — logisch,
+  bushaltes staan bíj een fabriekspoort. Zelfde klasse als de vaste 2 km-marge die ooit de
+  bewezen Beilun→Guixi-route afkeurde: **marge per punt, niet per soort.**
+- **2026-08-05 · EEN KLAVERBLADLUS SCOORT 2,4-2,6 OP DE TERUGLOOP-MAAT — EN IS WERKELIJKHEID.**
+  Gemeten op twee knooppunten (binnen 80 m respectievelijk 2 en 7 `motorway_link`-ways): je
+  rijdt er 1.509 m om 572 m op te schuiven. De band 2,0-3,0 was leeg toen `TERUGLOOP_V` op 2,2
+  werd gezet. De ijkpunten staan nu in `toets_knikken.py`; de **drempel is bewust niet verzet**
+  — dat verandert de uitslag van alle stromen met terugwerkende kracht en verdient een eigen
+  besluit met een eigen meting.
+- **2026-08-05 · HET 1:10M-LANDMASKER IS BIJ BUNBURY LOKAAL OMGEKEERD** (een varende bulkcarrier
+  staat als land, een barrièreduin als water). `maak_havenaanloop.py` kan daar per constructie
+  geen goede lijn maken; het gat van 4.933 m blijft open tot de vaargeul satelliet-gelegd is.
+  ⚠️ Bijvangst-kritiek op dat tool: `over_land_km(split=True)` sluit segment 0 uit, en bij
+  Bunbury zit dáár juist alle landkruising.
+
+## 2026-08-05 (4e ronde) — de verdachtenlijst afgewerkt
 
 - **2026-08-05 · "GEEN AIS" ZEGT NIETS OVER OF DE GEOMETRIE BESTAAT.** Het Wesel-vak stond als
   rechte lijn van 47,3 km omdat er geen AIS-dekking is (0 van 35.237 tracks — gemeten, dat
