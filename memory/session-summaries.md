@@ -1,6 +1,49 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+
+## 2026-08-05 (laatst) - De eerste keten van mijn tot eindproduct: grafiet Balama → Casa Grande
+
+Lars opende met *"waar waren we"*, maar zijn eigenlijke punt was schaal: niet blijven hangen in
+perfectie, door naar meerdere stromen, dán de echte visuals. Ik stelde voor de visuele laag naar
+voren te halen — er staan al 722 grondstofknopen in `data/*.js` die de v2-bol niet laadt. **Lars
+corrigeerde dat terecht:** die 722 zijn v1-registerdata van vóór de brieven, stadsniveau, geen
+satellietcheck; ze dragen de wereldschaal, niet het straatniveau. En zijn slotpunt klopte — er
+liep tot die dag **geen enkele** stroom van mijn tot eindproduct.
+
+Zijn insteek werd daarmee scherper dan "meer stromen": **3/4 pilots van verschillende grondstoffen
+op maximale variatie in overstaptypen en dataverzameling**. Een analyseronde over de zes bestaande
+brieven, het register en de gereedschapskist gaf: **grafiet · kolen · koper · diamant**. Diamant
+is de sterkste zet — luchtvracht (bestaat niet in de stroomlaag), de enige keten zónder zee, en
+een puur administratieve knoop. Voorstel, geen besluit.
+
+**Besluit Lars: fase D en E worden getekend hoewel het volume nul is.** *De weg is echt, de lading
+nog niet* — en dat verschil hoort in de tekst, niet in de lijnstijl.
+
+**De ronde leverde drie ankerfouten op, waarvan één een geografische vergissing.** Port Allen ligt
+niet aan de doorgaande vaarweg maar aan een **doodlopend zijkanaal**; daarom moest de ankercheck
+van 28-07 wel mislukken — die zocht langs de hoofdvaarweg. Nieuw anker op z19 (kadefront 59 m ≈
+de gepubliceerde 200 ft) + 51 AIS-pings binnen 50 m; de marker schoof van 2.080 m naar **34 m**.
+Het **Vidalia-anker stond in batture-bos** (echte apron 290 m ZO, alleen op een wolkenvrije
+Wayback-opname zichtbaar), en de sluis stond 1,18 km te ver noord. **Drie docks zijn niet gevonden
+en niet verzonnen** — beide docks bij De Soto falen op de **opnamedatum**: het beeld is nog de
+bouwfase terwijl de fabriek sinds juli 2025 draait. De Shed 8-8-klasse, nu in Kansas.
+
+**Twee eigen fouten, allebei door meten rechtgezet.** (1) Ik verklaarde zes omkeringen als
+via-punten-op-afritten; het nieuwe `projecteer_viapunten.py` vond de doorgaande rijbaan op 17–41 m
+— de echte oorzaak was **overschiet-en-terug**. Na de correctie verdwenen er 3 en versprongen de
+andere 3, en dát was het signaal om te stoppen met schuiven en te meten. (2) Ik las 12 → 28
+omkeringen als een regressie; de maat pad ÷ hemelsbreed liet zien dat er **3 terugloop** waren en
+de rest werkelijkheid.
+
+**En één verkeerde afspraak teruggenomen:** de twee Chinese fabrieksadressen lagen als taak bij
+Lars. Zijn vraag — *"waarom zou ik het wel kunnen vinden als jij het niet kan?"* — was terecht;
+ik had in het Engels en op OSM gezocht en toen gestopt. Beide zijn alsnog **machinaal gevonden**
+via het nationale emissievergunningregister, waar de coördinaat in verborgen HTML-velden staat.
+Daarmee zijn ook de lithiumbenen 5–8 gedeblokkeerd.
+
+**Eindstand:** 10 benen, 21.478 km, 32.630 punten, 9 markers, live op `?v=106`. Lars' check:
+*"ziet er goed uit denk ik"* — mild; uitvragen wat hij mist vóór de volgende stroom.
 ## 2026-07-30 (laatst) - De afwerklijst van de lithiumbrief, en de "110" die twee dingen betekende
 
 Lars' vraag was open: *"wat denk jij dat een logische volgende stap is."* Stand nagelezen, drie

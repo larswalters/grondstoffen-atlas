@@ -1,3 +1,105 @@
+> **🔋→🚗 DE EERSTE KETEN VAN MIJN TOT EINDPRODUCT — GRAFIET BALAMA → CASA GRANDE,
+> LIVE `?v=106` (2026-08-05, LAATSTE).** Commits `48afcf4` (§6b lithium) · `a68fd0b` (de keten).
+> Lars' check: *"ziet er goed uit denk ik"* — mild, geen enthousiaste go.
+>
+> **10 benen · 21.478 km · 32.630 punten · 9 markers.** Van de Balama-plant in Mozambique tot de
+> laaddeur van Lucid in Casa Grande — de eerste stroom die de A–E-belofte helemaal waarmaakt.
+> HUD: truck 3.890 · zeeschip 17.162 · binnenschip 426 km.
+>
+> **✅ BESLUIT LARS — FASE D EN E WORDEN GETEKEND HOEWEL HET VOLUME NUL IS.** Balama ligt stil,
+> "Graphite Shipped to Vidalia" was in 2025 nul, t/m Q2 2026 alleen ~150 t kwalificatiemonsters.
+> *De weg is echt, de lading nog niet.* Het verschil hoort in de tekst en de node-noten, **NIET in
+> de lijnstijl**: D/E zijn **doorgetrokken**, want stippel betekent in dit project uitsluitend
+> *hier reikt het net niet* (werkwijze §7). Zonder dit besluit had de atlas over een half jaar nog
+> steeds geen complete keten.
+>
+> **⚠️ DE SCHERPSTE VONDST — PORT ALLEN LAG AAN DE VERKEERDE WATERWEG.** De bargeterminal (IRMT)
+> ligt **niet aan de doorgaande vaarweg maar aan een doodlopend zijkanaal** dat er enkele km
+> westelijker vanaf takt. Elke zoekpoging langs de hoofdvaarweg moest dus mislukken — en dat
+> verklaart de gefaalde ankercheck van 28-07 achteraf, die het punt als "onbepaald" liet staan.
+> Nieuw anker **satelliet-gelegd op z19** (kadefront 59 m ≈ de gepubliceerde 200 ft) en bevestigd
+> door **51 AIS-pings binnen 50 m**; de marker stond **2.080 m** van de lijn en nu **34 m**, de
+> sluis op 12 m. **Benen 3 en 4 zijn eindelijk gesplitst** — ze stonden samengeklapt als één
+> binnenvaartbeen van 404 km **zónder overslag**; de barge vaart nu aantoonbaar door de sluis het
+> zijkanaal in (13 m van het routeerpunt, 18 m langs de sluis).
+>
+> **⚠️ HET VIDALIA-ANKER STOND IN BATTURE-BOS** — geen kade, geen ramp, geen verharding. De echte
+> apron ligt **290 m ZO** en was **alleen op een wolkenvrije Wayback-opname** te zien; het live
+> beeld toonde het niet. De faalmodus *opnamedatum* werkt dus **twee kanten op**: te nieuw
+> (Shed 8-8, Bunbury) én te bewolkt. De Port Allen Lock stond 1,18 km te ver noord.
+>
+> **⚠️ DRIE DOCKS NIET GEVONDEN, EN NIET VERZONNEN.** Het uitgaande AAM-laaddock bij Syrah (z19 is
+> de fijnste Esri-korrel en toont geen perron) en **beide docks bij Panasonic De Soto** — die
+> laatste falen op de **OPNAMEDATUM**, want het beeld is nog de bouwfase terwijl de fabriek sinds
+> juli 2025 draait: **de Shed 8-8-klasse, nu in Kansas**. De Soto krijgt daarom **één terreinanker**
+> in plaats van de twee die §2b eist, en de lijn eindigt **443 m** ervoor op het routeerpunt (over
+> de weg is het terrein niet bereikbaar) — anker ≠ routeerpunt, en dat staat zo in de brief.
+> **Een anker dat niet satelliet-gelegd is, is geen anker — ook niet onder druk.**
+>
+> **⚠️ NIET ELKE OMKERING IS EEN FOUT, EN DAT KOSTTE BIJNA EEN VERKEERDE CONCLUSIE.** Na het
+> herbakken sprongen de omkeringen **12 → 28**, wat als regressie las. De maat ontbrak: een nieuwe
+> verhouding **pad ÷ hemelsbreed** over een venster van ±8 punten scheidt een **TERUGLOOP** (de
+> lijn blijft ter plaatse — gemeten 3,0 en 10,2) van een **echte scherpe bocht** (komt ergens uit
+> — 1,1–2,0). Uitslag: **25 omkeringen waarvan 3 terugloop**, en de vier oudere stromen hebben er
+> **nul** — dus ook de "12" waar we weken naar keken waren grotendeels echte bochten.
+> `toets_knikken.py` is geboren op **spoor**, waar een trein fysiek niet kan omkeren; op weg en
+> water zijn een klaverbladlus, een sluispassage en een duwstel dat in een doodlopend kanaal
+> omdraait allemaal echt. **Een toets die op één modaliteit is geijkt hoort niet ongewijzigd op
+> een andere te draaien** — zoek die klasse elders.
+>
+> **⚠️ EN MIJN EERSTE VERKLARING DAARVOOR WAS FOUT.** Ik dacht dat de via-punten op afritten
+> lagen; het nieuwe `projecteer_viapunten.py` vond de doorgaande rijbaan op **17–41 m**. De echte
+> oorzaak is **overschiet-en-terug**: een via op het kruispunt snapt naar de dichtstbijzijnde
+> rijbaanvertex, en die kan **achter de afslagrichting** liggen. Punten 300–500 m vóóruit leggen
+> haalde 3 van de 6 weg. **Toen de rest ging verspringen in plaats van verdwijnen was dát het
+> signaal om te stoppen met schuiven en te meten** — en de meting liet zien dat de rest
+> werkelijkheid was.
+>
+> **⚠️ GENERATOR↔UITVOER-DRIFT, DERDE VERSCHIJNING.** Het wegbeen Balama→Nacala op schijf stond
+> op **502,7 km**; opnieuw bakken geeft **497,9** — `snoei_keerlussen` kwam er op 30-07 bij voor
+> lithium en raakt dit been ook. Getoetst door het oude gereedschap terug te zetten: zelfde nieuwe
+> uitkomst, dus **pre-existent**. **`v2/tools/bak_stromen.sh` legt nu het recept vast** en het
+> openstaande punt "de bak-commando's staan nergens" is voor grafiet dicht; voor de vier andere
+> staat expliciet in het bestand dát ze ontbreken. ⚠️ Herbak die vier niet zonder eerst de huidige
+> uitvoer te bewaren.
+>
+> **✅ DE CHINESE FABRIEKSADRESSEN ZIJN MACHINAAL VINDBAAR — die taak lag ten onrechte bij Lars.**
+> Zijn vraag *"waarom zou ik het wel kunnen vinden als jij het niet kan?"* was terecht: er was in
+> het Engels en op OSM gezocht en toen gestopt. Beide gevonden: **Tianqi Jiangsu 32.01218 /
+> 120.45771** (de poort) en **LG-Huayou Wuxi 31.523573 / 120.475895**. Winnende bron: het
+> **nationale emissievergunningregister** — de coördinaat staat in **verborgen HTML-velden**,
+> decimaal én in graden/minuten/seconden, wat meteen een gratis consistentiecheck geeft.
+> ⚠️ **De datumval draait hier de ANDERE kant op:** Chinese overheidsregisters en EIA-rapporten
+> staan in **CGCS2000 ≈ WGS-84** en mogen **niet** omgerekend worden — blind omrekenen legt het
+> punt 485 m NW in een akker; alleen kaartdiensten (Amap/Baidu/Tencent) vragen conversie.
+> ⚠️ **OSM-naamzoeken vervalt voor Chinese industriezones**: beide fabrieken hebben er geen enkele
+> naam-tag, dus de eerdere scan faalde niet — er zit een karteringsgat. Recept:
+> `v2/design/zoek-chinees-adres-recept.md`. **Lithium benen 5–8 zijn hiermee gedeblokkeerd.**
+>
+> **✅ §6b VARIANT 1 UITGEVOERD** (het besluit lag er sinds 30-07): `li-port-zhangjiagang` +
+> `li-ref-jiangsu` als knopen, nieuwe flow van 17 kt LCE, Sichuan 55 → 38. Register-laag, dus geen
+> `?v=`-bump voor dat deel.
+>
+> **PILOTSET VOORGESTELD (nog geen besluit):** grafiet · kolen · koper · diamant — gekozen op
+> maximale variatie in **overstaptypen en dataverzameling**, niet op breedte
+> (`v2/design/pilotronde-analyse.md`). Diamant is de sterkste zet: **luchtvracht** (bestaat niet in
+> de stroomlaag), de enige keten **zónder zee**, en een puur **administratieve** knoop.
+> ⚠️ Kolen vraagt éérst een halve dag bronwerk op de **cokesblend**: geen bron legt Cerrejón-kool
+> in de blend van Schwelgern, dus de keten kan technisch kloppen en tóch de verkeerde streng zijn.
+>
+> **GEMETEN:** gaten tussen benen 0–389 m (alle ≤ 0,5 km) · lengtetoetsen −4,1% / −1,7% / −4,0% /
+> +1,8% · alle verklikkers gemeden (0 punten in Oklahoma) · `aansluitingen.json` 18 → **25** · de
+> vier andere stromen **ongewijzigd**. De eindklassen van een wegbeen zijn nu **per profiel**
+> instelbaar (Vidalia's last mile begint met 1,2 km `highway=track`) — de default-tuple bleef
+> ongewijzigd en beide bestaande profielen komen **byte-identiek** uit de bake; dát is de
+> regressietoets.
+>
+> **→ VOLGENDE:** Lars' mildere check uitvragen · de **3 terugloopjes** (Napoleon Ave — bestond al
+> · één in het bargebeen · North Little Rock) · de pilotset bevestigen, dan koper (goedkoopst) →
+> kolen (bronwerk eerst) → diamant (luchtvracht bouwen, ~1 dag, ontsluit goud + PGM) · de
+> **bak-recepten van de vier andere stromen** reconstrueren · **lithium benen 5–8** ·
+> `toets_corridor.py` als repo-tool herbouwen (hij leefde in een scratchpad en is weg).
+
 > **🔋 LITHIUM STAAT OP DE BOL TOT DE KADE VAN ZHANGJIAGANG, EN DE AFWERKLIJST IS AF —
 > LIVE `?v=105` (2026-07-30, LAATSTE).** Commits `409be35`…`95535c6` (de stroom) + `6c7a454`
 > (de afwerklijst, géén `?v=`-bump).
@@ -376,7 +478,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-07-30 (laatst: lithium tot de kade van Zhangjiagang, live ?v=105, + de afwerklijst §6 van die brief)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet Balama → Casa Grande, live ?v=106)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2650,6 +2752,24 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-05 · ✅ BESLUIT LARS — FASE D/E TEKENEN BIJ VOLUME NUL** — de weg is gemeten, de
+  lading nog niet; het verschil hoort in de tekst en de node-noten, **niet in de lijnstijl**
+  (stippel blijft voorbehouden aan *hier reikt het net niet*).
+- **2026-08-05 · DE FASEN A–E GAAN OVER KETENPOSITIE, NIET MODALITEIT** — fase B heette "zee";
+  diamant vliegt. Houdt lucht, spoor en water onderling vergelijkbaar.
+- **2026-08-05 · NIET ELKE OMKERING IS EEN FOUT; DE MAAT IS PAD ÷ HEMELSBREED** — terugloop blijft
+  ter plaatse (3,0 / 10,2), een echte bocht komt ergens uit (1,1–2,0). ⚠️ De 150°-drempel is op
+  **spoor** geijkt, waar een trein niet kan omkeren; op weg en water is een klaverbladlus echt.
+- **2026-08-05 · EEN KNOOPPUNT-VIA LIGT NÁ DE AFSLAG, NIET OP HET KRUIS** — op het kruis snapt hij
+  naar de dichtstbijzijnde rijbaanvertex, die achter de reisrichting kan liggen (overschiet-en-terug).
+  ⚠️ Niet de afrit-fout: `projecteer_viapunten.py` vond de rijbaan op 17–41 m.
+- **2026-08-05 · EINDKLASSEN VAN EEN WEGBEEN ZIJN PER PROFIEL INSTELBAAR** — de default-tuple
+  blijft ongewijzigd, want het corridor-id hasht hem mee; bewezen met een byte-identieke herbake.
+- **2026-08-05 · CHINESE OVERHEIDSREGISTERS/EIA'S STAAN IN CGCS2000 ≈ WGS-84 EN WORDEN NIET
+  OMGEREKEND** — alleen kaartdiensten wel. En **OSM-naamzoeken vervalt** voor Chinese
+  industriezones (geen naam-tag; karteringsgat).
+- **2026-08-05 · HET BAK-RECEPT HOORT BIJ HET GEBAKKEN BESTAND** (`v2/tools/bak_stromen.sh`) en
+  verandert mee in dezelfde commit.
 - **2026-07-30 · ✅ BESLUIT LARS — §6b VARIANT 1** (vastgelegd, nog niet uitgevoerd): de atlas
   krijgt `li-port-zhangjiagang` + `li-ref-jiangsu` als knopen en een eigen flow van **17 kt LCE**,
   afgetrokken van de Sichuan-flow (55 → 38, want die draagt vandaag de héle Tianqi-helft terwijl

@@ -1,5 +1,44 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief)*
+*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet, `?v=106`)*
+
+## Stand 2026-08-05 (laatst) — een keten is pas af als hij bij het eindproduct uitkomt
+
+**De grafietketen is de eerste die de A–E-belofte helemaal waarmaakt**: 10 benen, 21.478 km,
+van de Balama-plant tot de laaddeur van Lucid in Casa Grande. Daarmee verschuift de maatstaf
+voor "af": niet meer *staat de lijn op de bol* maar *komt hij uit bij het ding dat je in je
+hand houdt*. Vier regels die daaruit volgen en voor elke volgende stroom gelden:
+
+1. **Een lijn mag getekend worden zonder dat er lading over gaat — mits je dat opschrijft.**
+   Fase D/E van grafiet dragen volume nul (Balama ligt stil, in 2025 werd er niets verscheept).
+   Besluit Lars: tóch tekenen, want de weg is gemeten en de fabrieken staan er. Maar het
+   verschil hoort in de **tekst en de node-noten**, niet in de lijnstijl — anders verwatert de
+   enige eerlijke conventie die de kaart heeft (stippel = *hier reikt het net niet*).
+2. **De fasen A–E gaan over KETENPOSITIE, niet over modaliteit.** Fase B heette "zee"; diamant
+   vliegt. Positie houdt de stromen onderling vergelijkbaar en kost niets.
+3. **Anker ≠ routeerpunt geldt ook aan de LANDkant.** Bij De Soto is het terrein over de weg
+   niet bereikbaar; de lijn eindigt 443 m ervoor op de rotonde. Dat is geen tekortkoming maar
+   dezelfde regel als Napoleon Ave (490 m ankerverplaatsing, 154 m routeerpunt).
+4. **Een anker dat niet satelliet-gelegd is, is geen anker — ook niet onder druk.** Drie docks
+   zijn niet gevonden en niet verzonnen; De Soto staat eerlijk als *terreinanker* in de brief.
+
+**⚠️ De meetlat zelf kan te streng staan, en dat is een eigen foutklasse.** `toets_knikken.py`
+meldde na het herbakken 12 → 28 omkeringen, wat op een regressie leek. Een nieuwe maat (pad
+÷ hemelsbreed over een venster) scheidt **terugloop** — de lijn blijft ter plaatse, verhouding
+3,0 en 10,2 — van een **echte scherpe bocht**, die ergens uitkomt (1,1–2,0). Uitslag: 25
+omkeringen waarvan **3 terugloop**, en de vier oudere stromen hebben er **nul**. De toets is
+geboren op **spoor**, waar een trein fysiek niet kan omkeren; op weg en water is een
+klaverbladlus of een duwstel dat in een doodlopend kanaal omdraait gewoon echt. **Een toets die
+voor één modaliteit is geijkt, hoort niet ongewijzigd op een andere te draaien.**
+
+**⚠️ En stop met schuiven zodra een fout verspringt in plaats van verdwijnt.** Bij de
+via-punten haalde de eerste ingreep 3 van de 6 omkeringen weg; de rest verplaatste zich. Dát was
+het signaal om te meten wat het was in plaats van door te tunen — en de meting liet zien dat de
+rest werkelijkheid was.
+
+**Het bak-recept hoort bij het gebakken bestand.** `bak_stromen.sh` legt vast hoe de grafietstroom
+gemaakt is. Meteen bleek waarom: het wegbeen op schijf was **niet meer wat zijn eigen generator
+maakt** (502,7 → 497,9 km). Derde verschijning van dezelfde klasse. Voor de vier andere stromen
+staat expliciet in het bestand dát hun recept ontbreekt — dat is de eerlijke tussenstand.
 
 ## Stand 2026-07-30 (laatst) — de brief is de bron van waarheid, dus §6 is een werklijst
 

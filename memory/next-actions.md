@@ -1,7 +1,47 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief, commit `6c7a454`)*
+*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct — grafiet, `?v=106`)*
 
-## 🟢 KLAAR OM TE BOUWEN 2026-07-30 (laatst) — §6b variant 1, besluit Lars
+## 🔴 NIEUW 2026-08-05 (laatst) — na de eerste complete keten
+
+1. **Vraag Lars' check uit.** Zijn oordeel op `?v=106` was *"ziet er goed uit denk ik"* — mild,
+   geen enthousiaste go zoals bij eerdere rondes. Vóór de volgende stroom is het de moeite waard
+   te weten wat hij mist; anders bouwen we drie stromen in een vorm die hem maar half bevalt.
+
+2. **De drie terugloopjes.** Napoleon Ave (bestond al, verhouding 10,2) · één in het bargebeen ·
+   North Little Rock I-30 → I-40 (3,0). Gebruik `toets_knikken.py` en kijk naar de
+   terugloop-kolom — de andere 22 omkeringen zijn werkelijkheid en mogen blijven.
+
+3. **De pilotset bevestigen** (`v2/design/pilotronde-analyse.md`): grafiet · kolen · koper ·
+   diamant. Grafiet is af; de volgorde daarna is koper (goedkoopst: 3 ankers, 1 kort been) →
+   kolen → diamant.
+   ⚠️ **Kolen vraagt éérst een halve dag bronwerk, vóór de eerste satellietpass:** geen bron legt
+   Cerrejón-kool in de cokesblend van Schwelgern; de gedocumenteerde stroom naar Duitsland is
+   krachtwerkkool. Je kunt de keten technisch perfect afmaken en tóch de verkeerde streng hebben
+   getekend. Valt de aanname, vervang dan de **kop** en niet de staart — Bowen Basin → Hay Point
+   staat al in het register en het Duitse eind draagt alle interessante overslagen.
+   ⚠️ **Diamant vraagt gereedschap vóór het eerste been:** luchtvracht als modaliteit (~1 dag;
+   kleur + label + een baker die een grootcirkel verdicht — `verdicht()` bestaat al). Dat
+   ontsluit daarna goud en PGM in één klap.
+
+4. **De bak-recepten van de vier andere stromen reconstrueren** (koper ×3, lithium) en toevoegen
+   aan `v2/tools/bak_stromen.sh`. ⚠️ Herbak ze **niet** zonder eerst de huidige uitvoer te
+   bewaren: bij grafiet bleek het wegbeen op schijf niet meer te zijn wat zijn generator maakt.
+
+5. **Lithium benen 5–8 bakken** — gedeblokkeerd nu beide Chinese fabrieksankers er zijn
+   (Tianqi Jiangsu 32.01218 / 120.45771 · LG-Huayou Wuxi 31.523573 / 120.475895). Allemaal
+   wegbenen, dus de 1-op-1-spoorbaker is hier niet nodig. Daarna is lithium de tweede stroom die
+   A–E waarmaakt.
+
+6. **`toets_corridor.py` bestaat niet meer** — hij leefde in een scratchpad en is verdwenen,
+   precies de klasse fout die `sat_check.py` naar `v2/tools/` bracht. De dekkings- en
+   verklikkertoets is deze ronde ad hoc geschreven; zet hem als repo-tool neer, met een
+   puntenlijst + verbodsstralen als invoer, zodat hij deze keer blijft bestaan.
+
+7. **Niet gevonden, en dat blijft zo tot er een andere bron is:** het uitgaande AAM-laaddock bij
+   Syrah (probeer de LDEQ-luchtvergunning met plot plan) en beide docks bij Panasonic De Soto
+   (wacht op een opname van ná juli 2025 — dit is de Shed 8-8-klasse, geen zoekprobleem).
+
+## ✅ AFGEROND 2026-08-05 — §6b variant 1 (uitgevoerd, commit `48afcf4`)
 
 **Punt 4 van de afwerklijst was géén coördinaatfout maar een eenheden-botsing.** De "110" van de
 brief is 110 kt spodumeen**concentraat** (≈17 kt LCE), de `value: 110` in `data/lithium.js` is kt
@@ -30,7 +70,7 @@ andere `via`. **Lars koos variant 1**; het volledige recept mét onderbouwing st
 
 Na uitvoering: §6 punt 4 op ✅, §6b inkorten tot besluit + de eenheden-les.
 
-## 🔴 NIEUW 2026-07-30 — de lithiumketen afmaken
+## 🟠 2026-07-30 — de lithiumketen afmaken (✅ punt 1 opgelost 2026-08-05: beide adressen gevonden, zie het recept in v2/design/zoek-chinees-adres-recept.md — benen 5–8 zijn nu te bakken)
 
 1. **Twee Chinese fabrieksadressen geocoderen — Lars zoekt ze op.** 东新路 5 号 (Tianqi
    Jiangsu, Zhangjiagang) en 锡梅路 167 号 (乐友新能源材料 / LG Chem–Huayou, Wuxi). OSM heeft

@@ -1,5 +1,44 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-07-30 (laatst: de afwerklijst §6 van de lithiumbrief)*
+*Last updated: 2026-08-05 (laatst: de eerste keten van mijn tot eindproduct)*
+
+## 2026-08-05 (laatst) — de eerste keten van mijn tot eindproduct
+
+- **2026-08-05 · ✅ BESLUIT LARS — FASE D EN E WORDEN GETEKEND HOEWEL HET VOLUME NUL IS.**
+  Balama ligt stil, "Graphite Shipped to Vidalia" was in 2025 nul, t/m Q2 2026 alleen ~150 t
+  kwalificatiemonsters. *De weg is echt, de lading nog niet.* **Het verschil hoort in de tekst
+  en de node-noten, NIET in de lijnstijl** — D/E zijn doorgetrokken, want stippel betekent in
+  dit project uitsluitend *hier reikt het net niet* (werkwijze §7). Zonder dit besluit had de
+  atlas over een half jaar nog steeds geen complete keten.
+- **2026-08-05 · DE FASEN A–E GAAN OVER KETENPOSITIE, NIET OVER MODALITEIT.** Fase B heette
+  "zee"; diamant vliegt en heeft geen zeebeen. Positie in plaats van modaliteit houdt de stromen
+  onderling vergelijkbaar en laat lucht, spoor en water er alle drie in passen. *Zelf beslist —
+  het was een boekhoudvraag die ten onrechte bij Lars was neergelegd.*
+- **2026-08-05 · NIET ELKE OMKERING IS EEN FOUT; DE MAAT IS PAD ÷ HEMELSBREED.** Een
+  **terugloop** blijft ter plaatse (gemeten 3,0 en 10,2), een **echte scherpe bocht** komt ergens
+  uit (1,1–2,0). `toets_knikken.py` rapporteert nu beide apart. ⚠️ De drempel van 150° is geijkt
+  op **spoor**, waar een trein niet kan omkeren — op weg en water zijn een klaverbladlus, een
+  sluispassage en een duwstel dat in een doodlopend kanaal omdraait allemaal echt.
+- **2026-08-05 · EEN KNOOPPUNT-VIA LIGT NÁ DE AFSLAG, NIET OP HET KRUIS.** Op het kruis snapt de
+  via naar de dichtstbijzijnde rijbaanvertex, en die kan **achter de reisrichting** liggen → de
+  router rijdt eraan voorbij en keert om. ⚠️ Dit is **niet** de afrit-fout: `projecteer_viapunten.py`
+  vond de doorgaande rijbaan op 17–41 m. Punten 300–500 m vooruit leggen op de weg waarover de
+  reis verdergaat.
+- **2026-08-05 · DE EINDKLASSEN VAN EEN WEGBEEN ZIJN PER PROFIEL INSTELBAAR.** Vidalia's last
+  mile begint met 1,2 km `highway=track`; zonder die klasse houdt het net op bij de provinciale
+  weg. ⚠️ De **default-tuple blijft ongewijzigd** en dat is geen netheid maar een vereiste: het
+  corridor-id dat de scan ziet hasht de eindklassen mee, dus een profiel zonder de sleutel houdt
+  dezelfde cachevingerafdruk — bewezen met een **byte-identieke** herbake van beide bestaande
+  profielen.
+- **2026-08-05 · CHINESE OVERHEIDSREGISTERS EN EIA'S STAAN IN CGCS2000 ≈ WGS-84 EN WORDEN NIET
+  OMGEREKEND** — alleen kaartdiensten (Amap/Baidu/Tencent) vragen conversie. Blind omrekenen legt
+  het Tianqi-punt 485 m NW in een akker. De werkende toets: reken alle drie de hypotheses door en
+  kies de lezing waarbij **alle in de brontekst genoemde buren aan de juiste kant liggen**.
+- **2026-08-05 · OSM-NAAMZOEKEN VERVALT ALS METHODE VOOR CHINESE INDUSTRIEZONES.** Beide gezochte
+  fabrieken hebben er **geen enkele naam-tag**; in Wuxi staat in het hele blok geen object. De
+  eerdere scan faalde dus niet — er zit een karteringsgat. OSM blijft wel bruikbaar als
+  **WGS-84-referentiekader** om een gevonden coördinaat tegen te toetsen.
+- **2026-08-05 · HET BAK-RECEPT HOORT BIJ HET GEBAKKEN BESTAND** (`bak_stromen.sh`), en verandert
+  mee in dezelfde commit. Lopen ze uit elkaar, dan is de stroom niet reproduceerbaar.
 
 ## 2026-07-30 (laatst) — de afwerklijst §6 van de lithiumbrief
 

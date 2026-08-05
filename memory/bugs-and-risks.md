@@ -1,5 +1,55 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-07-30 (nieuw: lege-uitvoer-zonder-foutmelding, stdout-crash na lange scan)*
+*Last updated: 2026-08-05 (nieuw: te strenge meetlat, generator-drift #3, drie terugloopjes)*
+
+## ⚠️ OPEN 2026-08-05 (laatst) — drie terugloopjes in de grafietketen
+
+Van de 25 omkeringen zijn er **3 een echte terugloop** (de lijn legt dezelfde weg terug):
+
+| plek | verhouding | status |
+|---|---|---|
+| Napoleon Ave, start bargebeen | 10,2 | **bestond al** vóór deze ronde |
+| tweede punt in het bargebeen | ≥ 2,2 | nieuw |
+| North Little Rock, I-30 → I-40 | 3,0 | nieuw |
+
+De overige 22 zijn **werkelijkheid** en horen niet gerepareerd te worden. Gebruik
+`toets_knikken.py` en kijk naar de terugloop-kolom, niet naar het omkeringen-totaal.
+
+## ⚠️ GEFIXT 2026-08-05 — de meetlat stond te streng, en dat leek een regressie
+
+Na het herbakken sprongen de omkeringen **12 → 28**. Dat las als een regressie en had bijna tot
+het terugdraaien van goed werk geleid. De maat ontbrak: `toets_knikken.py` was geijkt op **spoor**,
+waar een trein fysiek niet kan omkeren, dus daar is elke hoek ≥ 150° per definitie verzonnen
+geometrie. Op weg en water niet — een klaverbladlus, een sluispassage en een duwstel dat in een
+doodlopend zijkanaal omdraait zijn echte 180°-bochten.
+
+**Fix:** de verhouding pad ÷ hemelsbreed over een venster van ±8 punten. Terugloop blijft ter
+plaatse (3,0 en 10,2), een echte bocht komt ergens uit (1,1–2,0). Uitslag: 25 omkeringen waarvan
+**3 terugloop** — en de vier oudere stromen hebben er **nul**, dus ook de "12" waar we weken naar
+keken waren grotendeels echte bochten.
+
+⚠️ **Zoek dezelfde klasse elders:** elke toets die op één modaliteit is geijkt en ongewijzigd op
+een andere draait, kan systematisch vals alarm geven.
+
+## ⚠️ RISICO 2026-08-05 — generator↔uitvoer-drift, derde verschijning
+
+Het wegbeen `stroombeen-balama-nacala.geojson` op schijf stond op **502,7 km**; opnieuw bakken
+geeft **497,9**. Oorzaak: `snoei_keerlussen` kwam er op 30-07 bij voor de lithiumbrief en raakt
+dit been ook. Het bestand op schijf was dus **niet meer wat zijn eigen generator produceert**.
+
+Getoetst door het oude gereedschap terug te zetten en opnieuw te bakken — zelfde nieuwe uitkomst,
+dus de drift is **pre-existent** en niet door de eindklassen-wijziging veroorzaakt.
+
+⚠️ **De vier andere stromen dragen dit risico nog steeds**: hun recept staat nergens vastgelegd,
+dus niemand kan controleren of hun gebakken bestand nog matcht met het gereedschap van vandaag.
+Herbak ze niet zonder eerst de huidige uitvoer te bewaren.
+
+## ⚠️ LET OP 2026-08-05 — agent-rapporten kunnen vals alarm bevatten
+
+Een onderzoeksrapport meldde dat **pyosmium op deze machine geblokkeerd** zou zijn door
+applicatiebeleid, wat `fetch_landnet.py`, `fetch_service_lastmile.py` en `toets_ankers.py` zou
+breken. Zelf nagelopen: de module importeert en laadt gewoon. Het was een beperking van de
+omgeving waarin de agents draaiden, niet van de machine. **Loop een gemelde infrastructuurstoring
+zelf na vóór je hem doorgeeft of ernaar handelt.**
 
 ## ⚠️ GEFIXT 2026-07-30 (laatst) — `maak_aansluitingen.py` kon alleen draaien door een projectregel te overtreden
 
