@@ -68,6 +68,29 @@ def peiling(a, b):
 # ergens uit (verhouding ~1,0-2,0); een TERUGLOOP legt dezelfde weg terug en
 # blijft dus ter plaatse (gemeten: 3,0 bij North Little Rock, 10,2 bij Napoleon
 # Avenue). Alleen die tweede soort hoort gerepareerd te worden.
+#
+# ⚠️ DE BAND 2,0-3,0 WAS LEEG TOEN DEZE DREMPEL WERD GEKOZEN, EN DAT IS SINDS
+#    2026-08-05 NIET MEER ZO. De lithiumbenen 7 en 8 leverden twee omkeringen op
+#    die de toets als TERUGLOOP labelt maar die aantoonbaar WERKELIJKHEID zijn:
+#      32.06949, 118.93784 · v=2,4 · knooppunt G42 x G2503 bij Nanjing
+#      31.01827, 121.15034 · v=2,6 · knooppunt bij Songjiang
+#    Beide zijn met Overpass nagekeken: binnen 80 m liggen respectievelijk 2 en 7
+#    `motorway_link`-ways. Dat zijn KLAVERBLADLUSSEN — je rijdt er 1.509 m om
+#    572 m op te schuiven, en dat is precies wat een vrachtwagen daar doet. De
+#    grafietronde stelde dat al vast in woorden ("een klaverbladlus is echt")
+#    maar er was toen geen gemeten voorbeeld om de drempel op te ijken.
+#
+#    De ijkpunten staan nu dus zo:
+#      echte bocht        1,0 - 2,0
+#      klaverbladlus      2,4 - 2,6   ← NIEUW, gemeten, WERKELIJKHEID
+#      echte terugloop    3,0 en 10,2
+#    ⚠️ DE DREMPEL BLIJFT BEWUST OP 2,2 STAAN. Hem verhogen naar ~2,8 zou beter
+#    scheiden, maar het verandert de uitslag van ÁLLE stromen met terugwerkende
+#    kracht (o.a. Port Allen, v=2,2 — een duwstel dat in een doodlopend kanaal
+#    keert, en dus vermoedelijk óók werkelijkheid). Dat is een eigen besluit met
+#    een eigen meting, geen bijvangst van een bouwronde. Tot dat besluit valt:
+#    lees een gemelde terugloop tussen 2,2 en 2,8 als "kijk of het een knooppunt
+#    is" en niet als "hier moet iets gerepareerd worden".
 TERUGLOOP_V = 2.2
 VENSTER = 8
 

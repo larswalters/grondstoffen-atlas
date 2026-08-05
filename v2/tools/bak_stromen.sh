@@ -194,8 +194,74 @@ bak_koper_lobito() {
     --titel  "Koper · Copperbelt → Lobito → Duisburg (kathode)"
 }
 
-# ⚠️ OPENSTAAND: de recepten van de twee ANDERE stromen (koper Collahuasi→
-# Tongling, lithium) staan hier nog NIET. Die zijn
+# ── lithium · Greenbushes → Bunbury → zee → Yangtze → Zhangjiagang → Tianqi →
+#    Wuxi → Nanjing → Tesla Giga Shanghai   (DE TWEEDE A–E-KETEN)
+# Routebrief: v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md
+# Werkorder:  v2/design/werkorder-lithium-benen-5-8.md
+#
+# ⚠️ BENEN 1-4 GERECONSTRUEERD 2026-08-05, NIET TERUGGEVONDEN — maar strak: dit
+#    commando reproduceerde het bestand van 30-07 TEKEN VOOR TEKEN (52.821 byte,
+#    gelijke sha256 na normalisatie van `gemaakt`; 5 benen, 2.576 punten, 4
+#    markers), twee keer onafhankelijk nagedraaid.
+# ⚠️ DRIE VRIJHEIDSGRADEN, ALLE DRIE GEMETEN — en anders dan bij Lobito is
+#    --graaf hier WÉL vrij: mississippi of rijn geeft hetzelfde bestand, want het
+#    zeebeen rapporteert 0 track-edges / 46 MARNET-edges / 0 connectors en beide
+#    track-graven liggen aan de andere kant van de wereld. Tóch gepind: een graaf
+#    die deze route wél dekt kan het antwoord veranderen.
+#
+# ⚠️ TWEE ANKERS UIT DE BRIEF WAREN FOUT EN ZIJN VERVANGEN (werkorder A):
+#    * de "Tesla-poort 3" 30.87390/121.76572 was het REKENKUNDIG MIDDEN VAN VIER
+#      OSM-BUSHALTENODES — 1,0 m van een publieke straat, aan de westkant van het
+#      kanaal, 60,9 m BUITEN de fabriekspolygoon. De echte poort ligt op
+#      30.87423/121.76667, 18,2 m binnen way 635670279 (brug, wachtersgebouw).
+#    * het Nanjing-anker 32.16300/118.87900 lag 21,4 m BUITEN het hek in beboste
+#      helling. Het stond als "satelliet-gelegd op z16" — en z16 (2,0 m/px) kán
+#      dat verschil niet zien. Nu 32.16111/118.87953, binnen het hek.
+#
+# ⚠️ DRIE PROCESGATEN BLIJVEN BEWUST ZICHTBAAR: de UITGAANDE laadplekken bij
+#    Tianqi (219 m), Wuxi (310 m) en Nanjing (301 m) zijn niet gevonden, dus de
+#    koppen van b6/b7/b8 zijn substituten. Die gaten ZIJN de ontbrekende ankers;
+#    dichttrekken is de Waalhaven-klasse. Zelfde vorm als De Soto (grafiet) en
+#    het procesgat bij 贵冶 (koper).
+# ⚠️ HET GAT VAN 4.933 m TUSSEN BEEN 1 EN BEEN 2 BLIJFT OPEN, en het is het
+#    grootste van alle vijf stromen. Het is GEEN fout uiteinde: -33.30640/
+#    115.61330 is MARNET's eigen Bunbury-knoop en de eerstvolgende zeeknoop ligt
+#    92,8 km verderop. ⚠️ EN maak_havenaanloop.py KAN HET HIER NIET OPLOSSEN: het
+#    1:10M-landmasker is bij Bunbury LOKAAL OMGEKEERD (een varende bulkcarrier
+#    staat als land, een barrièreduin als water — werkorder F2). Eerst de
+#    vaargeul satelliet-leggen, dán een aanloop uit handmatige punten.
+bak_lithium() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|truck Greenbushes → Bunbury Berth 8 (Maranup Ford Rd → South Western Hwy)|$BEEN/stroombeen-greenbushes-bunbury.geojson" \
+    --been         "zee|zeeschip Bunbury → Yangtze-monding|-33.31995,115.66385|31.4074,121.4848" \
+    --stippel      "zee|overgang zeenet → Yangtze-bulklaag (MARNET houdt hier op)|31.51,121.4187|31.4512,121.4769" \
+    --been-geojson "binnenvaart|Yangtze-monding → Zhangjiagang, zuidgeul langs Shuangshan-eiland|$BEEN/rivierbeen-yangtze-zhangjiagang.geojson" \
+    --stippel      "binnenvaart|aanloop naar de ligplaats (anker ≠ routeerpunt)|31.9733,120.4202|31.968,120.4205" \
+    --been-geojson "truck|last mile kade → poort Tianqi (常金线 X301 → 长江北路 → 东新路)|$BEEN/stroombeen-zhangjiagang-lastmile.geojson" \
+    --been-geojson "truck|carbonaat/hydroxide Tianqi → kathodefabriek Wuxi (S23 → G4221 → S19)|$BEEN/stroombeen-zhangjiagang-wuxi.geojson" \
+    --been-geojson "truck|kathodepoeder Wuxi → LG ES Nanjing (G42 沪宁高速 → G2503 → 栖霞大道)|$BEEN/stroombeen-wuxi-nanjing.geojson" \
+    --been-geojson "truck|2170-cellen Nanjing → Tesla Giga Shanghai poort 3 (G42 → G1503 上海绕城 → G228 → 江山路)|$BEEN/stroombeen-nanjing-giga-shanghai.geojson" \
+    --marker "Greenbushes — concentraatloods (laadplek)|-33.86495,116.05505" \
+    --marker "Bunbury — Berth 8, scheepslader|-33.31995,115.66385" \
+    --marker "Yangtze-monding — overgang zeenet → rivier|31.45120,121.47690" \
+    --marker "Zhangjiagang — kade Zhangjiagang Port Group (ertsen/hout/staal)|31.96800,120.42050" \
+    --marker "天齐锂业（江苏）— poort 东新路 5 (uitgaande laadplek open)|32.01218,120.45771" \
+    --marker "乐友新能源材料（无锡）— laaddock westgevel|31.52362,120.47518" \
+    --marker "乐友新能源材料（无锡）— zuidpoort 锡梅路 (uitgaand, substituut)|31.52084,120.47492" \
+    --marker "LG Energy Solution Nanjing — New Port-campus|32.16111,118.87953" \
+    --marker "LG Energy Solution Nanjing — hoofdpoort 恒谊路 (uitgaand, substituut)|32.15840,118.87950" \
+    --marker "Tesla Giga Shanghai — poort 3 (losplek binnen het terrein open)|30.87423,121.76667" \
+    --routebrief v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md \
+    --uit    v2/data/stroomroute-lithium-greenbushes-zhangjiagang.json \
+    --stroom lithium-greenbushes-zhangjiagang \
+    --titel  "Lithium · Greenbushes → Zhangjiagang → Tesla Giga Shanghai (spodumeen SC6.0 → 2170-cel)"
+}
+
+# ⚠️ OPENSTAAND: het recept van de LAATSTE stroom (koper Collahuasi→Tongling)
+# staat hier nog NIET. Die zijn
 # gebakken vóór dit bestand bestond en hun vlaggen leven nog in een
 # shell-historie. Reconstrueer ze bij de eerstvolgende herbake van elk — en
 # herbak ze niet zonder eerst de huidige uitvoer te bewaren, want net als bij
@@ -209,5 +275,6 @@ case "${1:-}" in
   grafiet)         bak_grafiet ;;
   koper-escondida) bak_koper_escondida ;;
   koper-lobito)    bak_koper_lobito ;;
-  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida|koper-lobito}" >&2; exit 2 ;;
+  lithium)         bak_lithium ;;
+  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida|koper-lobito|lithium}" >&2; exit 2 ;;
 esac

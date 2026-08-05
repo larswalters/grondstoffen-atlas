@@ -353,6 +353,305 @@ PROFIELEN = {
         "vensterKm": 3,
         "uit": "stroombeen-guixi-fase-d.geojson",
     },
+
+    # ── Routebrief lithium-greenbushes-zhangjiagang, been 5 (2026-08-05) ──
+    # FASE C, last mile: van de publieke kade van 张家港港务集团 naar de poort van
+    # 天齐锂业（江苏）, 东新路 5号 in het 扬子江国际化学工业园.
+    #
+    # ⚠️ DE BRIEF ZEGT ±3-5 KM EN DAT KAN NIET. Hemelsbreed liggen de twee ankers
+    #    al 6,037 km uit elkaar: de weg moet zuidwaarts om de monding van het
+    #    Zhangjiagang-kanaal en de zuidgeul heen. Gemeten 10,261 km over 51 punten
+    #    — tweemaal onafhankelijk gereproduceerd (bevinding + weerlegger, tot op
+    #    de meter gelijk).
+    # ⚠️ DE EERSTE 0,555 KM IS HAVENTERREIN EN STAAT NIET IN OSM. In het vak
+    #    lon 120,413-120,4275 x lat 31,9625-31,970 liggen 5 highway-ways, alle op
+    #    lat <= 31,9641 (de zuidrand); boven 31,965 nul. De tool vlagt die aanloop
+    #    als "> 0,5 km — bevinding"; dat is de JUISTE uitslag. Niet dichttrekken.
+    # ⚠️ eindKlassen BEWUST NIET GEZET. Het beslissende eerste stuk is
+    #    西五节桥街 = highway=service, en `service` zit AL in EIND_KLASSEN_DEFAULT
+    #    ("residential", "service", "tertiary", "unclassified"). Zetten zou alleen
+    #    de cachevingerafdruk veranderen (scan_corridor["id"] = eigen id + de
+    #    eindklassen), niet de uitkomst.
+    #    ⚠️ CORRECTIE OP DE KOPER-COMMENT: het argument "anders komen de bestaande
+    #    profielen niet byte-identiek uit de bake" is ONJUIST — EIND_KLASSEN wordt
+    #    per run in _kies_profiel gezet en de scan-id wordt uit het EIGEN id van
+    #    elk profiel gebouwd, dus een eindKlassen-sleutel op een nieuw profiel kan
+    #    een ander profiel per constructie niet raken. Het besluit klopt wel.
+    # ⚠️ ALLE VIA-PUNTEN ZIJN ECHTE OSM-VERTICES uit de eigen wegscan (snap
+    #    0-1 m), geen plaatsknopen — de Balingup-val (180,0 graden keerpunt, been
+    #    2 van deze zelfde stroom) kan hier per constructie niet optreden.
+    "lithium-zhangjiagang-lastmile": {
+        "via": [
+            ("Kade Zhangjiagang Port Group",            (120.42050, 31.96800)),
+            ("中兴北路 × 常金线 X301",                     (120.42398, 31.95890)),
+            ("常金线 X301 — vak zuid van 双山岛",           (120.43965, 31.96252)),
+            ("常金线 X301 — vak langs het chemiepark",     (120.46944, 31.98062)),
+            ("常金线 X301 × 长江北路",                     (120.47170, 31.99419)),
+            ("长江北路 × 东新路",                          (120.46199, 32.01353)),
+            ("Poort Tianqi Lithium (Jiangsu), 东新路 5",   (120.45771, 32.01218)),
+        ],
+        "id": "li-zjg-lastmile",
+        "naam": "kade Zhangjiagang Port Group → poort Tianqi Lithium (Jiangsu) "
+                "(西五节桥街 → 中兴北路 → 常金线 X301 → 长江北路 → 东新路)",
+        "extracts": ["china"],
+        # 常金线 draagt X301; 中兴北路/长江北路/东新路 zijn ongenummerd en krijgen
+        # de zachte factor 3 — gemeten verandert dat de route niet.
+        "refs": ["X301"],
+        # ⚠️ TAUTOLOGISCH: dit is onze eigen meting, geen gepubliceerde waarde.
+        #    De lengtetoets op dit been bewijst dus niets; de echte controle is de
+        #    wegblokken-lijst en de verklikkers in sectie E van de werkorder.
+        "gepubliceerdKm": 10.26,
+        "bronnoot": "eigen Dijkstra over china-latest (2026-08-05) met exact de "
+                    "regels van dit gereedschap, twee keer onafhankelijk "
+                    "gereproduceerd; geen bron publiceert deze afstand. De "
+                    "brief-waarde ±3-5 km is niet reproduceerbaar: de hemelsbrede "
+                    "afstand kade→poort is al 6,037 km",
+        "vensterKm": 5,
+        "uit": "stroombeen-zhangjiagang-lastmile.geojson",
+    },
+
+    # ── Routebrief lithium-greenbushes-zhangjiagang, been 6 (2026-08-05) ──
+    # FASE D: batterijkwaliteit hydroxide/carbonaat van 天齐锂业（江苏）naar de
+    # kathodefabriek 乐友新能源材料（无锡）, 锡梅路 167号, Xinwu, Wuxi.
+    #
+    # DE CORRIDOR: 东新路 → 长江北路 → 常金线 X301 → 东海路 → S23 靖张高速
+    #   (OSM name:en "Zhangjiagang Port Expressway") → G4221 沪武高速 →
+    #   张家港枢纽立交 → S19 通锡高速 → afrit Xinwu → 新鸿路 X252.
+    #
+    # ⚠️ DE KOP IS DE POORT, NIET DE UITGAANDE LAADPLEK. Die laadplek is niet
+    #    gevonden (werkorder F3); het procesgat van 218,9 m naar het terreinanker
+    #    32.01050/120.45650 blijft daarom bewust bestaan en wordt NIET getekend.
+    # ⚠️ DE CORRIDORKEUZE IS ROBUUSTER DAN EERST GEMELD, MAAR HET AANGEVOERDE
+    #    BEWIJS KLOPTE NIET. De claim "zonder via-punten kiest de Dijkstra de
+    #    S259-route van 61,0 km" is NIET reproduceerbaar: met de refs hieronder en
+    #    NUL via-punten (venster 12 én 25 km) komt er exact 67,955 km uit, dezelfde
+    #    408 punten. De 61,0 km verschijnt pas als je óók de refs leegmaakt. Wat de
+    #    keuze wél draagt is een TIJD-optimale vrije Dijkstra (klassesnelheden,
+    #    geen via-punten, geen refs, venster 25 km, dus met S228/S259/G2/G42/S48 in
+    #    de zoekruimte): die kiest punt voor punt dezelfde lijn — 67,955 km /
+    #    48,6 min tegen 61,3 km / 69,9 min voor S259. Drie onafhankelijke criteria
+    #    (via-punten, ref-voorkeur, reistijd) geven dezelfde corridor.
+    # ⚠️ S259 锡张线 IS EEN REËEL ALTERNATIEF (werkwijze §2), geen negatief anker:
+    #    korter (61,0 km) maar trager, aandeel onbekend.
+    # ⚠️ "G2 京沪高速 ligt minimaal 17,4 km van deze lijn" IS FOUT en mag niet in
+    #    de brief. Ways met ref exact "G2" liggen 17,29 km weg, maar het
+    #    concurrentievak met ref "G2;G42" — dat ÍS 京沪高速 — passeert op 2,02 km
+    #    (bij 31,5073/120,4545). De conclusie (deze corridor is niet G2) blijft
+    #    staan; het bewijs zat er 8,6x naast. _wegen_graaf matcht op ref.split(";").
+    # ⚠️ DE TWEE KNOOPPUNT-VIAS LIGGEN NÁ DE INVOEGING (627 m op de G4221, 466 m
+    #    op de S19), niet op het kruis — de overschiet-en-terug-regel.
+    # ⚠️ eindKlassen BEWUST NIET GEZET: tertiary (东海路) en secondary zitten al in
+    #    WEG_HOUD resp. EIND_KLASSEN_DEFAULT.
+    "lithium-zhangjiagang-wuxi": {
+        "via": [
+            ("Poort Tianqi Lithium (Jiangsu), 东新路 5",    (120.45771, 32.01218)),
+            ("长江北路 (Yangtze North Road)",                (120.46633, 32.00489)),
+            ("常金线 X301 ná de aansluiting",               (120.47047, 31.98681)),
+            ("东海路 → kop van de S23",                     (120.46599, 31.96594)),
+            ("S23 靖张高速 ná de toerit",                    (120.47810, 31.95761)),
+            ("S23 靖张高速 — middenvak",                     (120.49876, 31.89771)),
+            ("S23 靖张高速 — vóór het knooppunt G4221",       (120.52082, 31.83047)),
+            ("G4221 沪武高速 ná de invoeging",               (120.53242, 31.80877)),
+            ("S19 通锡高速 ná 张家港枢纽立交",                  (120.58071, 31.78839)),
+            ("S19 通锡高速 — middenvak west van Changshu",    (120.55646, 31.69145)),
+            ("S19 通锡高速 — zuidvak oost van Wuxi",          (120.52141, 31.58316)),
+            ("S19 通锡高速 — vóór de afrit Xinwu",            (120.48052, 31.52150)),
+            ("新鸿路 X252 ná de afrit",                     (120.47346, 31.52318)),
+            # ⚠️ STAART = HET LAADDOCK (z19: twee rode opleggers onder een
+            #    laadluifel), NIET het EIA-anker 31.523573/120.475895. Reden is
+            #    meetbaar: het EIA-anker ligt 186 m van de gerouteerde lijn en zou
+            #    de marker-eis (<= 0,15 km punt-tot-segment) breken; het laaddock
+            #    ligt op 126,3 m van 新鸿路. De 68,0 m ertussen zijn de correctie.
+            #    Bijvangst: het EIA-anker was het enige anker in de brief met 6
+            #    decimalen terwijl werkwijze §2 er 5 eist — dat probleem verdwijnt.
+            ("Laaddock 乐友新能源材料（无锡）— westgevel",      (120.47518, 31.52362)),
+        ],
+        "id": "li-zjg-wuxi",
+        "naam": "poort Tianqi (Jiangsu) → laaddock LG Chem/Huayou Wuxi "
+                "(东新路 → 常金线 X301 → 东海路 → S23 靖张高速 → G4221 沪武高速 → "
+                "张家港枢纽 → S19 通锡高速 → 新鸿路 X252)",
+        "extracts": ["china"],
+        # ⚠️ X301 BEWUST NIET IN refs: 锡甘线 bij Wuxi draagt dezelfde ref en zou
+        #    het staartstuk naar zich toe trekken. (Gemeten: X301 er tóch bij
+        #    zetten verandert exact niets — 67,955 km, identiek. De waarschuwing
+        #    is dus overbodig maar onschadelijk.) De S19-ways met ref "S19;S58"
+        #    matchen gewoon, want _wegen_graaf splitst op ";".
+        "refs": ["S23", "G4221", "S19", "X252"],
+        # De brief-waarde, NIET onze eigen meting — anders is de toets tautologisch.
+        "gepubliceerdKm": 70,
+        "bronnoot": "brief been 6 (±70 km) tegen een eigen Dijkstra over "
+                    "china-latest (2026-08-05) langs de snelwegcorridor "
+                    "S23 → G4221 → S19: 67,955 km = -2,9%. Twee keer onafhankelijk "
+                    "gereproduceerd. Het afstand-optimale alternatief over de "
+                    "provinciale S259 锡张线 is 61,0 km (-12,9%) — korter maar "
+                    "trager (69,9 vs 48,6 min); reëel alternatief, aandeel onbekend",
+        "vensterKm": 6,
+        "uit": "stroombeen-zhangjiagang-wuxi.geojson",
+    },
+
+    # ── Routebrief lithium-greenbushes-zhangjiagang, been 7 (2026-08-05) ──
+    # FASE E: NCM-kathodepoeder Wuxi → celfabriek LG Energy Solution Nanjing,
+    # New Port-campus in de 南京经济技术开发区.
+    #
+    # DE CORRIDOR IS G42 沪宁高速. OSM draagt hem als ref "G2;G42" met naam
+    # 京沪高速 tussen Shanghai en Wuxi, en als ref "G42" naam 沪蓉高速 verder
+    # westwaarts — één weg, twee OSM-schrijfwijzen.
+    #
+    # ⚠️ HET "S38"-ALTERNATIEF IS GEMETEN EN VERWORPEN, twee keer. Wat in Jiangsu
+    #    S38 常合高速 heet ligt in OSM als G4221 沪武高速 (805 ways met ref G4221;
+    #    slechts 3 ways dragen S38, alle op lon 119,888-119,893 bij Changzhou —
+    #    precies de gedeelde-tracé-claim). G4221 ligt op lon 120,4 op lat 31,814-
+    #    31,819 (NOORD om Wuxi) en op lon 119,3 op lat 31,72, en nadert Nanjing van
+    #    het ZUIDwesten — de verkeerde kant voor de NEDZ op lat 32,16. Gemeten
+    #    312,3 km tegen 196,6 km via G42. Verworpen op VORM, niet alleen op lengte.
+    # ⚠️ GEEN VIA OP S19 通锡高速. De fabriek ligt er 0,5 km vandaan en de Dijkstra
+    #    pakt hem vanzelf. Een via ÓP S19 legde een 180,0-graden keerpunt neer: de
+    #    oprit ligt noordelijk van de fabriek, de reis gaat zuidwaarts.
+    # ⚠️ VIA-PUNT 8 LIGT BEWUST ÓÓST VAN HET G2503-KNOOPPUNT (dat zit op lon
+    #    ≈118,938). Een punt wést ervan gaf 3 km overschiet-en-terug.
+    # ⚠️ HET 栖霞大道-VIA LIGT 62 m VAN DE G2503-RIJBAAN, DUS ÓP HET KLAVERBLAD, en
+    #    produceert een omkering van 173,6 graden met pad/hemelsbreed 2,08. Dat is
+    #    een KNOOPPUNTLUS, geen terugloop (de band voor terugloop is 3,0-10,2), maar
+    #    het is wel dezelfde knooppunt-via-regel die op been 8 juist wél is
+    #    toegepast. Slaat toets_knikken.py erop aan: schuif dit punt verder
+    #    noordwestwaarts ÓP 栖霞大道 en hermeet. Niet vooraf verschuiven — ongemeten.
+    # ⚠️ DE KOP IS EEN SUBSTITUUT (de zuidpoort, 310,1 m van het laaddock): welk
+    #    dock uitgaand is, is niet gedocumenteerd — b6-staart en b7-kop wezen
+    #    anders op DEZELFDE apron en dan is §2b's twee-ankers-eis alleen nominaal
+    #    vervuld. Een verzonnen verschil tussen twee docks zou erger zijn.
+    #    ⚠️ DE EERSTE ~1 KM IS DAARDOOR NIET VOORGEMETEN: de meting van 196,6 km
+    #    liep vanaf het fabrieksanker met een aanloop van 199 m. Verwacht
+    #    锡梅路 → 新鸿路 → oprit → S19, dus +0,3 tot +0,6 km. HERMEET.
+    # ⚠️ DE STAART IS VERVANGEN. Het briefpunt 32.16300/118.87900 ligt 21,4 m
+    #    BUITEN way 621624910, in beboste helling — het was "satelliet-gelegd op
+    #    z16" en op 2,0 m/px is dat verschil onzichtbaar. Nieuw: het bbox-midden
+    #    van diezelfde way, binnen het hek, 216,0 m van het oude punt.
+    "lithium-wuxi-nanjing": {
+        "via": [
+            ("Zuidpoort 乐友无锡, 锡梅路 (substituut-kop)",  (120.47492, 31.52084)),
+            ("G2/G42 京沪高速 — knooppunt 硕放",             (120.45227, 31.50909)),
+            ("G42 沪蓉高速 — Wuxi-west / Luoshe",           (120.19721, 31.70953)),
+            ("G42 — Changzhou (noord van het centrum)",    (119.98628, 31.84207)),
+            ("G42 — Danyang",                              (119.65600, 32.00444)),
+            ("G42 — Zhenjiang",                            (119.44875, 32.05524)),
+            ("G42 — Jurong 句容",                           (119.19980, 32.04512)),
+            ("G42 — Nanjing-oost, vóór knooppunt G2503",   (118.97025, 32.06317)),
+            ("G2503 南京绕城高速 — noordwaarts na het knooppunt", (118.95119, 32.10188)),
+            ("栖霞大道 S338 — ná de afrit 栖霞",               (118.94392, 32.14829)),
+            ("LG ES Nanjing — terreinanker New Port",      (118.87953, 32.16111)),
+        ],
+        "id": "li-wuxi-nanjing",
+        "naam": "laaddock/zuidpoort LG Chem-Huayou Wuxi → LG Energy Solution "
+                "Nanjing, New Port (S19 通锡 → G42 沪宁高速 → G2503 南京绕城 → "
+                "栖霞大道 S338)",
+        "extracts": ["china"],
+        # G2 matcht het element "G2" in de OSM-ref "G2;G42"; G25 hoort bij G2503
+        # (die ring draagt "G25;G2503"). Zachte voorkeur, factor 3.
+        "refs": ["G42", "G2", "G2503", "G25", "S338"],
+        "gepubliceerdKm": 180,
+        "bronnoot": "brief been 7 (±180 km); onafhankelijk: gepubliceerde "
+                    "wegafstanden Wuxi→Nanjing centrum-tot-centrum 174-185 km en "
+                    "沪宁高速 is 274 km lang. Eigen corridormeting 196,6 km ruw / "
+                    "196,3 na snoei = +9,1% — verklaarbaar doordat beide ankers "
+                    "voorbij de stadscentra liggen (fabriek in Xinwu/硕放, campus "
+                    "in de NEDZ aan de Yangtze). ⚠️ KRAP BINNEN ±10%: dit is het "
+                    "eerste getal dat kantelt, en de kop IS verschoven — hermeet",
+        "vensterKm": 40,
+        "uit": "stroombeen-wuxi-nanjing.geojson",
+    },
+
+    # ── Routebrief lithium-greenbushes-zhangjiagang, been 8 (2026-08-05) ──
+    # FASE E, slot: 2170-cellen van LG ES Nanjing naar Tesla Giga Shanghai,
+    # poort 3, 江山路 5000号, 南汇新城镇, Lingang/Pudong. HET EINDE VAN DE KETEN.
+    #
+    # DE CORRIDOR: G42 沪宁高速 OOSTWAARTS TOT JIADING, DAARNA G1503 上海绕城高速
+    # MET DE KLOK MEE OM SHANGHAI HEEN (Qingpu → Songjiang → Jinshan → Fengxian →
+    # Lingang), en pas op het laatst 新四平公路 G228 → 江山路 → poort 3.
+    #
+    # ⚠️ ER GELDT EEN VRACHTVERBOD DOOR HET CENTRUM, EN DAT STUURT DE ROUTE.
+    #    Blauwe-plaat vrachtwagens mogen de hele dag niet binnen de binnenring;
+    #    sinds 15-10-2025 mogen diesel-vrachtwagens Euro-IV de hele dag niet
+    #    binnen G1503, met S20 外环 als aanbevolen omleiding. Deze lijn blijft
+    #    31,34 km van 人民广场 — gemeten. Ter vergelijking: een VRIJE Dijkstra
+    #    komt op 14,7 km en gaat dus wél de verbodszone in, en is 30 km korter.
+    #    Dát verbod is de reden dat we die kortere route niet nemen.
+    # ⚠️ VIER ARCS GEMETEN vanaf het knooppunt G42 x G1503 (121,139/31,290):
+    #    G1503-zuidwest 108,1 km · S32 申嘉湖 119,7 · S20 外环 + S2 沪芦 122,2 ·
+    #    oostelijke arc via Pudong 131,0. De zuidwestarc wint op lengte, ligt het
+    #    verst van de verbodszone en raakt als enige de brief-passage Songjiang.
+    #    ⚠️ S20+S2 IS GEEN SCHOON ALTERNATIEF: die route komt op 10,9 km van
+    #    人民广场 en ligt dus RUIM BINNEN G1503 — hij schendt precies het
+    #    Euro-IV-verbod waarmee de gekozen arc wordt gerechtvaardigd. Noem hem in
+    #    de brief alleen mét dat voorbehoud.
+    # ⚠️ VIA-PUNT 17 LIGT OP 新四平公路 G228, NIET OP HET G1503-KNOOPPUNT 临海路.
+    #    Gemeten: een via ÓP dat knooppunt (121.76188, 30.92297) legde een keerlus
+    #    van 5,49 km over 41 punten neer. Ná de afslag → 0 keerlussen en het been
+    #    381,9 → 376,1 km. Dezelfde les als Joplin/Lenexa.
+    # ⚠️ VIA-PUNT 11 IS KUNSHAN EN NIET ANTING. G42 buigt tussen lon 121,14 en
+    #    121,16 naar het zuiden; een via bij Anting (121,157/31,272) ligt in
+    #    reisrichting VOORBIJ het G1503-knooppunt (121,139/31,290).
+    # ⚠️ "G228" staat in refs voor de laatste 3,7 km, maar G228 loopt langs de hele
+    #    Chinese kust en parallel aan G1503 tussen Jinshan en Lingang. Buigt de
+    #    lijn daar raar af, dan is dit de eerste verdachte.
+    # ⚠️ DE KOP IS EEN SUBSTITUUT (hoofdpoort 恒谊路, 301,4 m van het terreinanker):
+    #    de uitgaande laadplek van de celfabriek is niet gevonden (werkorder F3).
+    # ⚠️ DE STAART IS VERVANGEN EN DIT IS DE BELANGRIJKSTE CORRECTIE VAN DE HELE
+    #    RONDE. Het briefpunt 30.87390/121.76572 is HET REKENKUNDIG MIDDEN VAN VIER
+    #    OSM-BUSHALTENODES (12376922502..505, alle highway=bus_stop resp.
+    #    public_transport=platform/stop_position, bus=yes; gemiddelde 30.873906/
+    #    121.765716). Het ligt 1,0 m van de PUBLIEKE straat 正嘉路 op de WESToever
+    #    van het kanaal en 60,9 m BUITEN way 635670279. Er is geen barrier=gate en
+    #    geen entrance=* binnen 1,8 km. Elk "bewijs" dat dat punt goed snapt is
+    #    CIRCULAIR: het meet het anker tegen één van de nodes waaruit het gemiddeld
+    #    is. De echte poort ligt 97,8 m verderop, over de brug, 18,2 m BINNEN de
+    #    fabriekspolygoon.
+    # ⚠️ HET LAATSTE STUK IS NIET MEER GECONTROLEERD OP OVERSCHIET-EN-TERUG. Die
+    #    controle liep op het oude (bushalte-)eindpunt. 正嘉路 (way 1338068671) heeft
+    #    5 vertices over 869 m; de nieuwe staart hangt aan way 1229490502. CONTROLEER
+    #    dit opnieuw — loopt het been over precies één benoemde way voorbij de poort,
+    #    dan is knip_osm_been.py hier wél inzetbaar (anders dan bij been 5).
+    "lithium-nanjing-shanghai": {
+        "via": [
+            ("Hoofdpoort LG ES Nanjing, 恒谊路 (substituut-kop)", (118.87950, 32.15840)),
+            ("栖霞大道 S338 — vóór de oprit G2503",           (118.94392, 32.14829)),
+            ("G2503 南京绕城高速 — zuidwaarts",                (118.95119, 32.10188)),
+            ("G42 沪蓉高速 — Nanjing-oost (Qixia)",           (118.97025, 32.06317)),
+            ("G42 — Jurong 句容",                            (119.19980, 32.04512)),
+            ("G42 — Zhenjiang",                              (119.44875, 32.05524)),
+            ("G42 — Danyang",                                (119.65600, 32.00444)),
+            ("G42 — Changzhou",                              (119.98628, 31.84207)),
+            ("G42 — Wuxi",                                   (120.19721, 31.70953)),
+            ("G2/G42 京沪高速 — Suzhou",                       (120.59967, 31.35006)),
+            ("G2/G42 — Kunshan (vóór knooppunt G1503)",      (120.99984, 31.33419)),
+            ("G1503 上海绕城高速 — zuidwaarts na Jiading",      (121.14262, 31.24131)),
+            ("G1503 — Qingpu",                               (121.13800, 31.14649)),
+            ("G1503 — Songjiang",                            (121.14908, 31.01539)),
+            ("G1503 — Jinshan / Fengxian (zuidkust)",        (121.29025, 30.87814)),
+            ("G1503 — Fengxian-oost",                        (121.60383, 30.91048)),
+            ("新四平公路 G228 — ná de afrit Lingang",          (121.73564, 30.88459)),
+            ("江山路 — westzijde Tesla-terrein",               (121.75945, 30.87586)),
+            ("Tesla Giga Shanghai — poort 3 (brug + wachtersgebouw)", (121.76667, 30.87423)),
+        ],
+        "id": "li-nanjing-shanghai",
+        "naam": "LG Energy Solution Nanjing → Tesla Giga Shanghai poort 3 "
+                "(G2503 → G42 沪宁高速 → G1503 上海绕城 → G228 新四平公路 → 江山路)",
+        "extracts": ["china"],
+        "refs": ["G42", "G2", "G2503", "G25", "G1503", "S338", "G228"],
+        # ⚠️ DE BRIEF-WAARDE ±300 KM IS DE GROOTCIRKEL EN MOET UIT DE BRIEF:
+        #    poort-tot-poort is hemelsbreed 308,68 km (nagerekend), dus een
+        #    wegafstand van 300 km is onmogelijk.
+        "gepubliceerdKm": 376,
+        "bronnoot": "eigen corridormeting 2026-08-05 over china-latest.osm.pbf, "
+                    "twee keer onafhankelijk gereproduceerd: 376,1 km ruw / 375,6 "
+                    "na snoei. ⚠️ TAUTOLOGISCHE LENGTETOETS — er is geen bron die "
+                    "deze rit documenteert. Onafhankelijke kruiscontrole: "
+                    "gepubliceerd Nanjing→Shanghai-centrum 297-305 km, Lingang ligt "
+                    "daar nog ~70 km voorbij, plus de ringomleiding → ~370-380 km. "
+                    "De brief-waarde ±300 km is de GROOTCIRKEL (308,68 km "
+                    "hemelsbreed poort-tot-poort)",
+        "vensterKm": 40,
+        "uit": "stroombeen-nanjing-giga-shanghai.geojson",
+    },
 }
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).

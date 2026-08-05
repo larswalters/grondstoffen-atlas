@@ -358,6 +358,64 @@ AANSLUITINGEN = [
               "fout: de bonded-zone-kade bij de fabriek is GEEN ladingkade (patrouille-/"
               "marinabekken met helipad), en de steigers van het chemiepark zijn voor "
               "VLOEISTOF, niet voor droge bulk."),
+    dict(id="li-zjg-tianqi", grondstof="lithium", fase="erts", rol="losplek",
+         naam="天齐锂业（江苏）— poort 东新路 5, Zhangjiagang",
+         plek=[120.45771, 32.01218], modi=[],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z18, 2026-08-05); coördinaat uit het "
+              "nationale emissievergunningregister permit.mee.gov.cn (verborgen HTML-velden, "
+              "decimaal én DMS), vergunning 91320592551155199K001U",
+         noot="Einde van been 5 (last mile kade → raffinaderij). ⚠️ DEZE AANSLUITING STOND HIER "
+              "BEWUST NIET sinds 2026-07-30: 'een aansluiting op een ongelegd punt ís de "
+              "Waalhaven-klasse'. Die reden is vervallen — het punt is nu gelegd. "
+              "⚠️ SATELLIET-GELEGD ALS VESTIGINGSPUNT AAN 东新路, NIET ALS GEKARTEERDE DEUR: op "
+              "z18 is er een verharde berm met geparkeerde vrachtwagens, géén poortgebouw, géén "
+              "slagboom, geen barrier-tag. Dat is de klasse 'een registerpunt is een vestiging, "
+              "geen deur'. ⚠️ De UITGAANDE laadplek is niet gevonden; been 6 vertrekt daarom van "
+              "ditzelfde punt en het terreinanker 32.01050/120.45650 (218,9 m) is NIET gebruikt. "
+              "⚠️ Routeerpunt = projectie op OSM way 432043510 (24,9 m); de dichtstbijzijnde "
+              "graafKNOOP ligt 79,5 m WEST, dus de lijn schiet er 75 m voorbij. ⚠️ MODI IS BEWUST LEEG: de gemeten weg-snap is 855 km. Het landnet heeft wereldwijd maar 1.883 wegknopen, dus dat is een MEETRESULTAAT en geen aansluiting — zelfde keuze als cu-guixi-walsdraad (341 km). De straat waarop het been aanhecht zit wél in OSM; daar tekent het bakprofiel op."),
+    dict(id="li-wx-lgchem", grondstof="lithium", fase="raffinaat", rol="losplek",
+         naam="乐友新能源材料（无锡）— laaddock westgevel (锡梅路 167号)",
+         plek=[120.47518, 31.52362], modi=[],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z19, 0,25 m/px, 2026-08-05): twee rode "
+              "opleggers onder een uitkragende laadluifel aan de westgevel van de noordelijke "
+              "hal; 92 m ZW een tweede dock. 68,0 m van het EIA-anker uit het gemeentelijke "
+              "milieurapport van Wuxi",
+         noot="Einde van been 6 (kathodefabriek van de LG Chem/Huayou-JV). ⚠️ De UITGAANDE "
+              "laadplek is niet gevonden: been 7 vertrekt van de ZUIDPOORT 31.52084/120.47492 "
+              "(achthoekig poortpaviljoen met slagbomen), 310,1 m hiervandaan. Dat procesgat "
+              "blijft bewust zichtbaar. Routeerpunt = 新鸿路 X252 op 126,3 m. ⚠️ MODI IS BEWUST LEEG: de gemeten weg-snap is 815 km. Het landnet heeft wereldwijd maar 1.883 wegknopen, dus dat is een MEETRESULTAAT en geen aansluiting — zelfde keuze als cu-guixi-walsdraad (341 km). De straat waarop het been aanhecht zit wél in OSM; daar tekent het bakprofiel op."),
+    dict(id="li-nj-lges", grondstof="lithium", fase="product", rol="losplek",
+         naam="LG Energy Solution Nanjing — New Port-campus (恒毅路 17号)",
+         plek=[118.87953, 32.16111], modi=[],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z18, 2026-08-05): bedrijfsgebouw binnen "
+              "het hek, met op dezelfde pass het rode LG-logo-monument ZW ervan; bbox-midden "
+              "van OSM way 621624910 (33,97 ha)",
+         noot="Einde van been 7 (celfabriek). ⚠️ HET BRIEFPUNT 32.16300/118.87900 WAS FOUT: dat "
+              "lag 21,4 m BUITEN de perceelgrens in beboste helling met oude funderingen. Het "
+              "stond als 'satelliet-gelegd op z16' — en z16 (2,0 m/px) kán dat verschil niet "
+              "zien. ⚠️ OPEN EN BELANGRIJK: de polygoon draagt de PRE-split naam 乐金化学 "
+              "(LG Chem), terwijl binnen 750 m twee expliciet LGES-genoemde genummerde percelen "
+              "liggen (六工厂 698 m, 九工厂 749 m). Welk perceel de 2170-cellen voor Tesla maakt "
+              "is NIET gedocumenteerd — dat is groter dan elk procesgat dat deze keten bewust "
+              "laat staan. ⚠️ De uitgaande laadplek is niet gevonden; been 8 vertrekt van de "
+              "hoofdpoort 恒谊路 32.15840/118.87950 (301,4 m). ⚠️ MODI IS BEWUST LEEG: de gemeten weg-snap is 785 km. Het landnet heeft wereldwijd maar 1.883 wegknopen, dus dat is een MEETRESULTAAT en geen aansluiting — zelfde keuze als cu-guixi-walsdraad (341 km). De straat waarop het been aanhecht zit wél in OSM; daar tekent het bakprofiel op."),
+    dict(id="li-sh-tesla", grondstof="lithium", fase="product", rol="losplek",
+         naam="Tesla Giga Shanghai — poort 3 (江山路 5000号, Lingang)",
+         plek=[121.76667, 30.87423], modi=[],
+         bron="SATELLIET-GELEGD op Esri World Imagery (z19, 0,26 m/px, 2026-08-05): brug over "
+              "het kanaal, wachtersgebouw op een verkeerseiland met luifel over de rijstroken, "
+              "vrachtwagens in de rij, direct oostelijk de fabrieksapron. 18,2 m BINNEN OSM-way "
+              "635670279 (特斯拉上海超级工厂, operator=Tesla (Shanghai))",
+         noot="HET EINDE VAN DE KETEN — de tweede stroom van de atlas die van de mijn tot het "
+              "eindproduct loopt (na grafiet). ⚠️ HET BRIEFPUNT 30.87390/121.76572 BESTOND NIET "
+              "ALS POORT: dat was het REKENKUNDIG MIDDEN VAN VIER OSM-BUSHALTENODES (特斯拉3号门, "
+              "alle highway=bus_stop), 1,0 m van de publieke straat 正嘉路 aan de WESTKANT van "
+              "het kanaal en 60,9 m BUITEN de fabriekspolygoon — een been dat daar eindigt "
+              "eindigt op een openbare weg aan de verkeerde kant van het water. ⚠️ De LOSPLEK "
+              "binnen het terrein is niet gedocumenteerd; de keten eindigt op de poort. "
+              "⚠️ Verklikker-kalibratie: de bushaltes liggen 98 m van deze poort, dus een "
+              "verbodsstraal van 150 m zou het JUISTE antwoord afkeuren — zet hem op 50 m. ⚠️ MODI IS BEWUST LEEG: de gemeten weg-snap is 854 km. Het landnet heeft wereldwijd maar 1.883 wegknopen, dus dat is een MEETRESULTAAT en geen aansluiting — zelfde keuze als cu-guixi-walsdraad (341 km). De straat waarop het been aanhecht zit wél in OSM; daar tekent het bakprofiel op."),
 
     # ======================================================================
     # GRAFIET — Balama → Nacala → New Orleans → Vidalia → De Soto → Casa Grande

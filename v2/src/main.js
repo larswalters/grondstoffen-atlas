@@ -254,7 +254,7 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "107", GLOBE.klemOpHorizon, def.bestand)
+  laadStroomroute(VECTOR_R, "108", GLOBE.klemOpHorizon, def.bestand)
     .then((s) => {
       s.groep.visible = def.aan;
       STROOMROUTES.set(def.sleutel, s);
