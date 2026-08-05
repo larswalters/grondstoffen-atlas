@@ -1356,9 +1356,23 @@ def cmd_route(args):
             print("  (--van/--naar worden in de been-modus genegeerd)")
         benen = []
         for soort, spec in args.keten:
-            if soort == "geojson":
+            if soort in ("geojson", "geojson-stippel"):
                 mod, naam, pad = _parse_been_geojson_spec(spec)
-                benen.append(_geojson_been(mod, naam, pad))
+                been = _geojson_been(mod, naam, pad)
+                if soort == "geojson-stippel":
+                    # ⚠️ GEOMETRIE EN EPISTEMISCHE STATUS ZIJN TWEE DINGEN.
+                    # --been-geojson tekent DOORGETROKKEN, en dat betekent in
+                    # dit project "we weten waar de lijn ligt" (werkwijze §7).
+                    # Een haven-aanloop die als kortste pad OVER WATER is
+                    # berekend heeft wél betere geometrie dan een rechte lijn
+                    # (geen landkruising meer) maar is nog steeds GEEN
+                    # waargenomen vaargeul — we weten alleen dat het water is,
+                    # niet waar het schip vaart. Zo'n been hoort dus zijn
+                    # stippel te HOUDEN. Zonder deze vlag zou een geometrische
+                    # verbetering stilzwijgend een kenniclaim worden, en dat is
+                    # precies de vervaging die §7 verbiedt.
+                    been["stippel"] = True
+                benen.append(been)
                 continue
             mod, naam, van, naar = _parse_been_spec(spec)
             if soort == "been":
@@ -1598,7 +1612,7 @@ class _KetenActie(argparse.Action):
     benen kunnen liggen."""
 
     SOORT = {"--been": "been", "--stippel": "stippel",
-             "--been-geojson": "geojson"}
+             "--been-geojson": "geojson", "--stippel-geojson": "geojson-stippel"}
 
     def __call__(self, parser, namespace, values, option_string=None):
         lst = getattr(namespace, self.dest, None) or []
@@ -1685,6 +1699,13 @@ def main():
                         " — DOORGETROKKEN opgenomen zonder routering; km = "
                         "som van de segmentlengtes; telt gewoon mee in de "
                         "reisvolgorde")
+    s.add_argument("--stippel-geojson", dest="keten", action=_KetenActie,
+                   metavar="MOD|NAAM|PAD",
+                   help="herhaalbaar: als --been-geojson, maar het been HOUDT "
+                        "zijn stippel. Voor geometrie die beter is dan een "
+                        "rechte lijn maar nog steeds geen waargenomen route — "
+                        "een haven-aanloop als kortste pad over water: we weten "
+                        "dát het water is, niet waar het schip vaart")
     s.add_argument("--marker", action="append", default=None,
                    metavar="NAAM|LAT,LON",
                    help="herhaalbaar: expliciete marker; zodra er één is "

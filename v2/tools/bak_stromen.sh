@@ -22,7 +22,12 @@
 #    mag het waternet niet laden (schone-bol-bake 24-07).
 # ⚠️ Zodra er één --marker staat vervangt die lijst de automatische afleiding
 #    volledig. Alle markers van de stroom moeten er dus in.
-# ⚠️ De volgorde van --been / --stippel / --been-geojson IS de reisvolgorde.
+# ⚠️ De volgorde van --been / --stippel / --been-geojson / --stippel-geojson IS
+#    de reisvolgorde.
+# ⚠️ --stippel-geojson = betere geometrie, ONGEWIJZIGDE kennisclaim. Een
+#    haven-aanloop die als kortste pad over water is berekend kruist geen land
+#    meer, maar is nog steeds geen waargenomen vaargeul — die houdt zijn stippel.
+#    Doorgetrokken blijft voorbehouden aan "we weten waar de lijn ligt".
 #
 # Draaien vanuit de repo-root:
 #   bash v2/tools/bak_stromen.sh grafiet
@@ -49,7 +54,7 @@ bak_grafiet() {
     --marnet "$MARNET" \
     --ne     "$NE" \
     --been-geojson "truck|vrachtwagen Balama → Nacala (N380/N1)|$BEEN/stroombeen-balama-nacala.geojson" \
-    --stippel      "zee|haven-aanloop Nacala (schematisch — MARNET reikt hier niet)|-14.5383,40.6673|-15.0,41.7" \
+    --stippel-geojson "zee|haven-aanloop Nacala (schematisch, over water — MARNET reikt hier niet)|$BEEN/aanloop-nacala.geojson" \
     --been         "zee|zeeschip Nacala → Southwest Pass|-15.0,41.7|28.91,-89.43014" \
     --been         "zee|zeeschip Southwest Pass → New Orleans|28.91,-89.43014|29.91230,-90.11200" \
     --been         "binnenvaart|containerbarge New Orleans → Port Allen (IRMT)|29.91230,-90.11200|30.43293,-91.24385" \
@@ -118,7 +123,7 @@ bak_koper_escondida() {
     --been-geojson "leiding|slurryleiding Escondida → Coloso (gevolgd tracé, 137,8 km)|$BEEN/leidingbeen-escondida-coloso.geojson" \
     --stippel      "leiding|slurryleiding La Negra → Coloso — deels ingegraven + twee tunnels (17,7 km)|-23.76861,-70.29369|-23.75900,-70.46700" \
     --stippel "leiding|terminalverwerking Coloso (filterfabriek → laadsteiger)|-23.759,-70.467|-23.7569,-70.4652" \
-    --stippel "zee|haven-aanloop Coloso (schematisch — MARNET reikt hier niet)|-23.7569,-70.4652|-23.8,-71.3" \
+    --stippel-geojson "zee|haven-aanloop Coloso (schematisch, over water — MARNET reikt hier niet)|$BEEN/aanloop-coloso.geojson" \
     --been    "zee|zeeschip Coloso → Beilun|-23.8,-71.3|29.9364,121.883" \
     --stippel "zee|haven-aanloop Beilun (MARNET-knoop ligt in de geul, het schip lost aan de berth)|29.9478,121.8837|29.9364,121.883" \
     --stippel "leiding|transportband losberth → landpunt/ertsveld (eigen terrein, geen net)|29.9364,121.883|29.92742,121.87573" \
@@ -137,8 +142,60 @@ bak_koper_escondida() {
     --titel  "Koper · Escondida → Guixi (China)"
 }
 
-# ⚠️ OPENSTAAND: de recepten van de drie ANDERE stromen (koper Collahuasi→
-# Tongling, koper Lobito→Duisburg, lithium) staan hier nog NIET. Die zijn
+# ── koper · Kamoa-Kakula → Lobito → Rotterdam → Duisburg (kathode)
+# Routebrief: v2/design/routebrieven/koper-lobito-duisburg.md
+#
+# ⚠️ GERECONSTRUEERD 2026-08-05, NIET TERUGGEVONDEN — maar STRAKKER vastgelegd dan
+#    bak_koper_escondida: dit commando reproduceert het bestand van 29-07 veld voor
+#    veld (7 benen, 4 markers, alle 4.863 puntcoördinaten identiek, `gemaakt`
+#    uitgezonderd), en drie van de vier vrijheidsgraden die daar open bleven zijn
+#    hier DICHT gemeten:
+#      * --graaf is NIET vrij: het moet `rijn` zijn. Met mississippi snapt het
+#        Emmerich-punt 108,9 km weg en wordt het Rijnbeen 249,8 km over MARNET
+#        dóór het IJsselmeer i.p.v. 161,1 km over tracks;
+#      * het spoorbeen komt uit --been-geojson, niet --spoor-geojson: die vlag zet
+#        zijn been altijd achteraan en hier staat spoor op plek 2;
+#      * de spoor-GeoJSON is de OUDE spoorroute-kamoa-lobito.geojson, NIET de
+#        `-nieuw-`-variant uit de 1-op-1-bake van 29-07: Kamoa→Lobito had al 0
+#        omkeringen en is toen bewust niet vervangen (alleen Beilun→Guixi).
+#    Vrij blijft: of de --been-uiteinden als anker of als routeerpunt zijn
+#    opgegeven (beide snappen op dezelfde halte).
+#
+# ⚠️ HET WESEL-BEEN IS GEEN STIPPEL MEER — de tweede correctie van 2026-08-05.
+#    Het was een rechte lijn van 47,3 km met 2 punten "want er is geen AIS-dekking"
+#    (0 van 35.237 tracks raken lon 6,45-6,60, structureel gemeten over 12,5 uur).
+#    Dat is de Escondida-denkfout op water: geen AIS zegt niets over of de
+#    GEOMETRIE bestaat. De Rijn ligt daar volledig in OSM en de rechte lijn lag er
+#    tot 7,26 km vanaf. Nu 66,64 km echte Rijnloop (164 punten, uiteinden op 87 en
+#    36 m van de gevraagde punten). ⚠️ De AIS-meting blijft staan: dit been zegt
+#    waar het WATER ligt, niet dat wij daar een schip gezien hebben.
+#    Recept van de geometrie: v2/tools/maak_rivierbeen_wesel.py
+bak_koper_lobito() {
+  # ⚠️ eigen graaf: deze stroom vaart de Rijn, niet de Mississippi.
+  local GRAAF_RIJN="v2/build-cache/ais/graaf/rijn"
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF_RIJN" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|aanvoer mijn → railhead Kamoa (geen spoor tot de poort)|-10.76,25.28|-10.6627,25.2873" \
+    --been-geojson "spoor|trein Kamoa-Kakula → Lobito (Benguela-lijn)|$BEEN/spoorroute-kamoa-lobito.geojson" \
+    --stippel      "zee|haven-aanloop Lobito (ligplaats nog niet vastgesteld)|-12.34709,13.549|-12.2702,13.5406" \
+    --been         "zee|zeeschip Lobito → Rotterdam (Waalhaven)|-12.2702,13.5406|51.8935,4.4585" \
+    --been         "binnenvaart|containerbinnenschip Waalhaven → Emmerich-vak|51.8935,4.4585|51.754,6.366" \
+    --been-geojson "binnenvaart|Wesel-vak — echte Rijnloop uit OSM (geen AIS-dekking: 0 van 35.237 tracks)|$BEEN/rivierbeen-wesel.geojson" \
+    --been         "binnenvaart|containerbinnenschip Wesel-vak → Duisport Ruhrort|51.4,6.745|51.4518,6.7565" \
+    --marker "Kamoa-Kakula — mijn (Copperbelt)|-10.76,25.28" \
+    --marker "Lobito — mineralenterminal (ligplaats open)|-12.34709,13.549" \
+    --marker "Rotterdam — RHB, Waalhaven Noordzijde 4|51.8935,4.4585" \
+    --marker "Duisburg — Duisport Ruhrort, Becken A|51.4518,6.7565" \
+    --routebrief v2/design/routebrieven/koper-lobito-duisburg.md \
+    --uit    v2/data/stroomroute-koper-lobito-duisburg.json \
+    --stroom koper-lobito-duisburg \
+    --titel  "Koper · Copperbelt → Lobito → Duisburg (kathode)"
+}
+
+# ⚠️ OPENSTAAND: de recepten van de twee ANDERE stromen (koper Collahuasi→
+# Tongling, lithium) staan hier nog NIET. Die zijn
 # gebakken vóór dit bestand bestond en hun vlaggen leven nog in een
 # shell-historie. Reconstrueer ze bij de eerstvolgende herbake van elk — en
 # herbak ze niet zonder eerst de huidige uitvoer te bewaren, want net als bij
@@ -151,5 +208,6 @@ bak_koper_escondida() {
 case "${1:-}" in
   grafiet)         bak_grafiet ;;
   koper-escondida) bak_koper_escondida ;;
-  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida}" >&2; exit 2 ;;
+  koper-lobito)    bak_koper_lobito ;;
+  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida|koper-lobito}" >&2; exit 2 ;;
 esac
