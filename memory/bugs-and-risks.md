@@ -1,6 +1,31 @@
 # Bugs & risks — Grondstoffen Atlas
 *Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
 
+## ⚠️ OPEN 2026-08-05 (verdachtenlijst) — drie rechte stippels die tóch werkelijkheid verbergen
+
+Uitkomst van `v2/tools/toets_rechte_benen.py`, gebouwd na de Escondida-leiding. **Goede
+uitslag eerst: geen enkel DOORGETROKKEN been is nog een rechte lijn** — de kaart claimt
+nergens kennis van een lijn die zij niet heeft. Alle 11 rechte benen (samen 386 km) zijn
+gestippeld. Maar de Escondida-les was juist dat een *stippel met een goede reden* nog steeds
+fout kan liggen, en dat blijkt bij drie ervan:
+
+| been | km | bevinding | vervolgweg |
+|---|---|---|---|
+| **haven-aanloop Nacala** (grafiet) | 122,3 | **loopt 17,5 km (14%) OVER LAND** — de rechte lijn snijdt dwars over de kust. Een schip vaart daar niet | de werkelijke aanloop volgen (kustlijn/vaargeul); grootste openstaande rechte lijn van de atlas |
+| **Wesel-vak** (koper Lobito→Duisburg) | 47,3 | ligt tot **8,19 km** van de **échte, volledig gekarteerde Rijn** (OSM: 16 ways, 419 punten in het vak) | de OSM-riviergeometrie overnemen — `maak_rivierbeen.py` bestaat al voor precies dit |
+| **haven-aanloop Coloso** (koper Escondida) | 85,1 | loopt **2,1 km (3%) over land** | klein; hoort bij een volgende ronde aan de Chileense kust |
+
+⚠️ **DE WESEL-BEVINDING IS DE ESCONDIDA-KLASSE, LETTERLIJK.** Die stippel bestaat omdat er
+**geen AIS-dekking** is (0 van 35.237 tracks raken lon 6,45-6,60 — structureel gemeten, dat
+klopt). Maar "geen AIS" zegt niets over of de **geometrie** bestaat, en de Rijn is een van de
+best gekarteerde rivieren ter wereld. Precies dezelfde denkfout als "geen `substance=slurry`
+in OSM" → "geen traé́": de afwezigheid van één soort bewijs werd gelezen als afwezigheid van
+alle bewijs.
+
+⚠️ **Wat de toets NIET zegt:** de landkruising-toets is betekenisloos voor een
+**binnenvaart**been — dat ligt per definitie binnen het landvlak (Wesel scoort daar 100% en
+dat is een artefact, geen bevinding). Alleen zee-benen mogen zo getoetst worden.
+
 ## ⚠️ OPEN 2026-08-05 (3e ronde) — wat er aan het leidingtracé nog niet klopt
 
 1. **De lijn volgt de corridor-as, niet aantoonbaar de concentraatbuis.** Dwarsonzekerheid
