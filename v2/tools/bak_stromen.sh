@@ -99,12 +99,24 @@ bak_grafiet() {
 #    de kathode-expeditie (niet gevonden — Esri heeft bij Guixi geen z19).
 #    Daarom blijft er bewust een PROCESGAT van 0,54 km tussen het spoorbeen en
 #    fase D. Dat gat ís het ontbrekende anker en wordt niet dichtgetrokken.
+# ⚠️ HET LEIDINGBEEN IS DRIE BENEN, EN DAT IS DE KERN VAN DE CORRECTIE VAN
+#    2026-08-05. Het was één rechte stippel van 153,5 km; op de plek waar de
+#    werkelijke leiding het verst van die lijn af ligt zat 15,4 km ertussen.
+#    Nu: gestippeld waar niets is waargenomen (mijnterrein 4,8 km · La Negra →
+#    Coloso 17,7 km), DOORGETROKKEN over het gevolgde tracé (137,8 km) —
+#    dezelfde regel als de Collahuasi-leiding, die doorgetrokken staat waar de
+#    kartering reikt en gestippeld op de laatste 736 m waar hij ophoudt.
+#    Recept van de geometrie: v2/tools/maak_leidingbeen_escondida.py (de
+#    puntenlijst staat in de broncode, dus dit been is op een verse clone
+#    reproduceerbaar — anders dan de andere --been-geojson-benen).
 bak_koper_escondida() {
   python v2/tools/hecht_marnet.py route \
     --graaf  "$GRAAF" \
     --marnet "$MARNET" \
     --ne     "$NE" \
-    --stippel "leiding|slurryleiding Escondida → Coloso — tracé NIET in OSM (0 substance=slurry, geen doorlopende dienstweg)|-24.262,-69.06|-23.759,-70.467" \
+    --stippel      "leiding|slurryleiding op het mijnterrein — pijpenrekken door elkaar, niet te volgen (4,8 km)|-24.26200,-69.06000|-24.24800,-69.10500" \
+    --been-geojson "leiding|slurryleiding Escondida → Coloso (gevolgd tracé, 137,8 km)|$BEEN/leidingbeen-escondida-coloso.geojson" \
+    --stippel      "leiding|slurryleiding La Negra → Coloso — deels ingegraven + twee tunnels (17,7 km)|-23.76861,-70.29369|-23.75900,-70.46700" \
     --stippel "leiding|terminalverwerking Coloso (filterfabriek → laadsteiger)|-23.759,-70.467|-23.7569,-70.4652" \
     --stippel "zee|haven-aanloop Coloso (schematisch — MARNET reikt hier niet)|-23.7569,-70.4652|-23.8,-71.3" \
     --been    "zee|zeeschip Coloso → Beilun|-23.8,-71.3|29.9364,121.883" \
