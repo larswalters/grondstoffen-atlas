@@ -386,16 +386,21 @@ mile" de leiding zelf, been 1.
 ## Been 4 · last mile uitgaand — kathode-expeditie → poort → openbaar net
 
 **been-id:** `koper-collahuasi-tongling-b4`
-**Modaliteit:** **niet brongestaafd** — drie kandidaten: weg (aannemelijk voor de groepsinterne leveringen binnen de 经开区), eigen kade/binnenvaart (het complex ligt aan de rivier), spoor-siding (in projectdata op 2026-07-24 aan het hoofdnet geheeld, maar de terrein-toewijzing is onzeker — §5.9)
-**Stippel:** ja zolang er geen ankers zijn — er wordt geen lijn getekend vóór de z16-pass (§5.8)
-**Routeerpunt kop / staart:** nog te bepalen
-**Toets-marge:** nog te bepalen
+**Modaliteit:** **weg (truck)** — beslist op een negatieve meting: er kruist **geen spoor** 翠湖六路 het 金冠-blok in, dus het terrein heeft in OSM geen spooraansluiting (§5.9)
+**Stippel:** **nee — doorgetrokken.** Gemeten aanloop 38 m aan de kop en een aaneengesloten intern servicenet ertussen; werkwijze §7 reserveert stippel uitsluitend voor *hier reikt het net niet*
+**Routeerpunt kop / staart:** 30.99602, 117.78548 / 30.99058, 117.78147
+**Toets-marge:** kop 100 m (anker ≠ routeerpunt)
+**GEBAKKEN 2026-08-06:** 1,1 km · 11 punten · snaps 0,04 → 0,01 → 0,00 km · lengtetoets −3,8%
+
+⚠️ **DE KOP IS 金冠铜业, NIET 金新铜业 — een wijziging aan ladder 5, geen stille swap.** Redenen: (a) 金冠 is het bestaande 760 kt/a-blok dat de foliefabriek al levert sinds fase 1 in dec 2017 draaide, zeven jaar vóór 金新 werd ontstoken (2025-03-26); (b) 金冠 is verifieerbaar op het enige beschikbare beeld en 金新 principieel niet — de hele Tongling-scene is één opname van **2019-04-05** (Esri identify-service `SRC_DATE2`), en op het 金新-registerpunt 31.00410/117.78538 staat daar nog rauw, deels drassig struweel: de opnamedatum-faalmodus (Shed 8-8 / De Soto-klasse) en het zoomplafond treffen hier dezelfde stroom tegelijk; (c) [D6] documenteert de interne levering op **concern**niveau, niet op blokniveau, dus 金冠 spreekt de bron niet tegen. 金新 blijft in de brief als tweede kathodebron met zijn registerpunt als **knoop-marker, geen anker**.
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | **kathode-laadplek (expeditiehal 金新铜业)** | laadplek | *nog te leggen (z16) — §5.8* | [D1] (bestaan), plek onbekend | **onzeker** |
-| 2 | — | terreinpoort aan de wegkant | poort | *nog te leggen (z16)* | — | **onzeker** |
-| 3 | — | aansluiting op het openbare net van de 经开区 | kruising | *nog te bepalen* | — | **onzeker** |
+| 1 | 0 | **kathode-laadplek → SUBSTITUUT-KOP: registerpunt 金冠铜业分公司** (vergunning `91340764551849860L001P`, 铜冶炼). Op de stitch: bedieningsblok in een draaiende zware installatie, pijpenrek ZW, zwavelzuurkolommen west, tankpark van zes cilinders ZO, elektrolysehallen NW | laadplek (substituut) | **30.99602, 117.78548** | MEE-emissieregister + eigen z18-stitch | **satelliet-gelegd (z18)** |
+| 2 | 0,9 | **terreinpoort zuid** (翠湖六路-zijde) — poortwachterspaar, parkeerstrook met ~15 auto's, verharde apron | poort | **30.99156, 117.78146** | eigen z18-stitch + 四至 verificatiebesluit | **satelliet-gelegd (z18)** |
+| 3 | 1,0 | aansluiting op het openbare net (翠湖六路) — OSM-knoop graad 3 | kruising | **30.99058, 117.78147** | OSM (ODbL) | **bevestigd** |
+
+**Negatief anker been 4 (aanvullend):** de **noordpoort** 30.99961, 117.78145 is óók satelliet-gelegd maar niet gekozen; komt er een bron die hém aanwijst, dan verandert alleen dit been (+~1,3 km op been 5).
 
 **Negatieve ankers been 4:**
 
@@ -407,16 +412,19 @@ mile" de leiding zelf, been 1.
 
 **been-id:** `koper-collahuasi-tongling-b5`
 **Modaliteit:** weg (stukgoed per truck — aannemelijk; zie been 4 voor het voorbehoud)
-**Lengte:** n.t.b. — beide terreinen liggen in de 铜陵经开区 [D1][D5]; exacte fabriekskavel open (§5.10)
+**Lengte:** **6,9 km gebakken** (2026-08-06), tegen 4,2 km hemelsbreed = ratio 1,50 — normaal voor een orthogonaal 经开区-raster op een diagonaal
 **Let op bij container/stukgoed:** dit is een kort binnenzone-been, geen lijndienst — de direct-vs-hub-vraag speelt hier niet; voor de véérdere vertakkingen (SHFE-entrepots, Chizhou/Hefei, Wuhu) is de modaliteit per tak onbekend = openstaand punt (§5.11), geen rechte lijn
-**Routeerpunt kop / staart:** nog te bepalen
-**Toets-marge:** nog te bepalen
+**Routeerpunt kop / staart:** 30.99058, 117.78147 / 30.96137, 117.81051
+**Toets-marge:** staart 100 m (anker ≠ routeerpunt; gemeten 41,9 m)
+**GEBAKKEN 2026-08-06:** 6,9 km · 51 punten · snaps 0,00 → 0,05 km · lengtetoets +7,6%
+
+⚠️ **DE STAART IS GETRIMD OP DE ANKERPROJECTIE.** De dichtstbijzijnde OSM-**knoop** ligt 51 m vóórbij de projectie van het folie-anker op 翠湖二路; ongetrimd reed de lijn de poort voorbij en keerde terug — de overschiet-en-terug-klasse, hier op het been-EINDE (zelfde klasse als de 792 m bij Guixi). `snoei_keerlussen` kan die per constructie niet vangen omdat de anker-stub ná de snoei wordt aangeplakt. Nieuwe opt-in `"trimStaart"` in `maak_stroombeen_weg.py` knipt op de projectie, en de **lengtetoets draait ná de trim** — 7,00 → 6,87 km, +9,7% → +7,6%.
 
 | # | km | punt | type | lat, lon | bron | status |
 |---|---|---|---|---|---|---|
-| 1 | 0 | vertrek: poort smeltercomplex (= einde been 4) | laadplek | *nog te leggen (z16)* | — | **onzeker** |
-| 2 | — | wegen van de 铜陵经开区 | passage | — | — | **onzeker** |
-| 3 | — | **losdock 铜冠铜箔, basis Tongling** — foliefabriek, fase 1 sinds dec 2017 | losplek | *nog te leggen (z16) — §5.10* | [D5] (bestaan + zone), plek onbekend | **onzeker** |
+| 1 | 0 | vertrek: aansluiting openbaar net (= einde been 4) | laadplek | **30.99058, 117.78147** | OSM (ODbL) | **bevestigd** |
+| 2 | — | 翠湖六路 1.438 m → 长山大道 1.974 m → 五松山大道/S335 619 m → tertiary 479567771 1.276 m → 479567772 806 m → 翠湖二路 248 m | passage | — | OSM (ODbL), eigen Dijkstra | **bevestigd** |
+| 3 | 6,9 | **铜陵铜冠电子铜箔有限公司** — 翠湖二路西段789号. Op de stitch: verhard voorterrein binnen een ommuurd perceel, L-vormige blauwe overkapping, ronde siertuin (klassiek 厂前区), en op ~180 m de witte proceshal met dakgemonteerde 酸雾净化塔 uit de vergunning | losplek (vestigingspunt) | **30.96174, 117.81059** | MEE-emissieregister `91340700MA2NH25G2R001V` + EIA + 水土保持 + eigen z18-stitch | **satelliet-gelegd (z18)** |
 
 **Bewijs voor dit been (waarom deze fabriek de streng is):** 铜冠铜箔 koopt **~68%** van zijn
 kathode intern bij TNMG en begroot voor 2026 bij de moedergroep 496 mln yuan **kathode** plus
@@ -488,9 +496,12 @@ takken.
 | 5 | b3 | aandeel Zhangjiagang/Jiangyin (alternatief) kwantificeren | [Y2] zegt "veel", geen getal | haven-/douanestatistiek concentraat per loshaven |
 | 6 | b3 | west-arm-negatief-anker: centroïde + straal verfijnen | eiland is smal; centroïde benaderd uit de junctie-coördinaten | aanwijzen op de bestaande oostgeul-stitch |
 | 7 | knoop C | terreingrens 金冠铜业 / 金新铜业 op het aangewezen smelterterrein | beide delen van het complex zijn actief; Lars wees "de nieuwe smelter" aan vóór de naamsidentificatie | z16-pass met de twee plantnamen erbij |
-| 8 | b4 | kathode-laadplek + poort op het terrein — alle fase D/E-punten zijn nieuw en hoogstens "bevestigd"; **de satellietpass (Esri z16) moet nog** | research leverde bedrijven en zones, geen kavels | z16-stitch van de 经开区 met de ladder-5-antwoorden ernaast |
+| 8 | b4 | ~~kathode-laadplek + poort~~ → **POORT GESLOTEN 2026-08-06.** Twee poorten satelliet-gelegd op **z18**: zuid **30.99156, 117.78146** en noord **30.99961, 117.78145**, beide een poortwachterspaar in een onderbroken haag-/muurlijn. Identiteit via het 四至 uit het gemeentelijke verificatiebesluit over het 奥炉改造工程 van 金冠铜业分公司: *"西湖二路以南，翠湖六路以北"*. De **zuidpoort** is gekozen door te meten, niet te kiezen: een Dijkstra naar de foliefabriek neemt hem vanzelf (7,41 tegen 8,70 km) | — | — |
+| 8b | b4 | **NIEUW — de kathode-expeditie zelf is NIET gevonden**, met twee gemeten oorzaken die elkaar niet vervangen: (a) het emissievergunningregister geeft één punt per vergunning — de **vestiging, geen deur** (het 副本 rendert leeg, dezelfde blokkade als Guixi); (b) **Esri heeft hier geen z19** — z19 én z20 leveren op alle drie de punten exact 2.521 byte placeholder terwijl z17/z18 16–18 kB echte tegels geven, dus **z18 = 0,51 m/px** is de fijnste korrel en een laadperron van 10–15 m ligt op de resolutiegrens. Vijfde bevestigde zoomplafond na Guixi, Zhangjiagang, Tianqi en Chizhou. Vier zoeklijnen liepen alle randen van het 金冠-blok af op 0,13–0,26 m/px: geen perron, geen dock, geen weegbrug | registergrens + zoomplafond | een **niet-Esri-bron** (Amap/Baidu met sleutel, of een 总平面布置图 uit een EIA-bijlage) — géén andere Wayback-release |
 | 9 | b4 | uitgaande modaliteit kathode (weg / eigen kade / spoor-siding) — en: hoort de op 2026-07-24 geheelde spoor-siding bij dít terrein? | geen bron; de siding-heal dateert van vóór de naamsidentificatie van het complex | bron over TNMG-expeditie, of de siding op de stitch volgen |
-| 10 | b5 | exacte kavel 铜冠铜箔-basis Tongling binnen de 经开区 | bron geeft zone + startjaar, geen adres | bedrijfsregister/adres + z16-pass; daarna anker in `aansluitingen.json` |
+| 10 | b5 | ~~exacte kavel 铜冠铜箔-basis Tongling~~ → **GESLOTEN 2026-08-06.** **铜陵铜冠电子铜箔有限公司**, USCC `91340700MA2NH25G2R`, **翠湖二路西段789号**, anker **30.96174, 117.81059**, satelliet-gelegd z18. Drie onafhankelijke overheidscoördinaten binnen 256 m op hetzelfde ommuurde perceel: MEE-register 30.96174/117.81059 · EIA 厂区中心 30.96330/117.81123 · 水土保持 30.96288/117.81292. ⚠️ **Rolverdeling vastleggen** (de Greenbushes-les): het EIA-厂区中心 is de waarde voor de *verwerkingsknoop op registerschaal*, het MEE-punt is de *aansluiting* voor de staart van been 5. ⚠️ **Niet verwarren met de moeder** 安徽铜冠铜箔集团 (301217), die in hetzelfde register in **Chizhou** staat op 30.70621/117.55141 — 37,7 km ZW | — | — |
+| 10b | b5 | **NIEUW — het losdock van de foliefabriek is niet gevonden** (zelfde twee oorzaken als §5.8b). Het folie-EIA documenteert **twee poorten** (翠湖二路 zuid, 泰山大道 oost) — dat is de goedkoopste gerichte vervolgstap | registergrens + zoomplafond | niet-Esri-bron, of de 总平面布置图 uit de EIA-bijlage |
+| 10c | b5 | ⚠️ **OSM-polygoon `way/1247093617` draagt de naam-tag 铜冠铜箔有限公司 maar omsluit 铜冠黄铜棒材** (翠湖二路2135号, registerpunt 30.96290/117.80663), 400 m westelijker. Armchair-edit, v1, geen source-tag. **Dit is de gevaarlijke variant van de OSM-regel: niet een lege uitslag maar een positieve en foute** — gebruik hem niet | — | staat als waarschuwing in de node-noot |
 | 11 | vertakkingen | aandeel + modaliteit per tak (Chizhou/Hefei/Wuhu/SHFE/板带); container-of-bulk per tak onbekend = geen rechte lijn | RPT-cijfers geven bedragen, geen tonnage per bestemming | jaarverslag-segmentatie of vrachtstatistiek |
 | 12 | fase D/E | locatie van de 铜丝/铜杆-tussenstap (kathode → draad → folie) | [D6] documenteert de inkoop, niet de fabriek | TNMG-bron over de draadfabriek; stad heeft ~600 kt/a walsdraad [D9] |
 | 13 | fase D | SHFE-merkregistratie van de TNMG-kathode niet geverifieerd (bijlage achter CAPTCHA) | levering aan de entrepots [D7] veronderstelt een geregistreerd merk | SHFE-bijlage 注册商标 raadplegen |
@@ -505,6 +516,8 @@ takken.
 | 4 | Zhangjiagang / Jiangyin | niet in de data | opnemen als **alternatief** (punt-type met aandeel zodra bekend, §5.5) — niet meer als "referentie" | [Y2] |
 | 5 | keten-eind in de data | `data/copper.js` eindigt bij kathode (`cu-ref-tongling`) | fase D/E toevoegen zodra §5.8/5.10 ankers opleveren: knoop foliefabriek + been smelter→folie; SHFE-tak apart | deze brief |
 | 6 | `aansluitingen.json` | geen entry voor de foliefabriek of de kathode-expeditie | nieuwe aansluitingen ná z16-pass (§5.8, §5.10) — niet eerder aanmaken | werkwijze §2 |
+| 7 | **NIEUW 2026-08-06** — de bron-noot van `cu-tongling-kade` zegt *"smelter erachter op 117,7806/30,98656"* | dat punt ligt **106 m** van het registerpunt van **铜冠冶化分公司** (行业类别 **炼铁** — ijzerbereiding) en **1.150 m** van 金冠铜业; het ligt bovendien **zuid** van 翠湖六路 terwijl 金冠铜业 volgens het gemeentelijke 四至 **noord** ervan ligt | de noot moet **冶化** noemen of de kopersmelter-coördinaat 30.99602/117.78548 gebruiken. ⚠️ **De kade zelf (117.7718/30.98656) staat en beweegt niet** — die is door Lars op de foto aangewezen en op 2026-07-28 satelliet-gecheckt | eigen meting |
+| 8 | **NIEUW** — de naad kade → kop been 4 | **1.503 m**, en dat is een **procesgat binnen de verwerkingsknoop**: van de kade, dwars door het smeltercomplex (98,5 ha), naar de expeditie. Zelfde klasse als Guixi (584 m), groter omdat het complex groter is en de kade aan de rivier ligt | blijft bewust staan; er wordt geen lijn dwars door een fabriek getekend. `voeg_been_toe.py` weigerde hem op de default van 1,0 km — bewust verhoogd naar 2,0 met deze reden | werkwijze §7 |
 
 ## 7 · Wat de kaart moet tekenen
 

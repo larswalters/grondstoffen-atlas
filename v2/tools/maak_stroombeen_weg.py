@@ -652,6 +652,90 @@ PROFIELEN = {
         "vensterKm": 40,
         "uit": "stroombeen-nanjing-giga-shanghai.geojson",
     },
+
+    # ── Routebrief koper-collahuasi-tongling, benen 4 en 5 (2026-08-06) ──────
+    # FASE D: kathode verlaat het TNMG-smeltercomplex en gaat naar de
+    # foliefabriek 铜冠铜箔, beide in de 铜陵经开区.
+    #
+    # ⚠️ DE KOP IS EEN SUBSTITUUT (besluit Lars, koperronde Guixi). De echte
+    #    kathode-expeditie is NIET gevonden, en dat heeft twee gemeten oorzaken
+    #    die elkaar niet vervangen: (a) het emissievergunningregister geeft één
+    #    punt per vergunning — de vestiging, niet de deur; (b) Esri heeft hier
+    #    GEEN z19 (z19 én z20 leveren op alle drie de punten exact 2.521 byte
+    #    placeholder, terwijl z17/z18 16-18 kB echte tegels geven), dus z18 =
+    #    0,51 m/px is de fijnste korrel en een laadperron van 10-15 m ligt op de
+    #    resolutiegrens. Vijfde bevestigde zoomplafond na Guixi, Zhangjiagang,
+    #    Tianqi en Chizhou. Het procesgat dat daardoor blijft staan (0-700 m, het
+    #    金冠-perceel meet 98,5 ha) ÍS het ontbrekende anker — niet dichttrekken.
+    # ⚠️ DE KOP IS 金冠铜业, NIET 金新铜业, en dat is een wijziging aan ladder 5
+    #    van de brief. 金冠 is het bestaande 760 kt/a-blok dat de foliefabriek al
+    #    levert sinds fase 1 in dec 2017 draaide; 金新 werd pas ontstoken op
+    #    2025-03-26 en is principieel niet satelliet-te-leggen omdat de hele
+    #    Tongling-scene één opname van 2019-04-05 is (identify-service SRC_DATE2)
+    #    — daar staat nog rauw struweel. [D6] documenteert de interne levering op
+    #    CONCERNniveau, dus 金冠 spreekt de bron niet tegen.
+    # ⚠️ DE ZUIDPOORT IS GEKOZEN DOOR TE METEN, NIET DOOR TE KIEZEN: een Dijkstra
+    #    vanaf het registerpunt naar de foliefabriek neemt vanzelf de zuidpoort
+    #    (7,41 km) boven de noordpoort (8,70 km). Beide poorten zijn op z18
+    #    gelegd (poortwachterspaar in een onderbroken haag-/muurlijn); komt er
+    #    later een bron die de noordpoort aanwijst, dan verandert alleen dit been.
+    "koper-tongling-lastmile": {
+        "via": [
+            ("金冠铜业分公司 — registerpunt (substituut-kop)", (117.78548, 30.99602)),
+            ("terreinpoort zuid (翠湖六路-zijde)",              (117.78146, 30.99156)),
+            ("aansluiting openbaar net (翠湖六路)",             (117.78147, 30.99058)),
+        ],
+        "id": "cu-tongling-lastmile",
+        "naam": "kathode 金冠铜业 → poort → openbaar net (翠湖六路)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 1.04,
+        "bronnoot": "eigen meting 2026-08-06 over het interne servicenet van het "
+                    "金冠-terrein (OSM service-ways 1247093604/1247093607/"
+                    "1247093593); geen bron publiceert deze afstand. Identiteit "
+                    "van het blok vastgelegd via het 四至 uit het gemeentelijke "
+                    "verificatiebesluit over het 奥炉改造工程 van 金冠铜业分公司: "
+                    "'西湖二路以南，翠湖六路以北'",
+        "vensterKm": 3,
+        "uit": "stroombeen-tongling-lastmile.geojson",
+    },
+
+    # ⚠️ DE STAART MOET GETRIMD WORDEN — overschiet-en-terug-klasse. De
+    #    dichtstbijzijnde OSM-KNOOP ligt 50 m voorbij de projectie van het
+    #    folie-anker op 翠湖二路; ongetrimd rijdt de lijn de poort voorbij en
+    #    keert terug. Zelfde klasse als het Guixi-eindpunt (792 m voorbij) en de
+    #    grafiet-via-punten. snoei_keerlussen vangt de lus; de lengte hoort ná de
+    #    snoei gemeten te worden — meet het eindproduct, niet je meetlat.
+    # ⚠️ HET STAARTANKER IS EEN VESTIGINGSPUNT, GEEN LOSDOCK. Drie officiële
+    #    coördinaten liggen binnen 256 m op hetzelfde ommuurde perceel
+    #    (MEE-register 30.96174/117.81059 · EIA 厂区中心 30.96330/117.81123 ·
+    #    水土保持 30.96288/117.81292). Het procesgat naar het echte losdock
+    #    (~150-300 m) blijft bewust staan.
+    # ⚠️ GEBRUIK OSM-POLYGOON way/1247093617 NIET. Die draagt de naam-tag
+    #    铜冠铜箔有限公司 maar omsluit in werkelijkheid 铜冠黄铜棒材 (翠湖二路
+    #    2135号), 400 m westelijker — een armchair-edit, v1, geen source-tag.
+    #    Dit is de gevaarlijke variant van de OSM-regel: niet een LEGE uitslag,
+    #    maar een POSITIEVE en foute.
+    "koper-tongling-folie": {
+        "via": [
+            ("aansluiting openbaar net (翠湖六路)",   (117.78147, 30.99058)),
+            ("铜冠电子铜箔 — 翠湖二路西段789号",       (117.81051, 30.96137)),
+        ],
+        "id": "cu-tongling-folie",
+        "naam": "kathode → 铜冠铜箔 basis Tongling (翠湖六路 / 长山大道 / 翠湖二路)",
+        "extracts": ["china"],
+        # Zachte voorkeur (factor 3): 五松山大道 draagt in OSM de ref S335. De
+        # overige assen zijn benoemde stadswegen zonder ref.
+        "refs": ["S335"],
+        "gepubliceerdKm": 6.38,
+        "bronnoot": "eigen meting 2026-08-06; geen bron publiceert deze "
+                    "binnenzone-rit. Corridor gemeten als 翠湖六路 1.438 m → "
+                    "长山大道 1.974 m → 五松山大道/S335 619 m → tertiary "
+                    "479567771 1.276 m → 479567772 806 m → 翠湖二路 248 m",
+        "vensterKm": 6,
+        "trimStaart": True,
+        "uit": "stroombeen-tongling-folie.geojson",
+    },
 }
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).
@@ -674,6 +758,8 @@ TOLERANTIE = 0.10                   # de brief-toets: ±10%
 # Worden in main() gezet uit het gekozen profiel.
 VIA_PUNTEN = []
 CORRIDOR = {}
+BRON = "geofabrik"      # --bron; zie _ways_uit_overpass()
+_PROFIEL_NAAM = ""      # --profiel; alleen voor de opt-in-sleutels
 UIT = ""
 
 
@@ -724,6 +810,123 @@ def snoei_keerlussen(pts, drempel_m=25.0):
     return [p for p, w in zip(pts, weg) if not w], gesnoeid
 
 
+def _trim_staart(pts, anker):
+    """Knip de gerouteerde lijn op de PROJECTIE van het staartanker, in plaats
+    van er een stub naartoe terug te leggen.
+
+    ⚠️ DE OVERSCHIET-EN-TERUG-KLASSE, NU OP HET BEEN-EINDE. `corridor_keten`
+    eindigt op de dichtstbijzijnde graafKNOOP, en die kan vóórbij het anker
+    liggen; main() plakt daarna het anker er als recht stukje achter. Het
+    resultaat rijdt de poort voorbij en keert terug — precies wat bij Guixi
+    792 m kostte en de lengtetoets op +29,0% zette (`knip_osm_been.py`, 05-08).
+    `snoei_keerlussen` kan dit per constructie niet vangen: die draait vóór het
+    aanplakken van het anker, dus de lus bestaat op dat moment nog niet.
+
+    Werking: zolang de loodrechte projectie van het anker BINNEN het laatste
+    segment valt (0 < t < 1), ligt het laatste punt voorbij het anker → weg
+    ermee. Dat is dezelfde knip-op-de-projectie die knip_osm_been.py op één
+    benoemde way doet, hier op de gerouteerde keten. Conservatief: valt de
+    projectie buiten het segment, dan wordt er niets aangeraakt.
+
+    ⚠️ OPT-IN PER PROFIEL (`"trimStaart": True`). De vier bestaande profielen
+    blijven daarmee per constructie byte-identiek — en dat is hier geen luxe,
+    want het Geofabrik-pad draait op deze machine niet meer (zie
+    _ways_uit_overpass), dus een regressie op die profielen is nu niet te meten.
+    Wat je niet kunt narekenen, moet je niet stilzwijgend veranderen.
+    """
+    weg = 0
+    while len(pts) >= 2:
+        a, b = pts[-2], pts[-1]
+        vx, vy = b[0] - a[0], b[1] - a[1]
+        nn = vx * vx + vy * vy
+        if nn <= 0:
+            break
+        t = ((anker[0] - a[0]) * vx + (anker[1] - a[1]) * vy) / nn
+        if not (0.0 < t < 1.0):
+            break
+        pts = pts[:-1]
+        weg += 1
+    return pts, weg
+
+
+def _ways_uit_overpass(bb, timeout=180):
+    """Het wegnet in het corridorvenster via OVERPASS in plaats van de
+    Geofabrik-extract. Levert exact dezelfde way-vorm als `fl.land_laad`
+    (`id`/`soort`/`ref`/`pts`), zodat álles stroomafwaarts — het eindklassen-
+    filter, `corridor_keten`, de snoei, de lengtetoets — letterlijk ongewijzigd
+    blijft. Geen tweede recept: alleen een tweede kraan op dezelfde leiding.
+
+    WAAROM DIT BESTAAT. `pyosmium` kan op deze machine sinds 2026-08-06 zijn
+    DLL niet meer laden — *"Dit bestand is geblokkeerd door een beleid voor
+    toepassingsbeheer"* — waardoor het Geofabrik-pad hier niet draait. Dat is
+    een machine-policy en geen codefout; hem omzeilen is niet aan dit script.
+    Overpass was in dit project al de gedocumenteerde kruiscontrole op datzelfde
+    pad, en die vergelijking is destijds hard gemaakt: hetzelfde systeem via
+    beide paden gehaald kwam er COÖRDINAAT VOOR COÖRDINAAT identiek uit
+    (0,000 m afwijking, M24). Daarom is dit een gelijkwaardige bron en geen
+    noodgreep.
+
+    ⚠️ HET FILTER MOET DEZELFDE ZIJN, ANDERS VERGELIJK JE TWEE DINGEN. We roepen
+    `fl.weg_houden()` aan — dus inclusief de runtime-patch die de kleine
+    eindklassen toelaat, en inclusief de access-uitsluiting. Overpass krijgt
+    daarom bewust een ruime vraag (alle `highway`-ways in de bbox) en het
+    schiften gebeurt hier, met exact de functie die het Geofabrik-pad ook
+    gebruikt.
+    ⚠️ GEEN CACHE. Het Geofabrik-pad hasht filter + corridorvenster in zijn
+    vingerafdruk; een half-gecachte Overpass-uitslag zou die discipline stil
+    ondermijnen. Elke run haalt vers op — het venster is klein genoeg.
+    """
+    import urllib.error
+    import urllib.parse
+    import urllib.request
+
+    vraag = (f"[out:json][timeout:{timeout}];"
+             f"way[\"highway\"]({bb[2]:.6f},{bb[0]:.6f},{bb[3]:.6f},{bb[1]:.6f});"
+             f"out geom;")
+    spiegels = ["https://overpass-api.de/api/interpreter",
+                "https://overpass.kumi.systems/api/interpreter"]
+    ruw = None
+    for url in spiegels:
+        try:
+            req = urllib.request.Request(
+                url, data=urllib.parse.urlencode({"data": vraag}).encode(),
+                headers={"User-Agent": "grondstoffen-atlas/1.0 (stroombeen)"})
+            with urllib.request.urlopen(req, timeout=timeout + 30) as r:
+                ruw = json.loads(r.read().decode())
+            print(f"  overpass: {url}")
+            break
+        except (urllib.error.URLError, TimeoutError, ValueError) as e:
+            print(f"  overpass mislukt op {url}: {e}")
+    if ruw is None:
+        raise SystemExit("overpass: alle spiegels mislukt — geen wegnet opgehaald")
+
+    ways, geweigerd = [], 0
+    for el in ruw.get("elements", []):
+        if el.get("type") != "way" or "geometry" not in el:
+            continue
+        tags = el.get("tags") or {}
+        houd, _ = fl.weg_houden(tags)
+        if not houd:
+            geweigerd += 1
+            continue
+        pts = [[round(p["lon"], 7), round(p["lat"], 7)] for p in el["geometry"]]
+        if len(pts) < 2:
+            continue
+        ways.append({
+            "id": el["id"],
+            "soort": (tags.get("highway") or "").strip(),
+            "ref": (tags.get("ref") or "").strip(),
+            "pts": pts,
+            "regio": "overpass",
+        })
+    print(f"  overpass: {len(ways):,} ways gehouden, {geweigerd:,} geweigerd "
+          f"door het wegfilter (zelfde weg_houden als het Geofabrik-pad)")
+    if not ways:
+        raise SystemExit("overpass: geen enkele way door het filter — "
+                         "controleer het venster")
+    return ways
+
+
 def _kies_profiel(naam):
     """Zet de moduleglobals uit een profiel. Eén plek, zodat de rest van het
     bestand (en de bestaande grafiet-bake) letterlijk ongewijzigd blijft."""
@@ -753,7 +956,19 @@ def main():
     ap.add_argument("--profiel", default="grafiet-balama-nacala",
                     choices=sorted(PROFIELEN),
                     help="welk truckbeen uit welke routebrief")
-    _kies_profiel(ap.parse_args().profiel)
+    ap.add_argument("--bron", default="geofabrik",
+                    choices=("geofabrik", "overpass"),
+                    help="waar het wegnet vandaan komt. 'geofabrik' (default) "
+                         "scant de lokale pbf met pyosmium; 'overpass' haalt "
+                         "hetzelfde venster live op en draait daarna door "
+                         "exact dezelfde filters en Dijkstra. Nodig sinds "
+                         "pyosmium op deze machine door een beleid voor "
+                         "toepassingsbeheer geblokkeerd wordt")
+    _args = ap.parse_args()
+    global BRON, _PROFIEL_NAAM
+    BRON = _args.bron
+    _PROFIEL_NAAM = _args.profiel
+    _kies_profiel(_args.profiel)
     print(f"profiel: {CORRIDOR['id']} — {CORRIDOR['naam']}")
 
     # ⚠️ RUNTIME-ONLY (1/3): CORRIDORS wordt vervangen door alléén dit been,
@@ -814,14 +1029,18 @@ def main():
     # — een lege uitvoer zonder foutmelding, precies de klasse fout die dit
     # bestand elders bewaakt.
     extracts = CORRIDOR["extracts"]
-    for naam in extracts:
-        pad_extract = fl.extract_pad(naam)
-        if not os.path.exists(pad_extract):
-            raise SystemExit(f"extract ontbreekt: {pad_extract} — "
-                             "haal hem met fetch_landnet.py --download")
+    if BRON == "overpass":
+        # Zelfde venster, andere kraan — zie _ways_uit_overpass().
+        ways = _ways_uit_overpass(bb)
+    else:
+        for naam in extracts:
+            pad_extract = fl.extract_pad(naam)
+            if not os.path.exists(pad_extract):
+                raise SystemExit(f"extract ontbreekt: {pad_extract} — "
+                                 "haal hem met fetch_landnet.py --download")
 
-    fl.land_scan(extracts, "weg", workers=1)
-    ways = fl.land_laad(extracts, "weg")
+        fl.land_scan(extracts, "weg", workers=1)
+        ways = fl.land_laad(extracts, "weg")
 
     # ── de 12-km-beperking: kleine klassen ALLEEN bij plant en kade ────────
     # Corridor-breed zou elk dorpsspoor het venster in trekken; hier vallen
@@ -857,6 +1076,20 @@ def main():
               f"{km_voor:,.1f} → {rap['km']:,.1f} km (dubbel gereden stukken)")
         for lo, la, n, k in sorted(gesnoeid, key=lambda x: -x[3])[:5]:
             print(f"    {la:.5f},{lo:.5f} · {n} punten · {k:.2f} km")
+
+    # ⚠️ TRIMMEN VÓÓR DE LENGTETOETS, om dezelfde reden als de snoei hierboven:
+    # een toets die de ongesnoeide lijn meet, keurt de juiste lijn af. Dat is in
+    # dit project al een keer misgegaan (lengtetoets 88,1 km terwijl de lijn
+    # 82,9 was, lithium been 2).
+    if PROFIELEN[_PROFIEL_NAAM].get("trimStaart"):
+        keten["pts"], n_trim = _trim_staart(list(keten["pts"]), kade)
+        if n_trim:
+            km_voor = rap["km"]
+            rap["km"] = sum(fw.km(keten["pts"][i], keten["pts"][i + 1])
+                            for i in range(len(keten["pts"]) - 1))
+            print(f"  staart getrimd op de ankerprojectie: {n_trim} punt(en) "
+                  f"voorbij het anker weg · lengte {km_voor:,.2f} → "
+                  f"{rap['km']:,.2f} km (overschiet-en-terug, zie _trim_staart)")
 
     # ── wegklasse per vertex (voor de eindrapportage: waarover loopt de
     # first/last mile werkelijk?) — zelfde 6-decimalenkorrel als de graaf ────
