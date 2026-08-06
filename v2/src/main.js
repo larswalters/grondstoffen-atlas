@@ -24,7 +24,7 @@ import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 import { laadGloednodes } from "./gloednodes.js?v=113";
-import { laadStroomleven } from "./stroomleven.js?v=113";
+import { laadStroomleven } from "./stroomleven.js?v=114";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 

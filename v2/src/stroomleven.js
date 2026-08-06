@@ -58,19 +58,30 @@ const KM_PER_DAG = {
   leiding: 2000,   // continu proces, leest als een gestage stroom
 };
 
-// De schillen van de koker: [hoogte in km boven de route, breedte in px, helderheid]
+// ⚠️ EERSTE VERSIE WAS ALLEEN RAND EN GEEN LIJN. Drie zachte additieve schillen
+// (9 · 6,5 · 4 px op oplopende hoogte) leverden een wolk op waarin de exacte
+// lijn van 1 px volledig verdween — Lars: "dit ziet er wel een beetje vaag uit".
+// Additief opgeteld verkleurde het bovendien naar wit, dus ook de modaliteits-
+// kleur ging eraan. V1 doet het andersom: een STEVIGE KERN met een subtiele
+// gloed eromheen. Vandaar de opzet hieronder — de kern draagt het beeld, de
+// halo's zijn duidelijk ondergeschikt en de hoogte zit op één schil in plaats
+// van op alle drie (drie hoogtes lezen onder een schuine hoek als drie losse
+// linten, en dát is de mist).
+//
+// [hoogte in km, breedte in px, opacity, additief?]
 const SCHILLEN = [
-  [0.0, 9.0, 0.16],
-  [1.6, 6.5, 0.13],
-  [3.4, 4.0, 0.10],
+  [0.0, 16.0, 0.055, true],   // buitenhalo — alleen sfeer
+  [0.0, 7.0, 0.11, true],     // binnenhalo
+  [2.5, 3.2, 0.10, true],     // de enige opgetilde schil = het volume-gevoel
+  [0.0, 2.4, 0.92, false],    // DE KERN: normale blending, volle kleur
 ];
 
 const AARDSTRAAL_KM = 6371;
 
 export const AFSTEMMING = {
   deeltjesPerBeen: 3,      // hoeveel deeltjes tegelijk over één been
-  deeltjeMinPx: 4.0,
-  deeltjeMaxPx: 13.0,
+  deeltjeMinPx: 5.5,
+  deeltjeMaxPx: 15.0,
   tempo: 1.0,              // 1 = één dag reistijd per seconde
 };
 
@@ -100,6 +111,10 @@ void main() {
   gl_PointSize = grootte;
 }
 `;
+// ⚠️ Een zachte gaussische vlek gaat op in de gloed van de lijn waar hij op
+// loopt — dan zie je wel iets bewegen maar niets afsteken. Daarom een HARDE
+// kern (bijna verzadigde schijf tot 45% van de straal) met een korte halo
+// eromheen, zodat een deeltje een objectje is en geen wolkje.
 const FRAG_D = `
 precision highp float;
 varying vec3 vKleur;
@@ -107,8 +122,9 @@ void main() {
   vec2 p = gl_PointCoord - vec2(0.5);
   float d = length(p) * 2.0;
   if (d > 1.0) discard;
-  float kern = exp(-9.0 * d * d);
-  gl_FragColor = vec4(vKleur, kern);
+  float kern = 1.0 - smoothstep(0.42, 0.62, d);
+  float halo = exp(-4.5 * d * d) * 0.45;
+  gl_FragColor = vec4(vKleur, clamp(kern + halo, 0.0, 1.0));
 }
 `;
 
@@ -139,7 +155,7 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
       plat.push(x, y, z);
     }
 
-    for (const [hoogteKm, breedte, helder] of SCHILLEN) {
+    SCHILLEN.forEach(([hoogteKm, breedte, helder, additief], si) => {
       const rr = radius * (1 + hoogteKm / AARDSTRAAL_KM);
       const pos = [];
       for (const p of punten) {
@@ -153,22 +169,23 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
         linewidth: breedte,          // pixels (worldUnits blijft false)
         transparent: true,
         opacity: helder,
-        blending: THREE.AdditiveBlending,
+        blending: additief ? THREE.AdditiveBlending : THREE.NormalBlending,
         depthTest: false,
         depthWrite: false,
-        toneMapped: false,
+        toneMapped: false,           // legenda-kleur = getekende kleur
       });
       // ⚠️ klemOpHorizon zet clippingPlanes; LineMaterial erft van
       // ShaderMaterial en ondersteunt die, dus de achterkant van de bol valt
       // net als bij de andere lagen weg.
       klemOpHorizon(mat);
       const lijn = new Line2(geo, mat);
-      lijn.renderOrder = 7.45;   // NET onder stroomroute.js (7,5): de koker
-                                 // ligt eromheen, de exacte lijn blijft bovenop
+      // Halo's van buiten naar binnen, de kern als laatste — anders schildert
+      // een additieve halo over de kern heen en is de scherpte weer weg.
+      lijn.renderOrder = 7.41 + si * 0.01;
       lijn.frustumCulled = false;
       materialen.push(mat);
       groep.add(lijn);
-    }
+    });
 
     // booglengte voor de deeltjes
     const cum = [0];
@@ -196,9 +213,12 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
     for (let k = 0; k < perBeen; k++) {
       const i = bi * perBeen + k;
       fase[i] = k / perBeen;                 // gelijkmatig over het been verdeeld
-      dKleur[i * 3] = b.kleur.r;
-      dKleur[i * 3 + 1] = b.kleur.g;
-      dKleur[i * 3 + 2] = b.kleur.b;
+      // Bijna wit met een vleug modaliteitskleur — zoals v1's schepen. Een
+      // deeltje in exact de lijnkleur is per definitie onzichtbaar op zijn
+      // eigen lijn; wit steekt af tegen elk van de vijf modaliteitskleuren.
+      dKleur[i * 3] = 0.72 + 0.28 * b.kleur.r;
+      dKleur[i * 3 + 1] = 0.72 + 0.28 * b.kleur.g;
+      dKleur[i * 3 + 2] = 0.72 + 0.28 * b.kleur.b;
       dGrootte[i] = AFSTEMMING.deeltjeMinPx;
     }
   });
@@ -214,7 +234,11 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
 
   const dMat = new THREE.ShaderMaterial({
     vertexShader: VERT_D, fragmentShader: FRAG_D,
-    blending: THREE.AdditiveBlending, transparent: true,
+    // ⚠️ NORMALE blending, geen additieve. Additief telt het deeltje op bij de
+    // lijn eronder en dan wordt het juist op de drukste plekken onzichtbaar —
+    // precies waar je het wilt zien. Normaal dekt het af en blijft het een
+    // objectje dat over de lijn schuift.
+    blending: THREE.NormalBlending, transparent: true,
     depthTest: false, depthWrite: false,
   });
   const deeltjes = new THREE.Points(dGeo, dMat);
