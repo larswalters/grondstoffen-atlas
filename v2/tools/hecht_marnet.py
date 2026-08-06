@@ -186,6 +186,25 @@ EPS_KM = 0.5              # raak-tolerantie; zie grond 2 in de kop
 REL_FACTOR = 2.0          # relatieve voorkeur hoofdcomponent (bak_havens-patroon)
 REL_MARGE = 0.1
 
+# ── de snap-guard ──────────────────────────────────────────────────────────
+# Een been-uiteinde snapt naar de dichtstbijzijnde halte in het gecombineerde
+# net. Die snap had geen bovengrens: een uiteinde waar het net niet komt schoof
+# gewoon door tot het ergens raakte, en het bestand werd zonder één waarschuwing
+# weggeschreven. Gemeten geval: een snap van 108,879 km, waarna het Emmerich-been
+# eindigde op 52.6208, 5.6231 — in het IJSSELMEER.
+#
+# Dat is dezelfde klasse als de ongeremde hoofdnet-eis in toets_spoorroute.mjs en
+# als de absolute havensnap die Whitby/Rostock 58 km wegteleporteerde: een
+# afstandsregel zonder plafond levert geen fout op maar een lijn die er niet ligt.
+# Een verre snap is bijna nooit "het net is hier grof" en bijna altijd "dit punt
+# hoort hier niet aan vast" — en dan hoort de bake te stoppen, niet te gokken.
+#
+# De grens is bewust royaal (25 km = ruim 5x het grootste bewust opengelaten gat
+# in het project, het Bunbury-gat van 4,933 km) en verstelbaar met --max-snap:
+# de machine meet, de redacteur oordeelt. Wie hem verhoogt hoort dat te doen met
+# een reden die in de routebrief staat.
+MAX_SNAP_KM = 25.0
+
 
 # ── MARNET lezen ───────────────────────────────────────────────────────────
 # Formaat afgelezen uit v2/src/marnet.js op tag pre-ais-net:
@@ -1162,6 +1181,29 @@ def _marker(naam, lat, lon):
     return {"naam": naam, "lon": round(lon, 5), "lat": round(lat, 5)}
 
 
+def _toets_snap(args, waar, paren):
+    """Stop de bake zodra een uiteinde verder dan --max-snap van het net ligt.
+
+    `paren` = [(etiket, naam, snap_km), ...]. Zie MAX_SNAP_KM voor het waarom;
+    de foutmelding draagt het herstelcommando, zoals maak_aansluitingen.py dat
+    ook doet — een guard die je niet vertelt hoe je verder moet, wordt weggehaald
+    in plaats van beantwoord."""
+    grens = getattr(args, "max_snap", MAX_SNAP_KM)
+    te_ver = [(e, n, d) for e, n, d in paren if d > grens]
+    if not te_ver:
+        return
+    regels = "\n".join(f"    {e} {n}: snap {d:.3f} km" for e, n, d in te_ver)
+    sys.exit(
+        f"SNAP TE VER voor {waar} — niets gebakken.\n{regels}\n"
+        f"  grens: --max-snap {grens:g} km\n"
+        f"  Een snap van deze orde betekent bijna altijd dat het uiteinde niet "
+        f"aan dit net vastzit; de lijn zou vanaf een plek beginnen waar niets "
+        f"ligt (het IJsselmeer-geval). Kies een uiteinde dat wél op het net "
+        f"ligt, geef het been mee als --stippel/--been-geojson, of verhoog de "
+        f"grens bewust met --max-snap <km> en noteer de reden in de routebrief."
+    )
+
+
 def _route_been(args, graaf, cache, m, comb, mod, naam, van, naar):
     """Eén been apart routeren over het gecombineerde net. De modaliteit komt
     uit de vlag; de km-uitsplitsing (track/MARNET/connector) en de
@@ -1174,6 +1216,7 @@ def _route_been(args, graaf, cache, m, comb, mod, naam, van, naar):
     hb, db, _ = G.snap_halte(comb, lat_b, lon_b)
     print(f"\n═══ BEEN [{mod}] {naam} ═══")
     print(f"  van {na} · snap {da:.3f} km — naar {nb} · snap {db:.3f} km")
+    _toets_snap(args, f"been '{naam}'", [("van ", na, da), ("naar", nb, db)])
     pad, _ = G.zoek_route(comb, ha, hb)
     if pad is None:
         sys.exit(f"GEEN PAD voor been '{naam}' ({na} -> {nb}) — niets gebakken")
@@ -1237,6 +1280,7 @@ def _route_vrij(args, graaf, cache, m, comb, conn_km):
     hb, db, _ = G.snap_halte(comb, lat_b, lon_b)
     print(f"\n═══ ROUTE (vrij) {na} -> {nb} ═══")
     print(f"  snap A: {da:.3f} km · snap B: {db:.3f} km")
+    _toets_snap(args, "de vrije route", [("van ", na, da), ("naar", nb, db)])
     pad, _ = G.zoek_route(comb, ha, hb)
     if pad is None:
         sys.exit("GEEN PAD over het gecombineerde net — niets gebakken")
@@ -1711,6 +1755,13 @@ def main():
                    help="herhaalbaar: expliciete marker; zodra er één is "
                         "opgegeven vervangt de lijst de automatische "
                         "afleiding volledig")
+    s.add_argument("--max-snap", type=float, default=MAX_SNAP_KM,
+                   dest="max_snap", metavar="KM",
+                   help=f"bovengrens op de snap van een been-uiteinde naar het "
+                        f"net (default {MAX_SNAP_KM:g} km). Erboven stopt de "
+                        f"bake: een verre snap tekent een lijn die er niet ligt "
+                        f"(gemeten: 108,879 km, been eindigde in het "
+                        f"IJsselmeer). Verhoog alleen met een reden in de brief")
     s.add_argument("--routebrief", default=None,
                    help="pad van de routebrief die deze keten voorschrijft; "
                         "gaat als veld het contract in")

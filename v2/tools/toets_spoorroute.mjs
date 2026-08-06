@@ -5,12 +5,28 @@
 // (fabriek → fabriek) na te rekenen én de gevolgde lijn op de kaart te leggen.
 // Dit tool doet precies dat, headless, met twee projectlessen ingebakken:
 //
-//   1. SNAP OP HET HOOFDNET (spoor-component >= 1.000 km), niet op de
-//      dichtstbijzijnde knoop hoe dan ook — anders snap je op een los
+//   1. SNAP OP HET HOOFDNET (spoor-component >= --hoofd-km, default 1.000 km),
+//      niet op de dichtstbijzijnde knoop hoe dan ook — anders snap je op een los
 //      rangeersporentje en geeft álles "geen pad" (de LAR-518-les; zelfde
 //      drempel als koppelNetten en toets_spoor_aansluiting.mjs). De absolute
 //      dichtste spoorknoop wordt wél gerapporteerd, zodat zichtbaar is wanneer
 //      de hoofdnet-eis een dichtere stub overslaat.
+//      ⚠️ MAAR DIE EIS HEEFT EEN BOVENGRENS (--max-snap, default 60 km), en die
+//      ontbrak hier terwijl `koppelNetten` hem wél had (MAX_LAND_SNAP_KM, zie
+//      v2/src/keten.js). Zonder grens zoekt de eis door tot ze ergens een groot
+//      net vindt: bij Cerrejón (mijnspoor op een component van 156 km) landde
+//      het uiteinde 1.025 km verderop IN CUBA, en omdat de laadlus én Puerto
+//      Bolívar op diezelfde Cubaanse knoop uitkwamen meldde het tool geen "geen
+//      pad" maar een gedegenereerd been — plausibel-fout in plaats van
+//      luid-fout. Boven de grens valt het punt daarom terug op de
+//      dichtstbijzijnde spoorknoop; liggen beide uiteinden dan op hetzelfde
+//      kleine component, dan is dát de echte lijn. Ligt er niets, dan komt er
+//      eerlijk "geen pad" uit. 106 van de 642 registerknopen hangen onder de
+//      1.000 km-drempel, dus dit raakt meer dan één stroom.
+//      ⚠️ De absolute drempel zelf is een erfenis: de haven-riviersnap ging op
+//      2026-07-24 juist van absoluut naar RELATIEF (doorgaand component, hooguit
+//      2x+1 km verder, cap 60) omdat een absolute drempel Whitby/Rostock 58 km
+//      wegteleporteerde. Dezelfde klasse; spoor mag die kant ook nog op.
 //   2. DE LIJNGEOMETRIE PER EDGE HEEFT EEN RICHTING (eerste vertex = knoop A);
 //      wie de edge van B naar A loopt moet de reeks omkeren, anders springt de
 //      getekende route op elke knoop heen en weer.
@@ -24,6 +40,7 @@
 //
 // Draaien:
 //   node v2/tools/toets_spoorroute.mjs "--van=LAT,LON" "--naar=LAT,LON" [--naam=slug]
+//                                       [--hoofd-km=1000] [--max-snap=60]
 // Uitvoer: kernregels op de console + de gevolgde lijn als GeoJSON in
 //   v2/build-cache/ais/graaf/spoorroute-<naam>.geojson
 
@@ -35,7 +52,6 @@ import { laadLandnetHeadless } from "./laad_headless.mjs";
 const V2 = dirname(dirname(fileURLToPath(import.meta.url)));
 const UITMAP = join(V2, "build-cache", "ais", "graaf");
 const STRAAL = 2.4;          // bolstraal van `posities` (afspraak z = -sin lon)
-const HOOFD_KM = 1000;       // hoofdnet-drempel, zie toets_spoor_aansluiting.mjs
 const AARDE_KM = 6371;
 
 // --- CLI ---
@@ -43,6 +59,20 @@ const args = {};
 for (const a of process.argv.slice(2)) {
   const m = a.match(/^--([^=]+)=(.*)$/);
   if (m) args[m[1]] = m[2];
+}
+// Hoofdnet-drempel en de bovengrens erop. Vlaggen en geen constanten, omdat een
+// legitiem nationaal net kleiner kan zijn dan de drempel (Colombia 156 km,
+// Peru 854) — dat is geen rangeerstub maar de lijn waar de stroom overheen gaat.
+const HOOFD_KM = getal("hoofd-km", 1000);   // zie toets_spoor_aansluiting.mjs
+const MAX_SNAP_KM = getal("max-snap", 60);  // = MAX_LAND_SNAP_KM in keten.js
+function getal(sleutel, standaard) {
+  if (args[sleutel] === undefined) return standaard;
+  const v = Number(args[sleutel]);
+  if (!Number.isFinite(v) || v < 0) {
+    console.error(`--${sleutel} moet een getal >= 0 zijn (kreeg "${args[sleutel]}")`);
+    process.exit(1);
+  }
+  return v;
 }
 function leesPunt(sleutel) {
   const v = args[sleutel];
@@ -114,7 +144,28 @@ function snapSpoor(p, etiket) {
     knoop: hoofdKnoop, km: kmUitDot(hoofdDot),
     dichtstKnoop, dichtstKm: kmUitDot(dichtstDot),
     dichtstCompKm: compKm.get(find(dichtstKnoop)) || 0,
+    teruggevallen: false,
   };
+  // De hoofdnet-eis heeft een BOVENGRENS. Ligt het dichtstbijzijnde grote net
+  // verder dan --max-snap, dan is dit geen "stub overslaan" meer maar een
+  // teleport: het uiteinde landt op een net waar deze plek fysiek niet aan
+  // vastzit. Terugvallen op de dichtstbijzijnde spoorknoop is dan het eerlijke
+  // antwoord — zitten beide uiteinden op hetzelfde kleine component, dan ís dat
+  // de echte lijn; zit er niets, dan volgt hieronder gewoon "geen pad".
+  if (hoofdKnoop < 0 || uit.km > MAX_SNAP_KM) {
+    const reden = hoofdKnoop < 0
+      ? `geen enkel component >= ${HOOFD_KM.toLocaleString("nl-NL")} km in het net`
+      : `dichtstbijzijnde hoofdnet ligt ${uit.km.toFixed(2)} km weg (> --max-snap ${MAX_SNAP_KM})`;
+    console.log(`${etiket} (${p.lat}, ${p.lon}): ⚠️ TERUGVAL op de dichtste ` +
+      `spoorknoop ${dichtstKnoop} op ${uit.dichtstKm.toFixed(2)} km · component ` +
+      `${Math.round(uit.dichtstCompKm).toLocaleString("nl-NL")} km — ${reden}. ` +
+      `De hoofdnet-eis wordt hier NIET toegepast; verhoog --max-snap alleen met ` +
+      `een reden, want een verre snap tekent een lijn die er niet ligt.`);
+    uit.knoop = dichtstKnoop;
+    uit.km = uit.dichtstKm;
+    uit.teruggevallen = true;
+    return uit;
+  }
   const overgeslagen = dichtstKnoop !== hoofdKnoop
     ? ` (dichtste spoorknoop ${uit.dichtstKm.toFixed(2)} km op stub-component van ` +
       `${Math.round(uit.dichtstCompKm).toLocaleString("nl-NL")} km — overgeslagen door de hoofdnet-eis)`
@@ -125,6 +176,21 @@ function snapSpoor(p, etiket) {
   return uit;
 }
 const snapVan = snapSpoor(van, "van "), snapNaar = snapSpoor(naar, "naar");
+
+// ⚠️ BEIDE UITEINDEN OP DEZELFDE KNOOP = GEEN BEEN, EN DAT MOET LUID ZIJN.
+// Dit is de faalvorm die de Cerrejón-diagnose zo lang verborg: de ongeremde
+// hoofdnet-eis stuurde de laadlus én Puerto Bolívar naar dezelfde knoop 1.000 km
+// verderop, waarna Dijkstra netjes een pad van lengte nul vond. Geen "geen pad",
+// geen foutmelding — een gedegenereerd been met de echte meting in een terzijde.
+// Een route van een knoop naar zichzelf is nooit een geldig antwoord.
+if (snapVan.knoop === snapNaar.knoop) {
+  console.log(`GEDEGENEREERD: beide uiteinden snappen op knoop ${snapVan.knoop} ` +
+    `(van ${snapVan.km.toFixed(2)} km · naar ${snapNaar.km.toFixed(2)} km). ` +
+    `Er is geen been tussen een knoop en zichzelf. Meestal betekent dit dat het ` +
+    `spoor dat deze twee plekken verbindt niet in het net zit, of dat de ` +
+    `snap-afstanden te groot zijn voor de vraag die je stelt.`);
+  process.exit(2);
+}
 
 // --- richting per edge-uiteinde: waar wijst de rail als je hier wegrijdt? -----
 // Nodig voor de bochtstraf hieronder. `uitA[e]` = de peiling waarmee je knoop A
