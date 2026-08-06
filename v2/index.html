@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=111" />
+<link rel="stylesheet" href="style.css?v=112" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -124,6 +124,23 @@
       <button class="glBtn" data-gl="uit">uit</button>
     </div>
     <div id="gloedNoot"></div>
+
+    <!-- De uitgezochte knopen als gloed (M26 / LAR-490). Alleen SITES lichten
+         op — dat een complex op wereldhoogte één vlek wordt hoort te ontstaan
+         uit de optelling, niet uit een voorgekookte hotspot-knoop. De vier
+         knoppen springen naar de plekken waar dat te zien is. -->
+    <div class="hudLabel">Gloed-knopen (koper, pilot)</div>
+    <div class="btnRow">
+      <button class="gnBtn is-on" data-gn="aan">aan</button>
+      <button class="gnBtn" data-gn="uit">uit</button>
+    </div>
+    <div class="btnRow">
+      <button class="gnGa" data-lon="117.79973" data-lat="30.97688" data-km="14">Tongling</button>
+      <button class="gnGa" data-lon="117.21919" data-lat="28.33180" data-km="14">Guixi</button>
+      <button class="gnGa" data-lon="117.5" data-lat="29.7" data-km="900">samen</button>
+      <button class="gnGa" data-lon="110" data-lat="28" data-km="9000">wereld</button>
+    </div>
+    <div id="gloedNodeNoot"></div>
 
     <!-- De ruwe AIS-pings (M28, LAR-535): het venster op wat de collector op de
          VPS binnenkrijgt. Puur weergave — hiermee beoordeel je DEKKING (leeg
@@ -247,6 +264,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=111"></script>
+<script type="module" src="src/main.js?v=112"></script>
 </body>
 </html>

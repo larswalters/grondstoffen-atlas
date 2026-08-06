@@ -1,0 +1,824 @@
+{
+ "versie": 1,
+ "toelichting": "Gloedlaag voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE knopen — nadrukkelijk geen generieke havenlijst. Site-coordinaten komen uit het MEE-emissievergunningregister; een vergunning is een VESTIGING, geen installatielijst, dus een laaddok of expeditiehal zit er principieel niet in. Complexknopen zijn afgeleid door single-linkage clustering op 5 km en dienen voor labels, interactie en flow-aggregatie — NIET als glow-object: de gloed hoort emergent te zijn uit de sites.",
+ "gewicht_waarschuwing": "Alle gewichten zijn ruwe schattingen voor de visuele pilot. Niet gebruiken voor uitspraken over volume.",
+ "clusterregel": "single-linkage, drempel 5 km",
+ "knopen": [
+  {
+   "id": "cx-1",
+   "naam": "Jinguan",
+   "lon": 117.79678,
+   "lat": 30.98052,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 305,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "11 sites, spreiding 5.2 km"
+  },
+  {
+   "id": "cx-2",
+   "naam": "Dongguashan",
+   "lon": 117.87724,
+   "lat": 30.91613,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 40,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-3",
+   "naam": "Anqing",
+   "lon": 116.94522,
+   "lat": 30.6436,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 25,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-4",
+   "naam": "铜陵有色金翔物资有限责任公司",
+   "lon": 117.74309,
+   "lat": 30.865,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 12,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-5",
+   "naam": "Guixi",
+   "lon": 117.22071,
+   "lat": 28.34212,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 221,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "7 sites, spreiding 5.4 km"
+  },
+  {
+   "id": "cx-6",
+   "naam": "红旗集团江西铜业有限公司",
+   "lon": 117.15127,
+   "lat": 28.2676,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 79,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "6 sites, spreiding 4.0 km"
+  },
+  {
+   "id": "cx-7",
+   "naam": "Dexing",
+   "lon": 117.70288,
+   "lat": 29.05199,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 128,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "2 sites, spreiding 2.1 km"
+  },
+  {
+   "id": "cx-8",
+   "naam": "江西铜业（德兴）化工有限公司",
+   "lon": 117.54583,
+   "lat": 29.0225,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-9",
+   "naam": "Yinshan",
+   "lon": 117.58089,
+   "lat": 28.9608,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 30,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-10",
+   "naam": "Yongping",
+   "lon": 117.75109,
+   "lat": 28.20441,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 58,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "3 sites, spreiding 2.1 km"
+  },
+  {
+   "id": "cx-11",
+   "naam": "Chengmenshan",
+   "lon": 115.79817,
+   "lat": 29.68689,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 35,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "cx-12",
+   "naam": "江西江铜同鑫环保科技有限公司",
+   "lon": 117.86869,
+   "lat": 28.33428,
+   "level": "complex",
+   "parent": null,
+   "rol": "complex",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "som van de sites",
+   "bron": "afgeleid — centroïde van de sites",
+   "korrel": "afgeleid",
+   "notitie": "1 sites, spreiding 0.0 km"
+  },
+  {
+   "id": "site-1",
+   "naam": "铜陵有色金属集团股份有限公司金冠铜业分公司",
+   "lon": 117.78548,
+   "lat": 30.99602,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 100,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340764551849860L001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Jinguan — hoofdsmelter Tongling; al anker in de koperstroom"
+  },
+  {
+   "id": "site-2",
+   "naam": "铜陵有色金属集团股份有限公司铜冠冶化分公司",
+   "lon": 117.78083,
+   "lat": 30.9875,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 35,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700781071361A001P (controlecijfer OK; DMS↔decimaal 0.4 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "ijzer- en zwavelzuurtak naast de smelter"
+  },
+  {
+   "id": "site-3",
+   "naam": "铜陵有色金属集团股份有限公司动力厂",
+   "lon": 117.78577,
+   "lat": 30.98071,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "energie",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 30,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700774959055N001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "warmtekrachtcentrale van het smelterterrein"
+  },
+  {
+   "id": "site-4",
+   "naam": "铜陵泰富特种材料有限公司",
+   "lon": 117.79325,
+   "lat": 30.98513,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 20,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913400006726372905001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "cokes"
+  },
+  {
+   "id": "site-5",
+   "naam": "铜陵有色金神耐磨材料有限责任公司",
+   "lon": 117.79544,
+   "lat": 31.00075,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 10,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 9134076415111008XB001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "gietwerk"
+  },
+  {
+   "id": "site-6",
+   "naam": "铜陵铜冠优创特种材料有限公司",
+   "lon": 117.80976,
+   "lat": 30.99496,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "raffinage",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 12,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700MA2RUDLN66001V (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "zeldzame metalen uit bijproducten"
+  },
+  {
+   "id": "site-7",
+   "naam": "铜陵铜冠电子铜箔有限公司",
+   "lon": 117.81059,
+   "lat": 30.96174,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 25,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700MA2NH25G2R001V (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "foliefabriek — eindpunt van de koperstroom Collahuasi-Tongling"
+  },
+  {
+   "id": "site-8",
+   "naam": "铜陵有色股份铜冠黄铜棒材有限公司",
+   "lon": 117.80663,
+   "lat": 30.9629,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 20,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340000777358503F001V (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "messingstaf; OSM way/1247093617 draagt ten onrechte de folienaam, 399 m west"
+  },
+  {
+   "id": "site-9",
+   "naam": "铜陵格里赛铜冠电子材料有限公司",
+   "lon": 117.81747,
+   "lat": 30.96143,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700395107186M001Q (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "koperwalserij"
+  },
+  {
+   "id": "site-10",
+   "naam": "铜陵有色建安钢构有限责任公司",
+   "lon": 117.80759,
+   "lat": 30.96804,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "ondersteunend",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 8,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700762760962L002R (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "staalbouw"
+  },
+  {
+   "id": "site-11",
+   "naam": "铜陵有色金属集团股份有限公司冬瓜山铜矿",
+   "lon": 117.87724,
+   "lat": 30.91613,
+   "level": "site",
+   "parent": "cx-2",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 40,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913407007199458578001X (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Dongguashan — kopermijn"
+  },
+  {
+   "id": "site-12",
+   "naam": "铜陵有色金属集团股份有限公司安庆铜矿",
+   "lon": 116.94522,
+   "lat": 30.6436,
+   "level": "site",
+   "parent": "cx-3",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 25,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700705092048U001V (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Anqing — kopermijn"
+  },
+  {
+   "id": "site-13",
+   "naam": "铜陵有色金翔物资有限责任公司",
+   "lon": 117.74309,
+   "lat": 30.865,
+   "level": "site",
+   "parent": "cx-4",
+   "rol": "recycling",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 12,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91340700151112747J001Y (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "schrootverwerking"
+  },
+  {
+   "id": "site-14",
+   "naam": "江西铜业股份有限公司贵溪冶炼厂",
+   "lon": 117.22545,
+   "lat": 28.33227,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 120,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360000X12430120H001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Guixi — grootste kopersmelter van China; anker uit fase D"
+  },
+  {
+   "id": "site-15",
+   "naam": "江西铜业铜材有限公司",
+   "lon": 117.21919,
+   "lat": 28.3318,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 30,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913600007363561816001Q (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "walsdraadfabriek — anker uit fase D"
+  },
+  {
+   "id": "site-16",
+   "naam": "贵溪市众安铜业有限公司",
+   "lon": 117.225,
+   "lat": 28.34195,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 20,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681MA3AE1L39D001W (controlecijfer OK; DMS↔decimaal 0.0 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "secundaire kopersmelter"
+  },
+  {
+   "id": "site-17",
+   "naam": "韩亚半导体材料（贵溪）有限公司",
+   "lon": 117.22789,
+   "lat": 28.36818,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 10,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681MA385ALK1B001V (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "basischemie op het smelterterrein"
+  },
+  {
+   "id": "site-18",
+   "naam": "贵溪百顺科技有限公司",
+   "lon": 117.21428,
+   "lat": 28.37033,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 8,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681MA35GDWF67001V (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "organische chemie"
+  },
+  {
+   "id": "site-19",
+   "naam": "中国十五冶金建设集团有限公司钢结构黄石分公司（贵溪厂区）",
+   "lon": 117.20715,
+   "lat": 28.32318,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "ondersteunend",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 8,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91420201MAD24T2579002Q (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "staalbouw, vestiging Guixi"
+  },
+  {
+   "id": "site-20",
+   "naam": "红旗集团江西铜业有限公司",
+   "lon": 117.15064,
+   "lat": 28.27372,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 20,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681674951208E002U (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "draad en kabel"
+  },
+  {
+   "id": "site-21",
+   "naam": "贵溪奥泰铜业有限公司",
+   "lon": 117.16427,
+   "lat": 28.2661,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "halffabricaat",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913606817897120046001Q (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "koperlegeringen"
+  },
+  {
+   "id": "site-22",
+   "naam": "贵溪千合盛金属有限责任公司",
+   "lon": 117.15496,
+   "lat": 28.27811,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "raffinage",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 12,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681731968218A001P (controlecijfer OK; DMS↔decimaal 0.7 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "overige non-ferrosmelt"
+  },
+  {
+   "id": "site-23",
+   "naam": "贵溪泰来科技发展有限公司",
+   "lon": 117.15143,
+   "lat": 28.27689,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 10,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360681074273511J001Z (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "non-ferrogieterij"
+  },
+  {
+   "id": "site-24",
+   "naam": "江西贵溪南方水泥有限公司",
+   "lon": 117.14439,
+   "lat": 28.26661,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 12,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913606815508624495001P (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "cement uit smelterslak"
+  },
+  {
+   "id": "site-25",
+   "naam": "光大生物能源（贵溪）有限公司",
+   "lon": 117.141945,
+   "lat": 28.244168,
+   "level": "site",
+   "parent": "cx-6",
+   "rol": "energie",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 10,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360600MA35Q6LK2J001V (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "biomassacentrale"
+  },
+  {
+   "id": "site-26",
+   "naam": "江西铜业股份有限公司德兴铜矿",
+   "lon": 117.70736,
+   "lat": 29.0432,
+   "level": "site",
+   "parent": "cx-7",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 120,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360000X12425989D001X (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Dexing — grootste dagbouw-kopermijn van China, voedt Guixi"
+  },
+  {
+   "id": "site-27",
+   "naam": "江西铜业（德兴）化工有限公司",
+   "lon": 117.54583,
+   "lat": 29.0225,
+   "level": "site",
+   "parent": "cx-8",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91361181571195614M001V (controlecijfer OK; DMS↔decimaal 0.4 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "zwavelzuur bij Dexing"
+  },
+  {
+   "id": "site-28",
+   "naam": "江西铜业集团（德兴）建材有限公司",
+   "lon": 117.6984,
+   "lat": 29.06077,
+   "level": "site",
+   "parent": "cx-7",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 8,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 9136118116185746XY001U (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "bouwmaterialen uit tailings"
+  },
+  {
+   "id": "site-29",
+   "naam": "江西铜业集团银山矿业有限责任公司",
+   "lon": 117.58089,
+   "lat": 28.9608,
+   "level": "site",
+   "parent": "cx-9",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 30,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91361181751127459Q001Z (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Yinshan — non-ferromijn"
+  },
+  {
+   "id": "site-30",
+   "naam": "江西铜业股份有限公司永平铜矿",
+   "lon": 117.76165,
+   "lat": 28.19792,
+   "level": "site",
+   "parent": "cx-10",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 40,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91360000705745336T003R (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Yongping — kopermijn"
+  },
+  {
+   "id": "site-31",
+   "naam": "江铜（铅山）化工有限公司",
+   "lon": 117.7437,
+   "lat": 28.20857,
+   "level": "site",
+   "parent": "cx-10",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 10,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91361124MA35F9UD09001V (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "zwavelzuur bij Yongping"
+  },
+  {
+   "id": "site-32",
+   "naam": "江西铜业集团（铅山）选矿药剂有限公司",
+   "lon": 117.74791,
+   "lat": 28.20674,
+   "level": "site",
+   "parent": "cx-10",
+   "rol": "nevenproces",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 8,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91361124705745790F001R (controlecijfer OK; DMS↔decimaal 0.2 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "flotatiereagentia"
+  },
+  {
+   "id": "site-33",
+   "naam": "江西铜业股份有限公司城门山铜矿",
+   "lon": 115.79817,
+   "lat": 29.68689,
+   "level": "site",
+   "parent": "cx-11",
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 35,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 913604006674560060001Y (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "Chengmenshan — kopermijn"
+  },
+  {
+   "id": "site-34",
+   "naam": "江西江铜同鑫环保科技有限公司",
+   "lon": 117.86869,
+   "lat": 28.33428,
+   "level": "site",
+   "parent": "cx-12",
+   "rol": "recycling",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 15,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "MEE-emissievergunningregister, USCC 91361121MAC28GJU42001Y (controlecijfer OK; DMS↔decimaal 0.1 m)",
+   "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
+   "notitie": "secundair koper uit schroot"
+  },
+  {
+   "id": "tongling-kade",
+   "naam": "铜陵有色 — kade van de TNMG-smelter",
+   "lon": 117.7718,
+   "lat": 30.98656,
+   "level": "site",
+   "parent": "cx-1",
+   "rol": "overslag",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 30,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "route-onderzoek — marker uit stroomroute-koper-collahuasi-tongling.json",
+   "korrel": "gelegd op Esri z18 (0,51 m/px; Tongling heeft geen z19)",
+   "notitie": "losplaats voor het concentraat"
+  },
+  {
+   "id": "guixi-losbundel",
+   "naam": "Jiangxi Copper Guixi — ertslosbundel",
+   "lon": 117.226,
+   "lat": 28.3271,
+   "level": "site",
+   "parent": "cx-5",
+   "rol": "overslag",
+   "grondstof": [
+    "koper"
+   ],
+   "gewicht": 25,
+   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "bron": "route-onderzoek — marker uit stroomroute-koper-escondida-guixi.json",
+   "korrel": "gelegd tijdens het routeonderzoek",
+   "notitie": "losbundel waar de trein uit Beilun aankomt"
+  }
+ ]
+}

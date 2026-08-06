@@ -23,6 +23,7 @@ import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aisping
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
+import { laadGloednodes } from "./gloednodes.js?v=112";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -339,6 +340,30 @@ laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
   })
   .catch((e) => console.warn("[atlas v2] aisgloed niet geladen (nog niet gebakken?):", e.message));
 
+// --- de uitgezochte knopen als gloed (M26 / LAR-490) -----------------------
+// De dichtbij-helft van het LOD-ontwerp. Alleen SITES lichten op; dat Tongling
+// en Guixi op wereldhoogte één vlek worden hoort te ONTSTAAN uit de optelling.
+// Zie de kop van gloednodes.js — als hier alsnog een hotspot-object nodig blijkt,
+// klopt de ontwerpbrief niet.
+let GLOEDNODES = null;
+laadGloednodes(VECTOR_R, "112", GLOBE.camera, GLOBE.renderer)
+  .then((g) => {
+    GLOEDNODES = g;
+    GLOBE.globeGroup.add(g.groep);
+    window.GLOEDNODES = g;
+    GLOBE.onTick(() => g.update());
+    console.log(
+      `[atlas v2] gloednodes: ${g.stats.sites} sites (${g.stats.complexen} complexen ` +
+      `bewust niet getekend) · laden ${g.stats.msLaden} ms`
+    );
+    const noot = document.getElementById("gloedNodeNoot");
+    if (noot) {
+      noot.textContent =
+        `${g.stats.sites} uitgezochte kopersites · Tongling en Guixi`;
+    }
+  })
+  .catch((e) => console.warn("[atlas v2] gloednodes niet geladen:", e.message));
+
 // --- de ruwe AIS-pings als debuglaag (M28, LAR-535) ------------------------
 // Het venster op wat de collector op de VPS binnenkrijgt. Hiermee beoordeel je
 // DEKKING terwijl je kijkt: een leeg stuk rivier in de graaf kan "geen schepen"
@@ -477,6 +502,14 @@ wireButtons(".akBtn", "ak", (mode) => {
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
+});
+wireButtons(".gnBtn", "gn", (mode) => {
+  if (GLOEDNODES) GLOEDNODES.groep.visible = (mode === "aan");
+});
+document.querySelectorAll(".gnGa").forEach((knop) => {
+  knop.addEventListener("click", () => {
+    GLOBE.vliegNaar(+knop.dataset.lon, +knop.dataset.lat, +knop.dataset.km);
+  });
 });
 wireButtons(".apBtn", "ap", (mode) => {
   if (!AISPINGS) return;

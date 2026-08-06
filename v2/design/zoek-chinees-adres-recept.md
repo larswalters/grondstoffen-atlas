@@ -18,6 +18,24 @@ status: bewezen op vier adressen (Tianqi Jiangsu · LG-Huayou Wuxi · 江西铜�
 >    (register V3.0). Controleer dit pad als eerste als een zoekopdracht niets teruggeeft —
 >    een verhuisd endpoint geeft geen foutmelding maar een leeg resultaat, en dat leest als
 >    "bedrijf niet gevonden".
+>
+>    **⚠️ BIJGEWERKT 2026-08-06 — HIJ IS ALWEER VERHUISD, EN NU FAALT HIJ LUID.**
+>    `perxxgkinfo` is **een top-level context geworden**, niet langer een segment binnen
+>    `permitExt`. Het pad hierboven geeft nu een harde **404**; het werkende pad is
+>    **`permit.mee.gov.cn/perxxgkinfo/syssb/xkgg/xkgg!licenseInformation.action`**.
+>    Dat het ditmaal 404't in plaats van leeg terug te geven is een meevaller, geen regel —
+>    de oude variant zónder `perxxgkinfo` geeft nog steeds een **302 naar
+>    `/perxxgkinfo/errorinfo.jsp`**, en dat redirect-doel is meteen de goedkoopste manier om
+>    de nieuwe contextnaam terug te vinden als hij weer verschuift.
+>
+>    **En de zoekopdracht heeft twee dingen nodig die hieronder ontbreken:** een
+>    **`JSESSIONID`-cookie** (haal de pagina eerst met GET op) én het verborgen veld
+>    **`tempReportKey`** uit diezelfde pagina. Zonder die twee geeft de POST een 302 naar
+>    `/perxxgkinfo/error.jsp` — opnieuw een lege uitslag die als "niets gevonden" leest.
+>    Volledige veldenset: `tempReportKey`, `page.pageNo`, `page.orderBy`, `page.order`,
+>    `registerentername`, `xkznum`, `publishtime`. De detailpagina zit achter
+>    **`/perxxgkinfo/xkgkAction!xkgk.action?xkgk=getxxgkContent&dataid=<id>`**, met de
+>    `dataid` uit de `查看`-kolom van de resultatenrij.
 > 2. **Zoek op een DEELSTRING van de bedrijfsnaam, niet op de volledige naam.** Chinese
 >    vennootschapsnamen dragen invoegingen die je niet vooraf kent
 >    (江铜华东**（浙江）**铜材有限公司), en een exacte match mist die dan. ⚠️ Een deelstring
