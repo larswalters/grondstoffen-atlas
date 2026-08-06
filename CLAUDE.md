@@ -1,5 +1,120 @@
+> **🛡️ GUARDS, OPRUIMING EN TONGLING FASE D — LIVE `?v=111` (2026-08-06, LAATSTE).**
+> Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom).
+>
+> **Koper Collahuasi → Tongling loopt nu tot de foliefabriek: 7 benen · 19.307,3 km · 6.001
+> punten · 6 markers.** Benen 1–5 zijn **NIET opnieuw gebakken** en byte-identiek.
+>
+> **✅ BESLUIT LARS — BAKKEN IS GEEN DELIVERABLE.** *"Bakken duurt veel te lang zonder dat het
+> echt iets oplevert, zeker als je dat per stroom elke keer opnieuw gaat zitten doen"* +
+> *"de ene bak maakt de andere weer invalid en we blijven anders bezig daarmee."* Geschrapt:
+> recept-reconstructies (o.a. `collahuasi-tongling`), herbakes om een contract-veld toe te
+> voegen, en de recept-stap bij een nieuwe stroom. **Extra velden voor de visuals (been-id,
+> fase, volume) gaan in een LOS METADATABESTAND** naast `stroomroute-*.json`. Nieuw
+> **`v2/tools/voeg_been_toe.py`** hecht benen aan zónder herbake — spiegelvorm van
+> `vervang_spoorbeen.py`, met de naad **gemeten en gerapporteerd** in plaats van dichtgetrokken.
+>
+> **⚠️ DE ECHTE BLOKKADE WAS NIET DE ISSUE-LIJST MAAR TWEE AFSTANDSREGELS ZONDER PLAFOND.**
+> `toets_spoorroute.mjs` nam de hoofdnet-drempel (component ≥ 1.000 km) over van `koppelNetten`
+> **zonder de bovengrens die daar wél staat** (`MAX_LAND_SNAP_KM = 60`, `v2/src/keten.js:142`).
+> Zonder plafond zoekt de eis door tot ze ergens een groot net vindt: bij **Cerrejón** landde het
+> uiteinde **1.023,64 km verderop IN CUBA**, en omdat de laadlus én Puerto Bolívar op diezelfde
+> Cubaanse knoop uitkwamen kwam er géén "geen pad" uit maar een **GEDEGENEREERD BEEN** —
+> plausibel-fout in plaats van luid-fout. Na de fix (`--hoofd-km` + `--max-snap`, terugval op de
+> dichtste spoorknoop boven de cap, twee uiteinden op één knoop = harde fout) geeft
+> Cerrejón-mijn → Puerto Bolívar **149,5 km over 10 edges, verhouding 1,05** = de echte **Vía
+> Ferroviaria Albania–Puerto Bolívar** op het component van 156 km. **De guard geeft dus niet
+> alleen geen fout antwoord meer, hij geeft het juiste.**
+> ⚠️ **CORRECTIE OP DE EERDERE ANALYSE:** die concludeerde dat deze klasse "structureel
+> verdwenen" was sinds de 1-op-1-bake. Nagemeten: **106 van de 642 registerknopen** hangen onder
+> de drempel, tegen 89 in `memory/bugs-and-risks.md:747` — **opgelopen, niet opgelost.**
+> **Wie meet wint van wie redeneert.**
+> Tweede guard: `hecht_marnet.py` accepteerde een snap van **108,879 km** zonder waarschuwing,
+> waarna het Emmerich-been eindigde op 52.6208, 5.6231 — **het IJsselmeer**. Nu `--max-snap`,
+> default 25 km (ruim 5× het grootste bewust opengelaten gat, Bunbury 4,933 km).
+> **Regressie:** Beilun → Guixi snapt nog gewoon op het hoofdnet (0,20 / 0,02 km) en de geometrie
+> is **byte-identiek** aan een run met de cap uitgezet.
+>
+> **✅ ZES LINEAR-ISSUES DICHT** (LAR-491/522/523/485 Done · LAR-525/526 Canceled), elk met de
+> reden als comment. Alleen **LAR-490** (M26 LOD) blijft open = de visual-fase.
+> **AIS is niet nodig, en dat is gemeten:** puntafstand is een vingerafdruk (MARNET verdicht op
+> 10 km, AIS-tracks 0,25–0,45 km) en alle vijf zeebenen zitten op **9,83–9,88 km** mediaan over
+> 71.681,6 km; AIS is **1,07%** van de gebakken geometrie, uitsluitend in twee havenstaarten, en
+> de counterfactual zonder AIS scheelt **0,005%**. Wat AIS wél levert is de **gloed** uit het
+> World Bank density-raster (staat al op schijf) — een visual, geen lijn.
+>
+> **DE ANKERS.** Foliefabriek **gesloten**: 铜陵铜冠电子铜箔有限公司, USCC
+> `91340700MA2NH25G2R`, 翠湖二路西段789号, **30.96174, 117.81059** — drie onafhankelijke
+> overheidscoördinaten binnen **256 m** op hetzelfde ommuurde perceel (MEE-emissieregister ·
+> EIA 厂区中心 · 水土保持). Twee terreinpoorten satelliet-gelegd op z18; de **zuidpoort is
+> gekozen door te MÉTEN**, niet te kiezen (een Dijkstra neemt hem vanzelf, 7,41 tegen 8,70 km).
+>
+> **⚠️ VIJFDE ZOOMPLAFOND ÉN DE OPNAMEDATUM-FAALMODUS TROFFEN DEZELFDE STROOM TEGELIJK.** Esri
+> heeft bij Tongling **geen z19**: z19 én z20 leveren op alle drie de punten exact **2.521 byte
+> placeholder** terwijl z17/z18 16–18 kB echte tegels geven → **z18 = 0,51 m/px is de fijnste
+> korrel**, en een laadperron van 10–15 m ligt op die resolutiegrens. Na Guixi, Zhangjiagang,
+> Tianqi en Chizhou is dit een **eigenschap van Esri boven Chinees binnenland**, geen incident.
+> En de hele Tongling-scene is **één opname van 2019-04-05** — vastgesteld met de
+> **identify-service (`SRC_DATE2`)**, ⚠️ **niet** met een Wayback-release-titel: drie zoeklijnen
+> leidden daaruit drie verschillende data af en kwamen tot tegengestelde conclusies. Daarom is de
+> kop van been 6 **金冠** en niet 金新 — die laatste is ontstoken maart 2025 en staat op het beeld
+> nog als struweel. Dat is een **wijziging aan ladder 5 van de brief, expliciet en niet stil**.
+>
+> **⚠️ EEN POSITIEVE OSM-UITSLAG KAN GEVAARLIJKER ZIJN DAN EEN LEGE.** De bestaande regel zegt
+> dat een *lege* OSM-uitslag niets bewijst voor Chinese industriezones. Nieuw: `way/1247093617`
+> draagt de naam-tag 铜冠铜箔有限公司 maar omsluit **铜冠黄铜棒材** (翠湖二路2135号), 400 m
+> westelijker — armchair-edit, v1, geen source-tag. Controleer een naam-tag tegen een registerpunt.
+>
+> **⚠️ `pyosmium` IS OP DEZE MACHINE GEBLOKKEERD** — *"Dit bestand is geblokkeerd door een beleid
+> voor toepassingsbeheer"*. Het **Geofabrik-pad draait hier niet meer** en dat raakt élke
+> toekomstige landnet-, wegbeen- en spoor-bake. Bewust **niet omzeild** (securitypolicy); in
+> plaats daarvan **`--bron overpass`** in `maak_stroombeen_weg.py`, die door **exact dezelfde**
+> `weg_houden` en `corridor_keten` loopt — Overpass was al de gedocumenteerde kruiscontrole en
+> kwam destijds coördinaat voor coördinaat identiek uit (0,000 m, M24). ⚠️ **Nevengevolg:**
+> regressies op de vier bestaande wegprofielen zijn nu **niet te meten**, dus nieuwe
+> gedragswijzigingen in die baker zijn **opt-in per profiel** (`trimStaart`). Wat je niet kunt
+> narekenen, verander je niet stilzwijgend. **Deblokkeren is iets voor Lars in het Windows-beleid.**
+>
+> **⚠️ OVERSCHIET-EN-TERUG OP HET BEEN-EINDE, NU STRUCTUREEL VERKLAARD.** De anker-stub wordt
+> **ná** `snoei_keerlussen` aangeplakt, dus die kan een overschiet op het eindpunt per
+> constructie niet vangen. Hier reed de lijn 51 m voorbij de poort en keerde terug. Nieuwe
+> opt-in `"trimStaart"` knipt op de ankerprojectie en draait **vóór** de lengtetoets:
+> 7,00 → 6,87 km, +9,7% → **+7,6%**. *Meet het eindproduct, niet je meetlat.*
+>
+> **⚠️ EIGEN FOUT, WANT DIE HOORT HIER.** De eerste toevoeging gebruikte modaliteit `weg`, en
+> `KLEUR[been.modaliteit] ?? 0xffffff` maakt een onbekende modaliteit **WIT** — precies waar de
+> kop van `stroomroute.js` voor waarschuwt (*"de legenda loog"*). Alle 12 bestaande wegbenen
+> heten **`truck`**. Teruggedraaid met `git checkout` en opnieuw toegevoegd via het gereedschap,
+> niet met de hand gepatcht.
+>
+> **DRIE PROCESGATEN BLIJVEN BEWUST STAAN:** kop **0–700 m** (niet-gevonden kathode-expeditie) ·
+> staart **~150–300 m** (niet-gevonden losdock) · en de naad kade → been 6 van **1.503 m**, dwars
+> door het smeltercomplex van 98,5 ha = een procesgat **binnen de verwerkingsknoop** (Guixi-klasse,
+> 584 m). `voeg_been_toe.py` weigerde die op de default van 1,0 km en is bewust op 2,0 gezet
+> **mét die reden**. Er wordt geen lijn dwars door een fabriek getekend.
+>
+> **GEMETEN:** naad tussen de twee nieuwe benen **0 m** · markers 0,0 m (金冠) en 41,9 m (folie =
+> *anker ≠ routeerpunt*) · alle 7 benen dragen een geldige modaliteitskleur · browser op `v=111`:
+> 7 benen, 19.307,3 km, twee amber LineSegments van 20 en 100 vertices in de scene, **0
+> console-fouten** · live op Pages geverifieerd. ⚠️ Twee **bestaande** markers staan verder van
+> de lijn dan de nieuwe: Shanghai/Luojing **4.454 m** en de Tongling-kade **397 m** —
+> pre-existent, niet aangeraakt.
+>
+> **⚠️ CONFLICT IN DE PROJECTDATA:** de bron-noot van `cu-tongling-kade` zegt *"smelter erachter
+> op 117,7806/30,98656"*. Dat punt ligt **106 m** van het registerpunt van **铜冠冶化分公司**
+> (行业类别 **炼铁** — ijzerbereiding) en **1.150 m** van 金冠铜业, en **zuid** van 翠湖六路
+> terwijl 金冠铜业 volgens het gemeentelijke 四至 **noord** ervan ligt. **De kade zélf
+> (117.7718/30.98656) klopt en is niet aangeraakt** — door Lars op de foto aangewezen en op
+> 2026-07-28 satelliet-gecheckt. Alleen de noot is fout; gecorrigeerd in §6 van de brief, nog
+> niet in `maak_aansluitingen.py`.
+>
+> **→ VOLGENDE:** **Lobito fase D** als tijdgeboxte bronronde (komt de bron niet: twee varianten
+> laten staan, níet tekenen) · **Las Bambas → Matarani** (kan nu pas — de spoordrempel was de
+> blokkade) · de **LG-perceelvraag in Nanjing** · de kathode-expeditie en het folie-losdock vragen
+> een **niet-Esri-bron** · `pyosmium` deblokkeren · overweeg de spoordrempel **relatief** te maken
+> zoals de haven-riviersnap al is.
+
 > **🟠 KOPER TOT DE WALSDRAADFABRIEK — EN HET BEWIJS DAT FASE E NIET BESTAAT, LIVE `?v=107`
-> (2026-08-05, LAATSTE).** Commits `24a9c8d` (bouw) · `b9fd005` (docs).
+> (2026-08-05, EERDER).** Commits `24a9c8d` (bouw) · `b9fd005` (docs).
 >
 > **9 benen · 19.826,6 km · 3.233 punten · 6 markers.** De koperketen Escondida → Guixi loopt nu
 > door voorbij de smelter tot de eigen walsdraadfabriek van 江西铜业铜材有限公司. Werkorder:
@@ -554,7 +669,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-05 (laatst: koper fase D op de bol, live ?v=107 — en het bewijs dat fase E van die stroom niet bestaat)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-06 (laatst: twee snap-guards + Tongling fase D, live ?v=111 — en het besluit dat bakken geen deliverable is)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2828,6 +2943,26 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-06 · ✅ BESLUIT LARS — BAKKEN IS GEEN DELIVERABLE** — *"de ene bak maakt de andere
+  weer invalid en we blijven anders bezig daarmee"*. Geen recept-reconstructies, geen herbakes
+  voor een contract-veld, geen recept-stap per nieuwe stroom; extra velden voor de visuals gaan
+  in een **los metadatabestand** naast `stroomroute-*.json`. Gereedschap: `voeg_been_toe.py`.
+- **2026-08-06 · EEN AFSTANDSREGEL ZONDER PLAFOND TEKENT EEN LIJN DIE ER NIET LIGT** — derde
+  verschijning. Elke "kies het dichtstbijzijnde X dat aan voorwaarde Y voldoet" hoort een
+  bovengrens **én** een eerlijke terugval te hebben. Cerrejón snapte 1.023,64 km naar Cuba en
+  leverde een *gedegenereerd been* i.p.v. "geen pad"; een been-snap van 108,879 km eindigde in
+  het IJsselmeer. ⚠️ En de klasse was **opgelopen** (106 van 642 knopen, was 89), niet verdwenen
+  zoals de mechanisme-redenering aannam — **wie meet wint van wie redeneert**.
+- **2026-08-06 · EEN NAAD TUSSEN BENEN WORDT GEMETEN, NIET DICHTGETROKKEN** — bij Tongling is de
+  naad kade → fase D **1.503 m** en dat is een procesgat **binnen de verwerkingsknoop** (dwars
+  door een complex van 98,5 ha). Geen lijn dwars door een fabriek.
+- **2026-08-06 · DE OPNAMEDATUM KOMT UIT DE IDENTIFY-SERVICE (`SRC_DATE2`), NIET UIT EEN
+  WAYBACK-RELEASE-TITEL** — drie zoeklijnen leidden uit die titels drie verschillende data af.
+- **2026-08-06 · EEN POSITIEVE OSM-UITSLAG KAN GEVAARLIJKER ZIJN DAN EEN LEGE** — een naam-tag
+  kan het verkeerde perceel omsluiten (`way/1247093617`, 400 m mis). Toets tegen een registerpunt.
+- **2026-08-06 · GEDRAGSWIJZIGINGEN IN `maak_stroombeen_weg.py` ZIJN OPT-IN PER PROFIEL** zolang
+  `pyosmium` geblokkeerd is en regressies op de bestaande profielen niet te meten zijn.
+  Overpass (`--bron overpass`) is een **gelijkwaardige bron**, geen noodgreep.
 - **2026-08-05 (2e sessie) · ✅ BESLUIT LARS — FASE D MET EEN SUBSTITUUT-KOP** — waar de echte
   laadplek niet te vinden is mag een been aanhechten op een satelliet-gelegd **registerpunt**,
   mits het verschil als **procesgat** in de kaart blijft staan (koper 贵冶 584 m, grafiet De Soto

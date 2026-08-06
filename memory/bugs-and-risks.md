@@ -1,5 +1,45 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-08-05 (nieuw: zoomplafond bij Guixi, productconflict Beilun, been-ids ontbreken)*
+*Last updated: 2026-08-06 (nieuw: pyosmium geblokkeerd; opgelost: twee snap-guards)*
+
+## 🔴 OPEN 2026-08-06 — de omgeving, niet de code
+
+1. **`pyosmium` LAADT ZIJN DLL NIET MEER OP DEZE MACHINE.** `ImportError: DLL load failed while
+   importing geom: Dit bestand is geblokkeerd door een beleid voor toepassingsbeheer.` Gevolg:
+   **het Geofabrik-pad draait hier niet**, en dat raakt élke toekomstige landnet-bake, wegbeen-bake
+   en spoor-bake. Bewust **niet omzeild** — dit is een Windows-securitypolicy en geen codefout.
+   *Werkomheen:* `maak_stroombeen_weg.py --bron overpass` (zelfde filters, zelfde Dijkstra).
+   *Echte fix:* Lars deblokkeert het in het Windows-beleid.
+   ⚠️ **Nevengevolg:** regressies op de vier bestaande wegprofielen zijn nu **niet te meten**,
+   dus nieuwe gedragswijzigingen in die baker zijn opt-in per profiel gemaakt.
+
+2. **De spoor-hoofdnetdrempel is nu begrensd maar nog steeds ABSOLUUT.** 106 van 642
+   registerknopen hangen onder de 1.000 km (was 89 — opgelopen). De cap voorkomt de teleport,
+   maar een klein-maar-echt nationaal net (Colombia 156 km, Peru 854 km) blijft "geen hoofdnet"
+   heten. De waterkant is op 2026-07-24 al van absoluut naar **relatief** gegaan (doorgaand
+   component, hooguit 2×+1 km verder, cap 60); spoor mag die kant ook nog op.
+
+3. **Twee bestaande markers staan ver van hun lijn** in `stroomroute-koper-collahuasi-tongling`:
+   Shanghai/Luojing **4.454 m** en de Tongling-kade **397 m**. Pre-existent, niet aangeraakt
+   deze ronde. De andere stromen halen 0 m — dit is dus een uitschieter, geen norm.
+
+4. **De bron-noot van `cu-tongling-kade` wijst naar de verkeerde fabriek** — *"smelter erachter
+   op 117,7806/30,98656"* ligt 106 m van **铜冠冶化分公司** (炼铁 — ijzerbereiding) en 1.150 m van
+   金冠铜业, en aan de verkeerde kant van 翠湖六路. De **kade zelf klopt** (door Lars op de foto
+   aangewezen, satelliet-gecheckt 2026-07-28). Alleen de noot is fout; gecorrigeerd in §6 van de
+   brief, nog niet in `maak_aansluitingen.py`.
+
+## ✅ OPGELOST 2026-08-06
+
+- **De ongeremde hoofdnet-eis in `toets_spoorroute.mjs`** — snapte tot 1.023,64 km ver (Cerrejón
+  → Cuba) en leverde een **gedegenereerd been** in plaats van "geen pad", omdat beide uiteinden
+  op dezelfde verre knoop landden. Gefixt met `--hoofd-km`/`--max-snap` + terugval + een harde
+  fout op twee uiteinden op één knoop. Commit `162560b`.
+- **De ongeremde been-snap in `hecht_marnet route`** — accepteerde 108,879 km en liet het
+  Emmerich-been in het IJsselmeer eindigen. Gefixt met `--max-snap` (default 25 km). Commit
+  `162560b`.
+- **Overschiet-en-terug op het been-EINDE** — de anker-stub wordt ná `snoei_keerlussen`
+  aangeplakt, dus die kon het per constructie niet vangen. Opt-in `trimStaart` knipt op de
+  ankerprojectie en draait **vóór** de lengtetoets (7,00 → 6,87 km, +9,7% → +7,6%).
 
 ## ⚠️ OPEN 2026-08-05 (5e ronde) — lithium: het grootste openstaande punt is een ENTITEIT
 

@@ -1,5 +1,51 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: koper fase D, `?v=107` — en de ontdekking dat niet elke stroom een eindproduct haalt)*
+*Last updated: 2026-08-06 (laatst: twee snap-guards + Tongling fase D, `?v=111` — en het besluit dat bakken geen deliverable is)*
+
+## Stand 2026-08-06 (laatst) — bouwen, niet bakken
+
+1. **✅ BESLUIT LARS — BAKKEN IS GEEN DELIVERABLE.** *"Bakken duurt veel te lang zonder dat het
+   echt iets oplevert, zeker als je dat per stroom elke keer opnieuw gaat zitten doen"* +
+   *"de ene bak maakt de andere weer invalid en we blijven anders bezig daarmee."* Concreet
+   geschrapt: recept-reconstructies (o.a. `collahuasi-tongling`), herbakes om een contract-veld
+   toe te voegen, en de recept-stap bij een nieuwe stroom. **Moet een gebakken stroom later
+   extra velden dragen** (been-id, fase, volume voor de visuals), dan komt dat in een **los
+   metadatabestand** naast `stroomroute-*.json` — niet door opnieuw te bakken.
+   → Gereedschap: `v2/tools/voeg_been_toe.py` hecht benen aan zónder herbake.
+
+2. **Een afstandsregel zonder plafond is de terugkerende foutklasse van dit project.** Drie
+   verschijningen nu: de absolute havensnap (teleporteerde Whitby/Rostock 58 km, opgelost door
+   *relatief* te wegen), de ongeremde spoor-hoofdnetdrempel (Cerrejón → Cuba, 1.023,64 km), en
+   de ongeremde been-snap in `hecht_marnet` (108,879 km → het IJsselmeer). **Vuistregel: elke
+   "kies het dichtstbijzijnde X dat aan voorwaarde Y voldoet" hoort een bovengrens én een
+   eerlijke terugval te hebben.** De waterkant is al naar relatief gegaan; spoor mag die kant
+   ook nog op.
+
+3. **Wie meet wint van wie redeneert.** De issue-analyse concludeerde dat de spoordrempel-klasse
+   "structureel verdwenen" was sinds de 1-op-1-bake; de meting gaf 106 van 642 registerknopen
+   onder de drempel, tegen 89 eerder — **opgelopen**. Bij een conflict tussen een mechanisme-
+   redenering en een meting wint de meting.
+
+4. **AIS is een visual-bron, geen routeerbron — en dat is nu gemeten in plaats van aangenomen.**
+   Puntafstand is een vingerafdruk: MARNET verdicht op 10 km, AIS-tracks hebben 0,25–0,45 km.
+   Alle vijf zeebenen zitten op 9,83–9,88 km mediaan. AIS is 1,07% van de gebakken geometrie en
+   uitsluitend in havenstaarten; de counterfactual scheelt 0,005%. Wat AIS wél kan: een
+   **gloedvenster per industrieplek** uit het World Bank density-raster dat al op schijf staat.
+
+5. **De satellietpass kent nu vijf bevestigde zoomplafond-plekken** (Guixi, Zhangjiagang, Tianqi,
+   Chizhou, Tongling) — het is geen incident meer maar een **eigenschap van Esri boven Chinees
+   binnenland**. Reken er standaard op: plan z18 als fijnste korrel, en een laadperron van
+   10–15 m is daar per definitie niet te leggen. De vervolgstap is een **andere bron**
+   (Amap/Baidu met sleutel, of een 总平面布置图 uit een EIA-bijlage), niet een andere release.
+   ⚠️ En bepaal de opnamedatum met de **identify-service** (`SRC_DATE2`), niet met een
+   Wayback-release-titel — drie zoeklijnen leidden uit die titels drie verschillende data af.
+
+6. **⚠️ `pyosmium` is op deze machine geblokkeerd** ("beleid voor toepassingsbeheer"), dus het
+   Geofabrik-pad draait hier niet meer. `maak_stroombeen_weg.py` heeft nu `--bron overpass`, die
+   door **exact dezelfde** `weg_houden` en `corridor_keten` loopt — Overpass was al de
+   gedocumenteerde kruiscontrole en kwam coördinaat voor coördinaat identiek uit (M24).
+   Consequentie voor de werkwijze: **regressies op de vier bestaande wegprofielen zijn nu niet
+   te meten**, dus nieuwe gedragswijzigingen in die baker horen **opt-in per profiel** te zijn
+   (`trimStaart` is zo gebouwd). Wat je niet kunt narekenen, verander je niet stilzwijgend.
 
 ## Stand 2026-08-05 (laatst, 2e sessie) — niet elke stroom kán een keten tot eindproduct worden
 

@@ -1993,3 +1993,50 @@ review: geen status-inflatie, niets verloren. ⚠️ Open: Cerrejón-cokesblend-
 (gedocumenteerde stroom = krachtwerkkool). Volgende: z16-passes D/E-ankers · route-toets
 D/E-benen · kolen-ankers satelliet-leggen.
 Vault: [[2026-07-29-grondstoffen-atlas-routebrieven-mijn-tot-eindproduct]]
+
+## 2026-08-06 — guards, Linear-opruiming en Tongling fase D (live `?v=111`)
+
+**Vraag van Lars:** *"wat hebben we nog echt nodig van de openstaande Linear-issues... moeten we
+die AIS-dingen nog echt doen? Lijkt me niet per se."* Beantwoord met metingen, niet met
+vermoedens (8 agents: 5 onderzoekslijnen + 2 adversariële toetsen + synthese).
+
+**Uitkomst: nul van de zeven issues blokkeerde nog iets.** Zes gesloten — LAR-491/522/523/485
+Done, LAR-525/526 Canceled, elk met de reden als comment. Alleen LAR-490 (M26 LOD) blijft, en
+die hoort bij de visual-fase.
+
+**AIS is niet nodig, en dat is gemeten.** Puntafstand is een vingerafdruk: MARNET verdicht op
+10 km, AIS-tracks hebben 0,25–0,45 km. Alle vijf zeebenen zitten op een mediane puntafstand van
+**9,83–9,88 km** over 71.681,6 km. Van de hele gebakken geometrie is ≈862 van 80.768 km AIS
+(**1,07%**), uitsluitend in twee havenstaarten; Lobito→Waalhaven zonder lokale AIS scheelt
+**0,005%**. Wat AIS wél levert is de gloed uit het World Bank density-raster — een visual.
+
+**De echte blokkade: twee afstandsregels zonder plafond.** `toets_spoorroute.mjs` nam de
+hoofdnet-drempel (≥1.000 km) over van `koppelNetten` **zonder** `MAX_LAND_SNAP_KM = 60`. Bij
+Cerrejón landde het uiteinde **1.023,64 km verderop in Cuba**, en omdat de laadlus én Puerto
+Bolívar op dezelfde Cubaanse knoop uitkwamen kwam er géén "geen pad" uit maar een
+**gedegenereerd been**. Na de fix: **149,5 km over 10 edges, verhouding 1,05** = de echte Vía
+Ferroviaria Albania–Puerto Bolívar. ⚠️ De klasse was **opgelopen**, niet verdwenen: 106 van 642
+registerknopen (was 89). Tweede guard: `hecht_marnet.py` accepteerde 108,879 km waarna een been
+in het **IJsselmeer** eindigde → `--max-snap`, default 25 km. Regressie: Beilun→Guixi
+byte-identiek aan een run met de cap uit.
+
+**✅ Besluit Lars: bakken is geen deliverable** — *"de ene bak maakt de andere weer invalid en we
+blijven anders bezig daarmee."* Geen recept-reconstructies, geen herbakes, geen recept-stap per
+stroom. Nieuw `voeg_been_toe.py` hecht benen aan zónder herbake en **meet de naad** in plaats van
+hem dicht te trekken.
+
+**Koper Collahuasi → Tongling tot de foliefabriek:** 7 benen · 19.307,3 km · 6.001 punten, benen
+1–5 byte-identiek. Foliefabriek gesloten (铜陵铜冠电子铜箔有限公司, 30.96174/117.81059 — drie
+overheidscoördinaten binnen 256 m op één perceel); poort **gemeten** i.p.v. gekozen.
+
+**Faalmodi deze ronde:** vijfde Esri-zoomplafond (z19/z20 = 2.521 byte placeholder, z18 =
+0,51 m/px) **tegelijk** met de opnamedatum-faalmodus (hele scene = 2019-04-05 volgens
+`SRC_DATE2` — niet af te leiden uit een Wayback-release-titel) · een **positieve** OSM-uitslag
+die fout is (`way/1247093617`) · `pyosmium` geblokkeerd door Windows-beleid → `--bron overpass` ·
+overschiet-en-terug op het been-einde, structureel verklaard (anker-stub komt ná de snoei).
+
+⚠️ **Eigen fout:** eerste toevoeging gebruikte modaliteit `weg`; onbekende modaliteit → **wit**
+(`KLEUR[...] ?? 0xffffff`), precies waar `stroomroute.js` voor waarschuwt. Teruggedraaid met
+`git checkout` en opnieuw via het gereedschap gedaan.
+
+Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom), alle gepusht.

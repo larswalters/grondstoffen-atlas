@@ -1,5 +1,44 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: koper fase D op de bol, `?v=107` — en fase E blijkt niet te bestaan)*
+*Last updated: 2026-08-06 (laatst: guards + Tongling fase D, `?v=111`)*
+
+## 🔴 NIEUW 2026-08-06 (laatst) — na de guards en Tongling fase D
+
+> ⚠️ **VERVALLEN PUNTEN UIT DE LIJST HIERONDER, per besluit van Lars (2026-08-06):**
+> punt 4 (been-ids → *"eén vlag, vijf herbakes"*) en punt 6 (de bak-recepten van de drie
+> resterende stromen) zijn **geschrapt**. Bakken is geen deliverable meer — *"de ene bak maakt
+> de andere weer invalid"*. Moeten been-ids/fase/volume er later tóch komen voor de visuals, dan
+> in een **los metadatabestand** naast `stroomroute-*.json`, niet via een herbake.
+
+1. **Lobito fase D als tijdgeboxte bronronde (halve dag).** Eén bronvondst scheidt "twee
+   varianten in de brief" van "getekend been"; het anker (51.82811, 6.26387) ligt er, in
+   z19-gebied. Komt de bron niet: **laat hem als twee expliciete varianten staan en teken hem
+   niet** — dat is de correcte uitkomst, geen mislukking.
+
+2. **Las Bambas → Matarani kan nu pas.** De spoordrempel was de blokkade (het tool leverde daar
+   een gedegenereerd been); die is gefixt. Hergebruikt fase C/D/E van Tongling → de eerste echte
+   §1b-samenvloeiing in koper, dus lage marginale kosten.
+
+3. **De LG-perceelvraag in Nanjing** (lithium) — productvraag, geen meetkunde. 750 m tussen drie
+   kandidaten, groter dan elk procesgat dat die keten bewust laat staan.
+
+4. **De kathode-expeditie (Tongling én Guixi) en het folie-losdock vragen een NIET-Esri-bron.**
+   Vijf bevestigde zoomplafond-plekken nu — dit is een eigenschap van Esri boven Chinees
+   binnenland, geen incident. Kandidaten: Amap/Baidu met sleutel (⚠️ GCJ-02-conversie), een
+   Tianditu-token (CGCS2000 ≈ WGS-84, geen datumval), of een 总平面布置图 uit een EIA-bijlage.
+   Het folie-EIA noemt **twee poorten** (翠湖二路 zuid, 泰山大道 oost) — goedkoopste gerichte stap.
+
+5. **⚠️ `pyosmium` deblokkeren** — Windows-beleid voor toepassingsbeheer, iets voor Lars. Zolang
+   het geblokkeerd is draait het Geofabrik-pad niet en zijn regressies op de vier bestaande
+   wegprofielen niet te meten.
+
+6. **Overweeg de spoordrempel relatief te maken**, zoals de haven-riviersnap op 2026-07-24 al is
+   geworden (doorgaand component, hooguit 2×+1 km verder, cap 60). De cap voorkomt nu de teleport,
+   maar 106 van 642 registerknopen heten nog steeds "geen hoofdnet".
+
+7. **Corrigeer de bron-noot van `cu-tongling-kade`** in `maak_aansluitingen.py` — hij noemt de
+   ijzerfabriek 铜冠冶化 als "de smelter erachter". De kade zelf klopt en blijft staan.
+
+8. **`toets_corridor.py` bestaat nog steeds niet.** Vierde ronde op rij ad hoc geschreven.
 
 ## 🔴 NIEUW 2026-08-05 (laatst, 2e sessie) — na de koper-fase-D-ronde
 

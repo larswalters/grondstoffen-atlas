@@ -1,5 +1,55 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-05 (laatst: koper fase D — en het bewijs dat fase E niet bestaat)*
+*Last updated: 2026-08-06 (laatst: bakken is geen deliverable + twee snap-guards)*
+
+## 2026-08-06 — guards, opruiming, Tongling fase D
+
+- **2026-08-06 · ✅ BESLUIT LARS — BAKKEN IS GEEN DELIVERABLE.** *"De ene bak maakt de andere
+  weer invalid en we blijven anders bezig daarmee."* Geen recept-reconstructies, geen herbakes
+  om een contract-veld toe te voegen, geen recept-stap bij een nieuwe stroom. Extra velden voor
+  de visuals (been-id, fase, volume) gaan in een **los metadatabestand** naast
+  `stroomroute-*.json`. **Waarom:** een recept bewijst alleen *"dit commando produceert dat
+  artefact"*, nooit *"dit wás het commando"* (vier vrijheidsgraden gaven byte-identieke uitvoer),
+  en de opbrengst weegt niet op tegen de tijd die het van het echte werk afhaalt.
+- **2026-08-06 · EEN AFSTANDSREGEL ZONDER PLAFOND TEKENT EEN LIJN DIE ER NIET LIGT.** Derde
+  verschijning van dezelfde klasse. `toets_spoorroute.mjs` nam de hoofdnet-drempel over van
+  `koppelNetten` maar **niet** `MAX_LAND_SNAP_KM = 60` (`v2/src/keten.js:142`) → Cerrejón snapte
+  **1.023,64 km naar Cuba**, en omdat beide uiteinden op dezelfde knoop landden kwam er een
+  **gedegenereerd been** uit in plaats van "geen pad". Nu `--hoofd-km` + `--max-snap`, terugval
+  op de dichtste spoorknoop boven de cap, en twee uiteinden op één knoop = harde fout.
+  ⚠️ Gemeten: **106 van 642** registerknopen hangen onder de drempel (was 89) — de klasse was
+  **opgelopen**, niet verdwenen zoals de mechanisme-redenering aannam.
+- **2026-08-06 · `hecht_marnet route` KRIJGT `--max-snap` (default 25 km).** Een snap van
+  108,879 km werd zonder waarschuwing geaccepteerd en liet een been in het IJsselmeer eindigen.
+  25 km = ruim 5× het grootste bewust opengelaten gat (Bunbury 4,933 km); verhogen mag, mét een
+  reden in de routebrief.
+- **2026-08-06 · EEN NAAD TUSSEN TWEE BENEN WORDT GEMETEN EN GERAPPORTEERD, NIET DICHTGETROKKEN.**
+  `voeg_been_toe.py` weigert boven `--max-gat-km` (default 1,0). Bij Tongling is hij bewust op
+  2,0 gezet: de naad kade → been 6 is **1.503 m** en overspant de **verwerkingsknoop** — van de
+  kade dwars door een complex van 98,5 ha naar de expeditie. Zelfde klasse als Guixi (584 m).
+  Er wordt geen lijn dwars door een fabriek getekend.
+- **2026-08-06 · DE KOP VAN TONGLING FASE D IS 金冠, NIET 金新** — wijziging aan ladder 5 van de
+  brief, expliciet en niet stil. 金冠 levert de foliefabriek al sinds 2017 en is verifieerbaar op
+  het enige beschikbare beeld; 金新 is ontstoken in maart 2025 terwijl de hele Tongling-scene één
+  opname van **2019-04-05** is. [D6] documenteert de levering op **concern**niveau, dus 金冠
+  spreekt de bron niet tegen.
+- **2026-08-06 · DE OPNAMEDATUM KOMT UIT DE IDENTIFY-SERVICE (`SRC_DATE2`), NIET UIT EEN
+  WAYBACK-RELEASE-TITEL.** Drie zoeklijnen leidden uit release-titels drie verschillende data af
+  (2019 / 2021 / 2026) en kwamen tot tegengestelde conclusies over of een fabriek al bestond.
+  Een release-datum zegt welke archiefversie een opname serveert, niet wanneer hij gemaakt is.
+- **2026-08-06 · EEN POSITIEVE OSM-UITSLAG KAN GEVAARLIJKER ZIJN DAN EEN LEGE.** De bestaande
+  regel zegt dat een *lege* OSM-uitslag niets bewijst voor Chinese industriezones. Nieuw:
+  `way/1247093617` draagt de naam-tag 铜冠铜箔有限公司 maar omsluit **铜冠黄铜棒材**, 400 m
+  westelijker (armchair-edit, v1, geen source-tag). Controleer een naam-tag altijd tegen een
+  registerpunt vóór je hem als perceel gebruikt.
+- **2026-08-06 · GEDRAGSWIJZIGINGEN IN `maak_stroombeen_weg.py` ZIJN OPT-IN PER PROFIEL zolang
+  het Geofabrik-pad hier niet draait.** `trimStaart` is daarom een profielsleutel en geen globale
+  wijziging: met `pyosmium` geblokkeerd is een regressie op de vier bestaande profielen **niet te
+  meten**, en wat je niet kunt narekenen verander je niet stilzwijgend.
+- **2026-08-06 · OVERPASS IS EEN GELIJKWAARDIGE BRON, GEEN NOODGREEP** (`--bron overpass`). Hij
+  loopt door exact dezelfde `weg_houden` en `corridor_keten`; de M24-vergelijking toonde destijds
+  coördinaat voor coördinaat identieke uitvoer (0,000 m). Geen cache — het Geofabrik-pad hasht
+  filter + venster in zijn vingerafdruk, en een half-gecachte Overpass-uitslag zou die discipline
+  stil ondermijnen.
 
 ## 2026-08-05 (laatst, 5e ronde) — lithium benen 5-8: de tweede A–E-keten
 
