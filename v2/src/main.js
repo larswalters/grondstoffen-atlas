@@ -23,8 +23,8 @@ import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aisping
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=113";
-import { laadStroomleven } from "./stroomleven.js?v=115";
+import { laadGloednodes } from "./gloednodes.js?v=116";
+import { laadStroomleven } from "./stroomleven.js?v=116";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -34,6 +34,23 @@ const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 // Eén constante voor alle lagen, zodat ze onderling per constructie niet uit
 // elkaar kunnen lopen.
 const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
+
+// --- welke lagen meedoen ---------------------------------------------------
+// Op verzoek van Lars (2026-08-07) staan vier lagen uit en zijn hun HUD-knoppen
+// weg: ze concurreerden met het beeld dat nu beoordeeld wordt (de AIS-drukte
+// legt een brede witte band over precies de rivieren waar de stromen lopen).
+//
+// ⚠️ Bewust een vlag en geen verwijderde code. Deze lagen zijn geen dood hout:
+// de havens zijn de aanhechtpunten voor het nieuwe waternet, de AIS-tracks zijn
+// het bronmateriaal voor de graaf-stap (LAR-530) en de vectorwereld is volgens
+// de projectafspraak de WAARHEID waartegen routering rekent — alleen het TÓNEN
+// ervan staat hier uit. Weghalen zou die rollen stilzwijgend opzeggen.
+const TOON = {
+  kustlijn: false,
+  havens: false,
+  aisgloed: false,
+  aistracks: false,
+};
 
 // --- satelliettegels -------------------------------------------------------
 // Streamt Esri World Imagery op het detailniveau dat bij je kijkhoogte past —
@@ -48,7 +65,7 @@ GLOBE.onTick((dt) => TEGELS.tick(dt));
 let wereldStats = null;
 let kustlijn = null;
 
-laadVectorWereld(VECTOR_R, GLOBE.klemOpHorizon)
+if (TOON.kustlijn) laadVectorWereld(VECTOR_R, GLOBE.klemOpHorizon)
   .then(({ lijnen, stats }) => {
     GLOBE.globeGroup.add(lijnen);
     kustlijn = lijnen;
@@ -69,7 +86,7 @@ laadVectorWereld(VECTOR_R, GLOBE.klemOpHorizon)
 let HAVENS = null;
 let HAVENLAAG = null;
 
-laadHavens()
+if (TOON.havens) laadHavens()
   .then((havens) => {
     HAVENS = havens;
     HAVENLAAG = bouwHavenLaag(havens, VECTOR_R);
@@ -159,6 +176,8 @@ let aistracksAan = false;
 let aistracksBezig = null;
 
 function haalAisTracks() {
+  // De laag was al lui (39,5 MB, pas bij de eerste "aan"); nu staat hij ook uit.
+  if (!TOON.aistracks) return Promise.resolve(null);
   if (aistracksBezig) return aistracksBezig;
   const noot = document.getElementById("tracksNoot");
   if (noot) noot.textContent = "laden… (39,5 MB, eenmalig)";
@@ -353,7 +372,7 @@ laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
 // gloed van zes jaar scheepvaart, additief per pilotvenster — dít is het
 // beeld; de lijnen hierboven zijn het graaf-zaad.
 let AISGLOED = null;
-laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
+if (TOON.aisgloed) laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
   .then((g) => {
     AISGLOED = g;
     GLOBE.globeGroup.add(g.groep);

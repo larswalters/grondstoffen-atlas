@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=115" />
+<link rel="stylesheet" href="style.css?v=116" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -39,19 +39,18 @@
 
     <div id="hudBody">
 
-    <!-- Twee ONAFHANKELIJKE lagen, niet één of-of-keuze: de ondergrond is het
-         oppervlak van de bol, de kustlijn ligt er als vectorlaag bovenop. -->
+    <!-- ⚠️ VIER LAGEN STAAN UIT en hun knoppen zijn hier weg (2026-08-07, op
+         verzoek van Lars): kustlijn · havens · AIS-drukte · AIS-tracks. Ze
+         concurreerden met het beeld dat nu beoordeeld wordt — de AIS-drukte
+         legde een brede witte band over precies de rivieren waar de stromen
+         lopen. Aanzetten = `TOON` bovenin src/main.js; de code is bewust blijven
+         staan, want die lagen dragen rollen (aanhechtpunten, bronmateriaal voor
+         de graaf-stap, de vectorwereld als waarheid) die hier niet opgezegd zijn. -->
     <div class="hudLabel">Ondergrond</div>
     <div class="btnRow">
       <button class="bmBtn is-on" data-bm="satelliet">satelliet</button>
       <button class="bmBtn" data-bm="kaart">kaart</button>
       <button class="bmBtn" data-bm="egaal">egaal</button>
-    </div>
-
-    <div class="hudLabel">Kustlijn (vector)</div>
-    <div class="btnRow">
-      <button class="clBtn is-on" data-cl="aan">aan</button>
-      <button class="clBtn" data-cl="uit">uit</button>
     </div>
 
     <!-- ⚠️ AIS-OMBOUW (2026-07-24): het oude waternet (marnet zee + binnen-
@@ -116,14 +115,6 @@
     <div id="ankerLijst"></div>
     <div id="ankerNoot"></div>
 
-    <!-- De AIS-drukte als GLOED (M27): het dichtheidsveld zélf op de bol,
-         additief per pilotvenster — dít is het beeld (besluit Lars 2026-07-25). -->
-    <div class="hudLabel">AIS-drukte (gloed)</div>
-    <div class="btnRow">
-      <button class="glBtn is-on" data-gl="aan">aan</button>
-      <button class="glBtn" data-gl="uit">uit</button>
-    </div>
-    <div id="gloedNoot"></div>
 
     <!-- De uitgezochte knopen als gloed (M26 / LAR-490). Alleen SITES lichten
          op — dat een complex op wereldhoogte één vlek wordt hoort te ontstaan
@@ -158,21 +149,12 @@
          Kystdatahuset (NO), AMSA (AU) en de eigen collector. Amber = opvaart,
          ijsblauw = afvaart. Standaard uit, en het bestand wordt PAS bij de
          eerste "aan" opgehaald (39,5 MB). -->
-    <div class="hudLabel">AIS-tracks (5 bronnen)</div>
-    <div class="btnRow">
-      <button class="atBtn" data-at="aan">aan</button>
-      <button class="atBtn is-on" data-at="uit">uit</button>
-    </div>
-    <div id="havenLegenda" style="margin-bottom:6px">
-      <span><i style="background:#ffd166"></i>opvaart</span>
-      <span><i style="background:#7fe8ff"></i>afvaart</span>
-    </div>
-    <!-- ⚠️ BRONVERMELDING = LICENTIE-EIS, GEEN COSMETICA. Deze lijst staat hier
-         STATISCH (niet pas na het laden), want de data staat op Pages zodra de
-         site staat — of iemand de laag aanzet of niet. De sleutels vs/dk/no/au/
-         wereld zijn dezelfde als in de noot eronder en in `bron` op elke lijn.
-         AMSA is CC BY-NC 3.0 AU: die eist naamsvermelding ÉN niet-commercieel
-         gebruik; beide staan er daarom voluit. -->
+    <!-- ⚠️ DE KNOP IS WEG, DE BRONVERMELDING BLIJFT — en dat is geen slordigheid.
+         Deze lijst stond hier al STATISCH omdat de eis aan de GEPUBLICEERDE DATA
+         hangt, niet aan het aanzetten van de laag: `aistracks-pilot.json` staat
+         nog gewoon op Pages. AMSA is CC BY-NC 3.0 AU en eist naamsvermelding ÉN
+         niet-commercieel gebruik. Wie dit blok wil opruimen moet éérst het
+         databestand van de publicatie halen, niet andersom. -->
     <div id="tracksBronnen">
       <span><b>vs</b> — MarineCadastre, NOAA/USACE (publiek domein)</span>
       <span><b>dk</b> — DMA, Danish Maritime Authority (Denemarken)</span>
@@ -209,25 +191,6 @@
     </div>
     <div id="landNoot"></div>
 
-    <!-- Havens (LAR-518): bijna 4.000 searoute-havens als losse laag. Ze zijn
-         het onderwerp van de overslag — een haven is de plek waar zee,
-         binnenwater en straks spoor/weg samenkomen, dus moet je ze kunnen zien
-         vóór je aanwijst welke een overslaghaven wordt. -->
-    <div class="hudLabel">Havens</div>
-    <div class="btnRow">
-      <button class="hvBtn is-on" data-hv="aan">aan</button>
-      <button class="hvBtn" data-hv="uit">uit</button>
-    </div>
-    <!-- De kleur zegt welke netten de haven raakt. Mintgroen = kandidaat voor
-         de aangewezen overslaghavens; de lijst zelf wijst Lars aan. -->
-    <div id="havenLegenda">
-      <span><i style="background:#ff6ad5"></i>zee + rivier + spoor (WPI)</span>
-      <span><i style="background:#4fe3b0"></i>zee + rivier</span>
-      <span><i style="background:#fff4e2"></i>alleen zee</span>
-      <span><i style="background:#d9a441"></i>alleen rivier</span>
-      <span><i style="background:#6a7484"></i>aan water, geen net &lt; 25 km</span>
-    </div>
-    <div id="havenNoot"></div>
 
     <!-- Route-test, keten-router en stromen (M26.x) zijn met het waternet mee
          geparkeerd op tag `pre-ais-net` — ze komen terug op het AIS-net. -->
@@ -264,6 +227,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=115"></script>
+<script type="module" src="src/main.js?v=116"></script>
 </body>
 </html>
