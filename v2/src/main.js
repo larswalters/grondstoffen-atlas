@@ -23,7 +23,8 @@ import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aisping
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=112";
+import { laadGloednodes } from "./gloednodes.js?v=113";
+import { laadStroomleven } from "./stroomleven.js?v=113";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -269,6 +270,35 @@ for (const def of STROMEN) {
       `[atlas v2] stroom ${def.sleutel} niet geladen (nog niet gebakken?):`, e.message));
 }
 
+// --- de stromen laten leven (M26 / LAR-490) --------------------------------
+// Koker + bewegende deeltjes NAAST stroomroute.js, niet erdoorheen: die laag is
+// bewezen en tekent de exacte lijn in de legenda-kleur. Zie de kop van
+// stroomleven.js voor waarom de lijn op de grond blijft.
+const STROOMLEVEN = new Map();
+for (const def of STROMEN) {
+  laadStroomleven(VECTOR_R, "113", GLOBE.klemOpHorizon, def.bestand,
+                  GLOBE.renderer, GLOBE.camera)
+    .then((l) => {
+      l.groep.visible = def.aan;
+      STROOMLEVEN.set(def.sleutel, l);
+      GLOBE.globeGroup.add(l.groep);
+      GLOBE.onTick((dt) => l.update(dt));
+      window.STROOMLEVEN = STROOMLEVEN;   // diagnose-handvat
+      console.log(
+        `[atlas v2] stroomleven ${def.sleutel}: ${l.stats.benen} benen · ` +
+        `${l.stats.schillen} kokerschillen · ${l.stats.deeltjes} deeltjes`
+      );
+    })
+    .catch((e) => console.warn(
+      `[atlas v2] stroomleven ${def.sleutel} niet geladen:`, e.message));
+}
+// LineMaterial rekent in pixels en moet de vensterafmeting kennen; bijhouden in
+// de tick is goedkoper dan een resize-listener die de kaart moet kennen.
+GLOBE.onTick(() => {
+  const c = GLOBE.renderer.domElement;
+  for (const l of STROOMLEVEN.values()) l.zetResolutie(c.width, c.height);
+});
+
 // --- open ligplaatsen: wat er van de anker-check over is --------------------
 // De beoordelingsronde van 2026-07-28 is afgerond: zeven correcties zijn
 // goedgekeurd en doorgevoerd, zes punten doorstonden de check. Die dertien zijn
@@ -493,6 +523,10 @@ for (const knop of document.querySelectorAll(".srBtn")) {
     const s = STROOMROUTES.get(sleutel);
     if (!s) return;
     s.groep.visible = !s.groep.visible;
+    // De levenslaag hoort bij dezelfde stroom en volgt dus dezelfde knop —
+    // anders blijven er koker en deeltjes zweven boven een lijn die weg is.
+    const l = STROOMLEVEN.get(sleutel);
+    if (l) l.groep.visible = s.groep.visible;
     knop.classList.toggle("is-on", s.groep.visible);
     toonStroomNoot();
   });
