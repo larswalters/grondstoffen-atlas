@@ -68,20 +68,30 @@ const KM_PER_DAG = {
 // van op alle drie (drie hoogtes lezen onder een schuine hoek als drie losse
 // linten, en dát is de mist).
 //
+// ⚠️ TWEEDE CORRECTIE, EN NU AAN DE OPZET IN PLAATS VAN AAN DE GETALLEN. Ook
+// mét kern bleef het oordeel "de lijnen zien er uit als één grote gloed": een
+// halo van 16 px om een kern van 2,4 px ís een gloed, hoe je hem ook afstemt.
+// De denkfout was dat de LIJN het licht moest geven. Nu geeft de lijn geen licht
+// meer — hij is dun, scherp en rustig, als een draad op de kaart — en al het
+// licht zit in KOMETEN die eroverheen bewegen. Dat scheidt de twee taken die
+// door elkaar liepen: de lijn zegt WAAR de route ligt, de kometen zeggen DAT er
+// iets over beweegt en hoe snel. Precies de ontkoppeling die dit project in juli
+// al eens moest maken tussen vorm, vaarsnelheid en baanklem.
+//
 // [hoogte in km, breedte in px, opacity, additief?]
 const SCHILLEN = [
-  [0.0, 16.0, 0.055, true],   // buitenhalo — alleen sfeer
-  [0.0, 7.0, 0.11, true],     // binnenhalo
-  [2.5, 3.2, 0.10, true],     // de enige opgetilde schil = het volume-gevoel
-  [0.0, 2.4, 0.92, false],    // DE KERN: normale blending, volle kleur
+  [0.0, 3.6, 0.13, true],     // één krappe halo, alleen om de kern lucht te geven
+  [0.0, 1.7, 0.88, false],    // DE DRAAD: dun, scherp, volle modaliteitskleur
 ];
 
 const AARDSTRAAL_KM = 6371;
 
 export const AFSTEMMING = {
-  deeltjesPerBeen: 3,      // hoeveel deeltjes tegelijk over één been
-  deeltjeMinPx: 5.5,
-  deeltjeMaxPx: 15.0,
+  kometenPerBeen: 2,       // hoeveel kometen tegelijk over één been
+  staartPunten: 14,        // lengte van de staart in punten
+  staartDeelVanBeen: 0.055, // staartlengte als fractie van de beenlengte
+  kopMinPx: 6.0,
+  kopMaxPx: 17.0,
   tempo: 1.0,              // 1 = één dag reistijd per seconde
 };
 
@@ -103,10 +113,13 @@ function gcKm(a, b) {
 
 const VERT_D = `
 attribute float grootte;
+attribute float alfa;
 attribute vec3 kleur;
 varying vec3 vKleur;
+varying float vAlfa;
 void main() {
   vKleur = kleur;
+  vAlfa = alfa;
   gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
   gl_PointSize = grootte;
 }
@@ -118,13 +131,14 @@ void main() {
 const FRAG_D = `
 precision highp float;
 varying vec3 vKleur;
+varying float vAlfa;
 void main() {
   vec2 p = gl_PointCoord - vec2(0.5);
   float d = length(p) * 2.0;
   if (d > 1.0) discard;
   float kern = 1.0 - smoothstep(0.42, 0.62, d);
   float halo = exp(-4.5 * d * d) * 0.45;
-  gl_FragColor = vec4(vKleur, clamp(kern + halo, 0.0, 1.0));
+  gl_FragColor = vec4(vKleur, clamp(kern + halo, 0.0, 1.0) * vAlfa);
 }
 `;
 
@@ -201,25 +215,37 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
     }
   }
 
-  // --- de deeltjes -----------------------------------------------------------
-  const perBeen = AFSTEMMING.deeltjesPerBeen;
-  const n = banen.length * perBeen;
+  // --- de kometen ------------------------------------------------------------
+  // Elke komeet is een KOP plus een staart van punten die achter hem aan sleept.
+  // De staartlengte is een fractie van de BEENLENGTE, niet een vast aantal km:
+  // een zeebeen van 19.000 km en een truckbeen van 8 km horen dezelfde vorm te
+  // krijgen, en een vaste km-staart is op het ene onzichtbaar en op het andere
+  // onmogelijk.
+  const K = AFSTEMMING.kometenPerBeen;
+  const T = AFSTEMMING.staartPunten;
+  const perKomeet = T + 1;
+  const n = banen.length * K * perKomeet;
   const dPos = new Float32Array(Math.max(1, n) * 3);
   const dKleur = new Float32Array(Math.max(1, n) * 3);
   const dGrootte = new Float32Array(Math.max(1, n));
-  const fase = new Float32Array(Math.max(1, n));
+  const dAlfa = new Float32Array(Math.max(1, n));
+  const fase = new Float32Array(Math.max(1, banen.length * K));
 
   banen.forEach((b, bi) => {
-    for (let k = 0; k < perBeen; k++) {
-      const i = bi * perBeen + k;
-      fase[i] = k / perBeen;                 // gelijkmatig over het been verdeeld
-      // Bijna wit met een vleug modaliteitskleur — zoals v1's schepen. Een
-      // deeltje in exact de lijnkleur is per definitie onzichtbaar op zijn
-      // eigen lijn; wit steekt af tegen elk van de vijf modaliteitskleuren.
-      dKleur[i * 3] = 0.72 + 0.28 * b.kleur.r;
-      dKleur[i * 3 + 1] = 0.72 + 0.28 * b.kleur.g;
-      dKleur[i * 3 + 2] = 0.72 + 0.28 * b.kleur.b;
-      dGrootte[i] = AFSTEMMING.deeltjeMinPx;
+    for (let c = 0; c < K; c++) {
+      fase[bi * K + c] = c / K;   // gelijkmatig over het been verdeeld
+      for (let j = 0; j <= T; j++) {
+        const i = (bi * K + c) * perKomeet + j;
+        const u = j / T;                     // 0 = kop, 1 = staarteind
+        // De KOP is bijna wit — die moet afsteken tegen elk van de vijf
+        // modaliteitskleuren, en een punt in exact de lijnkleur is op zijn
+        // eigen lijn per definitie onzichtbaar. De staart zakt terug naar de
+        // modaliteitskleur, zodat je aan de kleur ziet wat er beweegt.
+        const w = (1 - u) * 0.75;
+        dKleur[i * 3] = b.kleur.r + (1 - b.kleur.r) * w;
+        dKleur[i * 3 + 1] = b.kleur.g + (1 - b.kleur.g) * w;
+        dKleur[i * 3 + 2] = b.kleur.b + (1 - b.kleur.b) * w;
+      }
     }
   });
 
@@ -228,9 +254,12 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
   attrPos.setUsage(THREE.DynamicDrawUsage);
   const attrGr = new THREE.BufferAttribute(dGrootte, 1);
   attrGr.setUsage(THREE.DynamicDrawUsage);
+  const attrAlfa = new THREE.BufferAttribute(dAlfa, 1);
+  attrAlfa.setUsage(THREE.DynamicDrawUsage);
   dGeo.setAttribute("position", attrPos);
   dGeo.setAttribute("kleur", new THREE.BufferAttribute(dKleur, 3));
   dGeo.setAttribute("grootte", attrGr);
+  dGeo.setAttribute("alfa", attrAlfa);
 
   const dMat = new THREE.ShaderMaterial({
     vertexShader: VERT_D, fragmentShader: FRAG_D,
@@ -278,27 +307,42 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
     const h = renderer.domElement.height / (renderer.getPixelRatio() || 1);
     const perEenheid = h / (2 * Math.tan((camera.fov * Math.PI) / 360));
 
+    const stap = AFSTEMMING.staartDeelVanBeen / T;
+
     banen.forEach((b, bi) => {
       // reisduur in dagen = lengte / snelheid; tempo 1 = één dag per seconde
       const duur = b.totaal / b.kmPerDag;
-      for (let k = 0; k < perBeen; k++) {
-        const i = bi * perBeen + k;
-        const f = (fase[i] + tijd / duur) % 1;
-        opBaan(b, f, dPos, i * 3);
+      for (let c = 0; c < K; c++) {
+        const kop = (fase[bi * K + c] + tijd / duur) % 1;
+        for (let j = 0; j <= T; j++) {
+          const i = (bi * K + c) * perKomeet + j;
+          const u = j / T;
+          const f = kop - j * stap;
+          // Een komeet die net vertrokken is heeft nog geen staart achter zich;
+          // die om laten lopen naar het eind van het been zou een tweede,
+          // richtingloze sliert opleveren.
+          if (f < 0) { dGrootte[i] = 0; dAlfa[i] = 0; continue; }
 
-        tmp.set(dPos[i * 3], dPos[i * 3 + 1], dPos[i * 3 + 2]);
-        groep.localToWorld(tmp);
-        if (tmp.dot(camRicht) / radius < horizon) { dGrootte[i] = 0; continue; }
-        const afst = tmp.distanceTo(camera.position);
-        // dichterbij groter, met een plafond zodat een deeltje op straatniveau
-        // geen scherm vullende vlek wordt
-        const px = (0.35 * perEenheid) / Math.max(1e-6, afst) * 0.01;
-        dGrootte[i] = Math.min(AFSTEMMING.deeltjeMaxPx,
-                               Math.max(AFSTEMMING.deeltjeMinPx, px));
+          opBaan(b, f, dPos, i * 3);
+          tmp.set(dPos[i * 3], dPos[i * 3 + 1], dPos[i * 3 + 2]);
+          groep.localToWorld(tmp);
+          if (tmp.dot(camRicht) / radius < horizon) {
+            dGrootte[i] = 0; dAlfa[i] = 0; continue;
+          }
+          const afst = tmp.distanceTo(camera.position);
+          // dichterbij groter, met een plafond zodat een kop op straatniveau
+          // geen schermvullende vlek wordt
+          const px = (0.0035 * perEenheid) / Math.max(1e-6, afst);
+          const kopPx = Math.min(AFSTEMMING.kopMaxPx,
+                                 Math.max(AFSTEMMING.kopMinPx, px));
+          dGrootte[i] = kopPx * Math.pow(1 - u, 0.55);
+          dAlfa[i] = Math.pow(1 - u, 1.8);
+        }
       }
     });
     attrPos.needsUpdate = true;
     attrGr.needsUpdate = true;
+    attrAlfa.needsUpdate = true;
   }
 
   function zetResolutie(w, hh) {
@@ -308,6 +352,9 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
 
   return {
     groep, update, zetResolutie,
-    stats: { benen: banen.length, schillen: materialen.length, deeltjes: n },
+    stats: {
+      benen: banen.length, schillen: materialen.length,
+      kometen: banen.length * K, staartpunten: n,
+    },
   };
 }

@@ -24,7 +24,7 @@ import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=102";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 import { laadGloednodes } from "./gloednodes.js?v=113";
-import { laadStroomleven } from "./stroomleven.js?v=114";
+import { laadStroomleven } from "./stroomleven.js?v=115";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -286,7 +286,8 @@ for (const def of STROMEN) {
       window.STROOMLEVEN = STROOMLEVEN;   // diagnose-handvat
       console.log(
         `[atlas v2] stroomleven ${def.sleutel}: ${l.stats.benen} benen · ` +
-        `${l.stats.schillen} kokerschillen · ${l.stats.deeltjes} deeltjes`
+        `${l.stats.schillen} lijnschillen · ${l.stats.kometen} kometen ` +
+        `(${l.stats.staartpunten} punten)`
       );
     })
     .catch((e) => console.warn(
