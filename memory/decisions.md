@@ -1,5 +1,49 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: kleur per grondstof, hemelsbreed per been, een stijltabel)*
+*Last updated: 2026-08-07 (laatst: stroomknopen als gloedhotspots, ondergrond dimmen)*
+
+## 2026-08-07 (3e sessie) — de knopen worden hotspots
+
+- **2026-08-07 · ✅ VERZOEK LARS — DE BELANGRIJKE PUNTEN VAN EEN STROOM WORDEN GLOEDHOTSPOTS.**
+  *"Die witte ballen met cirkel erom moeten eigenlijk de gloedbron worden … zowel stroom, gloed
+  als die belangrijke punten moeten die gloeihotspots worden."* In de atlasmodus krijgen de
+  overslag- en eindpunten het koepel-mechanisme van `gloednodes.js` in de grondstofkleur.
+  ⚠️ **Dit is niet alleen mooier:** de ontwerpbrief eist dat de wereld-hotspot *ontstaat* uit de
+  optelling van losse glows, en zolang alleen `gloednodes-koper.json` gloeide kon dat alleen in
+  China gebeuren. Met de stroomknopen erbij is die claim voor het eerst **buiten één land
+  toetsbaar**.
+
+- **2026-08-07 · DE WITTE PRECISIESTIP BLIJFT BESTAAN IN DE MODALITEITSMODUS.** Een additieve
+  gloed is per definitie onnauwkeurig aan de rand — dat is zijn functie — en tijdens het routewerk
+  is de vraag juist *"ligt dit punt op de goede kade?"*. Twee modi bedienen twee vragen; hetzelfde
+  onderscheid als bij de lijnkleur. Precies één van de twee is zichtbaar: een witte stip bovenop
+  een gloed leest als een gat in het licht.
+
+- **2026-08-07 · HET GEWICHT VAN EEN STROOMKNOOP IS EEN HEURISTIEK, EN DAT STAAT ZO IN DE CODE.**
+  Een marker in `stroomroute-*.json` draagt alleen `naam`/`lon`/`lat`. Wat we wél weten is zijn
+  **positie in de keten**: eerste en laatste marker zijn de uiteinden (mijn, eindfabriek), de rest
+  is overslag — dus uiteinden krijgen meer gewicht. Zodra het losse metadatabestand volume per
+  been draagt hoort dit dááruit te komen, net als het aantal kometen. *De plek is waar, het
+  gewicht is een keuze.*
+
+- **2026-08-07 · ✅ DE ONDERGROND DIMMEN IS EEN VOORWAARDE, GEEN SCHOONHEIDSKNOP — EN DAT IS
+  GEMETEN.** De nieuwe hotspots verdwenen volledig op de felle Atacama terwijl ze boven groen
+  China prima lazen: additief licht heeft op een daglicht-satellietfoto niets om tegen af te
+  steken. Dit is exact wat besluit 5 van de ontwerpbrief (night-side) al zei; het is nu geen
+  voorkeur meer maar een meting.
+
+- **2026-08-07 · ⚠️ `toneMappingExposure` IS HET JUISTE GEREEDSCHAP, EN DAT IS OOK GEMETEN EN NIET
+  GEKOZEN.** In de scene gaan **92 materialen door tone mapping** (de tegels en de bol) en **145
+  niet** — 105 met `toneMapped: false` (de lijnen) plus 40 eigen ShaderMaterials (de gloed, de
+  kometen). De belichting raakt dus **per constructie alleen de ondergrond** en laat gloed en
+  lijnen op volle sterkte. Een donkerder tegeltextuur of een zwart vlak ertussen zou hetzelfde
+  beogen maar de gloed moeten ontzien — het soort uitzondering dat later stil kapot gaat.
+  ⚠️ `vol` blijft **1,6**, de ingemeten waarde van 2026-07-18: dimmen is een kijkstand, geen
+  nieuwe ijking.
+
+- **2026-08-07 · DE KLEURMODUS ZET DE ONDERGROND MEE, MAAR ZICHTBAAR.** Atlas → donker, routewerk
+  → vol, met de knoprij die meespringt en daarna los bij te stellen is. Zonder die koppeling zie
+  je bij het omschakelen de hotspots niet; met een ónzichtbare koppeling zou niemand snappen
+  waarom het beeld donkerder werd.
 
 ## 2026-08-07 (2e sessie) — de atlas kleurt op grondstof
 

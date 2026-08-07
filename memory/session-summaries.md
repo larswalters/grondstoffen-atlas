@@ -2,6 +2,52 @@
 *Newest first.*
 
 
+## 2026-08-07 (3e sessie) - De belangrijke punten van een stroom worden gloeihotspots
+
+Live `?v=119`, commit `5f0d11f`. Lars keek naar `?v=117` en wees aan wat er nog niet klopte:
+*"die witte ballen met cirkel erom moeten eigenlijk de gloedbron worden ... zowel stroom, gloed
+als die belangrijke punten moeten die gloeihotspots worden."*
+
+**De overslag- en eindpunten van elke stroom zijn in de atlasmodus gloedhotspots geworden** in de
+grondstofkleur, met exact het koepel-mechanisme van `gloednodes.js`. Dat mechanisme staat nu in
+een gedeelde `v2/src/gloed.js`, want er zijn twee bronnen: de 36 uitgezochte kopersites en de 35
+stroomknopen.
+
+Dat is niet alleen mooier. De ontwerpbrief eist dat de wereld-hotspot ONTSTAAT uit de optelling
+van losse glows; zolang alleen `gloednodes-koper.json` gloeide kon dat alleen in China gebeuren,
+want daar staan de enige uitgezochte sites. Met de stroomknopen erbij lichten Balama, Nacala,
+Vidalia, Greenbushes, Bunbury, Lobito en Duisburg ook op, en telt de gloed zichtbaar op waar een
+stroom door een complex loopt (Tongling). De optel-claim is daarmee voor het eerst buiten een land
+toetsbaar.
+
+**De witte precisiestip blijft in de modaliteitsmodus.** Een additieve gloed is per definitie
+onnauwkeurig aan de rand - dat is zijn functie - en tijdens het routewerk is de vraag juist "ligt
+dit punt op de goede kade?". Precies een van de twee is zichtbaar: een witte stip bovenop een
+gloed leest als een gat in het licht. Het gewicht van een stroomknoop is eerlijk een HEURISTIEK
+(uiteinde vs overslag), geen meting - een marker draagt alleen naam/lon/lat.
+
+**De ondergrond kan dimmen, en dat bleek de voorwaarde en geen schoonheidsknop.** Gemeten: op de
+felle Atacama verdwenen de nieuwe hotspots volledig terwijl ze boven groen China prima lazen -
+additief licht heeft op een daglicht-satellietfoto niets om tegen af te steken. Precies wat
+besluit 5 van de ontwerpbrief (night-side) al zei, nu als meting in plaats van als voorkeur.
+
+Het gereedschap is ook gemeten en niet gekozen: 92 materialen in de scene gaan door tone mapping
+(de tegels en de bol) en 145 niet - 105 met toneMapped:false (de lijnen) plus 40 eigen
+ShaderMaterials (gloed, kometen). `toneMappingExposure` raakt dus per constructie alleen de
+ondergrond en laat gloed en lijnen op volle sterkte. Een donkerder tegeltextuur zou hetzelfde
+beogen maar de gloed moeten ontzien, en dat is het soort uitzondering dat later stil kapot gaat.
+Drie standen (vol 1,6 = de ijking van 18-07, gedimd 0,75, donker 0,40); de kleurknop zet de stand
+mee en de knoprij springt zichtbaar mee, dus geen verborgen gedrag.
+
+**Gemeten via CDP:** 35 stroomknopen gloeien over vijf stromen (9+6+6+10+4), 5 schillen elk, stip
+tegenover gloed wisselt correct met de kleurmodus, 0 console-fouten in elke geteste stand, en de
+belichting volgt de kleurmodus (1,6 -> 0,40 -> 1,6) met de knoprij mee.
+
+**Open:** Lars' keuze uit de drie hemelsbreed-varianten (onveranderd); de gloedkoepels hebben de
+kern/halo-behandeling nog steeds niet gehad; stadslichten (Black Marble) zouden de gedimde
+ondergrond afmaken - op de gedimde bol doet het witte landnet dat werk nu half.
+
+
 ## 2026-08-07 (2e sessie) - De atlas kleurt op grondstof, en de lijnen krijgen drie hemelsbreed-varianten
 
 Live `?v=117`, commit `a66ea4f`. Lars was niet tevreden over de visuals-pilot en wees de oorzaak

@@ -1,5 +1,52 @@
+> **💡 DE BELANGRIJKE PUNTEN VAN EEN STROOM WORDEN GLOEIHOTSPOTS — EN DE ONDERGROND KAN DIMMEN,
+> LIVE `?v=119` (2026-08-07, LAATSTE).** Commit `5f0d11f`.
+>
+> **✅ VERZOEK LARS:** *"die witte ballen met cirkel erom moeten eigenlijk de gloedbron worden …
+> zowel stroom, gloed als die belangrijke punten moeten die gloeihotspots worden."* De overslag-
+> en eindpunten van elke stroom krijgen in de **atlasmodus** het koepel-mechanisme van
+> `gloednodes.js` in de grondstofkleur. Dat mechanisme staat nu in een gedeelde
+> **`v2/src/gloed.js`** — twee bronnen: 36 uitgezochte kopersites + **35 stroomknopen**.
+>
+> **⚠️ DIT IS NIET ALLEEN MOOIER — HET MAAKT EEN CLAIM VAN DE ONTWERPBRIEF TOETSBAAR.** De brief
+> eist dat de wereld-hotspot **ontstaat** uit de optelling van losse glows; zolang alleen
+> `gloednodes-koper.json` gloeide kon dat alleen in China gebeuren, want daar staan de enige
+> uitgezochte sites. Met de stroomknopen erbij lichten **Balama, Nacala, Vidalia, Greenbushes,
+> Bunbury, Lobito en Duisburg** ook op, en telt de gloed zichtbaar op waar een stroom door een
+> complex loopt (Tongling). De optel-claim is voor het eerst **buiten één land** te toetsen.
+>
+> **⚠️ DE WITTE PRECISIESTIP BLIJFT IN DE MODALITEITSMODUS.** Een additieve gloed is per definitie
+> onnauwkeurig aan de rand — dat is zijn functie — en tijdens het routewerk is de vraag juist
+> *"ligt dit punt op de goede kade?"*. Precies één van de twee is zichtbaar: een witte stip
+> bovenop een gloed leest als een gat in het licht. ⚠️ Het **gewicht** van een stroomknoop is een
+> **heuristiek** (uiteinde vs overslag), geen meting — een marker draagt alleen `naam`/`lon`/`lat`.
+> Hoort later uit het losse metadatabestand te komen, net als het aantal kometen.
+>
+> **✅ DE ONDERGROND KAN DIMMEN — EN DAT BLEEK DE VOORWAARDE, GEEN SCHOONHEIDSKNOP.** Gemeten: de
+> nieuwe hotspots verdwenen **volledig op de felle Atacama** terwijl ze boven groen China prima
+> lazen. Additief licht heeft op een daglicht-satellietfoto niets om tegen af te steken — precies
+> wat besluit 5 van de ontwerpbrief (night-side) al zei, nu als **meting** in plaats van voorkeur.
+>
+> **⚠️ EN HET GEREEDSCHAP IS OOK GEMETEN, NIET GEKOZEN.** In de scene gaan **92 materialen door
+> tone mapping** (de tegels en de bol) en **145 niet** — 105 met `toneMapped: false` (de lijnen)
+> plus 40 eigen ShaderMaterials (de gloed, de kometen). `toneMappingExposure` raakt dus **per
+> constructie alleen de ondergrond** en laat gloed en lijnen op volle sterkte. Een donkerder
+> tegeltextuur of een zwart vlak ertussen zou hetzelfde beogen maar de gloed moeten ontzien, en
+> dat is het soort uitzondering dat later stil kapot gaat. Drie standen: **vol 1,6** (de ingemeten
+> waarde van 18-07, 0% uitgebrande pixels) · **gedimd 0,75** · **donker 0,40** — dimmen is een
+> kijkstand, geen nieuwe ijking. De kleurknop zet de stand mee (atlas → donker, routewerk → vol)
+> en de knoprij **springt zichtbaar mee**, dus geen verborgen gedrag.
+>
+> **GEMETEN (echte headless Chrome via CDP):** 35 stroomknopen gloeien over vijf stromen
+> (9+6+6+10+4) · 5 schillen elk · stip ↔ gloed wisselt correct met de kleurmodus · **0
+> console-fouten in elke geteste stand** · belichting volgt de kleurmodus (1,6 → 0,40 → 1,6) en
+> handmatig bijstellen daarna werkt.
+>
+> **→ VOLGENDE:** Lars kiest uit de drie hemelsbreed-varianten · de **gloedkoepels** missen nog de
+> kern/halo-behandeling · **stadslichten** (Black Marble) zouden de gedimde ondergrond afmaken —
+> op de gedimde bol doet het witte landnet dat werk nu half.
+
 > **🎨 DE ATLAS KLEURT OP GRONDSTOF — EN DE LIJNEN KRIJGEN DRIE HEMELSBREED-VARIANTEN, LIVE
-> `?v=117` (2026-08-07, LAATSTE).** Commit `a66ea4f`.
+> `?v=117` (2026-08-07, EERDER).** Commit `a66ea4f`.
 >
 > **Lars' onvrede over de visuals-pilot bleek een ROLVERDELING en geen bug.** *"Verschillende
 > kleuren per transport type — dat was goed voor het routes maken, echter wil ik in de atlas
@@ -841,7 +888,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: de atlas kleurt op grondstof + drie hemelsbreed-varianten, live ?v=117)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: stroomknopen als gloedhotspots + ondergrond dimmen, live ?v=119)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3115,6 +3162,17 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-07 (3e) · ✅ VERZOEK LARS — DE BELANGRIJKE PUNTEN VAN EEN STROOM WORDEN GLOEIHOTSPOTS**
+  in de atlasmodus, met het koepel-mechanisme van `gloednodes.js` (nu gedeeld via `v2/src/gloed.js`,
+  twee bronnen). ⚠️ Niet alleen mooier: het maakt de **optel-claim** van de ontwerpbrief voor het
+  eerst buiten één land toetsbaar. De witte precisiestip blijft in de modaliteitsmodus, want een
+  additieve gloed is aan de rand per definitie onnauwkeurig. Het knoop-gewicht is een **heuristiek**
+  (uiteinde vs overslag), geen meting.
+- **2026-08-07 (3e) · ✅ DE ONDERGROND DIMMEN IS EEN VOORWAARDE, GEEN SCHOONHEIDSKNOP — GEMETEN.**
+  De hotspots verdwenen volledig op de felle Atacama en lazen prima boven groen China. ⚠️
+  `toneMappingExposure` is het juiste gereedschap en ook dát is gemeten: 92 materialen gaan door
+  tone mapping (tegels + bol) en 145 niet, dus de belichting raakt per constructie alleen de
+  ondergrond. `vol` blijft 1,6 — dimmen is een kijkstand, geen nieuwe ijking.
 - **2026-08-07 (2e) · ✅ BESLUIT LARS — DE ATLAS KLEURT OP GRONDSTOF, HET ROUTEWERK OP
   MODALITEIT.** Twee schakelbare assen, met de modaliteitsweergave als default. Het zijn twee
   vragen aan hetzelfde beeld: *waar houdt de zee op en begint de barge?* hoort bij het bouwen,

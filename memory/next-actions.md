@@ -1,5 +1,5 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: kleur per grondstof + drie hemelsbreed-varianten, `?v=117`)*
+*Last updated: 2026-08-07 (laatst: stroomknopen als gloedhotspots + ondergrond dimmen, `?v=119`)*
 
 ## 🔴 NIEUW 2026-08-07 (laatst) — na de omschakeling naar grondstofkleur (`?v=117`)
 
@@ -22,8 +22,14 @@
    ronde en zijn nu de zwakste schakel in het beeld. Zelfde diagnose verwachten: te veel rand,
    te weinig definitie.
 
-2. **De ondergrond dimmen onder de gloed.** ⚠️ *Sinds `?v=117` des te zichtbaarder: de lijnen
-   zijn feller geworden, de ondergrond niet.* Op satelliet verdwijnt het effect volledig — additief
+2. **✅ OPGELOST 2026-08-07 (`?v=119`) — de ondergrond kan dimmen.** Drie standen in de HUD (vol
+   1,6 = de ijking van 18-07 · gedimd 0,75 · donker 0,40) via `GLOBE.zetBelichting`; de kleurknop
+   zet de stand mee (atlas → donker, routewerk → vol) en de knoprij springt zichtbaar mee.
+   **Gemeten waarom het gereedschap klopt:** 92 materialen gaan door tone mapping (tegels + bol)
+   en 145 niet (105 `toneMapped:false` + 40 eigen ShaderMaterials), dus `toneMappingExposure`
+   raakt per constructie **alleen de ondergrond**. ⚠️ **Wat nog rest is stadslichten**
+   (Black Marble): de ontwerpbrief noemt die in één adem met night-side, en op de gedimde bol doet
+   het witte landnet dat werk nu half. *Oorspronkelijke melding:* op satelliet verdwijnt het effect — additief
    licht heeft op een lichte daglichtfoto niets om tegen af te steken. Daarmee is de night-side-
    vraag uit de ontwerpbrief **geen schoonheidsvraag maar een voorwaarde**. Twee opties: de
    satelliet dimmen ónder de gloedlaag, of deze laag aan een donkere modus koppelen.
