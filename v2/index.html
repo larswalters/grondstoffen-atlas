@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=117" />
+<link rel="stylesheet" href="style.css?v=119" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -113,6 +113,21 @@
     <div class="btnRow">
       <button class="slBtn" data-sl="recht-boog">recht (boog)</button>
       <button class="slBtn" data-sl="recht-zeeboog">boog op zee</button>
+    </div>
+
+    <!-- ✅ De ondergrond dimmen (2026-08-07). Gemeten en niet gekozen: 92
+         materialen in de scene gaan door tone mapping (tegels + bol) en 145
+         niet (lijnen met toneMapped:false + de eigen ShaderMaterials van de
+         gloed en de kometen), dus `toneMappingExposure` raakt per constructie
+         alleen de ondergrond. Zonder dit verdwijnen de gloedhotspots boven een
+         felle ondergrond — dat was op de Atacama meetbaar en boven groen China
+         niet. De kleurknop hierboven zet deze stand mee (atlas → donker,
+         routewerk → vol); daarna kun je hem los bijstellen. -->
+    <div class="hudLabel">Ondergrond dimmen</div>
+    <div class="btnRow">
+      <button class="sdBtn is-on" data-sd="vol">vol</button>
+      <button class="sdBtn" data-sd="gedimd">gedimd</button>
+      <button class="sdBtn" data-sd="donker">donker</button>
     </div>
 
     <div id="stroomLegenda">
@@ -261,6 +276,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=117"></script>
+<script type="module" src="src/main.js?v=119"></script>
 </body>
 </html>

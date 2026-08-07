@@ -38,7 +38,7 @@ import * as THREE from "three";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
-import { kleurVan, beenPunten } from "./stroomstijl.js?v=117";
+import { kleurVan, beenPunten } from "./stroomstijl.js?v=118";
 
 // ⚠️ DE KLEURTABEL STOND HIER OOK, EN DAT WAS DE FOUT. Twee kopieën van dezelfde
 // legenda (hier en in stroomroute.js) lopen vroeg of laat uit elkaar; sinds

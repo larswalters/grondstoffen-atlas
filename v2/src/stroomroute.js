@@ -30,7 +30,8 @@
 //     de legenda-kleur.
 
 import * as THREE from "three";
-import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=117";
+import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=118";
+import { bouwGloed } from "./gloed.js?v=118";
 
 function opBol(lonDeg, latDeg, r, uit, o) {
   // Exact dezelfde afspraak als world.js/aistracks.js (z = −sin lon).
@@ -146,16 +147,37 @@ function maakBeen(been, radius, kleur, klemOpHorizon, lijnModus) {
   return seg;
 }
 
-// ── De knopen als gloeiende cirkel ─────────────────────────────────────────
+// ── De knopen: precisiestip of gloedhotspot ────────────────────────────────
 //
-// De overslag- en eindpunten waren witte stippen van 7 px. Dat is genoeg om een
-// punt aan te wijzen tijdens het routewerk, maar het is niet wat de atlas moet
-// laten zien: op de referentiebeelden (`design/referenties/`) zijn de knopen
-// juist de dragers van het beeld — gloeiende cirkels waar de lijnen samenkomen.
+// De overslag- en eindpunten hebben TWEE gedaanten, en dat volgt de kleurmodus:
 //
-// Dit is dezelfde kern/halo-opzet als `gloednodes.js`, en om dezelfde reden:
-// een zachte vlek alléén leest als mist (dat kostte op 2026-08-07 drie afgekeurde
-// rondes), dus er hoort een felle kern in te zitten die de plek aanwijst.
+//   modaliteit (routewerk)  een witte bol met een dunne ring eromheen. Die wijst
+//                           de kade tot op de meter aan, en dat is precies wat je
+//                           nodig hebt als je een anker controleert.
+//   grondstof (atlas)       een GLOEDHOTSPOT in de grondstofkleur, met exact het
+//                           koepel-mechanisme van `gloednodes.js` (nu gedeeld via
+//                           `gloed.js`).
+//
+// ✅ VERZOEK LARS (2026-08-07): *"die witte ballen met cirkel erom moeten
+// eigenlijk de gloedbron worden … zowel stroom, gloed als die belangrijke punten
+// moeten die gloeihotspots worden."* De belangrijke punten van een keten — de
+// mijn, elke overslag, de fabriek — zijn precies de plekken die op de
+// referentiebeelden oplichten, en ze horen dezelfde kleur te dragen als de lijn
+// die er vertrekt.
+//
+// ⚠️ WAAROM DE WITTE STIP BLIJFT BESTAAN in de modaliteitsmodus: een additieve
+// gloed is per definitie onnauwkeurig aan de rand — dat is zijn functie. Tijdens
+// het routewerk is de vraag juist *"ligt dit punt op de goede kade?"*, en dan is
+// een halo van 30 px het verkeerde gereedschap. De twee modi bedienen twee
+// vragen; hetzelfde onderscheid als bij de lijnkleur zelf.
+//
+// ⚠️ EN ER IS EEN INHOUDELIJKE WINST, geen alleen-maar-mooier: de ontwerpbrief
+// wil dat de wereld-hotspot ONTSTAAT uit de optelling van losse glows. Zolang
+// alleen de 36 kopersites gloeiden kon dat alleen in China gebeuren. Met de
+// stroomknopen erbij lichten Balama, Nacala, Vidalia, Greenbushes, Bunbury,
+// Lobito en Duisburg ook op — en telt de gloed zichtbaar op waar een stroom
+// dwars door een complex loopt (Tongling). Dat maakt de optel-claim voor het
+// eerst buiten één land toetsbaar.
 //
 // ⚠️ HORIZON VIA GROOTTE 0, NIET VIA EEN CLIPPINGPLANE — exact het
 // gloednodes-argument: een eigen ShaderMaterial zou anders de clipping-chunks
@@ -188,6 +210,21 @@ void main() {
 `;
 
 const MARKER = { minPx: 9.0, maxPx: 44.0, wereldKm: 26.0 };
+
+// Hoe groot wordt de gloed van een stroomknoop?
+//
+// ⚠️ DIT IS EEN HEURISTIEK EN GEEN METING, en dat hoort erbij te staan. Een
+// marker in `stroomroute-*.json` draagt alleen `naam`, `lon` en `lat` — geen
+// capaciteit, geen volume. Wat we wél weten is zijn POSITIE IN DE KETEN: de
+// eerste en de laatste marker zijn de uiteinden (de mijn en de eindfabriek), de
+// rest is overslag. Uiteinden krijgen daarom meer gewicht dan een overslagpunt.
+// Zodra het losse metadatabestand naast `stroomroute-*.json` volume per been
+// draagt (het besluit van 2026-08-06), hoort dit dáár uit te komen — net als het
+// aantal kometen. Tot dan is de plek waar, en het gewicht een keuze.
+const KNOOPGLOED = {
+  uiteindeKm: 3.4, uiteindeHelder: 0.90,
+  overslagKm: 2.2, overslagHelder: 0.62,
+};
 
 function maakMarkers(markers, radius) {
   if (!markers.length) return null;
@@ -268,21 +305,35 @@ export async function laadStroomroute(radius, versie, klemOpHorizon,
   }
   bouwLijnen();
 
-  const markerLaag = maakMarkers(d.markers || [], radius);
+  const markers = d.markers || [];
+  const markerLaag = maakMarkers(markers, radius);
   if (markerLaag) groep.add(markerLaag.punten);
 
-  function zetMarkerKleur() {
-    if (!markerLaag) return;
-    // ⚠️ In modaliteitsmodus blijft de marker WIT — dat is de bewezen stand van
-    // ?v=111 en de routebouw-weergave is expres onaangeraakt. In de atlasmodus
-    // krijgt hij de grondstofkleur, zodat een knoop meteen zegt wélke stroom er
-    // samenkomt zonder dat je een lijn hoeft te volgen.
-    const k = kleurModus === "grondstof"
-      ? (GRONDSTOF_KLEUR[grondstof] ?? 0xffffff)
-      : 0xffffff;
-    markerLaag.mat.uniforms.kleur.value.setHex(k);
+  // De gloedhotspots op dezelfde punten — zie het blok hierboven voor waarom er
+  // twee gedaanten zijn en waarom de witte stip blijft bestaan.
+  const knoopKleur = GRONDSTOF_KLEUR[grondstof] ?? 0xffffff;
+  const gloed = bouwGloed(
+    markers.map((m, i) => {
+      const uiteinde = (i === 0 || i === markers.length - 1);
+      return {
+        lon: m.lon, lat: m.lat, kleur: knoopKleur,
+        straalKm: uiteinde ? KNOOPGLOED.uiteindeKm : KNOOPGLOED.overslagKm,
+        helder: uiteinde ? KNOOPGLOED.uiteindeHelder : KNOOPGLOED.overslagHelder,
+      };
+    }),
+    radius, camera, renderer, 7.58,   // net ónder gloednodes (7,6), boven de lijn
+  );
+  groep.add(gloed.groep);
+
+  function zetKnoopVorm() {
+    // Precies één van de twee is zichtbaar: een witte stip bovenop een gloed
+    // leest als een gat in het licht, en twee keer hetzelfde punt aanwijzen zegt
+    // niets extra's.
+    const atlas = (kleurModus === "grondstof");
+    if (markerLaag) markerLaag.punten.visible = !atlas;
+    gloed.groep.visible = atlas;
   }
-  zetMarkerKleur();
+  zetKnoopVorm();
 
   // Puntgrootte volgt de kijkafstand met een pixel-minimum én -maximum: dichtbij
   // een cirkel óm de site heen (wereldmaat), veraf een leesbare stip die niet
@@ -290,7 +341,9 @@ export async function laadStroomroute(radius, versie, klemOpHorizon,
   const tmp = new THREE.Vector3();
   const camRicht = new THREE.Vector3();
   function update() {
-    if (!markerLaag || !groep.visible || !camera || !renderer) return;
+    if (!groep.visible || !camera || !renderer) return;
+    gloed.update();
+    if (!markerLaag || !markerLaag.punten.visible) return;
     const afstandCam = camera.position.length();
     const horizon = afstandCam > radius ? radius / afstandCam : 1;
     camRicht.copy(camera.position).normalize();
@@ -320,7 +373,7 @@ export async function laadStroomroute(radius, versie, klemOpHorizon,
         if (o) o.material.color.setHex(
           kleurVan(ruweBenen[i].modaliteit, stroom, kleurModus));
       });
-      zetMarkerKleur();
+      zetKnoopVorm();
     },
     /** Schakel tussen de gemeten route en de drie hemelsbreed-varianten. */
     zetLijnModus(modus) {

@@ -382,7 +382,34 @@ export function createGlobe(mount) {
     renderer.toneMapping = (mode === "legacy")
       ? THREE.NoToneMapping
       : THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = EXPOSURE;
+    renderer.toneMappingExposure = belichting;
+  }
+
+  // --- de ondergrond dimmen -------------------------------------------------
+  //
+  // ✅ Het punt dat de ontwerpbrief een VOORWAARDE noemde en dat op 2026-08-07
+  // meetbaar werd: additief licht heeft op een felle daglicht-satellietfoto
+  // niets om tegen af te steken, dus de gloedhotspots verdwenen precies boven
+  // een lichte ondergrond (de Atacama) terwijl ze boven groen China prima lazen.
+  //
+  // ⚠️ DE BELICHTING IS HET JUISTE GEREEDSCHAP, EN DAT IS GEMETEN EN NIET
+  // GEKOZEN. In de scene gaan 92 materialen door tone mapping (de tegels en de
+  // bol) en 145 niet — 105 met `toneMapped: false` (de lijnen) plus 40 eigen
+  // ShaderMaterials (de gloed, de kometen). `toneMappingExposure` raakt dus per
+  // constructie ALLEEN de ondergrond en laat de gloed en de lijnen op volle
+  // sterkte staan. Een donkerder tegeltextuur of een zwart vlak ertussen zou
+  // hetzelfde beogen maar ook de gloed moeten ontzien, en dat is precies het
+  // soort uitzondering dat later stil kapot gaat.
+  //
+  // ⚠️ Dit verandert de INGEMETEN belichting van 2026-07-18 (zon 6,0 +
+  // belichting 1,6 = 0% uitgebrande pixels). Die meting blijft de referentie en
+  // `vol` blijft die waarde — dimmen is een kijkstand, geen nieuwe ijking.
+  const BELICHTING = { vol: EXPOSURE, gedimd: 0.75, donker: 0.40 };
+  let belichting = EXPOSURE;
+
+  function zetBelichting(stand) {
+    belichting = BELICHTING[stand] ?? EXPOSURE;
+    renderer.toneMappingExposure = belichting;
   }
 
   // Ondergrond wisselen. De satelliettextuur blijft beschikbaar (Lars: "die
@@ -545,6 +572,7 @@ export function createGlobe(mount) {
     scene, camera, renderer, globeGroup,
     radius: CONFIG.radius,
     onTick, setToneMapping, setSun, setBasemap, setSphereSink, klemOpHorizon, zetHorizonDrempel, zoomBy,
+    zetBelichting,
     vliegNaar,
     getAltitude: () => altitude,
     // hoogte in km, voor de statusregel: 2,4 eenheden = 6.371 km

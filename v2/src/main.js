@@ -11,7 +11,7 @@
 // AIS-net ze kan dragen. Havens, knooppunten en aansluitingen blijven bestaan
 // als AANHECHTPUNTEN voor het nieuwe net.
 
-import { createGlobe, CONFIG } from "./globe.js?v=100";
+import { createGlobe, CONFIG } from "./globe.js?v=118";
 import { laadVectorWereld } from "./world.js?v=070";
 import { createTileLayer } from "./tiles.js?v=070";
 import { laadHavens } from "./marnet.js?v=077";
@@ -21,10 +21,10 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=117";
+import { laadStroomroute } from "./stroomroute.js?v=118";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=117";
-import { laadStroomleven } from "./stroomleven.js?v=117";
+import { laadGloednodes } from "./gloednodes.js?v=118";
+import { laadStroomleven } from "./stroomleven.js?v=118";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -577,7 +577,25 @@ wireButtons(".skBtn", "sk", (modus) => {
   const grLeg = document.getElementById("stroomLegendaGrondstof");
   if (modLeg) modLeg.hidden = (modus === "grondstof");
   if (grLeg) grLeg.hidden = (modus !== "grondstof");
+  // De atlasmodus zet de ondergrond mee op donker en het routewerk weer op vol.
+  // ⚠️ Bewust GEEN verborgen gedrag: de knoprij hieronder springt zichtbaar
+  // mee, en je kunt hem daarna los bijstellen. Zonder deze koppeling zie je bij
+  // het omschakelen de gloedhotspots niet — additief licht heeft op een felle
+  // daglichtfoto niets om tegen af te steken, en dat is de reden dat de
+  // ontwerpbrief night-side een VOORWAARDE noemt en geen schoonheidsvraag.
+  zetOndergrondDim(modus === "grondstof" ? "donker" : "vol");
 });
+
+// Ondergrond dimmen. Raakt per constructie alleen de tegels en de bol: de
+// lijnen staan op `toneMapped: false` en de gloed/kometen zijn eigen
+// ShaderMaterials, en die drie gaan geen van alle door tone mapping.
+function zetOndergrondDim(stand) {
+  GLOBE.zetBelichting(stand);
+  for (const b of document.querySelectorAll(".sdBtn")) {
+    b.classList.toggle("is-on", b.dataset.sd === stand);
+  }
+}
+wireButtons(".sdBtn", "sd", (stand) => GLOBE.zetBelichting(stand));
 
 // Lijnvorm: de gemeten route of één van de drie hemelsbreed-varianten.
 wireButtons(".slBtn", "sl", (modus) => {
