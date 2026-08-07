@@ -21,10 +21,10 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=102";
+import { laadStroomroute } from "./stroomroute.js?v=117";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=116";
-import { laadStroomleven } from "./stroomleven.js?v=116";
+import { laadGloednodes } from "./gloednodes.js?v=117";
+import { laadStroomleven } from "./stroomleven.js?v=117";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -246,6 +246,11 @@ const STROMEN = [
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
 
+// De twee weergave-assen (zie src/stroomstijl.js). Defaults = de bewezen stand
+// van ?v=111, zodat het routewerk er precies zo uit blijft zien als het deed.
+let kleurModus = "modaliteit";       // "modaliteit" | "grondstof"
+let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | "recht-zeeboog"
+
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
   spoor: "trein", leiding: "leiding",
@@ -275,12 +280,20 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "111", GLOBE.klemOpHorizon, def.bestand)
+  laadStroomroute(VECTOR_R, "111", GLOBE.klemOpHorizon, def.bestand,
+                  GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
       STROOMROUTES.set(def.sleutel, s);
       STROOMROUTE = STROOMROUTE || s;
       GLOBE.globeGroup.add(s.groep);
+      // De knopen zijn gloeiende cirkels geworden en schalen met de kijkafstand
+      // (wereldmaat mét pixel-minimum, dezelfde hybride regel als gloednodes).
+      GLOBE.onTick(() => s.update());
+      // Een stroom die ná een omschakeling binnenkomt, moet in de huidige stand
+      // gaan staan — anders hangt de langzaamste stroom in de oude kleur.
+      s.zetKleurModus(kleurModus);
+      s.zetLijnModus(lijnModus);
       window.STROOMROUTES = STROOMROUTES;   // diagnose-handvat
       console.log(`[atlas v2] stroom ${def.sleutel}: ${s.titel} · ${stroomRegel(s)}`);
       toonStroomNoot();
@@ -302,6 +315,8 @@ for (const def of STROMEN) {
       STROOMLEVEN.set(def.sleutel, l);
       GLOBE.globeGroup.add(l.groep);
       GLOBE.onTick((dt) => l.update(dt));
+      l.zetKleurModus(kleurModus);   // zie de gelijke regel bij stroomroute
+      l.zetLijnModus(lijnModus);
       window.STROOMLEVEN = STROOMLEVEN;   // diagnose-handvat
       console.log(
         `[atlas v2] stroomleven ${def.sleutel}: ${l.stats.benen} benen · ` +
@@ -551,6 +566,26 @@ for (const knop of document.querySelectorAll(".srBtn")) {
     toonStroomNoot();
   });
 }
+// Kleur van de stromen: per transport (routewerk) ↔ per grondstof (atlas).
+// Beide lagen schakelen mee — de draad/komeet van stroomleven.js hoort per
+// constructie dezelfde kleur te hebben als de exacte lijn eronder.
+wireButtons(".skBtn", "sk", (modus) => {
+  kleurModus = modus;
+  for (const s of STROOMROUTES.values()) s.zetKleurModus(modus);
+  for (const l of STROOMLEVEN.values()) l.zetKleurModus(modus);
+  const modLeg = document.getElementById("stroomLegenda");
+  const grLeg = document.getElementById("stroomLegendaGrondstof");
+  if (modLeg) modLeg.hidden = (modus === "grondstof");
+  if (grLeg) grLeg.hidden = (modus !== "grondstof");
+});
+
+// Lijnvorm: de gemeten route of één van de drie hemelsbreed-varianten.
+wireButtons(".slBtn", "sl", (modus) => {
+  lijnModus = modus;
+  for (const s of STROOMROUTES.values()) s.zetLijnModus(modus);
+  for (const l of STROOMLEVEN.values()) l.zetLijnModus(modus);
+});
+
 wireButtons(".akBtn", "ak", (mode) => {
   if (ANKERCHECK) ANKERCHECK.groep.visible = (mode === "aan");
 });

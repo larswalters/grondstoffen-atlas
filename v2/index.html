@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=116" />
+<link rel="stylesheet" href="style.css?v=117" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -87,6 +87,34 @@
     <div class="btnRow">
       <button class="srBtn is-on" data-sr="li-gz">lithium Greenbushes→Zhangjiagang</button>
     </div>
+    <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
+         ROUTEWERK op modaliteit. Twee vragen aan hetzelfde beeld — "waar houdt
+         de zee op en begint de barge?" tijdens het bouwen, "waar gaat het koper
+         heen?" in de atlas. Precies wat de ontwerpbrief al voorschreef
+         (design/lod-ontwerpbrief.md: kleur = grondstof, lijnstijl = modaliteit).
+         Default blijft modaliteit: dat is de bewezen stand van ?v=111. -->
+    <div class="hudLabel">Kleur van de stromen</div>
+    <div class="btnRow">
+      <button class="skBtn is-on" data-sk="modaliteit">per transport</button>
+      <button class="skBtn" data-sk="grondstof">per grondstof</button>
+    </div>
+
+    <!-- De hemelsbreed-varianten staan er alle drie in, want ze zijn alleen
+         naast elkaar te beoordelen. ⚠️ Dit ondergraaft het besluit "de lijnen
+         blijven op de grond" NIET: dat gaat over de ECHTE routes (M23–M28 ging
+         er juist over ze op de gemeten geul te krijgen). Een hemelsbreed-lijn
+         doet die claim per definitie niet, en het optillen maakt zichtbaar dát
+         je naar een schematische verbinding kijkt. -->
+    <div class="hudLabel">Lijnen</div>
+    <div class="btnRow">
+      <button class="slBtn is-on" data-sl="route">onze routes</button>
+      <button class="slBtn" data-sl="recht-plat">recht (plat)</button>
+    </div>
+    <div class="btnRow">
+      <button class="slBtn" data-sl="recht-boog">recht (boog)</button>
+      <button class="slBtn" data-sl="recht-zeeboog">boog op zee</button>
+    </div>
+
     <div id="stroomLegenda">
       <span><i style="background:#5aa7ff"></i>zee (zeeschip)</span>
       <span><i style="background:#35e0c0"></i>binnenvaart (barge / rivier)</span>
@@ -94,6 +122,12 @@
       <span><i style="background:#ff7ab8"></i>trein (spoor)</span>
       <span><i style="background:#9b8cff"></i>slurryleiding — eigen verbinding, geen net</span>
       <span style="opacity:.75">gestippeld = schematische verbinding of gedocumenteerd gat (haven-aanloop, last mile, Wesel-vak)</span>
+    </div>
+    <div id="stroomLegendaGrondstof" hidden>
+      <span><i style="background:#ff8a30"></i>koper</span>
+      <span><i style="background:#c06bff"></i>lithium</span>
+      <span><i style="background:#7fd8ff"></i>grafiet</span>
+      <span style="opacity:.75">drie koperstromen delen één kleur — de overslag zie je aan de knopen, gestippeld blijft "hier reikt het net niet"</span>
     </div>
     <div id="stroomNoot"></div>
 
@@ -227,6 +261,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=116"></script>
+<script type="module" src="src/main.js?v=117"></script>
 </body>
 </html>

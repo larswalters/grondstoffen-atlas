@@ -254,6 +254,7 @@ html, body {
    en getElementById zou er stil de eerste van pakken. */
 #havenLegenda,
 #stroomLegenda,
+#stroomLegendaGrondstof,
 #ankerLegenda {
   margin-top: 6px;
   font-size: 10px;
@@ -263,6 +264,7 @@ html, body {
 
 #havenLegenda span,
 #stroomLegenda span,
+#stroomLegendaGrondstof span,
 #ankerLegenda span { display: block; }
 
 #havenNoot {
@@ -345,6 +347,7 @@ html, body {
 
 #havenLegenda i,
 #stroomLegenda i,
+#stroomLegendaGrondstof i,
 #ankerLegenda i {
   display: inline-block;
   width: 7px;

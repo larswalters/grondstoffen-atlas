@@ -1,37 +1,24 @@
 // stroomroute.js — de stroom-preview: één echte grondstofstroom als keten
 // op de bol (M28), sinds het versie-2-contract ROUTEBRIEF-gestuurd.
 //
-// De benen komen uit data/stroomroute-pilot.json (versie 2), en dát bestand
-// volgt de routebrief v2/design/routebrieven/grafiet-balama-vidalia.md:
-// de keten begint bij de Balama-MIJN met een truckbeen van echte
-// weggeometrie (N380/N1, via de M25-wegcorridor-machinerie — doorgetrokken),
-// dan een gestippelde haven-aanloop bij Nacala, zeeschip Nacala → New
-// Orleans (de Kaap-route, zoals de echte stroom vaart), containerbarge via
-// Port Allen (IRMT) → Port of Vidalia (rivier-mijl 359), en een last mile
-// per truck naar de Syrah-fabriek. Het spoorbeen is geschrapt — er ligt
-// geen spoor in Concordia Parish. De laag tekent wat de benen zeggen: per
-// been "modaliteit" (kleur), "naam", en optioneel "stippel": true. Stippel
-// is puur de stijl voor "schematische verbinding" — élke modaliteit kan
+// De benen komen uit data/stroomroute-*.json (versie 2), en die bestanden
+// volgen de routebrieven in v2/design/routebrieven/. De laag tekent wat de
+// benen zeggen: per been "modaliteit", "naam", en optioneel "stippel": true.
+// Stippel is puur de stijl voor "schematische verbinding" — élke modaliteit kan
 // gestippeld zijn (de haven-aanloop is gestippeld zee-blauw, de last mile
-// gestippeld truck-amber). MARNET zelf staat niet op de bol — wat je hier
-// ziet is de GEROUTETE stroom, niet het net waarover gerouteerd is.
+// gestippeld truck-amber). MARNET zelf staat niet op de bol — wat je hier ziet
+// is de GEROUTETE stroom, niet het net waarover gerouteerd is.
 //
-// ⚠️ TRUCK = AMBER (0xffb04d), niet meer wit: een witte doorgetrokken
-//   weglijn is in Mozambique niet te onderscheiden van het witte
-//   landnet-spoor — de Nacala-spoorcorridor loopt vlak bij de N380/N1.
-//   Amber is vrij nu het spoorbeen uit deze stroom is.
-//
-// ⚠️ KLEUR = MODALITEIT — bewust anders dan aistracks (daar is kleur richting).
-//   Het punt van deze laag is de OVERGANG tussen de netten zichtbaar maken:
-//   waar de zee ophoudt en de barge begint, en waar de kade de weg wordt —
-//   dat zijn precies de overslagpunten waar de hele keten om draait. Binnen
-//   één stroom is richting geen signaal (alle lading reist dezelfde kant op),
-//   dus die as is vrij en de modaliteit mag hem dragen.
+// ⚠️ KLEUR EN LIJNVORM ZIJN SINDS 2026-08-07 SCHAKELBAAR en wonen in
+//   `stroomstijl.js`. Lees daar waarom: kort samengevat is kleur=modaliteit de
+//   vraag van de ROUTEBOUW ("waar houdt de zee op?") en kleur=grondstof de vraag
+//   van de ATLAS ("waar gaat het koper heen?"), en de lijnvorm laat je kiezen
+//   tussen de gemeten route en drie hemelsbreed-varianten. De defaults zijn
+//   bewust de bewezen stand van ?v=111: modaliteit + gemeten route.
 //
 // Verder exact de tekendiscipline van aistracks.js: één lijnobject per been
 // (LineSegments doorgetrokken, THREE.Line gestippeld), klemOpHorizon op het
-// materiaal, frustumCulled uit. De overslag-/eindpunten als THREE.Points in
-// schermpixels (de LAR-480-les).
+// materiaal, frustumCulled uit.
 //
 // ⚠️ Twee keuzes die uit de eerste CDP-verificatie kwamen, niet uit de spec —
 //   ze blijven gelden:
@@ -43,22 +30,7 @@
 //     de legenda-kleur.
 
 import * as THREE from "three";
-
-// Kleur per modaliteit. Spoor blijft in de tabel voor latere stromen — de
-// laag tekent gewoon wat de benen zeggen; de grafietstroom heeft geen
-// spoorbeen meer (zie de routebrief).
-const KLEUR = {
-  zee: 0x5aa7ff,          // MARNET-zeebeen (zeeschip) + gestippelde haven-aanloop
-  binnenvaart: 0x35e0c0,  // echte AIS-tracks (barge) óf riviergeometrie uit de bulklaag
-  truck: 0xffb04d,        // weg-been (echte geometrie) + last mile — amber, zie de kop
-  spoor: 0xff7ab8,        // landnet — EIGEN kleur sinds 2026-07-28. Hij deelde amber
-                          // met truck zolang geen enkele stroom een spoorbeen had; de
-                          // koperstroom Escondida → Guixi heeft er nu wél een, en twee
-                          // modaliteiten in één kleur maakt de legenda onwaar.
-  leiding: 0x9b8cff,      // slurryleiding — een EIGEN VERBINDING, geen net (besluit
-                          // Lars 2026-07-23). Altijd te onderscheiden van de vier
-                          // netten, want dit been kan per definitie niet herrouteren.
-};
+import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=117";
 
 function opBol(lonDeg, latDeg, r, uit, o) {
   // Exact dezelfde afspraak als world.js/aistracks.js (z = −sin lon).
@@ -83,6 +55,9 @@ function opBol(lonDeg, latDeg, r, uit, o) {
  * De stap van 5 km is geijkt op de zakking: over 5 km is die 0,5 m, ruim onder
  * de 130 m waarop de tegels liggen — kleiner verdichten kost punten zonder dat
  * je het ziet.
+ *
+ * ⚠️ Alleen nodig in `route`-modus: de hemelsbreed-punten uit `beenPunten()`
+ * liggen al op de grootcirkel en dragen hun eigen hoogtefactor.
  */
 function verdicht(punten, maxKm = 5) {
   const R = 6371;
@@ -104,16 +79,22 @@ function verdicht(punten, maxKm = 5) {
         const y = a * Math.cos(p1[0]) * Math.sin(p1[1]) + b * Math.cos(p2[0]) * Math.sin(p2[1]);
         const z = a * Math.sin(p1[0]) + b * Math.sin(p2[0]);
         uit.push([Math.atan2(y, x) * 180 / Math.PI,
-                  Math.atan2(z, Math.hypot(x, y)) * 180 / Math.PI]);
+                  Math.atan2(z, Math.hypot(x, y)) * 180 / Math.PI, 1]);
       }
     }
-    uit.push(punten[i]);
+    uit.push([punten[i][0], punten[i][1], 1]);
   }
   return uit;
 }
 
-function maakBeen(been, radius, kleur, klemOpHorizon) {
-  const punten = verdicht(been.punten || []);
+/** De punten van een been als [lon, lat, straalfactor], klaar om te tekenen. */
+function puntenVoor(been, lijnModus) {
+  const p = beenPunten(been, lijnModus);
+  return lijnModus === "route" ? verdicht(p) : p;
+}
+
+function maakBeen(been, radius, kleur, klemOpHorizon, lijnModus) {
+  const punten = puntenVoor(been, lijnModus);
   if (punten.length < 2) return null;   // een been zonder lijnstuk: niets tekenen
 
   if (been.stippel) {
@@ -124,8 +105,8 @@ function maakBeen(been, radius, kleur, klemOpHorizon) {
     // daaronder zodat er meerdere streepjes op passen.
     const pos = new Float32Array(punten.length * 3);
     for (let i = 0; i < punten.length; i++) {
-      // Punten zijn [lon, lat] (GeoJSON-volgorde) — zie het datacontract.
-      opBol(punten[i][0], punten[i][1], radius, pos, i * 3);
+      // Punten zijn [lon, lat, straalfactor] — zie het datacontract + stroomstijl.
+      opBol(punten[i][0], punten[i][1], radius * punten[i][2], pos, i * 3);
     }
     const geo = new THREE.BufferGeometry();
     geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
@@ -148,9 +129,8 @@ function maakBeen(been, radius, kleur, klemOpHorizon) {
   const pos = new Float32Array(n * 6);
   let o = 0;
   for (let i = 0; i < n; i++) {
-    // Punten zijn [lon, lat] (GeoJSON-volgorde) — zie het datacontract.
-    opBol(punten[i][0], punten[i][1], radius, pos, o);
-    opBol(punten[i + 1][0], punten[i + 1][1], radius, pos, o + 3);
+    opBol(punten[i][0], punten[i][1], radius * punten[i][2], pos, o);
+    opBol(punten[i + 1][0], punten[i + 1][1], radius * punten[i + 1][2], pos, o + 3);
     o += 6;
   }
   const geo = new THREE.BufferGeometry();
@@ -166,31 +146,82 @@ function maakBeen(been, radius, kleur, klemOpHorizon) {
   return seg;
 }
 
-function maakMarkers(markers, radius, klemOpHorizon) {
+// ── De knopen als gloeiende cirkel ─────────────────────────────────────────
+//
+// De overslag- en eindpunten waren witte stippen van 7 px. Dat is genoeg om een
+// punt aan te wijzen tijdens het routewerk, maar het is niet wat de atlas moet
+// laten zien: op de referentiebeelden (`design/referenties/`) zijn de knopen
+// juist de dragers van het beeld — gloeiende cirkels waar de lijnen samenkomen.
+//
+// Dit is dezelfde kern/halo-opzet als `gloednodes.js`, en om dezelfde reden:
+// een zachte vlek alléén leest als mist (dat kostte op 2026-08-07 drie afgekeurde
+// rondes), dus er hoort een felle kern in te zitten die de plek aanwijst.
+//
+// ⚠️ HORIZON VIA GROOTTE 0, NIET VIA EEN CLIPPINGPLANE — exact het
+// gloednodes-argument: een eigen ShaderMaterial zou anders de clipping-chunks
+// nodig hebben, en bij een handvol markers is de CPU-toets gratis.
+const VERT_M = `
+attribute float grootte;
+varying vec3 vKleur;
+uniform vec3 kleur;
+void main() {
+  vKleur = kleur;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  gl_PointSize = grootte;
+}
+`;
+const FRAG_M = `
+precision highp float;
+varying vec3 vKleur;
+uniform float alfa;
+void main() {
+  vec2 p = gl_PointCoord - vec2(0.5);
+  float d = length(p) * 2.0;
+  if (d > 1.0) discard;
+  // ring + kern: de ring maakt er een CIRKEL van (referentiebeeld), de kern
+  // houdt de plek exact aanwijsbaar op straatniveau.
+  float kern = 1.0 - smoothstep(0.10, 0.30, d);
+  float halo = exp(-3.2 * d * d) * 0.42;
+  float ring = smoothstep(0.62, 0.74, d) * (1.0 - smoothstep(0.80, 0.94, d)) * 0.55;
+  gl_FragColor = vec4(vKleur, clamp(kern + halo + ring, 0.0, 1.0) * alfa);
+}
+`;
+
+const MARKER = { minPx: 9.0, maxPx: 44.0, wereldKm: 26.0 };
+
+function maakMarkers(markers, radius) {
   if (!markers.length) return null;
   const pos = new Float32Array(markers.length * 3);
   for (let i = 0; i < markers.length; i++) {
     opBol(markers[i].lon, markers[i].lat, radius, pos, i * 3);
   }
+  const grootte = new Float32Array(markers.length).fill(MARKER.minPx);
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-  const mat = new THREE.PointsMaterial({
-    color: 0xffffff,
-    size: 7,
-    sizeAttenuation: false,   // grootte in PIXELS (de LAR-480/marker-les)
-    transparent: true,
-    opacity: 0.95,
-    toneMapped: false,
+  const attrGr = new THREE.BufferAttribute(grootte, 1);
+  attrGr.setUsage(THREE.DynamicDrawUsage);
+  geo.setAttribute("grootte", attrGr);
+
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: VERT_M, fragmentShader: FRAG_M,
+    uniforms: {
+      kleur: { value: new THREE.Color(0xffffff) },
+      alfa: { value: 0.95 },
+    },
+    // Normale blending: additief zou de marker juist op de drukste plekken
+    // laten opgaan in de lijn eronder — de deeltjes-les van 2026-08-07.
+    blending: THREE.NormalBlending, transparent: true,
+    depthTest: false, depthWrite: false,
   });
-  klemOpHorizon(mat);
-  const points = new THREE.Points(geo, mat);
-  points.renderOrder = 7.6;   // net boven de benen
-  points.frustumCulled = false;
-  return points;
+  const punten = new THREE.Points(geo, mat);
+  punten.renderOrder = 7.6;   // net boven de benen
+  punten.frustumCulled = false;
+  return { punten, mat, attrGr, grootte, n: markers.length };
 }
 
 export async function laadStroomroute(radius, versie, klemOpHorizon,
-                                      bestand = "stroomroute-pilot.json") {
+                                      bestand = "stroomroute-pilot.json",
+                                      camera = null, renderer = null) {
   // ⚠️ Sinds 2026-07-28 draagt deze laag MEER DAN ÉÉN stroom, en daarom is de
   // bestandsnaam een parameter geworden in plaats van vast. Elke stroom is een
   // eigen bestand en een eigen groep, zodat hij los aan/uit kan — precies het
@@ -201,37 +232,112 @@ export async function laadStroomroute(radius, versie, klemOpHorizon,
   if (!r.ok) throw new Error(`${bestand}: HTTP ${r.status}`);
   const d = await r.json();
 
-  const groep = new THREE.Group();
-  groep.name = `stroomroute-${d.stroom || bestand}`;
+  const stroom = d.stroom || bestand;
+  const grondstof = grondstofVan(stroom);
 
-  const benen = [];
-  for (const been of d.benen || []) {
-    const seg = maakBeen(
-      been, radius,
-      KLEUR[been.modaliteit] ?? 0xffffff, klemOpHorizon
-    );
-    if (seg) {
-      seg.name = `stroomroute-${been.modaliteit}`;
-      groep.add(seg);
+  const groep = new THREE.Group();
+  groep.name = `stroomroute-${stroom}`;
+
+  let kleurModus = "modaliteit";
+  let lijnModus = "route";
+
+  // ⚠️ NIET FILTEREN op puntenaantal: `maakBeen` geeft zelf null terug bij een
+  // been zonder lijnstuk, en de HUD-statistiek (km per modaliteit) hoort over
+  // álle benen te lopen — anders zou een been zonder geometrie stil uit de
+  // kilometertelling vallen.
+  const ruweBenen = d.benen || [];
+  let objecten = [];    // parallel aan ruweBenen, null waar niets te tekenen viel
+
+  function bouwLijnen() {
+    for (const o of objecten) {
+      if (!o) continue;
+      groep.remove(o);
+      o.geometry.dispose();
+      o.material.dispose();
     }
-    benen.push({
+    objecten = ruweBenen.map((been) => {
+      const seg = maakBeen(been, radius,
+                           kleurVan(been.modaliteit, stroom, kleurModus),
+                           klemOpHorizon, lijnModus);
+      if (seg) {
+        seg.name = `stroomroute-${been.modaliteit}`;
+        groep.add(seg);
+      }
+      return seg;
+    });
+  }
+  bouwLijnen();
+
+  const markerLaag = maakMarkers(d.markers || [], radius);
+  if (markerLaag) groep.add(markerLaag.punten);
+
+  function zetMarkerKleur() {
+    if (!markerLaag) return;
+    // ⚠️ In modaliteitsmodus blijft de marker WIT — dat is de bewezen stand van
+    // ?v=111 en de routebouw-weergave is expres onaangeraakt. In de atlasmodus
+    // krijgt hij de grondstofkleur, zodat een knoop meteen zegt wélke stroom er
+    // samenkomt zonder dat je een lijn hoeft te volgen.
+    const k = kleurModus === "grondstof"
+      ? (GRONDSTOF_KLEUR[grondstof] ?? 0xffffff)
+      : 0xffffff;
+    markerLaag.mat.uniforms.kleur.value.setHex(k);
+  }
+  zetMarkerKleur();
+
+  // Puntgrootte volgt de kijkafstand met een pixel-minimum én -maximum: dichtbij
+  // een cirkel óm de site heen (wereldmaat), veraf een leesbare stip die niet
+  // verdwijnt. Dezelfde hybride regel als gloednodes.js en de ontwerpbrief.
+  const tmp = new THREE.Vector3();
+  const camRicht = new THREE.Vector3();
+  function update() {
+    if (!markerLaag || !groep.visible || !camera || !renderer) return;
+    const afstandCam = camera.position.length();
+    const horizon = afstandCam > radius ? radius / afstandCam : 1;
+    camRicht.copy(camera.position).normalize();
+    const h = renderer.domElement.height / (renderer.getPixelRatio() || 1);
+    const perEenheid = h / (2 * Math.tan((camera.fov * Math.PI) / 360));
+    const wereld = (MARKER.wereldKm / 6371) * radius;
+    const pos = markerLaag.punten.geometry.attributes.position.array;
+    for (let i = 0; i < markerLaag.n; i++) {
+      tmp.set(pos[i * 3], pos[i * 3 + 1], pos[i * 3 + 2]);
+      groep.localToWorld(tmp);
+      if (tmp.dot(camRicht) / radius < horizon) { markerLaag.grootte[i] = 0; continue; }
+      const px = (2 * wereld * perEenheid) / Math.max(1e-6, tmp.distanceTo(camera.position));
+      markerLaag.grootte[i] = Math.min(MARKER.maxPx, Math.max(MARKER.minPx, px));
+    }
+    markerLaag.attrGr.needsUpdate = true;
+  }
+
+  return {
+    groep,
+    update,
+    grondstof,
+    /** Schakel kleur=modaliteit ↔ kleur=grondstof zonder herladen. */
+    zetKleurModus(modus) {
+      if (modus === kleurModus) return;
+      kleurModus = modus;
+      objecten.forEach((o, i) => {
+        if (o) o.material.color.setHex(
+          kleurVan(ruweBenen[i].modaliteit, stroom, kleurModus));
+      });
+      zetMarkerKleur();
+    },
+    /** Schakel tussen de gemeten route en de drie hemelsbreed-varianten. */
+    zetLijnModus(modus) {
+      if (modus === lijnModus) return;
+      lijnModus = modus;
+      bouwLijnen();   // de puntentelling verschilt per modus → opnieuw opbouwen
+    },
+    benen: ruweBenen.map((been) => ({
       modaliteit: been.modaliteit,
       naam: been.naam,
       stippel: !!been.stippel,
       km: been.km,
       punten: (been.punten || []).length,
-    });
-  }
-
-  const markerLaag = maakMarkers(d.markers || [], radius, klemOpHorizon);
-  if (markerLaag) groep.add(markerLaag);
-
-  return {
-    groep,
-    benen,                                        // stats per been
+    })),
     markers: (d.markers || []).map((m) => m.naam),
     titel: d.titel,
-    stroom: d.stroom || bestand,
+    stroom,
     routebrief: d.routebrief || null,
   };
 }

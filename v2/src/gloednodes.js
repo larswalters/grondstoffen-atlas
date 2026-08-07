@@ -33,13 +33,21 @@
 // het scheelt de clipping-chunks die een eigen ShaderMaterial anders nodig heeft.
 
 import * as THREE from "three";
+import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=117";
 
-// Grondstofkleuren, gelijk aan data/<grondstof>.js in de v1-atlas — de gloed
-// hoort dezelfde taal te spreken als de rest van de atlas.
-const KLEUR = {
-  koper: [0xC8 / 255, 0x7D / 255, 0x4A / 255],
-  lithium: [0x4F / 255, 0xD1 / 255, 0xC5 / 255],
-};
+// Grondstofkleuren uit `stroomstijl.js` — de gloed hoort dezelfde taal te
+// spreken als de rest van de atlas.
+//
+// ⚠️ STOND HIER EERST ALS EIGEN KOPIE (de v1-waarden #C87D4A / #4FD1C5). Sinds
+// 2026-08-07 kleuren ook de stroomlijnen op grondstof, en twee tabellen die
+// hetzelfde horen te zeggen lopen uit elkaar — dus leest deze laag de gedeelde
+// tabel. Een gloedkoepel en de lijn die eruit vertrekt hebben nu per
+// constructie dezelfde kleur.
+const KLEUR = Object.fromEntries(
+  Object.entries(GRONDSTOF_KLEUR).map(([g, hex]) => [
+    g, [(hex >> 16 & 255) / 255, (hex >> 8 & 255) / 255, (hex & 255) / 255],
+  ])
+);
 const KLEUR_ONBEKEND = [0.75, 0.75, 0.75];
 
 // Afstemknoppen. Bewust hier en niet in CONFIG: dit is een pilotlaag en deze drie

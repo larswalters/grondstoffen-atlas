@@ -38,15 +38,13 @@ import * as THREE from "three";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
+import { kleurVan, beenPunten } from "./stroomstijl.js?v=117";
 
-// Zelfde kleuren als stroomroute.js — kleur is MODALITEIT, niet grondstof.
-const KLEUR = {
-  zee: 0x5aa7ff,
-  binnenvaart: 0x35e0c0,
-  truck: 0xffb04d,
-  spoor: 0xff7ab8,
-  leiding: 0x9b8cff,
-};
+// ⚠️ DE KLEURTABEL STOND HIER OOK, EN DAT WAS DE FOUT. Twee kopieën van dezelfde
+// legenda (hier en in stroomroute.js) lopen vroeg of laat uit elkaar; sinds
+// 2026-08-07 leest deze laag `stroomstijl.js`, samen met de exacte lijn en de
+// gloedknopen. Draad en komeet hebben per constructie dezelfde kleur als de
+// lijn waar ze op lopen — ook nadat je op grondstofkleur omschakelt.
 
 // Reissnelheid per modaliteit in km/dag — grof maar realistisch, en het gaat om
 // de VERHOUDING: een zeeschip doet er zichtbaar langer over dan een trein.
@@ -148,72 +146,95 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
   if (!r.ok) throw new Error(`${bestand}: HTTP ${r.status}`);
   const doc = await r.json();
 
+  const stroom = doc.stroom || bestand;
   const groep = new THREE.Group();
-  const materialen = [];   // LineMaterials, die willen de vensterresolutie weten
-  const banen = [];        // per been: punten in 3D + cumulatieve km
+  let materialen = [];     // LineMaterials, die willen de vensterresolutie weten
+  let lijnen = [];         // Line2-objecten, om te kunnen herbouwen
+  let kleurModus = "modaliteit";
+  let lijnModus = "route";
 
-  for (const been of doc.benen || []) {
-    const punten = been.punten || [];
-    if (punten.length < 2) continue;
-    const kleur = KLEUR[been.modaliteit] ?? 0xffffff;
+  // ⚠️ Stippel-benen krijgen GEEN draad en GEEN kometen. Gestippeld betekent in
+  // dit project "hier reikt het net niet" (werkwijze §7); daar een stroom
+  // overheen laten lopen zou een verbinding suggereren die we juist als
+  // ontbrekend hebben vastgesteld.
+  //
+  // De set benen ligt VAST over alle lijnmodi. Dat is geen detail: de
+  // komeet-buffers worden één keer op deze telling gealloceerd, dus als een
+  // andere lijnvorm er stilzwijgend eentje bij of af zou halen, zouden kop en
+  // staart in elkaars geheugen gaan schrijven.
+  const dragers = (doc.benen || []).filter(
+    (b) => !b.stippel && (b.punten || []).length >= 2);
+  const banen = dragers.map((been) => ({
+    been,
+    plat: [], cum: [0], totaal: 0,
+    kleur: new THREE.Color(0xffffff),
+    kmPerDag: KM_PER_DAG[been.modaliteit] ?? 500,
+  }));
 
-    // ⚠️ Stippel-benen krijgen GEEN koker en GEEN deeltjes. Gestippeld betekent
-    // in dit project "hier reikt het net niet" (werkwijze §7); daar een stroom
-    // overheen laten lopen zou een verbinding suggereren die we juist als
-    // ontbrekend hebben vastgesteld.
-    if (been.stippel) continue;
-
-    const plat = [];
-    for (const p of punten) {
-      const [x, y, z] = opBol(p[0], p[1], radius);
-      plat.push(x, y, z);
+  function bouwLijnen() {
+    for (const l of lijnen) {
+      groep.remove(l);
+      l.geometry.dispose();
+      l.material.dispose();
     }
+    lijnen = []; materialen = [];
 
-    SCHILLEN.forEach(([hoogteKm, breedte, helder, additief], si) => {
-      const rr = radius * (1 + hoogteKm / AARDSTRAAL_KM);
-      const pos = [];
+    banen.forEach((b) => {
+      const punten = beenPunten(b.been, lijnModus);
+      const kleur = kleurVan(b.been.modaliteit, stroom, kleurModus);
+      b.kleur.setHex(kleur);
+
+      b.plat = [];
       for (const p of punten) {
-        const [x, y, z] = opBol(p[0], p[1], rr);
-        pos.push(x, y, z);
+        const [x, y, z] = opBol(p[0], p[1], radius * p[2]);
+        b.plat.push(x, y, z);
       }
-      const geo = new LineGeometry();
-      geo.setPositions(pos);
-      const mat = new LineMaterial({
-        color: kleur,
-        linewidth: breedte,          // pixels (worldUnits blijft false)
-        transparent: true,
-        opacity: helder,
-        blending: additief ? THREE.AdditiveBlending : THREE.NormalBlending,
-        depthTest: false,
-        depthWrite: false,
-        toneMapped: false,           // legenda-kleur = getekende kleur
-      });
-      // ⚠️ klemOpHorizon zet clippingPlanes; LineMaterial erft van
-      // ShaderMaterial en ondersteunt die, dus de achterkant van de bol valt
-      // net als bij de andere lagen weg.
-      klemOpHorizon(mat);
-      const lijn = new Line2(geo, mat);
-      // Halo's van buiten naar binnen, de kern als laatste — anders schildert
-      // een additieve halo over de kern heen en is de scherpte weer weg.
-      lijn.renderOrder = 7.41 + si * 0.01;
-      lijn.frustumCulled = false;
-      materialen.push(mat);
-      groep.add(lijn);
-    });
 
-    // booglengte voor de deeltjes
-    const cum = [0];
-    for (let i = 1; i < punten.length; i++) {
-      cum.push(cum[i - 1] + gcKm(punten[i - 1], punten[i]));
-    }
-    const totaal = cum[cum.length - 1];
-    if (totaal > 0) {
-      banen.push({
-        plat, cum, totaal, kleur: new THREE.Color(kleur),
-        kmPerDag: KM_PER_DAG[been.modaliteit] ?? 500,
+      SCHILLEN.forEach(([hoogteKm, breedte, helder, additief], si) => {
+        const pos = [];
+        for (const p of punten) {
+          // De straalfactor uit stroomstijl (de boog) vermenigvuldigt met de
+          // schil-hoogte; in route-modus is die factor 1 en verandert er niets.
+          const rr = radius * p[2] * (1 + hoogteKm / AARDSTRAAL_KM);
+          const [x, y, z] = opBol(p[0], p[1], rr);
+          pos.push(x, y, z);
+        }
+        const geo = new LineGeometry();
+        geo.setPositions(pos);
+        const mat = new LineMaterial({
+          color: kleur,
+          linewidth: breedte,          // pixels (worldUnits blijft false)
+          transparent: true,
+          opacity: helder,
+          blending: additief ? THREE.AdditiveBlending : THREE.NormalBlending,
+          depthTest: false,
+          depthWrite: false,
+          toneMapped: false,           // legenda-kleur = getekende kleur
+        });
+        // ⚠️ klemOpHorizon zet clippingPlanes; LineMaterial erft van
+        // ShaderMaterial en ondersteunt die, dus de achterkant van de bol valt
+        // net als bij de andere lagen weg.
+        klemOpHorizon(mat);
+        const lijn = new Line2(geo, mat);
+        // Halo's van buiten naar binnen, de kern als laatste — anders schildert
+        // een additieve halo over de kern heen en is de scherpte weer weg.
+        lijn.renderOrder = 7.41 + si * 0.01;
+        lijn.frustumCulled = false;
+        materialen.push(mat);
+        lijnen.push(lijn);
+        groep.add(lijn);
       });
-    }
+
+      // booglengte voor de deeltjes — over dezelfde punten als de lijn, zodat
+      // een komeet per constructie op zijn eigen draad blijft lopen
+      b.cum = [0];
+      for (let i = 1; i < punten.length; i++) {
+        b.cum.push(b.cum[i - 1] + gcKm(punten[i - 1], punten[i]));
+      }
+      b.totaal = b.cum[b.cum.length - 1];
+    });
   }
+  bouwLijnen();
 
   // --- de kometen ------------------------------------------------------------
   // Elke komeet is een KOP plus een staart van punten die achter hem aan sleept.
@@ -232,22 +253,30 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
   const fase = new Float32Array(Math.max(1, banen.length * K));
 
   banen.forEach((b, bi) => {
-    for (let c = 0; c < K; c++) {
-      fase[bi * K + c] = c / K;   // gelijkmatig over het been verdeeld
-      for (let j = 0; j <= T; j++) {
-        const i = (bi * K + c) * perKomeet + j;
-        const u = j / T;                     // 0 = kop, 1 = staarteind
-        // De KOP is bijna wit — die moet afsteken tegen elk van de vijf
-        // modaliteitskleuren, en een punt in exact de lijnkleur is op zijn
-        // eigen lijn per definitie onzichtbaar. De staart zakt terug naar de
-        // modaliteitskleur, zodat je aan de kleur ziet wat er beweegt.
-        const w = (1 - u) * 0.75;
-        dKleur[i * 3] = b.kleur.r + (1 - b.kleur.r) * w;
-        dKleur[i * 3 + 1] = b.kleur.g + (1 - b.kleur.g) * w;
-        dKleur[i * 3 + 2] = b.kleur.b + (1 - b.kleur.b) * w;
-      }
-    }
+    for (let c = 0; c < K; c++) fase[bi * K + c] = c / K;  // gelijkmatig verdeeld
   });
+
+  // De kleur van kop en staart hangt aan de lijnkleur, dus dit draait opnieuw
+  // zodra je van modaliteit naar grondstof schakelt.
+  function kleurKometen() {
+    banen.forEach((b, bi) => {
+      for (let c = 0; c < K; c++) {
+        for (let j = 0; j <= T; j++) {
+          const i = (bi * K + c) * perKomeet + j;
+          const u = j / T;                     // 0 = kop, 1 = staarteind
+          // De KOP is bijna wit — die moet afsteken tegen élke lijnkleur, en een
+          // punt in exact de lijnkleur is op zijn eigen lijn per definitie
+          // onzichtbaar. De staart zakt terug naar de lijnkleur, zodat je aan de
+          // kleur ziet wát er beweegt.
+          const w = (1 - u) * 0.75;
+          dKleur[i * 3] = b.kleur.r + (1 - b.kleur.r) * w;
+          dKleur[i * 3 + 1] = b.kleur.g + (1 - b.kleur.g) * w;
+          dKleur[i * 3 + 2] = b.kleur.b + (1 - b.kleur.b) * w;
+        }
+      }
+    });
+  }
+  kleurKometen();
 
   const dGeo = new THREE.BufferGeometry();
   const attrPos = new THREE.BufferAttribute(dPos, 3);
@@ -256,8 +285,9 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
   attrGr.setUsage(THREE.DynamicDrawUsage);
   const attrAlfa = new THREE.BufferAttribute(dAlfa, 1);
   attrAlfa.setUsage(THREE.DynamicDrawUsage);
+  const attrKleur = new THREE.BufferAttribute(dKleur, 3);
   dGeo.setAttribute("position", attrPos);
-  dGeo.setAttribute("kleur", new THREE.BufferAttribute(dKleur, 3));
+  dGeo.setAttribute("kleur", attrKleur);
   dGeo.setAttribute("grootte", attrGr);
   dGeo.setAttribute("alfa", attrAlfa);
 
@@ -310,6 +340,17 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
     const stap = AFSTEMMING.staartDeelVanBeen / T;
 
     banen.forEach((b, bi) => {
+      // Een been zonder lengte (kop en staart vallen in hemelsbreed samen) heeft
+      // geen baan om over te lopen — dan alle punten op grootte 0 en door.
+      if (!(b.totaal > 0)) {
+        for (let c = 0; c < K; c++) {
+          for (let j = 0; j <= T; j++) {
+            const i = (bi * K + c) * perKomeet + j;
+            dGrootte[i] = 0; dAlfa[i] = 0;
+          }
+        }
+        return;
+      }
       // reisduur in dagen = lengte / snelheid; tempo 1 = één dag per seconde
       const duur = b.totaal / b.kmPerDag;
       for (let c = 0; c < K; c++) {
@@ -352,6 +393,32 @@ export async function laadStroomleven(radius, versie, klemOpHorizon, bestand,
 
   return {
     groep, update, zetResolutie,
+    /** Schakel kleur=modaliteit ↔ kleur=grondstof zonder herladen. */
+    zetKleurModus(modus) {
+      if (modus === kleurModus) return;
+      kleurModus = modus;
+      banen.forEach((b) => {
+        b.kleur.setHex(kleurVan(b.been.modaliteit, stroom, kleurModus));
+      });
+      // De schillen dragen de kleur op hun materiaal en staan per been op rij:
+      // SCHILLEN.length materialen achter elkaar, in dezelfde volgorde als banen.
+      banen.forEach((b, bi) => {
+        for (let si = 0; si < SCHILLEN.length; si++) {
+          materialen[bi * SCHILLEN.length + si].color.copy(b.kleur);
+        }
+      });
+      kleurKometen();
+      attrKleur.needsUpdate = true;
+    },
+    /** Schakel tussen de gemeten route en de drie hemelsbreed-varianten. */
+    zetLijnModus(modus) {
+      if (modus === lijnModus) return;
+      lijnModus = modus;
+      bouwLijnen();              // nieuwe geometrie voor draad én komeetbaan
+      kleurKometen();
+      attrKleur.needsUpdate = true;
+      zetResolutie(renderer.domElement.width, renderer.domElement.height);
+    },
     stats: {
       benen: banen.length, schillen: materialen.length,
       kometen: banen.length * K, staartpunten: n,
