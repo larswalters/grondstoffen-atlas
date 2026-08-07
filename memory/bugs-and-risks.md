@@ -1,5 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-08-06 (nieuw: pyosmium geblokkeerd; opgelost: twee snap-guards)*
+*Last updated: 2026-08-07 (nieuw: Pages-outage + tijdelijke VPS-preview + MEE-endpoint alweer verhuisd)*
+
+## 🟠 OPEN 2026-08-07 — buiten onze code, maar het raakt de bezorging
+
+1. **GITHUB PAGES EN ACTIONS HADDEN EEN MAJOR OUTAGE** (incident vanaf 15:22 UTC, 2026-08-06).
+   De push slaagde, maar de Pages-build **errorde** ("Page build failed") en de wachtrij liep op
+   tot 1 uur 38. ⚠️ **De verraderlijke kant:** de live site bleef gewoon de vórige versie
+   serveren, dus het lijkt alsof je nieuwe werk kapot is terwijl het er nooit is geweest. Een
+   `?vers=`-parameter omzeilt de **browsercache**, niet een build die nooit gedraaid heeft.
+   *Diagnose in één regel:* `curl -s <pages-url>/v2/index.html | grep -o 'main.js?v=[0-9]*'` —
+   staat daar de oude versie, dan is het de deploy en niet de code.
+   *Werkomheen:* tijdelijke VPS-preview (zie punt 2).
+
+2. **⚠️ DE VPS-PREVIEW IS TIJDELIJK EN MOET WEG.** `https://atlas.187.124.169.172.nip.io/v2/`
+   (nginx-container `atlas-preview` op 127.0.0.1:8089 + `/docker/traefik/dynamic/atlas-preview.yml`
+   + webroot `/srv/atlas-preview`). **Dit is geen tweede publicatiekanaal**: zodra Pages weer
+   draait is github.io de enige bron van waarheid, en een preview die stilletjes achterloopt op
+   de echte site is erger dan geen preview. Staat zo gedocumenteerd in de nginx.conf.
+   *Risico als hij blijft staan:* twee URL's met verschillende versies, en niemand weet welke
+   Lars bekeek toen hij een oordeel gaf.
+
+3. **HET MEE-VERGUNNINGENREGISTER IS OPNIEUW VERHUISD.** `perxxgkinfo` is nu een **top-level
+   context** en niet langer een segment binnen `permitExt`; het pad uit `zoek-chinees-adres-recept.md`
+   geeft nu een harde **404**. Bovendien vraagt de zoekopdracht een **JSESSIONID-cookie** plus het
+   verborgen veld **`tempReportKey`** uit de GET-pagina — zonder die twee volgt een 302 naar
+   `error.jsp`, en dat leest als "bedrijf niet gevonden". ⚠️ **Dit endpoint is nu twee keer in
+   twee dagen verhuisd**; reken erop dat het weer gebeurt. Goedkoopste terugvindtruc: het
+   **redirect-doel** van het oude pad noemt de nieuwe contextnaam. Recept bijgewerkt.
 
 ## 🔴 OPEN 2026-08-06 — de omgeving, niet de code
 

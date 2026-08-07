@@ -1,6 +1,45 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+
+## 2026-08-07 - De visuele fase begint: gloedknopen uit het vergunningenregister, en kometen over de stromen
+
+M26/LAR-490 van start. De eerste vraag was of er niet eerst meer koperstromen bij moesten; de
+meting zei nee - er stonden er al **drie** (44 benen, ~55.000 punten) en de afhankelijkheid onder
+het issue (M24 binnenwater -> M25 weg/spoor/pijpleiding) was stilzwijgend opgelost, want alle vier
+de modaliteiten zitten in de benen. Wat wel ontbrak was **knoopdichtheid**: met 3 markers op een
+complex van 98,5 ha valt er niets op te tellen, dus is de kernclaim van de ontwerpbrief niet te
+toetsen. Mijn eerste antwoord daarop - `ports.json` (3.963 havens) als gloedlaag - werd terecht
+afgewezen: *"die havens hebben we helemaal niet nodig, dat is niet het idee"*. Een gloedlaag hoort
+UITGEZOCHT te zijn. (Correctie die daarbij hoort: `ports.json` kan ook niet weg, want hij is het
+routeer-skelet en de draaiende atlas fetcht hem - maar hij hoort nergens in de gloed.)
+
+**De bron: het MEE-emissievergunningregister, en de grens uit het eigen recept viel gunstig uit.**
+*"Een punt per vergunning, dat is de vestiging"* geldt voor INSTALLATIES BINNEN EEN RECHTSPERSOON,
+niet voor RECHTSPERSONEN BINNEN EEN COMPLEX - en een Chinees industriecomplex bestaat uit
+tientallen aparte vennootschappen. Uitkomst: `v2/data/gloednodes-koper.json`, **36 sites in 12
+complexen**. Tongling 3 -> 12 punten; Guixi mét tweede industriezone en het mijndistrict incl.
+**Dexing**. Alle 36 USCC-controlecijfers slagen, DMS<->decimaal overal submeter, en **vier eerder
+onafhankelijk geverifieerde ankers komen exact terug**. Bijvangst: de **399 m** tussen foliefabriek
+en messingstaf is nu langs een tweede weg bevestigd.
+
+**Alleen SITES lichten op, en dat IS de toets van de ontwerpbrief.** Complex- en regioknopen staan
+wel in het bestand (labels/interactie/aggregatie) maar worden bewust niet getekend: de hotspot
+hoort te ONTSTAAN uit de optelling. **Uitkomst: het werkt** - geen aggregaat-object nodig.
+
+**Drie keer een afgekeurd beeld, en elke keer was de OPZET fout en niet de afstemming.**
+(1) *"vaag"* = drie zachte halo's om een lijn van 1 px, dus alles rand en niets lijn, en additief
+naar wit. (2) *"nog steeds een grote gloed"* = de aanname zelf fout dat de LIJN het licht moest
+geven. (3) deeltjes onzichtbaar op de drukste plekken = additieve blending telt ze op bij de lijn
+eronder. Eindvorm: **dunne scherpe draad (1,7 px, normale blending) + kometen met staart** -
+de lijn zegt WAAR, de komeet zegt DAT en HOE SNEL.
+
+**Gemeten:** 30 benen, 60 lijnschillen, 60 kometen (900 staartpunten), 165 fps, 124 draw calls,
+0 console-fouten - in echte headless Chrome via CDP (de Browser-pane composit geen frames).
+
+**Nog te tunen:** de gloedkoepels hebben de kern/halo-behandeling nog niet gehad; de ondergrond
+moet gedimd onder de gloed (op satelliet verdwijnt het effect); het aantal kometen moet uit
+volume komen zodra het losse metadatabestand dat draagt.
 ## 2026-08-05 (laatst, 5e ronde) - Lithium tot in de auto: de tweede keten van mijn tot eindproduct
 
 Na de koperronde lag de vraag open welke stroom de tweede complete keten zou worden. Koper

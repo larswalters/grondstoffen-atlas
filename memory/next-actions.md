@@ -1,5 +1,35 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-06 (laatst: guards + Tongling fase D, `?v=111`)*
+*Last updated: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen, `?v=116`)*
+
+## 🔴 NIEUW 2026-08-07 (laatst) — de visuele fase loopt, en die moet verder getuned
+
+1. **De gloedkoepels hebben de kern/halo-behandeling nog niet gehad.** De lijnen zijn twee keer
+   herzien (kern erbij, daarna kometen); de koepels staan nog op de instellingen van vóór die
+   ronde en zijn nu de zwakste schakel in het beeld. Zelfde diagnose verwachten: te veel rand,
+   te weinig definitie.
+
+2. **De ondergrond dimmen onder de gloed.** Op satelliet verdwijnt het effect volledig — additief
+   licht heeft op een lichte daglichtfoto niets om tegen af te steken. Daarmee is de night-side-
+   vraag uit de ontwerpbrief **geen schoonheidsvraag maar een voorwaarde**. Twee opties: de
+   satelliet dimmen ónder de gloedlaag, of deze laag aan een donkere modus koppelen.
+
+3. **Het aantal kometen uit VOLUME halen.** Nu twee per been, ongeacht of er 17 kt of 1,2 Mt
+   overheen gaat — de beweging klopt, de dichtheid niet. Wordt waar zodra het losse
+   metadatabestand naast `stroomroute-*.json` volume per been draagt (het besluit van 2026-08-06).
+   `stroomleven.js` is er al op geschreven.
+
+4. **⚠️ DE VPS-PREVIEW WEGHALEN zodra GitHub Pages weer draait.** `docker compose down` in
+   `/docker/atlas-preview` + `/docker/traefik/dynamic/atlas-preview.yml` verwijderen +
+   `/srv/atlas-preview` opruimen. **Dit is geen tweede publicatiekanaal**: een preview die stil
+   achterloopt op de echte site is erger dan geen preview. Staat zo in de nginx.conf gedocumenteerd.
+
+5. **De vier uitgezette lagen weer aanzetten wanneer nodig** — `TOON` bovenin `v2/src/main.js`
+   (kustlijn · havens · aisgloed · aistracks). Ze staan uit voor de beoordeling, niet omdat hun
+   rol vervallen is.
+
+6. **Overweeg de gewichten in `gloednodes-koper.json` te vervangen door echte capaciteiten.**
+   Nu nattevingerwerk en zo gemarkeerd (`gewicht_bron`). Voor de visuele pilot volstaat het;
+   zodra iemand er een uitspraak over volume aan wil hangen niet meer.
 
 ## 🔴 NIEUW 2026-08-06 (laatst) — na de guards en Tongling fase D
 

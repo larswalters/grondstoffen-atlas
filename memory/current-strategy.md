@@ -1,5 +1,38 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-08-06 (laatst: twee snap-guards + Tongling fase D, `?v=111` — en het besluit dat bakken geen deliverable is)*
+*Last updated: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen — gloedknopen en kometen, `?v=116`)*
+
+## Stand 2026-08-07 (laatst) — de visuele fase: uitgezochte knopen, en beeld door ontkoppeling
+
+1. **De gloedlaag is een LOSSE laag, precies zoals het bakken-besluit voorschrijft.**
+   `v2/data/gloednodes-koper.json` raakt `stroomroute-*.json` niet en wordt niet gebakken.
+   Dit is het eerste concrete gebruik van "extra velden gaan in een los metadatabestand".
+
+2. **Een gloedlaag bestaat uit UITGEZOCHTE knopen, nooit uit een generieke lijst.** `ports.json`
+   (3.963 LOCODE-centroïdes) werd als gloedbron afgewezen: die zouden de kaart laten oplichten
+   op plekken waar niets van het verhaal gebeurt. ⚠️ Wel blijven bestaan als **routeer-skelet**
+   (zee-/riviersnap; `marnet.js` fetcht hem runtime) — het bestand houden en de punten tékenen
+   zijn twee verschillende dingen.
+
+3. **ALLEEN SITES KRIJGEN EEN GLOW — de laag is een TOETS van de ontwerpbrief.** Complex- en
+   regioknopen bestaan wel (labels, interactie, flow-aggregatie) maar worden bewust niet
+   getekend. Blijkt er alsnog een hotspot-object nodig, dan klopt besluit 1 van de brief niet.
+   Uitkomst tot nu toe: het werkt.
+
+4. **Het beeld komt uit ONTKOPPELING, niet uit afstemming.** Drie afgekeurde ronden op één dag,
+   telkens met dezelfde wortel: één element droeg twee taken. Eindvorm — de **lijn** zegt waar de
+   route ligt (dun, scherp, modaliteitskleur, normale blending), de **komeet** zegt dat er iets
+   overheen gaat en hoe snel. Dezelfde ontkoppeling als in juli tussen vorm, vaarsnelheid en
+   baanklem.
+
+5. **De hybride maat (wereldmaat + pixel-minimum) is nu het patroon voor élk visueel element.**
+   De ontwerpbrief schreef hem voor lijndikte voor; hij zit nu ook op de gloed en de kometen.
+   Dichtbij wint de wereldmaat, veraf het pixel-minimum — één formule, twee gedragingen, geen
+   zoomdrempel en dus per constructie geen pop-in.
+
+6. **Visueel werk wordt getoetst in echte headless Chrome via CDP.** De Browser-pane composit
+   geen frames (`document.hidden` → rAF staat stil), dus per-frame maatregelen leveren daar nul
+   op en screenshots falen. En de camera moet met de eigen `vliegNaar` van de bol gezet worden,
+   want de framelus overschrijft een handmatig gezette camera meteen.
 
 ## Stand 2026-08-06 (laatst) — bouwen, niet bakken
 

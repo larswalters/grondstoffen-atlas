@@ -1,4 +1,108 @@
-> **🛡️ GUARDS, OPRUIMING EN TONGLING FASE D — LIVE `?v=111` (2026-08-06, LAATSTE).**
+> **✨ DE VISUELE FASE BEGINT — GLOEDKNOPEN EN KOMETEN, LIVE `?v=116` (2026-08-07, LAATSTE).**
+> Commits `6d7b290` (gloedlaag) · `8fb2ef8` (koker + koepel) · `96c8050` (kern/halo omgedraaid) ·
+> `bf283ed` (kometen) · `0c971fa` (vier lagen uit).
+>
+> **M26/LAR-490 is begonnen.** Eerste vraag beantwoord met een meting in plaats van een vermoeden:
+> **niet eerst meer koperstromen** — er stonden er al **drie** (44 benen, ~55.000 punten) en de
+> afhankelijkheid onder het issue (M24 binnenwater → M25 weg/spoor/pijpleiding) was **stilzwijgend
+> opgelost**, want alle vier de modaliteiten zitten in de benen. Wat wél ontbrak was
+> **knoopdichtheid**: met 3 markers op een complex van 98,5 ha valt er niets op te tellen, dus is
+> de kernclaim van de ontwerpbrief principieel niet te toetsen.
+>
+> **✅ EEN GLOEDLAAG BESTAAT UIT UITGEZOCHTE KNOPEN.** `ports.json` (3.963 LOCODE-centroïdes) als
+> gloedbron **afgewezen door Lars** — *"die havens hebben we helemaal niet nodig, dat is niet het
+> idee."* ⚠️ Nuance: `ports.json` kan **niet weg**, want hij is het routeer-skelet
+> (`knoopRivier`/`afstandRivierKm`) en `marnet.js` fetcht hem runtime — **het bestand houden en de
+> punten tékenen zijn twee verschillende dingen.**
+>
+> **`v2/data/gloednodes-koper.json` — 36 uitgezochte sites in 12 complexen**, losse laag, raakt
+> `stroomroute-*.json` niet en wordt **niet gebakken** (het eerste concrete gebruik van
+> "extra velden in een los metadatabestand"). Tongling **3 → 12** punten op het complex; Guixi
+> mét tweede industriezone 10 km zuidwest en het mijndistrict eromheen incl. **Dexing**, de
+> grootste dagbouw-kopermijn van China.
+>
+> **⚠️ DE GRENS VAN HET REGISTER-RECEPT GELDT PER RECHTSPERSOON, NIET PER COMPLEX.** *"Één punt
+> per vergunning, dat is de vestiging"* sluit een laadperron binnen één bedrijf uit, maar een
+> Chinees industriecomplex bestaat uit **tientallen aparte vennootschappen** met elk een eigen
+> vergunning en coördinaat. Dat is waarom deze laag überhaupt kon.
+>
+> **GEMETEN:** alle **36 USCC-controlecijfers slagen**, DMS↔decimaal overal **submeter**, en
+> **vier eerder onafhankelijk geverifieerde ankers komen exact terug** (金冠铜业, de foliefabriek,
+> 贵溪冶炼厂, de walsdraadfabriek). Bijvangst: de **399 m** tussen foliefabriek en messingstaf is
+> nu langs een **tweede, onafhankelijke weg** bevestigd — precies de scheiding waardoor
+> `way/1247093617` de verkeerde fabriek omsluit. ⚠️ Eerlijk in het bestand gezet: gewichten zijn
+> **nattevingerwerk** (`gewicht_bron`), **32 van de 36 coördinaten zijn registerpunten**
+> (vestiging, niet satelliet-gelegd — veld `korrel`), en de complexindeling komt uit
+> **single-linkage clustering op 5 km** = een parameter, geen bevinding.
+>
+> **⚠️ ALLEEN SITES LICHTEN OP — EN DAT ÍS DE TOETS VAN DE ONTWERPBRIEF.** Complex- en
+> regioknopen staan wél in het bestand (labels, interactie, flow-aggregatie) maar worden bewust
+> **niet getekend**: dat Tongling op wereldhoogte één vlek wordt hoort te **ontstaan** uit de
+> optelling. Blijkt er alsnog een hotspot-object nodig, dan klopt besluit 1 van de brief niet.
+> **Uitkomst: het werkt** — geen aggregaat-object nodig gebleken.
+>
+> **⚠️ DRIE KEER WAS DE OPZET FOUT EN NIET DE AFSTEMMING — dat is de les van deze sessie.**
+> (1) *"dit ziet er wel een beetje vaag uit"*: drie zachte additieve schillen (9 · 6,5 · 4 px) om
+> een exacte lijn van **1 px** — alles was **rand en niets was lijn**, en additief opgeteld
+> verkleurde het naar wit, dus ook de betekenisdragende modaliteitskleur ging eraan. (2) *"de
+> lijnen zien er uit als één grote gloed"*: ook mét kern bleef dat staan, want **een halo van 16 px
+> om een kern van 2,4 px ÍS een gloed**, hoe je hem ook afstemt — de denkfout zat een laag dieper,
+> namelijk de aanname dat **de lijn het licht moest geven**. (3) de deeltjes waren onzichtbaar
+> juist op de drukste plekken, omdat **additieve blending ze optelt bij de lijn eronder**, en omdat
+> ze de kleur van hun eigen lijn hadden. **Werkregel: bij een visuele afkeuring eerst vragen welk
+> element welke taak draagt, vóór je aan getallen draait.**
+>
+> **DE EINDVORM = ONTKOPPELING** (dezelfde als in juli tussen vorm, vaarsnelheid en baanklem):
+> de **draad** is 1,7 px, normale blending, volle modaliteitskleur, met één krappe halo — en al
+> het licht zit in **KOMETEN** (kop bijna wit + staart van 14 punten). **De lijn zegt WÁÁR de route
+> ligt, de komeet zegt DÁT er iets overheen gaat en HOE SNEL.** Staartlengte = **fractie van de
+> beenlengte** (5,5%), geen vast aantal km: een zeebeen van 19.000 km en een truckbeen van 8 km
+> horen dezelfde vorm te krijgen. Stippel-benen krijgen **géén** koker en géén kometen — gestippeld
+> betekent "hier reikt het net niet" (werkwijze §7).
+>
+> **✅ BESLUIT LARS — DE LIJNEN BLIJVEN OP DE GROND.** V1's bogen vlogen **22% van de bolstraal**
+> de lucht in (`arcStyle.lift: 0.22`); mooi, maar geografisch verzonnen, terwijl M23–M28 er juist
+> over ging ze op de échte route te krijgen. **✅ BESLUIT LARS — DE GLOED WORDT EEN KOEPEL MET
+> HOOGTE** (vijf schillen volgens een halve bol). ⚠️ **Géén omkering van besluit 2** uit de
+> ontwerpbrief ("glow-bollen, géén hoogte-pilaren"): dat verbiedt **capaciteit-als-hoogte**, en
+> hier is de koepel even hoog als breed. Wie hem later tóch op volume laat groeien, drááit besluit 2
+> om en hoort dat op te schrijven.
+>
+> **VIER LAGEN UIT EN HUN KNOPPEN WEG** — kustlijn · havens · AIS-drukte · AIS-tracks, achter de
+> vlag **`TOON`** bovenin `main.js`. ⚠️ **Een vlag en geen verwijderde code:** die lagen dragen
+> rollen (aanhechtpunten, bronmateriaal voor de graaf-stap, de vectorwereld als waarheid) die hier
+> niet zijn opgezegd. ⚠️ **De AIS-bronvermelding blijft staan** terwijl de knop weg is: die eis
+> hangt aan de **gepubliceerde data**, niet aan het aanzetten van de laag — `aistracks-pilot.json`
+> staat nog op Pages en AMSA is CC BY-NC 3.0 AU.
+>
+> **⚠️ HET MEE-ENDPOINT IS OPNIEUW VERHUISD** (tweede keer in twee dagen): `perxxgkinfo` is nu een
+> **top-level context**, niet langer een segment binnen `permitExt` — het pad uit het recept geeft
+> een harde **404**. En de zoekopdracht vraagt een **JSESSIONID-cookie plus het verborgen
+> `tempReportKey`**; zonder die twee volgt een 302 naar `error.jsp`, wat leest als "niets
+> gevonden". Goedkoopste terugvindtruc: het **redirect-doel** van het oude pad noemt de nieuwe
+> contextnaam. Recept bijgewerkt.
+>
+> **⚠️ GITHUB PAGES + ACTIONS HADDEN EEN MAJOR OUTAGE** (2026-08-06 vanaf 15:22 UTC; build
+> errored, wachtrij tot 1u38). Dat verklaarde ook waarom Lars "de knoppen niet zag": **de live
+> site serveerde nog `?v=111`**, dus hij keek naar de vórige versie en niet naar een kapotte
+> nieuwe — een `?vers=`-parameter omzeilt de **browsercache**, niet een build die nooit gedraaid
+> heeft. → **Tijdelijke VPS-preview** op `https://atlas.187.124.169.172.nip.io/v2/`
+> (nginx-container `atlas-preview` op 127.0.0.1:8089 + Traefik file-provider, exact het
+> `ais-pings`-patroon; form4app en Traefik zelf onaangeraakt). **⚠️ GEEN tweede publicatiekanaal —
+> weghalen zodra Pages weer draait.**
+>
+> **GEMETEN OP DE DRAAIENDE SITE:** 30 benen · 60 lijnschillen · 60 kometen (900 staartpunten) over
+> vijf stromen · **165 fps** · **124 draw calls** · **0 console-fouten**. ⚠️ In **echte headless
+> Chrome via CDP**, want de Browser-pane composit geen frames (`document.hidden` → rAF staat stil,
+> de M22-valkuil) — en de camera moet met de eigen **`vliegNaar`** van de bol gezet worden, want
+> de framelus overschrijft een handmatig gezette camera meteen.
+>
+> **→ VOLGENDE:** de **gloedkoepels** hebben de kern/halo-behandeling nog niet gehad (nu de zwakste
+> schakel) · de **ondergrond dimmen** onder de gloed, want op satelliet verdwijnt het effect en
+> daarmee is de night-side-vraag een **voorwaarde** en geen schoonheidsvraag · het **aantal kometen
+> uit volume** halen zodra het metadatabestand dat draagt · de **VPS-preview weghalen**.
+
+> **🛡️ GUARDS, OPRUIMING EN TONGLING FASE D — LIVE `?v=111` (2026-08-06, EERDER).**
 > Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom).
 >
 > **Koper Collahuasi → Tongling loopt nu tot de foliefabriek: 7 benen · 19.307,3 km · 6.001
@@ -669,7 +773,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-06 (laatst: twee snap-guards + Tongling fase D, live ?v=111 — en het besluit dat bakken geen deliverable is)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen — gloedknopen en kometen, live ?v=116)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -2943,6 +3047,41 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-07 · ✅ BESLUIT LARS — DE LIJNEN BLIJVEN OP DE GROND.** V1's bogen vlogen 22% van de
+  bolstraal de lucht in (`arcStyle.lift: 0.22`); mooi, maar geografisch verzonnen. Het 3D-gevoel
+  komt uit **beweging en volume boven** de lijn, niet uit het optillen ervan — anders zijn de
+  zeestraten, sluizen en kades waar M23–M28 op gemeten heeft visueel niet meer waar.
+- **2026-08-07 · ✅ BESLUIT LARS — DE GLOED IS EEN KOEPEL MET HOOGTE.** ⚠️ Géén omkering van
+  besluit 2 uit de ontwerpbrief ("géén hoogte-pilaren"): dat verbiedt **capaciteit-als-hoogte**,
+  en hier is de koepel even hoog als breed. Wie hem later op volume laat groeien, draait besluit 2
+  wél om en hoort dat op te schrijven.
+- **2026-08-07 · EEN GLOEDLAAG BESTAAT UIT UITGEZOCHTE KNOPEN, NOOIT UIT EEN GENERIEKE LIJST** —
+  `ports.json` (3.963 LOCODE-centroïdes) afgewezen als gloedbron. ⚠️ Maar hij kan **niet weg**:
+  hij is het routeer-skelet en `marnet.js` fetcht hem runtime. **Het bestand houden en de punten
+  tekenen zijn twee verschillende dingen.**
+- **2026-08-07 · ALLEEN SITES KRIJGEN EEN GLOW; DE COMPLEXKNOOP IS GEEN GLOW-OBJECT** — de
+  hotspot hoort te *ontstaan* uit de optelling. Daarmee **toetst** de laag besluit 1 van de brief.
+  Uitkomst: het werkt, geen aggregaat-object nodig.
+- **2026-08-07 · DE GRENS VAN HET REGISTER-RECEPT GELDT PER RECHTSPERSOON, NIET PER COMPLEX** —
+  "één punt per vergunning" sluit een laadperron binnen één bedrijf uit, maar een Chinees complex
+  bestaat uit tientallen aparte vennootschappen met elk een eigen coördinaat.
+- **2026-08-07 · BIJ EEN VISUELE AFKEURING EERST VRAGEN WELK ELEMENT WELKE TAAK DRAAGT** — drie
+  ronden op één dag, elke keer was de **opzet** fout en niet de afstemming. "Vaag" = er ontbreekt
+  een kern; "één grote gloed" = de aanname dat de lijn het licht moest geven; onzichtbare deeltjes
+  = additieve blending telt ze op bij de lijn eronder. Eindvorm door ontkoppeling: de lijn zegt
+  *waar*, de komeet *dat en hoe snel*.
+- **2026-08-07 · EEN GEKLEURDE LAAG DIE INFORMATIE DRAAGT KRIJGT NORMALE BLENDING** — additief
+  verliest kleur naarmate hij succesvoller optelt. Derde verschijning van de "de legenda loog"-
+  klasse, nu via blending.
+- **2026-08-07 · EEN BRONVERMELDING HANGT AAN DE GEPUBLICEERDE DATA, NIET AAN DE ZICHTBAARHEID
+  VAN DE LAAG** — de AIS-tracks-knop is weg, de licentielijst blijft, want het databestand staat
+  nog op Pages (AMSA = CC BY-NC 3.0 AU).
+- **2026-08-07 · UITGEZETTE LAGEN GAAN ACHTER EEN VLAG, NIET DE PRULLENBAK** (`TOON` in
+  `main.js`) — havens, AIS-tracks en de vectorwereld dragen rollen die hier niet zijn opgezegd.
+- **2026-08-07 · VISUEEL WERK WORDT GETOETST IN ECHTE HEADLESS CHROME VIA CDP** — de Browser-pane
+  composit geen frames (`document.hidden` → rAF staat stil), dus per-frame maatregelen leveren
+  daar nul op en screenshots falen. De camera zetten via de eigen `vliegNaar` van de bol, want de
+  framelus overschrijft een handmatig gezette camera meteen.
 - **2026-08-06 · ✅ BESLUIT LARS — BAKKEN IS GEEN DELIVERABLE** — *"de ene bak maakt de andere
   weer invalid en we blijven anders bezig daarmee"*. Geen recept-reconstructies, geen herbakes
   voor een contract-veld, geen recept-stap per nieuwe stroom; extra velden voor de visuals gaan

@@ -1,5 +1,60 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-06 (laatst: bakken is geen deliverable + twee snap-guards)*
+*Last updated: 2026-08-07 (laatst: de visuele fase — lijnen op de grond, gloed als koepel)*
+
+## 2026-08-07 — de visuele fase: gloedknopen en kometen
+
+- **2026-08-07 · ✅ BESLUIT LARS — DE LIJNEN BLIJVEN OP DE GROND.** V1's bogen vlogen 22% van de
+  bolstraal de lucht in (`arcStyle.lift: 0.22`) en dat oogde goed, maar was geografisch verzonnen;
+  M23–M28 ging er juist over die lijnen op de échte zeeroute, het échte spoor en de échte weg te
+  krijgen. Het 3D-gevoel komt daarom uit **beweging en volume boven** de lijn, niet uit het
+  optillen ervan. **Waarom dit een besluit is en geen smaakkwestie:** een opgetilde boog maakt de
+  zeestraten, sluizen en kades waar maandenlang op gemeten is visueel onwaar.
+
+- **2026-08-07 · ✅ BESLUIT LARS — DE GLOED WORDT EEN KOEPEL MET HOOGTE** (vijf schillen volgens
+  een halve bol). ⚠️ **Géén omkering van besluit 2 uit de ontwerpbrief** ("glow-bollen, géén
+  hoogte-pilaren"): dat besluit verbiedt **capaciteit-als-hoogte** — een staaf waarvan je de
+  lengte moet aflezen — en hier is de koepel even hoog als breed, dus capaciteit zit nog in de
+  grootte. Wie hem later tóch op volume laat groeien draait besluit 2 wél om en hoort dat op te
+  schrijven.
+
+- **2026-08-07 · EEN GLOEDLAAG BESTAAT UIT UITGEZOCHTE KNOPEN, NOOIT UIT EEN GENERIEKE LIJST.**
+  `ports.json` (3.963 LOCODE-centroïdes) als gloedbron afgewezen door Lars: *"die havens hebben
+  we helemaal niet nodig, dat is niet het idee."* ⚠️ Nuance die erbij hoort: `ports.json` kan
+  **niet weg** — hij is het routeer-skelet (`knoopRivier`/`afstandRivierKm`) en `marnet.js` fetcht
+  hem runtime. **Het bestand houden en de punten tekenen zijn twee verschillende dingen.**
+
+- **2026-08-07 · ALLEEN SITES KRIJGEN EEN GLOW; DE COMPLEXKNOOP IS GEEN GLOW-OBJECT.** De hotspot
+  hoort te **ontstaan** uit de optelling van de sites. Daarmee is de laag een **toets** van
+  besluit 1 uit de ontwerpbrief: blijkt er alsnog een aggregaat-object nodig, dan klopt de brief
+  niet. **Uitkomst: het werkt.**
+
+- **2026-08-07 · DE GRENS VAN HET REGISTER-RECEPT GELDT PER RECHTSPERSOON, NIET PER COMPLEX.**
+  *"Eén punt per vergunning, dat is de vestiging"* sluit een laadperron binnen één bedrijf uit,
+  maar een Chinees industriecomplex bestaat uit tientallen aparte vennootschappen met elk een
+  eigen vergunning en coördinaat. Tongling leverde zo 12 punten waar er 3 stonden.
+
+- **2026-08-07 · DRIE KEER WAS DE OPZET FOUT, NIET DE AFSTEMMING** — en dat is de bruikbare les.
+  *"Vaag"* = er ontbreekt een **kern** (alleen rand; additief opgeteld verkleurt alles naar wit,
+  dus ook de betekenisdragende modaliteitskleur). *"Eén grote gloed"* = de aanname dat **de lijn
+  het licht moest geven**. Onzichtbare deeltjes = **additieve blending telt ze op bij de lijn
+  eronder**, precies waar die het felst is. Eindvorm: dunne draad + kometen — de lijn zegt *waar*,
+  de komeet *dat en hoe snel*. **Werkregel: bij visuele afkeuring eerst vragen welk element welke
+  taak draagt, vóór je aan getallen draait.**
+
+- **2026-08-07 · EEN GEKLEURDE LAAG DIE INFORMATIE DRAAGT KRIJGT NORMALE BLENDING, GEEN
+  ADDITIEVE.** Additief verliest kleur naarmate hij succesvoller optelt — prima voor een
+  heatmap-kern, fataal zodra de kleur betekenis draagt. Derde verschijning van de "de legenda
+  loog"-klasse, nu via blending in plaats van via een ontbrekende kleur.
+
+- **2026-08-07 · EEN BRONVERMELDING HANGT AAN DE GEPUBLICEERDE DATA, NIET AAN DE ZICHTBAARHEID
+  VAN DE LAAG.** De AIS-tracks-knop is verwijderd maar de licentielijst blijft staan, want
+  `aistracks-pilot.json` staat nog op Pages en AMSA is CC BY-NC 3.0 AU. Opruimen kan pas nadat
+  het databestand van de publicatie is gehaald.
+
+- **2026-08-07 · UITGEZETTE LAGEN GAAN ACHTER EEN VLAG, NIET DE PRULLENBAK** (`TOON` in
+  `main.js`). Havens = aanhechtpunten voor het nieuwe waternet, AIS-tracks = bronmateriaal voor
+  de graaf-stap, vectorwereld = de waarheid waartegen routering rekent. Verwijderen zou die
+  rollen stilzwijgend opzeggen.
 
 ## 2026-08-06 — guards, opruiming, Tongling fase D
 
