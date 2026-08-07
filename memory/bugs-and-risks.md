@@ -1,7 +1,32 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-08-07 (nieuw: Pages-outage + tijdelijke VPS-preview + MEE-endpoint alweer verhuisd)*
+*Last updated: 2026-08-07 (Pages-outage voorbij; nieuw: Chrome-spawn in de sandbox, aggregaat verbergt verschil)*
 
-## 🟠 OPEN 2026-08-07 — buiten onze code, maar het raakt de bezorging
+## 🟡 NIEUW 2026-08-07 (2e sessie) — twee gereedschapslessen
+
+1. **EEN CHROME-`spawn` VANUIT DE BASH-SANDBOX KOMT NIET OP; `Start-Process` VANUIT POWERSHELL
+   WÉL.** Het CDP-screenshotscript startte zijn eigen headless Chrome met `child_process.spawn` en
+   kreeg daarna zestig keer een verbindingsfout op `/json/version` — geen foutmelding van Chrome
+   zelf, gewoon niets. Dezelfde vlaggen via `Start-Process` in PowerShell werken meteen.
+   **Werkregel:** start de browser buiten het script en laat het script *attachen* op een
+   bestaande `--remote-debugging-port`. Scheelt ook een profielmap per run.
+
+2. **⚠️ EEN AGGREGAAT KAN EEN VERSCHIL VERBERGEN DAT OP HET ONDERDEEL WÉL BESTAAT.** De eerste
+   meting van de hemelsbreed-varianten nam de **maximale straal per stroom** en concludeerde
+   daaruit dat `recht-boog` en `boog-op-zee` identiek waren — ze gaven allebei 7,9%. Dat klopte
+   ook: het langste been is in beide varianten het zeebeen, dus de maximale straal *moet* gelijk
+   zijn. Pas **per been** gemeten viel het verschil open (spoor 1,42% → exact 0). Zelfde familie
+   als de eerdere meetfouten ("meet het eindproduct, niet je meetlat"; de km-ijking die blind was
+   voor junctieverlies): **kies de korrel waarop het verschil kán bestaan.**
+
+## ✅ OPGELOST 2026-08-07 — de Pages-outage is voorbij
+
+De build van commit `a66ea4f` liep om **07:36 UTC groen** (`gh api repos/.../pages/builds/latest`
+→ `status: built`, `error: null`) en de live site serveert `?v=117`. **De tijdelijke VPS-preview
+op `https://atlas.187.124.169.172.nip.io/v2/` kan dus weg** — zie punt 4 in `next-actions.md`; hij
+is bewust géén tweede publicatiekanaal. De diagnose hieronder blijft staan als naslag, want de
+faalmodus komt terug.
+
+<details><summary>De oorspronkelijke melding (2026-08-06)</summary>
 
 1. **GITHUB PAGES EN ACTIONS HADDEN EEN MAJOR OUTAGE** (incident vanaf 15:22 UTC, 2026-08-06).
    De push slaagde, maar de Pages-build **errorde** ("Page build failed") en de wachtrij liep op
@@ -18,9 +43,14 @@
    draait is github.io de enige bron van waarheid, en een preview die stilletjes achterloopt op
    de echte site is erger dan geen preview. Staat zo gedocumenteerd in de nginx.conf.
    *Risico als hij blijft staan:* twee URL's met verschillende versies, en niemand weet welke
-   Lars bekeek toen hij een oordeel gaf.
+   Lars bekeek toen hij een oordeel gaf. **→ Pages draait weer, dus dit is nu een openstaande
+   opruimactie** (`next-actions.md` punt 4).
 
-3. **HET MEE-VERGUNNINGENREGISTER IS OPNIEUW VERHUISD.** `perxxgkinfo` is nu een **top-level
+</details>
+
+## 🟠 OPEN 2026-08-07 — de bron die blijft bewegen
+
+1. **HET MEE-VERGUNNINGENREGISTER IS OPNIEUW VERHUISD.** `perxxgkinfo` is nu een **top-level
    context** en niet langer een segment binnen `permitExt`; het pad uit `zoek-chinees-adres-recept.md`
    geeft nu een harde **404**. Bovendien vraagt de zoekopdracht een **JSESSIONID-cookie** plus het
    verborgen veld **`tempReportKey`** uit de GET-pagina — zonder die twee volgt een 302 naar

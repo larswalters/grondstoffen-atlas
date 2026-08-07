@@ -1,4 +1,72 @@
-> **✨ DE VISUELE FASE BEGINT — GLOEDKNOPEN EN KOMETEN, LIVE `?v=116` (2026-08-07, LAATSTE).**
+> **🎨 DE ATLAS KLEURT OP GRONDSTOF — EN DE LIJNEN KRIJGEN DRIE HEMELSBREED-VARIANTEN, LIVE
+> `?v=117` (2026-08-07, LAATSTE).** Commit `a66ea4f`.
+>
+> **Lars' onvrede over de visuals-pilot bleek een ROLVERDELING en geen bug.** *"Verschillende
+> kleuren per transport type — dat was goed voor het routes maken, echter wil ik in de atlas
+> kleuren per grondstof, dus die koperstroom wordt dan 1 kleur."* De modaliteitskleur was het
+> gereedschap waarmee de routes zijn **gelegd**, niet de vorm waarin de atlas ze moet **tonen** —
+> en `v2/design/lod-ontwerpbrief.md` schrijft in zijn tabel "de visuele taal" al letterlijk
+> *kleur = grondstof · lijnstijl = modaliteit*. **Dit is de brief uitvoeren, geen koerswijziging.**
+>
+> **TWEE SCHAKELBARE ASSEN IN DE HUD.** Kleur: **per transport** (routewerk) ↔ **per grondstof**
+> (atlas — de drie koperstromen worden één kleur). Lijnen: **onze routes · recht plat · recht boog
+> · boog op zee**. ⚠️ **Beide defaults zijn de bewezen stand van `?v=111`** (modaliteit + gemeten
+> route): de routebouw-weergave is expres onaangeraakt, want die is getoetst en er was niets mis
+> mee. Alle drie de hemelsbreed-varianten zitten erin omdat Lars ze *"naast elkaar"* wilde zien in
+> plaats van er vooraf één te kiezen.
+>
+> **⚠️ HEMELSBREED = GROOTCIRKEL KOP→STAART PER BEEN**, niet mijn→eindfabriek in één boog. De
+> benen zijn precies de stukken tussen twee overslagpunten, en dáár heeft de atlas iets te
+> vertellen: één boog over de hele keten laat wel zien *dát* Chili aan China levert, maar niet meer
+> *dát* er in Beilun iets van boord gaat. De overslag is het hele punt van de A–E-routebrieven.
+>
+> **⚠️ HET BESLUIT "DE LIJNEN BLIJVEN OP DE GROND" IS NIET OMGEDRAAID.** Dat besluit (06-08) geldt
+> de **gemeten** routes, waar M23–M28 juist over ging; die optillen maakt maandenlang meetwerk
+> visueel onwaar. Een **hemelsbreed**-lijn doet die geografische claim per definitie niet — hij
+> zegt alleen "van hier naar daar" — en het optillen is daar zelfs *eerlijker*: het maakt
+> zichtbaar dát je naar een schematische verbinding kijkt in plaats van naar een zeeschip dat over
+> de Andes vaart. **Wie ooit de gemeten route optilt, draait het besluit wél om.**
+>
+> **NIEUW `v2/src/stroomstijl.js` — DE ENIGE BRON VAN WAARHEID VOOR KLEUR ÉN LIJNVORM.**
+> `stroomroute.js` (de exacte lijn), `stroomleven.js` (draad + kometen) en `gloednodes.js` (de
+> koepels) droegen elk een eigen kopie van de kleurtabel; in de tweede stond letterlijk *"zelfde
+> kleuren als stroomroute.js"*. Twee kopieën van een legenda lopen uit elkaar, en die klasse is
+> hier al twee keer betaald ("de legenda loog" bij ACES, de generator↔uitvoer-drift bij
+> `cu-guixi-spoor`). Gloed en lijn van dezelfde grondstof kunnen nu per constructie niet verschillen.
+> ⚠️ **Een onbekende sleutel waarschuwt** in plaats van stilzwijgend wit te worden — precies de
+> fout die op 06-08 een teruggedraaide commit kostte (modaliteit `weg` bestaat niet, het heet
+> `truck`). De **grondstof komt uit het stroom-id** (eerste segment), bewust **afgeleid en niet
+> gebakken**: een veld erbij zou vijf herbakes kosten voor één string.
+>
+> **✅ KEUZE LARS — FELLERE ATLAS-VARIANTEN** (koper `#ff8a30` · lithium `#c06bff` · grafiet
+> `#7fd8ff`), niet de v1-waarden. ⚠️ De reden is **meetbaar, niet esthetisch**: v1 kleurt
+> **markers op een lichte kaart**, dit zijn **lichtgevende lijnen op satelliet in het donker** —
+> grafietgrijs (`#78828F`) gloeit niet en lithium-teal (`#4FD1C5`) valt samen met het
+> binnenvaart-turkoois dat er in modaliteitsmodus naast ligt.
+>
+> **DE OVERSLAG- EN EINDPUNTEN ZIJN GLOEIENDE CIRKELS GEWORDEN** in de grondstofkleur (kern + halo
+> + ring, wereldmaat mét pixel-minimum, horizon via grootte 0 — het `gloednodes`-patroon): het
+> element uit Lars' referentiebeelden in `v2/design/referenties/`. **Wit gebleven in
+> modaliteitsmodus.**
+>
+> **GEMETEN (echte headless Chrome via CDP):** 30 benen · 60 lijnschillen · 60 kometen · 900
+> staartpunten over vijf stromen = **identiek aan `?v=116`** · **0 console-fouten in alle acht
+> standen** (2 kleurmodi × 4 lijnmodi) · per grondstof exact één kleur · lift **per been**
+> (recht-plat 0% overal · recht-boog spoor 1,42% / zee 7,9% · boog-op-zee alleen zee, rest exact 0).
+> ⚠️ **Per been meten wás nodig:** op stroomniveau zijn `recht-boog` en `boog-op-zee` niet te
+> onderscheiden, want het langste been is in beide het zeebeen. ⚠️ Bijvangst: een Chrome-`spawn`
+> vanuit de Bash-sandbox komt niet op, `Start-Process` vanuit PowerShell wél — het CDP-script
+> attacht nu op een extern gestarte browser.
+>
+> **PAGES DRAAIT WEER** (build `a66ea4f` groen om 07:36 UTC) → de tijdelijke VPS-preview kan weg.
+>
+> **→ VOLGENDE:** **Lars kiest uit de drie hemelsbreed-varianten** (beoordeel op de **landbenen** —
+> daar zit het verschil tussen *boog* en *boog op zee*) · de **gloed verdwijnt nog op felle
+> satelliet**, en met de fellere lijnkleuren des te zichtbaarder → de night-side-vraag is een
+> **voorwaarde** · de gloedkoepels missen nog de kern/halo-behandeling · **lijnstijl per
+> modaliteit** zodra de grondstofkleur bevalt, dan draagt de brief-tabel volledig.
+
+> **✨ DE VISUELE FASE BEGINT — GLOEDKNOPEN EN KOMETEN, LIVE `?v=116` (2026-08-07, EERDER).**
 > Commits `6d7b290` (gloedlaag) · `8fb2ef8` (koker + koepel) · `96c8050` (kern/halo omgedraaid) ·
 > `bf283ed` (kometen) · `0c971fa` (vier lagen uit).
 >
@@ -773,7 +841,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen — gloedknopen en kometen, live ?v=116)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: de atlas kleurt op grondstof + drie hemelsbreed-varianten, live ?v=117)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3047,6 +3115,27 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-08-07 (2e) · ✅ BESLUIT LARS — DE ATLAS KLEURT OP GRONDSTOF, HET ROUTEWERK OP
+  MODALITEIT.** Twee schakelbare assen, met de modaliteitsweergave als default. Het zijn twee
+  vragen aan hetzelfde beeld: *waar houdt de zee op en begint de barge?* hoort bij het bouwen,
+  *waar gaat het koper heen?* is wat de atlas beantwoordt. ⚠️ Dit is de **ontwerpbrief uitvoeren**
+  (`kleur = grondstof · lijnstijl = modaliteit`), geen koerswijziging — de modaliteitskleur was
+  het gereedschap.
+- **2026-08-07 (2e) · ✅ KEUZE LARS — FELLERE ATLAS-VARIANTEN VAN DE V1-FAMILIES** (koper
+  `#ff8a30` · lithium `#c06bff` · grafiet `#7fd8ff`). De reden is **meetbaar**: v1 kleurt markers
+  op een lichte kaart, dit zijn lichtgevende lijnen op donkere satelliet — grafietgrijs gloeit
+  niet, lithium-teal botst met het binnenvaart-turkoois.
+- **2026-08-07 (2e) · HEMELSBREED = GROOTCIRKEL KOP→STAART PER BEEN**, niet mijn→eindfabriek in
+  één boog: anders verdwijnt de overslag, en die is het hele punt van de A–E-routebrieven.
+- **2026-08-07 (2e) · ⚠️ "DE LIJNEN BLIJVEN OP DE GROND" GELDT DE GEMETEN ROUTES, NIET DE
+  HEMELSBREED-VARIANT.** Die doet de geografische claim per definitie niet, en het optillen maakt
+  juist zichtbaar dát het schematisch is. Wie de gemeten route optilt, draait het besluit wél om.
+- **2026-08-07 (2e) · ÉÉN STIJLTABEL VOOR ALLE STROOMLAGEN** (`v2/src/stroomstijl.js`) — lijn,
+  draad, komeet én gloedkoepel lazen elk hun eigen kopie. **Een onbekende sleutel waarschuwt** in
+  plaats van stil wit te worden. De grondstof komt uit het stroom-id: **afgeleid, niet gebakken.**
+- **2026-08-07 (2e) · MEET DE BOOGHOOGTE PER BEEN, NIET PER STROOM** — op stroomniveau zijn
+  `recht-boog` en `boog-op-zee` niet te onderscheiden (het langste been is in beide het zeebeen).
+  Een aggregaat kan een verschil verbergen dat op het onderdeel wél bestaat.
 - **2026-08-07 · ✅ BESLUIT LARS — DE LIJNEN BLIJVEN OP DE GROND.** V1's bogen vlogen 22% van de
   bolstraal de lucht in (`arcStyle.lift: 0.22`); mooi, maar geografisch verzonnen. Het 3D-gevoel
   komt uit **beweging en volume boven** de lijn, niet uit het optillen ervan — anders zijn de

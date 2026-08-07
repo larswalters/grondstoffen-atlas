@@ -1,7 +1,68 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: de visuele fase — lijnen op de grond, gloed als koepel)*
+*Last updated: 2026-08-07 (laatst: kleur per grondstof, hemelsbreed per been, een stijltabel)*
 
-## 2026-08-07 — de visuele fase: gloedknopen en kometen
+## 2026-08-07 (2e sessie) — de atlas kleurt op grondstof
+
+- **2026-08-07 · ✅ BESLUIT LARS — DE ATLAS KLEURT OP GRONDSTOF, HET ROUTEWERK OP MODALITEIT.**
+  Twee schakelbare assen in de HUD, met de modaliteitsweergave als **default**. *Waarom dit een
+  besluit is en geen instelling:* het zijn twee verschillende vragen aan hetzelfde beeld — *waar
+  houdt de zee op en begint de barge?* hoort bij het bouwen en controleren van een route, *waar
+  gaat het koper heen?* is wat de atlas moet beantwoorden. In atlasmodus worden de drie
+  koperstromen daarom een kleur, ook al lopen ze over vier verschillende netten.
+  ⚠️ **Dit is de ontwerpbrief uitvoeren, geen koerswijziging:** `design/lod-ontwerpbrief.md`
+  heeft in zijn tabel "de visuele taal" altijd al *kleur = grondstof · lijnstijl = modaliteit*
+  gezegd. De modaliteitskleur was het **gereedschap** waarmee de routes zijn gelegd.
+
+- **2026-08-07 · ✅ KEUZE LARS — FELLERE ATLAS-VARIANTEN VAN DE V1-KLEURFAMILIES** (koper
+  `#ff8a30` · lithium `#c06bff` · grafiet `#7fd8ff`), niet de v1-waarden zelf. *De reden is
+  meetbaar en niet esthetisch:* v1 kleurt **markers op een lichte kaart**, hier zijn het
+  **lichtgevende lijnen op satelliet in het donker**. Grafietgrijs (`#78828F`) is als glowlijn
+  vrijwel onzichtbaar en lithium-teal (`#4FD1C5`) valt samen met het binnenvaart-turkoois dat er
+  in modaliteitsmodus naast ligt. De families blijven herkenbaar (koper warm, lithium violet).
+  ⚠️ Gevolg: de v1-atlas op de root heeft nu andere kleuren dan v2 — bewust geaccepteerd.
+
+- **2026-08-07 · HEMELSBREED = GROOTCIRKEL KOP→STAART PER BEEN, niet mijn→eindfabriek in een
+  boog.** De benen zijn precies de stukken tussen twee overslagpunten, en daar heeft de atlas iets
+  te vertellen. Een boog over de hele keten laat wel zien *dat* Chili aan China levert, maar niet
+  meer *dat* er in Beilun iets van boord gaat — dan verdwijnt de overslag, en die is het hele punt
+  van de A–E-routebrieven.
+
+- **2026-08-07 · ⚠️ HET BESLUIT "DE LIJNEN BLIJVEN OP DE GROND" GELDT DE GEMETEN ROUTES, NIET DE
+  HEMELSBREED-VARIANT.** Dat besluit (2026-08-06) bestaat omdat M23–M28 er juist over ging de
+  lijnen op de echte geul, het echte spoor en de echte weg te krijgen; ze optillen maakt die
+  metingen visueel onwaar. Een **hemelsbreed**-lijn doet die geografische claim per definitie
+  niet — hij zegt alleen "van hier naar daar" — en het optillen is daar zelfs *eerlijker*: het
+  maakt zichtbaar dat je naar een schematische verbinding kijkt in plaats van naar een zeeschip
+  dat over de Andes vaart. **Wie ooit de gemeten route optilt, draait het besluit wel om en hoort
+  dat op te schrijven.**
+
+- **2026-08-07 · EEN STIJLTABEL VOOR ALLE STROOMLAGEN** (`v2/src/stroomstijl.js`). `stroomroute.js`
+  (de exacte lijn), `stroomleven.js` (draad + kometen) en `gloednodes.js` (de koepels) droegen elk
+  hun eigen kopie van de kleurtabel — in de tweede stond letterlijk *"zelfde kleuren als
+  stroomroute.js"*. Twee kopieen van een legenda lopen uit elkaar, en die klasse is hier al twee
+  keer betaald ("de legenda loog" bij ACES-tone-mapping, de generator↔uitvoer-drift bij
+  `cu-guixi-spoor`). Gloed en lijn van dezelfde grondstof kunnen nu per constructie niet meer
+  verschillen.
+
+- **2026-08-07 · EEN ONBEKENDE STIJLSLEUTEL WAARSCHUWT, HIJ WORDT NIET STIL WIT.**
+  `KLEUR[modaliteit] ?? 0xffffff` kostte op 06-08 een teruggedraaide commit: modaliteit `weg`
+  bestond niet (het heet `truck`), het been werd stilzwijgend wit, en wit is in deze atlas geen
+  legenda-kleur maar "onbekend". `kleurVan()` meldt nu een keer per onbekende sleutel.
+
+- **2026-08-07 · DE GRONDSTOF WORDT AFGELEID UIT HET STROOM-ID, NIET GEBAKKEN.** De id's zijn
+  `<grondstof>-<bron>-<bestemming>`, dus het eerste segment is de grondstof. Een `grondstof`-veld
+  in `stroomroute-*.json` zou vijf herbakes kosten voor een string — precies wat het besluit
+  "bakken is geen deliverable" (06-08) uitsluit. Schiet de afleiding ooit tekort (twee
+  grondstoffen in een streng), dan hoort dat in het **losse metadatabestand**, niet in de gebakken
+  geometrie.
+
+- **2026-08-07 · MEET DE BOOGHOOGTE PER BEEN, NIET PER STROOM.** Op stroomniveau zijn
+  `recht-boog` en `boog-op-zee` niet te onderscheiden: het langste been is in beide varianten het
+  zeebeen, dus de maximale straal is identiek. Pas per been zie je het verschil (spoor 1,42% → 0).
+  *Zelfde familie als de eerdere meetfouten:* een aggregaat kan een verschil verbergen dat op het
+  onderdeel wel bestaat.
+
+## 2026-08-07 (1e sessie) — de visuele fase: gloedknopen en kometen
 
 - **2026-08-07 · ✅ BESLUIT LARS — DE LIJNEN BLIJVEN OP DE GROND.** V1's bogen vlogen 22% van de
   bolstraal de lucht in (`arcStyle.lift: 0.22`) en dat oogde goed, maar was geografisch verzonnen;

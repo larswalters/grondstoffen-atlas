@@ -2,6 +2,68 @@
 *Newest first.*
 
 
+## 2026-08-07 (2e sessie) - De atlas kleurt op grondstof, en de lijnen krijgen drie hemelsbreed-varianten
+
+Live `?v=117`, commit `a66ea4f`. Lars was niet tevreden over de visuals-pilot en wees de oorzaak
+precies aan: *"verschillende kleuren per transport type - dat was goed voor het routes maken,
+echter wil ik in de atlas kleuren per grondstof."* Dat is geen bugmelding maar een
+**rolverdeling**: de modaliteitskleur was het gereedschap waarmee de routes zijn GELEGD, niet de
+vorm waarin de atlas ze moet TONEN. En `design/lod-ontwerpbrief.md` schrijft dat in zijn tabel
+"de visuele taal" al letterlijk voor - *kleur = grondstof, lijnstijl = modaliteit* - dus dit is
+de brief uitvoeren en geen koerswijziging.
+
+**Twee schakelbare assen in de HUD.** Kleur: per transport (routewerk, default = de bewezen stand
+van `?v=111`) tegenover per grondstof (atlas - de drie koperstromen worden een kleur). Lijnen:
+onze routes / recht plat / recht boog / boog op zee. Alle drie de hemelsbreed-varianten zitten
+erin omdat Lars ze *"naast elkaar"* wilde zien in plaats van er vooraf een te kiezen; dat is
+goedkoper dan bouwen-op-verwachting en het levert meteen een gebruikersknop op als hij ze wil
+houden.
+
+**Hemelsbreed = grootcirkel kop naar staart PER BEEN**, niet mijn naar eindfabriek in een boog.
+De benen zijn precies de stukken tussen twee overslagpunten, en een enkele boog over de hele
+keten laat wel zien DAT Chili aan China levert maar niet meer DAT er in Beilun iets van boord
+gaat - dan verdwijnt de overslag, en die is het hele punt van de A-E-routebrieven.
+
+**Het besluit "de lijnen blijven op de grond" is niet omgedraaid.** Dat geldt de GEMETEN routes,
+waar M23-M28 juist over ging; ze optillen maakt die metingen visueel onwaar. Een hemelsbreed-lijn
+doet die geografische claim per definitie niet, en het optillen is daar zelfs eerlijker: het maakt
+zichtbaar dat je naar een schematische verbinding kijkt in plaats van naar een zeeschip dat over
+de Andes vaart. Wie ooit de echte route optilt, draait het besluit wel om.
+
+**Nieuw `v2/src/stroomstijl.js` is de enige bron van waarheid voor beide assen.**
+`stroomroute.js`, `stroomleven.js` en `gloednodes.js` droegen elk een eigen kopie van de
+kleurtabel - in de tweede stond letterlijk *"zelfde kleuren als stroomroute.js"* - en dat is de
+klasse die dit project al twee keer betaalde ("de legenda loog", de generator-uitvoer-drift bij
+`cu-guixi-spoor`). Een onbekende sleutel waarschuwt nu in plaats van stilzwijgend wit te worden;
+dat kostte op 06-08 een teruggedraaide commit. De grondstof komt uit het stroom-id (eerste
+segment), bewust afgeleid en niet gebakken - een veld erbij zou vijf herbakes kosten voor een
+string.
+
+**Palet fel op keuze van Lars** (koper `#ff8a30`, lithium `#c06bff`, grafiet `#7fd8ff`), met een
+meetbare reden en niet een esthetische: v1 kleurt markers op een lichte kaart, dit zijn
+lichtgevende lijnen op satelliet in het donker - grafietgrijs gloeit niet en lithium-teal valt
+samen met het binnenvaart-turkoois dat er in modaliteitsmodus naast ligt.
+
+**De overslag- en eindpunten zijn gloeiende cirkels geworden** in de grondstofkleur (kern + halo +
+ring, wereldmaat met pixel-minimum, horizon via grootte 0 - het gloednodes-patroon). Dat is het
+element uit Lars' referentiebeelden in `design/referenties/`. Wit gebleven in modaliteitsmodus,
+zodat de bewezen routebouw-weergave onaangeraakt blijft.
+
+**Gemeten in echte headless Chrome via CDP:** 30 benen / 60 lijnschillen / 60 kometen / 900
+staartpunten over vijf stromen = identiek aan `?v=116`, dus de omzetting heeft geen been gewonnen
+of verloren. 0 console-fouten in alle acht standen (2 kleurmodi x 4 lijnmodi). Per grondstof exact
+een kleur. Lift PER BEEN gemeten, en dat was nodig: op stroomniveau zijn recht-boog en
+boog-op-zee niet te onderscheiden omdat het langste been in beide het zeebeen is. Per been:
+recht-plat 0% overal, recht-boog spoor 1,42% / zee 7,9%, boog-op-zee alleen zee 7,9% en de rest
+exact 0. Bijvangst: een Chrome-`spawn` vanuit de Bash-sandbox komt niet op, `Start-Process` vanuit
+PowerShell wel - het CDP-script attacht nu op een extern gestarte browser.
+
+**Open:** Lars kiest uit de drie hemelsbreed-varianten (beoordeel op de LANDbenen, daar zit het
+verschil tussen boog en boog-op-zee); de gloed verdwijnt nog op felle satellietondergrond, en met
+de fellere lijnkleuren des te zichtbaarder - de night-side-vraag uit de ontwerpbrief is een
+voorwaarde en geen schoonheidsvraag; lijnstijl per modaliteit zodra de kleuromschakeling bevalt.
+
+
 ## 2026-08-07 - De visuele fase begint: gloedknopen uit het vergunningenregister, en kometen over de stromen
 
 M26/LAR-490 van start. De eerste vraag was of er niet eerst meer koperstromen bij moesten; de

@@ -1,14 +1,29 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen, `?v=116`)*
+*Last updated: 2026-08-07 (laatst: kleur per grondstof + drie hemelsbreed-varianten, `?v=117`)*
 
-## 🔴 NIEUW 2026-08-07 (laatst) — de visuele fase loopt, en die moet verder getuned
+## 🔴 NIEUW 2026-08-07 (laatst) — na de omschakeling naar grondstofkleur (`?v=117`)
+
+0. **Lars kiest uit de drie hemelsbreed-varianten** — ze staan alle drie als knop in de HUD
+   (*recht (plat)* · *recht (boog)* · *boog op zee*) naast *onze routes*. Kiest hij er één, dan
+   kunnen de andere twee eruit; wil hij ze houden, dan blijft het een gebruikersknop. ⚠️ Op
+   wereldhoogte lijken *recht (boog)* en *boog op zee* sterk op elkaar — het verschil zit op de
+   landbenen (Copperbelt-spoor, Balama-truck), dus beoordeel daar.
+
+0b. **Lijnstijl per modaliteit, zodra de grondstofkleur bevalt.** De brief-tabel zegt *kleur =
+   grondstof, lijnstijl = modaliteit*; de kleur-helft staat nu, de stijl-helft niet. Vandaag
+   dragen alleen de stippel-conventie en de overslagmarkers nog waar de drager wisselt — je ziet
+   dus wél wáár en niet meer wélke. Kandidaat: streeppatroon of dikte per modaliteit in
+   `stroomstijl.js`. **Bewust uitgesteld** tot de kleuromschakeling zelf beoordeeld is.
+
+## 🟠 NOG OPEN 2026-08-07 (eerder) — de visuele fase loopt, en die moet verder getuned
 
 1. **De gloedkoepels hebben de kern/halo-behandeling nog niet gehad.** De lijnen zijn twee keer
    herzien (kern erbij, daarna kometen); de koepels staan nog op de instellingen van vóór die
    ronde en zijn nu de zwakste schakel in het beeld. Zelfde diagnose verwachten: te veel rand,
    te weinig definitie.
 
-2. **De ondergrond dimmen onder de gloed.** Op satelliet verdwijnt het effect volledig — additief
+2. **De ondergrond dimmen onder de gloed.** ⚠️ *Sinds `?v=117` des te zichtbaarder: de lijnen
+   zijn feller geworden, de ondergrond niet.* Op satelliet verdwijnt het effect volledig — additief
    licht heeft op een lichte daglichtfoto niets om tegen af te steken. Daarmee is de night-side-
    vraag uit de ontwerpbrief **geen schoonheidsvraag maar een voorwaarde**. Twee opties: de
    satelliet dimmen ónder de gloedlaag, of deze laag aan een donkere modus koppelen.

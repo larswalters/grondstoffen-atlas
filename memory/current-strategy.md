@@ -1,7 +1,36 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: de visuele fase M26/LAR-490 begonnen — gloedknopen en kometen, `?v=116`)*
+*Last updated: 2026-08-07 (laatst: de atlas kleurt op grondstof + drie hemelsbreed-varianten, `?v=117`)*
 
-## Stand 2026-08-07 (laatst) — de visuele fase: uitgezochte knopen, en beeld door ontkoppeling
+## Stand 2026-08-07 (laatst) — twee weergave-assen: ROUTEWERK en ATLAS zijn niet hetzelfde beeld
+
+1. **De atlas kleurt op GRONDSTOF, het routewerk op MODALITEIT — en dat zijn twee vragen aan
+   hetzelfde beeld.** *Waar houdt de zee op en begint de barge?* is de vraag tijdens het bouwen en
+   controleren van een route; *waar gaat het koper heen?* is de vraag die de atlas beantwoordt.
+   Beide standen zitten als knop in de HUD, met de **routebouw-weergave als default** — die is
+   bewezen (`?v=111`) en er is geen reden hem aan te raken. `design/lod-ontwerpbrief.md` schreef
+   deze splitsing al voor (*kleur = grondstof, lijnstijl = modaliteit*); de modaliteitskleur was
+   dus nooit de eindvorm, hij was het gereedschap.
+
+2. **`v2/src/stroomstijl.js` is de enige bron van waarheid voor kleur én lijnvorm.** Lijn
+   (`stroomroute.js`), draad + komeet (`stroomleven.js`) en gloedkoepel (`gloednodes.js`) lezen
+   dezelfde tabel, dus een grondstof kan per constructie geen twee kleuren meer hebben. ⚠️ Ze
+   droegen alle drie een eigen kopie — in `stroomleven.js` stond letterlijk *"zelfde kleuren als
+   stroomroute.js"* — en dat is precies de klasse die dit project al twee keer betaalde ("de
+   legenda loog", de generator↔uitvoer-drift). **Een onbekende sleutel waarschuwt nu** in plaats
+   van stilzwijgend wit te worden.
+
+3. **Vier lijnvormen: de gemeten route + drie hemelsbreed-varianten** (plat · boog · boog alleen
+   op zee). ⚠️ **Hemelsbreed = grootcirkel kop→staart PER BEEN**, niet mijn→eindfabriek in één
+   boog: de benen zijn precies de stukken tussen twee overslagpunten, en één boog over de hele
+   keten maakt die overslag onzichtbaar. ⚠️ **Het besluit "de lijnen blijven op de grond" geldt de
+   GEMETEN routes** — een hemelsbreed-lijn doet die geografische claim per definitie niet, en het
+   optillen is daar zelfs eerlijker. Wie de échte route optilt, draait het besluit wél om.
+
+4. **De knopen zijn gloeiende cirkels** in de grondstofkleur (kern + halo + ring, wereldmaat mét
+   pixel-minimum, horizon via grootte 0 — het `gloednodes`-patroon). Wit gebleven in
+   modaliteitsmodus, zodat het routewerk hetzelfde beeld houdt.
+
+## Stand 2026-08-07 (eerder) — de visuele fase: uitgezochte knopen, en beeld door ontkoppeling
 
 1. **De gloedlaag is een LOSSE laag, precies zoals het bakken-besluit voorschrijft.**
    `v2/data/gloednodes-koper.json` raakt `stroomroute-*.json` niet en wordt niet gebakken.
