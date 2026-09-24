@@ -1,5 +1,40 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: de atlas kleurt op grondstof + drie hemelsbreed-varianten, `?v=117`)*
+*Last updated: 2026-09-25 (laatst: M29 koper verhaal-compleet — lichte werkwijze, sitelaag, zeven ketens, `?v=121`)*
+
+## Stand 2026-09-25 (laatst) — M29: koper verhaal-compleet onder de LICHTE werkwijze
+
+1. **Twee werkwijzen naast elkaar, bewust.** De volledige routebrief (`routebrief-werkwijze.md`, 600–1.100
+   regels, z16–z19-ankers, productvraag-ladder) blijft de norm voor de zes bestaande brieven en voor elke
+   keten die later een ankercheck krijgt. De **lichte werkwijze** (`routebrief-licht.md`) is de norm voor
+   M29 en verder: brief ≤ ~100 regels, ankers op site-niveau (4 decimalen, één Esri-blik z14–z15, status
+   bron-gelegd / aannemelijk / onzeker), via-punten 3–8 per landbeen en alleen bij een corridorkeuze, geen
+   last-mile-benen, fase D alleen bij één bron, toets = bake-uitvoer (km ±15%, naden ≤ 5 km) + blik op de bol.
+   Lars' reden: *"elke stroom met dezelfde hoeveelheid aandacht … vereist veel te veel; we moeten iets
+   sneller zodat het visuele plaatje sneller in beeld komt."*
+2. **De eerlijkheidsregels zijn NIET versoepeld.** Stippel = "hier reikt het net niet" of "eigen
+   verbinding" (§7). Een been waarvan alleen de *bestemming* op één bron rust wordt gemeten en doorgetrokken
+   getekend, met "aannemelijk" in de beennaam en in de brief — de onzekerheid zit in de tekst, niet in de lijn.
+   Geen coördinaat wordt verzonnen; een gat in OSM wordt een stippel met de reden in de naam.
+3. **Onderzoek parallel (agenten), geometrie sequentieel (ik).** Eén agent per keten schrijft de brief mét
+   satellietblikken; de bakes (wegscans, spoorroutes, aanlopen, `hecht_marnet route`) draaien daarna keten
+   voor keten, de zware scans op de achtergrond. Negen brieven in ~25 minuten wandtijd per agent.
+4. **Wegbenen: profiel per been in `maak_stroombeen_weg.py`**, met twee nieuwe sleutels: `corridorKlassen`
+   (kleine klassen corridor-breed toelaten — de OT-weg is `tertiary`, de Carretera del Cobre `unclassified`)
+   en `eindToegangPrivaat` (bedrijfs-privéwegen binnen de 12-km-eindzone; zit in de cachevingerafdruk).
+   `track` komt de scanner niet door, ook niet via corridorKlassen → stippel.
+5. **Spoorbenen: `toets_spoorroute.mjs` van via-punt naar via-punt** en de stukken aan elkaar plakken (naad
+   0 m). Een vrije Dijkstra kiest soms een omweg (Hamburg–Bremen via Soltau: 160 i.p.v. 113 km) — één
+   via-punt op de bekende corridor lost dat op. Emplacementen zitten niet in het 1-op-1-net → stippels.
+6. **Zee: MARNET routeert kade → kade, maar snap op ZEEknopen** (`marnet_zee(m)["knoop_id"]`): de dichtst-
+   bijzijnde MARNET-knoop kan een havenknoop zijn (San Antonio: 3 km haven, 74 km zee). Waar de zeeknoop ver
+   ligt: `maak_havenaanloop.py` over water als stippel (Matarani 72, Antofagasta 97, Mejillones 136 km); waar
+   de 1:10M-kust de haven niet kent (Hamburg) loopt dat tool vast → rechte stippel.
+7. **Gedeeld been = letterlijke kopie** (Yangtze-monding → Tongling voor Las Bambas en Chuqui = kopie van
+   Collahuasi b5, zelfde eindpunt 31.51,121.4187); **vertakking = `vertakt_van`** (`voeg_been_toe.py
+   --vertakt-van N` meet de naad tegen het moederbeen). Zo blijft één corridor één versie.
+8. **Gloedlaag: gewicht = capaciteit in kt Cu/j**, gevoed uit `design/koper-sitelaag.json` via
+   `voeg_sites_toe.py` (idempotent, `w-*`-ids); Chinese registersites zonder bron houden hun schatgewicht.
+
 
 ## Stand 2026-08-07 (laatst) — twee weergave-assen: ROUTEWERK en ATLAS zijn niet hetzelfde beeld
 

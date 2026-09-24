@@ -1,5 +1,44 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: stroomknopen als gloedhotspots, ondergrond dimmen)*
+*Last updated: 2026-09-25 (laatst: M29 — variant 1 onder de lichte werkwijze)*
+
+## 2026-09-25 — M29: variant 1 onder de lichte werkwijze
+
+- **2026-09-25 · ✅ LARS — VARIANT 1 (VERHAAL-COMPLEET) MET EEN TEMPO-EIS.** *"Elke stroom met dezelfde hoeveelheid
+  aandacht als die we nu hebben vereist veel te veel; we moeten iets sneller zodat het visuele plaatje sneller in
+  beeld komt."* Gevolg: één gemeten keten per handelsas (geen v1-compleet met ~14 ketens) én een lichtere brief.
+- **2026-09-25 · DE LICHTE WERKWIJZE IS EEN PRECISIE-BESLUIT, GEEN EERLIJKHEIDS-BESLUIT** (`routebrief-licht.md`).
+  Wat versoepelt: brieflengte, ankerkorrel (site-niveau, één satellietblik), via-punten (alleen bij corridor-
+  keuze), last mile (geen eigen been), fase D/E, de toets (bake-uitvoer i.p.v. ankercheck-ronde). Wat niet
+  versoepelt: stippel = "net reikt niet", zee = router / land = via-punten, geen verzonnen coördinaten, bakken via
+  `bak_stromen.sh`, bestaande ankers hergebruiken. Reden: het verhaal is het product, de 100 m niet.
+- **2026-09-25 · "AANNEMELIJK" STAAT IN DE TEKST, NIET IN DE LIJNSTIJL.** Eén bron voor de bestemming volstaat om een
+  been te tekenen (gemeten, doorgetrokken) mét "aannemelijk" in de beennaam en de brief. Zou de stippel dat
+  dragen, dan vervaagt §7 ("stippel = net reikt niet") — precies wat 2026-07-28 verbood.
+- **2026-09-25 · ONDERZOEK PARALLEL, GEOMETRIE SEQUENTIEEL.** Negen agenten schreven tegelijk elk één brief (geen
+  gedeelde bestanden); de bakes deed ik daarna keten voor keten omdat `maak_stroombeen_weg.py` en
+  `bak_stromen.sh` gedeelde bestanden zijn. Zware wegscans op de achtergrond.
+- **2026-09-25 · `corridorKlassen` EN `eindToegangPrivaat` ZIJN PROFIELSLEUTELS, GEEN GLOBALE VERSOEPELING.** Corridor-
+  breed `unclassified` trekt elk dorpsspoor het venster in; daarom per profiel, en de privaat-vlag zit in de
+  cachevingerafdruk. Gemeten aanleiding: OT-weg = `tertiary` (eerste bake 129 km westwaarts uit), Carretera del
+  Cobre = `unclassified`+`permit` achter Codelco-privéwegen ("geen wegpad").
+- **2026-09-25 · EEN OSM-GAT WORDT EEN STIPPEL, GEEN GELEENDE GEOMETRIE** — Carretera del Cobre 2× (Maitenes–
+  Confluencia alleen als *proposed*; 5,6 km *track* bij Coya, en track komt de scanner niet door). Drie gemeten
+  stukken + twee stippels i.p.v. één "bijna goede" lijn.
+- **2026-09-25 · VIA-PUNTEN LIGGEN ÓP DE DOORGAANDE WEG.** Een via-punt in het voetgangerscentrum van Rancagua snapte
+  op een los stukje `unclassified` → "geen wegpad tussen punt 1 en 2"; 300 m verderop op de Av. Miguel Ramírez
+  routeert het meteen. (Zelfde klasse als de afrit-les van 2026-08-04.)
+- **2026-09-25 · GEDEELD BEEN = LETTERLIJKE KOPIE; VERTAKKING = `vertakt_van`.** Yangtze-monding → Tongling voor Las
+  Bambas en Chuqui is een kopie van Collahuasi b5 (zelfde zee-eindpunt 31.51,121.4187); Lobito fase D en de
+  PT Smelting-tak zijn vertakkingen. `voeg_been_toe.py --vertakt-van N` meet de naad tegen het moederbeen —
+  zonder die optie meldde het tool een vals "gat" van 70 km.
+- **2026-09-25 · ZEE SNAPT OP ZEEKNOPEN.** MARNET's dichtstbijzijnde knoop kan een haven-/bulkknoop zijn (San Antonio:
+  3 km haven, 74 km zee → bake weigerde met snap 74 km). Aanloop-stippels over water waar de zeeknoop ver ligt;
+  bij Hamburg (1:10M-kust kent de haven niet) een rechte stippel, want `maak_havenaanloop.py` loopt daar vast.
+- **2026-09-25 · GLOEDGEWICHT = CAPACITEIT IN kt Cu/j** (45 nieuwe sites + de vier grote Chinese registersites); de rest
+  houdt het schatgewicht met de `gewicht_waarschuwing`. Schaal: Escondida 1.305, Guixi 1.100 — de koepelstraal
+  (0,3 km × √g ≈ 10 km) past bij de terreinen.
+- **2026-09-25 · DE VPS-PREVIEW IS WEG** (akkoord Lars): geen tweede publicatiekanaal dat stil achterloopt.
+
 
 ## 2026-08-07 (3e sessie) — de knopen worden hotspots
 

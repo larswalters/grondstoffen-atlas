@@ -1,6 +1,22 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-25 - M29 koper verhaal-compleet: lichte werkwijze, sitelaag, zeven ketens + Lobito fase D (`?v=120` → `?v=121`)
+
+Lars koos variant 1 (*verhaal-compleet*) met de eis "sneller, zodat het visuele plaatje eerder in beeld
+komt" en gaf akkoord om de VPS-preview weg te halen. In één sessie: de lichte werkwijze vastgelegd
+(`v2/design/routebrief-licht.md`), Linear-milestone M29 met LAR-555..564, negen onderzoeksagenten parallel
+(elk één brief van 65–90 regels met satellietblikken), daarna keten voor keten gebakken: Lobito fase D als
+aftakking naar de DG-kade Emmerich (`?v=120`), en (`?v=121`) de sitelaag met 81 sites (45 nieuw, gewicht =
+capaciteit), TFM→Durban→China (16.021 km), Las Bambas→Tongling (19.421), Chuqui→Mejillones→Tongling (19.856),
+El Teniente→San Antonio→Panama→Rotterdam (14.459), Grasberg→Manyar (2.974), Oyu Tolgoi→Bayannur (300, geen
+zee), Antofagasta→Brunsbüttel→Aurubis→Emmerich (14.256). Twaalf stromen op de bol, 0 console-fouten.
+Gereedschap: `corridorKlassen`/`eindToegangPrivaat` in `maak_stroombeen_weg.py`, `--vertakt-van` in
+`voeg_been_toe.py`, `voeg_sites_toe.py`, zeven bak-functies in `bak_stromen.sh`. Lessen: OSM-gaten → stippels,
+via-punten óp de weg, spoor-Dijkstra met via-punt, MARNET-zeeknoop ≠ havenknoop, `maak_havenaanloop` hangt
+op Hamburg. Alle M29-issues Done; wiki-samenvatting `2026-09-25-grondstoffen-atlas-m29-koper-verhaal-compleet`.
+
+
 
 ## 2026-08-07 (3e sessie) - De belangrijke punten van een stroom worden gloeihotspots
 

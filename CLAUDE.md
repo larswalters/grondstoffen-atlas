@@ -1,3 +1,18 @@
+> **🧭 M29 · KOPER VERHAAL-COMPLEET — ZEVEN GEMETEN KETENS EN EEN WERELDWIJDE SITELAAG IN ÉÉN SESSIE,
+> LIVE `?v=121` (2026-09-25, LAATSTE).** Commits `12f199a` → `73c5c48` (+ `1154a8d` Lobito fase D, `?v=120`).
+>
+> **✅ LARS:** *"die preview op de vps mag weg inderdaad en dan doen we variant 1 want elke stroom met dezelfde
+> hoeveelheid aandacht als die we nu hebben vereist veel te veel, we moeten iets sneller zodat het visuele
+> plaatje sneller in beeld komt."* → de **lichte werkwijze** (`v2/design/routebrief-licht.md`: brief ≤ ~100
+> regels, ankers op site-niveau met één satellietblik, via-punten alleen bij een corridorkeuze, geen last-mile-
+> benen, toets = bake-uitvoer). Stippel blijft "hier reikt het net niet"; "aannemelijk" staat in de beennaam.
+>
+> **Gebouwd:** sitelaag 81 sites met capaciteit (`voeg_sites_toe.py`) · TFM→Durban→China · Las Bambas→Tongling ·
+> Chuqui→Mejillones→Tongling · El Teniente→San Antonio→Panama→Rotterdam · Grasberg→Manyar · Oyu Tolgoi→Bayannur
+> (geen zee) · Antofagasta→Brunsbüttel→Aurubis→Emmerich · Lobito fase D (`vertakt_van`). Nieuwe profielsleutels
+> `corridorKlassen` / `eindToegangPrivaat`; `voeg_been_toe.py --vertakt-van`. VPS-preview verwijderd.
+> M29 = LAR-555..564 Done. Details: `memory/session-summaries.md` en de bak-noten §9 in elke brief.
+
 > **💡 DE BELANGRIJKE PUNTEN VAN EEN STROOM WORDEN GLOEIHOTSPOTS — EN DE ONDERGROND KAN DIMMEN,
 > LIVE `?v=119` (2026-08-07, LAATSTE).** Commit `5f0d11f`.
 >
@@ -888,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-08-07 (laatst: stroomknopen als gloedhotspots + ondergrond dimmen, live ?v=119)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-25 (laatst: M29 koper verhaal-compleet — lichte werkwijze, sitelaag, zeven ketens, live ?v=121)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3162,6 +3177,14 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-25 · ✅ LARS — VARIANT 1 (VERHAAL-COMPLEET) ONDER EEN LICHTE WERKWIJZE.** Eén gemeten keten per
+  handelsas, brief ≤ ~100 regels, ankers op site-niveau, toets = bake-uitvoer; stippel = "net reikt niet" blijft,
+  "aannemelijk" in de beennaam. Zie `v2/design/routebrief-licht.md` en `memory/decisions.md`.
+- **2026-09-25 · `corridorKlassen` en `eindToegangPrivaat` zijn PROFIELsleutels** in `maak_stroombeen_weg.py` (OT-weg =
+  tertiary, Carretera del Cobre = unclassified/permit achter Codelco-privéwegen); OSM-gaten worden stippels.
+- **2026-09-25 · Gedeeld been = letterlijke kopie; vertakking = `vertakt_van`** (`voeg_been_toe.py --vertakt-van N`).
+- **2026-09-25 · Zee snapt op ZEEknopen** (`marnet_zee(m)["knoop_id"]`; San Antonio: havenknoop 3 km, zeeknoop 74 km).
+- **2026-09-25 · Gloedgewicht = capaciteit in kt Cu/j** (`design/koper-sitelaag.json` → `voeg_sites_toe.py`).
 - **2026-08-07 (3e) · ✅ VERZOEK LARS — DE BELANGRIJKE PUNTEN VAN EEN STROOM WORDEN GLOEIHOTSPOTS**
   in de atlasmodus, met het koepel-mechanisme van `gloednodes.js` (nu gedeeld via `v2/src/gloed.js`,
   twee bronnen). ⚠️ Niet alleen mooier: het maakt de **optel-claim** van de ontwerpbrief voor het
@@ -3922,6 +3945,10 @@ Daarnaast `design/`:
 - `_brief-template.md` — **herbruikbare template voor de grondstof-brief** (alle nodes/stromen op een rij
   vóór het code wordt; sluit 1-op-1 aan op het `.js`-schema). Kopieer → `data/<grondstof>.md` en vul in.
 - `goud.md` — het uitgewerkte goud-ontwerp (wordt bij LAR-397/398 een volledig ingevulde brief).
+
+En in `v2/design/` (sinds 2026-09-25):
+- `routebrief-licht.md` — de **lichte werkwijze + sjabloon** (M29 en verder); `routebrieven/koper-*.md` de brieven
+  (§9 = bak-noot met benen/km/lessen); `koper-sitelaag.md/.json` — de bronlijst van de wereldwijde sitelaag.
 
 De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\General\grondstoffen-atlas\`.
 

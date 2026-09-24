@@ -1,5 +1,32 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-08-07 (laatst: stroomknopen als gloedhotspots + ondergrond dimmen, `?v=119`)*
+*Last updated: 2026-09-25 (laatst: M29 af — sitelaag + zeven ketens live `?v=121`)*
+
+## 🔴 NIEUW 2026-09-25 (laatst) — M29 is af; wat er nu ligt
+
+0. **Lars kijkt op de bol** (`?v=121`, atlasmodus *per grondstof* + *donker*, twaalf stroomknoppen). Vraag:
+   wat mist er aan het koperverhaal, en is dit de vorm waarin de andere grondstoffen moeten volgen?
+1. **Terug naar de visuele fase (LAR-490, In Progress)** — de punten van 2026-08-07 staan nog:
+   hemelsbreed-variant kiezen · lijnstijl per modaliteit · koepels kern/halo · stadslichten · kometen uit
+   volume. Nieuw: de brieven dragen jaarvolumes per keten, dus het losse metadatabestand met volume per
+   been (besluit 2026-08-06) kan nu gevuld worden.
+2. **Open punten per keten** (brieven §7): Manyar-loskade (niet-Esri-bron nodig) · ETEO-emplacement en
+   San Antonio-kade (onzeker) · bonded-loods Ganqimaodu · Aurubis' Chileense laadhaven · Durban-aandeel in
+   het TFM-volume · afnemer Tongling voor Las Bambas/Chuqui = samenvloeiingsaanname (Beilun→Guixi staat klaar).
+3. **Sitelaag-vervolg:** registerronde voor Chinese sites buiten het MEE-register (Daye, Yanggu Xiangguang,
+   Jinchuan, Julong — Julong is via OSM vindbaar: 29,6332/91,5942); Onsan-coördinaat (naamloze polygoon) en
+   het KCC-cijfer (Glencore rapporteert KCC+Mutanda samen) nalopen; Zhezkazgan, Sar Cheshmeh, Chagres,
+   Potrerillos, Aurubis Lünen liggen klaar (buiten het plafond van 45 gehouden).
+4. **LAR-539 spoornet 1-op-1 afmaken** zou vier emplacement-stippels dichten (Chuqui 9 km, Pillones 3,4,
+   Matarani 1,7, TGN-spur 2,9) — alleen als de bol erom vraagt.
+5. **`maak_havenaanloop.py` blijft hangen op havens die de 1:10M-kust niet kent** (Hamburg): een
+   time-out of een snelle "geen water op deze korrel"-afbreker zou de volgende keer minuten schelen.
+6. **`data/_chokepoints.js` zet `grens-gashuunsukhait` ~140 km naast de echte overgang** (v1-data, gemeld
+   door de OT-agent) — v1 is bevroren, maar noteren voor als v1-data ooit hergebruikt wordt.
+
+> ✅ AFGEHANDELD 2026-09-25: de VPS-preview is weg (punt 4 van 2026-08-07) · Lobito fase D getekend (punt 1 van
+> 2026-08-06) · Las Bambas → Matarani gebakken (punt 2 van 2026-08-06) · gewichten in de gloedlaag zijn nu
+> capaciteiten waar een bron is (punt 6 van 2026-08-07).
+
 
 ## 🔴 NIEUW 2026-08-07 (laatst) — na de omschakeling naar grondstofkleur (`?v=117`)
 

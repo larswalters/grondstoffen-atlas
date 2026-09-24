@@ -104,6 +104,15 @@ goud ✅, koper ✅, uranium ✅, zeldzame aardmetalen ✅, nikkel ✅, olie ✅
 Per grondstof herhalen we dezelfde stap: echte mijnen en fabrieken met naam en
 coördinaat, en de werkelijke handelsroutes met volume en transportmodus.
 
+## v2 · de koperketens (M29, 2026-09-25)
+
+De v2-bol (`v2/`, live op `/v2/`) toont twaalf gemeten stromen op de exacte kades — sinds M29 zeven
+koperketens onder de **lichte werkwijze** (`v2/design/routebrief-licht.md`): TFM→Durban→China,
+Las Bambas→Tongling, Chuqui→Mejillones→Tongling, El Teniente→San Antonio→Panama→Rotterdam, Grasberg→Manyar,
+Oyu Tolgoi→Bayannur en Antofagasta→Brunsbüttel→Aurubis→Emmerich, plus een gloedlaag van 81 kopersites met
+capaciteit. Elke keten heeft een brief in `v2/design/routebrieven/` en een bak-functie in
+`v2/tools/bak_stromen.sh`; gestippeld betekent "hier reikt het net niet".
+
 ## Bronnen / betrouwbaarheid
 
 De cijfers zijn indicatief en afgerond, gebaseerd op openbare bronnen (USGS

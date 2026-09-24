@@ -1,5 +1,30 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-08-07 (Pages-outage voorbij; nieuw: Chrome-spawn in de sandbox, aggregaat verbergt verschil)*
+*Last updated: 2026-09-25 (M29-bakes: track/scanner, havenaanloop-hang, onzekere ankers, emplacement-stippels)*
+
+## 🟡 NIEUW 2026-09-25 — lessen en open risico's uit de M29-bakes
+
+1. **`track` komt de wegscanner niet door, ook niet via `corridorKlassen`** — de H-27 bij Coya (5,6 km track)
+   bleef onbereikbaar; opgelost met een knip + stippel. Wie ooit track wil, moet in `fetch_landnet` kijken.
+2. **`maak_havenaanloop.py` hangt op havens die de 1:10M-kust niet kent** (Hamburg-Peute: ~20 min op 99% CPU,
+   handmatig gestopt). Geen time-out in het tool. Rechte stippel gebruikt.
+3. **Overpass was de hele sessie onbereikbaar op alle spiegels** (timeouts/resets); agenten weken uit naar
+   Nominatim/Photon, lokale `raw1op1`-data en M25-corridorvertices. Het WebSearch-budget per agent (200) raakte
+   bij vier agenten op — de brieven zijn wel volledig gebrond (gefetchte pagina's/PDF's).
+4. **Onzekere ankers (in de brieven zo gemarkeerd):** Manyar-loskade (Esri-opname van vóór de oplevering),
+   ETEO-emplacement (Olivar vs Los Lirios), San Antonio-kade (DP World vs STI), bonded-loods Ganqimaodu
+   (welke loods "Huafang" is), Aurubis' Chileense laadhaven (Antofagasta aannemelijk).
+5. **Vier emplacement-stippels omdat het 1-op-1-spoornet ze mist:** Chuqui-mijnemplacement 9 km, Pillones-
+   spoorlus 3,4, Matarani-havensporen 1,7, TGN-spur 2,9 (LAR-539-klasse).
+6. **De eerste OT-bake had een via-punt 14 km naast de weg** en week 129 km westwaarts uit; de snoei van
+   keerlussen verbergt zo'n fout deels (35 km weg, de omweg bleef). Les: bij een snap > 5 km op een via-punt
+   eerst de wegklasse controleren vóór je de km-toets gelooft.
+7. **Ventanas → San Antonio meet 143,8 km tegen 130 gepubliceerd (+10%)** — buiten de ±10% van het tool,
+   binnen de lichte ±15%; de corridor via Casablanca/Algarrobo is de aanname, de Codelco-pilot noemt geen route.
+8. **`data/_chokepoints.js` (v1) zet `grens-gashuunsukhait` ~140 km naast de echte overgang** (42,60/105,90 vs
+   42,41/107,57). v1 is bevroren; niet gefixt.
+9. **Twaalf stromen standaard aan** — visueel druk op wereldhoogte; performance was in orde (geen fouten,
+   laden < 1 s per laag), maar Lars' oordeel over de drukte is de echte toets.
+
 
 ## 🟡 NIEUW 2026-08-07 (2e sessie) — twee gereedschapslessen
 
