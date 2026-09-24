@@ -30,6 +30,12 @@ meters is een PROCESGAT dat het ontbrekende anker aanwijst (Guixi 584 m,
 De Soto 443 m). Boven --max-gat-km weigert het script, want dan is het geen
 procesgat meer maar een fout uiteinde.
 
+VERTAKKING (2026-09-24, lichte werkwijze M29): `--vertakt-van N` meet de naad
+tegen het dichtstbijzijnde punt van bestaand been N in plaats van tegen het
+einde van de keten, en zet 'vertakt_van': N op het nieuwe been. Zo kan fase D
+van de Lobito-keten (Rijn → Industriehafen Emmerich, DG-kade) als aftakking
+halverwege been 5 worden aangehecht zonder een vals "gat" van 70 km.
+
 Draaien:
     python v2/tools/voeg_been_toe.py \\
         --stroom v2/data/stroomroute-koper-collahuasi-tongling.json \\
@@ -102,6 +108,13 @@ def main():
                     help="grens op de naad tussen het laatste bestaande been "
                          "en het eerste nieuwe (default 1,0 km). Erboven is het "
                          "geen procesgat maar een fout uiteinde")
+    ap.add_argument("--vertakt-van", type=int, default=None, metavar="N",
+                    help="het nieuwe been is een VERTAKKING van bestaand been N "
+                         "(1-gebaseerd): de naad wordt gemeten tegen het "
+                         "dichtstbijzijnde punt van dát been i.p.v. tegen het "
+                         "einde van de keten, en het been krijgt 'vertakt_van': N. "
+                         "Voor een aftakking halverwege een corridor (lichte "
+                         "werkwijze M29: fase D Emmerich, LAR-564)")
     ap.add_argument("--droog", action="store_true", help="alleen rapporteren")
     args = ap.parse_args()
 
@@ -145,13 +158,31 @@ def main():
                           "_bron": "rechte lijn"})
 
     # ── de naad naar het bestaande laatste been ────────────────────────────
-    staart = d["benen"][-1]["punten"][-1]
     kop = nieuw[0]["punten"][0]
-    gat = bm.gc_km(tuple(staart), tuple(kop))
     print(f"stroom: {d['stroom']} — {oude_benen} benen · {oude_km:,.1f} km")
-    print(f"naad naar het bestaande laatste been "
-          f"[{d['benen'][-1]['modaliteit']}] {d['benen'][-1]['naam']}:")
-    print(f"  {gat*1000:,.0f} m")
+    if args.vertakt_van is not None:
+        # ── vertakking: de naad is de afstand tot het DICHTSTBIJZIJNDE punt van
+        # het moederbeen, niet tot het einde van de keten. Een aftakking begint
+        # per definitie halverwege — tegen het keteneinde meten zou hier altijd
+        # tientallen km "gat" melden dat geen gat is.
+        if not (1 <= args.vertakt_van <= oude_benen):
+            sys.exit(f"--vertakt-van {args.vertakt_van}: de stroom heeft "
+                     f"{oude_benen} benen")
+        moeder = d["benen"][args.vertakt_van - 1]
+        j, gat = min(((j, bm.gc_km(tuple(p), tuple(kop)))
+                      for j, p in enumerate(moeder["punten"])), key=lambda t: t[1])
+        print(f"vertakking van been {args.vertakt_van} "
+              f"[{moeder['modaliteit']}] {moeder['naam']}:")
+        print(f"  naad tot punt {j}/{len(moeder['punten'])} van het moederbeen: "
+              f"{gat*1000:,.0f} m")
+        for b in nieuw:
+            b["vertakt_van"] = args.vertakt_van
+    else:
+        staart = d["benen"][-1]["punten"][-1]
+        gat = bm.gc_km(tuple(staart), tuple(kop))
+        print(f"naad naar het bestaande laatste been "
+              f"[{d['benen'][-1]['modaliteit']}] {d['benen'][-1]['naam']}:")
+        print(f"  {gat*1000:,.0f} m")
     if gat > args.max_gat_km:
         sys.exit(
             f"GEWEIGERD: de naad is groter dan {args.max_gat_km:g} km. Een gat van "
