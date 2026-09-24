@@ -242,6 +242,16 @@ const STROMEN = [
   // de routebrief (§5). Liever een been dat ophoudt waar het bewijs ophoudt dan
   // een lijn naar een plausibel-maar-ongelegd punt (de Waalhaven-klasse).
   { sleutel: "li-gz", bestand: "stroomroute-lithium-greenbushes-zhangjiagang.json", aan: true },
+  // ── M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25) ──
+  // Eén gemeten keten per handelsas; ankers op site-niveau; stippel = hier
+  // reikt het net niet. Zie v2/design/routebrief-licht.md en de brieven.
+  { sleutel: "cu-td", bestand: "stroomroute-koper-tfm-durban.json", aan: true },
+  { sleutel: "cu-lt", bestand: "stroomroute-koper-lasbambas-tongling.json", aan: true },
+  { sleutel: "cu-cq", bestand: "stroomroute-koper-chuqui-tongling.json", aan: true },
+  { sleutel: "cu-er", bestand: "stroomroute-koper-elteniente-rotterdam.json", aan: true },
+  { sleutel: "cu-gm", bestand: "stroomroute-koper-grasberg-manyar.json", aan: true },
+  { sleutel: "cu-of", bestand: "stroomroute-koper-oyutolgoi-feishang.json", aan: true },
+  { sleutel: "cu-ah", bestand: "stroomroute-koper-aurubis-hamburg.json", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -280,7 +290,7 @@ function toonStroomNoot() {
 }
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "120", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "121", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -308,7 +318,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "120", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "121", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -411,7 +421,7 @@ if (TOON.aisgloed) laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
 // Zie de kop van gloednodes.js — als hier alsnog een hotspot-object nodig blijkt,
 // klopt de ontwerpbrief niet.
 let GLOEDNODES = null;
-laadGloednodes(VECTOR_R, "112", GLOBE.camera, GLOBE.renderer)
+laadGloednodes(VECTOR_R, "121", GLOBE.camera, GLOBE.renderer)
   .then((g) => {
     GLOEDNODES = g;
     GLOBE.globeGroup.add(g.groep);
@@ -424,7 +434,7 @@ laadGloednodes(VECTOR_R, "112", GLOBE.camera, GLOBE.renderer)
     const noot = document.getElementById("gloedNodeNoot");
     if (noot) {
       noot.textContent =
-        `${g.stats.sites} uitgezochte kopersites · Tongling en Guixi`;
+        `${g.stats.sites} kopersites met capaciteit · China-register + wereldwijde sitelaag (M29)`;
     }
   })
   .catch((e) => console.warn("[atlas v2] gloednodes niet geladen:", e.message));
