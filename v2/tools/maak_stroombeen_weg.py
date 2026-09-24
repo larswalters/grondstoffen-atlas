@@ -736,6 +736,240 @@ PROFIELEN = {
         "trimStaart": True,
         "uit": "stroombeen-tongling-folie.geojson",
     },
+
+    # ── Routebrief koper-kolwezi-durban (LICHTE werkwijze M29, 2026-09-24) ──
+    # Been 1: SX-EW-kathode TFM-plant (CMOC, Fungurume) → Durban DCT Pier 2 —
+    # de Copperbelt-truckcorridor (~3.000 km; de M25-bake cu-copperbelt-durban
+    # kwam op 3.068,8 km). Via-punten = OSM-wegvertices uit die M25-corridor, in
+    # reisvolgorde; de grensposten Kasumbalesa, Chirundu en Beitbridge zijn de
+    # verplichte tussenankers (wegcorridors.md). ⚠️ Venster 75 km: RN39 buigt
+    # bij Fungurume 53 km uit de rechte lijn. ⚠️ Buccleuch (N1/N3) komt uit een
+    # bake die door het Johannesburg-centrum liep — toets dat de lijn erna de
+    # N3 (Heidelberg) neemt en niet de M1/M2. Kop = plant-hart (EW-hallen op
+    # z15); de kathode-expeditiehal is niet gevonden (brief §7).
+    "koper-tfm-durban": {
+        "via": [
+            ("TFM-plant Fungurume (EW-hallen)",       (26.1975, -10.5685)),
+            ("Likasi RN39→RN1",                        (26.7355, -10.9806)),
+            ("Lubumbashi RN1",                         (27.4827, -11.6642)),
+            ("Kasumbalesa (grens DRC/Zambia)",         (27.7959, -12.2658)),
+            ("Ndola T3",                               (28.6367, -12.9688)),
+            ("Kabwe T2",                               (28.4400, -14.4426)),
+            ("Lusaka T2",                              (28.2835, -15.4278)),
+            ("Chirundu (grens Zambia/Zimbabwe)",       (28.8471, -16.0338)),
+            ("Harare A1→A4",                           (31.0467, -17.8362)),
+            ("Masvingo A4",                            (30.8343, -20.0720)),
+            ("Beitbridge (grens Zimbabwe/RSA)",        (29.9858, -22.2206)),
+            ("Polokwane N1",                           (29.4813, -23.9215)),
+            ("Buccleuch N1/N3-splitsing",              (28.0991, -26.0464)),
+            ("Durban DCT Pier 2, noordkade",           (31.0160, -29.8790)),
+        ],
+        "id": "cu-tfm-durban",
+        "naam": "TFM-plant Fungurume → Durban DCT Pier 2 (RN39/RN1 → T3/T2 → "
+                "A1/A4 → N1/N3)",
+        "extracts": ["congo-drc", "zambia", "zimbabwe", "zuid-afrika"],
+        # Zachte voorkeur (factor 3): de refs per land; "N1" matcht zowel de
+        # Congolese RN1-schrijfwijze N1 als de Zuid-Afrikaanse N1.
+        "refs": ["RN39", "RN1", "N1", "T3", "T2", "A1", "A4", "N3"],
+        "gepubliceerdKm": 3000,
+        "bronnoot": "wegcorridors.md ~3.000 km (Copperbelt → Durban); "
+                    "routeplanner 3.035; eigen M25-bake 3.068,8 km (+2,3%)",
+        "vensterKm": 75,
+        "uit": "stroombeen-tfm-durban.geojson",
+    },
+
+    # ── Routebrief koper-lasbambas-matarani (LICHTE werkwijze M29, 2026-09-24) ──
+    # Been 1: concentraat Las Bambas (MMG) → overslagstation Pillones, de
+    # "corredor minero del sur": PE-3SF → PE-3SY (RM 054-2019: Mara – Ccapacmarca
+    # – Yavi Yavi – Velille) → PE-3SG (Velille–Yauri) → PE-34E/34J (Yauri–Imata)
+    # → PE-34A. ⚠️ Het EIA-2011-tracé liep via Haquira–Santo Tomás; de 2e MEIA
+    # en de blokkades (Mara, Ccapacmarca, Yavi Yavi) leggen de trucks op de
+    # Mara-route — die is getekend. Via-punten = vertices van de M25-corridor
+    # (landnet_weg.geojson), ~3 km ná elke afslag, dus per constructie op de weg.
+    # Kop = concentrator (z15); de mijnweg naar PE-3SF (5–6 km) valt onder de
+    # eindklassen mét 'track' (mijnwegen heten in OSM vaak zo).
+    "koper-lasbambas-pillones": {
+        "via": [
+            ("Las Bambas — concentrator (laadplek)",   (-72.3357, -14.0894)),
+            ("PE-3SF ná Challhuahuacho",               (-72.2319, -14.1014)),
+            ("Mara",                                   (-72.1042, -14.0876)),
+            ("Ccapacmarca",                            (-71.9957, -14.0059)),
+            ("Yavi Yavi",                              (-71.9620, -14.1927)),
+            ("PE-3SG oost van Velille",                (-71.8590, -14.5101)),
+            ("PE-34E zuid van Yauri (Espinar)",        (-71.4165, -14.8222)),
+            ("Condoroma",                              (-71.1384, -15.3000)),
+            ("PE-34A ZW van Imata",                    (-71.1063, -15.8436)),
+            ("Pillones — overslagstation (spoorlus)",  (-71.2184, -15.9842)),
+        ],
+        "id": "cu-lasbambas-pillones",
+        "naam": "Las Bambas concentrator → Pillones (PE-3SF → PE-3SY → PE-3SG → "
+                "PE-34E/34J → PE-34A)",
+        "extracts": ["peru"],
+        # Zachte voorkeur (factor 3); OSM-Peru schrijft de refs wisselend met en
+        # zonder spatie/koppelteken.
+        "refs": ["PE-3SF", "PE-3S F", "PE-3SY", "PE-3S Y", "PE-3SG", "PE-3S G",
+                 "PE-34E", "PE-34J", "PE-34A", "3SF", "3SY", "3SG", "34E", "34A"],
+        "gepubliceerdKm": 450,
+        "bronnoot": "ProActivo 730 km totaal (weg+spoor) − ~285 spoor; fetch_landnet "
+                    "450; wegcorridors.md 435; corridor Progreso→Pillones 482,2 "
+                    "(RM); oude M25-bake 411,5 km vanaf PE-3SF",
+        "vensterKm": 50,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "stroombeen-lasbambas-pillones.geojson",
+    },
+
+    # ── Routebrief koper-elteniente-rotterdam (LICHTE werkwijze M29) ──
+    # Been 2: anodes per truck Caletones-smelter → Estación de Transferencia
+    # El Olivar/Los Lirios (ETEO) bij Rancagua, via de H-25 (Carretera del
+    # Cobre). ⚠️ ETEO-anker is ONZEKER (emplacement 1,7 km NNO van station Los
+    # Lirios); de km (±75) zijn afgeleid, H-25 = 63 km Rancagua→Caletones.
+    "koper-caletones-eteo": {
+        "via": [
+            ("Caletones-smelter (anodes)",             (-70.4503, -34.1061)),
+            ("Rancagua (H-25 → Ruta 5)",               (-70.7407, -34.1702)),
+            ("ETEO — El Olivar/Los Lirios (overslag)", (-70.7748, -34.2118)),
+        ],
+        "id": "cu-caletones-eteo",
+        "naam": "Caletones → ETEO Los Lirios (H-25 Carretera del Cobre → Ruta 5)",
+        "extracts": ["chili"],
+        "refs": ["H-25", "5", "Ruta 5", "H-10"],
+        "gepubliceerdKm": 75,
+        "bronnoot": "afgeleid: H-25 = 63 km Rancagua→Caletones/Sewell + ~12 km "
+                    "Rancagua→ETEO; geen bron publiceert het geheel",
+        "vensterKm": 25,
+        # De Carretera del Cobre is in OSM `unclassified` (access=permit) over
+        # ~60 km, met stukken `secondary`/`tertiary` (H-27/H-25): corridor-breed
+        # toelaten, anders "geen wegpad tussen punt 0 en 1" (gemeten 2026-09-25).
+        "corridorKlassen": ["unclassified", "tertiary"],
+        # De smelter hangt via Codelco's privé-servicewegen (Tramo 3, Puente
+        # Confluencia) aan de Carretera del Cobre — gemeten op de ongefilterde
+        # OSM-graaf 2026-09-25. Alleen binnen de 12-km-eindzone.
+        "eindToegangPrivaat": True,
+        "uit": "stroombeen-caletones-eteo.geojson",
+    },
+    # ⚠️ BOVENSTAAND PROFIEL ROUTEERT NIET: OSM heeft in de Carretera del Cobre
+    # een gat van 2,8 km tussen het einde van de oude weg (-34.15062,-70.54925)
+    # en Confluencia (-34.17568,-70.54976) — de nieuwe weg Maitenes–Confluencia
+    # staat er alleen als highway=proposed (gemeten op de ongefilterde graaf,
+    # 2026-09-25). Daarom twee gemeten stukken + een stippel in de bake.
+    "koper-caletones-maitenes": {
+        "via": [
+            ("Caletones-smelter (anodes)",                  (-70.4503, -34.1061)),
+            ("Variante Caletones / Carretera del Cobre",    (-70.50305, -34.09862)),
+            ("einde gekarteerde oude weg (vóór het gat)",   (-70.54925, -34.15062)),
+        ],
+        "id": "cu-caletones-maitenes",
+        "naam": "Caletones → Maitenes (Carretera del Cobre, oude weg; privé-servicewegen Codelco)",
+        "extracts": ["chili"],
+        "refs": ["H-25", "H-27"],
+        "gepubliceerdKm": 18.5,
+        "bronnoot": "eigen meting op de ongefilterde OSM-graaf (2026-09-25): 18,5 km",
+        "vensterKm": 15,
+        "corridorKlassen": ["unclassified", "tertiary"],
+        "eindToegangPrivaat": True,
+        "uit": "stroombeen-caletones-maitenes.geojson",
+    },
+    # ⚠️ TWEEDE GAT (gemeten 2026-09-25): tussen Coya (-34.19657,-70.57698) en
+    # (-34.19650,-70.61359) staat de H-27 in OSM 5,6 km als highway=track, en
+    # track komt de scanner niet door — óók niet via corridorKlassen. Daarom
+    # nog een knip: Confluencia → Coya gemeten, stippel over de track-strook,
+    # Rancagua-rand → ETEO gemeten.
+    "koper-confluencia-coya": {
+        "via": [
+            ("Confluencia — begin gekarteerde weg (ná het gat)", (-70.54976, -34.17568)),
+            ("Coya — einde H-27 secondary (vóór de track-strook)", (-70.57698, -34.19657)),
+        ],
+        "id": "cu-confluencia-coya",
+        "naam": "Confluencia → Coya (Carretera del Cobre, unclassified/permit → H-27)",
+        "extracts": ["chili"],
+        "refs": ["H-27", "H-25"],
+        "gepubliceerdKm": 4.6,
+        "bronnoot": "eigen meting op de ongefilterde OSM-graaf: 16,0 → 20,6 km = 4,6 km",
+        "vensterKm": 10,
+        "corridorKlassen": ["unclassified", "tertiary"],
+        "uit": "stroombeen-confluencia-coya.geojson",
+    },
+    "koper-coya-eteo": {
+        "via": [
+            ("Carretera del Cobre H-27 — ná de track-strook", (-70.61359, -34.19650)),
+            # ⚠️ Via-punt ÓP de doorgaande weg (Av. Miguel Ramírez, primary), niet
+            # in het voetgangerscentrum: daar snapt het punt op een los stukje
+            # unclassified en meldt de bake "geen wegpad" (gemeten 2026-09-25).
+            ("Rancagua — Av. Miguel Ramírez (primary)",      (-70.70146, -34.17579)),
+            ("ETEO — El Olivar/Los Lirios (overslag)",       (-70.7748, -34.2118)),
+        ],
+        "id": "cu-coya-eteo",
+        "naam": "Coya-rand → Rancagua → ETEO (H-27 → Ruta 5)",
+        "extracts": ["chili"],
+        "refs": ["H-27", "5", "Ruta 5"],
+        "gepubliceerdKm": 20,
+        "bronnoot": "afgeleid: ongefilterde graaf 26,5 → 39,6 km Rancagua-centrum (13,1) + ~5 km naar ETEO",
+        "vensterKm": 20,
+        "corridorKlassen": ["unclassified", "tertiary"],
+        "uit": "stroombeen-coya-eteo.geojson",
+    },
+    # Been 4: kathode per truck Ventanas-raffinaderij → Puerto San Antonio
+    # (Codelco-pilot juli 2026: vaste truckcorridor, 130 km). Via Concón,
+    # Casablanca (Ruta 68) en Algarrobo (F-90). ⚠️ San Antonio-kade ONZEKER
+    # (westkade espigón DP World/Puerto Central; STI Molo Sur 400 m W).
+    "koper-ventanas-sanantonio": {
+        "via": [
+            ("Ventanas-raffinaderij (kathode)",        (-71.4816, -32.7596)),
+            ("Concón (F-30-E)",                        (-71.5160, -32.9220)),
+            ("Casablanca (Ruta 68)",                   (-71.4101, -33.3206)),
+            ("Algarrobo (F-90)",                       (-71.6681, -33.3692)),
+            ("San Antonio — espigón (kathodekade)",    (-71.6170, -33.5885)),
+        ],
+        "id": "cu-ventanas-sanantonio",
+        "naam": "Ventanas → Puerto San Antonio (F-30-E → Ruta 68 → F-90 → G-98-F)",
+        "extracts": ["chili"],
+        "refs": ["F-30-E", "F-30", "60", "68", "Ruta 68", "F-90", "G-98-F", "78"],
+        "gepubliceerdKm": 130,
+        "bronnoot": "Codelco-pilot 2026: truckcorridor Ventanas → San Antonio 130 km",
+        "vensterKm": 30,
+        "uit": "stroombeen-ventanas-sanantonio.geojson",
+    },
+
+    # ── Routebrief koper-oyutolgoi-china (LICHTE werkwijze M29) ──
+    # Eén scan voor de hele landketen: concentraat per truck Oyu Tolgoi-
+    # concentrator → OT-betonweg (105 km, OT LLC) → grenspost Gashuun Sukhait →
+    # bonded warehouse ~7 km achter de grens (dezelfde Mongoolse trucks, geen
+    # drager-wissel — NI 43-101) → G242 → G335 → Bayannur Feishang Copper
+    # (Qingshan-industriepark; 158,2 kt OT-concentraat in 2022). ⚠️ Bij het
+    # bakken wordt de lijn gesplitst op het bonded-anker (twee benen: OT →
+    # bonded, bonded → smelter). De km-toets geldt het geheel: 105 + 7 + ~198
+    # (OSRM) ≈ 310. ⚠️ De bonded-loods is AANNEMELIJK (welke loods "Huafang" is,
+    # is niet gebrond).
+    "koper-oyutolgoi-feishang": {
+        "via": [
+            ("Oyu Tolgoi — concentrator/zakkenplant",   (106.8360, 43.0480)),
+            ("OT-betonweg (1)",                          (106.9657, 42.9945)),
+            ("OT-betonweg (2)",                          (107.3890, 42.7729)),
+            ("OT-betonweg (3) — vs. Tavan Tolgoi-kolenweg", (107.5437, 42.5785)),
+            ("Gashuun Sukhait — grenspost",              (107.5692, 42.4146)),
+            ("Ganqimaodu — Chinese poort/douanezone",    (107.5743, 42.4089)),
+            ("bonded warehouse (Huafang, aannemelijk)",  (107.5990, 42.3740)),
+            ("G242 zuid van Ganqimaodu",                 (107.5711, 42.3887)),
+            ("afrit G242 → G335",                        (107.3697, 41.2704)),
+            ("Bayan Baolige (G335)",                     (107.0729, 41.0790)),
+            ("Bayannur Feishang Copper — smelter",       (106.8530, 40.9694)),
+        ],
+        "id": "cu-oyutolgoi-feishang",
+        "naam": "Oyu Tolgoi → Gashuun Sukhait/Ganqimaodu → bonded → Feishang-smelter "
+                "(OT-weg → G242 → G335)",
+        "extracts": ["mongolia", "china"],
+        "refs": ["G242", "G335", "S212"],
+        "gepubliceerdKm": 310,
+        "bronnoot": "OT-weg 105 km (OT LLC) + ~7 km grens→bonded (NI 43-101) + "
+                    "~198 km bonded→Feishang (OSRM; geen publicatie)",
+        "vensterKm": 40,
+        # De OT-weg staat in OSM als 'Оюутолгой - Цагаанхад' (tertiary, asfalt)
+        # + 'Цагаан хад - Гашуун сухайт' (primary): zonder tertiary corridor-breed
+        # week de eerste bake (2026-09-25) uit naar het westen (129 km i.p.v. 105,
+        # via-punt 2 op 14 km naast de weg).
+        "corridorKlassen": ["tertiary"],
+        "uit": "stroombeen-oyutolgoi-feishang.geojson",
+    },
 }
 
 # ⚠️ Kleine wegklassen: ALLEEN binnen EIND_STRAAL_KM van plant/kade (zie kop).
@@ -752,6 +986,23 @@ PROFIELEN = {
 EIND_KLASSEN_DEFAULT = ("residential", "service", "tertiary", "unclassified")
 EIND_KLASSEN = EIND_KLASSEN_DEFAULT     # wordt per profiel gezet in _kies_profiel
 EIND_STRAAL_KM = 12.0
+# ⚠️ CORRIDOR-BREED TOEGELATEN KLEINE KLASSEN, per profiel via "corridorKlassen"
+# (2026-09-25, lichte werkwijze M29). Nodig omdat sommige échte corridors in OSM
+# geen WEG_HOUD-klasse dragen: de Carretera del Cobre (Caletones → Rancagua, de
+# anodeweg van El Teniente) is `unclassified` + access=permit over ~60 km, en de
+# OT-betonweg naar Gashuun Sukhait is een privé-mijnweg. Zonder deze sleutel
+# vallen die ways buiten de 12-km-eindzone weg en meldt de bake "geen wegpad".
+# Een klasse hoort óók in eindKlassen te staan (de tag-filter), anders komt hij
+# de graaf nooit in. Bewust per profiel en niet globaal: corridor-breed
+# `unclassified` trekt anders elk dorpsspoor het venster in.
+CORRIDOR_KLASSEN = ()
+# ⚠️ PRIVÉ-TOEGANG BINNEN DE EINDZONE, per profiel via "eindToegangPrivaat": True
+# (2026-09-25). Codelco's Caletones-smelter hangt uitsluitend via
+# `highway=service access=private`-wegen (Tramo 3, Puente Confluencia) aan de
+# Carretera del Cobre; zonder deze sleutel is er "geen wegpad tussen punt 0 en
+# 1". Geldt ALLEEN voor de kleine eindklassen (dus binnen EIND_STRAAL_KM van
+# plant/kade) — de hoofdroute blijft de access-regel van fetch_landnet houden.
+EIND_TOEGANG_PRIVAAT = False
 
 TOLERANTIE = 0.10                   # de brief-toets: ±10%
 
@@ -930,10 +1181,17 @@ def _ways_uit_overpass(bb, timeout=180):
 def _kies_profiel(naam):
     """Zet de moduleglobals uit een profiel. Eén plek, zodat de rest van het
     bestand (en de bestaande grafiet-bake) letterlijk ongewijzigd blijft."""
-    global VIA_PUNTEN, CORRIDOR, UIT, EIND_KLASSEN
+    global VIA_PUNTEN, CORRIDOR, UIT, EIND_KLASSEN, CORRIDOR_KLASSEN
     p = PROFIELEN[naam]
     VIA_PUNTEN = p["via"]
     EIND_KLASSEN = tuple(p.get("eindKlassen", EIND_KLASSEN_DEFAULT))
+    CORRIDOR_KLASSEN = tuple(p.get("corridorKlassen", ()))
+    global EIND_TOEGANG_PRIVAAT
+    EIND_TOEGANG_PRIVAAT = bool(p.get("eindToegangPrivaat", False))
+    for k in CORRIDOR_KLASSEN:
+        if k not in EIND_KLASSEN:
+            raise SystemExit(f"profiel {naam}: corridorKlasse '{k}' staat niet in "
+                             "eindKlassen — de tag-filter laat hem dan nooit door")
     CORRIDOR = {
         "id": p["id"],
         "naam": p["naam"],
@@ -984,7 +1242,8 @@ def main():
     # (zelfde punten/venster), alleen de cache-sleutel verschilt.
     scan_corridor = dict(CORRIDOR)
     scan_corridor["id"] = (CORRIDOR["id"] + "+eind-" + ",".join(EIND_KLASSEN)
-                           + f"@{EIND_STRAAL_KM:g}km")
+                           + f"@{EIND_STRAAL_KM:g}km"
+                           + ("+privaat" if EIND_TOEGANG_PRIVAAT else ""))
     fl.CORRIDORS[:] = [scan_corridor]
 
     # ⚠️ RUNTIME-ONLY (2/3): weg_houden accepteert óók de kleine eindklassen
@@ -997,9 +1256,13 @@ def main():
         if houd:
             return True, ""
         soort = (tags.get("highway") or "").strip()
-        if (soort in EIND_KLASSEN
-                and (tags.get("access") or "").strip() not in fl.WEG_ACCESS_WEG):
-            return True, ""
+        if soort in EIND_KLASSEN:
+            toegang = (tags.get("access") or "").strip()
+            if toegang not in fl.WEG_ACCESS_WEG:
+                return True, ""
+            # profiel-opt-in: privéwegen van het bedrijf zelf (eindzone)
+            if EIND_TOEGANG_PRIVAAT and toegang == "private":
+                return True, ""
         return houd, reden
 
     fl.weg_houden = _weg_houden_eind
@@ -1054,8 +1317,11 @@ def main():
                    for lo, la in w["pts"])
 
     n_klein_tot = sum(1 for w in ways if w["soort"] in EIND_KLASSEN)
-    ways = [w for w in ways if w["soort"] not in EIND_KLASSEN or _bij_eind(w)]
+    ways = [w for w in ways if w["soort"] not in EIND_KLASSEN
+            or w["soort"] in CORRIDOR_KLASSEN or _bij_eind(w)]
     n_klein_mee = sum(1 for w in ways if w["soort"] in EIND_KLASSEN)
+    if CORRIDOR_KLASSEN:
+        print(f"  corridor-breed toegelaten (profiel): {'/'.join(CORRIDOR_KLASSEN)}")
     print(f"  eindklassen ({'/'.join(EIND_KLASSEN)}): {n_klein_mee:,} van "
           f"{n_klein_tot:,} kleine-klasse-ways binnen {EIND_STRAAL_KM:g} km "
           f"van plant/kade doen mee; {len(ways):,} ways totaal in de graaf")
