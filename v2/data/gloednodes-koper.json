@@ -1,7 +1,7 @@
 {
  "versie": 1,
- "toelichting": "Gloedlaag voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE knopen — nadrukkelijk geen generieke havenlijst. Site-coordinaten komen uit het MEE-emissievergunningregister; een vergunning is een VESTIGING, geen installatielijst, dus een laaddok of expeditiehal zit er principieel niet in. Complexknopen zijn afgeleid door single-linkage clustering op 5 km en dienen voor labels, interactie en flow-aggregatie — NIET als glow-object: de gloed hoort emergent te zijn uit de sites.",
- "gewicht_waarschuwing": "Alle gewichten zijn ruwe schattingen voor de visuele pilot. Niet gebruiken voor uitspraken over volume.",
+ "toelichting": "Gloedlaag voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE knopen — nadrukkelijk geen generieke havenlijst. Site-coordinaten komen uit het MEE-emissievergunningregister; een vergunning is een VESTIGING, geen installatielijst, dus een laaddok of expeditiehal zit er principieel niet in. Complexknopen zijn afgeleid door single-linkage clustering op 5 km en dienen voor labels, interactie en flow-aggregatie — NIET als glow-object: de gloed hoort emergent te zijn uit de sites. || Sinds 2026-09-24 (M29.1, LAR-556) aangevuld met de wereldwijde sitelaag uit v2/design/koper-sitelaag.json via v2/tools/voeg_sites_toe.py: ids 'w-*', gewicht = capaciteit in kt Cu/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md). De Chinese registersites houden hun schatgewicht tenzij een capaciteit bekend is.",
+ "gewicht_waarschuwing": "Chinese registersites zonder capaciteit dragen nog een ruw schatgewicht (8–120); de 'w-*'-sites en de Chinese sites mét bron dragen capaciteit in kt Cu/j. Vergelijk alleen sites met een bron in gewicht_bron.",
  "clusterregel": "single-linkage, drempel 5 km",
  "knopen": [
   {
@@ -219,8 +219,8 @@
    "grondstof": [
     "koper"
    ],
-   "gewicht": 100,
-   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "gewicht": 480.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SMM/Nerin: ontwerp 400 kt kathode (2013) → 480 kt anode na uitbreiding 2022; hele Jinguan-tak incl. het Ausmelt-terrein 680 kt kathode; TNMG-totaal 1.768 kt in 2024 [B46][B47][B48]",
    "bron": "MEE-emissievergunningregister, USCC 91340764551849860L001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
    "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
    "notitie": "Jinguan — hoofdsmelter Tongling; al anker in de koperstroom"
@@ -389,8 +389,8 @@
    "grondstof": [
     "koper"
    ],
-   "gewicht": 40,
-   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "gewicht": 28.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Schatting: TNMG's binnenlandse mijnen (Dongguashan, Anqing, Shaxi …) samen ≈ 50 kt/j ('年总产能维持5万吨'; 2022: 51,6 kt); Dongguashan ≈ 28 kt volgens sectoranalyses, niet in een primaire bron gezien [B47][B48]",
    "bron": "MEE-emissievergunningregister, USCC 913407007199458578001X (controlecijfer OK; DMS↔decimaal 0.1 m)",
    "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
    "notitie": "Dongguashan — kopermijn"
@@ -440,8 +440,8 @@
    "grondstof": [
     "koper"
    ],
-   "gewicht": 120,
-   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "gewicht": 1100.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Wood Mackenzie: 1,2 Mt anode/1,1 Mt kathode per jaar; Economic Daily: enige smelter ter wereld >1 Mt per plant; Wikipedia noemt 900 kt (2015) [B43][B44][B45]",
    "bron": "MEE-emissievergunningregister, USCC 91360000X12430120H001P (controlecijfer OK; DMS↔decimaal 0.1 m)",
    "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
    "notitie": "Guixi — grootste kopersmelter van China; anker uit fase D"
@@ -644,8 +644,8 @@
    "grondstof": [
     "koper"
    ],
-   "gewicht": 120,
-   "gewicht_bron": "natte vinger — relatief, niet gemeten",
+   "gewicht": 156.0,
+   "gewicht_bron": "capaciteit kt Cu/j — JCC-jaarverslag 2022 via 中邮证券: 15,61 万吨 (156 kt) Cu in concentraat; chinascrap: 156.106 t (2022), 'ruim 150 kt/j' [B49][B50]",
    "bron": "MEE-emissievergunningregister, USCC 91360000X12425989D001X (controlecijfer OK; DMS↔decimaal 0.1 m)",
    "korrel": "registerpunt = vestiging, niet gemeten op satelliet",
    "notitie": "Dexing — grootste dagbouw-kopermijn van China, voedt Guixi"
@@ -819,6 +819,816 @@
    "bron": "route-onderzoek — marker uit stroomroute-koper-escondida-guixi.json",
    "korrel": "gelegd tijdens het routeonderzoek",
    "notitie": "losbundel waar de trein uit Beilun aankomt"
+  },
+  {
+   "id": "w-escondida",
+   "naam": "Escondida",
+   "lon": -69.07,
+   "lat": -24.27,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 1305.0,
+   "gewicht_bron": "capaciteit kt Cu/j — BHP Operational review FY2025 (jaar t/m 30-6-2025): 1.305 kt, hoogste in 17 jaar; FY2026-guidance 1.150–1.250 kt [B1]",
+   "bron": "Wikipedia-geohack 'Escondida' (en); satelliet z14: kruis in de hoofdput, Los Colorados/Laguna Seca-plant 2–3 km NO",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste kopermijn ter wereld (BHP 57,5%); concentraat via Coloso/Antofagasta naar Chinese en Japanse smelters, plus SX-EW-kathode."
+  },
+  {
+   "id": "w-collahuasi",
+   "naam": "Collahuasi (Rosario)",
+   "lon": -68.6386,
+   "lat": -20.9914,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 558.6,
+   "gewicht_bron": "capaciteit kt Cu/j — Glencore FY2024 production report: 245,8 kt = 44%-aandeel → 100% 558,6 kt in 2024 (idem mining.com-ranking) [B2][B3]",
+   "bron": "Wikipedia-geohack 'Collahuasi mine' (en); satelliet z14: kruis in de Rosario-put, concentrator 1,5 km N",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Anglo American/Glencore 44/44; concentraat per slurryleiding naar Patache (routebrief Collahuasi→Tongling)."
+  },
+  {
+   "id": "w-el-teniente",
+   "naam": "El Teniente",
+   "lon": -70.3875,
+   "lat": -34.0878,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 459.8,
+   "gewicht_bron": "capaciteit kt Cu/j — Codelco via es-Wikipedia 'Mina El Teniente': 459.817 t fijnkoper in 2021 — ⚠️ 2024 lag lager (rotsbreuk juli 2023, herstel vanaf juli 2024 volgens Codelco's dec-2024-rapport); een 2024-cijfer per divisie is in deze ronde niet gevonden [B51]",
+   "bron": "Wikipedia-geohack 'El Teniente' (en); satelliet z14: kruis aan de rand van het Sewell/mijncomplex (gebouwen, toegangsweg, installaties W) — ondergrondse mijn zonder put",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste ondergrondse kopermijn ter wereld (Codelco); erts naar de eigen concentrator Colón, concentraat naar de smelter Caletones 8 km W."
+  },
+  {
+   "id": "w-chuquicamata-mijn",
+   "naam": "Chuquicamata (mijn)",
+   "lon": -68.9022,
+   "lat": -22.3055,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 289.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Cochilco Anuario 2005–2024 (via Wikipedia 'Chuquicamata'): 289 kt in 2024 [B4]",
+   "bron": "Wikipedia-geohack 'Chuquicamata' (en); satelliet z14: kruis op de zuidrand van de put, concentrator/smelterterrein direct Z",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Codelco; sinds 2019 ondergrondse blokmijn onder de put; concentraat naar de eigen smelter op hetzelfde terrein."
+  },
+  {
+   "id": "w-los-pelambres",
+   "naam": "Los Pelambres",
+   "lon": -70.4938,
+   "lat": -31.7247,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 320.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Antofagasta plc, productie 2024: 320,0 kt Cu (groep 660,6 kt) [B5]",
+   "bron": "Wikipedia-geohack 'Los Pelambres' (es), landmark",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Antofagasta plc 60%; concentraat per 120 km-slurryleiding naar Punta Chungo (Los Vilos)."
+  },
+  {
+   "id": "w-cerro-verde",
+   "naam": "Cerro Verde",
+   "lon": -71.6,
+   "lat": -16.53,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 430.5,
+   "gewicht_bron": "capaciteit kt Cu/j — mining.com 'RANKED: World's biggest copper mines' (2024-data): 430.459 t; FCX 10-K 2024: 'ca. 0,9 mld lb' [B3][B6]",
+   "bron": "copper.js-centroïde, op satelliet (z13+z14) in de hoofdput bevonden; concentrator met indikkers 1,5 km N",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Freeport 55%; grootste concentrator ter wereld (415 kt erts/dag); concentraat via Matarani naar Azië."
+  },
+  {
+   "id": "w-antamina",
+   "naam": "Antamina",
+   "lon": -77.0611,
+   "lat": -9.5372,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 429.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Glencore FY2024: 144,7 kt = 33,75%-aandeel → 100% ≈ 429 kt; Teck 22,5% = 96,1 kt → 427 kt [B2][B7]",
+   "bron": "Wikipedia-geohack 'Antamina mine' (en); satelliet z14: kruis in de open pit",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Cu-Zn-mijn (BHP/Glencore/Teck/Mitsubishi); concentraat per 302 km-pijpleiding naar Punta Lobitos (Huarmey)."
+  },
+  {
+   "id": "w-las-bambas",
+   "naam": "Las Bambas",
+   "lon": -72.333,
+   "lat": -14.0885,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 410.8,
+   "gewicht_bron": "capaciteit kt Cu/j — MMG jaarresultaten 2025: 410.834 t Cu in concentraat in 2025 (2024: 322.912 t) [B8][B9]",
+   "bron": "es-Wikipedia-geohack lag aan de staartdam; op satelliet z14 verschoven naar de concentrator 1,6 km NW (Ferrobamba-put 3 km NO)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "MMG (China Minmetals) 62,5%; concentraat per truck over de 'mineralencorridor' naar Matarani."
+  },
+  {
+   "id": "w-quellaveco",
+   "naam": "Quellaveco",
+   "lon": -70.6164,
+   "lat": -17.1022,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 306.3,
+   "gewicht_bron": "capaciteit kt Cu/j — Anglo American Q4 2024 production report: 306.300 t in 2024 [B10]",
+   "bron": "OSM landuse=industrial 'Quellaveco' (Nominatim); Wikipedia-geohack op 0,5 km",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Anglo American 60% / Mitsubishi 40%, in productie sinds 2022; concentraat naar Ilo/Matarani."
+  },
+  {
+   "id": "w-toquepala",
+   "naam": "Toquepala",
+   "lon": -70.6136,
+   "lat": -17.2456,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 249.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SCC 10-K FY2024: Toquepala 496.428 klb concentrator (225,2 kt) + 53.165 klb SX-EW (24,1 kt) in 2024 [B11]",
+   "bron": "Wikipedia-geohack 'Toquepala mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Southern Copper (Grupo México); concentraat per spoor naar de Ilo-smelter, SX-EW-kathode direct."
+  },
+  {
+   "id": "w-cuajone",
+   "naam": "Cuajone",
+   "lon": -70.7071,
+   "lat": -17.0463,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 165.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SCC 10-K FY2024: 363.454 klb = 164,9 kt in 2024 (2025: ~163 kt) [B11][B12]",
+   "bron": "Wikipedia-geohack 'Cuajone mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Southern Copper; concentraat per spoor naar Ilo; US$319 mln pit-uitbreiding gepland."
+  },
+  {
+   "id": "w-kakula",
+   "naam": "Kamoa-Kakula (Kakula-mijn + concentrators)",
+   "lon": 25.197,
+   "lat": -10.885,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "DR Congo",
+   "gewicht": 388.8,
+   "gewicht_bron": "capaciteit kt Cu/j — Ivanhoe Mines, productie 2025 (15-1-2026): 388.838 t Cu in concentraat (2024: 437.061 t); 2026-guidance 380–420 kt [B13]",
+   "bron": "satelliet z14: kruis op het Kakula-concentratorcomplex; OSM landuse=industrial 'Kakula' 0,9 km W (Photon). ⚠️ het routebrief-anker Kamoa (−10,76/25,28) ligt 14 km NO in de savanne, niet op een plant",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Ivanhoe/Zijin; rijkste grote koperafzetting ter wereld; concentraat → eigen smelter (2025) → Lobito-corridor."
+  },
+  {
+   "id": "w-tenke-fungurume",
+   "naam": "Tenke Fungurume (TFM)",
+   "lon": 26.1956,
+   "lat": -10.5684,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "DR Congo",
+   "gewicht": 450.0,
+   "gewicht_bron": "capaciteit kt Cu/j — CMOC jaarresultaten 2024: TFM jaarcapaciteit 450 kt Cu, in 2024 op volle capaciteit (CMOC totaal 650.161 t incl. KFM ~200 kt) [B14]",
+   "bron": "Wikipedia-geohack 'Tenke Fungurume Mine' (en); satelliet z14: kruis op het fabrieksterrein (SX-EW-plant), putten ZW en Z",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "CMOC (China) 80%; oxide-erts → SX-EW-kathode + kobalthydroxide ter plekke; per truck via Kasumbalesa naar Durban/Dar es Salaam."
+  },
+  {
+   "id": "w-kcc-kolwezi",
+   "naam": "Kamoto (KCC), Kolwezi",
+   "lon": 25.3855,
+   "lat": -10.7148,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "DR Congo",
+   "gewicht": 224.5,
+   "gewicht_bron": "capaciteit kt Cu/j — Glencore FY2024: 'African Copper (KCC, Mutanda)' 224,5 kt kopermetaal in 2024 — ⚠️ KCC en Mutanda niet apart gerapporteerd [B2]",
+   "bron": "Wikipedia-geohack 'Kamoto mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Glencore 75%; KOV-put + ondergronds; SX-EW-kathode + kobalt; cijfer is KCC + Mutanda samen."
+  },
+  {
+   "id": "w-kansanshi",
+   "naam": "Kansanshi",
+   "lon": 26.425,
+   "lat": -12.08,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Zambia",
+   "gewicht": 181.0,
+   "gewicht_bron": "capaciteit kt Cu/j — First Quantum, productie 2025 (15-1-2026): 181 kt (2024: 171 kt); 2026-guidance 175–205 kt [B15]",
+   "bron": "satelliet z13: hoofdputten NO van Solwezi; en-Wikipedia-geohack (−12,1433/26,3858) ligt 7 km ZW bij de stad; OSM-polygoon 'Kansanshi' 3 km ZO",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "FQM 80%; S3-uitbreiding (2025) tilt de productie richting 250 kt; eigen smelter op hetzelfde terrein."
+  },
+  {
+   "id": "w-sentinel",
+   "naam": "Sentinel (Kalumbila)",
+   "lon": 25.3025,
+   "lat": -12.26,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Zambia",
+   "gewicht": 189.0,
+   "gewicht_bron": "capaciteit kt Cu/j — First Quantum, productie 2025: 189 kt (2024: 231 kt); 2026-guidance 190–220 kt [B15]",
+   "bron": "Wikipedia-geohack 'Sentinel mine' (en), dim 5 km",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "FQM 100%; sulfide-concentraat naar de Kansanshi-smelter en export (Walvis Bay/Durban)."
+  },
+  {
+   "id": "w-grasberg",
+   "naam": "Grasberg (Grasberg Block Cave / DMLZ)",
+   "lon": 137.1158,
+   "lat": -4.0528,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Indonesië",
+   "gewicht": 816.0,
+   "gewicht_bron": "capaciteit kt Cu/j — FCX 10-K 2024: Indonesia operations 1.800 mln lb Cu (= 816 kt) in 2024; mining.com: 816.466 t; ⚠️ modderstroom GBC sept 2025 → 2025/2026 lager [B6][B3]",
+   "bron": "Wikipedia-geohack 'Grasberg mine' (en); satelliet z14: kruis op de (uitgemijnde) open pit, ondergrondse blokmijn eronder; molen bij Tembagapura",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "PT-FI (MIND ID 51%/Freeport 49%); concentraat via Amamapare naar Manyar/PT Smelting (Gresik) en Japan."
+  },
+  {
+   "id": "w-batu-hijau",
+   "naam": "Batu Hijau",
+   "lon": 116.8796,
+   "lat": -8.9728,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Indonesië",
+   "gewicht": 179.0,
+   "gewicht_bron": "capaciteit kt Cu/j — AMMAN FY2024 (20-3-2025): 395 mln lb Cu (= 179 kt), 755.083 dmt concentraat; 2025-target 228 mln lb (fase 8, lagere grade) [B16]",
+   "bron": "OSM way/188618065 landuse=quarry 'Batu Hijau Mine' (Overpass, centroïde van de put); Wikipedia-geohack 1,5 km NW",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Amman Mineral (Sumbawa); concentraat sinds 2025 naar de eigen smelter (900 kt conc/j) op Sumbawa."
+  },
+  {
+   "id": "w-morenci",
+   "naam": "Morenci",
+   "lon": -109.3667,
+   "lat": 33.0906,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "VS",
+   "gewicht": 318.0,
+   "gewicht_bron": "capaciteit kt Cu/j — FCX 10-K 2024: Morenci 505 mln lb (FCX-aandeel 72%) → 100% ≈ 701 mln lb = 318 kt in 2024 [B6]",
+   "bron": "Wikipedia-geohack 'Morenci mine' (en), dim 10 km",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste Amerikaanse kopermijn; vooral SX-EW-kathode (blijft binnenlands); concentraat naar de Miami-smelter."
+  },
+  {
+   "id": "w-bingham-canyon",
+   "naam": "Bingham Canyon (Kennecott)",
+   "lon": -112.151,
+   "lat": 40.523,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "VS",
+   "gewicht": 125.1,
+   "gewicht_bron": "capaciteit kt Cu/j — Rio Tinto Q4 2025: Kennecott mined copper 125,1 kt in 2025 (2024: 123,4 kt, wandinstabiliteit) [B17]",
+   "bron": "Wikipedia-geohack 'Bingham Canyon Mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Rio Tinto; concentraat per pijpleiding naar Copperton → Garfield-smelter (Magna); volledig binnenlandse keten."
+  },
+  {
+   "id": "w-buenavista",
+   "naam": "Buenavista del Cobre (Cananea)",
+   "lon": -110.3314,
+   "lat": 30.9606,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Mexico",
+   "gewicht": 433.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SCC 10-K FY2024: 769.323 klb (concentrators) + 185.210 klb SX-EW = 954.533 klb = 433 kt in 2024; nameplate 500 kt [B11]",
+   "bron": "Wikipedia-geohack 'Buenavista mine' (en); satelliet z14: kruis in de open pit, concentrators/SX-EW-plant 2 km NO",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grupo México; SX-EW-kathode + concentraat (naar de La Caridad-smelter); grotendeels naar de VS over land."
+  },
+  {
+   "id": "w-oyu-tolgoi",
+   "naam": "Oyu Tolgoi",
+   "lon": 106.8431,
+   "lat": 43.0083,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Mongolië",
+   "gewicht": 345.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Rio Tinto Q4 2025: 227,8 kt (66%-aandeel) → 100% ≈ 345 kt in 2025 (2024: 141,9 kt/66% ≈ 215 kt); doel ~500 kt/j 2028–2036 [B17]",
+   "bron": "Wikipedia-geohack 'Oyu Tolgoi mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Rio Tinto 66%/Mongolië 34%; concentraat per truck 80 km naar Gashuun Sukhait → Chinese smelters."
+  },
+  {
+   "id": "w-aktogay",
+   "naam": "Aktogay",
+   "lon": 79.86,
+   "lat": 46.95,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Kazachstan",
+   "gewicht": 229.0,
+   "gewicht_bron": "capaciteit kt Cu/j — KAZ Minerals Q4 2024 production report: 229 kt in 2024 (waarvan 18 kt SX-EW-kathode); 2023: 252 kt [B18]",
+   "bron": "Wikipedia-geohack 'Aktogay mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "KAZ Minerals; twee sulfide-concentrators (50 Mt/j); concentraat en kathode per spoor naar China."
+  },
+  {
+   "id": "w-olympic-dam",
+   "naam": "Olympic Dam",
+   "lon": 136.8731,
+   "lat": -30.44,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Australië",
+   "gewicht": 215.7,
+   "gewicht_bron": "capaciteit kt Cu/j — BHP Operational review FY2024: Olympic Dam koperkathode (ER+EW) 215,7 kt; Copper South Australia FY2025 316 kt (incl. Carrapateena/Prominent Hill, niet uitgesplitst) [B19][B1]",
+   "bron": "Wikipedia-geohack 'Olympic Dam mine' (en)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "BHP; ondergrondse Cu-U-Au-mijn met eigen smelter+raffinaderij → kathode direct de markt op."
+  },
+  {
+   "id": "w-rudna",
+   "naam": "KGHM Rudna (Polkowice)",
+   "lon": 16.1073,
+   "lat": 51.5015,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Polen",
+   "gewicht": 200.2,
+   "gewicht_bron": "capaciteit kt Cu/j — KGHM: Rudna 200,2 kt Cu in gewonnen erts in 2024 [B20]",
+   "bron": "Wikipedia-geohack 'Rudna mine' (en), landmark",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste van de drie KGHM-mijnen (naast Polkowice-Sieroszowice en Lubin); concentraat naar Głogów/Legnica."
+  },
+  {
+   "id": "w-aitik",
+   "naam": "Aitik",
+   "lon": 20.95,
+   "lat": 67.0667,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Zweden",
+   "gewicht": 61.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Boliden R&R-rapport Aitik 2024, tabel 3: 40.840 kt erts × 0,17 % Cu × 88,3 % recovery ≈ 61 kt Cu in concentraat (afgeleid; 2023 ≈ 66 kt) [B21]",
+   "bron": "Wikipedia-geohack 'Aitik' (en/sv)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste open kopermijn van de EU (Boliden); lage grade; concentraat per spoor naar Rönnskär."
+  },
+  {
+   "id": "w-chuquicamata-smelter",
+   "naam": "Chuquicamata smelter + raffinaderij",
+   "lon": -68.8925,
+   "lat": -22.3095,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 855.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Wikipedia-lijst Chileense smelters (Sonami): smelter 450 kt/j; raffinaderij 855 kt kathode/j (Wikipedia 'Chuquicamata') — nameplate, feitelijke productie lager [B22][B4]",
+   "bron": "satelliet z15: fabriekscomplex met hoge schoorsteen direct ZO van de put; concentrator-indikkers ernaast",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Codelco's grootste smelter; raffineert ook anodes van Altonorte/Caletones/Potrerillos; kathode via Antofagasta/Mejillones."
+  },
+  {
+   "id": "w-caletones",
+   "naam": "Caletones",
+   "lon": -70.452,
+   "lat": -34.1055,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Wikipedia-lijst Chileense smelters: 400 kt/j; Codelco: 1,25 Mt concentraat/j [B22]",
+   "bron": "OSM building=industrial 'Fundición de Caletones' (Nominatim)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Smelter van El Teniente (Codelco); anodes/vuurgeraffineerd koper naar de Chuquicamata-raffinaderij en export via San Antonio."
+  },
+  {
+   "id": "w-altonorte",
+   "naam": "Altonorte (La Negra)",
+   "lon": -70.3172,
+   "lat": -23.8245,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Chili",
+   "gewicht": 349.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Glencore via mining.com (2025): 349 kt anodes/j; Wikipedia-lijst: 350 kt [B23][B22]",
+   "bron": "Wikipedia-geohack 'Fundición Altonorte' (en), landmark",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Glencore's custom-smelter bij Antofagasta; anodes naar Codelco-raffinaderijen; 2025 tijdelijk stil (force majeure)."
+  },
+  {
+   "id": "w-ilo",
+   "naam": "Ilo smelter + raffinaderij",
+   "lon": -71.359,
+   "lat": -17.505,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Peru",
+   "gewicht": 288.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SCC 10-K FY2024: smelter nominaal 1.376.050 t concentraat/j (2024: 1.230,9 kt gesmolten); raffinaderij 287,9 kt kathode in 2024 [B11]",
+   "bron": "OSM landuse=industrial 'Fundición de Cobre de Ilo' (Nominatim), 17 km N van Ilo; raffinaderij 8 km Z (Pacocha, −17,5790/−71,3527)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Southern Copper; verwerkt Toquepala/Cuajone-concentraat; uitbreiding (US$1,3 mld) gepland."
+  },
+  {
+   "id": "w-saganoseki",
+   "naam": "Saganoseki (Pan Pacific Copper/JX)",
+   "lon": 131.8784,
+   "lat": 33.2523,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Japan",
+   "gewicht": 450.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Pan Pacific Copper: 450 kt geraffineerd koper/j (Saganoseki-smelter + Hitachi-raffinage) [B24]",
+   "bron": "ja-Wikipedia-geohack 'パンパシフィック・カッパー佐賀関製錬所', landmark",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste Japanse kustsmelter (één flash-oven); importeert concentraat uit Chili/Peru/Indonesië."
+  },
+  {
+   "id": "w-toyo",
+   "naam": "Toyo (Sumitomo Metal Mining)",
+   "lon": 133.2305,
+   "lat": 33.9493,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Japan",
+   "gewicht": 450.0,
+   "gewicht_bron": "capaciteit kt Cu/j — SMM: 450 kt elektrolytisch koper/j op één lijn [B25]",
+   "bron": "OSM landuse=industrial '住友金属鉱山 東予工場' (Nominatim)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Saijo/Niihama (Shikoku); concentraat o.a. uit Morenci/Cerro Verde (SMM-belangen) en Chili."
+  },
+  {
+   "id": "w-onsan",
+   "naam": "Onsan (LS MnM)",
+   "lon": 129.3525,
+   "lat": 35.4234,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 680.0,
+   "gewicht_bron": "capaciteit kt Cu/j — LS MnM / Nate News 2025: Onsan-smelter 680 kt geraffineerd koper/j [B26][B27]",
+   "bron": "OSM landuse=industrial-polygoon (Photon-hit 'Onsan smelter', zonder Koreaanse naam) in het Onsan-complex; satelliet z14: fabrieksterrein aan de havenkom — toewijzing aan LS MnM niet bewezen (Korea Zinc's zinksmelter ligt 1 km NW)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste smelter buiten China op één locatie; concentraat uit Chili/Peru/Indonesië, kathode naar Korea/Japan/China."
+  },
+  {
+   "id": "w-aurubis-hamburg",
+   "naam": "Aurubis Hamburg (Peute)",
+   "lon": 10.0408,
+   "lat": 53.5186,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Duitsland",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Aurubis: 'produces around 400,000 t of pure copper' uit concentraat + recyclingmateriaal (FY2019/20: 384 kt kathode) [B28]",
+   "bron": "de-Wikipedia-geohack 'Aurubis' (hoofdkantoor op het Peute-terrein, dim 250 m)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste koperraffinaderij van Europa; concentraat via de Elbe, kathode naar kabel-/auto-industrie; zusterfabriek Lünen 210 kt (secundair)."
+  },
+  {
+   "id": "w-glogow",
+   "naam": "Huta Miedzi Głogów (KGHM)",
+   "lon": 15.9778,
+   "lat": 51.6872,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Polen",
+   "gewicht": 475.0,
+   "gewicht_bron": "capaciteit kt Cu/j — KGHM: Głogów I 240 kt + Głogów II 235 kt ≈ 475 kt elektrolytisch koper/j [B29]",
+   "bron": "OSM man_made=works 'Huta Miedzi „Głogów”' (Nominatim); satelliet z14: kruis op het smeltercomplex (Żukowice)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Geïntegreerd met de KGHM-mijnen (Rudna/Polkowice/Lubin); grootste primaire smelter van de EU."
+  },
+  {
+   "id": "w-dahej",
+   "naam": "Birla Copper Dahej (Hindalco)",
+   "lon": 72.54,
+   "lat": 21.701,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "India",
+   "gewicht": 500.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Hindalco: 500 kt kathode/j, grootste single-location smelter [B30]",
+   "bron": "satelliet z14: fabriek aan het eind van de weg naar de OSM-'Birla Copper jetty' (21,7002/72,5086); plantpolygoon zelf niet benoemd in OSM (toewijzing via jetty-naam)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "India's belangrijkste kopersmelter (Tuticorin ligt stil sinds 2018); importeert concentraat, eigen jetty in de Golf van Khambhat."
+  },
+  {
+   "id": "w-manyar",
+   "naam": "Manyar-smelter (PT Freeport Indonesia, JIIPE)",
+   "lon": 112.6268,
+   "lat": -7.078,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Indonesië",
+   "gewicht": 480.0,
+   "gewicht_bron": "capaciteit kt Cu/j — FCX: 1,7 Mt concentraat/j, elektroraffinaderij 480 kt kathode/j; brand okt 2024, herstart 2025; opnieuw stil na het GBC-incident, herstart sept 2026 [B31][B32]",
+   "bron": "OSM landuse=industrial 'Freeport-McMoRan Smelter' (Photon); satelliet z14: kruis op het smeltercomplex in JIIPE",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Nieuwe (2024) smelter voor Grasberg-concentraat — Indonesië's downstream-verplichting; naast PT Smelting."
+  },
+  {
+   "id": "w-pt-smelting",
+   "naam": "PT Smelting Gresik",
+   "lon": 112.6371,
+   "lat": -7.1367,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Indonesië",
+   "gewicht": 342.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Katadata 2022: uitbreiding naar 342 kt kathode/j; FCX 10-K 2024: 398,2 kt anode / 335,2 kt kathode geproduceerd in 2024 [B33][B6]",
+   "bron": "OSM landuse=industrial 'Smelting' (Nominatim), Roomo/Gresik",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Mitsubishi-proces smelter (PT-FI 66%); verwerkt Grasberg-concentraat sinds 1998."
+  },
+  {
+   "id": "w-kansanshi-smelter",
+   "naam": "Kansanshi-smelter",
+   "lon": 26.4064,
+   "lat": -12.0933,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Zambia",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Mining Technology (2025): smelter van 1,38 → 1,65 Mt conc/j, >400 kt anode/j na S3; FQM: '1.6Mtpa smelter capacity after S3' [B34][B35]",
+   "bron": "OSM highway=service 'Smelter Access Road' (Photon); satelliet z13: plantcluster W van de putten (gebouw niet onderscheiden)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste smelter van Zambia; smelt Kansanshi- en Sentinel-concentraat tot anode → export via Durban/Walvis Bay/Dar es Salaam."
+  },
+  {
+   "id": "w-kamoa-smelter",
+   "naam": "Kamoa-Kakula-smelter (direct-to-blister)",
+   "lon": 25.24,
+   "lat": -10.805,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "DR Congo",
+   "gewicht": 500.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Ivanhoe: 500 kt anode/j nameplate; opwarming 21-11-2025, eerste anode 29-12-2025; 2026 ≈ 80 % benut [B36][B13]",
+   "bron": "satelliet z14: fabrieksstrook Kamoa/fase 3 (smelter-eenheid niet apart onderscheiden); Kamoa Camp (OSM) 4 km NO",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste smelter van Afrika (2025); maakt van concentraat blister/anode voor de Lobito-corridor."
+  },
+  {
+   "id": "w-kennecott-smelter",
+   "naam": "Kennecott Garfield-smelter + raffinaderij (Magna)",
+   "lon": -112.2,
+   "lat": 40.7231,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "VS",
+   "gewicht": 335.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Wikipedia 'Kennecott Utah Copper': raffinaderij 335 kt/j; smelter ~300 kt/j [B37]",
+   "bron": "OSM landuse=industrial 'Kennecott Smelter' (Photon); satelliet z14: smeltercomplex met schoorsteen aan de zuidoever van het Great Salt Lake",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Rio Tinto; een van de twee overgebleven Amerikaanse smelters; volledig binnenlandse keten Bingham → kathode."
+  },
+  {
+   "id": "w-miami-smelter",
+   "naam": "Miami-smelter (Freeport)",
+   "lon": -110.8562,
+   "lat": 33.4128,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "VS",
+   "gewicht": 214.0,
+   "gewicht_bron": "capaciteit kt Cu/j — FCX 10-K 2024: 840.600 t concentraat verwerkt, 214.000 t anode in 2024 [B6]",
+   "bron": "OSM building=industrial 'Freeport McMoran Smelter' (Photon)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Smelt Morenci/Bagdad/Sierrita/Chino-concentraat; anodes naar de El Paso-raffinaderij; zwavelzuur voor de SX-EW-mijnen."
+  },
+  {
+   "id": "w-norilsk-copper-plant",
+   "naam": "Norilsk Medny Zavod (Copper Plant)",
+   "lon": 88.1279,
+   "lat": 69.3632,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Rusland",
+   "gewicht": 363.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Nornickel 2024: 433 kt Cu totaal, 363 kt uit Russisch erts excl. Trans-Baikal (Norilsk + Kola); capaciteit per fabriek niet gepubliceerd [B38][B39]",
+   "bron": "OSM landuse=industrial 'Медный завод' (Photon), NW-rand van Norilsk; Nadezhda-fabriek 7 km W (69,3275/87,9521)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Kathodekoper als bijproduct van nikkel/palladium (Talnakh-mijnen); afvoer via Dudinka/Noordelijke Zeeroute."
+  },
+  {
+   "id": "w-balkhash",
+   "naam": "Balkhash-smelter (Kazakhmys)",
+   "lon": 74.946,
+   "lat": 46.8355,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Kazachstan",
+   "gewicht": 250.0,
+   "gewicht_bron": "capaciteit kt Cu/j — Times of Central Asia (2025): bestaande Balkhash-smelter 250 kt kathode/j; nieuwe smelter 300 kt gepland (2030) [B40]",
+   "bron": "satelliet z13: smelterterrein met slakbergen ZW van de stad Balkhash; ru-Wikipedia 'Балхашцветмет' op 1 km",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Kazakhmys; Kazachse kathode grotendeels per spoor naar China (Xinjiang)."
+  },
+  {
+   "id": "w-mount-isa-smelter",
+   "naam": "Mount Isa-kopersmelter (Glencore)",
+   "lon": 139.4829,
+   "lat": -20.7292,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "koper"
+   ],
+   "land": "Australië",
+   "gewicht": 250.0,
+   "gewicht_bron": "capaciteit kt Cu/j — NS Energy/Glencore: >1 Mt concentraat/j, ~200–250 kt anode/j (incl. derden-concentraat); mijn gesloten H2 2025, smelter door tot ~2030 [B41][B42]",
+   "bron": "OSM building 'Copper Smelter' (Photon), Mount Isa Mines-lease",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Sinds de mijnsluiting (2025) een custom-smelter op o.a. Olympic Dam-concentraat; anodes per spoor naar Townsville (300 kt raffinaderij)."
   }
  ]
 }
