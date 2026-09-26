@@ -94,6 +94,397 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief lithium-bougouni-yangpu, been b1 (LICHTE werkwijze M29). Truck
+    # (spodumeenconcentraat) Ngoualana-plant (Kodal Minerals, Bougouni) → TIPSP
+    # San Pedro, dwars over Mali/Ivoorkust: RN7 Bougouni–Sikasso → grens
+    # Zégoua/Pogo → Ferkessédougou → Bouaké/Yamoussoukro → Soubré → San Pedro.
+    # ⚠️ HET IVORIAANSE TRACÉ IS NIET GEPUBLICEERD (brief §7): alleen "~880 km,
+    #    één grensovergang, gevestigde corridor via Sikasso"; de via-keten geeft
+    #    hemelsbreed al ~1.014 km (boven de 880) — de lengtetoets op de GEVOLGDE
+    #    weggeometrie is de echte controle, niet de via-punten-som.
+    "lithium-bougouni-yangpu-plant-sanpedro": {
+        "via": [
+            ("Ngoualana-plant — Kodal Minerals DMS (laadplek)", (-7.4886, 11.3413)),  # anker
+            ("Sikasso (RN7-knoop)",                             (-5.6778, 11.3166)),
+            ("Grens Zégoua (ML) / Pogo (CI)",                   (-5.6531, 10.4828)),
+            ("Ferkessédougou (A3/N1-knoop)",                    (-5.1976, 9.5940)),
+            ("Yamoussoukro (N1/A3-knoop)",                      (-5.2776, 6.8200)),
+            ("Soubré (aftakking naar San Pedro)",               (-6.5933, 5.7850)),
+            ("TIPSP San Pedro — bulkstockpile",                 (-6.6180, 4.7490)),  # anker
+        ],
+        "id": "li-bougouni-sanpedro",
+        "naam": "Ngoualana-plant → San Pedro TIPSP (RN7 → grens Zégoua/Pogo → Ferkessédougou → Yamoussoukro → Soubré)",
+        "extracts": ["mali", "ivoorkust"],
+        "refs": ["RN7", "N1", "A3", "N9"],
+        "gepubliceerdKm": 880,
+        "bronnoot": "Kodal Minerals: ~880 km, één grensovergang, gevestigde "
+                    "corridor via Sikasso (brief §2/§7); via-keten hemelsbreed "
+                    "~1.014 km, geen onafhankelijke bevestiging van het tracé",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-bougouni-yangpu-weg-plant-sanpedro.geojson",
+    },
+    # Routebrief lithium-bougouni-yangpu, been b3 (LICHTE werkwijze M29). Kort
+    # truckbeen SDIC Yangpu-kade → Hainan Xingzhihai New Materials, binnen de
+    # Yangpu Economic Development Zone / New Materials Industrial Park — geen
+    # tussenliggend via-punt (brief §7: geen corridorkeuze, ~5-10 km schatting).
+    # ⚠️ BEIDE ANKERS ONZEKER (brief §3): geen bron wijst een specifieke berth
+    #    of fabriekspoort aan; kade- en fabriekscoördinaat zijn plaatsbepalingen
+    #    binnen de havenzone resp. het industriepark.
+    "lithium-bougouni-yangpu-yangpu-xingzhihai": {
+        "via": [
+            ("SDIC Yangpu-havenzone — kade (onzeker)",                (109.1510, 19.7680)),  # anker
+            ("Hainan Xingzhihai New Materials — fabriekspoort (onzeker)", (109.1570, 19.7180)),  # anker
+        ],
+        "id": "li-yangpu-xingzhihai",
+        "naam": "SDIC Yangpu-kade → Hainan Xingzhihai New Materials (havenweg/estateweg Yangpu EDZ)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 8,
+        "bronnoot": "geen publicatie; schatting 5-10 km binnen de Yangpu New "
+                    "Materials Industrial Park (brief §2/§7)",
+        "vensterKm": 15,
+        "corridorKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "uit": "lithium-bougouni-yangpu-weg-yangpu-xingzhihai.geojson",
+    },
+    # Routebrief grafiet-balama-saemangeum, been b3 (LICHTE werkwijze M29). Kort been
+    # (~4 km) binnen hetzelfde Osikdo-dong-industriecomplex bij Gunsan: van de
+    # (aannemelijke) losplek Gunsan New Port naar het (onzekere) Future Graph
+    # Saemangeum-perceel (blok 6). GEEN corridorkeuze — geen via-punten nodig, alleen
+    # de twee ankers. ⚠️ Blok 6 is nog een bouwterrein (oplevering 2027); als de
+    # scanner geen wegverbinding vindt hoort dit been een stippel te worden
+    # ("eigen terrein / geen net op deze korrel"), niet een verzonnen lijn.
+    "grafiet-balama-saemangeum-gunsan-saemangeum": {
+        "via": [
+            ("Gunsan (New) Port — losplek (aannemelijk)", (126.5830, 35.9770)),
+            ("Future Graph Saemangeum — blok 6 (onzeker)", (126.5480, 35.9680)),
+        ],
+        "id": "gr-saemangeum-gunsan-fabriek",
+        "naam": "Gunsan New Port → Future Graph Saemangeum (Osikdo-dong-industrieterrein)",
+        "extracts": ["zuid-korea"],
+        "refs": [],
+        "eindKlassen": ("track", "residential", "service", "tertiary", "unclassified"),
+        "eindToegangPrivaat": True,
+        "gepubliceerdKm": 4,
+        "bronnoot": "geen publicatie — brief-schatting o.b.v. nabijheid binnen het complex",
+        "vensterKm": 12,
+        "uit": "grafiet-balama-saemangeum-weg-gunsan-saemangeum.geojson",
+    },
+    # Routebrief grafiet-balama-saemangeum, been b4. Truck Future Graph Saemangeum →
+    # POSCO Future M Sejong (~180 km, geen publicatie): Route 21 → Seohaean Expwy (15)
+    # → Iksan-knooppunt → Nonsan-knooppunt → Nonsan-Cheonan Expwy (25) →
+    # Jeonui-industriepark. Drie via-punten pinnen de corridorkeuze (kustsnelweg i.p.v.
+    # lokale N-wegen, dan de overstap naar de noord-zuidas 25). Volume nul (geen bron
+    # bevestigt geleverde Balama-vlok in Korea) — dat staat in de beennaam, niet hier.
+    "grafiet-balama-saemangeum-saemangeum-sejong": {
+        "via": [
+            ("Future Graph Saemangeum — blok 6 (onzeker)", (126.5480, 35.9680)),
+            ("Dong-Gunsan IC (Seohaean Expwy 15)",         (126.8342, 35.9452)),
+            ("Iksan-knooppunt",                            (127.0971, 35.9504)),
+            ("Nonsan-knooppunt (start Expwy 25)",          (127.0998, 36.0834)),
+            ("POSCO Future M Sejong — anodefabriek 1",     (127.2203, 36.7059)),
+        ],
+        "id": "gr-saemangeum-sejong",
+        "naam": "Future Graph Saemangeum → POSCO Future M Sejong "
+                "(Route 21 → Seohaean Expwy 15 → Iksan JC → Nonsan JC → Expwy 25)",
+        "extracts": ["zuid-korea"],
+        "refs": ["15", "25", "21"],
+        # ⚠️ GEEN GEPUBLICEERDE WEG-KM (brief §2/§7): 180 is de brief-schatting zelf
+        # (hemelsbreed-achtige aanname, geen onafhankelijke bron) — dit is dus geen
+        # echte lengtetoets, alleen een informatief getal; venster ruim gezet.
+        "gepubliceerdKm": 180,
+        "bronnoot": "geen publicatie — brief-schatting, geen onafhankelijke bron; "
+                    "OSRM/wegnet bepaalt de echte km bij het bakken",
+        "vensterKm": 60,
+        "uit": "grafiet-balama-saemangeum-weg-saemangeum-sejong.geojson",
+    },
+    # Routebrief lithium-olaroz-naraha, been b1 (LICHTE werkwijze M29). Truck
+    # (carbonaat in big bags) Olaroz-plant → Buenos Aires containerkade, dwars
+    # over Argentinië: RN52 (Susques→Purmamarca) → RN9 (San Salvador de Jujuy)
+    # → RN34/RN9-splitsing bij Tucumán → zuidwaarts via Rosario → Buenos Aires.
+    # ⚠️ GEEN GEPUBLICEERDE WEG-KM (brief §7/§2): gepubliceerdKm hieronder is de
+    #    hemelsbreed-som van de via-punten (~1.562 km, geen onafhankelijke
+    #    bron) — venster ruim gezet, dit is geen echte lengtetoets.
+    # ⚠️ RN52 BIJ OLAROZ LIGT OP ~3.900-4.200 M en kan in OSM lager geklasseerd
+    #    zijn dan primary/trunk (brief §7) → corridorKlassen breed gezet.
+    "lithium-olaroz-naraha-baires": {
+        "via": [
+            ("Olaroz-plant — Sales de Jujuy S.A. (Salar de Olaroz)", (-66.7025, -23.4629)),  # anker
+            ("Purmamarca (RN52 → RN9-knoop)",                        (-65.4992, -23.7466)),
+            ("San Salvador de Jujuy",                                (-65.2995, -24.1853)),
+            ("Tucumán (RN34/RN9-splitsing)",                         (-65.2226, -26.8241)),
+            ("Rosario",                                              (-60.6505, -32.9442)),
+            ("Buenos Aires containerkade — TRP Puerto Nuevo",        (-58.3631, -34.5847)),  # anker
+        ],
+        "id": "li-olaroz-baires",
+        "naam": "Olaroz-plant → Buenos Aires containerkade (RN52 → RN9 → RN34/RN9 → Rosario)",
+        "extracts": ["argentina"],
+        "refs": ["RN52", "52", "RN9", "9", "RN34", "34", "RN A008"],
+        "gepubliceerdKm": 1562,
+        "bronnoot": "niet gepubliceerd; hemelsbreed-som van de via-punten "
+                    "(~1.562 km) als indirecte controle, geen onafhankelijke bron "
+                    "(brief §7/§2)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified", "residential"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "lithium-olaroz-naraha-weg-olaroz-baires.geojson",
+    },
+    # Routebrief lithium-olaroz-naraha, been b3 (LICHTE werkwijze M29). Truck
+    # Onahama-kade → Toyotsu Lithium Naraha, Jōban-snelweg (E6)/Route 6
+    # noordwaarts — geen tussenliggend via-punt (één doorgaande route, geen
+    # corridorkeuze; brief §7).
+    "lithium-olaroz-naraha-onahama-naraha": {
+        "via": [
+            ("Ōken-ふ頭 containerterminal, Onahama-haven",  (140.8695, 36.9245)),  # anker
+            ("Toyotsu Lithium Naraha — hydroxidefabriek",  (140.9954, 37.2467)),  # anker
+        ],
+        "id": "li-onahama-naraha",
+        "naam": "Onahama-kade → Toyotsu Lithium Naraha (Jōban-snelweg/Route 6)",
+        "extracts": ["japan"],
+        "refs": ["E6", "6", "Route 6"],
+        "gepubliceerdKm": 35,
+        "bronnoot": "Toyotsu Onahama-havenseminar 2024-02-02: kade↔extern "
+                    "magazijn ~16 km/~30 min + resterend deel naar de fabriek, "
+                    "~35 km totaal (brief bron [3])",
+        "vensterKm": 20,
+        "uit": "lithium-olaroz-naraha-weg-onahama-naraha.geojson",
+    },
+    # ── Routebrief lithium-pilgangoora-gwangyang, been b1 (LICHTE werkwijze M29) ──
+    # Road trains Pilgan-plant (Pilgangoora, PLS) → Utah Point Bulk Handling
+    # Facility, Port Hedland: mijnweg → Marble Bar Road → Great Northern
+    # Highway → Utah Road. Via-punten = de vier corridorkeuzes uit de brief §4.
+    # ⚠️ TWEE PROFIELEN, NIET ÉÉN — GEMETEN OSM-GRAAFBREUK BIJ SOUTH HEDLAND.
+    #    De Dijkstra weigerde in één stuk: het GNH/stadsnet van Port Hedland
+    #    (component met Utah Point, Wilson St, Great Northern Highway-tak de
+    #    stad in) deelt GEEN knoop met het doorgaande GNH-net verderop zuid-
+    #    waarts, ook niet met corridorKlassen erbij. Kleinste gemeten afstand
+    #    tussen de twee componenten: 0,355 km (118.575136,-20.377913) ↔
+    #    (118.574874,-20.374731) — een OSM-topologiegat, geen wegklasse-fout
+    #    (beide zijden zijn zelf `trunk`/GNH). Dat gat wordt in bak_stromen.sh
+    #    een korte `--stippel` tussen de twee scans; verder is niets aan de
+    #    corridor bijgeschoven om dit te maskeren.
+    #    Ook opgelost via `eindToegangPrivaat` (haulroad-vertakkingen bij de
+    #    plant/Wodgina hangen als unclassified/service met access=private aan
+    #    een eigen geïsoleerd netwerkje, comp. 247 knopen tot lon 118.909) en
+    #    `corridorKlassen` (de kleine klassen tussen plant en Marble Bar Road,
+    #    ~55 km hemelsbreed, liggen buiten de 12 km-eindzone van de ankers).
+    "lithium-pilgangoora-gwangyang-plant-southhedland": {
+        "via": [
+            ("Pilgan-plant, Pilgangoora Operation (PLS)",     (118.8956, -21.0595)),  # anker
+            ("mijnweg × Marble Bar Road",                     (118.92,   -21.00)),
+            ("Strelley — Marble Bar Rd × Great Northern Hwy", (118.9512, -20.5162)),
+            ("South Hedland (GNH-doorgang)",                  (118.5987, -20.4088)),
+            ("GNH vóór het OSM-graafgat (zuidzijde)",         (118.575136, -20.377913)),
+        ],
+        "id": "li-pilgangoora-southhedland",
+        "naam": "Pilgan-plant → GNH bij South Hedland (mijnweg → Marble Bar Rd → Great Northern Hwy)",
+        "extracts": ["australie"],
+        "refs": ["Great Northern Highway", "Marble Bar Road", "Utah Road", "1", "95"],
+        "gepubliceerdKm": 105,
+        "bronnoot": "geen eigen publicatie voor dit deelstuk; PLS geeft alleen het "
+                    "totaal 'approximately 140 km SE of Port Hedland' [1] — de "
+                    "toets van 130 km geldt de SOM van beide wegprofielen",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "corridorKlassen": ["unclassified", "tertiary", "service", "residential"],
+        "uit": "lithium-pilgangoora-gwangyang-weg-plant-southhedland.geojson",
+    },
+    "lithium-pilgangoora-gwangyang-southhedland-utahpoint": {
+        "via": [
+            ("GNH ná het OSM-graafgat (noordzijde, stadsnet)", (118.574874, -20.374731)),
+            ("Utah Road-afslag vanaf GNH",                     (118.565,  -20.320)),
+            ("Utah Point Bulk Handling Facility, Berth 4",     (118.5585, -20.3153)),  # anker
+        ],
+        "id": "li-southhedland-utahpoint",
+        "naam": "GNH-stadsnet Port Hedland → Utah Point (Great Northern Hwy → Utah Road)",
+        "extracts": ["australie"],
+        "refs": ["Great Northern Highway", "Utah Road"],
+        "gepubliceerdKm": 25,
+        "bronnoot": "geen eigen publicatie voor dit deelstuk; zie de zusterprofiel-"
+                    "noot — de toets van 130 km geldt de SOM van beide wegprofielen",
+        "vensterKm": 40,
+        "uit": "lithium-pilgangoora-gwangyang-weg-southhedland-utahpoint.geojson",
+    },
+    # ── Routebrief lithium-atacama-antofagasta (LICHTE werkwijze M29) ──
+    # Been b1: LiCl-oplossing per tankwagen SQM Salar de Atacama → plantweg
+    # (compacted, zuidpoort) → Ruta B-39 (in OSM: geen B-385, alléén B-39,
+    # tertiary/chipseal) → Baquedano → Ruta 5 Norte zuidwest → PQL Carmen.
+    # ⚠️ B-385 BESTAAT NIET IN OSM (brief §7): 0 ways met die ref op de
+    # chili-extract; de weg heet er B-39. Zonder corridorKlassen tertiary
+    # week de M25-fout ("geen wegpad") hierdoor af.
+    # ⚠️ DE PLANTWEG (compacted `service`, 10,9-16 km) KAN BUITEN DE 12 KM-
+    # EINDZONE VALLEN — dan blijft er een korte stippel over ("plantweg,
+    # geen net op deze korrel"); niet dichtschuiven met een verzonnen via-punt.
+    "lithium-atacama-carmen": {
+        "via": [
+            ("SQM Salar de Atacama — lithiumplant (laadplek)", (-68.4000, -23.5675)),
+            ("plantweg, zuidpoort SQM-complex",                (-68.4060, -23.5700)),
+            ("Ruta B-39 ná samenkomst van de twee plantwegen", (-68.5939, -23.6669)),
+            ("Ruta B-39, knoop bij km ~64",                    (-68.8387, -23.5471)),
+            ("Ruta B-39, bocht naar NW",                       (-69.4078, -23.4941)),
+            ("Ruta B-39, vlak vóór Baquedano",                 (-69.7926, -23.3409)),
+            ("Ruta 5 Norte, ZW van Baquedano",                 (-70.0523, -23.4488)),
+            ("PQL Carmen — verwerkingsknoop (LiCl → Li2CO3)",  (-70.2600, -23.6335)),
+        ],
+        "id": "li-atacama-carmen",
+        "naam": "SQM Salar de Atacama → PQL Carmen (plantweg → Ruta B-39 → Baquedano → Ruta 5)",
+        "extracts": ["chili"],
+        "refs": ["B-39", "5", "Ruta 5"],
+        "gepubliceerdKm": 255,
+        "bronnoot": "SQM 20-F: 'approximately 255 km from the Salar de Atacama'; "
+                    "Antofagasta–salar via B-385 272 km; via-keten hemelsbreed 211",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "stroombeen-atacama-carmen.geojson",
+    },
+    # Been b2: carbonaat/hydroxide (big bags in containers) PQL Carmen →
+    # ATI-kade Puerto Antofagasta, over Ruta 5 (3 km) → Ruta 26 / Av. Salvador
+    # Allende → havenpoort.
+    "lithium-carmen-antofagasta": {
+        "via": [
+            ("PQL Carmen — verwerkingsknoop",                  (-70.2600, -23.6335)),
+            ("kruising Ruta 5 / Ruta 26",                      (-70.2685, -23.6047)),
+            ("Ruta 26 op de Cuesta",                           (-70.3438, -23.6253)),
+            ("Av. Salvador Allende (Ruta 26 in de stad)",      (-70.3960, -23.6287)),
+            ("Puerto Antofagasta, ATI — kade (overslag naar zee)", (-70.4088, -23.6500)),
+        ],
+        "id": "li-carmen-antofagasta",
+        "naam": "PQL Carmen → Puerto Antofagasta ATI (Ruta 5 → Ruta 26 → Av. Salvador Allende)",
+        "extracts": ["chili"],
+        "refs": ["5", "Ruta 5", "26", "Ruta 26"],
+        "gepubliceerdKm": 19,
+        "bronnoot": "SQM 20-F: 'ports of Antofagasta (15 km west of the Salar del "
+                    "Carmen)'; plant '20 km east of Antofagasta'; via-keten 19",
+        "vensterKm": 15,
+        "uit": "stroombeen-carmen-antofagasta.geojson",
+    },
+    # Routebrief grafiet-lakecharles-desoto, been b1 (LICHTE werkwijze M29).
+    # Truck (werkaanname) Lake Charles cokesveld → Novonix Riverside
+    # (Chattanooga TN), I-10 → I-12 → I-59 → I-24. Via-punten = de zes
+    # corridorkeuzes uit de brief §4 (b1).
+    # ⚠️ KOP OP PRIVÉ-TERREINWEGEN: het cokesveld ligt binnen het Phillips 66
+    #    Lake Charles-complex (`highway=service access=private`, 71 ways op
+    #    het terrein, brief §3/[13]) → eindToegangPrivaat binnen de 12-km-zone.
+    # ⚠️ GEEN GEPUBLICEERDE LENGTE (brief §2): 1.086 km is OSRM over OSM [15],
+    #    dezelfde bron als deze extract — de lengtetoets loopt hier tegen
+    #    zichzelf. Rapporteren, niet als onafhankelijke bevestiging lezen.
+    "grafiet-lakecharles-desoto-lakecharles-riverside": {
+        "via": [
+            ("P66 Lake Charles — cokesveld/coker",       (-93.2770, 30.2420)),   # anker
+            ("I-12 oost van Baton Rouge (Walker)",       (-90.8576, 30.4707)),
+            ("I-59 noord van Slidell (Pearl River)",     (-89.7265, 30.4031)),
+            ("I-59 noord van Hattiesburg",                (-89.3252, 31.3798)),
+            ("I-20/59 oost van Meridian",                 (-88.5772, 32.3964)),
+            ("I-59 NO van Birmingham (Trussville)",       (-86.6237, 33.6342)),
+            ("I-24 Chattanooga, Lookout Valley",          (-85.3830, 35.0188)),
+            ("Novonix Riverside — fabriek",               (-85.3243, 35.0388)),   # anker
+        ],
+        "id": "gr-lakecharles-riverside",
+        "naam": "P66 Lake Charles — cokesveld → Novonix Riverside (I-10 → I-12 → I-59 → I-24)",
+        "extracts": ["us-louisiana", "us-mississippi", "us-alabama", "us-tennessee"],
+        "refs": ["I-10", "I-12", "I-59", "I-20", "I-24", "10", "12", "59", "20", "24"],
+        "gepubliceerdKm": 1086,
+        "bronnoot": "OSRM over OSM (routebrief §2/[15], 2026-09-26); geen gepubliceerde "
+                    "lengte — de lengtetoets loopt tegen dezelfde bron als deze extract",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "grafiet-lakecharles-desoto-weg-lakecharles-riverside.geojson",
+    },
+    # Routebrief grafiet-lakecharles-desoto, been b2 (LICHTE werkwijze M29).
+    # Truck (werkaanname) Novonix Riverside → De Soto-routeerpunt (rotonde
+    # Astra Parkway), I-24 → I-57 → I-64 → I-70 → I-435 → K-10. Via-punten =
+    # de acht corridorkeuzes uit de brief §4 (b2). ⚠️ EINDIGT OP HET
+    #    ROUTEERPUNT, NIET HET TERREINANKER — zelfde vorm als
+    #    grafiet-vidalia-desoto/-desoto-casagrande in dit bestand: het
+    #    fabrieksterrein (38.93815,-95.00240) is over de weg niet bereikbaar,
+    #    de docks zijn niet gelegd (brief §3).
+    "grafiet-lakecharles-desoto-riverside-desoto": {
+        "via": [
+            ("Novonix Riverside — fabriek",               (-85.3243, 35.0388)),   # anker
+            ("I-24 W bij Kimball/Jasper",                 (-85.6740, 35.0424)),
+            ("I-24 NW Nashville, ná I-65/I-40",           (-86.7805, 36.2293)),
+            ("I-57 N ná het einde van I-24 (Pulleys Mill IL)", (-88.9763, 37.6474)),
+            ("I-64 W ná I-57 (Mt Vernon IL)",             (-89.0286, 38.3621)),
+            ("I-70 W Wentzville MO",                       (-90.8696, 38.8102)),
+            ("I-435 Z ná I-70 (Kansas City)",             (-94.5006, 39.0306)),
+            ("K-10 Lenexa, ná I-435",                      (-94.7779, 38.9423)),
+            ("K-10 × Lexington Ave, De Soto",             (-94.9665, 38.9602)),
+            ("Astra Parkway — rotonde (routeerpunt)",      (-95.00748, 38.94196)),  # routeerpunt
+        ],
+        "id": "gr-riverside-desoto",
+        "naam": "Novonix Riverside → De Soto-routeerpunt (I-24 → I-57 → I-64 → I-70 → I-435 → K-10)",
+        "extracts": ["us-tennessee", "us-kentucky", "us-illinois", "us-missouri", "us-kansas"],
+        "refs": ["I-24", "I-57", "I-64", "I-70", "I-435", "K-10", "24", "57", "64", "70",
+                 "435", "10"],
+        "gepubliceerdKm": 1152,
+        "bronnoot": "OSRM over OSM (routebrief §2/[15], 2026-09-26); geen gepubliceerde "
+                    "lengte — de lengtetoets loopt tegen dezelfde bron als deze extract",
+        "vensterKm": 40,
+        "uit": "grafiet-lakecharles-desoto-weg-riverside-desoto.geojson",
+    },
+    # Routebrief grafiet-balama-laixi, been b3 (LICHTE werkwijze M29). Enige
+    # weg-scan van deze stroom: b1 (Balama→Nacala) is een letterlijke kopie van
+    # bak_grafiet been 1, b2 is de MARNET-zeerouter. Kop = QQCT Qianwan-kade
+    # (aannemelijk, §3), staart = Qingdao Shinestar-fabriek in Nanshu
+    # (bron-gelegd, MEE-vergunning). Vijf via-punten pinnen de corridorkeuze om
+    # de Jiaozhou-baai (§4 van de brief): westelijke haven-uitvalsweg i.p.v.
+    # de baaibrug, doorrijden op G15 i.p.v. G204/S202 door Jimo, afrit naar de
+    # S214 i.p.v. Laixi-stad. ⚠️ Geen gepubliceerde km — brief-toets loopt tegen
+    # OSRM (149,6 km, zelfde OSM-bron); *aannemelijk: één bron* (contract 2018).
+    "grafiet-balama-laixi-qingdao-nanshu": {
+        "via": [
+            ("Qingdao Qianwan Container Terminal (QQCT) — kade",  (120.2070, 36.0124)),   # anker (aannemelijk)
+            ("S7602 uitrit havengebied (2号疏港高速)",              (120.1528, 36.0449)),
+            ("samenvloeiing G22 青兰高速 → G15 沈海高速",           (119.9736, 36.0573)),
+            ("G15 ten noorden van Jiaozhou (splitsing)",           (120.0259, 36.3890)),
+            ("afrit G15 → S214 南城路 (Laixi-west)",                (120.3366, 36.7634)),
+            ("S214 aankomst Nanshu, afslag industriezone",         (120.3339, 37.0170)),
+            ("Qingdao Shinestar SPG-fabriek, Nanshu",              (120.3224, 37.0252)),   # anker (bron-gelegd)
+        ],
+        "id": "gr-qingdao-qqct-laixi-shinestar",
+        "naam": "QQCT Qianwan-kade → Qingdao Shinestar-fabriek, Nanshu "
+                "(S7602 → G22 → G15 om de Jiaozhou-baai → S214)",
+        "extracts": ["china"],
+        "refs": ["S7602", "G22", "G15", "S214"],
+        "gepubliceerdKm": 150,
+        "bronnoot": "OSRM over OSM 149,6 km (geen onafhankelijke publicatie; "
+                    "contract Langruite 2018/2019)",
+        "vensterKm": 40,
+        "uit": "stroombeen-qingdao-qqct-laixi-shinestar.geojson",
+    },
+    # Routebrief lithium-bikita-zhangjiagang, been b1. A9/P4 (Mutare-Masvingo
+    # Highway, ZW) → Forbes/Machipanda-grens → EN6 (Beira-corridor, MZ).
+    "lithium-bikita-zhangjiagang-bkplant-beira": {
+        "via": [
+            ("Bikita Minerals — concentratorplant",      (31.4245, -19.9512)),   # anker
+            ("mijnafrit op de A9/P4",                     (31.4148, -19.9721)),
+            ("Nyika, A9/P4",                               (31.5915, -20.0001)),
+            ("Birchenough Bridge (Save-oversteek)",        (32.3460, -19.9614)),
+            ("Wengezi, A9/P4",                             (32.5318, -19.5095)),
+            ("Forbes Border Post, N6",                     (32.7123, -19.0052)),
+            ("Chimoio, N6-doorgaande weg",                 (33.4838, -19.1283)),
+            ("Inchope, EN6 × EN1",                         (33.9326, -19.2072)),
+            ("Dondo, N6",                                  (34.7460, -19.6165)),
+            # ⚠️ EINDIGT NIET OP DE KADE: gemeten (2026-09-26) dat Cornelder's
+            # havenstraten (`service`, geen access-tag) in OSM een EIGEN, VAN
+            # HET DOORGAANDE NET LOSSTAAND clustertje vormen (component van 2
+            # knopen op ≤0,25 km van de kade) — precies de "OSM kent de
+            # havenstraten niet"-uitzondering uit de brief. De laatste
+            # connected knoop op het net ligt op de N6-havenweg-inrit (Av.
+            # Samora Machel), 1,82 km van de kade — vrijwel exact de "1,8 km"
+            # die de brief bij via-punt 8 al noemt. Vanaf hier een stippel.
+            ("N6 — havenweg-inrit Beira (Av. Samora Machel)", (34.848737, -19.823623)),
+        ],
+        "id": "li-bkplant-beira",
+        "naam": "Bikita — concentratorplant → Forbes/Machipanda → Beira, N6-havenweg-inrit (A9/P4 → N6/EN6)",
+        "extracts": ["zimbabwe", "mozambique"],
+        "refs": ["A9", "P4", "N6", "EN6"],
+        "gepubliceerdKm": 525,
+        "bronnoot": "som van deelstukken (Masvingo-Mutare ~70+298 km + Mutare-Forbes ~8 + EN6 289 km); geen bron geeft de rit als geheel; dit profiel meet tot 1,82 km vóór de kade (zie hierboven)",
+        "vensterKm": 40,
+        "uit": "lithium-bikita-zhangjiagang-weg-bkplant-beira.geojson",
+    },
     "grafiet-balama-nacala": {
         "via": [
             ("Balama-plant",        (38.660,  -13.310)),

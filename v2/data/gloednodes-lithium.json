@@ -1,0 +1,511 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag lithium voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/lithium-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof lithium: ids 'w-*', gewicht = capaciteit in kt LCE/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt LCE/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-li-greenbushes",
+   "naam": "Greenbushes (Talison: Tianqi/IGO 51% · Albemarle 49%)",
+   "lon": 116.05505,
+   "lat": -33.86495,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 200.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ±1,4 Mt spodumeenconcentraat (SC6.0+technical) FY2025 ≈ 200 kt LCE (1,4 Mt × 6,0% Li2O × 2,473 ≈ 208 kt, afgerond op de gepubliceerde bandbreedte); CGP3 eind 2025 → richting ~2,1 Mt/j [B1][B2]",
+   "bron": "hergebruik bestaand anker uit v2/design/routebrieven/lithium-greenbushes-zhangjiagang.md (Talison-concentraatloods, satelliet-gelegd z18 op 2026-07-29)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste hardrock-lithiummijn ter wereld (~15% van de wereldproductie); export via Bunbury naar vooral Chinese converters (as 1 van de golf)."
+  },
+  {
+   "id": "w-li-pilgangoora",
+   "naam": "Pilgangoora (Pilbara Minerals)",
+   "lon": 118.8974,
+   "lat": -21.0505,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 105.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 754,6 kt SC FY2025 ≈ 105 kt LCE (Argus/Pilbara Minerals kwartaalrapport); capaciteitsdoel 1,0 Mt SC/j na P1000-uitbreiding [B3]",
+   "bron": "Nominatim (OSM landuse 'Pilbara Minerals Mine', Pilgan-plant) -21.0505,118.8974",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis op de processing-plant/tailings-rand direct naast de flotatieloods en de indikkers, tussen twee open putten (NO en ZW)."
+  },
+  {
+   "id": "w-li-wodgina",
+   "naam": "Wodgina (Mineral Resources 50% / Albemarle 50%)",
+   "lon": 118.6711,
+   "lat": -21.1912,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 100.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 750 kt SC5.5/j nameplate ≈ 100 kt LCE (MinRes kwartaalrapportage) [B4]",
+   "bron": "Nominatim (OSM landuse 'Wodgina Mine') -21.1912,118.6711",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis middenin het plant-/pitcomplex, tussen twee open putten en een groene indikker direct O van het kruis."
+  },
+  {
+   "id": "w-li-mtmarion",
+   "naam": "Mt Marion (Mineral Resources / Ganfeng)",
+   "lon": 121.448,
+   "lat": -31.075,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 75.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ~140 kt SC/kwartaal begin 2025 → ~500-600 kt SC/j ≈ 70-80 kt LCE (MinRes kwartaalrapportage, exact FY25-jaarcijfer niet bevestigd) [B4]",
+   "bron": "Nominatim ('Mount Marion' piek, -31.0548,121.4485) als startpunt, verschoven naar het satellietbeeld",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "eerste blik (op de piek-coördinaat) stond 2,3 km NW van het complex in bosgebied; verschoven naar -31.0750,121.4480, waar het kruis op de toegangsweg tussen concentrator en open put ligt (z15, tweede pass)."
+  },
+  {
+   "id": "w-li-kathleenvalley",
+   "naam": "Kathleen Valley (Liontown Resources)",
+   "lon": 120.5476,
+   "lat": -27.4749,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 70.0,
+   "gewicht_bron": "capaciteit kt LCE/j — naamplaat richting ~500 kt SC/j in volle productie (2024 in bedrijf genomen) ≈ 70 kt LCE-indicatie; exacte FY25/26-jaarproductie niet apart bevestigd deze ronde [B5]",
+   "bron": "Nominatim ('Kathleen Valley Access Road') -27.4749,120.5476",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z14 gezien: kruis op een klein gebouwencluster aan de toegangsweg, direct W van de tailings-dam en de concentrator (die ~250-500 m O/ZO ligt)."
+  },
+  {
+   "id": "w-li-mtholland",
+   "naam": "Mt Holland (Covalent Lithium: Wesfarmers 50% / SQM 50%)",
+   "lon": 119.774,
+   "lat": -32.099,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 50.0,
+   "gewicht_bron": "capaciteit kt LCE/j — spodumeenconcentraat-voeding voor de Kwinana-raffinaderij (50 kt LiOH/j nameplate) — capaciteit van de mijn zelf niet los gepubliceerd, gekoppeld aan Kwinana-intake [B6]",
+   "bron": "Nominatim ('Mount Holland Mine') -32.0906,119.7602, verschoven naar het concentraatterrein op satelliet",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z16 (tweede pass): kruis binnen de omheinde tailings-/concentraatzone naast de procesgebouwen; eerste punt (Nominatim-centroïde) lag 1,2 km NW tussen kleinere putten."
+  },
+  {
+   "id": "w-li-kemerton",
+   "naam": "Kemerton (Albemarle)",
+   "lon": 115.7604,
+   "lat": -33.205,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 88.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 2 trains × 50 kt LiOH/j nameplate (100 kt) ≈ 88 kt LCE-equivalent (×0,88); ⚠️ laatste trein sinds 2026 (grotendeels) stilgelegd — nameplate, geen actuele productie [B7]",
+   "bron": "Nominatim ('Albemarle Lithium, Kemerton Road') -33.2050,115.7604",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis midden op het fabrieksterrein (procesgebouwen, tanks, toegangsweg vanaf de snelweg)."
+  },
+  {
+   "id": "w-li-kwinana",
+   "naam": "Kwinana lithium hydroxide plant (Tianqi/IGO, TLK)",
+   "lon": 115.77,
+   "lat": -32.24,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Australië",
+   "gewicht": 44.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 50 kt LiOH/j nameplate (trein 1) ≈ 44 kt LCE-equivalent; capaciteitsbenutting laag gerapporteerd in eerdere kwartalen [B8]",
+   "bron": "v1-registercoördinaat (data/lithium.js li-ref-kwinana, benaderd), niet onafhankelijk herbevestigd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "z14 gezien: kruis op een gebouw in het brede Kwinana Industrial Area (tussen tankfarm en kustweg) — meerdere industriële installaties liggen hier dicht opeen (alumina, nikkel, chemie); niet hard onderscheiden welk pand van TLK is."
+  },
+  {
+   "id": "w-li-atacama-sqm",
+   "naam": "SQM Salar de Atacama (pekelwinning)",
+   "lon": -68.4,
+   "lat": -23.5675,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Chili",
+   "gewicht": 233.0,
+   "gewicht_bron": "capaciteit kt LCE/j — Nova Andino Litio (SQM) verkocht 233,1 kt LCE in 2025 (Q4 66,2 kt, record) [B9]",
+   "bron": "hergebruik bestaand anker li-atacama-laad uit v2/design/routebrieven/lithium-atacama-antofagasta.md (satelliet-gelegd z15 op 2026-09-26)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Pekel gaat per tankwagen naar de eigen carbonaatfabriek Salar del Carmen (Antofagasta); capaciteit hier = uitkomst van de gehele SQM-pekelketen, niet los te meten aan de put."
+  },
+  {
+   "id": "w-li-carmen",
+   "naam": "SQM Planta Química de Litio Carmen",
+   "lon": -70.26,
+   "lat": -23.6335,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Chili",
+   "gewicht": 225.0,
+   "gewicht_bron": "capaciteit kt LCE/j — Li2CO3-capaciteit 210 kt/j (eind 2025) → 240 kt/j (2028); + LiOH 40 kt/j → 100 kt/j (eind 2026) (SQM Form 20-F FY2025) [B9][B10]",
+   "bron": "hergebruik bestaand anker li-carmen-plant uit v2/design/routebrieven/lithium-atacama-antofagasta.md (satelliet-gelegd z15 op 2026-09-26)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Fabriekscomplex direct O van Ruta 5, met vijverveld Z ervan (z15 gezien: hallen, tanks, silo's)."
+  },
+  {
+   "id": "w-li-lanegra",
+   "naam": "La Negra (Albemarle)",
+   "lon": -70.3134,
+   "lat": -23.7559,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Chili",
+   "gewicht": 85.0,
+   "gewicht_bron": "capaciteit kt LCE/j — > 85 kt Li2CO3/j battery grade (Albemarle Chile, bedrijfspagina) [B11]",
+   "bron": "Nominatim/Photon ('Planta Química La Negra', industrial) -23.7559,-70.3134",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis tussen de verdampings-/loogvijvers (groen/wit) en het bebouwde fabrieksterrein ~200 m O, 27 km ZO van Antofagasta."
+  },
+  {
+   "id": "w-li-olaroz",
+   "naam": "Olaroz (Rio Tinto 66,5% / Toyota Tsusho 25% / JEMSE 8,5%)",
+   "lon": -66.7098,
+   "lat": -23.4723,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Argentinië",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 60 kt Li2CO3 verkocht in 2025 (Rio Tinto Q4-2025-rapport); ontwerpcapaciteit 42,5 kt/j oorspronkelijk, opgehoogd na uitbreidingsfase [B12]",
+   "bron": "Nominatim ('Salar de Olaroz', wetland-centroïde) -23.4723,-66.7098 — GEEN plant-anker",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "salarcentroïde, geen fabrieksgebouw op deze positie herkend; de carbonaatfabriek ligt ergens aan de rand van de salar, niet apart gelokaliseerd deze ronde."
+  },
+  {
+   "id": "w-li-cauchari-olaroz",
+   "naam": "Cauchari-Olaroz (Lithium Argentina / Ganfeng / JEMSE)",
+   "lon": -66.7286,
+   "lat": -23.7362,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Argentinië",
+   "gewicht": 40.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ~40 kt Li2CO3/j (ontwerpcapaciteit fase 1, Lithium Argentina/Ganfeng kwartaalrapportage); grootste Argentijnse pekelsite in aanbouw/ramp-up [B13]",
+   "bron": "Nominatim ('Salar de Cauchari', wetland-centroïde) -23.7362,-66.7286 — GEEN plant-anker",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "salarcentroïde, z13: geen fabrieksbebouwing op dit punt herkenbaar (zoutvlakte); exacte plantlocatie (bekend uit persberichten nabij Olaroz) niet apart satellietgelegd."
+  },
+  {
+   "id": "w-li-hombremuerto",
+   "naam": "Salar del Hombre Muerto / Fenix (Arcadium–Rio Tinto)",
+   "lon": -67.1415,
+   "lat": -25.3508,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Argentinië",
+   "gewicht": 25.0,
+   "gewicht_bron": "capaciteit kt LCE/j — Fenix-plant ~25 kt Li2CO3/j (Arcadium/Rio Tinto, na 2023-uitbreiding); oudste Argentijnse pekeloperatie [B14]",
+   "bron": "Wikipedia-coördinaat 'Salar del Hombre Muerto' (en) -25.35,-67.07, satellietblik op afgeleid punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "z13: alleen de grote witte zoutvlakte zichtbaar, geen fabrieksgebouw op dit brede beeld onderscheiden — vraagt een nauwere pass."
+  },
+  {
+   "id": "w-li-rincon",
+   "naam": "Rincon (Rio Tinto)",
+   "lon": -67.0871,
+   "lat": -24.0661,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Argentinië",
+   "gewicht": 3.0,
+   "gewicht_bron": "capaciteit kt LCE/j — starter plant 3 kt Li2CO3/j (eerste productie 2024/2025); volledig project (DLE) beoogt ~60 kt/j maar nog niet gerealiseerd (Rio Tinto persberichten) [B15]",
+   "bron": "Nominatim/Photon ('Salar del Rincón') -24.0661,-67.0871 — salarcentroïde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "z13: zoutvlakte, geen plant op deze positie gezien; kleinere bebouwing ~1,5-2 km NO op het beeld, niet hard aan Rio Tinto gekoppeld."
+  },
+  {
+   "id": "w-li-bikita",
+   "naam": "Bikita Minerals (Sinomine)",
+   "lon": 31.4245,
+   "lat": -19.9512,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Zimbabwe",
+   "gewicht": 85.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 300 kt SC (5,0-5,5% Li2O) + 480 kt petaliet (3,9%) ≈ 85 kt LCE naamplaat; 66,5 kt LCE geprognosticeerd 2026 (Sinomine; Benchmark via Sayona F-4) [B16]",
+   "bron": "hergebruik bestaand anker li-bk-plant uit v2/design/routebrieven/lithium-bikita-zhangjiagang.md (satelliet-gelegd z15 op 2026-09-26)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "grootste lithiumproducent van Zimbabwe; export via Beira naar China (as 3 van de golf)."
+  },
+  {
+   "id": "w-li-arcadia",
+   "naam": "Arcadia Lithium (Huayou / Prospect Lithium Zimbabwe)",
+   "lon": 31.4243,
+   "lat": -17.7715,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Zimbabwe",
+   "gewicht": 63.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ~450 kt SC/j naamplaat ≈ 63 kt LCE-indicatie (Huayou Cobalt persberichten/Prospect Resources verkoopdocumenten) [B17]",
+   "bron": "Nominatim ('Arcadia Lithium Mine', industrial) -17.7715,31.4243",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis exact op de blauwe-daken procesgebouwen van het complex, tussen de put/vijver (W) en akkers (O), 38 km O van Harare."
+  },
+  {
+   "id": "w-li-kamativi",
+   "naam": "Kamativi Tin & Lithium Mine (Zhejiang Huayou)",
+   "lon": 27.0526,
+   "lat": -18.3241,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Zimbabwe",
+   "gewicht": 30.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ~350 kt SC/j naamplaat ≈ 30 kt LCE-indicatie (Zhejiang Huayou-persberichten 2024/2025, indicatief) [B18]",
+   "bron": "Nominatim ('Tin & Lithium Mine, Kamativi', industrial) -18.3241,27.0526",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis dicht bij een klein gebouwencluster naast de open put en de tailings-dam Z ervan."
+  },
+  {
+   "id": "w-li-goulamina",
+   "naam": "Goulamina (Ganfeng Lithium / voorheen Leo Lithium)",
+   "lon": -7.9723,
+   "lat": 11.3495,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Mali",
+   "gewicht": 75.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 506 kt SC/j naamplaat ≈ 75 kt LCE-indicatie (Ganfeng/Leo Lithium-productieaankondigingen) [B19]",
+   "bron": "Nominatim ('Goulamina Lithium Mine', industrial) 11.3495,-7.9723",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis midden op het processing-plantterrein, tussen open put (O) en tailings-/loogvijver (W)."
+  },
+  {
+   "id": "w-li-sigma",
+   "naam": "Grota do Cirilo (Sigma Lithium)",
+   "lon": -41.8927,
+   "lat": -16.7002,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Brazilië",
+   "gewicht": 35.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 240 kt SC in 2024, doel 270 kt 2025 ≈ 35 kt LCE; productie 2025 tijdelijk gestaakt/hervat (Sigma MD&A 3Q25) [B20]",
+   "bron": "Photon (Sigma Lithium Brasil, industrial) -16.7002,-41.8927",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "z15 gezien: kruis op een klein gebouwencluster direct aan de oever van de Rio Jequitinhonha; niet hard te onderscheiden of dit de hoofdconcentrator is of een kleiner onderdeel (bv. pompstation) van het Grota do Cirilo-complex."
+  },
+  {
+   "id": "w-li-tianqi-jiangsu",
+   "naam": "Tianqi Lithium (Jiangsu), Zhangjiagang",
+   "lon": 120.45771,
+   "lat": 32.01218,
+   "level": "site",
+   "parent": null,
+   "rol": "converter",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "China",
+   "gewicht": 17.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 110 kt SC6.0 concentraat in → ~17 kt Li2CO3 uit (routebrief lithium-greenbushes-zhangjiagang.md §2; 110×6,0%×2,473≈16,3 kt, brief noemt zelf 17 kt) [B21]",
+   "bron": "hergebruik bestaand anker uit MEE-emissievergunningregister (permit.mee.gov.cn), vergunning 91320592551155199K001U, z18 satellietgelegd op 2026-07-29",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "poortcoördinaat 东新路5号, Zhangjiagang bonded zone; +30 kt LiOH (sinds 09-2025) hoort bij een APARTE rechtspersoon ~5 km ZO en is hier NIET meegeteld."
+  },
+  {
+   "id": "w-li-gwangyang",
+   "naam": "POSCO Pilbara Lithium Solution, Gwangyang (Yulchon)",
+   "lon": 127.5909,
+   "lat": 34.8995,
+   "level": "site",
+   "parent": null,
+   "rol": "converter",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 38.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 43 kt LiOH/j nameplate ≈ 38 kt LCE-equivalent (×0,88); gemeten 2026-tempo lag rond ~14 kt LiOH/j (POSCO-newsroom / ontwerpronde-notitie) [B22]",
+   "bron": "Nominatim ('율촌제1산업단지 / Yulchon industrial complex') 34.8995,127.5909 — industriepark, niet het specifieke pand",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "coördinaat is het industriepark waarin de POSCO-fabriek ligt, niet zelf satellietgelegd op het specifieke pand deze ronde."
+  },
+  {
+   "id": "w-li-naraha",
+   "naam": "Naraha (Toyota Tsusho)",
+   "lon": 140.9933,
+   "lat": 37.2826,
+   "level": "site",
+   "parent": null,
+   "rol": "converter",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Japan",
+   "gewicht": 9.0,
+   "gewicht_bron": "capaciteit kt LCE/j — kleine hydroxidefabriek gevoed met Argentijns carbonaat, ~10 kt LiOH/j-orde ≈ 9 kt LCE-indicatie (Toyota Tsusho-persberichten, niet exact bevestigd) [B23]",
+   "bron": "v1-registercoördinaat (data/lithium.js li-ref-naraha), stadscentroïde Naraha, niet satellietgelegd op het pand",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "coördinaat is de gemeente Naraha (Fukushima), niet het specifieke fabrieksterrein — deze ronde niet nader gelokaliseerd."
+  },
+  {
+   "id": "w-li-silverpeak",
+   "naam": "Silver Peak (Albemarle)",
+   "lon": -117.5768,
+   "lat": 37.7693,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit kt LCE/j — enige actieve Amerikaanse lithiummijn, ~5 kt LCE/j (Albemarle-fabrieksinformatie, v1-register) [B25]",
+   "bron": "Photon/OSM ('Silver Peak Lithium Mine', quarry) 37.7693,-117.5768",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z15 gezien: kruis midden op het verdampingsvijverveld (turkooise/groene bekkens), klassiek brine-operatiebeeld."
+  },
+  {
+   "id": "w-li-whabouchi",
+   "naam": "Whabouchi (Nemaska Lithium)",
+   "lon": -75.8952,
+   "lat": 51.6878,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Canada",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 33,5 kt SC6/j nameplate fase 1 ≈ 5 kt LCE-indicatie (33,5 × 6,0% × 2,473 ≈ 5,0 kt) (Nemaska Lithium/Investissement Québec projectupdates) [B27]",
+   "bron": "Photon (Mine Whabouchi, industrial) 51.6878,-75.8952",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z14 gezien: kruis op een gerooide/opgehoogde industriezone aan een meer, met toegangsweg — mijnsite in aanbouw/vroege productie."
+  },
+  {
+   "id": "w-li-becancour",
+   "naam": "Bécancour (Nemaska Lithium)",
+   "lon": -72.3938,
+   "lat": 46.3583,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Canada",
+   "gewicht": 6.0,
+   "gewicht_bron": "capaciteit kt LCE/j — eerste fase ~7 kt LiOH/j (herstart 2025) ≈ 6 kt LCE-equivalent (Nemaska Lithium/Investissement Québec) [B27]",
+   "bron": "Photon (Nemaska Lithium, construction) 46.3583,-72.3938",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "z14 gezien: kruis direct op het fabriekscomplex in het industriepark van Bécancour, langs de Saint-Laurent."
+  },
+  {
+   "id": "w-li-bitterfeld",
+   "naam": "Bitterfeld (AMG Lithium)",
+   "lon": 12.3167,
+   "lat": 51.6167,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "Duitsland",
+   "gewicht": 18.0,
+   "gewicht_bron": "capaciteit kt LCE/j — ~20 kt LiOH/j fase 1 ≈ 18 kt LCE-equivalent (AMG Lithium-bedrijfsinformatie); eerste EU-hydroxidefabriek, draait op geïmporteerd carbonaat [B32]",
+   "bron": "v1-registercoördinaat (data/lithium.js li-ref-bitterfeld), stadscentroïde Bitterfeld-Wolfen (Wikipedia-coördinaat bevestigt dezelfde plek)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "stadscoördinaat, niet het specifieke fabrieksterrein — geen satellietblik deze ronde."
+  },
+  {
+   "id": "w-li-yahua-yaan",
+   "naam": "Yahua Group, Ya'an lithium salt plant",
+   "lon": 103.128,
+   "lat": 30.048,
+   "level": "site",
+   "parent": null,
+   "rol": "converter",
+   "grondstof": [
+    "lithium"
+   ],
+   "land": "China",
+   "gewicht": 130.0,
+   "gewicht_bron": "capaciteit kt LCE/j — 130 kt lithiumzout/j eind 2025 (Asian Metal/Mysteel-schatting); jaarverslag 2024 noemt 3万吨 (30 kt) Li2CO3 fase-3-lijn in bedrijf genomen [B33][B34]",
+   "bron": "adres 四川省雅安市经济开发区永兴大道南段99号 uit Yahua jaarverslag 2024 (via Sina Finance), straat 永兴大道 gelokaliseerd via Nominatim, punt niet op een specifiek pand gelegd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "z15: kruis op een rotonde in het industriepark van Ya'an (Mingshan-district); meerdere fabriekscomplexen liggen binnen enkele honderden meters, welk gebouw exact Yahua's lithiumzoutlijn is, is deze ronde niet vastgesteld."
+  }
+ ]
+}

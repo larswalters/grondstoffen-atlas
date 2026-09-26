@@ -18,9 +18,16 @@
 // tweede bron bijgekomen: de belangrijke punten van elke stroom (mijn · overslag ·
 // fabriek) gloeien nu ook, op verzoek van Lars. Deze module is daarmee nog maar
 // één ding: de vertaling van `gloednodes-koper.json` naar gloedknopen.
+//
+// ⚠️ ÉÉN BESTAND PER GRONDSTOF (sinds 2026-09-26): `laadGloednodes` krijgt de
+// bestandsnaam mee (`gloednodes-<grondstof>.json`, gevuld door
+// v2/tools/voeg_sites_toe.py --grondstof <sleutel>) en main.js roept hem per
+// bestand aan. De helderheid normaliseert PER BESTAND (maxGewicht hieronder) —
+// bewust niet over alle grondstoffen samen, anders verschuift de koperhelderheid
+// zodra er een grondstof met grotere getallen bijkomt (kolen in Mt/j).
 
 import { bouwGloed, AFSTEMMING as GLOED_AFSTEMMING } from "./gloed.js?v=118";
-import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=118";
+import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=122";
 
 // Grondstofkleuren komen uit `stroomstijl.js` — de gloed hoort dezelfde taal te
 // spreken als de lijn die er vertrekt.
@@ -42,16 +49,17 @@ export const AFSTEMMING = {
   get koepelHoogte() { return GLOED_AFSTEMMING.koepelHoogte; },
 };
 
-export async function laadGloednodes(radius, versie, camera, renderer) {
+export async function laadGloednodes(radius, versie, camera, renderer,
+                                     bestand = "gloednodes-koper.json") {
   const t0 = performance.now();
-  const r = await fetch(`data/gloednodes-koper.json?v=${versie}`);
-  if (!r.ok) throw new Error(`gloednodes-koper.json: HTTP ${r.status}`);
+  const r = await fetch(`data/${bestand}?v=${versie}`);
+  if (!r.ok) throw new Error(`${bestand}: HTTP ${r.status}`);
   const doc = await r.json();
   const tLaden = performance.now();
 
   // ⚠️ Alleen sites. Zie de kop: complex/regio zijn labels, geen glow-objecten.
   const sites = doc.knopen.filter((k) => k.level === "site");
-  if (!sites.length) throw new Error("gloednodes: geen sites in het bestand");
+  if (!sites.length) throw new Error(`${bestand}: geen sites in het bestand`);
 
   const maxGewicht = Math.max(...sites.map((s) => s.gewicht || 1));
 
@@ -78,6 +86,7 @@ export async function laadGloednodes(radius, versie, camera, renderer) {
     update: gloed.update,
     sites,
     stats: {
+      bestand,
       sites: knopen.length,
       schillen: gloed.groep.children.length,
       complexen: doc.knopen.filter((k) => k.level === "complex").length,

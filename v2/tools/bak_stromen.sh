@@ -29,7 +29,14 @@
 #    meer, maar is nog steeds geen waargenomen vaargeul — die houdt zijn stippel.
 #    Doorgetrokken blijft voorbehouden aan "we weten waar de lijn ligt".
 #
-# Draaien vanuit de repo-root:
+# ⚠️ SPOOR: het 1-op-1-OSM-spoornet (v2/data/landnet-raw.bin, 3.260.717 spoor-
+#    edges) is in toets_spoorroute.mjs ALLEEN actief met `BAKE_SUFFIX=-raw`;
+#    zonder die var routeert het tool over het tekennet (470.543 edges) en krijg
+#    je andere lijnen. Controleer de eerste consoleregel. Zie
+#    v2/design/bakhandleiding-licht.md §2 (spoor).
+#
+# Draaien vanuit de repo-root (zonder of met onbekend argument: lijst van de
+# bekende stromen; elke functie bak_<naam met _> is via <naam met -> bereikbaar):
 #   bash v2/tools/bak_stromen.sh grafiet
 # ============================================================================
 set -euo pipefail
@@ -362,17 +369,339 @@ bak_koper_elteniente() {
   python v2/tools/hecht_marnet.py route     --graaf  "$GRAAF"     --marnet "$MARNET"     --ne     "$NE"     --stippel      "leiding|pulpleiding concentrator Colón → Caletones-smelter (~2 km, aannemelijk)|-34.0900,-70.4630|-34.1061,-70.4503"     --been-geojson "truck|anodes Caletones → Maitenes (Carretera del Cobre, oude weg; Codelco-privéwegen)|$BEEN/stroombeen-caletones-maitenes.geojson"     --stippel      "truck|Carretera del Cobre Maitenes–Confluencia (in OSM alleen als geplande weg gekarteerd)|-34.15062,-70.54925|-34.17568,-70.54976"     --been-geojson "truck|anodes Confluencia → Coya (Carretera del Cobre → H-27)|$BEEN/stroombeen-confluencia-coya.geojson"     --stippel      "truck|H-27 bij Coya (in OSM 5,6 km als track — komt de scanner niet door)|-34.19657,-70.57698|-34.19650,-70.61359"     --been-geojson "truck|anodes Coya → Rancagua → ETEO Los Lirios (H-27 → Ruta 5)|$BEEN/stroombeen-coya-eteo.geojson"     --stippel      "spoor|overslag ETEO — emplacement (anker onzeker)|-34.2118,-70.7748|-34.2099,-70.7710"     --been-geojson "spoor|anodes ETEO → Santiago → San Pedro → Ventanas (Fepasa, 850 t/dag)|$BEEN/spoorroute-eteo-ventanas.geojson"     --stippel      "spoor|spoor → Ventanas-raffinaderij (terrein)|-32.7540,-71.4789|-32.7596,-71.4816"     --been-geojson "truck|kathode Ventanas → Concón → Casablanca → Algarrobo → Puerto San Antonio (Codelco-corridor 2026)|$BEEN/stroombeen-ventanas-sanantonio.geojson"     --stippel-geojson "zee|haven-aanloop San Antonio (schematisch, over water — MARNET reikt hier niet: 80 km)|$BEEN/aanloop-sanantonio.geojson"     --been         "zee|zeeschip San Antonio → Rotterdam (kathode, via Panama)|-33.0,-72.0|51.8935,4.4585"     --marker "El Teniente — concentrator Colón (Codelco)|-34.0900,-70.4630"     --marker "Caletones — smelter (anodes)|-34.1061,-70.4503"     --marker "ETEO Los Lirios — overslag truck → spoor (onzeker)|-34.2118,-70.7748"     --marker "Ventanas — raffinaderij (kathode)|-32.7596,-71.4816"     --marker "San Antonio — espigón, kathodekade (onzeker)|-33.5885,-71.6170"     --marker "Rotterdam — RHB, Waalhaven Noordzijde 4|51.8935,4.4585"     --routebrief v2/design/routebrieven/koper-elteniente-rotterdam.md     --uit    v2/data/stroomroute-koper-elteniente-rotterdam.json     --stroom koper-elteniente-rotterdam     --titel  "Koper · El Teniente → Ventanas → San Antonio → Rotterdam (kathode)"
 }
 
-case "${1:-}" in
-  koper-durban)    bak_koper_durban ;;
-  koper-lasbambas) bak_koper_lasbambas ;;
-  koper-grasberg)  bak_koper_grasberg ;;
-  koper-chuqui)    bak_koper_chuqui ;;
-  koper-aurubis)   bak_koper_aurubis ;;
-  koper-oyutolgoi) bak_koper_oyutolgoi ;;
-  koper-elteniente) bak_koper_elteniente ;;
-  grafiet)         bak_grafiet ;;
-  koper-escondida) bak_koper_escondida ;;
-  koper-lobito)    bak_koper_lobito ;;
-  lithium)         bak_lithium ;;
-  *) echo "gebruik: bash v2/tools/bak_stromen.sh {grafiet|koper-escondida|koper-lobito|lithium}" >&2; exit 2 ;;
-esac
+# ── lithium · Salar de Atacama (SQM) → Salar del Carmen → Antofagasta → China (carbonaat)
+# Routebrief: v2/design/routebrieven/lithium-atacama-antofagasta.md
+# ⚠️ Fase D/E vervallen (brief §6): geen bron noemt de Chinese fabriek/haven die
+#    het SQM-carbonaat lost, dus de brief stopt op de Yangtze-monding
+#    (aanlanding-aannemelijk, 72% van de Chileense export). "aannemelijk: één
+#    bron" staat in de beennaam, niet in de lijnstijl.
+# ⚠️ B1 IS TRUCK MET TANKWAGENS (LiCl-oplossing ~6% Li), GEEN PIJPLEIDING — de
+#    v1-aanname `pipeline` was fout (brief §2). De plantweg (compacted service,
+#    10,9-16 km) valt deels buiten de 12 km-eindzone: de anker→weg-aanloop van
+#    7,61 km blijft als restje staan (getekend, geen stippel — de weg bestaat en
+#    is gescand, alleen de eindzone-drempel snijdt hem af).
+# ⚠️ B2 IS +15,4% BOVEN DE GEPUBLICEERDE ~19 KM (buiten ±15%, bevinding, niet
+#    dichtgetrokken): de via-keten van de brief zelf gaf al 19 km hemelsbreed
+#    tegen de bronzin "15 km west of the Salar del Carmen" — twee losse
+#    schattingen die niet op elkaar aansluiten.
+# ⚠️ ZEEBEEN: kade > 25 km van een zeeknoop → letterlijke kopie van de
+#    bestaande haven-aanloop `aanloop-antofagasta.geojson` (koper-aurubis-
+#    hamburg, cu-antofagasta-kade = li-antofagasta-kade, zelfde kade) + MARNET
+#    zeeknoop -23.80,-71.30 → Yangtze-monding (bestaand anker, gedeeld met vier
+#    koperstromen).
+bak_lithium_atacama_antofagasta() {
+  python v2/tools/hecht_marnet.py route     --graaf  "$GRAAF"     --marnet "$MARNET"     --ne     "$NE"     --been-geojson "truck|tankwagens SQM Salar de Atacama → PQL Carmen (plantweg → Ruta B-39 → Baquedano → Ruta 5)|$BEEN/stroombeen-atacama-carmen.geojson"     --been-geojson "truck|carbonaat/hydroxide (containers) PQL Carmen → Puerto Antofagasta ATI (Ruta 5 → Ruta 26 → Av. Salvador Allende)|$BEEN/stroombeen-carmen-antofagasta.geojson"     --stippel-geojson "zee|haven-aanloop Antofagasta (schematisch, over water — MARNET reikt hier niet: 97 km; gedeeld met koper-aurubis-hamburg)|$BEEN/aanloop-antofagasta.geojson"     --been         "zee|zeeschip Antofagasta → Yangtze-monding (containerschip, 50°N-lane; aannemelijk: één bron, 72% van de Chileense carbonaatexport)|-23.800,-71.300|31.42704,121.47618"     --marker "SQM Salar de Atacama — lithiumplant (laadplek tankwagens)|-23.5675,-68.4000"     --marker "SQM Planta Química de Litio Carmen — verwerkingsknoop (LiCl → Li2CO3/LiOH)|-23.6335,-70.2600"     --marker "Puerto Antofagasta, ATI — kade (containers, gedeeld anker)|-23.6500,-70.4088"     --marker "Yangtze-monding — aanlanding China (aannemelijk, gedeeld anker)|31.42704,121.47618"     --routebrief v2/design/routebrieven/lithium-atacama-antofagasta.md     --uit    v2/data/stroomroute-lithium-atacama-antofagasta.json     --stroom lithium-atacama-antofagasta     --titel  "Lithium · Salar de Atacama → Antofagasta → China (LiCl → carbonaat)"
+}
+
+# ── grafiet · Balama → Nacala → Qingdao (QQCT) → Laixi/Nanshu (Qingdao Shinestar, China)
+# Routebrief: v2/design/routebrieven/grafiet-balama-laixi.md (LICHTE werkwijze M29)
+# ⚠️ Been 1 (Balama→Nacala) EN de haven-aanloop Nacala zijn LETTERLIJKE KOPIEËN
+#    van bak_grafiet (Balama→Vidalia) — géén tweede scan/aanloop-poging.
+# ⚠️ Zeebeen (b2) heeft GEEN aanloop nodig: QQCT-kade (36.0124,120.2070) ligt
+#    5,6 km van zeeknoop 5841 (< 25 km) en snapt automatisch.
+# ⚠️ VOLUME = NUL (brief §1, Lars-besluit 2026-08-04-klasse): Syrah meldde voor
+#    2025 géén natuurlijk-grafietverkoop aan Chinese anodeklanten. Doorgetrokken,
+#    niet gestippeld — de weg is echt, de lading niet (werkwijze §7).
+# ⚠️ QQCT-kade én de Qingdao→Laixi-corridor zijn *aannemelijk: één bron* (brief
+#    §3/§7: contract Langruite 2018/2019) — dat staat in de been-/markernamen,
+#    niet in de lijnstijl.
+bak_grafiet_balama_laixi() {
+  python v2/tools/hecht_marnet.py route     --graaf  "$GRAAF"     --marnet "$MARNET"     --ne     "$NE"     --been-geojson "truck|vrachtwagen Balama → Nacala (N380/N1) — LETTERLIJKE KOPIE bak_grafiet been 1|$BEEN/stroombeen-balama-nacala.geojson"     --stippel-geojson "zee|haven-aanloop Nacala (schematisch, over water — MARNET reikt hier niet, 152,1 km — LETTERLIJKE KOPIE bak_grafiet)|$BEEN/aanloop-nacala.geojson"     --been         "zee|zeeschip Nacala → Qingdao QQCT (Indische Oceaan → Straat Malakka → Zuid-Chinese Zee → Gele Zee; losplek aannemelijk, geen bron noemt de terminal)|-15.0,41.7|36.0124,120.2070"     --been-geojson "truck|vrachtwagen QQCT-kade → Qingdao Shinestar-fabriek Nanshu (S7602 → G22 → G15 om de Jiaozhou-baai → S214; aannemelijk: één bron, contract 2018)|$BEEN/stroombeen-qingdao-qqct-laixi-shinestar.geojson"     --marker "Balama-plant, bagging on-site (Syrah/Twigg)|-13.31000,38.66000"     --marker "Porto de Nacala — containerterminal oostoever|-14.53830,40.66730"     --marker "QQCT Qianwan-kade, Qingdao (aannemelijk)|36.01240,120.20700"     --marker "Qingdao Shinestar SPG-fabriek, Nanshu|37.02520,120.32240"     --routebrief v2/design/routebrieven/grafiet-balama-laixi.md     --uit    v2/data/stroomroute-grafiet-balama-laixi.json     --stroom grafiet-balama-laixi     --titel  "Grafiet · Balama → Nacala → Qingdao → Laixi (China)"
+}
+
+# ── grafiet · Jinzhou (CNPC-naaldcokes) → Zhangjiakou → Baotou Jiuyuan (Shanshan-AAM-basis)
+# Routebrief: v2/design/routebrieven/grafiet-jinzhou-baotou.md (LICHTE werkwijze M29)
+# ⚠️ Modaliteit spoor is een WERKAANNAME (brief §7): geen bron noemt expliciet
+#    spoor voor dit traject; een wegalternatief (G1/G6, ~1.200 km) is niet
+#    uitgesloten.
+# ⚠️ Eén corridorkeuze op de Jingbao-lijn (via Shanhaiguan/Beijing-ring, niet de
+#    Datong–Qinhuangdao-kolenlijn) → twee spoorrouter-runs, gesplitst bij
+#    Zhangjiakou (geen --via-vlag op de spoorrouter). Kop→Zhangjiakou geraakt
+#    2,4 km van Shanhaiguan-station; Zhangjiakou→staart geraakt 0,4 km van
+#    Hohhot-station — beide bevestigen de Jingbao-hoofdlijn i.p.v. een omweg.
+# ⚠️ "Aannemelijk: bedrijfsniveau" — geen bron noemt de ontvangende Shanshan-
+#    fabriek met naam (kaderakkoord 2021 bewijst alleen de relatie CNPC↔Shanshan
+#    op bedrijfsniveau). Doorgetrokken, niet gestippeld — dat staat in de
+#    beennaam/markernaam, niet in de lijnstijl (werkwijze §valkuilen).
+# ⚠️ Eén korte omkering (180°, ~30 m boogstraal) op 4,9 km van het Jinzhou-
+#    anker — een kopmaak-plek bij het laademplacement, zelfde klasse als
+#    Chuqui (9 km)/Matarani (1,7 km): geen bugreden, het emplacement zelf zit
+#    niet in het 1-op-1-net. Snap Baotou-eind 1,22 km (anker ≠ routeerpunt,
+#    het exacte Shanshan-perceel binnen Jiuyuan Industrial Park is niet
+#    individueel bevestigd — brief §7).
+# ⚠️ Fase D vervalt (brief §6): geen bron koppelt Shanshan Baotou aan één
+#    celfabriek. Geen zee, geen MARNET — de keten is een pure landas.
+bak_grafiet_jinzhou_baotou() {
+  python v2/tools/hecht_marnet.py route     --graaf  "$GRAAF"     --marnet "$MARNET"     --ne     "$NE"     --been-geojson "spoor|trein Jinzhou → Zhangjiakou (Jingbao-lijn via Shanhaiguan; werkaanname)|$BEEN/spoorroute-grafiet-jinzhou-baotou-jinzhou-zhangjiakou.geojson"     --been-geojson "spoor|trein Zhangjiakou → Baotou Jiuyuan (Jingbao-lijn via Hohhot; werkaanname, aannemelijk: bedrijfsniveau)|$BEEN/spoorroute-grafiet-jinzhou-baotou-zhangjiakou-baotou.geojson"     --marker "CNPC Jinzhou Petrochemical — naaldcokesfabriek (kop)|41.13159,121.08583"     --marker "Shanshan Baotou Jiuyuan — grafitisatie-/AAM-basis (staart, aannemelijk)|40.60860,109.67826"     --routebrief v2/design/routebrieven/grafiet-jinzhou-baotou.md     --uit    v2/data/stroomroute-grafiet-jinzhou-baotou.json     --stroom grafiet-jinzhou-baotou     --titel  "Grafiet · Jinzhou → Zhangjiakou → Baotou (China)"
+}
+
+# ── grafiet · Lake Charles (P66, naaldcokes) → Novonix Riverside (Chattanooga)
+#    → Panasonic Energy Kansas, De Soto (synthetisch AAM, geen zee)
+# Routebrief: v2/design/routebrieven/grafiet-lakecharles-desoto.md (LICHTE werkwijze M29)
+# ⚠️ BEIDE BENEN DRAGEN "aannemelijk: één bron; volume nul tot H2 2027" (brief
+#    §1/§5): Novonix' 20-F noemt Phillips 66 als één van "a select few other
+#    suppliers", geen bindende supply-overeenkomst; massaproductie voor
+#    Panasonic start pas H2 2027. Doorgetrokken, niet gestippeld — de weg is
+#    gemeten, de lading nog niet (werkwijze §7, dezelfde vorm als grafiet-
+#    balama-vidalia/-laixi en lithium-atacama-antofagasta).
+# ⚠️ MODALITEIT VAN BEIDE BENEN IS EEN WERKAANNAME (brief §7): cokes gaat in de
+#    VS vaak per spoorhopper en beide sites liggen aan spoor; zonder bron voor
+#    een gedocumenteerd spoorbeen is truck de getekende keuze.
+# ⚠️ GEEN ZEE: dit is de eerste grafietketen van de atlas zonder MARNET-been —
+#    beide fabrieken liggen landinwaarts en de brief stopt bij het De Soto-
+#    routeerpunt (fase E is al been 10 van grafiet-balama-vs, niet opnieuw
+#    getekend — brief §1/§6).
+# ⚠️ BEEN 2 EINDIGT OP HET ROUTEERPUNT (rotonde Astra Parkway), NIET HET
+#    TERREINANKER (38.93815,-95.00240) — hergebruik van hetzelfde De Soto-
+#    anker/routeerpunt-paar als grafiet-balama-vidalia been 7/8: het terrein
+#    is over de weg niet bereikbaar en de docks zijn niet gelegd. De marker
+#    hieronder staat daarom op het terreinanker, ~480 m van de lijn
+#    (anker ≠ routeerpunt, brief §3).
+# ⚠️ KOP VAN BEEN 1 OP PRIVÉ-TERREINWEGEN (Phillips 66 Lake Charles Manufacturing
+#    Complex, `access=private` binnen het terrein) → profiel
+#    grafiet-lakecharles-desoto-lakecharles-riverside draait met
+#    eindToegangPrivaat: True (v2/tools/maak_stroombeen_weg.py).
+bak_grafiet_lakecharles_desoto() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen P66 Lake Charles — cokesveld → Novonix Riverside (I-10 → I-12 → I-59 → I-24; aannemelijk: één bron; volume nul tot H2 2027)|$BEEN/grafiet-lakecharles-desoto-weg-lakecharles-riverside.geojson" \
+    --been-geojson "truck|vrachtwagen Novonix Riverside → De Soto-routeerpunt (I-24 → I-57 → I-64 → I-70 → I-435 → K-10; aannemelijk: één bron; volume nul tot H2 2027)|$BEEN/grafiet-lakecharles-desoto-weg-riverside-desoto.geojson" \
+    --marker "Phillips 66 Lake Charles Manufacturing Complex — cokesveld/coker|30.24200,-93.27700" \
+    --marker "Novonix Riverside — fabriek (Chattanooga, grafitisatie)|35.03880,-85.32430" \
+    --marker "Panasonic Energy Kansas — De Soto (fase D, aannemelijk: één bron; volume nul)|38.93815,-95.00240" \
+    --routebrief v2/design/routebrieven/grafiet-lakecharles-desoto.md \
+    --uit    v2/data/stroomroute-grafiet-lakecharles-desoto.json \
+    --stroom grafiet-lakecharles-desoto \
+    --titel  "Grafiet · Lake Charles → Chattanooga → De Soto (VS)"
+}
+
+# ── lithium · Bikita (Zimbabwe) → Beira → Zhangjiagang (China) — spodumeenconcentraat/petaliet
+# Routebrief: v2/design/routebrieven/lithium-bikita-zhangjiagang.md (LICHTE werkwijze M29)
+# ⚠️ HAVENTERREIN BEIRA NIET IN HET NET (gemeten 2026-09-26): Cornelder's
+#    havenstraten (`service`, geen access-tag) vormen in OSM een eigen, van
+#    het doorgaande net LOSSTAAND clustertje (component van 2 knopen binnen
+#    0,25 km van de kade) — precies de "haventerrein Beira alleen als OSM de
+#    havenstraten mist"-uitzondering die de brief al noemt. Het truckbeen
+#    (profiel lithium-bikita-zhangjiagang-bkplant-beira) eindigt daarom op de
+#    laatste VERBONDEN knoop, de N6-havenweg-inrit bij Av. Samora Machel
+#    (1,82 km van de kade — vrijwel exact de "1,8 km" die de brief bij
+#    via-punt 8 zelf al noemt); de laatste 1,82 km is een stippel "eigen
+#    terrein".
+# ⚠️ ZEEBEEN "AANNEMELIJK: ÉÉN BRON" (SunSirs noemt Tianjin/Zhangjiagang als
+#    aankomsthavens van de Bikita-ladingen) — de aanname staat in de
+#    beennaam, niet in de lijnstijl (werkwijze §7); zeeknoop 7,8 km van de
+#    kade, dus geen haven-aanloop nodig.
+# ⚠️ b3/b4/b5 ZIJN EEN LETTERLIJKE KOPIE VAN bak_lithium (Greenbushes→
+#    Zhangjiagang): dezelfde overgang zeenet→Yangtze-bulklaag, hetzelfde
+#    Yangtze-rivierbeen (gedeeld bestand, geen tweede versie) en dezelfde
+#    aanloop-stippel naar de kade (anker ≠ routeerpunt) — brief §2 b3-b5.
+bak_lithium_bikita_zhangjiagang() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Bikita-plant → N6-havenweg-inrit Beira (A9/P4 Mutare-Masvingo Highway → Forbes/Machipanda-grens → N6/EN6 → Av. Samora Machel)|$BEEN/lithium-bikita-zhangjiagang-weg-bkplant-beira.geojson" \
+    --stippel      "truck|haventerrein Beira (eigen terrein — OSM's havenstraten hangen niet aan het doorgaande net)|-19.823623,34.848737|-19.8150,34.8340" \
+    --been         "zee|zeeschip Beira → Yangtze-monding (Mozambiquekanaal → Malakka → Zuid-Chinese Zee; bestemming aannemelijk: één bron)|-19.8150,34.8340|31.4074,121.4848" \
+    --stippel      "zee|overgang zeenet → Yangtze-bulklaag (MARNET houdt hier op) — letterlijke kopie bak_lithium|31.51,121.4187|31.4512,121.4769" \
+    --been-geojson "binnenvaart|Yangtze-monding → Zhangjiagang, zuidgeul langs Shuangshan-eiland — letterlijke kopie bak_lithium|$BEEN/rivierbeen-yangtze-zhangjiagang.geojson" \
+    --stippel      "binnenvaart|aanloop naar de ligplaats (anker ≠ routeerpunt) — letterlijke kopie bak_lithium|31.9733,120.4202|31.968,120.4205" \
+    --marker "Bikita Minerals — concentratorplant (Sinomine)|-19.9512,31.4245" \
+    --marker "Forbes Border Post (ZW) / Machipanda (MZ), N6|-19.0052,32.7123" \
+    --marker "Beira — general-cargo-terminal (Cornelder de Moçambique)|-19.8150,34.8340" \
+    --marker "Yangtze-monding — overgang zee → rivier|31.42704,121.47618" \
+    --marker "Zhangjiagang — kade Zhangjiagang Port Group (ertsen/hout/staal)|31.96800,120.42050" \
+    --routebrief v2/design/routebrieven/lithium-bikita-zhangjiagang.md \
+    --uit    v2/data/stroomroute-lithium-bikita-zhangjiagang.json \
+    --stroom lithium-bikita-zhangjiagang \
+    --titel  "Lithium · Bikita → Beira → Zhangjiagang (Zimbabwe → China)"
+}
+
+# ── grafiet · Balama (Mozambique) → Nacala → Saemangeum (Zuid-Korea) — vlokgrafiet → SPG → AAM
+# Routebrief: v2/design/routebrieven/grafiet-balama-saemangeum.md (LICHTE werkwijze M29)
+# ⚠️ b1 IS EEN LETTERLIJKE KOPIE VAN been 1 `grafiet-balama-vs` (497,9 km,
+#    hergebruikte satelliet-gelegde ankers gr-balama-mill/gr-nacala-kade) —
+#    géén nieuwe bake, geen tweede versie.
+# ⚠️ TWEE HAVEN-AANLOPEN: Nacala snapt op 122,3 km van het zeenet (hergebruik
+#    van de bestaande `aanloop-nacala.geojson`, dezelfde als bak_grafiet) en
+#    Gunsan op 10,7-11,0 km (5643/5638) — een nieuwe korte aanloop gebakken
+#    (`maak_havenaanloop.py`, 11,5 km over water, 0,00 km over land). Beide
+#    blijven gestippeld (nog geen waargenomen vaargeul).
+# ⚠️ b2/b3/b4 DRAGEN "VOLUME NUL" IN DE NAAM: geen bron bevestigt dat er in
+#    2025/2026 al Balama-vlok in Zuid-Korea is aangekomen (brief §7). Dat
+#    verschil hoort in de naam en de brief, NIET in de lijnstijl — alle drie
+#    zijn DOORGETROKKEN.
+# ⚠️ HET GUNSAN-ANKER EN HET SAEMANGEUM-FABRIEKSANKER ZIJN AANNEMELIJK RESP.
+#    ONZEKER (brief §3): geen bron noemt de loshaven met naam, en blok 6 van
+#    het Saemangeum-industriecomplex was op de satellietopname nog niet van
+#    de buurpercelen te onderscheiden (bouw begon begin 2026). Doorgetrokken
+#    geometrie, onzekere status blijft in de brief staan.
+bak_grafiet_balama_saemangeum() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Balama-plant → Nacala-containerterminal (N380/N1) — LETTERLIJKE KOPIE been 1 grafiet-balama-vs|$BEEN/stroombeen-balama-nacala.geojson" \
+    --stippel-geojson "zee|haven-aanloop Nacala (schematisch, over water — MARNET reikt hier niet, 152,1 km — hergebruik uit bak_grafiet)|$BEEN/aanloop-nacala.geojson" \
+    --been         "zee|zeeschip Nacala → Gunsan New Port (Indische Oceaan → Straat Malakka → Zuid-Chinese Zee → Oost-Chinese Zee → Gele Zee; haven aannemelijk, geen bron noemt de losplek met naam; volume nul: leveringen aan POSCO niet gepubliceerd)|-15.0,41.7|35.9991,126.6991" \
+    --stippel-geojson "zee|haven-aanloop Gunsan New Port (schematisch, over water — MARNET reikt niet tot de kade)|$BEEN/grafiet-balama-saemangeum-aanloop-gunsan.geojson" \
+    --been-geojson "truck|vrachtwagen Gunsan New Port → Future Graph Saemangeum (Osikdo-dong-industrieterrein; plant-anker onzeker)|$BEEN/grafiet-balama-saemangeum-weg-gunsan-saemangeum.geojson" \
+    --been-geojson "truck|vrachtwagen Future Graph Saemangeum → POSCO Future M Sejong (Route 21 → Seohaean Expwy 15 → Iksan JC → Nonsan JC → Expwy 25; volume nul: leveringen aan POSCO niet gepubliceerd)|$BEEN/grafiet-balama-saemangeum-weg-saemangeum-sejong.geojson" \
+    --marker "Balama-plant (Syrah Resources), Mozambique|-13.31000,38.66000" \
+    --marker "Nacala-containerterminal, oostoever|-14.53830,40.66730" \
+    --marker "Gunsan (New) Port, Osikdo-dong (aannemelijk)|35.97700,126.58300" \
+    --marker "Future Graph Saemangeum — POSCO Future M, blok 6 (onzeker)|35.96800,126.54800" \
+    --marker "POSCO Future M — Sejong natuurlijk-grafiet-anodefabriek 1|36.70590,127.22030" \
+    --routebrief v2/design/routebrieven/grafiet-balama-saemangeum.md \
+    --uit    v2/data/stroomroute-grafiet-balama-saemangeum.json \
+    --stroom grafiet-balama-saemangeum \
+    --titel  "Grafiet · Balama → Nacala → Saemangeum (Zuid-Korea)"
+}
+
+# ── lithium · Bougouni (Kodal Minerals, Mali) → San Pedro (Ivoorkust) → Yangpu (Hainan, China)
+# Routebrief: v2/design/routebrieven/lithium-bougouni-yangpu.md (LICHTE werkwijze M29)
+# ⚠️ b1 (truck, Mali/Ivoorkust) IS +30,7% BOVEN DE GEPUBLICEERDE ~880 KM
+#    (bevinding, niet dichtgetrokken — brief §7): het Ivoriaanse tracé is niet
+#    gepubliceerd, alleen "één grensovergang, corridor via Sikasso"; de
+#    via-keten gaf zelf al ~1.014 km hemelsbreed vóór het bakken.
+# ⚠️ b2 (zee) — SAN PEDRO SNAPT BINNEN 1,58 KM (geen aanloop nodig, "been zee"
+#    tekent zelf niet tot de kade, alleen tot de zeeknoop, maar 1,58 km blijft
+#    onder de 5 km-naadnorm). YANGPU SNAPT OP 19,38 KM VAN DE DICHTSTBIJZIJNDE
+#    ZEEKNOOP (< de 25 km --max-snap-afbreekgrens uit handleiding §2, maar wél
+#    boven de 5 km-naadnorm van de toets) → CORRECTIE OP DE BRIEFSCHATTING VAN
+#    ~25 km: de gemeten 19,38 km is kleiner, maar nog steeds een naad die een
+#    aparte haven-aanloop vraagt (maak_havenaanloop.py, 20,4 km over water,
+#    0 km landkruising, omwegfactor 1,054) van de zeeknoop naar de kade.
+# ⚠️ b3 (truck, korte stippel-kandidaat) BLEEK GEEN STIPPEL NODIG: OSM heeft
+#    wél een havenweg/estateweg tussen de twee onzekere ankers binnen de Yangpu
+#    New Materials Industrial Park (9,4 km tegen een schatting van 5-10 km,
+#    +17,5% — binnen de bandbreedte van de schatting zelf). Doorgetrokken, niet
+#    gestippeld — "onzeker" staat in de ankernamen/marker, niet in de lijnstijl.
+# ⚠️ BEIDE YANGPU-ANKERS ZIJN ONZEKER (brief §3): geen bron wijst een
+#    specifieke berth of fabriekspoort aan; MEE-registerzoektocht (星之海/
+#    兴之海) niet herhaald in deze bake (endpoint recent weer verhuisd).
+bak_lithium_bougouni_yangpu() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Ngoualana-plant (Kodal Minerals) → San Pedro TIPSP (RN7 → grens Zégoua/Pogo → Ferkessédougou → Yamoussoukro → Soubré; +30,7% boven ~880 km, bevinding)|$BEEN/lithium-bougouni-yangpu-weg-plant-sanpedro.geojson" \
+    --been         "zee|zeeschip San Pedro → Yangpu (Golf van Guinee → Kaap de Goede Hoop → Indische Oceaan → Straat Malakka → Zuid-Chinese Zee; San Pedro snapt binnen 1,58 km, geen aanloop nodig)|4.7490,-6.6180|19.8701,109.0009" \
+    --stippel-geojson "zee|haven-aanloop Yangpu (schematisch, over water — MARNET-zeeknoop ligt 19,38 km van de kade, geen AIS-dekking op Hainan)|$BEEN/lithium-bougouni-yangpu-aanloop-yangpu.geojson" \
+    --been-geojson "truck|vrachtwagen SDIC Yangpu-kade → Hainan Xingzhihai New Materials (havenweg/estateweg Yangpu New Materials Industrial Park; beide ankers onzeker)|$BEEN/lithium-bougouni-yangpu-weg-yangpu-xingzhihai.geojson" \
+    --marker "Ngoualana open pit + Stage 1 DMS-plant (Kodal Minerals), Kola, Cercle de Bougouni|11.3413,-7.4886" \
+    --marker "TIPSP San Pedro — bulkstockpile (Port Autonome de San Pedro)|4.7490,-6.6180" \
+    --marker "SDIC Yangpu-havenzone — kade (onzeker)|19.7680,109.1510" \
+    --marker "Hainan Xingzhihai New Materials — Yangpu New Materials Industrial Park (onzeker)|19.7180,109.1570" \
+    --routebrief v2/design/routebrieven/lithium-bougouni-yangpu.md \
+    --uit    v2/data/stroomroute-lithium-bougouni-yangpu.json \
+    --stroom lithium-bougouni-yangpu \
+    --titel  "Lithium · Bougouni (Mali) → San Pedro (Ivoorkust) → Yangpu (China)"
+}
+
+# ── lithium · Olaroz (Salar de Olaroz, Argentinië) → Buenos Aires → Onahama (Japan) → Naraha (Toyotsu Lithium)
+# Routebrief: v2/design/routebrieven/lithium-olaroz-naraha.md (LICHTE werkwijze M29)
+# ⚠️ b1 (truck, Argentinië) IS +19,6% BOVEN DE HEMELSBREED-SOM VAN DE VIA-PUNTEN
+#    (~1.562 km — GEEN gepubliceerde weg-km, brief §7/§2), maar +6,7% t.o.v. de
+#    ontwerpschatting uit de brief (~1.750 km) — bevinding, niet dichtgetrokken.
+#    RN52 vlak bij Olaroz-plant loopt over `service`/`track`-mijnwegen op de
+#    salarwerken (~3.900-4.200 m); zonder een corridor-brede `residential` én
+#    een verruimde `eindKlassen` (mét `track`) meldde de scan "geen wegpad" —
+#    zie het profiel in maak_stroombeen_weg.py. Anker-verbinding plant → weg
+#    0,83 km (> 0,5 km, bevinding).
+# ⚠️ b2 (zee) — BEIDE KADES LIGGEN TE VER VAN EEN ZEEKNOOP VOOR EEN DIRECT
+#    "--been": Buenos Aires TRP snapt op 30,5 km, Onahama-kade op 44,9 km
+#    (marnet_zee-snippet, bak-handleiding §2). Twee `maak_havenaanloop.py`-
+#    aanlopen (32,3 km / 45,5 km, allebei geen landkruising) overbruggen dat;
+#    het zeebeen zelf loopt tussen de twee ZEEKNOPEN en laat MARNET de
+#    Kaap- of Panama-route kiezen (geen zeestraat op de heenweg, brief §2).
+#    ⚠️ DE ONAHAMA-AANLOOP IS IN AANKOMSTRICHTING GEGENEREERD (zeeknoop → kade,
+#    `--van`/`--naar` omgedraaid t.o.v. de kade→zeeknoop-vertrekconventie):
+#    `--been-geojson`/`--stippel-geojson` tekenen de punten LETTERLIJK in
+#    bestandsvolgorde (geen automatische omkering in hecht_marnet.py), dus de
+#    reisvolgorde moet al in het bestand zitten.
+# ⚠️ b3 (truck, Japan) IS +28,0% BOVEN DE GEPUBLICEERDE ~35 KM (Toyotsu
+#    Onahama-havenseminar, brief bron [3]) — bevinding, niet dichtgetrokken:
+#    geen tussenliggend via-punt (brief §7, geen corridorkeuze), dus de
+#    gemeten 44,8 km is de kortste weg tussen de twee ankers over het net.
+# ⚠️ NARAHA STAAT SINDS MEDIO 2025 OP CARE AND MAINTENANCE (brief §1/§5/[1][5])
+#    — de weg is echt gevaren tot 2025, de lading ligt nu stil. Doorgetrokken,
+#    niet gestippeld (werkwijze §7, zelfde behandeling als grafiet
+#    Balama→Vidalia): het volume-nul hoort in de tekst, niet in de lijnstijl.
+# ⚠️ FASE D VERVALT (brief §6): Toyotsu Lithium Naraha is zelf de conversieknoop
+#    (carbonaat → hydroxide) en het stoppunt van deze brief.
+bak_lithium_olaroz_naraha() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Olaroz-plant → Buenos Aires containerkade (RN52 → RN9 → RN34/RN9-splitsing → Rosario; +19,6% boven de hemelsbreed-som, geen gepubliceerde weg-km)|$BEEN/lithium-olaroz-naraha-weg-olaroz-baires.geojson" \
+    --stippel-geojson "zee|haven-aanloop Buenos Aires TRP (schematisch, over water — MARNET reikt hier niet: 30,5 km)|$BEEN/lithium-olaroz-naraha-aanloop-baires.geojson" \
+    --been         "zee|zeeschip Buenos Aires-zeeknoop → Onahama-zeeknoop (Atlantische Oceaan, geen zeestraat op de heenweg — MARNET beslist Kaap- of Panama-route)|-34.32530,-58.47060|36.90680,141.37350" \
+    --stippel-geojson "zee|haven-aanloop Onahama, aankomstrichting (schematisch, over water — MARNET reikt hier niet: 44,9 km)|$BEEN/lithium-olaroz-naraha-aanloop-onahama-aankomst.geojson" \
+    --been-geojson "truck|vrachtwagen Onahama-kade → Toyotsu Lithium Naraha (Jōban-snelweg/Route 6, geen corridorkeuze; +28,0% boven de gepubliceerde ~35 km)|$BEEN/lithium-olaroz-naraha-weg-onahama-naraha.geojson" \
+    --marker "Sales de Jujuy — Olaroz-plant, Salar de Olaroz (~3.900 m)|-23.4629,-66.7025" \
+    --marker "Buenos Aires — TRP, Terminales Río de la Plata (Puerto Nuevo)|-34.5847,-58.3631" \
+    --marker "Onahama — Ōken-ふ頭 containerterminal (Iwaki, Fukushima)|36.9245,140.8695" \
+    --marker "Toyotsu Lithium Naraha — hydroxidefabriek (care and maintenance, stoppunt)|37.2467,140.9954" \
+    --routebrief v2/design/routebrieven/lithium-olaroz-naraha.md \
+    --uit    v2/data/stroomroute-lithium-olaroz-naraha.json \
+    --stroom lithium-olaroz-naraha \
+    --titel  "Lithium · Olaroz (Argentinië) → Buenos Aires → Onahama → Naraha (Japan)"
+}
+
+# ── lithium · Pilgangoora (PLS) → Port Hedland/Utah Point → Gwangyang/Yulchon
+#    (P-PLS-hydroxidefabriek → POSCO Future M-kathodefabriek, aannemelijk)
+# Routebrief: v2/design/routebrieven/lithium-pilgangoora-gwangyang.md (LICHTE werkwijze M29)
+# ⚠️ b1 IS TWEE WEGPROFIELEN MET EEN KORTE STIPPEL ERTUSSEN — GEMETEN OSM-
+#    GRAAFGAT, GEEN WEGKLASSE-FOUT. De Great Northern Highway bij South
+#    Hedland bestaat in OSM als twee componenten die geen knoop delen: het
+#    doorgaande GNH-net (naar Marble Bar Rd/de mijn) en het stadsnet van Port
+#    Hedland (Wilson St, Utah Road, de haven). Kleinste gemeten afstand tussen
+#    beide componenten: 0,355 km — te klein om als "geen net op deze korrel"
+#    weg te schrijven, groot genoeg om niet dicht te trekken. Zie de kop van
+#    het profiel in maak_stroombeen_weg.py voor de meting.
+# ⚠️ b2 (zee) heeft AAN BEIDE KANTEN een aanloop: de Port Hedland-zeeknoop ligt
+#    79,7 km uit de kust (AU-binnenkant heeft geen MARNET-graaf) en de
+#    Gwangyang-zeeknoop 29,7 km van Yulchon (op de grens van --max-snap 25 km)
+#    — beide gehaald met maak_havenaanloop.py, geen terugval nodig.
+# ⚠️ b3/b4 zijn allebei "eigen terrein"-stippels (§7): b3 kade → P-PLS-fabriek
+#    (~1,3 km, geen net op deze korrel) en b4 P-PLS → POSCO Future M-
+#    kathodefabriek (<1 km, "aannemelijk: één bron" — beide fabrieken op
+#    hetzelfde Yulchon-complex, opeenvolgende straatadressen, geen bron geeft
+#    het overgedragen volume). Fase D/E-onderscheid staat in de beennaam, niet
+#    in de lijnstijl.
+bak_lithium_pilgangoora_gwangyang() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|road train Pilgan-plant → GNH bij South Hedland (mijnweg → Marble Bar Rd → Great Northern Hwy)|$BEEN/lithium-pilgangoora-gwangyang-weg-plant-southhedland.geojson" \
+    --stippel      "truck|OSM-graafgat in de Great Northern Highway bij South Hedland (twee GNH-componenten delen geen knoop, 0,355 km — geen net op deze korrel)|-20.377913,118.575136|-20.374731,118.574874" \
+    --been-geojson "truck|road train GNH-stadsnet Port Hedland → Utah Point (Great Northern Hwy → Utah Road)|$BEEN/lithium-pilgangoora-gwangyang-weg-southhedland-utahpoint.geojson" \
+    --stippel-geojson "zee|haven-aanloop Utah Point Bulk Handling Facility (schematisch, over water — MARNET reikt hier niet: 79,7 km)|$BEEN/lithium-pilgangoora-gwangyang-aanloop-utahpoint.geojson" \
+    --been         "zee|zeeschip Utah Point → Yulchon/Gwangyang (bulkcarrier; Lombok/Makassar–Zuid-Chinese Zee–Taiwanstraat–Oost-Chinese Zee, MARNET beslist)|-19.60000,118.60000|34.71000,127.82040" \
+    --stippel-geojson "zee|haven-aanloop Yulchon/Gwangyang, aankomstrichting (schematisch, over water — MARNET reikt hier niet: 29,7 km; kade-anker onzeker)|$BEEN/lithium-pilgangoora-gwangyang-aanloop-yulchon.geojson" \
+    --stippel      "truck|havenweg Yulchon-kade → P-PLS-hydroxidefabriek (eigen terrein — geen net op deze korrel, ~1,3 km)|34.9075,127.6020|34.9008,127.5911" \
+    --stippel      "truck|P-PLS → POSCO Future M-kathodefabriek (aannemelijk: één bron — eigen terrein, hetzelfde Yulchon-complex)|34.9008,127.5911|34.8985,127.5885" \
+    --marker "Pilgan-plant, Pilgangoora Operation (PLS)|-21.0595,118.8956" \
+    --marker "Utah Point Bulk Handling Facility, Port Hedland (Berth 4)|-20.3153,118.5585" \
+    --marker "Yulchon-havenfront, Gwangyang (losplek onzeker)|34.9075,127.6020" \
+    --marker "POSCO Pilbara Lithium Solution (P-PLS), Yulchon-industriecomplex|34.9008,127.5911" \
+    --marker "POSCO Future M — kathodefabriek, Yulchon-industriecomplex (aannemelijk)|34.8985,127.5885" \
+    --routebrief v2/design/routebrieven/lithium-pilgangoora-gwangyang.md \
+    --uit    v2/data/stroomroute-lithium-pilgangoora-gwangyang.json \
+    --stroom lithium-pilgangoora-gwangyang \
+    --titel  "Lithium · Pilgangoora (Australië) → Port Hedland → Gwangyang (Zuid-Korea)"
+}
+
+# ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
+# Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
+# functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom
+# vraagt dus alleen een functie hierboven, geen regel hier.
+arg="${1:-}"; naam="bak_${arg//-/_}"   # ${1:-} eerst: zonder argument geeft set -u anders "unbound variable"
+if [ -n "${1:-}" ] && declare -F "$naam" >/dev/null; then "$naam"
+else echo "gebruik: bash v2/tools/bak_stromen.sh <stroom>; bekend:" >&2
+     declare -F | sed -n 's/^declare -f bak_//p' | tr '_' '-' >&2; exit 2; fi

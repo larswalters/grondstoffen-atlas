@@ -116,6 +116,74 @@ html, body {
   font-weight: 600;
 }
 
+/* --- stromen per grondstof: inklapbare groep met "alles"-knop (2026-09-26) ---
+   Eigen summary-opmaak (geen browser-standaarddriehoek); de knop staat ín de
+   summary zodat een dichtgeklapte groep aan/uit kan zonder hem open te klappen.
+   Maten volgen de HUD: 11 px-knoppen, 10 px-tellingen, dezelfde is-on-kleur. */
+.srGroep {
+  margin-top: 6px;
+  padding: 0 6px 6px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.srGroep:not([open]) { padding-bottom: 0; }
+.srGroep > summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 2px;
+  font-size: 11px;
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+}
+.srGroep > summary::-webkit-details-marker { display: none; }
+.srGroep > summary::before {
+  content: "\25B8";                 /* het driehoekje, gedraaid als de groep open is */
+  flex: none;
+  width: 9px;
+  font-size: 10px;
+  color: var(--ink-dim);
+  transition: transform 0.15s;
+}
+.srGroep[open] > summary::before { transform: rotate(90deg); }
+.gsBol {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #888;                 /* main.js zet GRONDSTOF_KLEUR */
+  border: 1px solid rgba(8, 12, 18, 0.9);
+}
+.gsNaam { font-weight: 600; }
+.gsTel { flex: 1; font-size: 10px; color: var(--ink-dim); }
+.srGroep .gsBtn {
+  flex: none;
+  padding: 3px 9px;
+  font: inherit;
+  font-size: 10px;
+  color: var(--ink-dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.srGroep .gsBtn:hover { color: var(--ink); background: rgba(255, 255, 255, 0.08); }
+.srGroep .gsBtn.is-on {
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+.srGroep .btnRow { margin-top: 6px; }
+.srGroep > summary + .btnRow { margin-top: 0; }
+/* Een opschrift als "Antofagasta→Aurubis→Emmerich" heeft geen spatie en dus geen
+   afbreekpunt; op 375 px liep hij de groep uit. min-width 0 laat het flex-item
+   krimpen, overflow-wrap breekt dan binnen de knop af. */
+.srGroep .btnRow button { min-width: 0; overflow-wrap: anywhere; }
+
 #stats {
   margin-top: 14px;
   padding-top: 10px;

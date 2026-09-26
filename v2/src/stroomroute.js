@@ -30,7 +30,7 @@
 //     de legenda-kleur.
 
 import * as THREE from "three";
-import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=118";
+import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=122";
 import { bouwGloed } from "./gloed.js?v=118";
 
 function opBol(lonDeg, latDeg, r, uit, o) {

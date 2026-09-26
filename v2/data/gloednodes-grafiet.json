@@ -1,0 +1,295 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag grafiet voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/grafiet-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof grafiet: ids 'w-*', gewicht = capaciteit in kt/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-balama",
+   "naam": "Balama-plant (Syrah Resources / Twigg Exploration)",
+   "lon": 38.66,
+   "lat": -13.31,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Mozambique",
+   "gewicht": 67.0,
+   "gewicht_bron": "capaciteit kt/j — Syrah Resources, 2025 Annual Report (mrt 2026): 67 kt geproduceerd / 55 kt verkocht in 2025 (2024: 35 kt); nameplate 350 kt/j fase 1 [B1]. Q2 2026: 2,3 kt, campagne uitgesteld naar Q3 [B2].",
+   "bron": "Hergebruik `v2/design/routebrieven/grafiet-balama-vidalia.md` (satelliet-gelegd, ankercheck 2026-07-28); herbevestigd op z14 in deze ronde (`sat-sitelaag-grafiet-balama.png`): kruis 25 m van de procesfabriek/bezinkvijvers, put ten ZW.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste vlokmijn buiten China; nameplate 350 kt/j, 2025 werkelijk 67 kt — het volume-verschil is het kernfeit van deze golf (routebrieven grafiet-balama-laixi en grafiet-balama-vidalia). Voedt zowel Vidalia (VS) als de Chinese verwerking."
+  },
+  {
+   "id": "w-gallois-marovintsy",
+   "naam": "Marovintsy-mijn (Établissements Gallois / Madagraphite)",
+   "lon": 48.9488,
+   "lat": -19.2401,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Madagaskar",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit kt/j — SCHATTING (orde van grootte, onzeker): L'Élémentarium 2022 noemt 140 kt/j nameplate over twee mijnen (80/60) [B7], maar de haalbaarheidstoets van 2026-09-26 vond dat een orde te hoog tegen de gerapporteerde productie (USGS MYB Madagascar); USGS MCS 2026 geeft Madagaskar totaal 80 kt/j (2025e) [B4] inclusief Tirupati en Molo. Hier 15/10 kt als productie-orde; te vervangen door een primaire bron.",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z14, `sat-sitelaag-grafiet-marovintsy.png`, live): kruis op de rand van het bewerkingsterrein direct onder het open-pit-/wascomplex (turkooise bezinkvijvers zichtbaar).",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Regio Toamasina/Brickaville, oostkust. Coördinaat van deze ronde (satellietgecheckt) i.p.v. de v1-centroïde van Toamasina-stad."
+  },
+  {
+   "id": "w-gallois-antsirakambo",
+   "naam": "Antsirakambo-mijn (Établissements Gallois / Madagraphite)",
+   "lon": 49.187,
+   "lat": -18.448,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Madagaskar",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit kt/j — SCHATTING (orde van grootte, onzeker): L'Élémentarium 2022 noemt 140 kt/j nameplate over twee mijnen (80/60) [B7], maar de haalbaarheidstoets van 2026-09-26 vond dat een orde te hoog tegen de gerapporteerde productie (USGS MYB Madagascar); USGS MCS 2026 geeft Madagaskar totaal 80 kt/j (2025e) [B4] inclusief Tirupati en Molo. Hier 15/10 kt als productie-orde; te vervangen door een primaire bron.",
+   "bron": "Satellietblik (z14, `sat-sitelaag-grafiet-antsirakambo.png`): de kandidaatcoördinaat (-18,4462/49,1992) lag in bos, ~450 m N van het zichtbare open-pit-/washery-complex; punt verschoven naar het terrein dat wél zichtbaar is (pits + bezinkvijvers ZW van de kandidaat).",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Gallois publiceert geen kaart; geen enkele bron geeft een coördinaat. Verschoven-naar-het-zichtbare volgens werkwijze §4, niet gemeten op de meter."
+  },
+  {
+   "id": "w-nextsource-molo",
+   "naam": "Molo-mijn (NextSource Materials)",
+   "lon": 45.1244,
+   "lat": -24.0045,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Madagaskar",
+   "gewicht": 17.0,
+   "gewicht_bron": "capaciteit kt/j — NextSource Materials, corporate updates: Molo fase 1 17 kt/j SuperFlake-concentraat; eerste containers naar Duitsland/VS okt 2024 [B8].",
+   "bron": "Satellietblik (z14, `sat-sitelaag-grafiet-molo.png`): kruis op/vlak bij kleine gebouwen in droog savannegebied, ~200 m van het kandidaatpunt.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Regio Fotadrevo/Ampanihy, zuid-Madagaskar — ander deel van het eiland dan Gallois (oostkust)."
+  },
+  {
+   "id": "w-skaland",
+   "naam": "Skaland-mijn (Skaland Graphite / Senja)",
+   "lon": 17.3279,
+   "lat": 69.4462,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Noorwegen",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit kt/j — Skaland Graphite corporate (via v1-register en herhaalde branchecitaten): ~15 kt/j, hoogwaardigste vlok van Europa [B10]. Eerdere schatting 6,6 kt/j (oudere bron) genoteerd als afwijking.",
+   "bron": "Satellietblik (z14, `sat-sitelaag-grafiet-skaland.png`): kruis op een gebouw op de heuvelflank boven het dorp Skaland/Senja.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Over land/spoor (Narvik) naar Talga's fabriek in Luleå."
+  },
+  {
+   "id": "w-zavallya",
+   "naam": "Zavallya-mijn (Zavalievsky Graphite)",
+   "lon": 30.0199,
+   "lat": 48.2167,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Oekraïne",
+   "gewicht": 20.0,
+   "gewicht_bron": "capaciteit kt/j — Zavalievsky Graphite / branchecitaten: nominale capaciteit ~20 kt/j, oorlog-verstoorde werkelijke output ~0,8 kt/j (design-ontwerp) [B11].",
+   "bron": "Satellietblik (z14, `sat-sitelaag-grafiet-zavallya.png`): kruis bij het dorp Zavallya, direct N van de zichtbare, deels met water gevulde open pit.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "v1-coördinaat (48,23/30,40) bleek ~30 km fout — deze ronde vervangen door de OSM/satelliet-bevestigde positie bij de echte put."
+  },
+  {
+   "id": "w-bogala",
+   "naam": "Bogala-mijn (vein-grafiet)",
+   "lon": 80.3106,
+   "lat": 7.1164,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Sri Lanka",
+   "gewicht": 3.2,
+   "gewicht_bron": "capaciteit kt/j — Bogala Graphite Lanka / branchecitaten: ~3,2 kt/j, de zeldzame ~99%-zuivere vein-/klompgrafiet (design-ontwerp) [B12].",
+   "bron": "Satellietblik (z15, `sat-sitelaag-grafiet-bogala.png`): kruis bij een kleine bebouwingscluster in bos; geen duidelijke mijninfrastructuur op dit zoomniveau te onderscheiden (ondergrondse ader-mijn, kleine oppervlakte-voetafdruk).",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Vein-grafiet wordt ondergronds gewonnen — op satelliet is geen open put te zien, dus de plaatsing steunt op de dorpsnaam/regio, niet op zichtbare mijninfrastructuur."
+  },
+  {
+   "id": "w-jinzhou-petrochemical",
+   "naam": "CNPC Jinzhou Petrochemical (naaldcokesfabriek)",
+   "lon": 121.087,
+   "lat": 41.133,
+   "level": "site",
+   "parent": null,
+   "rol": "feedstock",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "China",
+   "gewicht": 150.0,
+   "gewicht_bron": "capaciteit kt/j — Benchmark Mineral Intelligence / Asian Metal: 150 kt/j naaldcokes in bedrijf + 400 kt/j in aanbouw (fase II, gereed medio-okt 2024) [B16][B17]. (Correctie op v1/ontwerp-cijfer van 170 kt.)",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z15, `sat-grafiet-jinzhou-baotou-jinzhou-cand2.png`, live): kruis aan de rand van een groot petrochemisch complex met tankenpark — kandidaat 1 (stedelijk gebied, geen match) verworpen.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "#2 wereldwijd in naaldcokescapaciteit; voedt de Binnen-Mongolië-grafitisatie (`w-baotou-jiuyuan` e.a.)."
+  },
+  {
+   "id": "w-laixi-shinestar",
+   "naam": "Qingdao Shinestar Graphite Materials (ex-Guangxing), Nanshu, Laixi",
+   "lon": 120.3224,
+   "lat": 37.0252,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-natuurlijk",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "China",
+   "gewicht": 30.0,
+   "gewicht_bron": "capaciteit kt/j — Sohu (12-04-2019): ~30 kt/j alle grafietproducten (球形石墨/鳞片石墨/高纯石墨粉/碱性电池粉/微粉), SPG-aandeel niet gepubliceerd [B19]. Qingdao Ribao (10-10-2023): Laixi/Nanshu-cluster >50% van de nationale gezuiverd-grafietproductie [B20].",
+   "bron": "Hergebruik `v2/design/routebrieven/grafiet-balama-laixi.md` — MEE-emissievergunningregister 91370285MACJTLFM79001U, longitude 120,32238 / latitude 37,02517 (bron-gelegd, z15).",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Contractpartij van Syrah (2018/2019) voor Balama-vlok; enige site in deze laag met een MEE-registerpunt."
+  },
+  {
+   "id": "w-baotou-jiuyuan",
+   "naam": "Shanshan Technology anodebasis Baotou (Jiuyuan)",
+   "lon": 109.6783,
+   "lat": 40.6086,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-synthetisch",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "China",
+   "gewicht": 100.0,
+   "gewicht_bron": "capaciteit kt/j — SMM (2019) / ctechigroup: 100 kt/j anodemateriaal (60 kt grafiet-gecoat + 40 kt carbon-gecoat) over twee locaties (装备制造产业园区 + Jiuyuan-industriepark), 50 kt/j grafitisatieverwerking [B21][B22].",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z14, `sat-grafiet-jinzhou-baotou-baotou-jiuyuanpark.png`, live): kruis binnen een omheind industrieterrein met procesgebouwen in het Jiuyuan-industriepark; welke van de vele vestigingen ter plekke exact Shanshan is, is op het beeld niet te onderscheiden van naburige chemiebedrijven.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Onderdeel van de Baotou/Wuhai/Ulanqab-grafitisatiepool op goedkope kolenstroom."
+  },
+  {
+   "id": "w-vidalia",
+   "naam": "Syrah Resources — Vidalia",
+   "lon": -91.4887,
+   "lat": 31.5466,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-natuurlijk",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "VS (Louisiana)",
+   "gewicht": 11.25,
+   "gewicht_bron": "capaciteit kt/j — Syrah Resources: 11,25 kt AAM/j fase 1; commerciële verkoop verwacht H2 2026 [B1][B2].",
+   "bron": "Hergebruik bestaand anker `data/graphite.js` `gr-ref-vidalia` (satelliet-gelegd, ankercheck 2026-07-28/2026-08-04); herbevestigd deze ronde (`sat-sitelaag-grafiet-vidalia.png`, z15): kruis exact op het fabrieksgebouw.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Enige actieve niet-Chinese natuurlijk-AAM-fabriek op geïmporteerd Afrikaans vlok (Balama)."
+  },
+  {
+   "id": "w-btr-kendal",
+   "naam": "PT Indonesia BTR New Energy Material, Kendal SEZ",
+   "lon": 110.2685,
+   "lat": -6.9237,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-synthetisch",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Indonesië",
+   "gewicht": 160.0,
+   "gewicht_bron": "capaciteit kt/j — Kendal Industrial Park / Jakarta Globe: 80 kt/j fase 1 (aug 2024) + 80 kt/j fase 2 (eind 2025) = 160 kt/j; grootste anodefabriek buiten China [B23][B24].",
+   "bron": "OpenStreetMap (ODbL) via Nominatim: landuse=industrial 'Kawasan Industri Kendal' (way 1252879133); satellietblik (z14, `sat-sitelaag-grafiet-kendal.png`): kruis exact op het blauwe-dak-fabriekscomplex.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "USGS: Indonesië 31% van de Amerikaanse AAM-import jan–aug 2025 — het China-trechter-verplaatsingsverhaal."
+  },
+  {
+   "id": "w-posco-sejong",
+   "naam": "POSCO Future M — Sejong (natuurlijk AAM)",
+   "lon": 127.2187,
+   "lat": 36.7033,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-natuurlijk",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 44.0,
+   "gewicht_bron": "capaciteit kt/j — POSCO Future M newsroom/investor-materiaal: Sejong-I 24 kt/j + Sejong-II 20 kt/j = 44 kt AAM/j; verwerkt SPG uit Saemangeum tot eindproduct [B25][B26].",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z15, `sat-grafiet-balama-saemangeum-sejong-plant1.png`, live): kruis op een gebouw met zichtbaar 'POSCO'-dak-opschrift.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Doel: volledig ex-China grondstof (eigen Afrikaanse mijnbelangen → Saemangeum-SPG → Sejong-AAM) tegen 2027."
+  },
+  {
+   "id": "w-novonix-riverside",
+   "naam": "Novonix Riverside (Chattanooga)",
+   "lon": -85.3243,
+   "lat": 35.0388,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-synthetisch",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "VS (Tennessee)",
+   "gewicht": 20.0,
+   "gewicht_bron": "capaciteit kt/j — NOVONIX Form 20-F FY2025: nameplate 'up to 20.000 tonnes per annum'; Panasonic-offtake ≥10 kt 2025–2028, PowerCo tweede afnemer; volume vandaag ~0 (massaproductie H2 2027) [B31][B32].",
+   "bron": "Hergebruik `v2/design/routebrieven/grafiet-lakecharles-desoto.md` (bron-gelegd, z15, live 2026-09-26): grote witte fabriekshal aan Riverfront Parkway.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "1029 West 19th Street, Chattanooga TN. Verwerkt (mogelijk) Lake Charles-naaldcokes, geen bevestigde leveringsovereenkomst."
+  },
+  {
+   "id": "w-posco-pohang",
+   "naam": "POSCO Future M — Pohang (synthetisch AAM)",
+   "lon": 129.4168,
+   "lat": 36.0026,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-synthetisch",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 16.0,
+   "gewicht_bron": "capaciteit kt/j — POSCO Future M corporate: 16 kt/j synthetisch AAM/j [B25].",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z15, `sat-sitelaag-grafiet-posco-pohang.png`, live): kruis op een rood-wit gebouwencomplex binnen het POSCO-havenstaalterrein van Pohang.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Binnen het grotere POSCO-staalcomplex Pohang; specifiek anodegebouw niet los van het staalterrein te onderscheiden op dit zoomniveau."
+  },
+  {
+   "id": "w-vianode-heroya",
+   "naam": "Vianode — Via ONE, Herøya",
+   "lon": 9.6245,
+   "lat": 59.1228,
+   "level": "site",
+   "parent": null,
+   "rol": "verwerker-synthetisch",
+   "grondstof": [
+    "grafiet"
+   ],
+   "land": "Noorwegen",
+   "gewicht": 2.0,
+   "gewicht_bron": "capaciteit kt/j — Vianode / electrive.com: Via ONE geopend okt 2024, huidige capaciteit ~2 kt/j; opschaling naar een veelvoud (grootschalige vervolgfabriek) aangekondigd maar nog niet in bedrijf [B33][B34].",
+   "bron": "Satellietblik `v2/tools/sat_check.py` (z15, `sat-sitelaag-grafiet-heroya.png`, live): kruis op een fabriekshal binnen Herøya Industripark.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Volledig synthetisch, laagste-CO2-claim van de sector (hydro-stroom); klein volume."
+  }
+ ]
+}

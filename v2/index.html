@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=119" />
+<link rel="stylesheet" href="style.css?v=122" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -76,34 +76,70 @@
          verbinding OF een gedocumenteerd gat — nooit geleende geometrie.
          MARNET zelf staat niet op de bol; dit is de GEROUTETE stroom. -->
     <div class="hudLabel">Stromen (op de exacte kades)</div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="grafiet">grafiet Balama→VS</button>
-      <button class="srBtn is-on" data-sr="cu-eg">koper Escondida→Guixi</button>
-    </div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="cu-ct">koper Collahuasi→Tongling</button>
-      <button class="srBtn is-on" data-sr="cu-ld">koper Lobito→Duisburg</button>
-    </div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="li-gz">lithium Greenbushes→Zhangjiagang</button>
-    </div>
-    <!-- M29 · koper verhaal-compleet: één gemeten keten per handelsas (lichte
-         werkwijze, v2/design/routebrief-licht.md). Zeven ketens, 2026-09-24/25. -->
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="cu-td">koper TFM→Durban→China</button>
-      <button class="srBtn is-on" data-sr="cu-lt">koper Las Bambas→Tongling</button>
-    </div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="cu-cq">koper Chuqui→Mejillones→Tongling</button>
-      <button class="srBtn is-on" data-sr="cu-er">koper El Teniente→Rotterdam</button>
-    </div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="cu-gm">koper Grasberg→Manyar</button>
-      <button class="srBtn is-on" data-sr="cu-of">koper Oyu Tolgoi→Bayannur</button>
-    </div>
-    <div class="btnRow">
-      <button class="srBtn is-on" data-sr="cu-ah">koper Antofagasta→Aurubis→Emmerich</button>
-    </div>
+    <!-- Per grondstof één inklapbare groep (2026-09-26, voorbereiding op zes
+         grondstoffen). Het bolletje krijgt zijn kleur uit GRONDSTOF_KLEUR via
+         main.js (één bron van waarheid, niet hard-coded hier); de telling is
+         zichtbaar/geladen; "alles" schakelt alle stromen van de groep tegelijk
+         en staat ín de summary, zodat een dichtgeklapte groep bedienbaar blijft.
+         Een groep zonder geladen stroom verbergt main.js; op ≤ 640 px starten
+         de groepen dichtgeklapt. De srBtn-knoppen zijn ongewijzigd (data-sr =
+         sleutel uit STROMEN); alleen het grondstof-voorvoegsel is uit het
+         opschrift, want de groep draagt die naam al. -->
+    <details class="srGroep" data-gs="koper" open>
+      <summary><i class="gsBol"></i><span class="gsNaam">koper</span><span class="gsTel">10</span><button type="button" class="gsBtn is-on" data-gs="koper">alles</button></summary>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="cu-eg">Escondida → Guixi</button>
+        <button class="srBtn is-on" data-sr="cu-ct">Collahuasi → Tongling</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="cu-ld">Lobito → Duisburg</button>
+        <button class="srBtn is-on" data-sr="cu-td">TFM → Durban → China</button>
+      </div>
+      <!-- M29 · koper verhaal-compleet: één gemeten keten per handelsas (lichte
+           werkwijze, v2/design/routebrief-licht.md). Zeven ketens, 2026-09-24/25. -->
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="cu-lt">Las Bambas → Tongling</button>
+        <button class="srBtn is-on" data-sr="cu-cq">Chuqui → Mejillones → Tongling</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="cu-er">El Teniente → Rotterdam</button>
+        <button class="srBtn is-on" data-sr="cu-gm">Grasberg → Manyar</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="cu-of">Oyu Tolgoi → Bayannur</button>
+        <button class="srBtn is-on" data-sr="cu-ah">Antofagasta → Aurubis → Emmerich</button>
+      </div>
+    </details>
+    <details class="srGroep" data-gs="lithium" open>
+      <summary><i class="gsBol"></i><span class="gsNaam">lithium</span><span class="gsTel">6</span><button type="button" class="gsBtn is-on" data-gs="lithium">alles</button></summary>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="li-gz">Greenbushes → Zhangjiagang</button>
+        <button class="srBtn is-on" data-sr="li-aa">Atacama → Antofagasta → China</button>
+      </div>
+      <!-- M30 · golf 2 (2026-09-26): één gemeten keten per handelsas, lichte werkwijze. -->
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="li-bz">Bikita → Beira → Zhangjiagang</button>
+        <button class="srBtn is-on" data-sr="li-pg">Pilgangoora → Gwangyang</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="li-on">Olaroz → Buenos Aires → Naraha</button>
+        <button class="srBtn is-on" data-sr="li-by">Bougouni → San Pedro → Yangpu</button>
+      </div>
+    </details>
+    <details class="srGroep" data-gs="grafiet" open>
+      <summary><i class="gsBol"></i><span class="gsNaam">grafiet</span><span class="gsTel">5</span><button type="button" class="gsBtn is-on" data-gs="grafiet">alles</button></summary>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="grafiet">Balama → VS</button>
+        <button class="srBtn is-on" data-sr="gr-bl">Balama → Qingdao → Laixi</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="gr-bs">Balama → Saemangeum</button>
+        <button class="srBtn is-on" data-sr="gr-ld">Lake Charles → De Soto</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="gr-jb">Jinzhou → Baotou</button>
+      </div>
+    </details>
     <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
          ROUTEWERK op modaliteit. Twee vragen aan hetzelfde beeld — "waar houdt
          de zee op en begint de barge?" tijdens het bouwen, "waar gaat het koper
@@ -155,11 +191,10 @@
       <span><i style="background:#9b8cff"></i>slurryleiding — eigen verbinding, geen net</span>
       <span style="opacity:.75">gestippeld = schematische verbinding of gedocumenteerd gat (haven-aanloop, last mile, Wesel-vak)</span>
     </div>
+    <!-- De kleurregels vult main.js uit GRONDSTOF_KLEUR, voor elke grondstof die
+         in STROMEN voorkomt — niet meer hard-coded per grondstof. -->
     <div id="stroomLegendaGrondstof" hidden>
-      <span><i style="background:#ff8a30"></i>koper</span>
-      <span><i style="background:#c06bff"></i>lithium</span>
-      <span><i style="background:#7fd8ff"></i>grafiet</span>
-      <span style="opacity:.75">drie koperstromen delen één kleur — de overslag zie je aan de knopen, gestippeld blijft "hier reikt het net niet"</span>
+      <span class="legNoot" style="opacity:.75">stromen van één grondstof delen één kleur — de overslag zie je aan de knopen, gestippeld blijft "hier reikt het net niet"</span>
     </div>
     <div id="stroomNoot"></div>
 
@@ -293,6 +328,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=121"></script>
+<script type="module" src="src/main.js?v=122"></script>
 </body>
 </html>

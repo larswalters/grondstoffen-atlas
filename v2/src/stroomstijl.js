@@ -75,6 +75,11 @@ export const GRONDSTOF_KLEUR = {
   zilver: 0xe6f2ff,
   uranium: 0x8bff5a,
   "rare-earths": 0xe8ff3d,
+  // `ree` = dezelfde kleur als "rare-earths": de stroom-id's heten
+  // `ree-<van>-<naar>` en grondstofVan() splitst op het EERSTE streepje, dus
+  // "rare-earths" zou als id-prefix nooit matchen. De prefix is de sleutel die
+  // lijn, komeet en gloed opzoeken; de regel hierboven blijft voor de v1-naam.
+  ree: 0xe8ff3d,
   pgm: 0xc0e0ff,
   olie: 0xff4d4d,
   gas: 0x5ce1e6,
