@@ -1107,6 +1107,461 @@ bak_nikkel_taganito_niihama() {
     --vertakt-van 5
 }
 
+# ── kolen · Taldinsky-groeve (Kuzbass) → Taishet → Chita → Khabarovsk → Vostochny-laadkade
+# Routebrief: v2/design/routebrieven/kolen-taldinsky-vostochny.md (LICHTE werkwijze M29)
+# ⚠️ Vier opeenvolgende Trans-Siberische spoorbenen, 5.923,1 km — de langste
+#    landcorridor van de atlas. Elk been apart geroutet onder BAKE_SUFFIX=-raw
+#    (1-op-1-net); Taishet/Chita/Khabarovsk zijn VERPLICHTE via-punten (brief
+#    §4) — zonder Chita neemt een vrije Dijkstra de Chinese Oost-spoorweg via
+#    Harbin (ander spoorwijdte-net), gemeten 4.917,2 km met een omkering in
+#    Harbin (zie build-cache/ais/graaf/spoorroute-diag-kolen-taldinsky-
+#    vostochny.geojson, een eerdere diagnose-run zonder via's — géén onderdeel
+#    van deze bake).
+# ⚠️ Kop-stippel b1: het GEM-putpunt (54.1772,87.1906) ligt in de dagbouwput
+#    zelf; de mijn-eigen railaansluiting op de Erunakovo-tak/het emplacement
+#    ontbreekt in OSM. De router snapt 9,72 km verderop op het hoofdnet
+#    (54.1140,87.0875) — korte stippel ertussen, geen doorgetrokken lijn de
+#    put in.
+# ⚠️ b4 (Khabarovsk → Vostochny) bevat één 180°-omkering bij 48.49890,135.0649
+#    (boogstraal ~32 m) — een kopmaak-plek op het net, geen verzonnen sluiproute
+#    (sanity OK, verhouding 1,38; km 904,8 klopt exact met de brief-tabel).
+# ⚠️ Geen zeebeen: geen bron noemt een specifieke Aziatische loshaven (brief
+#    §6/§7) — de keten stopt op de Vostochny-laadkade, bestemmingstype als
+#    marker-noot (Japan/Korea/China/Taiwan/India/NL).
+bak_kolen_taldinsky_vostochny() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "spoor|Taldinsky-put → hoofdspoor (mijn-eigen railaansluiting Erunakovo-tak/emplacement ontbreekt in OSM)|54.1772,87.1906|54.1140,87.0875" \
+    --been-geojson "spoor|trein Taldinsky → Taishet (Kuzbass-net Artyshta/Novokuznetsk → Novosibirsk-zuid/Yurga → Krasnoyarsk → Taishet, boven de BAM-splitsing)|$BEEN/spoorroute-kolen-taldinsky-vostochny-taldinsky-taishet.geojson" \
+    --been-geojson "spoor|trein Taishet → Chita (Trans-Sib hoofdlijn)|$BEEN/spoorroute-kolen-taldinsky-vostochny-taishet-chita.geojson" \
+    --been-geojson "spoor|trein Chita → Khabarovsk (Trans-Sib hoofdlijn)|$BEEN/spoorroute-kolen-taldinsky-vostochny-chita-khabarovsk.geojson" \
+    --been-geojson "spoor|trein Khabarovsk → Vostochny-laadkade (Trans-Sib/Ussuri-lijn → Nachodka-tak)|$BEEN/spoorroute-kolen-taldinsky-vostochny-khabarovsk-vostochny.geojson" \
+    --marker "Taldinsky open pit (Kuzbassrazrezugol/UMMC), Prokopjevsk-district, Kemerovo — mijn/laadgebied|54.1772,87.1906" \
+    --marker "Vostochny Port JSC kolenterminal, Wrangel-baai, Nachodka — laadkade (bestemming: Japan/Korea/China/Taiwan/India/NL, GEM)|42.7555,133.0680" \
+    --routebrief v2/design/routebrieven/kolen-taldinsky-vostochny.md \
+    --uit    v2/data/stroomroute-kolen-taldinsky-vostochny.json \
+    --stroom kolen-taldinsky-vostochny \
+    --titel  "Kolen · Taldinsky (Kuzbass) → Trans-Sib → Vostochny (Rusland)"
+}
+
+# ── zeldzame aardmetalen · NPM Silmet (Sillamäe) → Neo-magneetfabriek (Narva)
+# Routebrief: v2/design/routebrieven/ree-sillamae-narva.md (LICHTE werkwijze M29)
+# ⚠️ Eén been (truck, E20/Tallinn–Narva mnt, ~30 km): REE-oxide (NdPr/Dy/Tb),
+#    modaliteit-en-afnemer "aannemelijk: één bron" — staat in de beennaam, niet
+#    in de lijnstijl (doorgetrokken, geen net-reikt-niet).
+# ⚠️ Upstream-oxide naar Silmet (Lynas + overige bronnen) bewust NIET getekend
+#    (brief §7): geen laadhaven/aandeel per bron gebrond, geen coördinaat
+#    verzonnen. Evenmin een zeebeen bij Port of Sillamäe (21,4 km van de
+#    dichtstbijzijnde MARNET-zeeknoop): geen bron noemt zeevracht op deze as.
+# ⚠️ Spoor bewust niet gebruikt ondanks dat het net er ligt (0,7/0,3 km bij
+#    Sillamäe/Narva volgens het ontwerp) — geen bron noemt treinvervoer.
+# ⚠️ Silmet hangt via `service`+`access=private`-terreinwegen aan de E20
+#    (eindToegangPrivaat in het wegprofiel); geen last-mile-been, want beide
+#    ankers zijn de site zelf.
+bak_ree_sillamae_narva() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|NdPr/Dy/Tb-oxide NPM Silmet Sillamäe → Neo-magneetfabriek Narva (E20/Tallinn–Narva mnt; aannemelijk: één bron voor de oxidelevering)|$BEEN/ree-sillamae-narva-weg-silmet-narva.geojson" \
+    --marker "NPM Silmet OÜ, Sillamäe — REE-scheidingsfabriek (laadplek)|59.4031,27.7421" \
+    --marker "Neo Performance Materials — NPM Narva OÜ, Kulgu-tööstuspark (losplek, magneetfabriek)|59.3618,28.1478" \
+    --routebrief v2/design/routebrieven/ree-sillamae-narva.md \
+    --uit    v2/data/stroomroute-ree-sillamae-narva.json \
+    --stroom ree-sillamae-narva \
+    --titel  "Zeldzame aardmetalen · Sillamäe (Silmet) → Narva (Neo-magneetfabriek, Estland)"
+}
+
+# ── kolen · Datong-mijnstreek (Shanxi) → Qinhuangdao-kolenkade (Daqin-lijn) → Huaneng Haimen-centrale (Guangdong)
+# Routebrief: v2/design/routebrieven/kolen-datong-haimen.md (LICHTE werkwijze M29)
+# ⚠️ b1 (spoor) = 4 losse runs op het 1-op-1-net (kop→Yangyuan→Shacheng→
+#    Zunhua-N→Qinhuangdao-kade), elk een eigen corridorkeuze uit de toets.
+#    Som 635,8 km tegen gepubliceerd 653 km (−2,6 %, ruim binnen ±15 %) — de
+#    ingekorte 3-via-lijst uit de brief volstond, de volledige 11-vertexlijst
+#    was niet nodig.
+# ⚠️ Kop-anker `kolen-datong-kop` is ONZEKER: de westelijkste OSM-vertex van de
+#    Daqin-lijn bij Datong, geen bevestigde mijn met eigen laadstation (brief §7).
+# ⚠️ b2 (zee, kustvaart binnenlands) is AANNEMELIJK: geen bron legt het havenpaar
+#    Qinhuangdao→Haimen rechtstreeks (GEM tagt Haimen deels als "imported"); dat
+#    staat in de beennaam, niet in de lijnstijl. Beide kades liggen <25 km van
+#    een MARNET-zeeknoop (Qinhuangdao 19,7 km / zeeknoop 9650; Haimen 17,8 km /
+#    zeeknoop 5570), maar de RECHTE snap laat een procesgat van 18-19 km staan
+#    (hecht_marnet plakt geen automatische aanloopstukken — dat bleek pas ná de
+#    eerste bake, toets §5). Twee `maak_havenaanloop.py`-runs (timeout 300,
+#    beide binnen budget) sluiten het: Qinhuangdao kade→zeeknoop 19,5 km (0,43 km
+#    aan het uiteinde, dat is de 1:10M-kustkorrel, geen fout); Haimen
+#    zeeknoop→kade 41,8 km (rechte lijn liep 81% over land — Haimen ligt op een
+#    schiereiland, de omweg is dus reëel, omwegfactor 2,30).
+# ⚠️ b3 (leiding/band, ~1 km) is een STIPPEL: geen OSM-way voor de transportband
+#    over het eigen Huaneng-terrein tussen terminal en ketelhuizen — net reikt
+#    hier niet, geen gok naar een verzonnen tracé.
+# ⚠️ Fase D/E vervallen (brief §6): de centrale zet kolen in één stap om in
+#    stroom, geen smelter-/raffinaderijfase.
+bak_kolen_datong_haimen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Datong-kop → Yangyuan (Daqin-lijn 大秦铁路, mijnkop onzeker)|$BEEN/spoorroute-kolen-datong-haimen-kop-yangyuan.geojson" \
+    --been-geojson "spoor|trein Yangyuan → Shacheng (Daqin-lijn)|$BEEN/spoorroute-kolen-datong-haimen-yangyuan-shacheng.geojson" \
+    --been-geojson "spoor|trein Shacheng → Zunhua-N (Daqin-lijn)|$BEEN/spoorroute-kolen-datong-haimen-shacheng-zunhua.geojson" \
+    --been-geojson "spoor|trein Zunhua-N → Qinhuangdao-kolenkade (Daqin-lijn, havenemplacement)|$BEEN/spoorroute-kolen-datong-haimen-zunhua-qhd.geojson" \
+    --stippel-geojson "zee|haven-aanloop Qinhuangdao (schematisch, over water — kade ligt 19,7 km van de MARNET-zeeknoop)|$BEEN/kolen-datong-haimen-aanloop-qinhuangdao.geojson" \
+    --been         "zee|kustvaart (binnenlands) Qinhuangdao → Haimen (Bohai–Gele Zee–Oost-Chinese Zee–Straat Taiwan; aannemelijk: geen bron voor dit havenpaar)|39.8014,119.7875|23.3438,116.6470" \
+    --stippel-geojson "zee|haven-aanloop Haimen (schematisch, over water — kade ligt 17,8 km van de MARNET-zeeknoop, schiereiland-omweg)|$BEEN/kolen-datong-haimen-aanloop-haimen.geojson" \
+    --stippel      "leiding|transportband Haimen-terminal → Huaneng Haimen-centrale (eigen terrein, geen net)|23.1810,116.6595|23.1899,116.6548" \
+    --marker "Daqin-spoorkop bij Datong — mijn niet gebrond (onzeker)|39.9905,113.2324" \
+    --marker "Qinhuangdao-kolenterminal, Port of Qinhuangdao — overslag spoor → zee|39.9290,119.6440" \
+    --marker "Huaneng-kolenterminal Shantou-Haimen — losligplaats/coal transit base|23.1810,116.6595" \
+    --marker "Huaneng Haimen Power Station, Shantou, Guangdong — stoppunt|23.1899,116.6548" \
+    --routebrief v2/design/routebrieven/kolen-datong-haimen.md \
+    --uit    v2/data/stroomroute-kolen-datong-haimen.json \
+    --stroom kolen-datong-haimen \
+    --titel  "Kolen · Datong → Qinhuangdao → Haimen (China)"
+}
+
+# ── zeldzame aardmetalen · Mountain Pass mijn+scheiding → Fort Worth (Independence, NdPr-metaal + NdFeB-magneten)
+# Routebrief: v2/design/routebrieven/ree-mountainpass-fortworth.md (LICHTE werkwijze M29)
+# ⚠️ Modaliteit AANNEMELIJK — nergens gepubliceerd welke drager MP Materials
+#    gebruikt (10-K noemt alleen "immediately adjacent to Interstate 15 …
+#    within a one-hour drive of a major railhead"); truck is de enige eerlijke
+#    aanname, "aannemelijk" staat daarom in de beennaam en NIET in de lijnstijl
+#    (doorgetrokken, geen stippel — werkwijze §7). Het gemeten spooralternatief
+#    (2.312 km, M28) is niet getekend.
+# ⚠️ Geen gepubliceerde km voor dit been (brief §7): de bake-toets loopt tegen
+#    de eigen OSRM/wegscan-uitkomst (~2.026,5 km getekend), geen ±15%-toets
+#    tegen een onafhankelijke bron.
+# ⚠️ Fase D (NdPr-metaal → gesinterde NdFeB-magneten) is GEEN apart been —
+#    zelfde perceel, 0 km, eigen terrein (brief §5/§6). Geen --been/--stippel-
+#    regel; de fabrieksmarker op ree-fw-fabriek draagt beide rollen (losplek +
+#    D-verwerkingsknoop).
+# ⚠️ Bewust niet getekend (brief §5/§7/§8): de gestopte concentraat-rondreis
+#    Mountain Pass ↔ China (2025-04-17) · de NdPr-oxide-exportstroom naar
+#    Japan/Zuid-Korea via vermoedelijk LA/Long Beach (geen kade/afnemer met
+#    naam+adres) · GM's eigen magneetafnamefabriek (Ultium-motoren, locatie
+#    niet gepubliceerd) · de geplande 10X Northlake-magneetfabriek (niet op
+#    adresniveau bevestigd).
+bak_ree_mountainpass_fortworth() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|NdPr-oxide Mountain Pass → I-15 → I-40 → US-287 → Independence (aannemelijk: modaliteit niet gepubliceerd)|$BEEN/ree-mountainpass-fortworth-weg-mountainpass-fortworth.geojson" \
+    --marker "Mountain Pass — mijn- en scheidingsfabriek (MP Materials, San Bernardino County, CA)|35.4786,-115.5325" \
+    --marker "Independence, Fort Worth — NdPr-metaal → gesinterde NdFeB-magneten (MP Materials, D-knoop, eigen terrein)|32.9845,-97.2498" \
+    --routebrief v2/design/routebrieven/ree-mountainpass-fortworth.md \
+    --uit    v2/data/stroomroute-ree-mountainpass-fortworth.json \
+    --stroom ree-mountainpass-fortworth \
+    --titel  "Zeldzame aardmetalen · Mountain Pass → Fort Worth (VS)"
+}
+
+# ── ree · Bayan Obo-laadstation → Baogang-selectie (包白铁路, spoor) →
+#    Northern Rare Earth-scheiding Huamei (truck, stedelijk Baotou)
+# Routebrief: v2/design/routebrieven/ree-bayanobo-baotou.md (LICHTE werkwijze M29)
+# ⚠️ b1 (spoor) SNAPT VEEL DICHTER OP DE ANKERS DAN VERWACHT (brief §2 zei
+#    "verwacht ~1,3/2,8 km emplacement-stippel"): gemeten met BAKE_SUFFIX=-raw
+#    op het 1-op-1-net (3.260.717 spoor-edges) is de snap 0,22 km bij Bayan Obo
+#    en 0,25 km bij Baogang-selectie — ruim binnen de marker-norm (≤0,5 km),
+#    dus GEEN aparte emplacement-stippelbeentjes nodig. 149,1 km tegen 159 km
+#    gepubliceerd (包白铁路, zh.wikipedia) = −6,2%, binnen ±15%.
+# ⚠️ b2 (truck) heeft GEEN gepubliceerde km (brief §2/§7): ~15 km hemelsbreed
+#    is een schatting, geen operator-bron. Gemeten wegtracé 19,3 km = +28,3%
+#    t.o.v. die schatting — buiten ±10%/±15% maar het is een INDICATIEVE
+#    toets (geen derde-bron-publicatie om tegen te toetsen), dus bevinding in
+#    §9, niet dichtgetrokken.
+# ⚠️ b2 draagt "waarschijnlijk: Huamei-dochter" (brief §6/§7): geen bron
+#    documenteert per rechtspersoon wie het concentraat als eerste ontvangt.
+bak_ree_bayanobo_baotou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Bayan Obo-laadstation → Baogang-selectiecomplex (包白铁路, 1-op-1-net)|$BEEN/spoorroute-ree-bayanobo-baotou-laad-selectie.geojson" \
+    --been-geojson "truck|vrachtwagen Baogang-selectiecomplex → Northern Rare Earth-scheiding Huamei (stedelijke wegen Baotou, aannemelijk: welke Northern-dochter)|$BEEN/ree-bayanobo-baotou-weg-baogang-scheiding.geojson" \
+    --marker "Bayan Obo-spoorstation — mijn/laadstation (kop 包白铁路)|41.7712,109.9517" \
+    --marker "Baogang-selectiecomplex — veredelingsfabriek (ijzer-REE-erts → REE-concentraat REO 50%)|40.6790,109.7550" \
+    --marker "Northern Rare Earth-scheiding (Huamei), 稀土高新区 — stoppunt|40.5884,109.8741" \
+    --routebrief v2/design/routebrieven/ree-bayanobo-baotou.md \
+    --uit    v2/data/stroomroute-ree-bayanobo-baotou.json \
+    --stroom ree-bayanobo-baotou \
+    --titel  "Zeldzame aardmetalen · Bayan Obo → Baotou (China)"
+}
+
+# ── kolen · Cerrejón (spoor) → Puerto Bolívar → EMO Maasvlakte → Werkshafen
+#    Schwelgern-loskade (Duisburg) — LICHTE WERKWIJZE, stoppunt bij Schwelgern
+# Routebrief: v2/design/routebrieven/kolen-cerrejon-ruhr.md (§10, licht)
+# ⚠️ Fase D vervalt: de Kokerei Schwelgern-brochure van thyssenkrupp zelf noemt
+#    de kolenherkomst ("vooral Australië, Canada, VS, Afrika en deels Azië")
+#    en Colombia staat er niet bij — geen been, alleen een marker met de noot.
+# ⚠️ b1 (spoor) hergebruikt de toets-ronde van 2026-08-06 (BAKE_SUFFIX=-raw,
+#    --hoofd-km=100): 150,6 km / 94 punten, 0 bochten ≥60°. Laatste ~1 km OSM-
+#    gat bij de pierlus apart gestippeld (terminal-lus niet doorverbonden).
+# ⚠️ b2 (zee): Puerto Bolívar-kade snapt op 36,4 km van de dichtstbijzijnde
+#    zeeknoop (>25 km, geen AIS-dekking Colombia in de wereldscan) →
+#    maak_havenaanloop.py (cel 0,005° gebufferd, 42,1 km, blijft stippel).
+# ⚠️ b3 (binnenvaart): de kade-ankers `coal-rotterdam-kade` (1,07 km) en
+#    `coal-duisburg-kade` (0,82 km) liggen boven de 0,5 km-raakpuntregel van
+#    hecht_marnet → het routeerpunt ligt op een trackpunt (EMO-oostzijde
+#    ≈51.937,4.060, niet de kade-centroïde) resp. op de loskade zelf
+#    (51.50900,6.73000 — NIET de OSM-pier op 51.51321,6.72347). De vier
+#    via-punten uit de brief (Groothoofd/Werkendam/Loevestein/Pannerdensche
+#    Kop) staan als losse --been-segmenten in reisvolgorde.
+# ⚠️ HET LAATSTE STUK (Pannerdensche Kop → Schwelgern) LIGT OVER DE AIS-
+#    TRACKGAAF NIET TE ROUTEREN: 0 tracks bij Wesel (lon 6,45-6,60, dezelfde
+#    dekkingsgeul als bij koper-lobito-duisburg) knipt de trackgraaf in twee
+#    losse componenten (snap 4,5 km, "geen pad"). Net als bij Lobito de
+#    bulklaag gebruikt (maak_rivierbeen.py, niet de AIS-tracks): 77,6 km /
+#    423 punten — dit been zegt waar het water ligt, niet dat er een schip
+#    gezien is.
+bak_kolen_cerrejon_ruhr() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "v2/build-cache/ais/graaf/rijn" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Cerrejón-laadlus → Puerto Bolívar-pierlus (Vía Ferroviaria Albania – Puerto Bolívar)|$BEEN/spoorroute-kolen-cerrejon-ruhr-b1.geojson" \
+    --stippel      "spoor|laatste km Puerto Bolívar (OSM-gat bij de pier, terminal-lus niet doorverbonden)|12.2391,-71.9739|12.23912,-71.97693" \
+    --stippel-geojson "zee|haven-aanloop Puerto Bolívar (schematisch, over water — geen AIS-dekking Colombia)|$BEEN/kolen-cerrejon-ruhr-aanloop-bolivar.geojson" \
+    --been         "zee|zeeschip Puerto Bolívar-aanloop → EMO Maasvlakte|12.44700,-72.23630|51.94109,4.05354" \
+    --been         "binnenvaart|EMO-oostzijde → Groothoofd (Noord NIET nemen)|51.937,4.060|51.820,4.670" \
+    --been         "binnenvaart|Groothoofd → Werkendam (Nieuwe Merwede NIET nemen)|51.820,4.670|51.821,4.894" \
+    --been         "binnenvaart|Werkendam → Loevestein (monding Afgedamde Maas)|51.821,4.894|51.821,5.002" \
+    --been         "binnenvaart|Loevestein → Pannerdensche Kop (Pannerdensch Kanaal NIET nemen)|51.821,5.002|51.874,6.038" \
+    --been-geojson "binnenvaart|Pannerdensche Kop → Schwelgern-loskade (bulklaag: ligging van het water — AIS-dekking ontbreekt bij Wesel)|$BEEN/kolen-cerrejon-ruhr-rivier-pannerdensche-schwelgern.geojson" \
+    --marker "Cerrejón laadlus — keerlus met laadsilo's|11.12600,-72.63500" \
+    --marker "Puerto Bolívar-terminal (Terminal de Carbones del Cerrejón)|12.23912,-71.97693" \
+    --marker "EMO-kolenkade, Mississippihaven, Maasvlakte|51.94109,4.05354" \
+    --marker "Werkshafen Schwelgern-loskade|51.50900,6.73000" \
+    --marker "thyssenkrupp Schwelgern (cokesblend: geen bron; gedocumenteerd: krachtwerkkool RWE/STEAG, ±31% DE-import)|51.50900,6.73000" \
+    --routebrief v2/design/routebrieven/kolen-cerrejon-ruhr.md \
+    --uit    v2/data/stroomroute-kolen-cerrejon-ruhr.json \
+    --stroom kolen-cerrejon-ruhr \
+    --titel  "Kolen · Cerrejón → Rotterdam → Schwelgern (Duisburg)"
+}
+
+# ── zeldzame aardmetalen · Pangwa (Kachin, Myanmar) → Diantan-douane (Tengchong, China)
+# Routebrief: v2/design/routebrieven/ree-kachin-ganzhou.md (LICHTE werkwijze M29)
+# ⚠️ ÉÉN BEEN (b1, truck): de brief stopt bewust bij de Diantan-douane — de
+#    ~2.300 km naar de Ganzhou/Longnan-scheiding wordt NIET getekend (brief
+#    §6: alleen groepsniveau gedocumenteerd, geen volledige coördinaat voor de
+#    kandidaat-vestiging). De scheidingsfabriek gaat later naar de sitelaag
+#    als gloednode (rol scheidingsfabriek), niet als lijn.
+# ⚠️ GEEN GEPUBLICEERDE KM: hemelsbreed 57,5 km, "~60-110 km" in het ontwerp
+#    was een ongebronde aanname. Eigen scan geeft 118,7 km weggeometrie
+#    (118,8 km getekend incl. anker-stukjes) — ruim boven die aanname, wat bij
+#    bergterrein met haarspeldbochten (243 keerlussen gesnoeid) niet
+#    onaannemelijk is, maar zonder derde bron is dit referentie, geen ±15%-toets.
+# ⚠️ GEEN VIA-PUNTEN (brief §4): geen gedocumenteerde corridorkeuze in het
+#    nauwelijks gekarteerde Kachin-wegennet; corridorKlassen tertiary/
+#    unclassified liet de scan het tracé zelf kiezen (venster 60 km).
+bak_ree_kachin_ganzhou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Pangwa-mijngebied/grensdoorlaat → Diantan-douane, Tengchong (Kachin-bergweg → Chinese zijde, geen gepubliceerde wegnummers)|$BEEN/ree-kachin-ganzhou-weg-pangwa-diantan.geojson" \
+    --marker "Pangwa (mijngebied + grensdoorlaat) — uitloogputtengebied, KIA-gebied|26.0153,98.6080" \
+    --marker "Diantan-douane, Tengchong (Yunnan) — stoppunt, handover aan Chinese kopers|25.5292,98.4097" \
+    --routebrief v2/design/routebrieven/ree-kachin-ganzhou.md \
+    --uit    v2/data/stroomroute-ree-kachin-ganzhou.json \
+    --stroom ree-kachin-ganzhou \
+    --titel  "Zeldzame aardmetalen · Pangwa (Kachin) → Diantan-douane (Myanmar–China)"
+}
+
+# ── kolen · Goonyella Riverside (BMA) → Coppabella → Hay Point → Dhamra Port → Bhadrak → Jakhapura → Tata Steel Kalinganagar
+# Routebrief: v2/design/routebrieven/kolen-goonyella-kalinganagar.md (LICHTE werkwijze M29)
+# ⚠️ Kop-mijnkeuze IS AANNEMELIJK: BMA verkoopt cokeskool als blend uit vijf
+#    mijnen (Goonyella Riverside, Peak Downs, Saraji, Norwich Park/Daunia,
+#    Caval Ridge); geen bron legt één specifieke Dhamra-lading bij Goonyella
+#    Riverside alleen — dat staat daarom letterlijk in de kop-markernaam, niet
+#    in de lijnstijl (brief §7).
+# ⚠️ b1 = TWEE spoorruns (kop→Coppabella-junctie, Coppabella→Hay Point) op het
+#    1-op-1-net (BAKE_SUFFIX=-raw, 3.260.717 spoor-edges, extract australie):
+#    42,5 + 153,8 = 196,3 km tegen de brief-schatting 199,0 km (−1,4%, binnen
+#    ±15%). Snaps 1,19/2,50/1,18 km. Aan beide uiteinden een korte stippel
+#    voor het stuk dat niet op het 1-op-1-net staat (loadout-spur bij de mijn,
+#    HPCT-kade-aansluiting ~1,2 km) — de Chuqui/Matarani-klasse, geen bug.
+#    Terminalsplitsing HPCT/DBCT is niet apart via-gepind (brief §7).
+# ⚠️ b2 = zee. Hay Point snapt direct op zeeknoop 9022 (5,6 km, < 25 km
+#    max-snap default — geen aanloop nodig). Dhamra ligt 109,7 km van
+#    zeeknoop 2373 (21,0/88,0; Dhamra staat niet in ports.json) →
+#    `maak_havenaanloop.py` gaf een schoon pad (113,3 km, 0% over land,
+#    omwegfactor 1,033) als STIPPEL-GEOJSON. De diepgangkeuze Torres-straat
+#    vs. noord-om-Papoea-Nieuw-Guinea staat in de beennaam, niet afgedwongen —
+#    MARNET kent geen diepgang en kiest zelf. Zeebeen-afstand (~9.500–10.500 km
+#    afgeleid) is niet getoetst tegen een operatorcijfer; de bake meet het exact.
+# ⚠️ b3 = DRIE spoorruns (Dhamra→Bhadrak-junctie, Bhadrak→Jakhapura-junctie,
+#    Jakhapura→Tata-siding — de derde was nodig, de router liet Jakhapura niet
+#    direct op de Tata-siding uitkomen). 66,4 + 46,7 + 13,1 = 126,2 km tegen
+#    de brief-schatting 114,2 km (+10,5%, binnen ±15%). Snaps 0,48/2,64/0,12/
+#    0,26 km. Het derde segment draagt één OMKERING (175°, ~191 m boogstraal)
+#    vlak vóór de Tata-siding — een kopmaak-plek op het fabrieksterrein, zelfde
+#    klasse als Chuqui/Matarani (emplacement niet in het 1-op-1-net), geen
+#    via-punt bijgeschoven. `toets_spoorroute.mjs` meldde op dit derde segment
+#    óók "sanity FOUT — route korter dan de grootcirkel": een bekende bug in
+#    het meetgereedschap zelf (grootcirkel wordt tussen de ONgesnapte
+#    invoerpunten berekend, de route tussen de gesnapte) — geen routeerfout.
+bak_kolen_goonyella_kalinganagar() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "spoor|loadout-spur Goonyella Riverside → hoofdspoor (mijnemplacement niet in het 1-op-1-net, ~1,2 km)|-21.7923,147.9620|-21.80120,147.95560" \
+    --been-geojson "spoor|trein Goonyella Riverside → Coppabella-junctie (Goonyella-spoorsysteem, Aurizon)|$BEEN/spoorroute-kolen-goonyella-kalinganagar-goonyella-coppabella.geojson" \
+    --been-geojson "spoor|trein Coppabella-junctie → Hay Point Coal Terminal (Goonyella-spoorsysteem, HPCT/DBCT-terminalsplitsing niet apart gepind)|$BEEN/spoorroute-kolen-goonyella-kalinganagar-coppabella-haypoint.geojson" \
+    --stippel      "spoor|hoofdspoor → HPCT-kade-aansluiting (kade ligt 1,2 km van het 1-op-1-net, geen net op de laatste meters)|-21.28060,149.29000|-21.2700,149.2900" \
+    --been         "zee|zeeschip Hay Point Coal Terminal → Dhamra-zeeknoop (Koraalzee → Torres-straat of noord-om-Papoea-Nieuw-Guinea, diepgang niet afgedwongen → Golf van Bengalen)|-21.2700,149.2900|21.0,88.0" \
+    --stippel-geojson "zee|haven-aanloop Dhamra Port (schematisch, over water — MARNET/ports.json kent de haven niet, ~110 km)|$BEEN/kolen-goonyella-kalinganagar-aanloop-dhamra.geojson" \
+    --been-geojson "spoor|trein Dhamra Port losplaats → Bhadrak-junctie (Dhamra–Bhadrak-havenlijn, 2011)|$BEEN/spoorroute-kolen-goonyella-kalinganagar-dhamra-bhadrak.geojson" \
+    --been-geojson "spoor|trein Bhadrak-junctie → Jakhapura-junctie (Howrah–Chennai-hoofdlijn zuid)|$BEEN/spoorroute-kolen-goonyella-kalinganagar-bhadrak-jakhapura.geojson" \
+    --been-geojson "spoor|trein Jakhapura-junctie → Tata Steel Kalinganagar (Daitari–Jakhapura-lijn/Tata-siding, kopmaak op het terrein)|$BEEN/spoorroute-kolen-goonyella-kalinganagar-jakhapura-kalinganagar.geojson" \
+    --marker "Goonyella Riverside (BMA, aannemelijk: blend uit 5 mijnen)|-21.7923,147.9620" \
+    --marker "Hay Point Coal Terminal — BMA-kade, offshore trestle (verkoop aan GIP aangekondigd 2025)|-21.2700,149.2900" \
+    --marker "Dhamra Port — kolenstockyard + jetty (Adani)|20.8280,86.9600" \
+    --marker "Tata Steel Kalinganagar — cokerij/hoogovens|20.9704,86.0152" \
+    --routebrief v2/design/routebrieven/kolen-goonyella-kalinganagar.md \
+    --uit    v2/data/stroomroute-kolen-goonyella-kalinganagar.json \
+    --stroom kolen-goonyella-kalinganagar \
+    --titel  "Kolen · Goonyella Riverside → Hay Point → Dhamra → Kalinganagar (India)"
+}
+
+# ── kolen · ETT-laadterminal Tavan Tolgoi → Gashuunsukhait → Ganqimaodu → Wanshuiquan-Zuid (Baotou) → Baotou Steel
+# Routebrief: v2/design/routebrieven/kolen-tavantolgoi-baotou.md (LICHTE werkwijze M29)
+# ⚠️ b1 = spoor (BAKE_SUFFIX=-raw, extract mongolia): 227,2 km tegen 233,6 km
+#    gepubliceerd (−2,7%, binnen ±15%). Eén OMKERING vlak bij de laadterminal
+#    (172,9°, ~32 m boogstraal) — kopmaak-plek op het opstelterrein, zelfde
+#    klasse als Chuqui/Matarani (emplacement), geen via-punt bijgeschoven.
+# ⚠️ b2 = truck (maak_stroombeen_weg, profiel kolen-tavantolgoi-baotou-tt-gs-
+#    ganqimaodu, extracts mongolia+china): 13,6 km — geen gepubliceerde km
+#    (brief: ~9-10 km afgeleid uit de ankers), lengtetoets is indicatief. Via
+#    `cu-ot-grens` en "Chinese poort Ganqimaodu" LETTERLIJK HERGEBRUIKT uit
+#    koper-oyutolgoi-china.md (zelfde coördinaten, geen nieuwe scan op die
+#    punten). Dit been is een TIJDELIJKE TOESTAND: de grensspoorlijn (32,6 km)
+#    vervangt het zodra hij klaar is (gepland 2027).
+# ⚠️ b3 = spoor (BAKE_SUFFIX=-raw, extract china): 368,6 km tegen 366,9 km
+#    gepubliceerd (+0,5%, ruim binnen ±15%).
+# ⚠️ b4 = STIPPEL, geen bake-tool: Baotou Steel als afnemer rust op één bron
+#    (sxcoal 2017); geen gekarteerde siding of weg tussen Wanshuiquan-Zuid en
+#    Baogang. ~14 km hemelsbreed, last mile (geen net op deze korrel) EN
+#    aannemelijk (één bron) — beide in de beennaam, niet in de lijnstijl.
+bak_kolen_tavantolgoi_baotou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein ETT-laadterminal Tavan Tolgoi → Gashuunsukhait rail-yard (Tavantolgoi–Gashuunsukhait-spoorlijn, Bodi International, 1520 mm, open sinds 09-2022)|$BEEN/spoorroute-kolen-tavantolgoi-baotou-tt-gs.geojson" \
+    --been-geojson "truck|vrachtwagen Gashuunsukhait-overslag → grenspost → Chinese poort → Ganqimaodu-opslag (grensoverslag; grensspoorlijn 32,6 km nog in aanbouw, gepland 2027)|$BEEN/kolen-tavantolgoi-baotou-weg-ttgs-ganqimaodu.geojson" \
+    --been-geojson "spoor|trein Ganqimaodu-station → Wanshuiquan-Zuid, Baotou (甘泉铁路, Ganqimaodu → Baoshen-lijn, geëlektrificeerd enkelspoor, 2012)|$BEEN/spoorroute-kolen-tavantolgoi-baotou-ganqimaodu-baotou.geojson" \
+    --stippel      "truck|last mile Baotou Steel (aannemelijk: één bron, sxcoal 2017) — geen gekarteerde siding|40.5775,109.89105|40.6549,109.7545" \
+    --marker "ETT-laadterminal Tavan Tolgoi — automated loading logistics center (in bedrijf sinds mei 2024)|43.64336,105.58236" \
+    --marker "Gashuunsukhait rail-yard (overslag spoor eind MN / truck-transfer)|42.44558,107.53063" \
+    --marker "Gashuun Sukhait grenspost (MN) / Ganqimaodu (CN) — hergebruikt uit koper-oyutolgoi-china.md|42.4146,107.5692" \
+    --marker "Ganqimaodu-station + opslagloodsen (kop van 甘泉铁路)|42.37414,107.60964" \
+    --marker "Wanshuiquan-Zuid station, Baotou (spooreindpunt, stoppunt fase C)|40.5775,109.89105" \
+    --marker "Baotou Steel (包钢), staalwerken — fase D, aannemelijk|40.6549,109.7545" \
+    --routebrief v2/design/routebrieven/kolen-tavantolgoi-baotou.md \
+    --uit    v2/data/stroomroute-kolen-tavantolgoi-baotou.json \
+    --stroom kolen-tavantolgoi-baotou \
+    --titel  "Kolen · Tavan Tolgoi → Gashuunsukhait/Ganqimaodu → Baotou (China)"
+}
+
+# ── zeldzame aardmetalen · Mt Weld-mijn → Kalgoorlie REPF → Fremantle → Kuantan Port → LAMP Gebeng (MREC → NdPr-oxide)
+# Routebrief: v2/design/routebrieven/ree-mtweld-kuantan.md (LICHTE werkwijze M29)
+# ⚠️ b1 (truck, maak_stroombeen_weg, profiel ree-mtweld-kuantan-mtweld-
+#    kalgoorlie, extract australie): eerste poging faalde ("geen wegpad") —
+#    de outback-mijnweg Mt Weld→Laverton zit niet in WEG_HOUD (motorway t/m
+#    secondary) binnen het venster. Hergebruikt de al bestaande, geconnec-
+#    teerde via-keten uit corridor `ree-mountweld-leonora`
+#    (fetch_landnet.py CORRIDORS) voor het stuk Mt Weld→Leonora, verlengd via
+#    Menzies (`corridorKlassen: tertiary/unclassified`). 401,0 km tegen
+#    ~380 km gepubliceerd (+5,5%, binnen ±15%).
+# ⚠️ b2 (spoor, BAKE_SUFFIX=-raw, TWEE runs, extract 1-op-1-net): Kalgoorlie
+#    REPF → Kewdale 646,9 km (tegen 563 km gepubliceerd Kalgoorlie–Kewdale,
+#    +14,9%, net binnen ±15%) · Kewdale → Fremantle North Quay 42,3 km (tegen
+#    ~20 km schatting, +111%, BUITEN ±15% — bevinding, niet dichtgetrokken:
+#    de gepubliceerde ~20 km was zelf al een schatting, geen operator-cijfer,
+#    en Kewdale is bewust een spoorreferentiepunt zonder wegequivalent om een
+#    Dijkstra-omweg via de goudlijn te vermijden). REPF-snap 0,47 km (ruim
+#    onder de verwachte 1,9 km last-mile — geen aparte stippel nodig, de naad
+#    tussen truck- en spoorbeen blijft binnen de norm); Fremantle-snap
+#    0,51 km. Eén OMKERING bij elke run (170,5° resp. 169,3°, kopmaak-plekken
+#    op het REPF-/Kewdale-emplacement, geen bugreden).
+# ⚠️ b3 (zee, MARNET, --been zee Fremantle → Kuantan Port): Fremantle snapt
+#    op 0,6 km (geen aanloop nodig). Kuantan ligt 22,8 km van de dichtst-
+#    bijzijnde zeeknoop (binnen de default --max-snap 25) — de haven-aanloop
+#    (maak_havenaanloop.py, geslaagd, 24,7 km over water, omwegfactor 1,085)
+#    vervangt het laatste stuk als stippel-geojson zodat de lijn niet recht
+#    over Tanjung Gelang snijdt.
+# ⚠️ b4 (truck, maak_stroombeen_weg, profiel ree-mtweld-kuantan-kuantan-
+#    lamp, extract maleisie): 13,1 km tegen een OSRM-schatting van 8-12 km
+#    (geen harde publicatie — indicatief, geen ±15%-toets).
+# ⚠️ Kalgoorlie REPF-anker is ONZEKER (brief §3/§7): satellietpas toont geen
+#    ondubbelzinnig REPF-terrein op 70 Johns Rd, Yilkari — mogelijk jonger
+#    dan de Esri-opname; adres uit vergunningdocumenten wel eenduidig.
+bak_ree_mtweld_kuantan() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Mt Weld-mijn/concentratieplant → Laverton → Leonora → Menzies → Lynas Kalgoorlie REPF (mijnweg → Great Central/Beadell Hwy → Goldfields Highway)|$BEEN/ree-mtweld-kuantan-weg-mtweld-kalgoorlie.geojson" \
+    --been-geojson "spoor|trein Lynas Kalgoorlie REPF → Kewdale (Eastern Goldfields Railway, 1-op-1-net)|$BEEN/spoorroute-ree-mtweld-kuantan-kalgoorlie-kewdale.geojson" \
+    --been-geojson "spoor|trein Kewdale → Fremantle North Quay (spoorreferentiepunt Kewdale splitst de run om een Dijkstra-omweg via de goudlijn te vermijden)|$BEEN/spoorroute-ree-mtweld-kuantan-kewdale-fremantle.geojson" \
+    --been         "zee|zeeschip Fremantle North Quay → Kuantan Port (Indische Oceaan → Straat Sunda/Lombok → Straat Karimata → Zuid-Chinese Zee)|-32.0438,115.7449|3.9805,103.4242" \
+    --stippel-geojson "zee|haven-aanloop Kuantan (schematisch, over water — MARNET reikt hier niet, 22,8 km)|$BEEN/ree-mtweld-kuantan-aanloop-kuantan.geojson" \
+    --been-geojson "truck|vrachtwagen Kuantan Port → Jalan Gebeng → Lynas Advanced Materials Plant (LAMP), Gebeng-industriezone|$BEEN/ree-mtweld-kuantan-weg-kuantan-lamp.geojson" \
+    --marker "Mt Weld-mijn en concentratieplant (Lynas), rotainer-laadplek|-28.8695,122.5392" \
+    --marker "Lynas Kalgoorlie REPF, Johns Rd, Yilkari (cracking & leaching → MREC, onzeker)|-30.7883,121.4086" \
+    --marker "Fremantle North Quay containerterminal (overslag spoor→zee)|-32.0438,115.7449" \
+    --marker "Kuantan Port (Pelabuhan Kuantan), Tanjung Gelang (overslag zee→truck)|3.9805,103.4242" \
+    --marker "Lynas Advanced Materials Plant (LAMP), Gebeng — scheiding tot NdPr-oxide|4.0034,103.3775" \
+    --routebrief v2/design/routebrieven/ree-mtweld-kuantan.md \
+    --uit    v2/data/stroomroute-ree-mtweld-kuantan.json \
+    --stroom ree-mtweld-kuantan \
+    --titel  "Zeldzame aardmetalen · Mt Weld → Kalgoorlie → Fremantle → Kuantan (Maleisië)"
+}
+
+# ── kolen · KPC-mijn Sangatta → Tanjung Bara Coal Terminal → Mundra UMPP (India, thermisch)
+# Routebrief: v2/design/routebrieven/kolen-sangatta-mundra.md (lichte werkwijze M29)
+# ⚠️ b1 (band Sangatta → TBCT) is een STIPPEL zonder wegscan, als DRIE losse
+#    segmenten (het tool kent geen multi-punts --stippel; via-punten uit
+#    brief §4 als eigen segmentgrenzen): de Indonesië-extract kent 137
+#    goods_conveyor-ways maar geen enkele met een naam/operator-tag naar
+#    KPC/Kaltim Prima/Tanjung Bara (bindende toets-uitkomst, brief §7).
+#    Gepubliceerde km 13 (mining-technology.com); de stippelafstand komt
+#    hoger uit (~24 km hemelsbreed) omdat het exacte laadpunt/wasserij binnen de
+#    ~20 km-lange KPC-concessie niet vast te stellen is — bevinding, geen via-punt
+#    bijgeschoven om het te laten kloppen.
+# ⚠️ b2 (zee) snapt de TBCT-zijde automatisch op zeeknoop 5453 (21,8 km, binnen
+#    25 km, geen aanloop nodig); aan de Mundra-kant reikt MARNET niet tot de
+#    kolenjetty (jetty zelf niet satelliet-gelokaliseerd, brief §7) →
+#    maak_havenaanloop.py van zeeknoop 5321 (22,5734/69,4446) naar het
+#    CGPL-terreinanker, 30,0 km / 11 punten, 0,00 km land midden op de lijn
+#    (geslaagd, geen terugval nodig).
+# ⚠️ Eigen-keten-claim (Tata Power-belang in KPC sinds 2007 + CGPL-offtake 2011)
+#    blijft AANNEMELIJK: geen bron noemt een specifieke scheepslading KPC → Mundra
+#    in 2024/25 (brief §7) — staat in de beennaam, niet in de lijnstijl.
+# ⚠️ Geen fase D/E: de keten stopt bij de kolenopslag van de centrale (brief §6,
+#    kolen wordt daar in één stap verstookt).
+bak_kolen_sangatta_mundra() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|band KPC-mijn → haalweg-knoop (schematisch — OSM kent geen goods_conveyor met KPC/TBCT-tag)|0.5810,117.4985|0.5820,117.5080" \
+    --stippel      "truck|band haalweg-knoop → TBCT-landzijde (schematisch)|0.5820,117.5080|0.5400,117.6250" \
+    --stippel      "truck|band TBCT-landzijde → Tanjung Bara-kade (schematisch)|0.5400,117.6250|0.5375,117.6595" \
+    --been         "zee|zeeschip Tanjung Bara → Mundra (thermisch; centrale stil jul 2025–mrt 2026, weer in bedrijf 04-2026)|0.5375,117.6595|22.5734,69.4446" \
+    --stippel-geojson "zee|haven-aanloop Mundra (schematisch, over water — MARNET reikt niet tot de kolenjetty)|$BEEN/kolen-sangatta-mundra-aanloop-mundra.geojson" \
+    --marker "KPC open pit + naaste terreinen, Sangatta — mijn (kop van de band)|0.58100,117.49850" \
+    --marker "Tanjung Bara Coal Terminal — laadponton aan kade-einde (band → zee)|0.53750,117.65950" \
+    --marker "Coastal Gujarat Power Ltd, Mundra UMPP (Tata Power) — losplek + stoppunt|22.82007,69.51889" \
+    --routebrief v2/design/routebrieven/kolen-sangatta-mundra.md \
+    --uit    v2/data/stroomroute-kolen-sangatta-mundra.json \
+    --stroom kolen-sangatta-mundra \
+    --titel  "Kolen · Sangatta (KPC) → Tanjung Bara → Mundra (India)"
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom

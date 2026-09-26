@@ -1,0 +1,745 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag kolen voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/kolen-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof kolen: ids 'w-*', gewicht = capaciteit in Mt/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in Mt/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-narm",
+   "naam": "North Antelope Rochelle",
+   "lon": -105.283,
+   "lat": 43.588,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "VS (Wyoming, Powder River Basin)",
+   "gewicht": 58.9,
+   "gewicht_bron": "capaciteit Mt/j — Global Energy Monitor, Global Coal Mine Tracker: 58,9 Mt in 2025; 62 Mt in 2023 [B1]; Peabody Energy noemt NARM de grootste kolenmijn van de VS [B2]",
+   "bron": "GEM Table 1: 43,566667/-105,283333; satelliet z14 (sitelaag-kolen-narm): het kruis lag ~2 km zuidelijk van de zichtbare wingaten/haldes — verschoven naar de zuidrand van het noordelijke bekken (43,588/-105,283), nog steeds ~1 km van de dichtstbijzijnde bank. Peabody's eigen 'Background'-coördinaat (43,527/-105,271) ligt op vergelijkbare afstand aan de andere kant.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Peabody Powder River Mining LLC (Peabody Energy); grootste ondergrondse... nee, grootste OPPERVLAKTE-kolenmijn van de VS, volledig thermisch/binnenlands (Powder River Basin low-sulphur)."
+  },
+  {
+   "id": "w-blackthunder",
+   "naam": "Black Thunder",
+   "lon": -105.3,
+   "lat": 43.66,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "VS (Wyoming, Powder River Basin)",
+   "gewicht": 60.5,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 60,5 Mt in 2023 [B1]; Wikipedia 'Black Thunder Coal Mine': ~71 mln short tons (≈64 Mt) [B3]",
+   "bron": "GEM/mindat centroïde 43,66/-105,30 (DMS 43°40'00\"N 105°18'00\"W); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Thunder Basin Coal Company, dochter van Core Natural Resources (voorheen Arch Coal, in 2024 gefuseerd met CONSOL); een van de grootste mijncomplexen ter wereld, direct naast NARM."
+  },
+  {
+   "id": "w-gevra",
+   "naam": "Gevra OC",
+   "lon": 82.54575,
+   "lat": 22.33631,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Chhattisgarh, Korba-veld)",
+   "gewicht": 55.8,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 55,8 Mt in 2025 [B1]; PIB/Ministry of Coal (juli 2024): Gevra en Kusmunda onder de vijf grootste mijnen ter wereld, Gevra-vergunning verhoogd naar 70 Mtpa [B4]",
+   "bron": "GEM Table 1 (WGS84); satelliet z14 (sitelaag-kolen-gevra): kruis op de rand van het wingat, terrasvormige excavatie en overslagterrein rondom",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "South Eastern Coalfields Ltd (SECL), dochter van Coal India; thermisch, vrijwel volledig binnenlands (Korba-centrales + spoor naar de rest van India). Op dit moment de grootste enkelvoudige kolenmijn ter wereld op productie."
+  },
+  {
+   "id": "w-kusmunda",
+   "naam": "Kusmunda OC",
+   "lon": 82.66667,
+   "lat": 22.33263,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Chhattisgarh, Korba-veld)",
+   "gewicht": 50.1,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 50,12 Mt in 2024 [B1]; drishtiias/PIB: Gevra en Kusmunda #2 en #4 op de wereldranglijst (WorldAtlas), capaciteit 62,5 Mtpa [B4][B5]",
+   "bron": "GEM Table 1 (WGS84); satelliet z14 (sitelaag-kolen-kusmunda): kruis in de wingatrand, terrassen en pitmeren aan weerszijden, overslagterrein direct noordelijk",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "SECL/Coal India; thermisch, binnenlands. Zuid-centraal deel van het Korba-veld, ~13 km oost van Gevra."
+  },
+  {
+   "id": "w-dipka",
+   "naam": "Dipka OCP",
+   "lon": 82.5279,
+   "lat": 22.3227,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Chhattisgarh, Korba-veld)",
+   "gewicht": 37.5,
+   "gewicht_bron": "capaciteit Mt/j — Coal Controller's Organisation 'Dipka OCP SECL': vergunning verhoogd naar 40 Mtpa, pad naar 60 Mtpa [B6]; IndianPSU: recordproductie 37,5 Mt en dispatch 39,43 Mt in FY2025-26 [B7]",
+   "bron": "Middelpunt van de gepubliceerde blokgrenzen 22°18'59\"-22°19'43\"N / 82°30'47\"-82°33'34\"E (Coal Controller's Organisation); niet satelliet-gelegd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "SECL/Coal India; derde grote Korba-mijn naast Gevra en Kusmunda, samen goed voor het overgrote deel van SECL's productie."
+  },
+  {
+   "id": "w-kpc-sangatta",
+   "naam": "KPC (Sangatta + Bengalon)",
+   "lon": 117.59903,
+   "lat": 0.82398,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Oost-Kalimantan)",
+   "gewicht": 55.0,
+   "gewicht_bron": "capaciteit Mt/j — PT Kaltim Prima Coal/Bumi Resources jaarcijfers: 55,0 Mt in 2024 (+3% t.o.v. 53,5 Mt in 2023) [B8]; GEM Global Coal Mine Tracker (KPC Operation Coal Mine): 53,6 Mt in 2023 [B1]",
+   "bron": "GEM Table 1 (WGS84); satelliet z14 (sitelaag-kolen-kpc-sangatta): kruis op een smalle landtong tussen twee pitmeren, midden in het KPC-complex (wingaten, haul roads)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Kaltim Prima Coal (Bumi Resources, meerderheidsbelang); 's werelds grootste open-pit kolenmijn op oppervlakte; thermisch, export via de eigen Tanjung Bara-terminal."
+  },
+  {
+   "id": "w-borneo-indobara",
+   "naam": "Borneo Indobara (BIB)",
+   "lon": 115.55983,
+   "lat": -3.70024,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Zuid-Kalimantan)",
+   "gewicht": 46.0,
+   "gewicht_bron": "capaciteit Mt/j — Golden Energy Mines: 46 Mt in 2024, doel 50 Mt in 2025 en 54 Mt vanaf 2026 [B9]; GEM Global Coal Mine Tracker: 42,14 Mt in 2023 [B1]",
+   "bron": "GEM-coördinaat expliciet gemarkeerd '(approximate)'; satelliet z13 (sitelaag-kolen-borneo-indobara + wide-versie): kruis ligt in dicht bos zonder directe mijnactiviteit — verspreide ontginningen 2-4 km verderop, passend bij de omvang van de concessie (24.100 ha) maar het kruis zelf ligt niet op een wingat",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "PT Borneo Indobara, dochter van Golden Energy Mines (Sinarmas); thermisch, laagcalorisch (4.000 kcal/kg gar), export. Coördinaat blijft de GEM-registerwaarde; op site-niveau niet bevestigd."
+  },
+  {
+   "id": "w-bara-tabang",
+   "naam": "Bara Tabang (Tabang-project)",
+   "lon": 116.12633,
+   "lat": 0.55091,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Oost-Kalimantan)",
+   "gewicht": 50.5,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 50,5 Mt in 2024 [B1]; Bayan Resources 'Tabang/Pakar Mine': ~80% van Bayan's totale productie, laagste-kosten mijn van Indonesië [B10]",
+   "bron": "GEM Table 1 (WGS84); satelliet z14 (sitelaag-kolen-bara-tabang): kruis op de rand van het wingat, processing-plant en stockpile met rookpluim direct zuidelijk zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "PT Bara Tabang, dochter van Bayan Resources; thermisch, export. Onderdeel van de Fajar Tabang Brian/North Pakar/South Pakar-groep mijnen 180 km NW van Samarinda."
+  },
+  {
+   "id": "w-tanjung-enim",
+   "naam": "Tanjung Enim (PTBA-mijnen)",
+   "lon": 103.76832,
+   "lat": -3.73998,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Zuid-Sumatra)",
+   "gewicht": 41.8,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker (PTBA Coal Mines): 41,752 Mt in 2023 [B1]; PT Bukit Asam (Persero): 30,04 Mt (2021)/24,21 Mt (2020) als historische reeks [B11]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "PT Bukit Asam (Persero), staatsmijnbouwer; thermisch + cokeskool, binnenlands (spoor naar Tarahan/Kertapati) én export. Een van Azië's grootste cokeskoolreserves op dit veld."
+  },
+  {
+   "id": "w-tutupan",
+   "naam": "Tutupan",
+   "lon": 115.5278,
+   "lat": -2.20448,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Zuid-Kalimantan)",
+   "gewicht": 43.8,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 43,8 Mt in 2024 [B1]; sxcoal: Adaro Indonesia (3 pits incl. Tutupan) mikte op 67 Mt in 2024, totaal 50,8 Mt gerealiseerd [B12]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Adaro Indonesia; thermisch, export via de eigen Kelanis-Taboneo-keten. Grootste van de drie Adaro-pits (naast Wara en Paringin)."
+  },
+  {
+   "id": "w-kideco",
+   "naam": "Pasir (Kideco)",
+   "lon": 115.87159,
+   "lat": -1.89094,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Oost-Kalimantan, Pasir)",
+   "gewicht": 30.7,
+   "gewicht_bron": "capaciteit Mt/j — Indika Energy: 30,7 Mt in 2024 [B13]; GEM Global Coal Mine Tracker (Pasir Coal Mine): 30,1 Mt in 2023 [B1]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "PT Kideco Jaya Agung (Indika Energy-belang); thermisch, export sinds 1982 onder een Generation I Coal Cooperation Agreement."
+  },
+  {
+   "id": "w-haerwusu",
+   "naam": "Haerwusu",
+   "lon": 111.25832,
+   "lat": 39.73104,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Binnen-Mongolië, Jungar/Ordos)",
+   "gewicht": 35.0,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 35 Mt in 2023 (vergunde capaciteit 35 Mtpa) [B1]; Mining Digital/EJAtlas: grootste open-pit kolenmijn van China, >1,7 mld t winbare reserves [B14][B15]",
+   "bron": "GEM Table (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "China Shenhua Energy (China Energy 69%); thermisch, binnenlands. Onderdeel van het Jungar-kolenveld, samen met Heidaigou het hart van Ordos' dagbouw."
+  },
+  {
+   "id": "w-heidaigou",
+   "naam": "Heidaigou",
+   "lon": 111.271,
+   "lat": 39.7,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Binnen-Mongolië, Jungar/Ordos)",
+   "gewicht": 33.1,
+   "gewicht_bron": "capaciteit Mt/j — PMC/wetenschappelijke publicatie (Ecological Effects of Open-Pit Mining, Heidaigou): geschat 33,1 Mtpa productie in 2023, vergund 31 Mt/j [B16]; Zhunneng Group (CSEC): opgenomen in de lijst Central-SOE Industrial Cultural Heritage [B17]",
+   "bron": "Middelpunt van de gepubliceerde mijngrenzen 111°10'00\"-111°22'30\"E / 39°39'45\"-39°44'15\"N; niet satelliet-gelegd, geen benoemd OSM-object gevonden",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "China Shenhua Energy (via Zhunneng Group); thermisch, binnenlands, ~150 km ZW van Ordos-stad, planningsgebied 42 km²."
+  },
+  {
+   "id": "w-goonyella",
+   "naam": "Goonyella Riverside",
+   "lon": 147.977,
+   "lat": -21.759,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Australië (Bowen Basin, Queensland)",
+   "gewicht": 17.1,
+   "gewicht_bron": "capaciteit Mt/j — Wikipedia 'Goonyella Riverside Mine' / BHP: ~17,1 Mt/j, >17 Mt cokeskool in 2019 [B18]; BHP-website (Goonyella Riverside): onderdeel van BMA (BHP-Mitsubishi Alliance) [B19]",
+   "bron": "Wikipedia-geohack 'Goonyella Riverside Mine' (21°45'32\"S 147°58'37\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "BMA (BHP 50% / Mitsubishi Development 50%); premium harde cokeskool, export via Hay Point/Dalrymple Bay. 30 km N van Moranbah."
+  },
+  {
+   "id": "w-peakdowns",
+   "naam": "Peak Downs",
+   "lon": 148.1797,
+   "lat": -22.2549,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Australië (Bowen Basin, Queensland)",
+   "gewicht": 17.78,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker (augustus-2026 release, Queensland-overheidsdata): 17,78 Mt in 2025 [B1]; NS Energy/BHP: onderdeel van BMA, cokeskool [B20]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "BMA (BHP/Mitsubishi); premium cokeskool, 31 km ZO van Moranbah, sinds 2022 gemined door Thiess."
+  },
+  {
+   "id": "w-mtarthur",
+   "naam": "Mount Arthur",
+   "lon": 150.85614,
+   "lat": -32.33702,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Australië (Hunter Valley, NSW)",
+   "gewicht": 22.335,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 22,335 Mt in 2024 [B1]; BHP: vergunde capaciteit 20 Mtpa energiekolen, sluiting aangekondigd voor juni 2030 [B21]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "BHP (100%, via Hunter Valley Energy Coal); thermisch, export via Newcastle én binnenlandse levering (Bayswater/Liddell-centrales), 5 km Z van Muswellbrook."
+  },
+  {
+   "id": "w-grootegeluk",
+   "naam": "Grootegeluk",
+   "lon": 27.52889,
+   "lat": -23.67167,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Waterberg)",
+   "gewicht": 26.0,
+   "gewicht_bron": "capaciteit Mt/j — Exxaro-corporate: ~26 Mtpa (varianten in andere bronnen tot 18,8 Mt 'final coal products'); Exxaro's grootste mijn, ~50% van de resterende Zuid-Afrikaanse kolenreserves [B22]; Wikipedia 'Grootegeluk Coal Mine' [B23]",
+   "bron": "Wikipedia-geohack 'Grootegeluk Coal Mine' (23°40'18\"S 27°31'44\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Exxaro Resources; thermisch, vrijwel volledig binnenlands naar de aangrenzende Eskom-centrales Medupi en Matimba (mine-mouth-mijn, geen aparte transportketen)."
+  },
+  {
+   "id": "w-cerrejon",
+   "naam": "Cerrejón — Complejo Carbonífero",
+   "lon": -72.5596,
+   "lat": 11.12067,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Colombia (La Guajira)",
+   "gewicht": 19.2,
+   "gewicht_bron": "capaciteit Mt/j — Glencore Full Year 2024/2025 Production Reports: 19,2 Mt in 2024, 16,8 Mt in 2025 (vrijwillige productiebeperking van 5-10 Mt aangekondigd maart 2025 wegens onrendabele zeevrachtprijzen) [B24]; Argus Media 'Cerrejón to cut coal production by 5-10mn t in 2025' [B25]",
+   "bron": "Anker HERGEBRUIKT: `coal-cerrejon-laad` uit v2/data/aansluitingen.json — OSM way 'Complejo Carbonífero El Cerrejón' (ODbL), laadzijde van de mijn-spoorlijn; satelliet-gelegd in de kolen-cerrejon-ruhr-brief (2026-07-28 e.v.)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Glencore (100% sinds 2022, voorheen ook BHP/Anglo American); thermisch, Atlantische export via Puerto Bolívar. Anker letterlijk hergebruikt uit de bestaande routebrief kolen-cerrejon-ruhr.md."
+  },
+  {
+   "id": "w-tavantolgoi",
+   "naam": "Tavan Tolgoi (Erdenes TT)",
+   "lon": 105.474,
+   "lat": 43.625,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Mongolië (Ömnögovi)",
+   "gewicht": 28.64,
+   "gewicht_bron": "capaciteit Mt/j — Erdenes Tavan Tolgoi JSC: 28,64 Mt in 2024 [B26]; Erdenes TT (sept 2024): licentiegebied bevat 8,1 mld t reserves na herberekening 2017-2023 [B27]",
+   "bron": "Wikipedia-geohack 'Tavan Tolgoi' (43°37'30\"N 105°28'27\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Erdenes MGL (staatsbedrijf); cokeskool, landlocked — export per truck/spoor over de Gobi-grens (grens-gashuunsukhait) naar China. Naast ETT ook Energy Resources/UHG-concessies op hetzelfde veld, hier niet apart genomen."
+  },
+  {
+   "id": "w-taldinsky",
+   "naam": "Taldinsky (incl. Taldinsky-Zapadny)",
+   "lon": 87.13875,
+   "lat": 54.19428,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Rusland (Kemerovo Oblast, Kuzbass)",
+   "gewicht": 9.1,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker (Taldinsky-Zapadny): 0,83 Mt (2020) op dít deelblok; mediaberichten (thecoalhub, KRU-overname): het bredere Taldinsky-complex (3 secties: Taldinsky/Tayezhnoye/Erunakovskoye) rond 13 Mtpa ontwerp, 2023 ~9,1 Mt [B28]",
+   "bron": "GEM Table 1 (WGS84) voor het Taldinsky-Zapadny-deelblok; niet satelliet-gelegd — de coördinaat dekt met zekerheid maar één van de drie secties",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Kuzbassrazrezugol/KRU (Ural Mining Metallurgical Company); thermisch + cokeskool. Cijfers over de drie secties lopen uiteen tussen bronnen — capaciteit hier is de minst onzekere schatting, geen geverifieerd jaartotaal voor het hele complex."
+  },
+  {
+   "id": "w-elga",
+   "naam": "Elga (Elginskiy)",
+   "lon": 130.63583,
+   "lat": 56.19944,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Rusland (Sacha/Jakoetië)",
+   "gewicht": 28.6,
+   "gewicht_bron": "capaciteit Mt/j — TASS: 28,6 Mt in 2024; 18 Mt in H1-2025 met doel 36 Mt voor heel 2025 [B29][B30]",
+   "bron": "Wikipedia-geohack 'Elga coal mine' (56°11'58\"N 130°38'09\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Elga Sibanthracite/Elsi Group (A-Property, sinds de fusie Elgaugol+Sibanthracite 2022); cokeskool + thermisch, een van de grootste onaangeboorde cokeskoolvelden ter wereld (>2,2 mld t), export via de eigen Elga-Ulak-spoorlijn naar de Pacific."
+  },
+  {
+   "id": "w-bogatyr",
+   "naam": "Bogatyr",
+   "lon": 75.4336,
+   "lat": 51.6555,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Kazachstan (Pavlodar, Ekibastuz)",
+   "gewicht": 32.53,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 32,53 Mt in 2024 [B1]; Times of Central Asia: doel 45,2 Mt in 2026, 56,5 Mt in 2032 (Bogatyr + het kleinere Severny-blok) [B31]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Bogatyr Komir LLP (Samruk-Energo 50% / RUSAL 50%); thermisch, ~40% van de Kazachse productie, vrijwel geheel binnenlands (Ekibastuz-centrales) + spoor naar Rusland/China."
+  },
+  {
+   "id": "w-eldescanso",
+   "naam": "El Descanso (Drummond)",
+   "lon": -73.52319,
+   "lat": 9.70509,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Colombia (Cesar, Codazzi)",
+   "gewicht": 21.7,
+   "gewicht_bron": "capaciteit Mt/j — GEM Global Coal Mine Tracker: 21,7 Mt in 2024 [B1]",
+   "bron": "GEM Table 1 (WGS84); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drummond Ltd (Drummond Company Inc, VS); thermisch, per spoor (193 km) naar de eigen Puerto Drummond. Inmiddels groter dan het nabijgelegen Pribbenow/La Loma-blok van dezelfde eigenaar (3,86 Mt in 2024, sterk gekrompen), dat hier bewust niet apart is opgenomen."
+  },
+  {
+   "id": "w-elkview",
+   "naam": "Elkview",
+   "lon": -114.8772,
+   "lat": 49.7522,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Canada (British Columbia, Elk Valley)",
+   "gewicht": 9.0,
+   "gewicht_bron": "capaciteit Mt/j — Wood Mackenzie/mediaberichten: ~9 Mt in 2024 (Baldy Ridge Extension-project) [B32]; Teck Resources (tot juli 2024) / sindsdien Glencore (77%-belang overgenomen): onderdeel van de Elk Valley-cokeskoolgroep [B33]",
+   "bron": "Wikipedia-geohack 'Elkview coal mine' (49°45'08\"N 114°52'38\"W); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Elk Valley Resources (Glencore, sinds juli 2024; voorheen Teck Coal); metallurgische cokeskool, per spoor naar Westshore/Ridley → Aziatisch staal."
+  },
+  {
+   "id": "w-qinhuangdao",
+   "naam": "Qinhuangdao — kolenoverslag",
+   "lon": 119.688,
+   "lat": 39.945,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal (binnenlands transshipment)",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Hebei)",
+   "gewicht": 200.0,
+   "gewicht_bron": "capaciteit Mt/j — Wikipedia 'Port of Qinhuangdao': ontworpen doorzet 226,35 Mt/j, 23 kolenberths, ~200 Mt/j feitelijke doorzet [B34]; Wood Mackenzie (Qinhuangdao daily coal throughput-reeks) [B35]",
+   "bron": "Wikipedia-geohack havenpolygoon 39,92222/119,61861; satelliet z13 (sitelaag-kolen-qinhuangdao/-2): kruis verschoven ~4 km NO naar de donkere rechthoekige kolenstockyards die duidelijk zichtbaar zijn tussen de havenbekkens — niet exact op één stapel gelegd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "De oorspronkelijke 'noord-kool zuid-transport'-benchmarkhaven: Shanxi-kolen komt hier per spoor aan, gaat per kustvaart naar Guangdong. Inmiddels ingehaald door Huanghua als grootste kolenhaven van China."
+  },
+  {
+   "id": "w-huanghua",
+   "naam": "Huanghua — kolenhaven",
+   "lon": 117.775,
+   "lat": 38.345,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal (binnenlands transshipment)",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Hebei/Cangzhou)",
+   "gewicht": 214.4,
+   "gewicht_bron": "capaciteit Mt/j — Mysteel: 214,4 Mt geladen in 2024 (+2,3% j-o-j), sinds 2016 grootste kolenhaven van China [B36]; CSEC/China Shenhua corporate: eigendom en exploitatie door Shenhua's eigen havenbedrijf [B37]",
+   "bron": "Meerdere bronnen wijken >0,15° uiteen (38,10-38,33N); satelliet z13 (sitelaag-kolen-huanghua/-2) op 38,3333/117,8833 (Baidu-afgeleid): kruis lag in het vaarwater ~600 m van de kade — verschoven naar de zichtbare donkere stockpile-rijen op 38,345/117,775",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "China Shenhua Energy; ontvangt kolen uit Shaanxi/Binnen-Mongolië, sinds 2016 de grootste kolenoverslaghaven ter wereld — groter dan Qinhuangdao."
+  },
+  {
+   "id": "w-caofeidian",
+   "naam": "Caofeidian — kolenterminal",
+   "lon": 118.53333,
+   "lat": 38.93333,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal (binnenlands transshipment)",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Hebei/Tangshan)",
+   "gewicht": 150.0,
+   "gewicht_bron": "capaciteit Mt/j — GEM Caofeidian Coal Terminal: ontworpen capaciteit 250 Mt/j (2019, incl. andere bulk), kolenterminal alleen 150 Mt/j na de 2013-uitbreiding (van 100 naar 150 Mt/j) [B38]; steelorbis (ijzererts-capaciteitsbericht, ter context van de gedeelde haven) [B39]",
+   "bron": "38°55'59,99\"N 118°31'59,88\"E (meerdere Chinese kaartbronnen); satelliet z13 (sitelaag-kolen-caofeidian/-2): kruis ligt vlak bij/in het water direct naast rijen donkere stockpiles en een kolenkade — op <500 m van de terminal",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Onderdeel van Port of Tangshan; kolenterminal met vijf laadbergen (2× 100.000 dwt, 2× 70.000, 1× 50.000). Diepwaterhaven op het kunstmatige eiland Caofeidian."
+  },
+  {
+   "id": "w-ganqimaodu",
+   "naam": "Ganqimaodu — grensovergang",
+   "lon": 107.5667,
+   "lat": 42.4017,
+   "level": "site",
+   "parent": null,
+   "rol": "grensovergang (landhub)",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Binnen-Mongolië) / Mongolië",
+   "gewicht": 45.0,
+   "gewicht_bron": "capaciteit Mt/j — Sxcoal: doel 45 Mt kolenimport voor 2025, 13,05 Mt bereikt per 6-5-2024, tot 1.223 vrachtwagens/dag [B40]; Mining Insight (Mongolië): 12,09-12,64 Mt in 2023 [B41]",
+   "bron": "Wikidata/kaartbronnen: 42°24'34,6\"N 107°34'23,2\"E; correspondeert met Gashuunsukhait aan de Mongoolse kant; niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "China's grootste landgrensovergang voor kolenimport uit Mongolië; ontvangt de Tavan Tolgoi-cokeskool. Zelfde grenspaar als het bestaande chokepoint `grens-gashuunsukhait` in data/_chokepoints.js — dit is de Chinese kant ervan, nu als site."
+  },
+  {
+   "id": "w-newcastle",
+   "naam": "Newcastle — Kooragang Coal Terminal (PWCS)",
+   "lon": 151.77315,
+   "lat": -32.87717,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Australië (New South Wales)",
+   "gewicht": 120.0,
+   "gewicht_bron": "capaciteit Mt/j — Port Waratah Coal Services: Kooragang-terminal laadcapaciteit 120 Mt/j; PWCS + NCIG samen maken Newcastle de grootste kolen-exporthaven ter wereld [B42]; NCIG Sustainability Report 2024: NCIG-doorzet tot 79 Mt/j na de 2020-verruiming [B43]",
+   "bron": "GEO/gem.wiki-coördinaat Kooragang Coal Terminal (WGS84); satelliet z14 (sitelaag-kolen-newcastle): kruis midden op de lange, evenwijdige donkere kolenstockpiles van het PWCS-Kooragang-complex, shiploaders aan de kade zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Port Waratah Coal Services (Kooragang + Carrington); samen met NCIG (Kooragang Island) verwerkt de Hunter Valley-thermisch naar Japan/Korea/Taiwan/China. Dit anker dekt de PWCS-kant; NCIG ligt op hetzelfde eiland, enkele honderden meters verderop."
+  },
+  {
+   "id": "w-dalrymplebay",
+   "naam": "Hay Point / Dalrymple Bay Coal Terminal",
+   "lon": 149.2837,
+   "lat": -21.28483,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Australië (Queensland)",
+   "gewicht": 85.0,
+   "gewicht_bron": "capaciteit Mt/j — Dalrymple Bay Infrastructure: exportcapaciteit 84,2-85 Mt/j (geïntegreerde supply chain), volledig gecontracteerd tot 2028 [B44]; GEM Dalrymple Bay Coal Terminal [B45]",
+   "bron": "GEO-coördinaat (WGS84); satelliet z14 (sitelaag-kolen-dalrymplebay): kruis midden op de kolenstockyard, twee lange laadsteigers met shiploaders duidelijk de baai in zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Dalrymple Bay Coal Terminal Pty Ltd; samen met de naastgelegen Hay Point Coal Terminal (BHP) de exportroute van het Bowen Basin-cokeskool (Goonyella/Peak Downs) naar Japan/Korea/India."
+  },
+  {
+   "id": "w-richardsbay",
+   "naam": "Richards Bay Coal Terminal (RBCT)",
+   "lon": 32.052,
+   "lat": -28.818,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Zuid-Afrika (KwaZulu-Natal)",
+   "gewicht": 91.0,
+   "gewicht_bron": "capaciteit Mt/j — RBCT/mining.com: ontwerpcapaciteit 91 Mt/j, feitelijke export 52,08 Mt in 2024 (+10% t.o.v. 47,21 Mt in 2023) [B46]; miningweekly: 6.342 treinen gelost in 2024 [B47]",
+   "bron": "Wikipedia-geohack 'Port of Richards Bay' (28°49'05\"S 32°03'07\"E); satelliet z14 (sitelaag-kolen-richardsbay): kruis midden op de grote donkere kolenstockpile, spoorbundel en kade direct zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Richards Bay Coal Terminal Company (RBCT), consortium van Zuid-Afrikaanse kolenproducenten (Glencore/Thungela/Exxaro e.a.); grootste kolenterminal van Afrika, sinds 2022 vooral richting India/Azië i.p.v. Europa."
+  },
+  {
+   "id": "w-tanjungbara",
+   "naam": "Tanjung Bara Coal Terminal (KPC)",
+   "lon": 117.70371,
+   "lat": 0.58602,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Indonesië (Oost-Kalimantan)",
+   "gewicht": 38.1,
+   "gewicht_bron": "capaciteit Mt/j — Mediaberichten (dredgepoint/SeaRates): KPC-export via Tanjung Bara 38,1 Mt in 2023, vergelijkbaar volume in 8 mnd 2024 [B48]; PT Kaltim Prima Coal, operations page: directe scheepslading + drijvende kranen voor bargeladingen sinds 1991 [B49]",
+   "bron": "GEM/Wikipedia-geohack 'Tanjung Bara Coal Terminal' (0°35'09,68\"N 117°42'13,34\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Kaltim Prima Coal se eigen exportterminal voor Sangatta/Bengalon-kolen, direct gekoppeld aan mijn `w-kpc-sangatta`."
+  },
+  {
+   "id": "w-mundra",
+   "naam": "Mundra Port — West Basin kolenterminal",
+   "lon": 69.7061,
+   "lat": 22.7385,
+   "level": "site",
+   "parent": null,
+   "rol": "importterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Gujarat)",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit Mt/j — Adani Ports: West Basin kolenterminal 60 Mtpa, grootste volledig gemechaniseerde kolenimportterminal ter wereld [B50]; Adani Enterprises operationele update 2024/25/26: recordmaand mei 2024 1,07 Mt [B51]",
+   "bron": "Algemene havencoördinaat (Golf van Kutch, Adani Ports); West Basin ligt ~10 zeemijl west van het oorspronkelijke terminal, niet apart gelegd — niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Adani Ports & SEZ; grootste kolenimportterminal ter wereld, voedt Adani's eigen kustcentrales en het bredere Indiase net. Coördinaat is de algemene havenlocatie, niet het West Basin-blok zelf."
+  },
+  {
+   "id": "w-dhamra",
+   "naam": "Dhamra Port — kolenterminal",
+   "lon": 86.9628,
+   "lat": 20.8233,
+   "level": "site",
+   "parent": null,
+   "rol": "importterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Odisha)",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit Mt/j — Adani Ports: totale havencapaciteit 60 MMT/j, 46,08 MMT doorzet in FY2024-25 [B52]; constructionworld: recordlading cokeskool (Tata Steel, 186.782 t) in 2024/25 [B53]",
+   "bron": "Wikipedia-geohack 'Dhamra Port' (20°49'24\"N 86°57'46\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Adani Ports (sinds 2014, voorheen Tata Steel/L&T-joint venture); gemechaniseerd kolen/ijzererts/kalksteenterrein, groeiend als cokeskool-importpunt voor de Odisha-staalindustrie (o.a. Kalinganagar)."
+  },
+  {
+   "id": "w-puerto-drummond",
+   "naam": "Puerto Drummond",
+   "lon": -74.3812,
+   "lat": 11.95,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Colombia (Magdalena, Ciénaga)",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit Mt/j — Drummond Ltd: exportcapaciteit tot 60 Mt/j, 8.000 t/uur directe belading; 29,7 Mt geëxporteerd in 2024 [B54]; GEM Puerto Drummond coal port [B55]",
+   "bron": "UNIS/haven-coördinaat 11°57'N 74°22,87'W; niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drummond Ltd; eigen exportterminal voor El Descanso en het inkrimpende Pribbenow/La Loma-blok, 193 km spoor vanaf de mijnen, Colombia's grootste kolenhaven."
+  },
+  {
+   "id": "w-rotterdam",
+   "naam": "Rotterdam — EMO, Maasvlakte",
+   "lon": 4.05354,
+   "lat": 51.94109,
+   "level": "site",
+   "parent": null,
+   "rol": "importterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Nederland",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit Mt/j — HES International/EMO: gecombineerde kolen+ijzererts-capaciteit ~60 Mt/j; grootste droge-bulkterminal van Europa [B56]; Port of Rotterdam: EMO grootste kolenterminal van de haven, die op zijn beurt Europa's grootste kolenimporteur is [B57]",
+   "bron": "Anker HERGEBRUIKT: `coal-rotterdam-kade` uit v2/data/aansluitingen.json — OSM way 'EMO', landuse=industrial, satelliet-gelegd 2026-07-28",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "HES International (EMO); voedt via de Rijn de Ruhr (o.a. Duisburg/Schwelgern) en de rest van het Noordwest-Europese achterland. Anker letterlijk hergebruikt uit kolen-cerrejon-ruhr.md en aansluitingen.json — capaciteit is gedeeld met ijzererts, niet zuiver kolen."
+  },
+  {
+   "id": "w-vostochny",
+   "naam": "Vostochny",
+   "lon": 133.0514,
+   "lat": 42.7625,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Rusland (Primorsky Krai)",
+   "gewicht": 58.0,
+   "gewicht_bron": "capaciteit Mt/j — portnews.ru: capaciteit verhoogd tot 58 Mt/j (dec 2022) [B58]; GEM/Vostochnaya Coal Terminal: 13,4 Mt doorzet in H1-2024 [B1]",
+   "bron": "Wikipedia/mediaberichten (Wrangel-baai); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "De Pacific-poort van de Russische kolen-oost-draai na het EU-embargo van aug 2022; ontvangt Kuzbass-kolen per overbelast Trans-Siberisch spoor."
+  },
+  {
+   "id": "w-tuoketuo",
+   "naam": "Tuoketuo (Datang Togtoh)",
+   "lon": 111.36444,
+   "lat": 40.19694,
+   "level": "site",
+   "parent": null,
+   "rol": "centrale",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "China (Binnen-Mongolië, Hohhot)",
+   "gewicht": 11.7,
+   "gewicht_bron": "capaciteit Mt/j — Afgeleid: 33,317 TWh netto output/jaar (Wikipedia 'Tuoketuo Power Station') × ~0,35 kg standaardkolen/kWh (typisch voor een moderne Chinese kolencentrale) ≈ 11,7 Mt/j — geen directe verbruiksbron gevonden [B59]; power-technology/GEM: nameplate 6.720 MW, grootste kolencentrale ter wereld, voedt uit het Junggar-kolenveld 50 km verderop [B60]",
+   "bron": "Wikipedia-geohack 'Tuoketuo Power Station' (40°11'49\"N 111°21'52\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Datang International; 6.720 MW, 's werelds grootste kolengestookte centrale op één locatie. Kolenverbruik is een AFLEIDING (zie eenheid_site) — geen enkele bron publiceert het rechtstreeks in Mt/j."
+  },
+  {
+   "id": "w-vindhyachal",
+   "naam": "Vindhyachal Super Thermal Power Station (NTPC)",
+   "lon": 82.67361,
+   "lat": 24.09722,
+   "level": "site",
+   "parent": null,
+   "rol": "centrale",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Madhya Pradesh, Singrauli)",
+   "gewicht": 17.1,
+   "gewicht_bron": "capaciteit Mt/j — NTPC/CERC-rapportage: kolenbehoefte fase I-III ~17,1 Mt/j (oudere, kleinere configuratie) [B61]; power-technology/GEM: huidig opgesteld vermogen 4.760-4.783 MW over 13 eenheden, India's grootste kolencentrale, kolen uit de Nigahi-mijn [B62]",
+   "bron": "Wikipedia-geohack 'Vindhyachal Thermal Power Station' (24°05'50\"N 82°40'25\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "NTPC Limited; India's grootste kolencentrale op één locatie, gevoed door de nabijgelegen Nigahi-mijn (NCL/Coal India). Het gepubliceerde Mt-cijfer dekt alleen de oudere fase I-III, niet de volledige huidige capaciteit — zie eenheid_site."
+  },
+  {
+   "id": "w-kalinganagar",
+   "naam": "Tata Steel Kalinganagar",
+   "lon": 86.12917,
+   "lat": 20.94583,
+   "level": "site",
+   "parent": null,
+   "rol": "staalfabriek",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "India (Odisha, Jajpur)",
+   "gewicht": 2.1,
+   "gewicht_bron": "capaciteit Mt/j — Hellenic Shipping News/Mysteel: nieuwe cokesfabriek ~1,5 Mt cokes/j → cokeskoolbehoefte ~2,1 Mt/j [B63]; Tata Group: fase-II-uitbreiding brengt de totale staalcapaciteit van 3 naar 8 Mtpa [B64]",
+   "bron": "Wikipedia-geohack 'Kalinganagar' (20°56'45\"N 86°7'45\"E); niet satelliet-gelegd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Tata Steel; geïntegreerd staalcomplex (pelletfabriek, cokesfabriek, hoogoven — India's grootste hoogoven), cokeskool vooral geïmporteerd via Dhamra/Paradip. Mt-cijfer is de cokeskoolbehoefte van de nieuwe cokesfabriek, niet de totale staalcapaciteit — zie eenheid_site."
+  },
+  {
+   "id": "w-duisburg",
+   "naam": "Duisburg — Schwelgern-pier / Kokerei Schwelgern",
+   "lon": 6.72347,
+   "lat": 51.51321,
+   "level": "site",
+   "parent": null,
+   "rol": "cokerij",
+   "grondstof": [
+    "kolen"
+   ],
+   "land": "Duitsland",
+   "gewicht": 3.5,
+   "gewicht_bron": "capaciteit Mt/j — Afgeleid: Kokerei Schwelgern produceert 2,6 Mt cokes/j (thyssenkrupp Industrial Solutions-brochure) [B65] ÷ ~0,75 kolen→cokes-rendement ≈ 3,5 Mt cokeskool-input/j — geen directe inputbron gevonden; bestaande brief kolen-cerrejon-ruhr.md noemt de Schwelgern-kade totaal (erts+kolen) op ±23 Mt/j [B66]",
+   "bron": "Anker HERGEBRUIKT: `coal-duisburg-kade` uit v2/data/aansluitingen.json — OSM way man_made=pier bij Schwelgern met moorings, satelliet-gelegd in kolen-cerrejon-ruhr.md",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "thyssenkrupp Steel (Kokerei Schwelgern, wereld's modernste cokesfabrieken); ontvangt cokeskool via de Rijn (o.a. uit Rotterdam/EMO). Anker letterlijk hergebruikt; Mt-cijfer is een AFLEIDING uit de cokescapaciteit, niet rechtstreeks gepubliceerd."
+  }
+ ]
+}

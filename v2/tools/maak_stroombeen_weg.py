@@ -95,6 +95,225 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief kolen-tavantolgoi-baotou, been b2 (LICHTE werkwijze M29). Truck
+    # (cokeskool, grensoverslag) Gashuunsukhait rail-yard (MN) → grenspost Gashuun
+    # Sukhait → Chinese poort Ganqimaodu → Ganqimaodu-station/opslagloodsen (CN).
+    # Geen gepubliceerde km (~9-10 km afgeleid uit de ankers); de grensspoorlijn
+    # (32,6 km) is nog in aanbouw (gepland 2027), dus dit been is vandaag truck.
+    # Via-punten `cu-ot-grens` en "Chinese poort Ganqimaodu" hergebruikt uit
+    # koper-oyutolgoi-china.md §3/§4 (letterlijk dezelfde coördinaten).
+    # ⚠️ Ruim venster (20 km) om de douanezone niet af te snijden; corridor kan
+    #    tertiary/unclassified zijn in de poortzone.
+    "kolen-tavantolgoi-baotou-tt-gs-ganqimaodu": {
+        "via": [
+            ("Gashuunsukhait rail-yard (anker, kolen-tt-gs)",              (107.53063, 42.44558)),
+            ("Gashuun Sukhait grenspost (cu-ot-grens, hergebruikt)",       (107.5692, 42.4146)),
+            ("Chinese poort Ganqimaodu (via-punt, hergebruikt)",          (107.5743, 42.4089)),
+            ("Ganqimaodu-station + opslagloodsen (anker, kolen-ganqimaodu-opslag)", (107.60964, 42.37414)),
+        ],
+        "id": "kolen-tt-gs-ganqimaodu",
+        "naam": "Gashuunsukhait-overslag → grenspost → Chinese poort → Ganqimaodu-opslag (grensoverslag, truck)",
+        "extracts": ["mongolia", "china"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; ~9-10 km afgeleid uit de ankers "
+                    "(routebrief kolen-tavantolgoi-baotou.md b2) — lengtetoets is "
+                    "indicatief, geen ±15%-toets tegen een derde bron",
+        "vensterKm": 20,
+        "uit": "kolen-tavantolgoi-baotou-weg-ttgs-ganqimaodu.geojson",
+    },
+    # Routebrief ree-mtweld-kuantan, been b1 (LICHTE werkwijze M29). Truck
+    # (REE-concentraat in rotainers) Mt Weld-mijn/concentratieplant (Lynas) →
+    # Laverton → Leonora → Menzies → Lynas Kalgoorlie Rare Earths Processing
+    # Facility (Johns Rd, Yilkari) via de mijnweg → Great Central/Beadell Hwy →
+    # Goldfields Highway. Drie via-punten pinnen de doorgaande corridor
+    # (brief §4): Laverton = aansluiting mijnweg → Great Central Hwy (noord vs.
+    # rechtstreeks zuid), Leonora = overgang naar de Goldfields Hwy (i.p.v. via
+    # Cosmo Newbery), Menzies = Goldfields Hwy blijft doorgaand i.p.v. een
+    # binnendoor-piste.
+    # ⚠️ Kalgoorlie REPF-anker is ONZEKER (brief §3/§7): de satellietpas toont
+    #    geen ondubbelzinnig REPF-terrein op 70 Johns Rd — mogelijk jonger dan
+    #    de Esri-opname; adres uit vergunningdocumenten wel eenduidig.
+    # ⚠️ Laatste toegang naar het REPF-terrein kan buiten het OSM-net vallen
+    #    (Yilkari-terreininrit) — bij falen wordt dat een korte stippel in de bake.
+    # ⚠️ Mt Weld → Laverton is een geen-wegpad zonder tussenpunten (eerste
+    #    poging): het venster + WEG_HOUD (motorway t/m secondary) mist de
+    #    outback-mijnweg. Hergebruikt de al bestaande, geconnecteerde via-keten
+    #    uit corridor `ree-mountweld-leonora` (fetch_landnet.py CORRIDORS) voor
+    #    het stuk Mt Weld→Leonora (bak_aanwijzingen), verlengd via Menzies naar
+    #    Kalgoorlie REPF.
+    "ree-mtweld-kuantan-mtweld-kalgoorlie": {
+        "via": [
+            ("Mt Weld-mijn/concentratieplant (anker, ree-mtweld-laad)",           (122.5392, -28.8695)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (122.460970, -28.838070)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (122.447140, -28.771820)),
+            ("Laverton (corridor-punt, hergebruikt)",                            (122.400170, -28.625700)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (122.249690, -28.556980)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (121.859850, -28.829980)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (121.517600, -28.926250)),
+            ("corridor-punt (ree-mountweld-leonora, hergebruikt)",                (121.334990, -28.885020)),
+            ("Leonora (corridor-punt, hergebruikt)",                             (121.324050, -28.870100)),
+            ("Menzies",                                                          (121.0291, -29.6924)),
+            ("Lynas Kalgoorlie REPF, Johns Rd (anker, ree-kalgoorlie-repf, onzeker)", (121.4086, -30.7883)),
+        ],
+        "id": "ree-mtweld-kalgoorlie",
+        "naam": "Mt Weld-mijn → Laverton → Leonora → Menzies → Lynas Kalgoorlie REPF (mijnweg → Goldfields Highway)",
+        "extracts": ["australie"],
+        "refs": [],
+        "gepubliceerdKm": 380,
+        "bronnoot": "~380 km, DWER/EPA-vergunningdocumenten (routebrief §2/§8[3][10])",
+        "vensterKm": 50,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "ree-mtweld-kuantan-weg-mtweld-kalgoorlie.geojson",
+    },
+    # Routebrief ree-mtweld-kuantan, been b4 (LICHTE werkwijze M29). Truck
+    # (MREC/rotainers) Kuantan Port (Tanjung Gelang) → havenweg → Jalan Gebeng
+    # → Lynas Advanced Materials Plant (LAMP), Gebeng-industriezone. Geen
+    # via-punten nodig (brief §4: korte havenweg → industrieweg, geen
+    # gedocumenteerde corridorkeuze).
+    # ⚠️ GEEN GEPUBLICEERDE KM (brief §2/§7): alleen een OSRM-schatting van
+    #    8-12 km — de lengtetoets is hier indicatief, geen ±15%-toets tegen
+    #    een derde bron.
+    "ree-mtweld-kuantan-kuantan-lamp": {
+        "via": [
+            ("Kuantan Port, Tanjung Gelang (anker, ree-kuantan-kade)",  (103.4242, 3.9805)),
+            ("Lynas Advanced Materials Plant, Gebeng (anker, ree-lamp-gebeng)", (103.3775, 4.0034)),
+        ],
+        "id": "ree-kuantan-lamp",
+        "naam": "Kuantan Port → Jalan Gebeng → LAMP Gebeng (havenweg → industrieweg, geen gepubliceerde km)",
+        "extracts": ["maleisie"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; OSRM-schatting 8-12 km (routebrief §2/§7) "
+                    "— lengtetoets is indicatief, geen ±15%-toets tegen een derde bron",
+        "vensterKm": 40,
+        "uit": "ree-mtweld-kuantan-weg-kuantan-lamp.geojson",
+    },
+    # Routebrief ree-bayanobo-baotou, been b2 (LICHTE werkwijze M29). Truck
+    # (REE-concentraat, aannemelijk: Huamei-dochter ontvangt als eerste) van
+    # het Baogang-selectiecomplex (Kundulun, 河西-industrie) naar de
+    # scheidingsfabriek van Northern Rare Earth (waarschijnlijk 包头华美稀土高科,
+    # 稀土高新区). Geen via-punten (brief §4: geen gedocumenteerde
+    # corridorkeuze, ~15 km stedelijke hop over Baotou's doorgaande wegen).
+    # ⚠️ GEEN GEPUBLICEERDE KM (brief §2/§7): ~15 km hemelsbreed is een
+    #    schatting, geen operator-publicatie — de lengtetoets hierop is dus
+    #    indicatief, geen ±15%-toets tegen een derde bron.
+    "ree-bayanobo-baotou-baogang-scheiding": {
+        "via": [
+            ("Baogang-selectie (anker, ree-baogang-selectie)",             (109.7550, 40.6790)),
+            ("Northern-scheiding Huamei (anker, ree-baotou-scheiding)",    (109.8741, 40.5884)),
+        ],
+        "id": "ree-baogang-scheiding",
+        "naam": "Baogang-selectiecomplex → Northern Rare Earth-scheiding (Huamei), stedelijke wegen Baotou",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 15,
+        "bronnoot": "geen publicatie; ~15 km hemelsbreed, geen officiële bron "
+                    "(routebrief §2/§7) — lengtetoets is indicatief, geen "
+                    "±15%-toets tegen een derde bron",
+        "vensterKm": 25,
+        "uit": "ree-bayanobo-baotou-weg-baogang-scheiding.geojson",
+    },
+    # Routebrief ree-kachin-ganzhou, been b1 (LICHTE werkwijze M29). Truck
+    # (zware-REE-ionklei, RE-carbonaat/oxalaat in zakken) Pangwa-mijngebied +
+    # grensdoorlaat (Kachin Special Region 1, Myanmar, KIA-gebied) → Diantan-
+    # douane (滇滩镇), Tengchong, Yunnan. Geen via-punten (brief §4: geen
+    # gedocumenteerde corridorkeuze in het nauwelijks gekarteerde Kachin-
+    # wegennet) — het venster is ruim zodat de scan zelf het tracé door de
+    # vallei kiest.
+    # ⚠️ GEEN GEPUBLICEERDE KM (brief §2/§7): hemelsbreed 57,5 km, gepubliceerd
+    #    "~60-110 km" is een ongebronde ontwerpaanname — lengtetoets is dus
+    #    referentie, geen ±15%-toets tegen een derde bron.
+    # ⚠️ CORRIDORKLASSEN OP TERTIARY/UNCLASSIFIED (geen `track`): de Kachin-kant
+    #    hangt grotendeels aan `track` (in de eerdere scan 44 track tegen
+    #    24 tertiary/10 secondary/4 primary/59 unclassified in de mijnbouw-
+    #    bbox) — waar geen tertiary/unclassified-verbinding bestaat wordt het
+    #    stuk een stippel met reden "hier reikt het net niet" (werkwijze §7),
+    #    nooit dichtgetrokken via track.
+    "ree-kachin-ganzhou-pangwa-diantan": {
+        "via": [
+            ("Pangwa — mijngebied + grensdoorlaat (anker, ree-pangwa-mijn)", (98.6080, 26.0153)),
+            ("Diantan-douane, Tengchong (anker, ree-diantan-douane)",        (98.4097, 25.5292)),
+        ],
+        "id": "ree-pangwa-diantan",
+        "naam": "Pangwa-mijngebied/grensdoorlaat → Diantan-douane, Tengchong (Kachin-bergweg → Chinese zijde, geen gepubliceerde wegnummers)",
+        "extracts": ["myanmar", "china"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; hemelsbreed 57,5 km, ontwerpaanname "
+                    "\"~60-110 km\" zonder bron (routebrief §2/§7) — "
+                    "lengtetoets is referentie, geen ±15%-toets",
+        "vensterKm": 60,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "ree-kachin-ganzhou-weg-pangwa-diantan.geojson",
+    },
+    # Routebrief ree-sillamae-narva, been b1 (LICHTE werkwijze M29). Truck
+    # (NdPr/Dy/Tb-oxide, aannemelijk: één bron) NPM Silmet OÜ, Sillamäe →
+    # E20/Tallinn–Narva mnt (nationale weg 1) → Neo-magneetfabriek, Kulgu-
+    # tööstuspark Narva. Drie via-punten pinnen de route op de doorgaande
+    # kustcorridor i.p.v. de binnenweg door Sillamäe-centrum resp. een
+    # binnenlandse afsnijding via Vaivara-Soldina resp. rechtdoor
+    # Narva-centrum (brief §4, OSRM-tracé).
+    # ⚠️ GEPUBLICEERDE KM = eigen OSRM-meting (30,3 km), geen onafhankelijke
+    #    operator-publicatie (brief §2/§8[13]) — de lengtetoets loopt dus
+    #    tegen de eigen referentie, geen ±15%-toets tegen een derde bron.
+    # ⚠️ SILMET HANGT VIA `service`+`access=private`-terreinwegen AAN DE E20
+    #    (gemeten op de ongefilterde OSM-graaf 2026-09-26; geen tertiary/
+    #    unclassified binnen ~150 m van het anker) → eindToegangPrivaat, alleen
+    #    binnen de 12-km-eindzone.
+    "ree-sillamae-narva-silmet-narva": {
+        "via": [
+            ("NPM Silmet OÜ, Sillamäe (anker, ree-silmet-scheiding)",         (27.7421, 59.4031)),
+            ("aansluiting Sillamäe op de Tallinn–Narva mnt",                  (27.7610, 59.3964)),
+            ("doorgaande E20/weg 1 ter hoogte van Vaivara",                   (28.0131, 59.4010)),
+            ("afslag Tallinn–Narva mnt → Kulgu-tööstuspark",                  (28.1541, 59.3767)),
+            ("Neo-magneetfabriek, Kulgu-tööstuspark Narva (anker, ree-narva-magneetfabriek)", (28.1478, 59.3618)),
+        ],
+        "id": "ree-silmet-narva",
+        "naam": "NPM Silmet Sillamäe → Neo-magneetfabriek Narva (E20/Tallinn–Narva mnt, kustcorridor)",
+        "extracts": ["estland"],
+        "refs": ["E20"],
+        "gepubliceerdKm": 30,
+        "bronnoot": "eigen OSRM-meting (routebrief §2/§8[13]), geen onafhankelijke "
+                    "operator-publicatie — lengtetoets tegen de eigen referentie",
+        "vensterKm": 20,
+        "eindToegangPrivaat": True,
+        "uit": "ree-sillamae-narva-weg-silmet-narva.geojson",
+    },
+    # Routebrief ree-mountainpass-fortworth, been b1 (LICHTE werkwijze M29). Truck
+    # (NdPr-oxide, modaliteit aannemelijk — nergens gepubliceerd) Mountain Pass
+    # mijn+scheiding → I-15 → US-93/I-11 → I-40 → US-287 → MP Materials
+    # Independence (Fort Worth). Corridor + via-punten 1-op-1 hergebruikt uit de
+    # bestaande definitie in fetch_landnet.CORRIDORS (id "ree-mountainpass-
+    # fortworth"), alleen omgezet naar (lon, lat)-tuples voor dit profiel.
+    # ⚠️ GEEN GEPUBLICEERDE KM (brief §7): de bake-toets loopt tegen de eigen
+    #    OSRM/wegscan-uitkomst (~2.250 km indicatie), geen ±15%-toets tegen een
+    #    onafhankelijke bron. Het gemeten spooralternatief (2.312 km, M28) is
+    #    niet getekend.
+    "ree-mountainpass-fortworth-mountainpass-fortworth": {
+        "via": [
+            ("Mountain Pass — mijn+scheiding (anker, ree-mp-laad)",        (-115.5325, 35.4786)),
+            ("Las Vegas (I-15/US-93-knoop)",                               (-115.1372, 36.1750)),
+            ("Boulder City-omgeving (US-93/I-11)",                        (-114.7414, 36.0125)),
+            ("Kingman AZ (US-93/I-40-knoop)",                              (-114.0530, 35.1894)),
+            ("Flagstaff AZ (op I-40)",                                     (-111.6513, 35.1983)),
+            ("Albuquerque NM (op I-40)",                                   (-106.6504, 35.0844)),
+            ("Amarillo TX (I-40/US-287-knoop)",                            (-101.8313, 35.2220)),
+            ("Wichita Falls TX (op US-287)",                                (-98.4934, 33.9137)),
+            ("Decatur/Justin-omgeving TX (US-287 laatste stuk)",           (-97.5861, 33.2343)),
+            ("Independence Fort Worth — metaal-/magneetfabriek (anker, ree-fw-fabriek)", (-97.2498, 32.9845)),
+        ],
+        "id": "ree-mp-fortworth",
+        "naam": "Mountain Pass → Las Vegas → Kingman → Flagstaff → Albuquerque → Amarillo → Fort Worth (I-15 → I-11/US-93 → I-40 → US-287)",
+        "extracts": ["us-california", "us-nevada", "us-arizona", "us-new-mexico", "us-texas"],
+        "refs": ["I 15", "I 11", "US 93", "I 40", "US 287"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie — bake-toets tegen de eigen OSRM/wegscan-"
+                    "uitkomst (~2.250 km indicatie, routebrief §7); "
+                    "spooralternatief 2.312 km (M28) niet getekend",
+        "vensterKm": 50,
+        "uit": "ree-mountainpass-fortworth-weg-mountainpass-fortworth.geojson",
+    },
     # Routebrief nikkel-morowali-quzhou, been b2 (LICHTE werkwijze M29). Truck
     # (MHP in containers/big bags) Ningbo/Beilun-losberth (hergebruikt anker uit
     # de koperketen) → Huayou New Energy Technology Quzhou — nikkelsulfaat-/
@@ -1961,11 +2180,19 @@ def main():
               f"{rap['snapsKm'][i]:.2f} → {rap['snapsKm'][i + 1]:.2f}")
 
     # ── lengtetoets: rapporteren, niet gladstrijken — ALLEEN de weggeometrie
-    afw = rap["km"] / CORRIDOR["gepubliceerdKm"] - 1.0
-    vlag = "OK" if abs(afw) <= TOLERANTIE else "⚠️ BUITEN ±10% — bevinding"
-    print(f"\n  lengtetoets (weggeometrie): {rap['km']:,.1f} km tegen "
-          f"~{CORRIDOR['gepubliceerdKm']} ({CORRIDOR['bronnoot']}) "
-          f"= {100 * afw:+.1f}%  [{vlag}]")
+    # ⚠️ Zonder gepubliceerde km (CORRIDOR["gepubliceerdKm"] is None) is er geen
+    # onafhankelijke bron om tegen te toetsen — rapporteer de eigen scanuitkomst
+    # als referentie in plaats van tegen None te delen.
+    if CORRIDOR["gepubliceerdKm"] is None:
+        print(f"\n  lengtetoets (weggeometrie): {rap['km']:,.1f} km — geen "
+              f"gepubliceerde lengte ({CORRIDOR['bronnoot']}); alleen "
+              f"referentie, geen ±10%-toets")
+    else:
+        afw = rap["km"] / CORRIDOR["gepubliceerdKm"] - 1.0
+        vlag = "OK" if abs(afw) <= TOLERANTIE else "⚠️ BUITEN ±10% — bevinding"
+        print(f"\n  lengtetoets (weggeometrie): {rap['km']:,.1f} km tegen "
+              f"~{CORRIDOR['gepubliceerdKm']} ({CORRIDOR['bronnoot']}) "
+              f"= {100 * afw:+.1f}%  [{vlag}]")
 
     # ── anker-verbindingsstukken (zie kop): plant → eerste wegpunt en laatste
     # wegpunt → kade, zodat het been exact op de briefankers begint en eindigt.
@@ -2029,8 +2256,10 @@ def main():
                 "klassenVan": kl_van,
                 "klassenNaar": kl_naar,
                 "gepubliceerdKm": CORRIDOR["gepubliceerdKm"],
-                "afwijkingPct": round(100 * afw, 1),
-                "binnenTolerantie": bool(abs(afw) <= TOLERANTIE),
+                "afwijkingPct": (None if CORRIDOR["gepubliceerdKm"] is None
+                                 else round(100 * afw, 1)),
+                "binnenTolerantie": (None if CORRIDOR["gepubliceerdKm"] is None
+                                     else bool(abs(afw) <= TOLERANTIE)),
                 "vensterKm": CORRIDOR["vensterKm"],
                 "benen": benen_props,
             },

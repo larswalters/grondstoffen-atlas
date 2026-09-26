@@ -1,6 +1,6 @@
 # Routebrief · kolen (cokes-/stoomkool) — Cerrejón → staal thyssenkrupp Duisburg (Colombia → Duitsland)
 
-**stroom-id:** `kolen-cerrejon-ruhr`  ·  **geschreven:** 2026-07-24 (fase A–C)  ·  **herschreven naar het mijn-tot-eindproduct-format + fase D/E toegevoegd:** 2026-07-29  ·  **status brief:** in toets
+**stroom-id:** `kolen-cerrejon-ruhr`  ·  **geschreven:** 2026-07-24 (fase A–C)  ·  **herschreven naar het mijn-tot-eindproduct-format + fase D/E toegevoegd:** 2026-07-29  ·  **lichte afronding:** 2026-09-26  ·  **status:** gebakken
 **Keten in één zin:** steenkool uit de Cerrejón-dagbouw (La Guajira), per eigen normaalspoor 150 km naar Puerto Bolívar, per capesize over de Atlantische Oceaan naar de EMO-terminal op de Maasvlakte, per duwstel 240 km sluisvrij over Hartelkanaal–Oude Maas–Merwede–Waal–Rijn naar het Werkshafen Schwelgern (Duisburg), daar per transportband naar de Kokerei Schwelgern (kolen → cokes), per band naar de hoogovens Schwelgern 1/2 (cokes + erts → ruwijzer), en per torpedowagen over het werkspoor naar het Oxygenstahlwerk (ruwijzer → staal) — waar de kolen als grondstof ophouden te bestaan.
 
 *Volgens `../routebrief-werkwijze.md`. De brief loopt door tot het EINDPRODUCT — hij stopt niet
@@ -833,3 +833,132 @@ richting 2030
 **Eigen metingen:** snap-afstanden per anker uit `v2/data/aansluitingen.json`
 (`maak_aansluitingen.py`, netstadium 2026-07-23/28) · OSM-scan de-nrw-extract met pyosmium
 (2026-07-29, bbox 51.44–51.56 / 6.62–6.82) · satelliet-overlay Esri z16: **nog te draaien** (§5).
+
+## 10 · Lichte afronding (M30, 2026-09-26)
+
+**Stoppunt (lichte werkwijze).** Schwelgern-loskade (51.50900, 6.73000, anker
+`coal-duisburg-kade`). Cokesblend-bron gezocht (15 min): thyssenkrupp's eigen
+Kokerei-Schwelgern-brochure noemt de kolenherkomst zelf — "vor allem aus Australien, Kanada,
+USA, Afrika und teilweise aus Asien" [F1] — **Colombia/Cerrejón staat daar niet bij**, en
+bevestigt zo de eerdere uitkomst (§5 punt 5, bron E1–E3: alleen krachtwerkkool RWE/STEAG
+gedocumenteerd). **Fase D vervalt**: geen been naar de kokerei, alleen een marker
+"thyssenkrupp Schwelgern (cokesblend: geen bron; gedocumenteerd: krachtwerkkool RWE/STEAG,
+±31% DE-import)".
+
+### Benen (§2, licht formaat)
+| # | fase | modaliteit | van → naar | corridor | km (bron) | geometrie | stippel? |
+|---|---|---|---|---|---|---|---|
+| b1 | A | spoor | laadlus 11.12600,-72.63500 → pierlus 12.2391,-71.9739 | Vía Ferroviaria Albania–Puerto Bolívar | 151,0 gemeten (toets, `--hoofd-km=100`) / 150 operator | `toets_spoorroute` (colombia) | ja — laatste ~1 km OSM-gat bij de pier |
+| b2 | B | zee | Puerto Bolívar 12.23912,-71.97693 (aanloop zeeknoop 12.44700,-72.23630) → EMO 51.94109,4.05354 (zeeknoop 51.98760,4.06970) | Caribische Zee–Atlantische Oceaan–Kanaal | ±8.231 (`?v=071`, te herijken) | MARNET + haven-aanloop | aanloop Bolívar 36,4 km — geen AIS Colombia |
+| b3 | C | binnenvaart | EMO-oostzijde ≈51.937,4.060 → Schwelgern-loskade 51.50900,6.73000 | Hartelkanaal–Oude Maas–Ben.Merwede–Waal–Rijn (km 790,20) | 240 operator / 254 `?v=071` (te herijken) | AIS-graaf Rijn, 4 via-punten | nee — routeerpunt-snap bewaken (open punt) |
+| b4 | D | — vervalt | — | — | — | — | marker i.p.v. been, zie stoppunt |
+
+### Ankers (§3, hergebruikt uit de bestaande brief)
+| id | rol | naam | lat, lon | bron | status |
+|---|---|---|---|---|---|
+| `coal-cerrejon-laad` | mijn / laadplek | Cerrejón laadlus (keerlus + silo's) | 11.12600, -72.63500 | brief b1-1 | bron-gelegd (z15: keerlus/vijver bij laadgebouwen, kolenstockpile direct zuidelijk) |
+| `coal-bolivar-kade` | overslag spoor→zee (terminalcentroïde) | Puerto Bolívar terminal | 12.23912, -71.97693 | brief overslag 1→2 | bron-gelegd (z15: rail-/wegennet en gebouwen op het terminalterrein; kade+stockpile 2,3 km NO aan de kust) |
+| `coal-rotterdam-kade` | overslag zee→binnenvaart | EMO Maasvlakte | 51.94109, 4.05354 | brief overslag 2→3 | bron-gelegd (z15: kolen-/ertsstapels met dekzeil, laadbruggen langs de kade, binnenschepen aangemeerd) |
+| `coal-duisburg-kade` | overslag binnenvaart→terrein / stoppunt | Werkshafen Schwelgern-loskade | 51.50900, 6.73000 | brief b3-93 | bron-gelegd (z15: kade in de rivierbocht met loskraan, kolen-/ertsopslag op het tk-terrein direct zuidelijk, duwbakken op de Rijn) |
+
+*Satellietbeelden: `v2/build-cache/satcheck/sat-kolen-cerrejon-ruhr-{laadlus,bolivar,emo,schwelgern}.png` (Esri z15, 2026-09-26).*
+
+### Via-punten (§4 — alleen b3, waar een corridorkeuze bestaat)
+| been | # | punt | lat, lon | waarom hier |
+|---|---|---|---|---|
+| b3 | 1 | Groothoofd (Noord NIET nemen) | 51.820, 4.670 | drierivierenpunt → keuze Beneden-Merwede |
+| b3 | 2 | Werkendam (Nieuwe Merwede NIET nemen) | 51.821, 4.894 | splitsing → Boven-Merwede |
+| b3 | 3 | Loevestein / monding Afgedamde Maas | 51.821, 5.002 | monding → keuze de Waal |
+| b3 | 4 | Pannerdensche Kop (Pannerdensch Kanaal NIET nemen) | 51.874, 6.038 | keuze Boven-Rijn / Duitse grens |
+
+### Open punten
+- Cokesblend-bron ontbreekt nog steeds (opnieuw 15 min gezocht, 2026-09-26) → fase D/E blijven
+  weg; marker + noot in plaats van een been.
+- b3-routeerpunten: bestaande snaps (`coal-rotterdam-kade` 1,07 km · `coal-duisburg-kade`
+  0,82 km) liggen boven de 0,5 km-raakpuntregel van `hecht_marnet` → "geen pad" dreigt; leg het
+  routeerpunt op de track (EMO-oostzijde i.p.v. kade-centroïde; Schwelgern-loskade zelf, niet de
+  OSM-pier 51.51321, 6.72347).
+- Puerto Bolívar-aanloop blijft stippel (36,4 km) — geen AIS-dekking Colombia (wereldscan).
+- `coal-cerrejon-laad` staat in `aansluitingen.json` nog op de quarry-centroïde (spoor-snap
+  5,95 km); verplaatsen naar de laadlus is centraal werk (`maak_aansluitingen.py`).
+- Jaarvolume: Cerrejón 16,8 Mt in 2024 (−12%) → aangekondigd 11–16 Mt/j voor 2025 [F2]; Glencore
+  FY2025 energiekool 98,0 Mt (−1,6 Mt, "mainly reflecting the voluntary Cerrejón production
+  cuts") [F3]; aandeel naar Rotterdam/Schwelgern niet vastgesteld.
+
+**Bronnen (§10):** [F1] thyssenkrupp Steel, Kokerei Schwelgern — kolenherkomst "vor allem aus
+Australien, Kanada, USA, Afrika und teilweise aus Asien" (Colombia niet genoemd).
+https://www.thyssenkrupp-steel.com/media/content_1/publikationen/kokerei_schwelgern/thyssenkrupp_kokerei_schwelgern.pdf
+· [F2] Reuters, 2025-03-25 — Cerrejón-productiereductie naar 11–16 Mt/j.
+https://www.reuters.com/markets/commodities/glencores-cerrejon-reduce-colombia-coal-output-by-much-10-mln-tons-annually-2025-03-25/
+· [F3] Glencore, Full Year 2025 Production Report — energiekool 98,0 Mt.
+https://www.glencore.com/media-and-insights/news/full-year-2025-production-report
+· [F4] eigen satellietmetingen `v2/tools/sat_check.py` (Esri z15, 2026-09-26).
+
+## 11 · Gebakken (2026-09-26, lichte werkwijze)
+
+**Stroom `kolen-cerrejon-ruhr`** → `v2/data/stroomroute-kolen-cerrejon-ruhr.json` — 9 benen, 8.676,8 km,
+5 markers: spoor 150,6 km · spoor (stippel) 0,3 km · zee (stippel) 42,1 km · zee 8.233,9 km ·
+binnenvaart 55,0 km · binnenvaart 22,6 km · binnenvaart 9,5 km · binnenvaart 85,2 km · binnenvaart 77,6 km.
+Recept: `bak_stromen.sh` (functie `bak_kolen_cerrejon_ruhr`). Geen naad > 0,5 km tussen opeenvolgende
+benen (grootste 0,466 km, bij de Wesel-overgang binnen b3); alle markers ≤ 0,45 km van hun lijn.
+
+**Been 1 (spoor, laadlus → pierlus).** Hergebruikt de toets-ronde van 2026-08-06
+(`BAKE_SUFFIX=-raw`, `--hoofd-km=100`, colombia-extract, 3.260.717 spoor-edges): 150,6 km over 94 punten,
+snap 0,45/0,00 km, 0 bochten ≥60°, verhouding 1,05 op de grootcirkel. Tegen de gepubliceerde 150 km:
+**+0,4%**, ruim binnen ±15%. Plus de gestippelde laatste kilometer bij de pier (0,3 km, terminal-lus niet
+doorverbonden — het bekende OSM-gat uit brief §1). Totaal been 1: 150,9 km.
+
+**Been 2 (zee, Puerto Bolívar → EMO).** Puerto Bolívar-kade snapt op 36,4 km van de dichtstbijzijnde
+MARNET-zeeknoop (>25 km) → `maak_havenaanloop.py` (cel 0,005° gebufferd, 60 punten, 42,1 km, 0,45 km over
+land waarvan 0,00 km midden op de lijn — blijft stippel, geen AIS-dekking Colombia in de wereldscan).
+Het hoofdzeebeen (MARNET, vrij geroutet) komt uit op 8.233,9 km. Totaal been 2: 8.276,0 km tegen de
+gepubliceerde ±8.231 km (`?v=071`, netstadium 24 juli): **+0,55%**, binnen ±15%.
+
+**Been 3 (binnenvaart, EMO → Schwelgern).** De vier via-punten uit de brief (Groothoofd/Werkendam/
+Loevestein/Pannerdensche Kop) staan als losse `--been`-segmenten over de Rijn-AIS-graaf, in reisvolgorde:
+55,0 · 22,6 · 9,5 · 85,2 km. Beide kade-ankers (`coal-rotterdam-kade` 1,07 km · `coal-duisburg-kade`
+0,82 km) liggen boven de 0,5 km-raakpuntregel van `hecht_marnet` — het routeerpunt is daarom expliciet op
+een trackpunt gelegd: EMO-oostzijde ≈51.937,4.060 (Mississippihaven-uitvaart, niet de kade-centroïde) en
+Schwelgern-loskade zelf (51.50900,6.73000, niet de OSM-pier op 51.51321,6.72347). Het laatste stuk
+(Pannerdensche Kop → Schwelgern) bleek **niet routeerbaar over de AIS-trackgraaf**: 0 tracks bij Wesel
+(lon 6,45–6,60) knipt de trackgraaf in twee losse componenten (snap 4,5 km, "geen pad") — exact dezelfde
+dekkingsgeul die `koper-lobito-duisburg` al dwong tot een OSM-gebaseerd Wesel-vak. Net als daar is hier
+de bulklaag gebruikt (`maak_rivierbeen.py`, niet de AIS-tracks): 77,6 km over 423 punten (bulk-knoop-snap
+0,51/0,50 km) — dit been zegt waar het water ligt, niet dat er een schip gezien is. Totaal been 3:
+249,9 km tegen operator-240 km (**+4,1%**) en tegen de eerdere `?v=071`-meting van 254 km (**−1,6%**),
+beide binnen ±15%.
+
+**Toets.** `toets_knikken.py`: 27 knikken ≥60°, waarvan 8 omkeringen, waarvan 5 TERUGLOOP — allemaal in de
+bestaande MARNET-/AIS-graven bij de Mississippihaven-uitvaart en enkele riviersplitsingen (51.94–51.96,
+4.03–4.04 en 51.82, 4.65–4.94), niet in door deze bake toegevoegde geometrie (het spoorbeen en het nieuwe
+Pannerdensche-Schwelgern-rivierbeen geven 0 knikken/omkeringen). Bevinding, niet dichtgetrokken — zelfde
+regel als bij de andere lichte bakes: op water is een terugloop soms echt (sluis/junctie), en dit project
+repareert geen bestaande netgeometrie in een enkele-stroom-bake. `toets_rechte_benen.py --min-km 5`: geen
+enkel been van `kolen-cerrejon-ruhr` in de lijst — geen ongeteste rechte lijn ≥5 km. Contract: `json.load`
+slaagt, `versie 2`, `punt_formaat lonlat`, modaliteiten `{spoor, zee, binnenvaart}`, elk been ≥2 punten,
+bestand 35,0 KB (ruim onder ~300 KB).
+
+**Fase D — vervalt (geen been, alleen marker).** Zoals §10 al vastlegde: geen bron legt Cerrejón-kool in
+de Schwelgern-cokesblend (thyssenkrupp's eigen Kokerei-brochure noemt "vooral Australië, Canada, VS,
+Afrika en deels Azië"). Been b4 is niet getekend; in plaats daarvan staat de marker "thyssenkrupp
+Schwelgern (cokesblend: geen bron; gedocumenteerd: krachtwerkkool RWE/STEAG, ±31% DE-import)" op hetzelfde
+punt als `coal-duisburg-kade` (51.50900, 6.73000) — het lichte-werkwijze-stoppunt van deze keten.
+
+**Gereedschapslessen.**
+- De AIS-trackgraaf van de Rijn heeft dezelfde dekkingsgeul bij Wesel (lon 6,45–6,60, 0 tracks) die
+  eerder `koper-lobito-duisburg` trof — een tweede, onafhankelijke stroom die er middenin eindigt/begint
+  loopt tegen exact dezelfde "geen pad" aan. `maak_rivierbeen.py` (de bulklaag) is hier het juiste
+  terugvalgereedschap, niet een tweede AIS-poging.
+- De routebrief zelf had al voorzien dat de kade-ankers boven de 0,5 km-raakpuntregel lagen
+  (§10, open punten) — het expliciet op een trackpunt leggen van het routeerpunt (in plaats van de
+  kade-centroïde) loste dit zonder verdere aanpassingen op.
+- `coal-cerrejon-laad` staat in `aansluitingen.json` nog op de quarry-centroïde (spoor-snap 5,95 km); deze
+  bake routeert vanaf de laadlus uit de brief (11.12600,-72.63500) en niet vanaf dat aansluitingspunt —
+  het gemeten verschil (~0,45 km tot de b1-startgeometrie) is de eerdere §5/§6-discrepantie, niet nieuw.
+
+**Open punten (ongewijzigd overgenomen uit §5/§10 van de brief, niet in deze bake opgelost):**
+Cerrejón-aandeel in de Schwelgern-kokskolenblend blijft ongedocumenteerd (fase D/E blijven weg) ·
+EMO draagt nog één anker voor twee rollen (zeeschip-losligplaats vs duwbak-belaadkade) ·
+`coal-cerrejon-laad` verplaatsen naar de laadlus is centraal werk in `maak_aansluitingen.py` ·
+aandeel Cerrejón-export specifiek naar Rotterdam/Schwelgern is niet vastgesteld (alleen het
+Colombiaanse aandeel in de totale Duitse kolenimport, ±31%, is gedocumenteerd).
