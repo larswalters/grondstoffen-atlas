@@ -1,0 +1,349 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag kobalt voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/kobalt-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof kobalt: ids 'w-*', gewicht = capaciteit in kt Co/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt Co/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-tfm",
+   "naam": "Tenke Fungurume (TFM)",
+   "lon": 26.1956,
+   "lat": -10.5684,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + SX-EW/hydroxide-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 55.0,
+   "gewicht_bron": "capaciteit kt Co/j — CMOC jaarresultaten 2025 (halfjaarbericht 2026): TFM+KFM samen 117,5 kt Co in 2025; TFM-aandeel niet apart gerapporteerd, orde 50-60 kt op basis van reserve-aandeel en eerdere jaren [B1][B2]",
+   "bron": "Wikipedia-geohack 'Tenke Fungurume Mine' (en); satelliet z15: kruis op het SX-EW/hydroxide-fabrieksterrein, putten Z en ZW",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "CMOC (China) 80%; grootste kobaltcomplex ter wereld; hydroxide per truck via Kasumbalesa naar Durban/Lobito. Zelfde anker als in koper-sitelaag.json (w-tenke-fungurume)."
+  },
+  {
+   "id": "w-kisanfu",
+   "naam": "Kisanfu (KFM)",
+   "lon": 25.956,
+   "lat": -10.709,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + hydroxide-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 55.0,
+   "gewicht_bron": "capaciteit kt Co/j — CMOC jaarresultaten 2025: TFM+KFM samen 117,5 kt Co; KFM-aandeel niet uitgesplitst, orde 50-60 kt (rest van het CMOC-totaal) [B1][B2]",
+   "bron": "mindat/miningdataonline: 53 km O van Kolwezi, mindat-satellietpunt 10°41'17\"S 25°56'35\"E; satelliet z14: dat punt ligt in bushland, het fabrieks-/verwerkingscomplex (gebouwen, indikkers, tailingsvijver) is zichtbaar ca. 2,3 km ZO daarvan — kruis daarheen verschoven",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "CMOC 71,25% / CATL (via Brunp) 23,75% / DRC-staat 5%. In 2023 geopend; grootste onontgonnen Cu-Co-afzetting ter wereld toen aangekocht. Correctie op het ontwerp: ligt ten zuidwesten van TFM, niet '~55 km O van Kolwezi' in de eerder aangenomen richting."
+  },
+  {
+   "id": "w-kcc-pit",
+   "naam": "Kamoto/KOV (KCC) — putten",
+   "lon": 25.3855,
+   "lat": -10.7148,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 27.0,
+   "gewicht_bron": "capaciteit kt Co/j — Cobalt Institute, Cobalt Market Report 2024: KCC 27 kt Co in 2024 (splitst Glencore's gecombineerde KCC+Mutanda-cijfer uit) [B3]",
+   "bron": "Wikipedia-geohack 'Kamoto mine' (en); satelliet z15: kruis op het pitcomplex (Kamoto/KOV/Mashamba East), ondergrondse en open werkingen",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Glencore 75% / Gécamines 25%. Erts en ondergrondse output gaan naar de Luilu-plant (apart genoteerd, w-kcc-luilu), 3,5 km ZW. Zelfde anker als koper-sitelaag w-kcc-kolwezi."
+  },
+  {
+   "id": "w-mutanda",
+   "naam": "Mutanda",
+   "lon": 25.8082,
+   "lat": -10.7858,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + hydroxide-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit kt Co/j — Cobalt Institute, Cobalt Market Report 2024: Mutanda 8 kt Co in 2024 (Glencore's eigen rapportage splitst KCC/Mutanda niet) [B3]",
+   "bron": "Wikipedia-geohack 'Mutanda mine' (en): 10°47'09\"S 25°48'30\"E; satelliet z15: kruis in de open put, SX-EW-plant direct ZW zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Glencore 100%. Was ooit de grootste kobaltmijn ter wereld; lag stil 2019-2021. Cobalt Institute-cijfer (8 kt) ligt lager dan de vroegere reputatie — het herstel na de stillegging is nog niet compleet."
+  },
+  {
+   "id": "w-metalkol-rtr",
+   "naam": "Metalkol RTR (Roan Tailings Reclamation)",
+   "lon": 25.3966,
+   "lat": -10.7116,
+   "level": "site",
+   "parent": null,
+   "rol": "tailingsverwerking → hydroxide",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 5.7,
+   "gewicht_bron": "capaciteit kt Co/j — Nameplate 23 kt Co/j (ERG Africa); werkelijke output 5,7 kt in 2025 en ARECOMS-quotum 12,3 kt voor 2026 (design-ontwerp, afgeleid uit Cobalt Institute/Fastmarkets-cijfers) [B4][B5]",
+   "bron": "Wikipedia 'Kolwezi tailings project': 10°42'42\"S 25°23'48\"E; satelliet z15: kruis grenst aan een kleinere put met een grote tan/oranje uitloogvlakte (tailings-heruitloging) NO ervan — plantgebouw zelf niet ondubbelzinnig aangewezen",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "ERG (Eurasian Resources Group) 100%; verwerkt honderd jaar oude tailings van Kolwezi. ⚠️ Nameplate (23 kt) ligt ver boven de werkelijke output (5,7 kt 2025) — gebruik het werkelijke-outputcijfer, anders gloeit RTR als een top-3-site die het niet is."
+  },
+  {
+   "id": "w-deziwa",
+   "naam": "Deziwa",
+   "lon": 25.801,
+   "lat": -10.797,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 11.6,
+   "gewicht_bron": "capaciteit kt Co/j — Geen direct gepubliceerd 2024/2025-Co-cijfer gevonden; afgeleid als 4% van de wereldmijnproductie (~290 kt in 2025, uit het ontwerp-verhaal) ≈ 11,6 kt — schatting, geen primaire bron [B6]",
+   "bron": "Wikipedia-geohack 'Deziwa mine' (en): 10°47'36\"S 25°46'54\"E; satelliet z14: kruis verschoven ~1,8 km OZO naar het zichtbare fabriekscomplex naast een grote open put",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "CNMC (China) 51% / Gécamines 49%. Geopend 2020; ligt direct naast de Mutanda-mijn. Capaciteitscijfer is een schatting — bij een volgende ronde een primaire CNMC/Gécamines-bron zoeken."
+  },
+  {
+   "id": "w-ruashi",
+   "naam": "Ruashi",
+   "lon": 27.55,
+   "lat": -11.6167,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + SX-EW-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "DR Congo",
+   "gewicht": 1.0,
+   "gewicht_bron": "capaciteit kt Co/j — Historisch cijfer (2008, bij opstart): ~1.000 t Co/j nameplate naast 10.000 t Cu/j — geen recenter Co-specifiek cijfer gevonden deze ronde [B9]",
+   "bron": "Wikipedia-geohack 'Ruashi mine' (en): 11°37'00\"S 27°33'00\"E — dit ronde niet satelliet-geverifieerd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Jinchuan Group (China) 75% via Metorex, Gécamines 25%; 10 km van Lubumbashi. Erts gaat naar Jinchuan's eigen Chinese raffinaderij."
+  },
+  {
+   "id": "w-huayue-morowali",
+   "naam": "Huayue Nickel Cobalt HPAL",
+   "lon": 122.16,
+   "lat": -2.83,
+   "level": "site",
+   "parent": null,
+   "rol": "HPAL → MHP",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Indonesië",
+   "gewicht": 7.8,
+   "gewicht_bron": "capaciteit kt Co/j — Wood Mackenzie / brancherapporten: Huayue was de eerste en grootste operationele HPAL in Indonesië, nameplate ~7,8 kt Co-inhoud/j in MHP [B12][B13]",
+   "bron": "IMIP-parkcentroïde (Wikipedia-geohack 'Morowali Industrial Park' 02°49'48\"S 122°09'36\"E) — geen apart Huayue-gebouw gevonden binnen het park deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "MBMA/Huayou/Tsingshan-joint venture, op het Indonesia Morowali Industrial Park (IMIP), Sulawesi. Grootste operationele HPAL-project ter wereld (2024-2025)."
+  },
+  {
+   "id": "w-qmb-morowali",
+   "naam": "PT QMB New Energy Materials",
+   "lon": 122.16,
+   "lat": -2.83,
+   "level": "site",
+   "parent": null,
+   "rol": "HPAL → MHP",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Indonesië",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit kt Co/j — 96 kt Ni-eq/j nameplate; GEM Indonesia (equity-aandeel) rapporteerde 6,5 kt Co in de eerste 9 maanden van 2025 → geannualiseerd/op 100%-basis orde 8 kt Co-inhoud/j — herleid, geen directe 100%-bron [B14]",
+   "bron": "IMIP-parkcentroïde (zelfde als Huayue — QMB ligt in hetzelfde industriepark, apart gebouw niet onderscheiden)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "GEM (China) 55% / Tsingshan 10% / Brunp-CATL 10% / Ecopro (Korea) 9% / Hanwa (Japan) 8% / Yibin Libao 8%. 106 ha, >3 mrd USD investering."
+  },
+  {
+   "id": "w-huafei-wedabay",
+   "naam": "Huafei Nickel Cobalt HPAL",
+   "lon": 127.9836,
+   "lat": 0.4783,
+   "level": "site",
+   "parent": null,
+   "rol": "HPAL → MHP",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Indonesië",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit kt Co/j — Nameplate 120 kt Ni + 15 kt Co per jaar (4e-generatie HPAL, in bedrijf sinds juli 2023) [B15]",
+   "bron": "Wikipedia-geohack 'Weda Bay Industrial Park' (IWIP-parkcentroïde) 0°28'42\"N 127°59'01\"E — apart Huafei-gebouw niet onderscheiden binnen het park",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Huayou (China) / Tsingshan / EVE Energy-joint venture op Weda Bay Industrial Park (IWIP), Halmahera. Correctie op het ontwerp: Huafei zit op IWIP (Weda Bay), niet op IMIP zoals één van de top-sites-regels suggereerde."
+  },
+  {
+   "id": "w-murrin-murrin",
+   "naam": "Murrin Murrin",
+   "lon": 121.8939,
+   "lat": -28.7675,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL/raffinaderij",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Australië",
+   "gewicht": 2.1,
+   "gewicht_bron": "capaciteit kt Co/j — Glencore, productiecijfers 2023: 2.100 t Co (2,1 kt) naast 31.100 t Ni [B16]",
+   "bron": "Wikipedia-geohack 'Murrin Murrin Mine' (en) 28°46'03\"S 121°53'38\"E — dit ronde niet satelliet-geverifieerd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Glencore 100% (via de overname van Minara Resources in 2011). Australië's enige noemenswaardige kobaltproductie; laterietmijn + eigen HPAL-raffinaderij op hetzelfde terrein."
+  },
+  {
+   "id": "w-moa-puntagorda",
+   "naam": "Moa / Punta Gorda (Pedro Soto Alba + Ernesto Che Guevara-plant)",
+   "lon": -74.8569,
+   "lat": 20.6308,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + MSP-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Cuba",
+   "gewicht": 3.4,
+   "gewicht_bron": "capaciteit kt Co/j — Sherritt/GNC (Moa JV), productie 2022: 3.368 t Co (3,4 kt) naast 32.268 t Ni [B17]",
+   "bron": "OSM 'Punta Gorda' (Nominatim, plaatsnaam/kaap) — de Che Guevara-plant ligt bij dit gehucht aan de kust ten O van Moa Oriental",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Sherritt International (Canada) 50% / General Nickel Company (Cuba) 50%. Erts wordt op locatie tot gemengd sulfide (MSP) verwerkt, dat vervolgens naar Fort Saskatchewan (Canada) gaat voor raffinage."
+  },
+  {
+   "id": "w-ambatovy-toamasina",
+   "naam": "Ambatovy-plant (Toamasina)",
+   "lon": 49.3604,
+   "lat": -18.2002,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (Ni/Co-briketten)",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Madagaskar",
+   "gewicht": 2.5,
+   "gewicht_bron": "capaciteit kt Co/j — Nameplate 4 kt Co/j; na cycloon Gezani (feb. 2026) herstart naar ~3 kt Co/j run-rate; 2024-productie ~2,5 kt Co (mining.com/CNBC Africa 2026, Skillings 2026) [B18][B19]",
+   "bron": "OSM 'Ambatovy Plant Site' (Nominatim, building=industrial) bij Toamasina — benoemd object",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Zelfde consortium als de mijn. Verwerkt de lateriet-slurry uit Moramanga tot nikkel- en kobaltbriketten; export via Port of Toamasina. Klein aandeel (~1%) van de wereldproductie, maar de enige grote HPAL-achtige raffinage aan de bron buiten Indonesië/China."
+  },
+  {
+   "id": "w-umicore-kokkola",
+   "naam": "Umicore Kokkola",
+   "lon": 23.0528,
+   "lat": 63.8595,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij + precursor",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Finland",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit kt Co/j — Umicore/brancherapporten: grootste kobaltraffinaderij buiten China, in bedrijf sinds 1968 (Umicore-eigendom sinds 2019); indicatief 15 kt Co/j (ontwerp-oordeel, uit eerdere sitelaag-ronden) [B20]",
+   "bron": "OSM landuse=industrial 'Suurteollisuusalue' (Kokkola Industrial Park, Nominatim/Photon); satelliet z14: dicht industrieterrein met tanks/gebouwen zichtbaar, het specifieke Umicore-gebouw niet apart onderscheiden van buurbedrijf Boliden Kokkola",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Umicore (België), overgenomen van Freeport Cobalt in 2019. Draait op Glencore-hydroxide uit de Copperbelt; Europa's enige grote schakel in deze keten buiten Olen."
+  },
+  {
+   "id": "w-nikkelverk",
+   "naam": "Glencore Nikkelverk",
+   "lon": 7.9723,
+   "lat": 58.1392,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (bijproduct van nikkel)",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Noorwegen",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit kt Co/j — Nikkelverk 'At a glance': kobaltcapaciteit 5.000 t/j (5 kt), naast ~92 kt Ni en 40 kt Cu [B21]",
+   "bron": "Bedrijfsopgave 58°8'21.142\"N 7°58'20.370\"E (nikkelverk.no); satelliet z16: kruis op het raffinaderijcomplex aan de fjord",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Glencore (Zwitserland/VK). Grootste nikkelraffinaderij van het westen; kobalt als bijproduct, deels op Russisch feedmateriaal (Kola/Norilsk) — zie w-norilsk."
+  },
+  {
+   "id": "w-umicore-olen",
+   "naam": "Umicore Olen",
+   "lon": 4.8928,
+   "lat": 51.1822,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij + kathodematerialen (afbouwend)",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "België",
+   "gewicht": 1.5,
+   "gewicht_bron": "capaciteit kt Co/j — USGS Mineral Industry of Belgium 2019: ~1.500 t geraffineerd kobalt (schatting) [B22]",
+   "bron": "OSM landuse=industrial 'Umicore Olen' (Nominatim) — benoemd object",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Umicore (België). ⚠️ Kobaltraffinage en een deel van de kobalt-transformatie worden verplaatst naar Kokkola (Umicore's eigen aankondiging) — Olen's rol krimpt; blijft wel R&D-centrum en kathodematerialen."
+  },
+  {
+   "id": "w-longharbour",
+   "naam": "Vale Long Harbour",
+   "lon": -53.8167,
+   "lat": 47.4242,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (hydromet, bijproduct van nikkel)",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Canada",
+   "gewicht": 2.5,
+   "gewicht_bron": "capaciteit kt Co/j — Vale: nameplate 50 kt Ni + 4,7 kt Cu + 2,5 kt Co per jaar [B24]",
+   "bron": "Wikipedia-geohack 'Long Harbour Nickel Processing Plant' (en) 47°25'27\"N 53°49'0\"W",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Vale Base Metals (Brazilië). Eerste hydrometallurgische nikkelplant ter wereld die rechtstreeks van sulfideconcentraat naar 'Plating Rounds' gaat; verwerkt Voisey's Bay-concentraat."
+  },
+  {
+   "id": "w-talvivaara-sotkamo",
+   "naam": "Talvivaara/Terrafame Sotkamo",
+   "lon": 28.0169,
+   "lat": 63.9672,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (bioloog) + batterijchemicaliën-plant",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Finland",
+   "gewicht": 7.4,
+   "gewicht_bron": "capaciteit kt Co/j — Terrafame: nameplate 7,4 kt/j kobaltsulfaat (product), commissioning 2021 [B27]",
+   "bron": "Wikipedia-geohack 'Talvivaara mine' (en) 63°58'2\"N 28°1'1\"E",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Terrafame (Finse staat). ⚠️ Het brongetal (7,4 kt) is kobaltSULFAAT-product, niet Co-inhoud — bij CoSO4·7H2O (~21% Co) zou dat ≈ 1,5-1,6 kt Co-inhoud zijn; niet herrekend omdat niet zeker is of de 7,4 kt al op contained-metal-basis wordt gerapporteerd. Bioleaching-mijn + plant op hetzelfde terrein, dus als één site genoteerd."
+  },
+  {
+   "id": "w-norilsk",
+   "naam": "Norilsk (mijn- en smeltercomplex)",
+   "lon": 88.2,
+   "lat": 69.35,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (bijproduct van nikkel/palladium)",
+   "grondstof": [
+    "kobalt"
+   ],
+   "land": "Rusland",
+   "gewicht": 3.0,
+   "gewicht_bron": "capaciteit kt Co/j — Nornickel: nameplate 3 kt Co/j op het Kola-circuit (hersteld dec. 2025 na een brand in 2022); het Norilsk/Taimyr-ertsaandeel zelf niet los in Co gepubliceerd [B28]",
+   "bron": "v1-register-centroïde (cobalt.js, ~1 km); dit ronde niet satelliet-geverifieerd, geen benoemd Severonickel/Kola-object gevonden",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Nornickel (Rusland). Kobalt als bijvangst van nikkel/palladium/koper op het Norilsk-Talnakh-complex; de raffinage van dat kobalt gebeurt grotendeels op het Kola-schiereiland (Severonickel, Monchegorsk) — dat raffinagepunt is deze ronde niet gelokaliseerd (zie buiten scope)."
+  }
+ ]
+}

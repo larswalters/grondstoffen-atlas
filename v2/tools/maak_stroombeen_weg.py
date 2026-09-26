@@ -95,6 +95,188 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief nikkel-morowali-quzhou, been b2 (LICHTE werkwijze M29). Truck
+    # (MHP in containers/big bags) Ningbo/Beilun-losberth (hergebruikt anker uit
+    # de koperketen) → Huayou New Energy Technology Quzhou — nikkelsulfaat-/
+    # precursorfabriek (aannemelijk: één bron voor de exacte afnemer). Corridor
+    # G60 Shanghai–Kunming via Shaoxing–Jinhua.
+    # ⚠️ BEIDE TUSSENPUNTEN ZIJN STADSCENTROÏDES UIT NOMINATIM, GEEN WEGVERTICES
+    #    (brief §4): Overpass was onbereikbaar om de echte G60-op-/afritten te
+    #    vinden. Ze moeten hier op de doorgaande G60 projecteren; >5 km snap =
+    #    fout gelegd, dan eerst de wegklasse nakijken (corridorKlassen), niet
+    #    het punt bijschuiven.
+    # ⚠️ GEEN GEPUBLICEERDE KM (brief §7): ~300 km is een corridorschatting over
+    #    de kaart (Ningbo–Shaoxing–Jinhua–Quzhou langs G60), geen bronopgave —
+    #    de lengtetoets hierop is dus geen ±15%-toets, alleen een referentie.
+    # ⚠️ Quzhou-eindpunt is regio-niveau (perceel niet gelegd, brief §3/§7).
+    "nikkel-morowali-quzhou-beilun-quzhou": {
+        "via": [
+            ("Ningbo/Beilun-losberth (anker, hergebruikt)",                    (121.8830, 29.9364)),
+            ("Shaoxing-omgeving (stadscentroïde, corridor-indicator — projecteer op G60)", (120.5769, 29.9992)),
+            ("Jinhua-omgeving (stadscentroïde, corridor-indicator — projecteer op G60)",   (119.6486, 29.1080)),
+            ("Huayou Quzhou-fabriek (regio-niveau, onzeker, anker)",           (118.8780, 28.9020)),
+        ],
+        "id": "ni-beilun-quzhou",
+        "naam": "Ningbo/Beilun-losberth → Huayou Quzhou-fabriek (G60 via Shaoxing–Jinhua)",
+        "extracts": ["china"],
+        "refs": ["G60"],
+        "gepubliceerdKm": 300,
+        "bronnoot": "geen publicatie; corridorschatting over de kaart "
+                    "(Ningbo–Shaoxing–Jinhua–Quzhou langs G60), geen bronopgave "
+                    "(routebrief §7) — rapporteer als referentie, geen ±15%-toets",
+        "vensterKm": 60,
+        "uit": "nikkel-morowali-quzhou-weg-beilun-quzhou.geojson",
+    },
+    # Routebrief nikkel-ouaco-gwangyang, been b1 (LICHTE werkwijze M29). Truck
+    # (lateriet-erts) NMC-mijnplateau Ouaco (Kaala-Gomen) → Téoudié-laadkade,
+    # over de privé-mijnweg "Mines" (Cotransmine). OSM-bbox rond Ouaco is
+    # overwegend track/unclassified (348× track, 73× unclassified, 60×
+    # primary/RT1) — de doorgaande mijnweg zelf staat vrijwel zeker als
+    # `track`, en dat komt de scanner NOOIT door, ook niet via corridorKlassen
+    # (zie de opmerking bij regel 1368 hieronder). Dit profiel is daarom een
+    # VERWACHTE-MISLUKKING-poging: als hij geen pad geeft, valt het been terug
+    # op een rechte stippel (bak-aanwijzingen, orkestrator-opdracht).
+    "nikkel-ouaco-gwangyang-ouaco-teoudie": {
+        "via": [
+            ("NMC-mijnplateau Ouaco (anker, ni-ouaco-mijn)", (164.4750, -20.7400)),
+            ("Téoudié-laadkade (anker, ni-teoudie-kade)",    (164.3822, -20.7566)),
+        ],
+        "id": "ni-ouaco-teoudie",
+        "naam": "Ouaco-mijnplateau → Téoudié-laadkade (mijnweg \"Mines\", privaat/track)",
+        "extracts": ["nieuw-caledonie"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; ~10 km hemelsbreed (routebrief §7) — losse "
+                    "controle, geen hard toetsdoel",
+        "vensterKm": 15,
+        "corridorKlassen": ["unclassified", "tertiary"],
+        "eindKlassen": ["unclassified", "tertiary", "service", "residential"],
+        "eindToegangPrivaat": True,
+        "uit": "nikkel-ouaco-gwangyang-weg-ouaco-teoudie.geojson",
+    },
+    # Routebrief nikkel-ouaco-gwangyang, been b7 (LICHTE werkwijze M29). Truck
+    # (ferronikkel) SNNC-fabriek Gwangyang → POSCO-staalfabriek Pohang. Geen
+    # bron noemt de weg of de lengte (aannemelijk: één bron voor de afnemer,
+    # brief §6/§7); via-lijst = alleen de twee ankers, de Dijkstra routeert
+    # vrij over het zuid-korea-extract op WEG_HOUD (motorway t/m secondary).
+    "nikkel-ouaco-gwangyang-snnc-pohang": {
+        "via": [
+            ("SNNC-fabriek Gwangyang (anker, ni-snnc-fabriek)",       (127.7360, 34.9295)),
+            ("POSCO-staalfabriek Pohang (anker, ni-pohang-mill)",     (129.3820, 36.0180)),
+        ],
+        "id": "ni-snnc-pohang",
+        "naam": "SNNC Gwangyang → POSCO Pohang (aannemelijk: één bron, geen gedocumenteerde corridor)",
+        "extracts": ["zuid-korea"],
+        "refs": [],
+        "gepubliceerdKm": 250,
+        "bronnoot": "schatting op de kaart (routebrief §2/bak-aanwijzingen), geen "
+                    "publicatie om ±15% tegen te toetsen",
+        "vensterKm": 60,
+        "uit": "nikkel-ouaco-gwangyang-weg-snnc-pohang.geojson",
+    },
+    # Routebrief nikkel-taganito-niihama, been b1 (LICHTE werkwijze M29). Truck
+    # (limonieterts) Taganito Mining Corporation, laadplek (Nickel Asia, Claver)
+    # → Taganito HPAL Nickel Corporation-plant, aangrenzend terrein — eigen
+    # mijnweg, hemelsbreed maar 1,2 km. ⚠️ GEEN GEPUBLICEERDE WEG-KM (brief §2):
+    # het venster 3-8 km is een ontwerpschatting, geen harde toets. De
+    # OSM-bbox rond Claver is overwegend unclassified/service (access=private)
+    # en track → corridorKlassen ruim + eindToegangPrivaat True; lukt geen
+    # wegpad, dan valt dit been terug op een stippel "eigen terrein" in de
+    # bake (geen tweede scanpoging). Negeer 8 korte ongelabelde pipeline-ways
+    # rond 9.54,125.82 (THPAL-terrein) — dat is géén ertsleiding.
+    "nikkel-taganito-niihama-taganito-thpal": {
+        "via": [
+            ("Taganito Mining Corporation — laadplek (anker, ni-taganito-laad)", (125.8193, 9.5464)),
+            ("Taganito HPAL Nickel Corporation — plant (anker, ni-thpal-plant)", (125.8106, 9.5395)),
+        ],
+        "id": "ni-taganito-thpal",
+        "naam": "Taganito-mijn (TMC) → THPAL-plant (eigen mijnweg, aangrenzend terrein)",
+        "extracts": ["filipijnen"],
+        "refs": [],
+        "eindKlassen": ("tertiary", "unclassified", "residential", "service"),
+        "eindToegangPrivaat": True,
+        "gepubliceerdKm": 5.5,
+        "bronnoot": "geen publicatie; routebrief geeft een venster van 3-8 km "
+                    "(ontwerpschatting, geen harde toets), hemelsbreed 1,2 km",
+        "vensterKm": 12,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "uit": "nikkel-taganito-niihama-weg-taganito-thpal.geojson",
+    },
+    # Routebrief nikkel-wedabay-iwip, been b1 (LICHTE werkwijze M29). Truck
+    # (lateriet-erts) actieve dagbouw-put WBN → IWIP-ore-yard, eigen mijnweg
+    # (deels OSM unclassified/tertiary, deels track/service). Geen gepubliceerde
+    # km — 3,6 km hemelsbreed (satellietmeting, dit document) is losse controle,
+    # geen hard toetsdoel; vensterKm ruim (reliëf kan het pad fors verlengen).
+    # ⚠️ Kop bij de put is vermoedelijk track/service (niet gekarteerd als
+    # doorgaande weg) → als het laatste stuk daar niet doorkomt, knipt de bake
+    # en wordt dat stuk gestippeld "eigen mijnweg (geen net op deze korrel)".
+    "nikkel-wedabay-iwip-pit-rkef": {
+        "via": [
+            ("Actieve dagbouw-put WBN (anker, ni-wedabay-pit)",          (127.9350, 0.4930)),
+            ("Knik mijnweg / erts-schermstation",                        (127.9430, 0.4880)),
+            ("Eerste kruising IWIP-industrieweg",                        (127.9560, 0.4940)),
+            ("IWIP-ore-yard, Lelilef (anker, ni-iwip-rkef)",             (127.9670, 0.4970)),
+        ],
+        "id": "ni-wedabay-iwip-pit-rkef",
+        "naam": "Weda Bay-put → IWIP-ore-yard (eigen mijnweg, unclassified/tertiary)",
+        "extracts": ["indonesie"],
+        "refs": [],
+        "gepubliceerdKm": 3.6,
+        "bronnoot": "GEEN publicatie; 3,6 km hemelsbreed (satellietmeting, "
+                    "routebrief §2) — losse controle, geen hard toetsdoel. Het "
+                    "echte pad kan door het reliëf fors langer zijn; een "
+                    "lengte-afwijking t.o.v. dit hemelsbrede getal is verwacht "
+                    "en is een bevinding, geen fout.",
+        "vensterKm": 20,
+        # OSM-scan bbox toont 138 unclassified / 88 trunk / 55 track / 29
+        # tertiary; benoemde mijnwegen staan als unclassified/service. Trunk
+        # zit al in WEG_HOUD (default corridorklassen); service erbij als
+        # kleine klasse (`track` komt de scanner sowieso niet door).
+        "corridorKlassen": ["unclassified", "tertiary", "service"],
+        # Zowel de put als het IWIP-ore-yard-terrein zijn vermoedelijk deels
+        # private/permit-wegen (WBN-contractgebied resp. IWIP-industrieterrein).
+        "eindToegangPrivaat": True,
+        "uit": "nikkel-wedabay-iwip-weg-pit-rkef.geojson",
+    },
+    # Routebrief kobalt-kcc-kokkola, been b1 (LICHTE werkwijze M29). Truck
+    # (kobalthydroxide) KCC Luilu-plant (Glencore, Kolwezi) → Durban DCT Pier 2 —
+    # RN39 Kolwezi→Likasi (nieuw stuk, niet eerder gebakken), dan IDENTIEK aan
+    # koper-tfm-durban §4 vanaf Likasi (RN1 → Kasumbalesa → T3/T2 → Chirundu →
+    # A1/A4 → Beitbridge → N1/N3) — geen letterlijke bestandskopie (ander
+    # beginpunt: Luilu i.p.v. TFM Fungurume), wel dezelfde 12 via-punten in
+    # dezelfde volgorde. ⚠️ Venster 75 km (zoals koper-tfm-durban: RN39 buigt
+    # ver uit de rechte lijn). ⚠️ RN39 Kolwezi–Likasi mogelijk lage OSM-wegklasse
+    # (Oyu Tolgoi-precedent) — check corridorKlassen bij een snap > 5 km.
+    "kobalt-kcc-durban": {
+        "via": [
+            ("KCC Luilu-plant, Kolwezi (anker, co-kcc-luilu)", (25.3620, -10.7205)),
+            ("RN39 ZO van Kolwezi (nieuw stuk)",               (25.5300, -10.8600)),
+            ("Likasi RN39→RN1",                                 (26.7355, -10.9806)),
+            ("Lubumbashi RN1",                                  (27.4827, -11.6642)),
+            ("Kasumbalesa (grens DRC/Zambia)",                  (27.7959, -12.2658)),
+            ("Ndola T3",                                        (28.6367, -12.9688)),
+            ("Kabwe T2",                                        (28.4400, -14.4426)),
+            ("Lusaka T2",                                       (28.2817, -15.4163)),
+            ("Chirundu (grens Zambia/Zimbabwe)",                (28.8471, -16.0338)),
+            ("Harare A1→A4",                                    (31.0467, -17.8362)),
+            ("Masvingo A4",                                     (30.8332, -20.0745)),
+            ("Beitbridge (grens Zimbabwe/RSA)",                 (29.9865, -22.2244)),
+            ("Polokwane N1-bypass",                             (29.4803, -23.9218)),
+            ("Buccleuch N1/N3-splitsing",                       (28.1004, -26.0493)),
+            ("Durban DCT Pier 2 (anker, cu-durban-kade)",       (31.0160, -29.8790)),
+        ],
+        "id": "co-kcc-durban",
+        "naam": "KCC Luilu-plant, Kolwezi → Durban DCT Pier 2 (RN39 → RN1 → "
+                "T3/T2 → A1/A4 → N1/N3)",
+        "extracts": ["congo-drc", "zambia", "zimbabwe", "zuid-afrika"],
+        "refs": ["RN39", "RN1", "N1", "T3", "T2", "A1", "A4", "N3"],
+        "gepubliceerdKm": 3100,
+        "bronnoot": "routebrief §2: ~3.100 km (400 Kolwezi–Kasumbalesa [7] + "
+                    "rest = koper-tfm-durban b1, 2.982 km gebakken)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary"],
+        "uit": "kobalt-kcc-kokkola-weg-kcc-durban.geojson",
+    },
     # Routebrief lithium-bougouni-yangpu, been b1 (LICHTE werkwijze M29). Truck
     # (spodumeenconcentraat) Ngoualana-plant (Kodal Minerals, Bougouni) → TIPSP
     # San Pedro, dwars over Mali/Ivoorkust: RN7 Bougouni–Sikasso → grens

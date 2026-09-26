@@ -267,6 +267,17 @@ const STROMEN = [
   { sleutel: "gr-bs", bestand: "stroomroute-grafiet-balama-saemangeum.json", grondstof: "grafiet", aan: true },
   { sleutel: "gr-ld", bestand: "stroomroute-grafiet-lakecharles-desoto.json", grondstof: "grafiet", aan: true },
   { sleutel: "gr-jb", bestand: "stroomroute-grafiet-jinzhou-baotou.json", grondstof: "grafiet", aan: true },
+  // ── M30 · golf 2b (2026-09-26): kobalt + nikkel ──
+  { sleutel: "co-tq", bestand: "stroomroute-kobalt-tfm-quzhou.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-kl", bestand: "stroomroute-kobalt-kolwezi-lobito.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-mq", bestand: "stroomroute-kobalt-morowali-quzhou.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-kk", bestand: "stroomroute-kobalt-kcc-kokkola.json", grondstof: "kobalt", aan: true },
+  { sleutel: "ni-wi", bestand: "stroomroute-nikkel-wedabay-iwip.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-mq", bestand: "stroomroute-nikkel-morowali-quzhou.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-tn", bestand: "stroomroute-nikkel-taganito-niihama.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-nm", bestand: "stroomroute-nikkel-norilsk-monchegorsk.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-sk", bestand: "stroomroute-nikkel-sudbury-kristiansand.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-og", bestand: "stroomroute-nikkel-ouaco-gwangyang.json", grondstof: "nikkel", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -375,7 +386,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "122", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "123", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -404,7 +415,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "122", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "123", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -536,7 +547,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "122", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "123", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);

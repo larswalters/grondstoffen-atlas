@@ -1,0 +1,655 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag nikkel voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/nikkel-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof nikkel: ids 'w-*', gewicht = capaciteit in kt Ni/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt Ni/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-iwip-hpal",
+   "naam": "IWIP Weda Bay — Huafei Nickel-Cobalt (HPAL)",
+   "lon": 127.985,
+   "lat": 0.48,
+   "level": "site",
+   "parent": null,
+   "rol": "HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 120.0,
+   "gewicht_bron": "capaciteit kt Ni/j — PT Huafei Nickel Cobalt (Huayou/Tsingshan/EVE Energy): nameplate 120 kt Ni/j in MHP + 15 kt Co/j; productietest juni 2023, sinds 2024 vrijwel volledig geramd [B1][B2]",
+   "bron": "Wikipedia-geohack 'Weda Bay Industrial Park' (en); satelliet z14: kruis op het havencomplex van IWIP (blauwe fabrieksdaken, jetty, tankopslag)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "HPAL-lijn van het Weda Bay-park (IWIP), Halmahera; MHP vaart naar de Chinese sulfaat-/precursorketen (Huayou Quzhou e.a.)."
+  },
+  {
+   "id": "w-iwip-rkef",
+   "naam": "IWIP Weda Bay — RKEF/NPI-lijnen (Tsingshan/Eramet)",
+   "lon": 127.987,
+   "lat": 0.482,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (RKEF NPI)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 30.0,
+   "gewicht_bron": "capaciteit kt Ni/j — CTRM Center/Discovery Alert: eerste RKEF-lijn 2020 op 30 kt Ni/j nameplate; het park is sindsdien fors uitgebreid (park verwerkt orde 120 Mwmt erts/j) maar een actueel totaalcijfer op Ni-basis is niet gepubliceerd — dit is een ONDERGRENS, geen huidige capaciteit [B3]",
+   "bron": "zelfde satellietpass als w-iwip-hpal (hetzelfde havencomplex, RKEF-ovens ten noorden ervan)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Erts van de Weda Bay-mijn blijft in het land (exportban); NPI gaat naar Chinese roestvrijstaal-mills. Gewicht is bewust een minimum — zie kolom capaciteit_bron."
+  },
+  {
+   "id": "w-imip-tsingshan-npi",
+   "naam": "IMIP Morowali — Tsingshan CSI+BSI (NPI)",
+   "lon": 122.16,
+   "lat": -2.83,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (RKEF NPI)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 38.0,
+   "gewicht_bron": "capaciteit kt Ni/j — MMTA/CRU-bezoek IMIP: CSI+BSI-smelters (Tsingshan, gebouwd 2020) gezamenlijk nameplate ~38 kt Ni/j [B4]",
+   "bron": "Wikipedia-geohack 'Morowali Industrial Park' (en); satelliet z14: kruis midden op het smeltercomplex (blauwe hallen, hoogspanningslijnen)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Twee van de 53 RKEF-lijnen in IMIP (parkbreed ~4,2 Mt NPI/j nameplate, niet per lijn gepubliceerd op Ni-basis)."
+  },
+  {
+   "id": "w-imip-huayue-hpal",
+   "naam": "IMIP Morowali — Huayue HPAL",
+   "lon": 122.162,
+   "lat": -2.828,
+   "level": "site",
+   "parent": null,
+   "rol": "HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 65.0,
+   "gewicht_bron": "capaciteit kt Ni/j — PT Huayue (Tsingshan/Huayou/CMOC): nameplate 60–65 kt Ni/j in MHP + 6 kt Co/j; volledig geramd 2024 (Q3 2024: 71.531 t MHP-Ni op jaarbasis) [B5][B6]",
+   "bron": "zelfde satellietpass als w-imip-tsingshan-npi (HPAL-autoclaven ten zuidoosten van de RKEF-hallen, op het IMIP-terrein)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Eerste grote Indonesische HPAL (2022); MHP naar de Chinese sulfaat-/precursorketen."
+  },
+  {
+   "id": "w-imip-nickelindustries",
+   "naam": "IMIP Morowali — Nickel Industries RKEF (Hengjaya/Ranger/Oracle)",
+   "lon": 122.158,
+   "lat": -2.832,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (RKEF NPI)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 100.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Nickel Industries Annual Report 2025: vier RKEF-projecten (Hengjaya/Ranger/Oracle in IMIP + Angel in IWIP) samen 124.966 t Ni-metaal in 2025; Hengjaya alleen 2 lijnen à 15 kt nameplate. Cijfer hier = totaal minus een geschatte Angel(IWIP)-bijdrage — AFGELEID, de drie-projecten-som is niet los gepubliceerd [B7]",
+   "bron": "satelliet z14: fabriekshallen direct ten westen/zuiden van het Tsingshan/Huayue-cluster, binnen hetzelfde IMIP-hekwerk",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drie van de vier ASX-genoteerde Nickel Industries-RKEF-projecten liggen in IMIP; het vierde (Angel Nickel) ligt in IWIP en is niet apart meegenomen."
+  },
+  {
+   "id": "w-obi-harita-hpal",
+   "naam": "Obi (Harita/HPL + ONC) — HPAL-cluster",
+   "lon": 127.416,
+   "lat": -1.5361,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 130.0,
+   "gewicht_bron": "capaciteit kt Ni/j — PT Halmahera Persada Lygend (HPL, Fase I–III) 65 kt Ni MHP/j + PT Obi Nickel Cobalt (ONC, 3 lijnen sinds 2024) 65 kt Ni MHP/j + 7,5 kt Co/j = 130 kt Ni/j gecombineerd nameplate [B8][B9]",
+   "bron": "prop=coordinates (HPL-vergunningdocument) 45° fase I-coordinaat; satelliet z14: kruis op het procescomplex (autoclaven, tankopslag, jetty), stoompluim van de eigen centrale 3,5 km zuidelijker",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Harita's geïntegreerde eiland: eigen Kawasi-mijn, RKEF, twee HPAL-lijnen en sinds juni 2023 nikkelsulfaat-export."
+  },
+  {
+   "id": "w-sorowako-vale",
+   "naam": "Sorowako (PT Vale Indonesia)",
+   "lon": 121.3785,
+   "lat": -2.568,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (matte)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Indonesië",
+   "gewicht": 70.8,
+   "gewicht_bron": "capaciteit kt Ni/j — PT Vale Indonesia 2024-doel: 70,8 kt Ni in matte (80% Vale Canada/20% SMM-aandeel, alles naar Japan) [B10]",
+   "bron": "Wikipedia-geohack 'Sorowako mine' (en); satelliet z14: kruis op het matte-smeltercomplex (roosterovens, schoorstenen) direct ten oosten van het mijngat",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Oudste grote nikkeloperatie van Indonesië (sinds 1968); matte per truck naar Malili en per schip naar Japan — de klassieke, niet-Chinese class-1-route."
+  },
+  {
+   "id": "w-taganito-thpal",
+   "naam": "Taganito (TMC-mijn + THPAL)",
+   "lon": 125.8134,
+   "lat": 9.5407,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Filipijnen",
+   "gewicht": 36.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Taganito HPAL Nickel Corp. (Sumitomo): nameplate 36 kt Ni + 2,6 kt Co/j als mixed sulfide (MS), export naar de Niihama-raffinaderij [B11][B12]",
+   "bron": "THPAL-plant coordinates 9°32'27\"N 125°48'48\"E (bedrijfsdocument/EMB Caraga); satelliet z14: kruis op het HPAL-terrein aan de Taganito-riviermonding, mijnputten en tailings direct zuidoostelijk",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Nickel Asia Corp (mijn) + Sumitomo Metal Mining (THPAL); Filipijnse ruwe-ertsexport (géén exportban) loopt via dezelfde regio maar een ander schip."
+  },
+  {
+   "id": "w-coralbay-riotuba",
+   "naam": "Rio Tuba (mijn) + Coral Bay Nickel (HPAL)",
+   "lon": 117.419,
+   "lat": 8.57,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Filipijnen",
+   "gewicht": 24.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Coral Bay Nickel Corp. (SMM/Sumitomo/Nickel Asia): nameplate 24 kt Ni/j als mixed sulfide (MS), export naar Niihama [B13]",
+   "bron": "Wikipedia/Mindat 'Rio Tuba mine' (8.570°N 117.419°E) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Coral Bay HPAL ligt op het terrein van Rio Tuba Nickel Mining Corp (RTNMC), Bataraza, Palawan; oudste Filipijnse HPAL (2005)."
+  },
+  {
+   "id": "w-doniambo-sln",
+   "naam": "Doniambo (SLN/Eramet)",
+   "lon": 166.44,
+   "lat": -22.27,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (ferronikkel)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Nieuw-Caledonië",
+   "gewicht": 55.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Eramet/SLN: historisch nameplate orde 55–60 kt Ni/j ferronikkel; ~15% van de wereldwijde ferronikkelproductie in 2023, in structurele crisis (staatsleningen sinds 2024) — geen scherp 2024-cijfer per site gevonden deze ronde [B16]",
+   "bron": "nickel.js-centroïde Nouméa/Doniambo — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Anders dan Koniambo blijft SLN in bedrijf, op staatssteun; marges weggevaagd door goedkope Indonesische NPI."
+  },
+  {
+   "id": "w-norilsk-talnakh-nadezhda",
+   "naam": "Norilsk — Talnakh-mijnen + Nadezhda-fabriek",
+   "lon": 87.9521,
+   "lat": 69.3275,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (matte)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Rusland",
+   "gewicht": 205.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Nornickel geconsolideerde productieresultaten 2024: 205 kt Ni (boven de 196–204 kt-guidance) [B17]",
+   "bron": "koper-sitelaag.json (hergebruikt anker, satelliet-bevestigd 2026-07): Nadezhda Metallurgical Plant 69,3275/87,9521; Talnakh-mijnen/concentrator liggen 25 km NO (69,53/88,34, ook satelliet gecheckt — industrieterrein met tailings)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Boven de poolcirkel; erts uit de Talnakh-mijnen (Oktyabrsky/Taimyrsky) smelt op hetzelfde Norilsk-complex tot matte. Matte per schip (Dudinka–Moermansk, eigen ijsbrekervloot) naar Kola."
+  },
+  {
+   "id": "w-kola-severonickel",
+   "naam": "Kola MMC — Severonickel (Monchegorsk)",
+   "lon": 32.825,
+   "lat": 67.922,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (class-1)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Rusland",
+   "gewicht": 145.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Nornickel/Barents Observer: tankhouse-uitbreiding 120 → 145 kt Ni/j (chloorloogtechnologie); een deel van de bronnen noemt 165 kt na volledige consolidatie van de Norilsk-raffinage naar Monchegorsk [B18][B19]",
+   "bron": "satelliet z14: kruis op het smelter-/raffinaderijcomplex met tailingsbekken aan het meer, ZW van de stad (verschoven van de aanvankelijke stadscentrum-kandidaat)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Raffineert Norilsk-matte tot class-1 (LME-leverbaar); sinds de 2022-sancties verschuift afzet van de EU naar China en de binnenlandse markt."
+  },
+  {
+   "id": "w-harjavalta-nornickel",
+   "naam": "Norilsk Nickel Harjavalta (raffinaderij)",
+   "lon": 22.128,
+   "lat": 61.322,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (class-1 + sulfaat)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Finland",
+   "gewicht": 65.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Nornickel: huidige capaciteit 65 kt Ni/j; uitbreiding in twee fasen (75 kt 2023, 100 kt begin 2026) aangekondigd maar niet bevestigd als voltooid deze ronde [B20][B21]",
+   "bron": "Wikipedia-geohack 'Harjavalta' (en); satelliet z14: kruis op het industriecomplex aan de rivier (blauwe hallen, tailings ZW)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Draait op Nornickel-matte (Kola); EU-batterijnikkel met een Russisch-verbonden gevoeligheid sinds 2022."
+  },
+  {
+   "id": "w-harjavalta-boliden",
+   "naam": "Boliden Harjavalta (smelter, matte)",
+   "lon": 22.125,
+   "lat": 61.32,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (matte)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Finland",
+   "gewicht": 25.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Boliden: 2020-productie 25 kt Ni in matte; enige nikkelsmelter van West-Europa, infeed-capaciteit 310→370 kt grondstof/j na de 2020-uitbreiding (geen recenter Ni-metaalcijfer gevonden deze ronde) [B22][B23]",
+   "bron": "zelfde industriezone Harjavalta als de Nornickel-raffinaderij (aparte rechtspersoon/terrein, niet apart gesatellietcheckt)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Losse site van de Nornickel-raffinaderij ernaast — niet samenvoegen: smelter (Boliden) levert matte, raffinage (Nornickel) maakt er class-1/sulfaat van."
+  },
+  {
+   "id": "w-terrafame-sotkamo",
+   "naam": "Terrafame (Sotkamo)",
+   "lon": 28.3833,
+   "lat": 64.1333,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + sulfaatfabriek",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Finland",
+   "gewicht": 37.4,
+   "gewicht_bron": "capaciteit kt Ni/j — Terrafame battery chemicals plant: nameplate 170 kt nikkelsulfaat/j = 37,4 kt Ni-inhoud/j (+ 7,4 kt kobaltsulfaat) [B24]",
+   "bron": "Wikipedia-geohack 'Sotkamo' (en) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Bioheap-leaching + eigen sulfaatfabriek: één van de weinige geïntegreerde EU-batterijnikkelbronnen."
+  },
+  {
+   "id": "w-nikkelverk-kristiansand",
+   "naam": "Nikkelverk (Kristiansand)",
+   "lon": 7.9723,
+   "lat": 58.1392,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (99,9%, LME)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Noorwegen",
+   "gewicht": 92.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Glencore Nikkelverk: capaciteit ~92 kt Ni/j (sommige bronnen 95 kt); tankhouse-nevenproducten 40 kt Cu/j + 5 kt Co/j [B25]",
+   "bron": "Waze/bedrijfsadres 31 Vesterveien → 58°8'21\"N 7°58'20\"O; satelliet z15: kruis op het fabrieksterrein aan de haven (herzien vanaf een eerste stadscentrum-kandidaat)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste nikkelraffinaderij van het westelijk halfrond; draait op Glencore-matte uit Sudbury (Canada)."
+  },
+  {
+   "id": "w-sudbury-coppercliff-vale",
+   "naam": "Copper Cliff (Vale) — Sudbury smelter/raffinaderij",
+   "lon": -81.035,
+   "lat": 46.475,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter + raffinaderij",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Canada",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Vale Asset Review: Sudbury-Ni-capaciteit ≈ 60 kt/j tegen 2026 (2025: >70 kt Ni/j verwerkt volgens Vale-factsheet) [B26]",
+   "bron": "Wikipedia-geohack 'Sudbury, Ontario' als stadsanker (46,49/-81,00); coördinaat hier verschoven naar het Copper Cliff-complex t.z.v. de stad — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Vale's geïntegreerde mijn+smelter+raffinaderij bij Sudbury; verwerkt ook Voisey's Bay-concentraat."
+  },
+  {
+   "id": "w-sudbury-glencore",
+   "naam": "Sudbury INO (Glencore smelter, Onaping/Falconbridge)",
+   "lon": -81.1,
+   "lat": 46.65,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (matte)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Canada",
+   "gewicht": 85.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Glencore Sudbury Integrated Nickel Operations: ~140 kt matte/j verscheept naar Nikkelverk, ≈ 85 kt Ni-inhoud (koper-sitelaag-ontwerp/Glencore-jaarcijfers) [B27]",
+   "bron": "nickel.js-centroïde (voormalig Falconbridge-terrein NW van Sudbury) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Matte gaat per spoor naar Québec en per schip naar Nikkelverk (Kristiansand) — de LME-leverbare class-1-keten."
+  },
+  {
+   "id": "w-longharbour-vale",
+   "naam": "Long Harbour (Vale, raffinaderij)",
+   "lon": -53.82,
+   "lat": 47.43,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Canada",
+   "gewicht": 45.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Vale Base Metals: nameplate ≈ 45 kt Ni/j + 20 kt Cu/j + 2,6 kt Co/j; volledige ramp-up verwacht 2026 [B28]",
+   "bron": "Wikipedia-geohack 'Long Harbour, Newfoundland and Labrador' (en) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Verwerkt concentraat van Voisey's Bay tot afgewerkt nikkel, via een hydrometallurgisch (niet-smelt) proces."
+  },
+  {
+   "id": "w-voiseys-bay-vale",
+   "naam": "Voisey's Bay (Vale)",
+   "lon": -62.1031,
+   "lat": 56.3347,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Canada",
+   "gewicht": 45.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Vale Asset Review: Voisey's Bay ≈ 45 kt Ni/j concentraat tegen 2026 [B26]",
+   "bron": "Wikipedia-geohack 'Voisey's Bay Mine' (en); satelliet z13: kruis op het mijn-/molencomplex, concentraatopslag en landingsstrip zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Labrador; concentraat per schip de Saint-Laurent op naar Sudbury/Long Harbour."
+  },
+  {
+   "id": "w-niihama-sumitomo",
+   "naam": "Niihama Nickel Refinery (Sumitomo Metal Mining)",
+   "lon": 133.283,
+   "lat": 33.967,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (elektrolytisch + sulfaat)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Japan",
+   "gewicht": 65.0,
+   "gewicht_bron": "capaciteit kt Ni/j — SMM: elektrolytische capaciteit uitgebreid van 41 naar 65 kt Ni/j (2013-project, doel gehaald 2015: 65,98 kt) [B29]",
+   "bron": "Wikipedia-geohack 'Niihama' (en); satelliet z14: kruis op het havenindustriecomplex (Sumitomo-terrein, Shikoku)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Raffineert de mixed sulfide (MS) uit Taganito en Coral Bay (Filipijnen) tot class-1-kathode en sulfaat."
+  },
+  {
+   "id": "w-gwangyang-snnc",
+   "naam": "SNNC Gwangyang (ferronikkel)",
+   "lon": 127.75,
+   "lat": 34.93,
+   "level": "site",
+   "parent": null,
+   "rol": "ferronikkelfabriek",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 54.0,
+   "gewicht_bron": "capaciteit kt Ni/j — SMSP/POSCO: nameplate 54 kt Ni-metaal/j in ferronikkel (uitgebreid van 30 naar 54 kt, 2e lijn 2015) [B30]",
+   "bron": "nickel.js-centroïde Gwangyang-industriecomplex — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "SMSP (Nieuw-Caledonië) 51% / POSCO 49%; verwerkt uitsluitend NMC-erts, alle output naar POSCO's roestvrijfabrieken."
+  },
+  {
+   "id": "w-onsan-kemco",
+   "naam": "Onsan (Korea Zinc / KEMCO, nikkelsulfaat)",
+   "lon": 129.36,
+   "lat": 35.42,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij (sulfaat)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 18.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Korea Zinc/KEMCO: 80.000–100.000 t nikkelsulfaat/j nameplate → omgerekend ≈ 18–22 kt Ni-inhoud/j bij ~22% Ni in NiSO4·6H2O (oorspronkelijke eenheid = product-tonnage, hier omgerekend) [B31]",
+   "bron": "Ulsan/Onsan National Industrial Complex — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Apart van SNNC: Korea Zinc/KEMCO maakt sulfaat uit gekocht MHP/matte, geen eigen mijn of smelter. Een nieuwe geïntegreerde raffinaderij (42,6 kt Ni, met Trafigura) is in aanbouw — niet meegeteld."
+  },
+  {
+   "id": "w-jinchuan-jinchang",
+   "naam": "Jinchuan Jinchang (mijn + raffinaderij)",
+   "lon": 102.185,
+   "lat": 38.521,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + raffinaderij",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 190.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Jinchuan Group/JNMC: ≈190 kt elektrolytisch Ni/j; >330 kt Ni-houdende producten totaal (China Daily/JNMC-claim, niet onafhankelijk geverifieerd) [B32]",
+   "bron": "Wikipedia-geohack 'Jinchang' (en) als stadsanker; satelliet z14: kruis in het stadscentrum, het feitelijke mijn-/smeltercomplex ligt in de oostelijke industriezone (niet scherp afgebakend dit anker) — aannemelijk",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "China's eigen sulfide-district; bescheiden naast de Indonesische lateriet-massa, maar de klassieke binnenlandse class-1-bron."
+  },
+  {
+   "id": "w-huayou-quzhou",
+   "naam": "Huayou New Energy (Quzhou, nikkelsulfaat)",
+   "lon": 118.85,
+   "lat": 28.95,
+   "level": "site",
+   "parent": null,
+   "rol": "scheiding (sulfaatfabriek)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 29.1,
+   "gewicht_bron": "capaciteit kt Ni/j — Wood Mackenzie/Huayou: nameplate 29,1 kt Ni-inhoud/j nikkelsulfaat (2021-cijfer; sindsdien uitgebreid met precursorlijnen) [B33][B34]",
+   "bron": "stadscentrum Quzhou (Zhejiang) — MEE-registerpunt niet gevonden deze ronde (recept verplaatst, zie CLAUDE.md); aannemelijk",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Zet Indonesische MHP/matte om in batterijsulfaat; onderdeel van Huayou's volledige nikkelketen (mijn tot precursor)."
+  },
+  {
+   "id": "w-gem-jingmen",
+   "naam": "GEM Jingmen (nikkel-/kobaltprecursor)",
+   "lon": 112.199,
+   "lat": 31.03,
+   "level": "site",
+   "parent": null,
+   "rol": "scheiding (precursorfabriek)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 30.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Wood Mackenzie: nameplate 30,0 kt Ni-inhoud/j (2021 werkelijk ≈18,3 kt); recyclingfeedstock + primair MHP/matte [B35][B36]",
+   "bron": "Jingmen High & New Technology Development Zone (bedrijfsadres via Panjiva) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "GEM's stadsmijnbouw-model: nikkel/kobalt uit recyclingschroot + primaire feedstock, tot batterijsulfaat."
+  },
+  {
+   "id": "w-cngr-tongren",
+   "naam": "CNGR Tongren (precursorfabriek)",
+   "lon": 109.19,
+   "lat": 27.718,
+   "level": "site",
+   "parent": null,
+   "rol": "scheiding (precursorfabriek)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 36.0,
+   "gewicht_bron": "capaciteit kt Ni/j — CNGR: westelijke basis Tongren (Guizhou) 60 kt precursor/j → omgerekend ≈ 36 kt Ni-inhoud/j bij een NCM-precursor met ≈60% Ni-aandeel (oorspronkelijke eenheid = precursor-tonnage, hier omgerekend met aanname) [B37]",
+   "bron": "stadscentrum Tongren (Guizhou) — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Eén van CNGR's drie Chinese precursorbases (naast Ningxiang/Hunan en Qinzhou/Guangxi); Tesla is genoemd als afnemer van CNGR-precursor."
+  },
+  {
+   "id": "w-shandong-xinhai-weifang",
+   "naam": "Shandong Taigang Xinhai (Weifang, NPI/roestvrij)",
+   "lon": 119.1,
+   "lat": 36.7,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (NPI + roestvrij)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 130.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Bedrijfsopgave: 1,2 Mt NPI/j nameplate → omgerekend ≈ 130 kt Ni-inhoud/j bij een laaggehalte-NPI van ≈11% Ni (oorspronkelijke eenheid = NPI-tonnage, hier omgerekend met aanname; geen aparte Ni-cijfer gepubliceerd) [B38]",
+   "bron": "stadscentrum Weifang (Shandong) — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Sinds okt 2022 hernoemd tot Shandong Taigang Xinhai Stainless Steel; ook doel voor productiebeperkingen bij internationale topontmoetingen (luchtkwaliteit)."
+  },
+  {
+   "id": "w-fujian-dingxin-fuan",
+   "naam": "Fujian Dingxin (Fu'an, NPI)",
+   "lon": 119.64,
+   "lat": 27.08,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (NPI)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "China",
+   "gewicht": 110.0,
+   "gewicht_bron": "capaciteit kt Ni/j — SMM: 1 Mt NPI/j nameplate (Tsingshan-groep) → omgerekend ≈ 110 kt Ni-inhoud/j bij ≈11% Ni (oorspronkelijke eenheid = NPI-tonnage, hier omgerekend met aanname) [B39]",
+   "bron": "stadscentrum Fu'an (Fujian) — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Onderdeel van Tsingshan's binnenlandse NPI-voetafdruk naast de Indonesische parken."
+  },
+  {
+   "id": "w-murrin-murrin",
+   "naam": "Murrin Murrin (Glencore/Minara)",
+   "lon": 121.89,
+   "lat": -28.76,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Australië",
+   "gewicht": 40.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Glencore Murrin Murrin: nameplate tot 40 kt Ni + 2,5 kt Co/j (briketten, LME-leverbaar); 2022 werkelijk 40,4 kt [B42]",
+   "bron": "nickel.js-centroïde (Goldfields, WA) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "HPAL op lateriet; Minara Resources 60% / Glencore 40%. Per spoor naar Esperance."
+  },
+  {
+   "id": "w-ravensthorpe",
+   "naam": "Ravensthorpe (First Quantum/POSCO)",
+   "lon": 120.01,
+   "lat": -33.565,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Australië",
+   "gewicht": 39.0,
+   "gewicht_bron": "capaciteit kt Ni/j — First Quantum Ravensthorpe NI 43-101: nameplate tot 220 kt/j nikkel-kobalthydroxide product → ≈ 39 kt Ni-inhoud/j; op care & maintenance sinds april 2024 [B44]",
+   "bron": "Wikipedia-geohack 'Ravensthorpe, Western Australia' als stadsanker; satelliet z13: kruis bij de mijnputten/HPAL-tailings NW van het anker — verschoven naar het zichtbare procescomplex",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "First Quantum 70% / POSCO 30%; derde keer op care & maintenance (2017, 2020-herstart, 2024)."
+  },
+  {
+   "id": "w-ambatovy",
+   "naam": "Ambatovy",
+   "lon": 48.307,
+   "lat": -18.845,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + HPAL",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Madagaskar",
+   "gewicht": 60.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Sherritt/Sumitomo/Kores: nameplate 60 kt Ni + 5,6 kt Co/j; FY2024 werkelijk ≈ 30 kt Ni (COVID-onderbreking, herstel) [B45][B46]",
+   "bron": "Wikipedia-geohack 'Ambatovy mine' (en) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Eén van de grootste HPAL-projecten ter wereld; slurry per pijpleiding naar Toamasina, class-1-briketten/sulfaat naar Azië."
+  },
+  {
+   "id": "w-cerro-matoso",
+   "naam": "Cerro Matoso",
+   "lon": -75.5516,
+   "lat": 7.9049,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (ferronikkel)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Colombia",
+   "gewicht": 50.0,
+   "gewicht_bron": "capaciteit kt Ni/j — South32/CoreX: smeltercapaciteit 50 kt Ni/j nameplate; 2024 werkelijk ≈ 40,2 kt (88,6 mln lb) [B47][B48]",
+   "bron": "Wikipedia-geohack 'Cerro Matoso mine' (en) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Verkocht door South32 aan CoreX Holding (2025); één van de grootste ferronikkelsmelters ter wereld, Córdoba."
+  },
+  {
+   "id": "w-barro-alto",
+   "naam": "Barro Alto (Anglo American)",
+   "lon": -48.8,
+   "lat": -15.11,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (ferronikkel)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Brazilië",
+   "gewicht": 41.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Anglo American: gemiddeld 41 kt Ni/j over de eerste vijf volle productiejaren (ontworpen op 36 kt/j gemiddeld over de mijnlevensduur) [B49]",
+   "bron": "Niquelândia-regio (Goiás) — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Ferronikkel, vooral voor de Atlantische (EU/VS) roestvrijmarkt via Vitória."
+  },
+  {
+   "id": "w-onca-puma",
+   "naam": "Onça Puma (Vale)",
+   "lon": -51.15,
+   "lat": -6.75,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn + smelter (ferronikkel)",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Brazilië",
+   "gewicht": 40.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Vale: nameplate 40 kt Ni/j na de opstart van de tweede oven (was 25 kt met één oven na de 2012-schade) [B50]",
+   "bron": "Ourilândia do Pará-regio — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Herstelde van een dubbele ovenstoring (2012); onderdeel van Vale's Braziliaanse ferronikkeltak naast Barro Alto."
+  },
+  {
+   "id": "w-fortsaskatchewan-sherritt",
+   "naam": "Fort Saskatchewan (Sherritt, raffinaderij)",
+   "lon": -113.2133,
+   "lat": 53.7128,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "nikkel"
+   ],
+   "land": "Canada",
+   "gewicht": 33.0,
+   "gewicht_bron": "capaciteit kt Ni/j — Sherritt International 2024 Annual Report: gecombineerde Ni+Co-capaciteit ≈38,2 kt/j (100%-basis); Ni-aandeel hier geschat op ≈33 kt/j (Co apart ≈5 kt) [B51]",
+   "bron": "stadscentrum Fort Saskatchewan (Alberta) — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Raffineert de mixed sulfides uit Moa Bay (Cuba, 50/50 joint venture) tot briketten/poeder; Cubaans embargo sluit de VS-markt uit."
+  }
+ ]
+}

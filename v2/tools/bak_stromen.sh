@@ -697,6 +697,416 @@ bak_lithium_pilgangoora_gwangyang() {
     --titel  "Lithium · Pilgangoora (Australië) → Port Hedland → Gwangyang (Zuid-Korea)"
 }
 
+# ── kobalt · Kolwezi-spoorstation → Kamoa-railhead → Lobito (Benguela-lijn)
+# Routebrief: v2/design/routebrieven/kobalt-kolwezi-lobito.md (LICHTE werkwijze M29)
+# ⚠️ b1 is NIEUW en op het 1-op-1-spoornet gescand (BAKE_SUFFIX=-raw,
+#    "3260717 spoor-edges" bevestigd): 29,4 km over 36 edges tegen 22,2 km
+#    hemelsbreed (verhouding 1,32) — één omkering vlak bij het beginpunt
+#    (156,6°, boogstraal ~100 m) is kopmaken op het emplacement, geen fout.
+# ⚠️ b2 EN de aanloop-stippel van b3 zijn LETTERLIJKE KOPIEËN van
+#    bak_koper_lobito (koper-lobito-duisburg) — géén tweede scan/aanloop-
+#    poging. b3 is daar zelf al een RECHTE --stippel (geen geojson-bestand),
+#    dus die vorm is hier exact overgenomen, niet een stippel-geojson die niet
+#    bestaat.
+# ⚠️ GEEN b4 (zee naar een bestemmingshaven): geen bron noemt de koper/haven
+#    van het kobalt na Lobito (brief §6/§7). De brief stopt bewust bij de
+#    haven-nadering.
+# ⚠️ co-kolwezi-laad is de CFB-spoorstation-fallback, status onzeker (brief
+#    §3/§7): de echte EGC/LAR-laadlus in Kolwezi is nergens bij naam of
+#    coördinaat gedocumenteerd.
+bak_kobalt_kolwezi_lobito() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|Kolwezi-spoorstation → Kamoa-railhead (nieuw stuk, 1-op-1-net)|$BEEN/spoorroute-kobalt-kolwezi-lobito-kolwezi-railhead.geojson" \
+    --been-geojson "spoor|trein Kamoa-Kakula → Lobito (Benguela-lijn, gedeeld met koper-lobito-duisburg)|v2/build-cache/ais/graaf/spoorroute-kamoa-lobito.geojson" \
+    --stippel      "zee|haven-aanloop Lobito (schematisch, over water — MARNET reikt niet; ligplaats niet vastgesteld; gedeeld met koper-lobito-duisburg)|-12.34709,13.549|-12.2702,13.5406" \
+    --marker "Kolwezi-spoorstation — Gare de Kolwezi/CFB-emplacement (laadplek, onzeker)|-10.71495,25.48365" \
+    --marker "Kamoa-railhead — kop van spoorroute-kamoa-lobito.geojson (gedeeld anker)|-10.6627,25.2873" \
+    --marker "Dilolo — Congolees grensstation (Benguela-lijn)|-10.69886,22.34423" \
+    --marker "Luau — Angolees grensstation, start Benguela-kilometrering|-10.70491,22.22639" \
+    --marker "Lobito — mineralenterminal (ligplaats open, gedeeld anker)|-12.34709,13.549" \
+    --routebrief v2/design/routebrieven/kobalt-kolwezi-lobito.md \
+    --uit    v2/data/stroomroute-kobalt-kolwezi-lobito.json \
+    --stroom kobalt-kolwezi-lobito \
+    --titel  "Kobalt · Kolwezi → Kamoa-railhead → Lobito (Benguela-lijn)"
+}
+
+# ── nikkel · Sudbury Smelter (Falconbridge) → Québec (CN-spoor) → Kristiansand/Nikkelverk (zee)
+# Routebrief: v2/design/routebrieven/nikkel-sudbury-kristiansand.md (LICHTE werkwijze M29)
+# ⚠️ b0 is een KORT emplacementsstuk (spoor reikt niet tot de smelterdeur):
+#    gemeten snapgat 0,16 km (BAKE_SUFFIX=-raw, hoofdnet-knoop) — veel korter
+#    dan de haalbaarheidsschatting van 2,22 km; de échte meting wint.
+# ⚠️ b1 is DRIE RUNS op het 1-op-1-spoornet (BAKE_SUFFIX=-raw, "3260717
+#    spoor-edges" bevestigd), via MacMillan Yard en Taschereau Yard:
+#    463,9 + 535,5 + 283,8 = 1.283,2 km tegen de brief se ~1.230 km (+4,3%,
+#    binnen ±15%). Eén 180°-omkering blijft staan bij 43,6673/-79,4652
+#    (boogstraal ~36 m, in run 1): getest met vier alternatieve via-vertices
+#    in en rond de MacMillan-yardcluster (0,00–2,26 km van het opgegeven
+#    punt) én met keerstraf 150 — de omkering verandert niet van plek of
+#    verdwijnt niet. De yardcluster is een lokaal subnet (~1,4 km) dat pas op
+#    ≥29,9 km weer aansluit op het grote net, dus de omkering zit in de
+#    brongeometrie zelf, niet in het gekozen via-punt. Bevinding, niet
+#    dichtgetrokken (werkwijze §5: buiten de norm = bevinding).
+# ⚠️ `ni-quebec-kade` is AANNEMELIJK (brief §3/§7: Glencore noemt geen kade/
+#    sector in secteur Beauport); b2 heeft geen haven-aanloop nodig — beide
+#    kades snappen <25 km van een zeeknoop (Québec 0,6 km, Kristiansand
+#    6,2 km).
+# ⚠️ Geen fase D: de brief stopt bewust bij Nikkelverk (§6) — geen bron
+#    koppelt een Nikkelverk-zending aan een specifiek LME-entrepot.
+bak_nikkel_sudbury_kristiansand() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "spoor|Falconbridge-emplacement → spoornet (schematisch — net reikt niet tot de smelterdeur, gemeten 0,16 km)|46.5786,-80.7993|46.5787,-80.7972" \
+    --been-geojson "spoor|trein Sudbury-emplacement → MacMillan Yard (CN Bala Sub, via Barrie)|$BEEN/spoorroute-nikkel-sudbury-kristiansand-sudbury-macmillan.geojson" \
+    --been-geojson "spoor|trein MacMillan Yard → Taschereau Yard (CN Kingston Sub, via Toronto-Montréal)|$BEEN/spoorroute-nikkel-sudbury-kristiansand-macmillan-taschereau.geojson" \
+    --been-geojson "spoor|trein Taschereau Yard → Glencore-terminal Port of Québec (CN Kingston Sub, secteur Beauport aannemelijk)|$BEEN/spoorroute-nikkel-sudbury-kristiansand-taschereau-quebec.geojson" \
+    --been         "zee|zeeschip Québec → Kristiansand (Saint-Laurent-benedenloop → Cabotstraat → Noord-Atlantische Oceaan → Skagerrak)|46.8330,-71.2035|58.1388,7.9713" \
+    --marker "Glencore Sudbury Smelter (Falconbridge) — kop van het spoor|46.5786,-80.7993" \
+    --marker "MacMillan Yard (CN, Vaughan/Toronto-noord) — via-punt corridorkeuze|43.8119,-79.5111" \
+    --marker "Taschereau Yard (CN, Saint-Laurent/Montréal) — via-punt corridorkeuze|45.4686,-73.6861" \
+    --marker "Glencore-terminal, Port of Québec, secteur Beauport (aannemelijk)|46.8330,-71.2035" \
+    --marker "Nikkelverk (Glencore), Kolsdalen, Kristiansand — losplek + raffinaderij, stoppunt|58.1388,7.9713" \
+    --routebrief v2/design/routebrieven/nikkel-sudbury-kristiansand.md \
+    --uit    v2/data/stroomroute-nikkel-sudbury-kristiansand.json \
+    --stroom nikkel-sudbury-kristiansand \
+    --titel  "Nikkel · Sudbury → Québec → Kristiansand (Noorwegen)"
+}
+
+# ── nikkel · Norilsk (Nadezhda) → Dudinka → Jenisej → Moermansk (Arc7) → Monchegorsk (Severonickel)
+# Routebrief: v2/design/routebrieven/nikkel-norilsk-monchegorsk.md (LICHTE werkwijze M29)
+# ⚠️ b1 spoor (1-op-1-net, BAKE_SUFFIX=-raw): 77,7 km — EXACT de gepubliceerde
+#    77,7 km uit de brief (rusland-siberie, geïsoleerd Norilsk-industrienet).
+# ⚠️ b2 binnenvaart (bulklaag): 429,8 km — EXACT de gepubliceerde 429,8 km.
+#    Beennaam noemt de clausule "bulklaag: ligging van het water, geen
+#    bevaarbaarheidsbewijs" (brief §2, Nornickel Arc7-vloot).
+# ⚠️ b2b IS EEN STIPPEL: de naad tussen de dichtstbijzijnde bulk-knoop
+#    (71,82880/82,77830) en MARNET-zeeknoop 2338 (71.9829,82.4669) is
+#    20,23 km — gemeten, boven de 5 km-norm, dus niet dichtgetrokken.
+# ⚠️ b3 zee laat MARNET zelf via Karskiye Vorota routeren (geen via-punt
+#    afgedwongen) — jaarrond Arc7-ijsbrekervloot, `northwest`-passage blijft
+#    dicht (default), dus geen Noordwest-Passage-sluipweg.
+# ⚠️ b4 spoor (rusland-noordwest): 145,1 km tegen gepubliceerd 142,1 km
+#    (+2,1%, ruim binnen ±15%); 2 omkeringen vlak bij Moermansk-terminal
+#    (178,0°/165,7°, boogstralen 27-57 m) = kopmaken op het emplacement,
+#    geen fout — komt overeen met de "1 spike" uit de brief.
+# ⚠️ GEEN b4b-stippel: de brief verwachtte een los terreinspoor-stukje
+#    (~3 km, "geen net op deze korrel"), maar de gemeten snap bij Severonickel
+#    is 0,23 km — het net reikt hier al tot het anker. Bevinding, niet
+#    dichtgetrokken (§9).
+# ⚠️ GEEN b5 (Harjavalta-vertakking, Finland): optioneel volgens de brief
+#    ("alleen tekenen als er tijd voor is, anders weglaten") — in deze bake
+#    weggelaten; blijft open punt.
+# ⚠️ `ni-moermansk-terminal` is AANNEMELIJK (brief §3/§7: adres via
+#    bedrijvenregister, geen Nornickel-specifiek kenmerk op het satellietbeeld
+#    te onderscheiden van het naastgelegen scheepsreparatiebedrijf).
+bak_nikkel_norilsk_monchegorsk() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Nadezhda-fabriek → Kajerkan → Dudinka-kade (geïsoleerd Norilsk-industrienet, 1-op-1-net)|$BEEN/spoorroute-nikkel-norilsk-monchegorsk-nadezhda-dudinka.geojson" \
+    --been-geojson "binnenvaart|Jenisej stroomafwaarts Dudinka-kade → bulk-knoop bij zeeknoop 2338 (bulklaag: ligging van het water, geen bevaarbaarheidsbewijs; Nornickel Arc7-vloot)|$BEEN/nikkel-norilsk-monchegorsk-rivier-dudinka-bulkknoop.geojson" \
+    --stippel      "zee|haven-aanloop Jenisej-golf (schematisch, naad rivier↔MARNET, 20,2 km > 5 km-norm)|71.82880,82.77830|71.9829,82.4669" \
+    --been         "zee|zeeschip (Arc7-ijsbreker, jaarrond) Jenisej-golf → Moermansk (Karazee → Karskiye Vorota → Barentszzee)|71.9829,82.4669|68.9737,33.0658" \
+    --been-geojson "spoor|trein Moermansk-terminal → Kola → Olenegorsk → Monchegorsk (Oktoberspoorweg, 1-op-1-net)|$BEEN/spoorroute-nikkel-norilsk-monchegorsk-moermansk-severonickel.geojson" \
+    --marker "Nadezhda Metallurgical Plant, Norilsk (Nornickel Polar Division) — kop spoor|69.3275,87.9521" \
+    --marker "Dudinka-havenkade, Jenisej — overslag spoor→binnenvaart|69.4030,86.1680" \
+    --marker "Jenisej-golf — bulk-knoop (naad-eindpunt rivierbeen)|71.82880,82.77830" \
+    --marker "Jenisej-golf — MARNET-zeeknoop 2338 (naad-eindpunt zeebeen)|71.9829,82.4669" \
+    --marker "Nornickel Murmansk Transport Division, Портовый проезд 31/1 — overslag zee→spoor (aannemelijk)|68.9737,33.0658" \
+    --marker "Severonickel-fabriek (Kola MMC), Monchegorsk — losplek/raffinaderij, stoppunt|67.9195,32.8320" \
+    --routebrief v2/design/routebrieven/nikkel-norilsk-monchegorsk.md \
+    --uit    v2/data/stroomroute-nikkel-norilsk-monchegorsk.json \
+    --stroom nikkel-norilsk-monchegorsk \
+    --titel  "Nikkel · Norilsk → Dudinka → Moermansk → Monchegorsk (Rusland)"
+}
+
+# ── kobalt · TFM (Fungurume) → Kasumbalesa → Durban → Ningbo (hydroxide, stopt bij de containerkade)
+# Routebrief: v2/design/routebrieven/kobalt-tfm-quzhou.md (lichte werkwijze M29, LAR-563)
+# ⚠️ b1 EN de Durban-aanloopstippel zijn LETTERLIJKE KOPIEËN van bak_koper_durban
+#    (koper-tfm-durban): zelfde truck, zelfde Copperbelt-zuidroute
+#    (RN39/RN1 → Kasumbalesa → T3/T2 → Chirundu → A1/A4 → Beitbridge → N1/N3,
+#    2.982 km) — géén tweede wegscan, géén tweede aanloop-poging.
+# ⚠️ b2 (zee Durban → Ningbo) is NIEUW over MARNET: de afnemer Huayou Quzhou
+#    is een SAMENVLOEIING, aannemelijk — CMOC verkoopt via handelaar IXM, geen
+#    bron koppelt dit hydroxide aan Quzhou specifiek (brief §6/§7).
+# ⚠️ b2a (haven-aanloop Ningbo) is NIEUW: maak_havenaanloop.py vond een pad
+#    over water, 11,6 km / 5 punten / 0,00 km over land — geen terugval nodig.
+# ⚠️ GEEN been C (Ningbo → Huayou Quzhou, ~300 km truck): geen bron toont dat
+#    dit specifieke hydroxide bij Quzhou aankomt (Huayou's eigen due-diligence-
+#    rapport, de enige kandidaat, gaf een 403). De lijn stopt op de Ningbo-kade;
+#    Huayou Quzhou blijft een ongeplaatste knoop (§5/§7, coördinaat niet
+#    gevonden — niet verzonnen, dus ook geen marker).
+bak_kobalt_tfm_quzhou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|kobalthydroxide TFM-plant → Durban DCT Pier 2 (Copperbelt-zuidroute, letterlijke kopie van koper-tfm-durban)|$BEEN/stroombeen-tfm-durban.geojson" \
+    --stippel-geojson "zee|haven-aanloop Durban (schematisch, over water — MARNET reikt niet; letterlijke kopie van koper-tfm-durban)|$BEEN/aanloop-durban.geojson" \
+    --been         "zee|zeeschip Durban → Ningbo (kobalthydroxide; afnemer Huayou Quzhou: samenvloeiing, aannemelijk)|-29.8168,31.1737|29.9758,121.9736" \
+    --stippel-geojson "zee|haven-aanloop Ningbo Beilun (schematisch, over water — MARNET reikt niet tot de containerkade)|$BEEN/kobalt-tfm-quzhou-aanloop-ningbo.geojson" \
+    --marker "TFM hydrometallurgische plant (CMOC/Gécamines), Kwatebala, Fungurume — laadplek (hergebruikt anker)|-10.5685,26.1975" \
+    --marker "Durban — DCT Pier 2, noordkade (overslag truck → container → zeeschip, hergebruikt anker)|-29.8790,31.0160" \
+    --marker "Ningbo Beilun Container Terminal Phase 2 — overslag zeeschip → onbekend vervolg (stoppunt)|29.9353,121.8695" \
+    --routebrief v2/design/routebrieven/kobalt-tfm-quzhou.md \
+    --uit    v2/data/stroomroute-kobalt-tfm-quzhou.json \
+    --stroom kobalt-tfm-quzhou \
+    --titel  "Kobalt · TFM (Fungurume) → Durban → Ningbo (hydroxide)"
+}
+
+# ── nikkel · Weda Bay-put → IWIP-ore-yard (eigen mijnweg, Indonesië)
+# Routebrief: v2/design/routebrieven/nikkel-wedabay-iwip.md (LICHTE werkwijze M29)
+# ⚠️ EEN LANDBEEN, GEEN ZEEBEEN — export naar Chinese roestvrijstaal-mills is
+#    nergens op fabrieksniveau gebrond (brief §6), dus de keten stopt op het
+#    IWIP-ore-yard-anker. GEEN fase-C-been binnen het park: de RKEF-smeltrijen
+#    en de haven liggen 3-5 km oostelijker op hetzelfde terrein maar krijgen
+#    geen eigen anker (werkwijze §1, één anker per site).
+# ⚠️ GEEN gepubliceerde lengte voor de mijnweg — 3,6 km hemelsbreed
+#    (satellietmeting) is een losse controle, geen hard toetsdoel. Gemeten pad:
+#    7,4 km (+104% t.o.v. de hemelsbrede meting) — verwacht door het reliëf,
+#    blijft als bevinding staan (brief §9), niet dichtgetrokken.
+# ⚠️ Beide uiteinden snappen ruim binnen 0,5 km op de weg (0,12 / 0,39 km) —
+#    de scan vond een doorgaand pad over unclassified/tertiary/service, dus
+#    GEEN stippel-knip bij de put nodig (anders dan vooraf verwacht in de
+#    bak-aanwijzing van het onderzoek).
+# ⚠️ ni-iwip-jetty is een MARKER-ALLEEN (haven/kolenopslag verderop op
+#    hetzelfde terrein) — geen been ernaartoe (werkwijze: geen last-mile-been).
+bak_nikkel_wedabay_iwip() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|lateriet-erts actieve dagbouw-put WBN → IWIP-ore-yard (eigen mijnweg, unclassified/tertiary/service)|$BEEN/nikkel-wedabay-iwip-weg-pit-rkef.geojson" \
+    --marker "Actieve dagbouw-put, WBN-contractgebied, Halmahera Tengah — mijn/laadfront|0.4930,127.9350" \
+    --marker "IWIP-terrein Lelilef — ore-yard/eerste industriecluster (RKEF Tsingshan + Huafei-HPAL Huayou), stoppunt|0.4970,127.9670" \
+    --marker "IWIP-havenbekken binnen de golfbreker — jetty (marker, geen been)|0.4745,128.0055" \
+    --routebrief v2/design/routebrieven/nikkel-wedabay-iwip.md \
+    --uit    v2/data/stroomroute-nikkel-wedabay-iwip.json \
+    --stroom nikkel-wedabay-iwip \
+    --titel  "Nikkel · Weda Bay-put → IWIP-ore-yard (Indonesië)"
+}
+
+# ── kobalt · Morowali (Huayue MHP-plant) → Labota-jetty → Ningbo (stopt bij de containerkade)
+# Routebrief: v2/design/routebrieven/kobalt-morowali-quzhou.md (lichte werkwijze M29)
+# ⚠️ b1 is een STIPPEL zonder wegscan: parkinterne IMIP-weg, geen net op deze
+#    korrel (brief b1, ~3,5 km hemelsbreed).
+# ⚠️ b2 (haven-aanloop Labota) is NIEUW via maak_havenaanloop.py: 100,9 km,
+#    exit 0 (0.39 km land-restant zit op de kade-korrel zelf, geen fout) — de
+#    zwaarste haven-aanloop van de zes kobaltassen, +8,5% t.o.v. de brief se
+#    ~93 km, binnen ±15%.
+# ⚠️ b3 (zee Golf van Tolo → zeeknoop bij Ningbo) is de MARNET-router tussen
+#    twee al bestaande zeeknopen (5491 uit de ontwerptoets, 5850 uit
+#    kobalt-tfm-quzhou.md b2) — geen snap-berekening nodig, geen stippel.
+# ⚠️ b4 (haven-aanloop Ningbo Beilun) is een LETTERLIJKE KOPIE van
+#    kobalt-tfm-quzhou.md's b2a-geojson (co-ningbo-kade = exact hetzelfde
+#    punt in beide stromen) — géén tweede aanloop-poging.
+# ⚠️ GEEN been C (Ningbo → Huayou Quzhou): geen coördinaat voor de
+#    vervolgfabriek gevonden deze sessie (brief §6/§7, gedeeld open punt met
+#    kobalt-tfm-quzhou.md); Huayou Quzhou blijft een ongeplaatste knoop,
+#    geen marker.
+bak_kobalt_morowali_quzhou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|parkintern Huayue → Labota-jetty (binnen estate, geen net op deze korrel)|-2.8371,122.1658|-2.8606,122.1871" \
+    --stippel-geojson "zee|haven-aanloop Labota (schematisch, over water — MARNET reikt hier niet: 93 km, zwaarste aanloop van de zes kobaltassen)|$BEEN/kobalt-morowali-quzhou-aanloop-labota.geojson" \
+    --been         "zee|zeeschip Labota → Ningbo (MHP, 4-5% Co; Golf van Tolo → Banda-/Molukse Zee → Filipijnenzee/Zuid-Chinese Zee → Oost-Chinese Zee)|-2.0357,122.0017|29.9758,121.9736" \
+    --stippel-geojson "zee|haven-aanloop Ningbo Beilun (schematisch, over water — MARNET reikt niet tot de containerkade; letterlijke kopie van kobalt-tfm-quzhou)|v2/build-cache/ais/graaf/kobalt-tfm-quzhou-aanloop-ningbo.geojson" \
+    --marker "PT Huayue Nickel Cobalt, Morowali Industrial Park (IMIP), Sulawesi — HPAL-plant, laadplek (aannemelijk)|-2.8371,122.1658" \
+    --marker "Labota-jetty, IMIP-havenzone — overslag parkweg → zee (bron-gelegd)|-2.8606,122.1871" \
+    --marker "Ningbo Beilun Container Terminal Phase 2 — overslag zeeschip → onbekend vervolg (stoppunt, hergebruikt anker)|29.9353,121.8695" \
+    --routebrief v2/design/routebrieven/kobalt-morowali-quzhou.md \
+    --uit    v2/data/stroomroute-kobalt-morowali-quzhou.json \
+    --stroom kobalt-morowali-quzhou \
+    --titel  "Kobalt · Morowali (IMIP) → Labota-jetty → Ningbo (MHP)"
+}
+
+# ── kobalt · KCC Luilu (Kolwezi) → Durban → Kokkola (Umicore-raffinaderij, Finland)
+# Routebrief: v2/design/routebrieven/kobalt-kcc-kokkola.md (LICHTE werkwijze M29)
+# ⚠️ Been 1 (truck) is een NIEUW profiel `kobalt-kcc-durban` — niet dezelfde
+#    bestandskopie als koper-tfm-durban (ander beginpunt: Luilu i.p.v. TFM
+#    Fungurume), wel dezelfde 12 via-punten vanaf Likasi. RN39 Kolwezi→Likasi
+#    kreeg `corridorKlassen: ["tertiary"]` (Oyu Tolgoi-precedent): zonder die
+#    klasse snapte het nieuwe via-punt 8,05 km, mét 3,65 km.
+# ⚠️ Kop-aanloop Durban = LETTERLIJKE KOPIE van `aanloop-durban.geojson` (17,8 km,
+#    uit koper-kolwezi-durban) — geen nieuwe scan. Staart-aanloop Kokkola is wél
+#    nieuw: de Kokkola-zeeknoop (8821, 64.0369,22.7535) ligt 23,4 km van de kade
+#    (binnen --max-snap 25 maar dicht bij de grens en over de Kvarken-scherenkust)
+#    → `maak_havenaanloop.py` gedraaid, geslaagd (25,4 km, 0,00 km over land).
+# ⚠️ Laadhaven Durban is AANNEMELIJK (branche-default, Fastmarkets — Glencore
+#    publiceert geen haven); dat staat in de beennaam, niet in de lijnstijl.
+# ⚠️ Fase C (kade → Umicore-raffinaderij, <3 km) krijgt GEEN eigen been (lichte
+#    werkwijze) — alleen de marker `co-kip-umicore`. Fase D (raffinaderij →
+#    precursorlijn, zelfde terrein) wordt niet getekend, alleen genoemd in §5
+#    van de brief (één bron).
+bak_kobalt_kcc_kokkola() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|kobalthydroxide KCC Luilu-plant, Kolwezi → Durban DCT Pier 2 (RN39 → RN1 → T3/T2 → A1/A4 → N1/N3)|$BEEN/kobalt-kcc-kokkola-weg-kcc-durban.geojson" \
+    --stippel-geojson "zee|haven-aanloop Durban (schematisch, over water — MARNET-knoop 16,7 km buiten de haven; letterlijke kopie van koper-kolwezi-durban)|$BEEN/aanloop-durban.geojson" \
+    --been         "zee|zeeschip Durban DCT Pier 2 → Port of Kokkola (kobalthydroxide, om de Kaap · Skagerrak · Kattegat · Oostzee · Botnische Golf; laadhaven Durban aannemelijk: branche-default, Glencore publiceert geen haven)|-29.8790,31.0160|63.8645,23.0270" \
+    --stippel-geojson "zee|haven-aanloop Kokkola (schematisch, over water — zeeknoop 8821 ligt 23,4 km van de kade, Kvarken-scherenkust)|$BEEN/kobalt-kcc-kokkola-aanloop-kokkola.geojson" \
+    --marker "KCC (Glencore 75%) Luilu hydrometallurgische plant, Kolwezi|-10.7205,25.3620" \
+    --marker "Durban Container Terminal Pier 2 (Bayhead) — hergebruikt anker|-29.8790,31.0160" \
+    --marker "Kokkolan syväsatama (Deep Port), Port of Kokkola|63.8645,23.0270" \
+    --marker "Umicore Finland Oy, Kokkola Industrial Park — raffinaderij + precursorlijn (fase D, onzeker perceel)|63.8580,23.0490" \
+    --routebrief v2/design/routebrieven/kobalt-kcc-kokkola.md \
+    --uit    v2/data/stroomroute-kobalt-kcc-kokkola.json \
+    --stroom kobalt-kcc-kokkola \
+    --titel  "Kobalt · KCC Kolwezi → Durban → Kokkola (Umicore)"
+}
+
+# ── nikkel · Ouaco-mijnplateau → Téoudié-laadkade → Gwangyang (SNNC) → Pohang (POSCO)
+# Routebrief: v2/design/routebrieven/nikkel-ouaco-gwangyang.md (LICHTE werkwijze M29)
+# ⚠️ b1 IS EEN VERWACHTE-MISLUKKING-POGING: het profiel
+#    nikkel-ouaco-gwangyang-ouaco-teoudie (nieuw-caledonie-extract) geeft "geen
+#    wegpad" — de Ouaco-mijnweg "Mines" is in OSM vrijwel volledig `track`, en
+#    track komt de scanner nooit door (ook niet via corridorKlassen). Rechte
+#    stippel met de reden in de naam, geen tweede poging.
+# ⚠️ b2/b3 ZIJN VOLLEDIG STIPPEL, ZONDER BETROUWBAAR TUSSENANKER: de rede/
+#    ankerplaats Téoudié heeft geen gepubliceerde coördinaat (brief §7); het
+#    redepunt (-20.760,164.375) is een schatting ~2-3 km uit de kust op het rif.
+# ⚠️ b3/b5 ZIJN HAVEN-AANLOPEN VAN maak_havenaanloop.py (getekend, blijven
+#    stippel): Ouaco 98,2 km (rif, geen landkruising midden op de lijn) tegen
+#    ~102 km in de brief; Gwangyang 25,5 km tegen ~22,1 km — allebei binnen het
+#    schematische karakter van een aanloop, geen gemeten been.
+# ⚠️ GEEN EIGEN BEEN VOOR KADE → SNNC-FABRIEK: beide liggen op hetzelfde
+#    Gwangyang-industrieterrein (~2,4 km) — korte stippel-`truck` als
+#    procesgat, geen lijn dwars door het complex (Tongling/Manyar-klasse).
+# ⚠️ b7 (SNNC → Pohang) IS AANNEMELIJK: ÉÉN BRON NOEMT POHANG ALS AFNEMER, GEEN
+#    ENKELE NOEMT DE ROUTE. Vrije Dijkstra over het zuid-korea-extract
+#    (WEG_HOUD, motorway t/m secondary): 239,8 km tegen de kaart-schatting van
+#    ~250 km (-4,1%), geen publicatie om hard tegen te toetsen.
+bak_nikkel_ouaco_gwangyang() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|vrachtwagen Ouaco-mijnplateau → Téoudié-laadkade (privé mijnweg \"Mines\", geen net op deze korrel)|-20.7400,164.4750|-20.7566,164.3822" \
+    --stippel      "zee|bakken Téoudié-laadkade → rede (geen kade voor zeeschepen; bakken 250-330 t achter sleepboten)|-20.7566,164.3822|-20.760,164.375" \
+    --stippel-geojson "zee|haven-aanloop Ouaco (schematisch, over het barrièrerif — MARNET reikt niet tot de rede)|$BEEN/nikkel-ouaco-gwangyang-aanloop-ouaco.geojson" \
+    --been         "zee|zeeschip Ouaco-aanloop → Gwangyang-aanloop (Koraalzee → Salomonszee/Bismarckzee → Filipijnenzee → Oost-Chinese Zee)|-20.9000,163.5000|34.7100,127.8204" \
+    --stippel-geojson "zee|haven-aanloop Gwangyang (schematisch, over water — MARNET-zeeknoop ligt buiten de 25 km-snap van de kade)|$BEEN/nikkel-ouaco-gwangyang-aanloop-gwangyang.geojson" \
+    --stippel      "truck|kade → SNNC-terrein (zelfde Gwangyang-industriehaven, procesgat)|34.9095,127.7280|34.9295,127.7360" \
+    --been-geojson "truck|ferronikkel SNNC Gwangyang → POSCO-staalfabriek Pohang (aannemelijk: één bron, geen gedocumenteerde corridor)|$BEEN/nikkel-ouaco-gwangyang-weg-snnc-pohang.geojson" \
+    --marker "NMC-mijnplateau Ouaco (Kaala-Gomen)|-20.7400,164.4750" \
+    --marker "Téoudié-laadkade, Cotransmine (Kaala-Gomen, westkust)|-20.7566,164.3822" \
+    --marker "SNNC ferronikkelfabriek, Gwangyang Industrial Complex|34.9295,127.7360" \
+    --marker "Bulkkade, POSCO Gwangyang-industriehaven|34.9095,127.7280" \
+    --marker "POSCO geïntegreerd staalcomplex Pohang|36.0180,129.3820" \
+    --routebrief v2/design/routebrieven/nikkel-ouaco-gwangyang.md \
+    --uit    v2/data/stroomroute-nikkel-ouaco-gwangyang.json \
+    --stroom nikkel-ouaco-gwangyang \
+    --titel  "Nikkel · Ouaco → Téoudié → Gwangyang (SNNC) → Pohang (POSCO)"
+}
+
+# ── nikkel · IMIP Morowali (Huayue) → Ningbo (Beilun, hergebruikt anker) → Quzhou (Huayou)
+# Routebrief: v2/design/routebrieven/nikkel-morowali-quzhou.md (LICHTE werkwijze M29)
+# ⚠️ b1 (zee): IMIP-jetty ligt 92,9 km van de dichtstbijzijnde MARNET-zeeknoop
+#    (5491, -2.03570,122.00170) — geen aanloop-tweede-poging nodig, de eerste
+#    trap (0,01° gebufferd) vond een schoon pad (95,6 km, 0% over land) →
+#    `maak_havenaanloop.py` als STIPPEL-GEOJSON; het zeebeen zelf begint op de
+#    zeeknoop, niet op de kade. Beilun is het HERGEBRUIKTE anker uit de
+#    koperketen en al aangesloten — geen tweede aanloop aan die kant.
+# ⚠️ b2 (truck): het profiel `nikkel-morowali-quzhou-beilun-quzhou` in
+#    maak_stroombeen_weg.py — beide via-punten (Shaoxing/Jinhua) zijn
+#    Nominatim-stadscentroïdes, geprojecteerd op de doorgaande G60 door de
+#    scanner (snap 0,00–0,16 km, ruim binnen 5 km). GEEN gepubliceerde km
+#    (brief §7): de gescande 405,7 km tegen de ~300 km-corridorschatting over
+#    de kaart is GEEN ±15%-toets, alleen een referentie voor later gebruik —
+#    +35,2%, buiten de gebruikelijke ±10/15%-band, bewust niet dichtgetrokken.
+#    Huayou Quzhou-fabriek blijft regio-niveau (perceel niet gelegd, brief §3/§7).
+# ⚠️ SCM-mijn (Konawe) → IMIP-slurryleiding (~62 km, Huayou-persbericht) is
+#    NIET getekend: het pompstation op het Routa-plateau heeft geen
+#    gepubliceerde coördinaat en is deze sessie niet satelliet-gelegd (brief §7).
+#    IMIP-processing (Huayue e.a.) → IMIP-jetty is eigen terrein en blijft
+#    ongetekend (ketenkaart §1) — alleen de site-marker staat op de kaart.
+# ⚠️ Fase D vervalt (brief §6): geen bron noemt de afnemer van Quzhou's
+#    sulfaat/precursor.
+bak_nikkel_morowali_quzhou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel-geojson "zee|haven-aanloop IMIP-jetty (Bahodopi) (schematisch, over water — MARNET reikt niet tot de kust: 92,9 km)|$BEEN/nikkel-morowali-quzhou-aanloop-imip.geojson" \
+    --been         "zee|zeeschip IMIP (Bahodopi) → Ningbo/Beilun-losberth (hergebruikt anker, koperketen — MHP in containers/big bags)|-2.03570,122.00170|29.9364,121.883" \
+    --max-snap 25 \
+    --been-geojson "truck|MHP-container Ningbo/Beilun-losberth → Huayou Quzhou-fabriek (G60 via Shaoxing–Jinhua, aannemelijk: één bron voor de exacte afnemer)|$BEEN/nikkel-morowali-quzhou-weg-beilun-quzhou.geojson" \
+    --marker "IMIP-verwerkingszone, Bahodopi, Morowali — Huayue Nickel Cobalt (HPAL/MHP, eigen terrein niet getekend)|-2.8250,122.1600" \
+    --marker "IMIP-exporthaven, oostpunt van het complex, Bahodopi|-2.8480,122.1980" \
+    --marker "Ningbo–Zhoushan, Beilun-losberth (hergebruikt anker, koperketen)|29.9364,121.8830" \
+    --marker "Huayou New Energy Technology (Quzhou) — nikkelsulfaat-/precursorfabriek (regio-niveau, onzeker)|28.9020,118.8780" \
+    --routebrief v2/design/routebrieven/nikkel-morowali-quzhou.md \
+    --uit    v2/data/stroomroute-nikkel-morowali-quzhou.json \
+    --stroom nikkel-morowali-quzhou \
+    --titel  "Nikkel · Morowali (IMIP) → Ningbo (Beilun) → Quzhou (Huayou)"
+}
+
+# ── nikkel · Taganito (Claver) → THPAL → Niihama (Japan), met vertakking Hachinohe (DSO)
+# Routebrief: v2/design/routebrieven/nikkel-taganito-niihama.md (LICHTE werkwijze M29)
+# ⚠️ b1 is een NIEUWE wegscan (profiel nikkel-taganito-niihama-taganito-thpal,
+#    corridorKlassen ruim + eindToegangPrivaat True, extract filipijnen): 1,8 km
+#    tegen het brief-venster van 3-8 km (-67,1%, buiten ±10% — bevinding, geen
+#    via-punt bijgeschoven; de twee terreinen liggen simpelweg dichter bij
+#    elkaar dan het venster veronderstelde — hemelsbreed is al maar 1,2 km).
+# ⚠️ THPAL-plant → THPAL-kade (~1,2 km) is GEEN eigen been (site-intern,
+#    Portsite-patroon uit de Grasberg-brief) — de MS "verschijnt" op
+#    ni-thpal-pier; dat procesgat blijft bewust staan (zie §9).
+# ⚠️ Twee haven-aanlopen via maak_havenaanloop.py: Claver 65,9 km (brief
+#    ~51-56, omwegfactor 1,089) en Niihama 25,7 km (brief ~24,8, snap net
+#    onder de max-snap-grens) — beide zonder landkruising midden op de lijn.
+# ⚠️ b3 is het enige GEMETEN zeebeen (MARNET-zeeknoop 8314 → 5746): doorgetrokken.
+# ⚠️ Vertakking (DSO naar PAMCO Hachinohe, bedrijfsniveau gebrond) via
+#    voeg_been_toe.py --vertakt-van, NA de hoofdbake in dezelfde functie:
+#    b5 (zeeknoop 8314 → Hachinohe-zeeknoop 5690, doorgetrokken, NIET gemeten
+#    in de brief-toets — console-km 4.004,9 is leidend, niet de schatting
+#    3.300-3.800) en b6 (Hachinohe-zeeknoop → PAMCO Hachinohe, stippel: haven
+#    reikt niet tot MARNET ÉN de kade-positie is onzeker — geen OSM-naam-tag
+#    bevestigt welk perceel PAMCO is; dat is een aparte reden naast de
+#    klassieke stippel-conventie, zie §9). Rechte stippellijn (10,3 km,
+#    0% over land per maak_havenaanloop) i.p.v. een geojson: voeg_been_toe.py
+#    kent geen geojson-stippel-optie (alleen hecht_marnet.py --stippel-geojson
+#    heeft die), en op deze korte aanloop maakt dat geometrisch niets uit.
+bak_nikkel_taganito_niihama() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Taganito-mijn (TMC) → THPAL-plant (eigen mijnweg, aangrenzend terrein)|$BEEN/nikkel-taganito-niihama-weg-taganito-thpal.geojson" \
+    --stippel-geojson "zee|haven-aanloop Claver/THPAL-kade (schematisch, over water — MARNET reikt niet tot de kade: 65,9 km)|$BEEN/nikkel-taganito-niihama-aanloop-claver.geojson" \
+    --been         "zee|zeeschip Claver/THPAL-kade → MARNET-zeeknoop 5746 (mixed sulfide naar Niihama; oostelijk om Kyushu, Bungo-kanaal in)|9.8356,125.3465|34.0720,133.0479" \
+    --stippel-geojson "zee|haven-aanloop Niihama Nickel Refinery (schematisch, over water — MARNET reikt niet: 25,7 km, snap net onder de max-snap-grens)|$BEEN/nikkel-taganito-niihama-aanloop-niihama.geojson" \
+    --marker "Taganito Mining Corporation (Nickel Asia), Brgy. Taganito, Claver — laadplek erts/DSO|9.5464,125.8193" \
+    --marker "Taganito HPAL Nickel Corporation (THPAL) — plant|9.5395,125.8106" \
+    --marker "Taganito/Claver-laadsteiger (TMC/THPAL) — overslagkade|9.5490,125.8160" \
+    --marker "Niihama Nickel Refinery, Sumitomo Metal Mining — raffinaderij (stoppunt kathode)|33.9669,133.2658" \
+    --routebrief v2/design/routebrieven/nikkel-taganito-niihama.md \
+    --uit    v2/data/stroomroute-nikkel-taganito-niihama.json \
+    --stroom nikkel-taganito-niihama \
+    --titel  "Nikkel · Taganito (Claver) → THPAL → Niihama (Japan)"
+
+  # Vertakking DSO → PAMCO Hachinohe: aangehecht ná de hoofdbake, geen herbake
+  # van b1-b4 (besluit Lars 2026-08-06: bakken is geen deliverable).
+  python v2/tools/voeg_been_toe.py \
+    --stroom v2/data/stroomroute-nikkel-taganito-niihama.json \
+    --been "zee|MARNET-zeeknoop 8314 → Hachinohe-zeeknoop (vertakt van b2, DSO naar PAMCO; niet gemeten in de brief-toets — console-km leidend)|$BEEN/nikkel-taganito-niihama-vertakking-hachinohe.geojson" \
+    --vertakt-van 2
+
+  python v2/tools/voeg_been_toe.py \
+    --stroom v2/data/stroomroute-nikkel-taganito-niihama.json \
+    --stippel "zee|haven-aanloop PAMCO Hachinohe, Kawaraki-havengebied (schematisch, over water — MARNET reikt niet + kade-positie onzeker: geen OSM-naam-tag bevestigt welk perceel PAMCO is)|40.62650,141.58630|40.578,141.482" \
+    --marker "PAMCO (Pacific Metals Co.) Hachinohe — Kawaraki-havengebied (onzeker: geen naam-tag bevestigt het perceel)|40.578,141.482" \
+    --vertakt-van 5
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom
