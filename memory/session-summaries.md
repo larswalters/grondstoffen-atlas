@@ -1,6 +1,20 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-26 - M30 zes grondstoffen verhaal-compleet in drie golven (`?v=121` → `?v=124`)
+
+Lars na `?v=121`: "ziet er wel goed uit, kan je op deze manier nog meer grondstoffen uitwerken — ultracode staat aan."
+Ontwerp-workflow (14 agenten: gereedschapsrapport + `bakhandleiding-licht.md`, UI-analyse, zes ontwerpen, zes
+haalbaarheidstoetsen → 33 assen, 30 haalbaar, 8 wezenlijk gecorrigeerd), centrale voorbereiding (LAR-565: `ree`-kleur,
+generieke dispatch, `voeg_sites_toe --grondstof`, gloedlaag per bestand, HUD-groepen per grondstof). De eerste workflow
+(66 agenten, hoofdmodel) strandde na vier brieven op de sessielimiet; op Lars' aanwijzing gestopt en in drie golven op
+Sonnet 5 hervat: lithium+grafiet (`eb67f59`, `?v=122`), kobalt+nikkel (`4a141f5`, `?v=123`), REE+kolen (`b98eb96`,
+`?v=124`). 30/30 ketens gebakken en getoetst (Sudbury met twee teruglopen als bevinding); sitelagen 28·16·19·36·13·41
+sites met gewicht (projecten, gesloten fabrieken en sites zonder cijfer bewust zonder gewicht). Eerlijke stoppunten:
+kobalt op de Ningbo-containerkade (Huayou niet gebrond), Kachin bij de douane, Taldinsky op de kade, Bayan Obo bij de
+scheiding; Weda Bay→IWIP als landketen van 8 km. Bol: 42 stromen, 7 gloedlagen, 234 sites, 0 console-fouten.
+LAR-565 t/m LAR-571 Done. Wiki: `2026-09-26-grondstoffen-atlas-m30-zes-grondstoffen-verhaal-compleet`.
+
 ## 2026-09-25 - M29 koper verhaal-compleet: lichte werkwijze, sitelaag, zeven ketens + Lobito fase D (`?v=120` → `?v=121`)
 
 Lars koos variant 1 (*verhaal-compleet*) met de eis "sneller, zodat het visuele plaatje eerder in beeld

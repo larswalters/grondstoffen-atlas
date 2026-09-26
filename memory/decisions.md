@@ -1,5 +1,30 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-25 (laatst: M29 — variant 1 onder de lichte werkwijze)*
+*Last updated: 2026-09-26 (laatst: M30 — zes grondstoffen in golven met agenten)*
+
+## 2026-09-26 — M30: zes grondstoffen verhaal-compleet, in golven met agenten
+
+- **2026-09-26 · ✅ LARS — "OP DEZE MANIER NOG MEER GRONDSTOFFEN", MET ULTRACODE.** Na `?v=121`: *"ziet er wel goed uit, kan je
+  op deze manier nog meer grondstoffen uitwerken; ik heb ultracode aangezet."* Gekozen (mijn voorstel): lithium, grafiet,
+  kobalt, nikkel, zeldzame aardmetalen, kolen — de batterijmetalen plus de zwaarste bulkstroom.
+- **2026-09-26 · ONTWERP + SKEPTISCHE TOETS VÓÓR DE BRIEF.** Per grondstof kiest een agent de assen; een tweede agent probeert
+  elke keten af te wijzen tegen het gereedschapsrapport en webchecks. Reden: de v1-data is een checklist met natte-vinger-
+  routes (Olaroz "via Antofagasta", Huafei "op Morowali", Sudbury "via de Ottawa-vallei") — 8 van 33 assen veranderden.
+- **2026-09-26 · ✅ LARS — GROTE WORKFLOWS IN GOLVEN OP SONNET 5.** *"Stop de workflow, sla de cache op zodat we met een ander
+  model verder kunnen … deze run kan je niet eens afmaken met een Max 20-account"* en *"beter met Sonnet 5"*. Eén workflow
+  van 66 agenten strandde na vier brieven; sindsdien ~10 ketens + 2 sitelagen per golf, `model: "sonnet"` in de agent-opts,
+  na elke golf pushen met link.
+- **2026-09-26 · GEDEELDE BESTANDEN MOGEN PARALLEL, MET VASTE ANKERS.** Het M29-besluit "geometrie sequentieel" is losgelaten:
+  functies vóór de ankerregel in `bak_stromen.sh`, profielen ná de ankerregel in `PROFIELEN`, kleine gerichte edits,
+  tussenuitvoer met stroom-id-prefix, wegscans door een semafoor van vier. 30 bakes zonder botsing.
+- **2026-09-26 · GLOEDGEWICHT ALLEEN MET BRON ÉN PRODUCTIE.** Projecten, gesloten/gesuspendeerde fabrieken en sites zonder
+  cijfer krijgen geen gewicht (wel in het rapport, `sites_zonder_gewicht`). Reden: v1 leerde al dat niet-producerende
+  plekken anders dikke bollen krijgen; de gloed-tegenhanger van "geen coördinaat verzinnen".
+- **2026-09-26 · EÉN GLOEDBESTAND PER GRONDSTOF, NORMALISATIE PER BESTAND** — samenvoegen of globaal normaliseren zou de
+  koperhelderheid verschuiven; `gloednodes-koper.json` bleef byte-identiek.
+- **2026-09-26 · `ree` IS DE SLEUTEL/PREFIX VOOR ZELDZAME AARDMETALEN**, omdat `grondstofVan()` op het eerste streepje
+  splitst; `rare-earths` blijft als ongebruikte kleurregel staan.
+- **2026-09-26 · EEN STROOM-ID BELOOFT NIET MEER DAN DE LIJN TEKENT** (les `ree-ganzhou-ningbo-eu`, afgewezen): ketens
+  stoppen waar het bewijs stopt, ook als ze kort worden (Kachin 119 km, Weda Bay 8 km, Sillamäe 29 km).
 
 ## 2026-09-25 — M29: variant 1 onder de lichte werkwijze
 

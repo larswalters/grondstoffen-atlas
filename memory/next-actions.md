@@ -1,7 +1,34 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-25 (laatst: M29 af — sitelaag + zeven ketens live `?v=121`)*
+*Last updated: 2026-09-26 (laatst: M30 af — zes grondstoffen, 42 stromen live `?v=124`)*
 
-## 🔴 NIEUW 2026-09-25 (laatst) — M29 is af; wat er nu ligt
+## 🔴 NIEUW 2026-09-26 (laatst) — M30 is af; wat er nu ligt
+
+0. **Lars kijkt op de bol** (`?v=124`, *per grondstof* + *donker*): is dit de vorm voor alle grondstoffen, en zijn 42 stromen
+   standaard aan te druk/traag op de telefoon? Terugval: alleen koper standaard aan, de rest via de "alles"-knop per grondstof.
+1. **Registerronde China voor alle zes lagen** — het MEE-emissieregister is een derde keer verhuisd (cookie + tempReportKey);
+   recept `v2/design/zoek-chinees-adres-recept.md` bijwerken in een interactieve sessie. Doel: Huayou Quzhou, GEM Jingmen,
+   Jinchuan, CNGR Tongren, de lithiumconverters (Tianqi/Ganfeng/Yahua/Chengxin), anodebases (Shanshan/BTR/Putailai), Northern
+   en Southern Rare Earth — nu stadscentroïden of afwezig. Daarmee kunnen ook de kobalt/nikkel-ketens naar Quzhou doorlopen.
+2. **Sites zonder gewicht terughalen** zodra er een bron is: `v2/design/<grondstof>-sitelaag.json` → `sites_zonder_gewicht`
+   (lithium 6 · grafiet 15 · kobalt 16 · nikkel 5 · ree 19 · kolen 0). Gallois (orde-schatting) en de vier NPI-sites met
+   omgerekend Ni-cijfer zijn onzeker.
+3. **Visuele fase LAR-490** met het nieuwe materiaal: hemelsbreed-variant, lijnstijl per modaliteit, koepels kern/halo,
+   stadslichten, kometen uit volume; overweeg een gloedschaal per grondstof (Mt kolen ≠ kt koper) en een performance-meting met
+   42 stromen (headless Chrome, telefoon).
+4. **Nazorg per keten (§7/§9 van de brieven):** Lake Charles→De Soto 433 KB en Olaroz→Naraha 336 KB (> 300 KB-richtwaarde,
+   punten uitdunnen?); Sudbury b1 twee teruglopen in het Toronto-net; Bayan Obo b1 drie teruglopen; `coal-cerrejon-laad` in
+   `aansluitingen.json` nog op de quarry-centroïde; Greenbushes-brief §6a/§8 op de ?v=104-stand; Mundra-kolenjetty en
+   Manyar-loskade zonder Esri-bron.
+5. **Overige zeven grondstoffen** (goud, zilver, uranium, PGM, olie, gas, diamant) op dezelfde manier — luchtvracht en
+   pijpleidingen vragen een eigen patroon; alleen als Lars het wil.
+6. **Kleine gereedschapswensen** uit de handleiding: `BAKE_SUFFIX=-raw` als default in `toets_spoorroute.mjs`, een
+   `--timeout` in `maak_havenaanloop.py`, een node-toets voor stroomroute-json.
+
+> ✅ AFGEHANDELD 2026-09-26: LAR-565 t/m LAR-571 (centrale voorbereiding + zes grondstoffen) · HUD-groepen per grondstof ·
+> bakhandleiding · `voeg_sites_toe.py` per grondstof · het M29-punt "is dit de vorm voor de andere grondstoffen" is met
+> zes grondstoffen beantwoord in de praktijk.
+
+## 🔴 NIEUW 2026-09-25 (eerder) — M29 is af; wat er nu ligt
 
 0. **Lars kijkt op de bol** (`?v=121`, atlasmodus *per grondstof* + *donker*, twaalf stroomknoppen). Vraag:
    wat mist er aan het koperverhaal, en is dit de vorm waarin de andere grondstoffen moeten volgen?

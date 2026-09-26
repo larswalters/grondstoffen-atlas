@@ -1,5 +1,28 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-25 (M29-bakes: track/scanner, havenaanloop-hang, onzekere ankers, emplacement-stippels)*
+*Last updated: 2026-09-26 (M30: sessielimiet, MEE-register, 42 stromen standaard aan, bestanden > 300 KB)*
+
+## 🟡 NIEUW 2026-09-26 — risico's uit M30 (zes grondstoffen, drie golven)
+
+1. **Een workflow van 66 agenten op het hoofdmodel haalt de sessielimiet van het Max 20-account niet** (4 brieven, daarna
+   "session limit"). Werkregel: golven van ~10 ketens, agenten op Sonnet 5, journal-cache bewaren, stale sloten opruimen.
+2. **42 stromen standaard aan** — performance op de telefoon nooit gemeten (bugs-and-risks #9 van M29 waarschuwde al bij 12);
+   elke stroom wordt twee keer gefetcht (route + leven). Terugval: alleen koper aan.
+3. **Het MEE-emissieregister is opnieuw verhuisd** (redirect naar errorinfo.jsp; cookie + tempReportKey) — alle Chinese sites
+   van de nieuwe lagen staan op stadscentroïde of ontbreken (Huayou Quzhou!), en de kobalt/nikkel-ketens stoppen daardoor
+   op de Ningbo-kade.
+4. **Eenheden per gloedlaag zijn niet onderling vergelijkbaar** (Mt kolen vs kt Cu; kt NdFeB naast kt REO in één laag) —
+   normalisatie per bestand verbergt dat binnen een laag, maar een gloedschaal per grondstof ontbreekt.
+5. **Twee stroombestanden > 300 KB** (grafiet-lakecharles-desoto 433 KB door brede corridorKlassen, lithium-olaroz-naraha
+   336 KB) — laadtijd op de telefoon.
+6. **Buiten de ±15 %-norm, als bevinding gelaten:** Olaroz b3 +28 % (geen gepubliceerde km), Bougouni b1 +31 % (tracé niet
+   gepubliceerd), Carmen→ATI +15,4 %, Kalgoorlie–Kewdale +15,3 %, Weda Bay +104 % tegen hemelsbreed; naden > 5 km bij
+   Beira (7,8, brief-eigen keuze), QQCT (5,6), Hay Point (5,6), Mundra (21,8).
+7. **Teruglopen in het 1-op-1-spoornet** (Sudbury 2×, Bayan Obo 3×, Khabarovsk 1×, Jinzhou 1×) zijn topologisch
+   afgedwongen (doodlopende emplacementen/zigzags), niet gerepareerd — LAR-539-klasse.
+8. **Schattingen als gewicht, gemarkeerd onzeker:** Gallois 15/10 kt; vier Chinese NPI-sites omgerekend uit NPI-tonnage;
+   TFM/KFM 55/55 kt als split van het CMOC-totaal.
+9. **`toets_spoorroute.mjs` routeert stil over het tekennet zonder `BAKE_SUFFIX=-raw`** — nu in de handleiding, nog geen
+   default in het tool.
 
 ## 🟡 NIEUW 2026-09-25 — lessen en open risico's uit de M29-bakes
 

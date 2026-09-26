@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-25 (laatst: M29 koper verhaal-compleet — lichte werkwijze, sitelaag, zeven ketens, live ?v=121)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-26 (laatst: M30 zes grondstoffen verhaal-compleet in drie golven — 42 stromen, 7 gloedlagen, live ?v=124)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3930,6 +3930,17 @@ per grondstof volgens het lithium-schema; "eerst ontwerpen, dan bouwen".
   Afwijkingen als aparte issues (Lars' verzoek): LAR-447 (recycle-chip-tooltip nog REE-bewoord, raakt gedeelde `ui.js`) + LAR-448
   (optionele Pt/Pd-exchange-laag, pure data). Sectie J: alléén `data/pgm.js`+`design/pgm.md` gecommit (`2c4b668`). Details in `memory/decisions.md`.
 
+- **2026-09-26 · M30 zes grondstoffen verhaal-compleet in drie golven (`?v=122` → `?v=124`)** — lithium 5 · grafiet 4 · kobalt 4 ·
+  nikkel 6 · zeldzame aardmetalen 5 · kolen 6 = 30 nieuwe ketens + zes sitelagen, door agenten volgens `routebrief-licht.md` en de
+  nieuwe `v2/design/bakhandleiding-licht.md`. Ontwerp + skeptische toets per grondstof vóór de brief (8 van 33 assen gecorrigeerd,
+  2 afgewezen). Centraal: `ree`-sleutel, generieke dispatch in `bak_stromen.sh`, `voeg_sites_toe.py --grondstof/--eenheid`,
+  gloedlaag per bestand, HUD-groepen per grondstof. Details in `memory/decisions.md`.
+- **2026-09-26 · Grote workflows in golven op Sonnet 5** — één workflow van 66 agenten op het hoofdmodel strandde op de sessielimiet;
+  sindsdien golven van ~10 ketens, agenten op een goedkoper model, push + link na elke golf. Gedeelde bestanden mogen parallel bewerkt
+  worden met vaste invoegankers; wegscans door een semafoor van vier.
+- **2026-09-26 · Gloedgewicht alleen met bron én productie** — projecten, gesloten fabrieken en sites zonder cijfer staan in
+  `sites_zonder_gewicht` van de sitelaag-json en gloeien niet; één `gloednodes-<sleutel>.json` per grondstof, normalisatie per bestand.
+
 ## E - Memory Map
 
 De projectgeschiedenis en werkgeheugen leven in `memory/` (6 files, conventie zoals de andere projecten):
@@ -3949,6 +3960,9 @@ Daarnaast `design/`:
 En in `v2/design/` (sinds 2026-09-25):
 - `routebrief-licht.md` — de **lichte werkwijze + sjabloon** (M29 en verder); `routebrieven/koper-*.md` de brieven
   (§9 = bak-noot met benen/km/lessen); `koper-sitelaag.md/.json` — de bronlijst van de wereldwijde sitelaag.
+- `bakhandleiding-licht.md` — gereedschap per modaliteit + werkafspraken voor parallelle bak-agenten (M30).
+- `routebrieven/{lithium,grafiet,kobalt,nikkel,ree,kolen}-*.md` en `<grondstof>-sitelaag.md/.json` — de zes grondstoffen van M30;
+  `sites_zonder_gewicht` in de json = sites zonder gebronde capaciteit/productie (wel gedocumenteerd, niet in de gloed).
 
 De browsbare wiki-samenvatting staat onder `Portable LLM brain\wiki\projects\General\grondstoffen-atlas\`.
 

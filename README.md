@@ -2,6 +2,8 @@
 
 **🌍 Live:** https://larswalters.github.io/grondstoffen-atlas/ — werkt op elke PC en mobiel.
 
+**v2 (routes-atlas):** https://larswalters.github.io/grondstoffen-atlas/v2/ — zeven grondstoffen verhaal-compleet (koper, lithium, grafiet, kobalt, nikkel, zeldzame aardmetalen, kolen): 42 gemeten stromen en 234 gloedsites, HUD per grondstof (stand 2026-09-26, `?v=124`). Werkwijze: `v2/design/routebrief-licht.md`, bakken: `v2/design/bakhandleiding-licht.md`.
+
 > **Deploy = GitHub Pages** (branch `main`, root). Elke `git push` naar `origin` werkt de live site automatisch bij (~1-2 min rebuild).
 > Een `.nojekyll`-bestand in de root zorgt dat de `_`-bestanden (`data/_registry.js`, `data/_chokepoints.js`) óók geserveerd worden —
 > zonder dat negeert Jekyll ze en werkt de atlas niet.

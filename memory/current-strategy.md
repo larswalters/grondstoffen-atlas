@@ -1,7 +1,26 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-25 (laatst: M29 koper verhaal-compleet — lichte werkwijze, sitelaag, zeven ketens, `?v=121`)*
+*Last updated: 2026-09-26 (laatst: M30 zes grondstoffen verhaal-compleet in drie golven, `?v=124`)*
 
-## Stand 2026-09-25 (laatst) — M29: koper verhaal-compleet onder de LICHTE werkwijze
+## Stand 2026-09-26 (laatst) — M30: zes grondstoffen verhaal-compleet, in golven met agenten
+
+1. **De lichte werkwijze schaalt.** Per grondstof eerst een ONTWERP (assen uit het v1-register + webbronnen) dat door een
+   skeptische toets-agent tegen het gereedschap wordt gehouden (extracts aanwezig? spoornet? MARNET-zeeknoop? afnemer
+   gebrond?); pas daarna brieven en bakes. De toets veranderde 8 van de 33 assen wezenlijk en wees er 2 af.
+2. **Agentwerk parallel, ook op de gedeelde bestanden.** Vaste invoegankers (`# ── NIEUWE STROOMFUNCTIES HIERBOVEN
+   INVOEGEN` in `bak_stromen.sh`, `# ── NIEUWE PROFIELEN HIERONDER INVOEGEN` in `PROFIELEN`), alle tussenuitvoer in
+   build-cache met het stroom-id als prefix, wegscans door een semafoor van vier sloten; register, HUD, sitelaag-merge,
+   `?v=`-bump, console-toets en commit blijven centraal. `v2/design/bakhandleiding-licht.md` is de handleiding.
+3. **In golven, op een goedkoper model.** Eén workflow van 66 agenten op het hoofdmodel strandde op de sessielimiet;
+   sindsdien golven van ~10 ketens + 2 sitelagen op Sonnet 5 (`model`-optie in de workflow), na elke golf integreren en
+   pushen. Drie golven = 30 ketens in één dag.
+4. **Eén gloedbestand per grondstof** (`gloednodes-<sleutel>.json`, gevoed uit `design/<sleutel>-sitelaag.json` via
+   `voeg_sites_toe.py --grondstof --eenheid`), normalisatie per bestand. Gewicht alleen met gebronde capaciteit én
+   productie; de rest in `sites_zonder_gewicht`. Eenheden per grondstof: kt LCE/j · kt/j per rol · kt Co-inhoud/j ·
+   kt Ni-inhoud/j · kt REO/j (+ kt NdFeB/j) · Mt kolen/j.
+5. **Sleutel = id-prefix = kleur:** `ree` (niet `rare-earths`), en het `grondstof`-veld in STROMEN stuurt de HUD-groep.
+6. **Ketens stoppen waar het bewijs stopt**, ook als de as kort wordt; een stroom-id belooft niet meer dan de lijn tekent.
+
+## Stand 2026-09-25 (eerder) — M29: koper verhaal-compleet onder de LICHTE werkwijze
 
 1. **Twee werkwijzen naast elkaar, bewust.** De volledige routebrief (`routebrief-werkwijze.md`, 600–1.100
    regels, z16–z19-ankers, productvraag-ladder) blijft de norm voor de zes bestaande brieven en voor elke
