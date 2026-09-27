@@ -1,5 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-26 (laatst: M30 af — zes grondstoffen, 42 stromen live `?v=124`)*
+*Last updated: 2026-09-27 (AIS-collector opgeheven → opruimwerk; product: M30 af, `?v=124`)*
+
+## 🔵 2026-09-27 — AIS-collector opgeheven: opruimwerk in de atlas
+
+1. **Debug-toggle "AIS-pings" uit de HUD halen.** Het endpoint `ais.187.124.169.172.nip.io` bestaat niet meer (container
+   weg). Ruim ook `haal_ais_data.py` en verwijzingen naar de VPS-pings op.
+2. **AIS-backlog cancelen als Lars akkoord is:** LAR-489 (AIS-realisme-check), LAR-531 (terminal-nodes uit
+   ligplaats-pings), LAR-532 (MARNET↔AIS-stitching), en evt. LAR-482 (AIS-dichtheid-toggle). Het dok-bewijs voor
+   Port Allen/Vidalia moet via een andere bron.
+3. De gebakken `aistracks`/`aisgloed` blijven bruikbaar; niets opnieuw bakken.
 
 ## 🔴 NIEUW 2026-09-26 (laatst) — M30 is af; wat er nu ligt
 

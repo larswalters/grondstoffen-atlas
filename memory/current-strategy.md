@@ -1,5 +1,16 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-26 (laatst: M30 zes grondstoffen verhaal-compleet in drie golven, `?v=124`)*
+*Last updated: 2026-09-27 (infra: AIS-collector opgeheven; product-stand = M30 `?v=124`)*
+
+## Stand 2026-09-27 (infra-besluit) — AIS-collector opgeheven
+
+- **✅ Lars:** *"die ais collector en de data mag verwijderd worden want die gebruiken we uiteindelijk niet."* Aanleiding:
+  de VPS-schijf stond op 94%; `/var/lib/ais-collector` was 45 GB en groeide ~1,2 GB/dag. `ais-collector.service` +
+  `ais-publiceren.timer` zijn disabled, de container `ais-pings` is verwijderd en Lars wiste de ruwe pings. De code in
+  `/opt/ais-collector` en de disabled units blijven staan (18 MB).
+- **Onveranderd:** de gebakken lagen in de repo (`aistracks`, `aisgloed`, de havenstaarten). Die hangen niet van de VPS
+  af. Past bij de M28-meting (AIS = 1,07% van de geometrie, counterfactual 0,005%).
+- **Gevolg:** de HUD-toggle "AIS-pings (debug)" en `haal_ais_data.py` werken niet meer. AIS-afhankelijke ideeën
+  (dok-bewijs uit trackuiteinden, ligplaats-nodes, MARNET↔AIS-stitching) krijgen geen nieuwe data meer.
 
 ## Stand 2026-09-26 (laatst) — M30: zes grondstoffen verhaal-compleet, in golven met agenten
 

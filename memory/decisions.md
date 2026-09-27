@@ -1,5 +1,14 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-26 (laatst: M30 — zes grondstoffen in golven met agenten)*
+*Last updated: 2026-09-27 (AIS-collector opgeheven, ruwe pings gewist)*
+
+## 2026-09-27 — AIS-collector opgeheven, ruwe pings gewist
+
+- **2026-09-27 · ✅ LARS — "DIE AIS COLLECTOR EN DE DATA MAG VERWIJDERD WORDEN, WE GEBRUIKEN HET UITEINDELIJK NIET."**
+  Aanleiding: de VPS-schijf uit de Insiderly-sessie (94%; AIS-map 45 GB, +~1,2 GB/dag → vol binnen ~5 dagen).
+  Waarom verantwoord: de M28-meting liet al zien dat AIS 1,07% van de gebakken geometrie is (twee havenstaarten,
+  counterfactual 0,005%). De routes rusten op MARNET + binnenwater/spoor/weg.
+- **Uitvoering:** services gestopt/disabled + container weg (Claude); de data definitief gewist door Lars zelf. De code in
+  `/opt/ais-collector` blijft staan, dus het is omkeerbaar: units weer enablen + een nieuwe container.
 
 ## 2026-09-26 — M30: zes grondstoffen verhaal-compleet, in golven met agenten
 

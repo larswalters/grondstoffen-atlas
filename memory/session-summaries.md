@@ -1,6 +1,14 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-27 - AIS-collector opgeheven (infra-besluit, in de Insiderly-sessie)
+
+De VPS-schijf stond op 94%; meting: `/var/lib/ais-collector` 45 GB, +~1,2 GB/dag. Lars: *"die ais collector en de data mag
+verwijderd worden want die gebruiken we uiteindelijk niet."* `ais-collector.service` + `ais-publiceren.timer` zijn
+disabled, de container `ais-pings` is weg, en Lars wiste de 45 GB ruwe pings → schijf 22%. De gebakken lagen blijven; de
+debug-toggle "AIS-pings" moet uit de HUD; de AIS-backlog (LAR-489/531/532, evt. 482) is kandidaat voor cancel. Vault:
+`wiki/projects/General/grondstoffen-atlas/2026-09-27-grondstoffen-atlas-ais-collector-uit.md`.
+
 ## 2026-09-26 - M30 zes grondstoffen verhaal-compleet in drie golven (`?v=121` → `?v=124`)
 
 Lars na `?v=121`: "ziet er wel goed uit, kan je op deze manier nog meer grondstoffen uitwerken — ultracode staat aan."

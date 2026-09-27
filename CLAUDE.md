@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-27 · ✅ LARS — AIS-COLLECTOR OPGEHEVEN, RUWE PINGS GEWIST ("gebruiken we uiteindelijk niet").** Services disabled,
+  container `ais-pings` weg, 45 GB gewist (VPS-schijf 94% → 22%). De gebakken `aistracks`/`aisgloed` blijven; de
+  debug-toggle "AIS-pings" en `haal_ais_data.py` zijn dood → opruimen. AIS-backlog LAR-489/531/532 is kandidaat voor cancel.
 - **2026-09-25 · ✅ LARS — VARIANT 1 (VERHAAL-COMPLEET) ONDER EEN LICHTE WERKWIJZE.** Eén gemeten keten per
   handelsas, brief ≤ ~100 regels, ankers op site-niveau, toets = bake-uitvoer; stippel = "net reikt niet" blijft,
   "aannemelijk" in de beennaam. Zie `v2/design/routebrief-licht.md` en `memory/decisions.md`.

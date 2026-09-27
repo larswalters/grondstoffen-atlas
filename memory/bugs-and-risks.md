@@ -1,5 +1,13 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-26 (M30: sessielimiet, MEE-register, 42 stromen standaard aan, bestanden > 300 KB)*
+*Last updated: 2026-09-27 (AIS-collector opgeheven: dode debug-toggle + haal_ais_data.py)*
+
+## 🔵 NIEUW 2026-09-27 — na het opheffen van de AIS-collector
+
+1. **De HUD-toggle "AIS-pings (debug)" wijst naar een dood endpoint** (`ais.187…nip.io`), dus hij faalt stil of logt een
+   fetch-fout. Uit de HUD halen.
+2. **`haal_ais_data.py` werkt niet meer**: de bron op de VPS is weg.
+3. **Er komt geen nieuwe AIS-data meer.** Ideeën die op trackuiteinden of ligplaatsen leunen (dok-bewijs, terminal-nodes)
+   hebben een andere bron nodig.
 
 ## 🟡 NIEUW 2026-09-26 — risico's uit M30 (zes grondstoffen, drie golven)
 
