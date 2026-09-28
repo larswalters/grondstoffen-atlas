@@ -1,5 +1,14 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (golf 4: reserve-golf zonder ontwerpstap)*
+*Last updated: 2026-09-28 (golf 5: nieuwe ontwerpgolf, dunste grondstoffen)*
+
+
+## 2026-09-28 (avond, laatst) — golf 5
+
+- **2026-09-28 · ✅ LARS — "Bingham mag blijven, doe maar een nieuwe ontwerpgolf"**, in de middelgrote variant (zilver +5, uranium +4, gas +4, REE +3, grafiet +3, lithium +3). Die keuze viel met de weeklimiet op 66%.
+- **Bingham Canyon → Garfield blijft**, als derde volledig gestippelde keten na Ambatovy en Antamina.
+- **Omvang afstemmen op de weeklimiet, niet alleen op het 5-uursvenster.** 75 Sonnet-agenten kostten ~7% van de week, dus het 5-uursvenster is niet langer de enige rem.
+- **Een gasleiding is alleen doorgetrokken waar OSM de way heeft.** Het gat daartussen is een stippel met reden (China-Oostroute 30%). Europipe II bleek offshore wél volledig in OSM te staan.
+- **Sitelaag-centroïdes worden centraal gelijkgetrokken met de satelliet-gelegde keten-ankers** (precedent golf 3). Alleen de coördinaat verandert, het gewicht niet; daarna schrijf ik de gloedlaag opnieuw.
 
 ## 2026-09-28 (avond, laat) — golf 4
 

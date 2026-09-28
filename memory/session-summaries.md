@@ -1,6 +1,31 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (avond, laatst) - M31 golf 5 live op `?v=130` (LAR-614, commit `e6fdf7c`)
+
+Lars: *"Bingham mag blijven, doe maar een nieuwe ontwerpgolf"*, in de middelgrote variant (weeklimiet 66%).
+
+**Workflow `wf_5c8c1874-20c`** (75 agenten, Sonnet 5, 0 fouten, 20,6M tokens, ~2 u 15 min): ontwerp en toets per grondstof, daarna brief → bake → keuring per keten.
+
+**Resultaat — 21 gebakken en gekeurd:**
+- zilver: rampuraagucha-pantnagar (eindigt in Chanderiya), fresnillo-torreon, garpenberg-ronnskar, brokenhill-portpirie, uchucchacua-callao
+- uranium: smithranch-metropolis, jaduguda-hyderabad, malvesi-tricastin, kharasan-alashankou
+- gas: chayanda-shanghai (Power of Siberia, eindigt in Nantong), karsto-dornum (Europipe II), cautionbay-futtsu, arzew-barcelona
+- REE: oscom-aluva, chavara-aluva, georgia-whitemesa
+- grafiet: molo-duisburg, bogala-hauzenberg
+- lithium: mibra-bitterfeld, carmen-pohang (eindigt in Daesan), greenbushes-kemerton
+
+**De toets wees 9 assen af:** Ridder, Cerro Moro, Capenhurst → Springfields, Coral → South Hook, Minaçu, Phalaborwa, Luobei, Humber → Baotou en Lac des Îles.
+
+**Centraal:**
+- vijf sitelaag-centroïdes gelijkgetrokken met de keten-ankers;
+- de gloed van zilver, uranium en lithium opnieuw geschreven (alleen posities);
+- sleutel `ag-ft` rechtgezet.
+
+**Controle:** 158 stromen = 158 knoppen, 0 consolefouten, 375 px ok.
+
+**Kosten:** 5-uursvenster 2 → 40%, weeklimiet 66 → 73%.
+
 ## 2026-09-28 (avond, laat) - M31 golf 4 live op `?v=129` (LAR-604, commit `4352bcd`)
 
 Lars: *"Nog een golf met reserve ketens"* (sessielimiet op 69%).

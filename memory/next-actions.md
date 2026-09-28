@@ -1,5 +1,19 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 4 LIVE `?v=129` — reserve-assen, 137 stromen over 14 grondstoffen)*
+*Last updated: 2026-09-28 (M31 golf 5 LIVE `?v=130` — de zes dunste grondstoffen, 158 stromen)*
+
+
+## 🔴 NIEUW 2026-09-28 (avond, laatst) — na golf 5 live
+
+1. **Lars kijkt:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=130. Nieuw zijn de gasleidingen Power of Siberia en Europipe II, de uraniumconversie in Metropolis en Malvési → Tricastin, en de Kazachse spoorlijn naar Alashankou.
+2. **Volgende kiezen:**
+   - (a) **de visuele fase LAR-490** (aanbevolen): 158 stromen staan standaard aan, wat 316 fetches betekent. Leesbaarheid en telefoonprestaties zijn nooit gemeten;
+   - (b) nog een ontwerpgolf (nikkel 9; kolen, olie en PGM 10). De weeklimiet staat op 73% en reset op 3 oktober.
+3. **Bestandsnamen die niet bij het eindpunt passen** (niet hernoemd, commentaar in `STROMEN`):
+   - `zilver-rampuraagucha-pantnagar` eindigt in Chanderiya;
+   - `gas-chayanda-shanghai` eindigt in Nantong;
+   - `lithium-carmen-pohang` eindigt in Daesan.
+4. **Ongebruikte reserves uit golf 5** (door de toets gekomen, niet gebakken): `uranium-mccleanlake-porthope`, `gas-bintulu-pyeongtaek`, `lithium-whabouchi-becancour`, `lithium-arcadia-beira`.
+5. De punten van golf 4 en eerder hieronder staan nog open. Bingham Canyon → Garfield blijft (keuze Lars).
 
 ## 🔴 NIEUW 2026-09-28 (avond, laat) — na golf 4 live
 

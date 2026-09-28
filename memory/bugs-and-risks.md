@@ -1,5 +1,13 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 4 live `?v=129`)*
+*Last updated: 2026-09-28 (M31 golf 5 live `?v=130`)*
+
+
+## 🟡 NIEUW 2026-09-28 (avond, laatst) — uit golf 5
+
+20. **Sitelaag-centroïdes liggen nog steeds naast de terreinen:** Uchucchacua 25 km, Bitterfeld 5,7, Chanderiya 4,0, Peñoles 3,3 en Metropolis 3,2 km. Deze vijf zijn gecorrigeerd. Andere sitelaagpunten met status "aannemelijk" die (nog) geen keten-anker hebben, blijven onzeker.
+21. **Twee gasketens hebben een groot stippeldeel:** de China-Oostroute (30%, gaten in OSM) en PNG LNG Hides → Caution Bay (594 km over land, 100% stippel; de rest is gemeten zee).
+22. **Bak-agenten schrijven af en toe een verkeerde registersleutel** (`zilver-fresnillo-torreon` in plaats van `ag-ft`). De centrale registratie controleert daarom botsingen en het formaat.
+- **Nog altijd open (#11):** nu 158 stromen standaard aan (316 fetches), en de telefoonprestaties zijn nooit gemeten.
 
 ## 🟡 NIEUW 2026-09-28 (avond, laat) — uit golf 4
 

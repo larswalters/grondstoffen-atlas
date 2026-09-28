@@ -1,5 +1,13 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 4 LIVE `?v=129` — reserve-assen, 137 stromen over 14 grondstoffen)*
+*Last updated: 2026-09-28 (M31 golf 5 LIVE `?v=130` — de zes dunste grondstoffen, 158 stromen)*
+
+
+## Stand 2026-09-28 (avond, laatst) — M31 golf 5 live: de zes dunste grondstoffen
+
+- **Op de bol (`?v=130`, commit `e6fdf7c`):** 158 gemeten stromen over 14 grondstoffen: koper 15 · goud 15 · diamant 13 · lithium 12 · kobalt 11 · uranium 11 · gas 11 · REE 11 · zilver 10 · grafiet 10 · kolen 10 · olie 10 · PGM 10 · nikkel 9.
+- **Ontwerpgolf voor bestaande grondstoffen:** ontwerp en toets per grondstof, daarna brief → bake → keuring per keten, zonder sitelaagstap. De eerder afgewezen assen gaan mee met reden. 75 agenten voor 21 ketens.
+- **Nieuwe inhoud:** het pijpleidinggas (Power of Siberia; Europipe II volledig uit OSM, óók offshore) en de schakels na de uraniummijn (conversie in Metropolis en Malvési → Tricastin).
+- **Kostenijk:** 75 Sonnet-agenten ≈ 38% van het 5-uursvenster en ≈ 7% van de weeklimiet.
 
 ## Stand 2026-09-28 (avond, laat) — M31 golf 4 live: de reserve-assen
 
