@@ -1,0 +1,583 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag olie voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/olie-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof olie: ids 'w-*', gewicht = capaciteit in kb/d (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kb/d (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-rastanura",
+   "naam": "Ras Tanura Refinery & Terminal",
+   "lon": 50.159,
+   "lat": 26.648,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal+raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Saoedi-Arabië",
+   "gewicht": 550.0,
+   "gewicht_bron": "capaciteit kb/d — Bloomberg/World Oil (18-3-2026): Ras Tanura-raffinaderij 550.000 vaten/dag, tijdelijk stilgelegd na een droneaanval op 2-3-2026, herstart maart 2026, ladingen bij het terminal hervat eind juni 2026 (CNBC 27-6-2026) [B1][B2][B3]; het naastgelegen terminalcomplex (Sea Island + Juaymah) geldt daarnaast los van de raffinaderij als 's werelds grootste crude-exporthaven, zonder los gepubliceerd kb/d-cijfer deze ronde [B4]",
+   "bron": "satelliet z15 (sitelaag-olie-rastanura + -v2): kruis verschoven van open water naar de basis van de exportsteiger, midden in het tankenpark van het schiereiland",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Saudi Aramco; grootste raffinaderij van het Midden-Oosten plus het grootste crude-exportterminalcomplex ter wereld (Sea Island/Juaymah); in 2026 geraakt door de Iran-oorlog en sindsdien hersteld — de eerste keer dat een top-anker van deze atlas een oorlogsonderbreking binnen het peiljaar draagt."
+  },
+  {
+   "id": "w-abqaiq",
+   "naam": "Abqaiq Stabilization Plant",
+   "lon": 49.68583,
+   "lat": 25.92861,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (verzamel-/stabilisatiepunt Ghawar)",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Saoedi-Arabië",
+   "gewicht": 7000.0,
+   "gewicht_bron": "capaciteit kb/d — Wikipedia 'Abqaiq'/CRS-rapport: verwerkingscapaciteit 7 mln vaten/dag, wereldwijd grootste stabilisatie-installatie (H2S verwijderen, dampspanning verlagen) [B5][B6]",
+   "bron": "Wikipedia-geohack 'Abqaiq' (en), 25°55'43\"N 49°41'09\"O — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Verzamel- en stabilisatiepunt van het Ghawar-veld (grootste olieveld ter wereld, ~3,8 Mb/d historische productie); geen eigen veld-put als site-anker genomen — de put zelf is een oppervlak van tientallen km, geen punt."
+  },
+  {
+   "id": "w-yanbu",
+   "naam": "Yanbu-exportterminal (Petroline-terminus)",
+   "lon": 38.25,
+   "lat": 23.933,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Saoedi-Arabië",
+   "gewicht": 4500.0,
+   "gewicht_bron": "capaciteit kb/d — Yanbu-analyse (wisdomandboats/ENR): Yanbu Noord+Zuid gecombineerd ~4,5 mln vaten/dag laadcapaciteit op papier, in de praktijk dichter bij 4 mln vaten/dag; East-West Pipeline (Petroline) sinds de 2019-ombouw van parallelle gasleidingen noodcapaciteit tot 7 mln vaten/dag [B7][B8][B9]",
+   "bron": "satelliet z14 (sitelaag-olie-yanbu): kruis op/vlak naast de exportsteiger in de Rode Zee, tankenpark en raffinaderijen van Yanbu Industrial City direct landinwaarts zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Terminus van de Petroline (Oost-West-pijpleiding) vanaf Abqaiq — de fysieke Hormuz-bypass van Saoedi-Arabië."
+  },
+  {
+   "id": "w-jubail-satorp",
+   "naam": "SATORP-raffinaderij (Jubail)",
+   "lon": 49.6167,
+   "lat": 27.0333,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Saoedi-Arabië",
+   "gewicht": 460.0,
+   "gewicht_bron": "capaciteit kb/d — Saudipedia/vision2030.ai: SATORP (Saudi Aramco 62,5% / TotalEnergies 37,5%) verwerkt 460.000 vaten/dag Arabian Heavy, opgehoogd van aanvankelijk 400.000 [B10][B11]",
+   "bron": "Jubail 2 Industrial City, algemene ligging uit bedrijfsbronnen — geen precieze coördinaat of satellietblik deze ronde gevonden",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Export-raffinaderij op het Jubail-complex; coördinaat is een schatting op industriezone-niveau, niet op de installatie zelf."
+  },
+  {
+   "id": "w-fujairah",
+   "naam": "Fujairah Oil Terminal (ADNOC)",
+   "lon": 56.32,
+   "lat": 25.15,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Arabische Emiraten",
+   "gewicht": 1500.0,
+   "gewicht_bron": "capaciteit kb/d — Seatrade/CNBC/The National (2026): Habshan-Fujairah-pijpleiding nameplate 1,8 mln vaten/dag, praktische capaciteit ~1,5 mln vaten/dag; Fujairah exporteerde vorig jaar gemiddeld >1,7 mln vaten/dag ruwe olie + producten; uitbreiding naar 3 mln vaten/dag gepland voor 2027 [B12][B13][B14]",
+   "bron": "satelliet z14 (sitelaag-olie-fujairah + -v2): kruis verschoven van een woonwijk naar de rand van het zichtbare tankenpark ten noordwesten van Fujairah-stad",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Terminus van ADNOC's Murban-pijpleiding vanaf Habshan — de Hormuz-bypass van de VAE; ook grote bunker-/opslaghub."
+  },
+  {
+   "id": "w-ruwais",
+   "naam": "Ruwais-raffinaderij (ADNOC)",
+   "lon": 52.72783,
+   "lat": 24.10629,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Arabische Emiraten",
+   "gewicht": 922.0,
+   "gewicht_bron": "capaciteit kb/d — ADNOC/bedrijfsbronnen: 922.000 vaten ruwe olie + condensaat per dag, vierde grootste raffinaderij ter wereld op één locatie en de grootste van het Midden-Oosten [B15]",
+   "bron": "Wikipedia-geohack 'Ruwais refinery' (en), 24°06'23\"N 52°43'40\"O — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "ADNOC Refining; bij de stad Al Dhannah, West-Abu Dhabi."
+  },
+  {
+   "id": "w-kharg",
+   "naam": "Kharg Island-exportterminal",
+   "lon": 50.31,
+   "lat": 29.24,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Iran",
+   "gewicht": 1577.0,
+   "gewicht_bron": "capaciteit kb/d — Mansfield Energy/CIA/Iran Open Data: nameplate laadcapaciteit ~7 mln vaten/dag (10 supertankers tegelijk, ~30 mln vaten opslag), feitelijke export ~1,577 mln vaten/dag in 2024/2025 (~96% van Irans totale olie-export van ~1,64 mln vaten/dag) [B16][B17][B18]",
+   "bron": "satelliet z13 (sitelaag-olie-kharg): kruis midden op het bebouwde terminal-/raffinagegedeelte van het eiland, laadsteigers aan beide uiteinden zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Terminal voor vrijwel de gehele Iraanse olie-export; gewicht is de FEITELIJKE doorzet, niet de veel hogere nameplate — zie toelichting_eenheid."
+  },
+  {
+   "id": "w-basra-minaalbakr",
+   "naam": "Al Başrah Oil Terminal (ABOT, incl. Khor al-Amaya)",
+   "lon": 48.81667,
+   "lat": 29.68333,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Irak",
+   "gewicht": 3000.0,
+   "gewicht_bron": "capaciteit kb/d — Wikipedia 'Al Başrah Oil Terminal': tot 3 mln vaten (480.000 m³) per dag bij volle bezetting van de vier super tanker-ligplaatsen; samen met zusterterminal Khor al-Amaya (KAAOT) het belangrijkste exportpunt voor >80% van Iraks bbp [B19]",
+   "bron": "Wikipedia-coördinaat (29,683333/48,816667), offshore ~50 km ZO van het Al-Faw-schiereiland; satelliet z14/z17 (sitelaag-olie-basra-minaalbakr + -v2): geen structuur zichtbaar op deze Esri-tegels op deze locatie (leeg zeewater-tegel) — het platform is te klein of buiten de beschikbare capture",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Ontbrak in de v1-kaart ondanks dat Irak de #2 OPEC-exporteur is (expliciet register-gat uit het ontwerp van deze ronde); offshore vaste laadinrichting, geen zichtbaar terrein — vult het door de v1-toets gesignaleerde gat."
+  },
+  {
+   "id": "w-primorsk",
+   "naam": "Primorsk-exportterminal",
+   "lon": 28.61,
+   "lat": 60.345,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Rusland",
+   "gewicht": 1000.0,
+   "gewicht_bron": "capaciteit kb/d — Baltic Pipeline System (Wikipedia)/mediaberichten 2026: laadcapaciteit ~1 mln vaten/dag, BPS-1 76,5 mln ton/jaar, 18 tanks van 50.000 ton, 9 ligplaatsen tot 150.000 dwt [B20][B21]",
+   "bron": "algemene havencoördinaat Primorsk (Golf van Finland) — geen precieze terminal-coördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Terminus van het Baltic Pipeline System (West-Siberië/Oeral-Wolga); sinds 2022 vooral de as naar India/China i.p.v. Europa; in 2026 meermaals doelwit van drone-aanvallen (mediaberichten), actuele operationele status kan afwijken."
+  },
+  {
+   "id": "w-novorossiysk-sheskharis",
+   "naam": "Novorossiysk — Sheskharis-terminal (Transneft)",
+   "lon": 37.7842,
+   "lat": 44.7302,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Rusland",
+   "gewicht": 1000.0,
+   "gewicht_bron": "capaciteit kb/d — FleetLeaks/Incorrys/Moscow Times: 3,5-4,5 mln ton ruwe olie per maand (~1 mln vaten/dag), tot 20% van de Russische zeevaart-olie-export; alternatieve bron noemt 1,5 mln vaten/dag [B22][B23]",
+   "bron": "coördinaat uit bedrijfs-/vakpersbron (44,7302/37,7842) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Transneft-terminal aan de Zwarte Zee; onderscheiden van de naastgelegen CPC-terminal (Kazachse olie). Herhaaldelijk doelwit van Oekraïense aanvallen in 2026."
+  },
+  {
+   "id": "w-cpc-novorossiysk",
+   "naam": "CPC Marine Terminal (Yuzhnaya Ozereyevka)",
+   "lon": 37.6892,
+   "lat": 44.6206,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Rusland",
+   "gewicht": 1400.0,
+   "gewicht_bron": "capaciteit kb/d — Caspian Pipeline Consortium (Wikipedia): pijpleiding maximale afgifte 1,4 mln vaten/dag (na de tweede-fase-uitbreiding); terminal met twee single point moorings, tankpark 4×100.000 m³, één SPM tot 800.000 vaten/dag [B24][B25]",
+   "bron": "coördinaat uit algemene kennis (Yuzhnaya Ozereyevka, ten zuiden van Novorossiysk) — deze ronde niet met een losse bron bevestigd of satellietblik gedaan",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Zwarte Zee-terminus van de Kaspische Pijpleiding (Tengiz/Kashagan/Karachaganak, overwegend Kazachse olie, geen Russische productie); apart van de Transneft-Sheskharis-terminal ernaast."
+  },
+  {
+   "id": "w-kozmino",
+   "naam": "Kozmino-terminal (ESPO)",
+   "lon": 133.02727,
+   "lat": 42.73087,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Rusland",
+   "gewicht": 600.0,
+   "gewicht_bron": "capaciteit kb/d — S&P Global/GEM/Wikipedia: ESPO-pijpleiding max. afgifte 1,6 mln vaten/dag (80 mln ton/jaar-ontwerp na de 2025-uitbreiding); Kozmino's eigen tankpark 350.000 m³ met een genoemde laadcapaciteit van '300.000 vaten/dag' — dat cijfer oogt laag tegen de historisch gerapporteerde jaarlijkse verscheping van orde 30-36 mln ton (~600-720 kb/d); hier de conservatieve afgeleide waarde aangehouden, geen aparte throughput-bron gevonden deze ronde [B26][B27][B28]",
+   "bron": "Wikipedia-coördinaat (42,730874/133,027267) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Pacific-terminus van de ESPO-pijpleiding; Chinese en Indiase afname. Cijfer draagt een intern tegenstrijdige bronsituatie — zie capaciteit_bron."
+  },
+  {
+   "id": "w-ceyhan-btc",
+   "naam": "Ceyhan-terminal (BTC-pijpleiding)",
+   "lon": 35.9333,
+   "lat": 36.85,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Turkije",
+   "gewicht": 1200.0,
+   "gewicht_bron": "capaciteit kb/d — BP/SOCAR: BTC-pijpleiding doorzetcapaciteit 1,2 mln vaten/dag (sinds maart 2009 met drag reducing agents, was 1,0 mln 2006-2009) [B29][B30]",
+   "bron": "BTC Terminal Ceyhan-coördinaat uit scheepvaart-/havenbronnen (36,85/35,9333); Iskenderun-baai, Turkse Middellandse Zeekust — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Terminus van de Baku-Tbilisi-Ceyhan-pijpleiding (Azerbeidzjaanse olie via Georgië); ook historisch eindpunt van de Kirkuk-Ceyhan-lijn (Iraakse olie, nu grotendeels buiten dienst)."
+  },
+  {
+   "id": "w-corpuschristi",
+   "naam": "Corpus Christi-exportcluster (o.a. South Texas Gateway)",
+   "lon": -97.205,
+   "lat": 27.832,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 2500.0,
+   "gewicht_bron": "capaciteit kb/d — OilPrice/Port of Corpus Christi (2024-2026): haven verscheept ~2,4-2,5 mln vaten ruwe olie per dag (piek rond maart 2026), #1 Amerikaanse crude-exporthaven en wereldwijd #3; meer dan de helft van alle Amerikaanse ruwe-olie-export [B31][B32]",
+   "bron": "satelliet z15 (sitelaag-olie-corpuschristi + -v2): kruis verschoven van bosgebied naar een tank middenin het zichtbare tankenpark bij Ingleside/South Texas Gateway",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Cijfer is voor het hele havencomplex (meerdere terminals: South Texas Gateway, Moda/Enterprise Ingleside, EPIC e.a.), niet voor één afzonderlijke terminal — geen betrouwbare uitsplitsing per terminal gevonden deze ronde."
+  },
+  {
+   "id": "w-loop",
+   "naam": "Louisiana Offshore Oil Port (LOOP)",
+   "lon": -90.0251,
+   "lat": 28.8852,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 1200.0,
+   "gewicht_bron": "capaciteit kb/d — Wikipedia/adventuresinenergy: circa 1,2 mln vaten/dag, tot 100.000 vaten per uur lossen/laden [B33]",
+   "bron": "Wikipedia-coördinaat (28°53'06.7\"N 90°01'30.3\"W) — offshore diepwaterboei 29 km uit de kust bij Port Fourchon; geen satellietblik (te klein voor Esri-resolutie op zee)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Enige Amerikaanse diepwaterhaven die VLCC's kan lossen/laden; oorspronkelijk importpunt, inmiddels ook exportcapabel."
+  },
+  {
+   "id": "w-portarthur",
+   "naam": "Motiva Port Arthur Refinery",
+   "lon": -93.9625,
+   "lat": 29.885,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 730.0,
+   "gewicht_bron": "capaciteit kb/d — Bloomberg/Argaam (2025): na de 2025-uitbreiding 730.000 vaten/dag, grootste raffinaderij van de VS (Saudi Aramco/Motiva); eerdere cijfers noemen 630.000-640.500 vaten/dag vóór die uitbreiding [B34][B35][B36]",
+   "bron": "satelliet z14 (sitelaag-olie-portarthur): kruis midden in het raffinagecomplex, tankenparken en procesinstallaties rondom duidelijk zichtbaar; Wikipedia-coördinaat 29°53'06\"N 93°57'45\"W bevestigd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Sinds 1903 in bedrijf (oorspronkelijk Texaco); nu grootste raffinaderij van de Verenigde Staten."
+  },
+  {
+   "id": "w-baytown",
+   "naam": "ExxonMobil Baytown Refinery",
+   "lon": -95.0106,
+   "lat": 29.739,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 588.0,
+   "gewicht_bron": "capaciteit kb/d — ExxonMobil corporate fact sheet/Wikipedia: 588.000 vaten/dag; complex van 3.400 acres aan het Houston Ship Channel [B37]",
+   "bron": "satelliet z14 (sitelaag-olie-baytown): kruis binnen het bebouwde ExxonMobil-complex (installaties/wegen rondom zichtbaar), conform Wikipedia-coördinaat 29°44'20\"N 95°00'38\"W; een tweede poging verder zuidwestelijk viel in de baai en is verworpen",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Onderdeel van het bredere Baytown-complex (raffinaderij + chemie + olefines)."
+  },
+  {
+   "id": "w-galvestonbay",
+   "naam": "Marathon Galveston Bay Refinery (Texas City)",
+   "lon": -94.9241,
+   "lat": 29.3775,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Verenigde Staten",
+   "gewicht": 631.0,
+   "gewicht_bron": "capaciteit kb/d — Algemeen gepubliceerd cijfer (Marathon Petroleum-corporate/vakpers): ~631.000 vaten/dag, een van de grootste raffinaderijen van de VS — deze ronde niet met een losse zoekopdracht herbevestigd (websearch-budget uitgeput na de eerste ~28 zoekacties van deze ronde) [B38]",
+   "bron": "coördinaat uit algemene kennis (Texas City, Galveston Bay) — geen satellietblik of losse coördinaatbron deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Toegevoegd voor de spreiding van de Golfkust-raffinagecluster naast Port Arthur/Baytown; cijfer en coördinaat verdienen bevestiging in een volgende ronde."
+  },
+  {
+   "id": "w-tengiz",
+   "naam": "Tengiz-olieveld / Tengizchevroil-installatie",
+   "lon": 53.38333,
+   "lat": 46.15278,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Kazachstan",
+   "gewicht": 870.0,
+   "gewicht_bron": "capaciteit kb/d — Interfax/Kazachs ministerie van Energie (2025): productie 870.000 vaten/dag in januari 2025; Chevron mikt op een plateau van ~960.000 vaten/dag na de Future Growth Project-uitbreiding [B39][B40]",
+   "bron": "Wikipedia-geohack 'Tengiz Field' (en), 46°09'10\"N 53°23'00\"O — veldcentrum, geen plant-specifiek anker; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Chevron 50% / ExxonMobil 25% / KazMunayGas 20% / LukArco 5%; olie gaat per CPC-pijpleiding naar Novorossiysk (zie w-cpc-novorossiysk) en per BTC naar Ceyhan."
+  },
+  {
+   "id": "w-jamnagar",
+   "naam": "Jamnagar Refinery Complex (Reliance)",
+   "lon": 69.86889,
+   "lat": 22.34806,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "India",
+   "gewicht": 1240.0,
+   "gewicht_bron": "capaciteit kb/d — NSEnergy/oilgasstoragenews (2026): gecombineerd 1,24 mln vaten/dag (Refinery 1: 660.000 + SEZ Refinery 2: 580.000); Wikipedia noemt een theoretisch nameplate-totaal tot 1,84 mln vaten/dag [B41][B42]",
+   "bron": "satelliet z14 (sitelaag-olie-jamnagar): kruis midden in het reusachtige raffinagecomplex (tankenparken, procesinstallaties, spoorverbindingen), conform Wikipedia-coördinaat 22°20'53\"N 69°52'08\"O",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste raffinaderij ter wereld op één locatie; export-georiënteerd, grote afnemer van omgeleide Russische ruwe olie sinds 2022."
+  },
+  {
+   "id": "w-vadinar",
+   "naam": "Vadinar-raffinaderij (Nayara Energy)",
+   "lon": 69.74722,
+   "lat": 22.33167,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "India",
+   "gewicht": 405.0,
+   "gewicht_bron": "capaciteit kb/d — Wikipedia/NSEnergy: 20 mln ton/jaar = 405.000 vaten/dag; India's op één na grootste raffinaderij op één locatie, complexiteitsindex 11,8 [B43][B44]",
+   "bron": "Wikipedia-geohack 'Vadinar Refinery' (en), 22°19'54\"N 69°44'50\"O — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Rosneft heeft 49,13% belang; belangrijke afnemer van Russische Oeral-crude via de Primorsk-as."
+  },
+  {
+   "id": "w-pernis",
+   "naam": "Shell Pernis-raffinaderij (Rotterdam)",
+   "lon": 4.3833,
+   "lat": 51.8827,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Nederland",
+   "gewicht": 404.0,
+   "gewicht_bron": "capaciteit kb/d — Hydrocarbon Processing (2026)/vakpers: 404.000 vaten/dag, grootste raffinaderij van Europa [B45]",
+   "bron": "coördinaat uit algemene kennis (Vondelingenplaat, Rotterdam-Pernis) — geen precieze coördinaatbron of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Onderdeel van het ARA-raffinage-/handelscluster; verwerkt zowel Golf- als Atlantische crude."
+  },
+  {
+   "id": "w-antwerpen",
+   "naam": "ExxonMobil Antwerpen-raffinaderij",
+   "lon": 4.34045,
+   "lat": 51.25477,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "België",
+   "gewicht": 320.0,
+   "gewicht_bron": "capaciteit kb/d — ExxonMobil corporate/GEO: ~320.000 vaten/dag (bronnen variëren 265.000-370.000 afhankelijk van periode) [B46][B47]",
+   "bron": "GEO-coördinaat (51,25477/4,34045), Polderdijkweg, Antwerpse haven — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "ExxonMobil's grootste Europese raffinaderij; onderdeel van het ARA-cluster naast Pernis."
+  },
+  {
+   "id": "w-ulsan",
+   "naam": "SK Energy Ulsan-raffinaderij",
+   "lon": 129.3429,
+   "lat": 35.43317,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 840.0,
+   "gewicht_bron": "capaciteit kb/d — Statista/Korea Times: 840.000 vaten/dag in 2023, grootste raffinaderij van Zuid-Korea, wereldwijd #3 [B48][B49]",
+   "bron": "satelliet z14 (sitelaag-olie-ulsan): kruis midden in het Ulsan-industriecomplex, tankenparken/procesinstallaties/havenkom rondom duidelijk zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "SK Energy (SK Innovation); verwerkt overwegend Golf- en Amerikaanse crude, product-export naar heel Azië."
+  },
+  {
+   "id": "w-yeosu",
+   "naam": "GS Caltex Yeosu-raffinaderij",
+   "lon": 127.69082,
+   "lat": 34.85138,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 800.0,
+   "gewicht_bron": "capaciteit kb/d — NESFircroft/GS Caltex: 800.000 vaten/dag verwerkingscapaciteit [B50]",
+   "bron": "Global Energy Monitor-coördinaat (34,851378/127,690818, 'GS Caltex Yeosu Chemical Plant'); satelliet z14 (sitelaag-olie-yeosu): kruis aan de rand van het complex, het eigenlijke tankenpark/raffinagegedeelte ligt enkele honderden meters oostelijker binnen hetzelfde industrieterrein",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Onderdeel van het bredere Yeosu Petrochemical Complex (Chevron/GS Caltex 50/50)."
+  },
+  {
+   "id": "w-zpc-zhoushan",
+   "naam": "Zhejiang Petroleum & Chemical (ZPC/Rongsheng)",
+   "lon": 122.082,
+   "lat": 30.152,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "China",
+   "gewicht": 800.0,
+   "gewicht_bron": "capaciteit kb/d — NSEnergy/GEM: ontwerpcapaciteit 800.000 vaten/dag over vier eenheden van elk 200.000 vaten/dag [B51][B52]",
+   "bron": "GEM-coördinaat (30,119922/122,096157); satelliet z14 (sitelaag-olie-zpc-zhoushan-v2): kruis verschoven naar het zichtbare tankenpark/procescomplex aan de kust van Daishan-eiland (Zhoushan Green Petrochemical Base)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Rongsheng/Juhua/Tongkun/Zhoushan-joint venture; verwerkt Golf- en West-Afrikaanse crude, één van de nieuwste mega-raffinaderijen van China."
+  },
+  {
+   "id": "w-zhenhai",
+   "naam": "Sinopec Zhenhai Refining & Chemical (Ningbo)",
+   "lon": 121.7106,
+   "lat": 29.9538,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "China",
+   "gewicht": 460.0,
+   "gewicht_bron": "capaciteit kb/d — Algemeen gepubliceerd cijfer (Sinopec-corporate/vakpers): ~23 mln ton/jaar = ~460.000 vaten/dag, één van Sinopec's grootste raffinaderijen — deze ronde niet met een losse zoekopdracht herbevestigd (websearch-budget uitgeput) [B53]",
+   "bron": "coördinaat uit algemene kennis (Zhenhai-district, Ningbo) — geen satellietblik of losse coördinaatbron deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Toegevoegd voor de as Golf/West-Afrika → Oost-China naast ZPC Zhoushan; cijfer en coördinaat verdienen bevestiging in een volgende ronde."
+  },
+  {
+   "id": "w-dongjiakou",
+   "naam": "Dongjiakou-havencluster (Qingdao)",
+   "lon": 120.2,
+   "lat": 35.9167,
+   "level": "site",
+   "parent": null,
+   "rol": "exportterminal (binnenlands transshipment)/importterminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "China",
+   "gewicht": 1000.0,
+   "gewicht_bron": "capaciteit kb/d — China Daily/Xindemarinenews (2023): derde-fase-terminal + bestaande tanks samen 11,06 mln m³ opslag, 's lands grootste kustolieopslag; havendoel 50 mln ton ruwe olie/jaar → omgerekend ≈1,0 mln vaten/dag bij 7,33 vaten/ton (oorspronkelijke eenheid Mt/j, hier omgerekend); Qingdao Port ontvangt ~16-18% van alle Chinese ruwe-olie-import en voedt via pijpleiding de Shandong-teapotcluster (Weifang/Dongying/Binzhou) [B54][B55]",
+   "bron": "coördinaat uit algemene kennis van het Dongjiakou-havengebied (Qingdao) — geen precieze coördinaatbron of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Anker voor de Shandong-teapotcluster (Dongjiakou/Qingdao/Lanqiao e.a.) — er bestaat geen vrij coördinatenregister voor de tientallen losse teapot-raffinaderijen zelf (zie het ontwerp-oordeel/registergat), dus deze havenhub draagt de hele cluster in deze ronde."
+  },
+  {
+   "id": "w-chiba",
+   "naam": "ENEOS Chiba-raffinaderij",
+   "lon": 140.03,
+   "lat": 35.485,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Japan",
+   "gewicht": 155.0,
+   "gewicht_bron": "capaciteit kb/d — Hydrocarbonprocessing (2026): CDU-capaciteit 155.100 vaten/dag, terrein van 1,44 mln m² aan de kust van Ichihara (Tokiobaai) [B56]",
+   "bron": "coördinaat uit algemene kennis (Ichihara-stad, Tokiobaai) — geen precieze coördinaatbron of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "ENEOS (voorheen JXTG); één van de raffinaderijen aan de westkust van de Tokiobaai die Golf-/Zuidoost-Aziatische crude verwerken."
+  },
+  {
+   "id": "w-jurong",
+   "naam": "ExxonMobil Jurong Island-raffinaderij",
+   "lon": 103.6833,
+   "lat": 1.2667,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Singapore",
+   "gewicht": 592.0,
+   "gewicht_bron": "capaciteit kb/d — Investing.com/bairdmaritime (2026): verwerkingscapaciteit 592.000 vaten/dag [B57][B58]",
+   "bron": "coördinaat uit algemene kennis (Jurong Island is een groot kunstmatig industrie-eiland) — geen precieze coördinaatbron of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Onderdeel van Singapore's Jurong Island-raffinage-/petrochemiecluster; verwerkt overwegend Golf-crude via Malakka."
+  },
+  {
+   "id": "w-bonny",
+   "naam": "Bonny-exportterminal (Shell/NNPC, Finima)",
+   "lon": 7.14134,
+   "lat": 4.42155,
+   "level": "site",
+   "parent": null,
+   "rol": "terminal",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Nigeria",
+   "gewicht": 250.0,
+   "gewicht_bron": "capaciteit kb/d — Leadership/Premium Times Nigeria (2023-2025): SPDC's Bonny-exportterminal 250.000 vaten/dag operationeel na hervatting van een langere onderbreking (sabotage/diefstal van toevoerleidingen); totale terminalcapaciteit (incl. niet-Shell-aanvoer) tot 1,25 mln vaten/dag, grootste van Afrika [B59][B60]",
+   "bron": "coördinaat 'Bonny Oil Terminal, Finima' uit kaartbronnen (4,421545/7,141341) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Gewicht is het recent bevestigde operationele cijfer, niet de veel hogere nameplate — zie toelichting_eenheid; het historisch instabiele productiepatroon (herhaalde force-majeure-periodes) maakt dit cijfer kwetsbaarder dan de andere terminals in deze lijst."
+  },
+  {
+   "id": "w-abadan",
+   "naam": "Abadan-raffinaderij",
+   "lon": 48.2864,
+   "lat": 30.3392,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "olie"
+   ],
+   "land": "Iran",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit kb/d — Algemeen gepubliceerd cijfer (National Iranian Oil Refining and Distribution Company/vakpers): ~400.000 vaten/dag, Irans oudste en één van de grootste raffinaderijen — deze ronde niet met een losse zoekopdracht herbevestigd (websearch-budget uitgeput) [B61]",
+   "bron": "coördinaat uit algemene kennis (Abadan, Khuzestan) — geen satellietblik of losse coördinaatbron deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Toegevoegd als binnenlandse tegenhanger van de Kharg-exportketen (Iraanse olie die niet geëxporteerd maar zelf geraffineerd wordt); cijfer en coördinaat verdienen bevestiging in een volgende ronde."
+  }
+ ]
+}

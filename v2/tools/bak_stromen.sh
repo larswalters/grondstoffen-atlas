@@ -1562,6 +1562,490 @@ bak_kolen_sangatta_mundra() {
     --titel  "Kolen · Sangatta (KPC) → Tanjung Bara → Mundra (India)"
 }
 
+# ── uranium · Rössing-fabriek (Arandis) → Walvis Bay-haven (truck, B2)
+# Routebrief: v2/design/routebrieven/uranium-rossing-walvisbay.md (LICHTE werkwijze M31)
+# Eén been, geen corridorkeuze — B2 is de enige gekarteerde hoofdweg tussen
+# Arandis en Walvis Bay, geen via-punten nodig.
+# ⚠️ Modaliteit truck is AANNEMELIJK: geen Rössing-specifieke bron voor het
+#    wegtransport van de yellowcake-drums zelf; analogie met de buurmijn Husab
+#    (brief §7).
+# ⚠️ Lengtetoets 106,3 km tegen ~90 km gepubliceerd = +18,1% — BUITEN ±15%
+#    (bevinding, niet dichtgetrokken; geen enkele bron geeft een directe
+#    km-waarde voor dit traject, ~90 is zelf al afgeleid uit twee losse
+#    cijfers, brief §7).
+# ⚠️ Fase B (zee) NIET getekend: geen gepubliceerd Chinees loshavenanker
+#    (brief §6, bindende haalbaarheidstoets) — de keten stopt bij de haven.
+bak_uranium_rossing_walvisbay() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Rössing → Walvis Bay (B2)|$BEEN/uranium-rossing-walvisbay-weg.geojson" \
+    --marker "Rössing-fabriek|-22.4635,15.0405" \
+    --marker "Walvis Bay-haven|-22.9465,14.4840" \
+    --routebrief v2/design/routebrieven/uranium-rossing-walvisbay.md \
+    --uit    v2/data/stroomroute-uranium-rossing-walvisbay.json \
+    --stroom uranium-rossing-walvisbay \
+    --titel  "Uranium · Rössing (Arandis) → Walvis Bay (Namibië)"
+}
+
+# ── uranium · SOMAIR-mijn Arlit → Parakou → Cotonou (Niger/Benin, exportroute GESTAAKT sinds 26-07-2023)
+# Routebrief: v2/design/routebrieven/uranium-arlit-cotonou.md (LICHTE werkwijze M31)
+# Drie benen, ALLE DOORGETROKKEN: het net bestaat en is gemeten, "gestaakt" is
+# een statusfeit (brief §6), geen stippel-reden (werkwijze §7).
+# ⚠️ b1 (RN1 Niger, extract niger) en b2 (RNIE2 Benin, extract benin) zijn
+#    beide AANNEMELIJK op km (afgeleid uit WNA-totaal 1.600 km minus de
+#    spoorlengte 400 km, brief §2/§7/§8[1][2][8][9]) — geen directe bron per
+#    deelstuk. Beide profielen droegen `corridorKlassen: [tertiary,
+#    unclassified]`: de RN1 (Tahoua–Niamey) en de RNIE2 bij Bembèrèkè dragen
+#    geen primary/secondary-tag over het hele traject (osmium-check).
+# ⚠️ b3 (spoor, OCBN-noordlijn) routeert op een GEÏSOLEERD net (component
+#    455 km, dichtstbijzijnde hoofdnet 198-232 km weg > --max-snap 60) —
+#    de terugval is hier de juiste uitkomst, geen fout: Benin's spoor hangt
+#    aan geen ander land. 442,1 km over 73 edges tegen 400 km (WNA) / 437 km
+#    lijnlengte incl. aftakkingen = binnen ±15% op beide referenties.
+# ⚠️ u-parakou-emplacement is AANNEMELIJK (brief §3/§7): OSM-punt "Gare" is
+#    een gebouw in de stad, geen apart vrachtemplacement satelliet-
+#    onderscheiden op z15 — snap van de wegkant is desondanks 0,05 km.
+# ⚠️ Géén fase D/E (brief §6): het toekomstige afzetkanaal (TSUMCO, mei 2026)
+#    is niet gebrond en Orano/Frankrijk is niet gegarandeerd het vervolg.
+bak_uranium_arlit_cotonou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen SOMAIR-mijn Arlit → Agadez → Tahoua → Niamey → Dosso → grens Gaya/Malanville (RN1 Niger, aannemelijk: één bron, historische route gestaakt sinds 26-07-2023)|$BEEN/uranium-arlit-cotonou-weg-arlit-grens.geojson" \
+    --been-geojson "truck|vrachtwagen grens Gaya/Malanville → Kandi → Bembèrèkè → Parakou-emplacement (RNIE2 Benin)|$BEEN/uranium-arlit-cotonou-weg-grens-parakou.geojson" \
+    --been-geojson "spoor|trein Parakou-emplacement → Cotonou-haven (OCBN-noordlijn, geïsoleerd Benins net, aangelegd t/m 1936)|$BEEN/spoorroute-uranium-arlit-cotonou-parakou-cotonou.geojson" \
+    --marker "SOMAIR-mijn/verwerkingscomplex, Arlit — mijn (kop van b1)|18.7731,7.3443" \
+    --marker "Brug Gaya/Malanville — grensovergang (b1→b2)|11.8807,3.3961" \
+    --marker "Spoorstation Gare, Parakou — overslag truck→spoor (b2→b3), aannemelijk|9.3487,2.6099" \
+    --marker "Port Autonome de Cotonou — loskade (einde b3)|6.3444,2.4187" \
+    --routebrief v2/design/routebrieven/uranium-arlit-cotonou.md \
+    --uit    v2/data/stroomroute-uranium-arlit-cotonou.json \
+    --stroom uranium-arlit-cotonou \
+    --titel  "Uranium · Arlit → Parakou → Cotonou (Benin) — gestaakt sinds 2023"
+}
+
+# ── kobalt · Ambatovy-mijn (Moramanga) → Ambatovy-plant (Toamasina) — slurrypijpleiding
+# Routebrief: v2/design/routebrieven/kobalt-ambatovy-toamasina.md (LICHTE werkwijze M31)
+# ⚠️ Enig been = een STIPPEL: de 220 km-slurrypijpleiding (Ausenco/EIB, schematisch,
+#    ~1.000 m hoogteverschil, zwaartekracht-gedreven) is BEVESTIGD niet als
+#    doorlopende OSM-way gekarteerd — directe pyosmium-scan van madagaskar-
+#    latest.osm.pbf op man_made=pipeline gaf 35 ways, geen op deze corridor
+#    (de enige benoemde ligt bij Vohipeno). Geen geometrie-tool nodig; rechte
+#    stippellijn. Gepubliceerde km (220, vaste bron) blijft normaal toetsbaar
+#    ondanks de stippel (werkwijze §5).
+# ⚠️ Fase B (zee, plant → kade) wordt NIET getekend: geen bron noemt een naam-
+#    en-adres-afnemer voor het geraffineerde nikkel/kobalt, alleen marktregio's
+#    (Europa/Japan). De kade krijgt daarom alleen een LOSSE marker (geen
+#    --been/--stippel-regel ernaartoe), zodat hij wel oplicht in de sitelaag/
+#    gloed zonder een lijn te claimen die er niet is (brief §6).
+# ⚠️ Fase C/D/E vervallen: mijn en plant zijn rechtstreeks door de pijpleiding
+#    verbonden (geen tussenknoop) en er is geen tweede fabriek of afnemer
+#    gebrond (brief §7).
+# ⚠️ Eerste en enige Malagassische keten in de atlas — geen gedeelde geometrie
+#    met een andere stroom mogelijk.
+bak_kobalt_ambatovy_toamasina() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel "leiding|Ambatovy slurry-pijpleiding Moramanga → Toamasina (schematisch — geen OSM-way)|-18.8446,48.3077|-18.2002,49.3604" \
+    --marker "co-ambatovy-moramanga — Ambatovy Mine, mijn/ertsvoorbereiding (kop)|-18.8446,48.3077" \
+    --marker "co-ambatovy-plant — Ambatovy Plant Site, proces- en raffinaderijterrein (staart, stoppunt fase D)|-18.2002,49.3604" \
+    --marker "co-toamasina-kade — Ambatovy Bulk Jetty Terminal / Port of Toamasina (marker, geen lijn — geen afnemer gebrond)|-18.1556,49.4278" \
+    --routebrief v2/design/routebrieven/kobalt-ambatovy-toamasina.md \
+    --uit    v2/data/stroomroute-kobalt-ambatovy-toamasina.json \
+    --stroom kobalt-ambatovy-toamasina \
+    --titel  "Kobalt · Ambatovy-mijn (Moramanga) → Ambatovy-plant (Toamasina)"
+}
+
+# ── olie · Bonny-exportterminal (Nigeria) → Vadinar SPM → Vadinar-raffinaderij (India)
+# Routebrief: v2/design/routebrieven/olie-bonny-vadinar.md (LICHTE werkwijze M31)
+# ⚠️ b1 (zee) is AANNEMELIJK — géén cargo-niveau bron koppelt Bonny-crude
+#    specifiek aan Vadinar (Bonny Light gaat ook naar Jamnagar/Mangalore); staat
+#    in de beennaam, niet in de lijnstijl.
+# ⚠️ Vadinar SPM ligt op 26,7 km van de dichtstbijzijnde MARNET-zeeknoop (>25 km)
+#    → haven-aanloop gebouwd (`maak_havenaanloop.py`, cel 0,02° gebufferd,
+#    28,84 km, 0 km land midden op de lijn); het zeebeen eindigt op die
+#    zeeknoop (22.5734,69.4446), de aanloop maakt de kade af.
+# ⚠️ b2 (leiding) is een gestippelde eigen crude-pijpleiding SPM → tankfarm/
+#    raffinaderij (~15 km, geen OSM-way verwacht op dit tracé) — géén tweede
+#    poging, direct gestippeld per de bak-aanwijzing in de brief.
+# ⚠️ Fase D vervalt (brief §6/§7): geen bron noemt een specifieke downstream-
+#    bestemming van de Vadinar-producten per lading; de brief stopt bij de
+#    poort van de raffinaderij.
+bak_olie_bonny_vadinar() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been         "zee|zeeschip Bonny-exportterminal → Vadinar SPM (Golf van Guinee → Kaap de Goede Hoop → Indische Oceaan → Arabische Zee, geen Suez; aannemelijk: geen cargo-niveau bron)|4.4200,7.1600|22.5734,69.4446" \
+    --stippel-geojson "zee|haven-aanloop Vadinar SPM (schematisch, over water — MARNET reikt niet: 26,7 km)|$BEEN/olie-bonny-vadinar-aanloop-vadinar-spm.geojson" \
+    --stippel      "leiding|Vadinar SPM → Vadinar-raffinaderij (eigen crude-pijpleiding, schematisch — niet verwacht in OSM)|22.4528,69.6694|22.3317,69.7472" \
+    --marker "Bonny Oil & Gas Terminal (Shell/SPDC/NNPC), Bonny Island — laadplek/exportterminal|4.4200,7.1600" \
+    --marker "Vadinar SPM, Pathfinder Inlet (Nayara Energy) — overslag zee → leiding|22.4528,69.6694" \
+    --marker "Vadinar-raffinaderij (Nayara Energy), Gujarat — raffinaderij, stoppunt|22.3317,69.7472" \
+    --routebrief v2/design/routebrieven/olie-bonny-vadinar.md \
+    --uit    v2/data/stroomroute-olie-bonny-vadinar.json \
+    --stroom olie-bonny-vadinar \
+    --titel  "Olie · Bonny (Nigeria) → Vadinar SPM → Vadinar-raffinaderij (India)"
+}
+
+# ── olie · Habshan (ADNOC-verzamelknooppunt) → Fujairah-exportterminal → Chiba-raffinaderij (ENEOS, Japan)
+# Routebrief: v2/design/routebrieven/olie-habshan-chiba.md (LICHTE werkwijze M31)
+# ⚠️ b1 (leiding) is gestikt uit 5 OSM-ways (man_made=pipeline, gcc-staten-
+#    extract, ids 451508619/586125766/225206383/360437230/360499797) tot twee
+#    LineStrings van resp. 236,9 en 165,1 km, met een stippel van 17,3 km over
+#    het interne kaarteringsgat bij Sweihan/Al Ain (niet onafhankelijk bevestigd
+#    als échte onderbreking — kan een OSM-omissie zijn, brief §7). Som 402,0 km
+#    + gat 17,3 km = 419,3 km, tegen gepubliceerd 406 km (14 km offshore) →
+#    binnen ±15%.
+# ⚠️ Haven-aanloop Fujairah (LAR-586, 2026-09-28): de kade snapt binnen 25 km
+#    op zeeknoop 8407, maar op 10,5 km — boven de naadnorm van 5 km
+#    (bakhandleiding §5). maak_havenaanloop.py vond een pad over water (12,2 km,
+#    2,2 km over land alleen aan de kadekant) → stippel-geojson tussen leiding
+#    en zeebeen. Chiba snapt op 7,7 km / zeeknoop 9067 en eindigt de stroom
+#    (geen volgend been, dus geen naad).
+# ⚠️ Fase D/E vervallen (brief §6): geen bron koppelt één specifieke lading aan
+#    de Chiba/ENEOS-raffinaderij (het "Japan 30%"-cijfer is een aggregaat over
+#    heel ADNOC's Murban-export); de brief stopt bij de poort van de raffinaderij.
+bak_olie_habshan_chiba() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "leiding|Habshan-Fujairah-pijpleiding (Hormuz-bypass), segment 1: Habshan → vóór het kaarteringsgat bij Sweihan|$BEEN/olie-habshan-chiba-leiding-habshan-sweihan.geojson" \
+    --stippel      "leiding|Habshan-Fujairah-pijpleiding, schematisch — OSM-kaarteringsgat ~17 km bij Sweihan/Al Ain (brief §7)|24.5977,55.3998|24.5749,55.2302" \
+    --been-geojson "leiding|Habshan-Fujairah-pijpleiding (Hormuz-bypass), segment 2: ná het kaarteringsgat → Fujairah-exportterminal|$BEEN/olie-habshan-chiba-leiding-sweihan-fujairah.geojson" \
+    --stippel-geojson "zee|haven-aanloop Fujairah (schematisch, over water — kade 10,5 km van de MARNET-zeeknoop)|$BEEN/olie-habshan-chiba-aanloop-fujairah.geojson" \
+    --been         "zee|VLCC Fujairah-exportterminal → Chiba-raffinaderij (Golf van Oman → Arabische Zee → Straat Malakka → Zuid-Chinese Zee → Oost-Chinese Zee)|25.2135,56.3419|35.5195,140.0430" \
+    --marker "Habshan-pijplijnkop (Habshan–Fujairah-leiding, ADNOC Onshore/ADCO) — verzamelknooppunt, kop|23.8285,53.4915" \
+    --marker "Fujairah-exportterminal (FOIZ-tankenpark, Habshan–Fujairah-pijplijneind) — overslag leiding → zee|25.2135,56.3419" \
+    --marker "Chiba-raffinaderij (ENEOS), Chikusa-kaigan 1, Ichihara (Tokiobaai) — losplek, stoppunt|35.5195,140.0430" \
+    --routebrief v2/design/routebrieven/olie-habshan-chiba.md \
+    --uit    v2/data/stroomroute-olie-habshan-chiba.json \
+    --stroom olie-habshan-chiba \
+    --titel  "Olie · Habshan (ADNOC) → Fujairah (Hormuz-bypass) → Chiba (ENEOS)"
+}
+
+# ── olie · Ghawar/Abqaiq-olievelden → Ras Tanura-exportterminal → ZPC-kade Zhoushan (China)
+# Routebrief: v2/design/routebrieven/olie-rastanura-zhoushan.md (LICHTE werkwijze M31)
+# ⚠️ b1 (leiding) is een gestippelde schematische lijn: Aramco's interne
+#    gatheringpijpleidingen tussen Ghawar/Abqaiq en Ras Tanura zijn nergens als
+#    één gepubliceerde lijn te vinden. Eén pyosmium-scan op `man_made=pipeline`
+#    in bbox 25,8–26,8/49,5–50,3 (gcc-staten-extract) gaf GEEN negatieve
+#    uitslag: er liggen wél losse, grotendeels ongenaamde `substance=oil`-
+#    fragmenten in dat gebied (o.a. way 219942630/219942632/226435144 met een
+#    uiteinde op ~3 km van het Abqaiq-anker), maar geen enkele stitcht door tot
+#    binnen 5 km van het Ras Tanura-anker (dichtstbijzijnde fragment-uiteinde
+#    bleef ~37 km te kort) en geen enkele draagt een naam. Dat bevestigt de
+#    brief eerder dan dat het hem weerlegt: een fragmentarisch, ongekarteerd
+#    net, geen gepubliceerde enkele lijn — de rechte stippel blijft de eindvorm.
+# ⚠️ b2 (zee) is de MARNET-route kade → kade; beide kades snappen binnen de
+#    25 km-norm op een zeeknoop (Ras Tanura 11,1 km, Zhoushan 7,8 km). MARNET
+#    routeert zelf via Hormuz + Malakka (`northwest`-passage blijft dicht).
+# ⚠️ Haven-aanloop Ras Tanura (LAR-586, 2026-09-28): de 11,1 km-snap liet een
+#    naad boven de 5 km-norm (bakhandleiding §5) tussen de gatheringstippel en
+#    het zeebeen → maak_havenaanloop.py, pad over water (11,8 km, 0 km land).
+#    Zhoushan eindigt de stroom (geen volgend been, dus geen naad).
+# ⚠️ Geen fase D/E: geen bron benoemt welk deel van ZPC's nafta-/aromaten-
+#    uitstroom naar welke met-naam-genoemde vervolgfabriek gaat (brief §6/§7).
+bak_olie_rastanura_zhoushan() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "leiding|Aramco-gatheringnet Ghawar/Abqaiq → Ras Tanura (schematisch — interne infrastructuur, geen gepubliceerde enkele OSM man_made=pipeline-lijn)|25.9400,49.6600|26.6540,50.1648" \
+    --stippel-geojson "zee|haven-aanloop Ras Tanura (schematisch, over water — kade 11,1 km van de MARNET-zeeknoop)|$BEEN/olie-rastanura-zhoushan-aanloop-rastanura.geojson" \
+    --been         "zee|zeeschip Ras Tanura-exportterminal → ZPC-kade Zhoushan (Perzische Golf → Straat Hormuz → Arabische Zee → Straat Malakka → Zuid-Chinese Zee → Oost-Chinese Zee)|26.6540,50.1648|30.3180,121.9600" \
+    --marker "Abqaiq Plants (Saudi Aramco), Ghawar/Abqaiq-veldencomplex — olieveld/stabilisatiecomplex (kop van de leiding)|25.9400,49.6600" \
+    --marker "Ras Tanura-exportterminal (Saudi Aramco) — tankenpark + T-steiger + Sea Island-fingerpier, laadplek|26.6540,50.1648" \
+    --marker "ZPC (Zhejiang Petroleum & Chemical, Rongsheng-affiliate), Zhoushan Green Petrochemical Base, Dayushan-eiland — losplek/raffinage- en kraakcomplex, stoppunt|30.3180,121.9600" \
+    --routebrief v2/design/routebrieven/olie-rastanura-zhoushan.md \
+    --uit    v2/data/stroomroute-olie-rastanura-zhoushan.json \
+    --stroom olie-rastanura-zhoushan \
+    --titel  "Olie · Ras Tanura (Saoedi-Arabië) → Zhoushan (China)"
+}
+
+# ── olie · Corpus Christi-exportterminals (South Texas Gateway) → Maasvlakte Olie Terminal (Rotterdam)
+# Routebrief: v2/design/routebrieven/olie-corpuschristi-rotterdam.md (LICHTE werkwijze M31)
+# ⚠️ Eén been (zee): Amerikaanse schalie-ruwe olie (VLCC/Suezmax) rechtstreeks
+#    kade → kade, Golf van Mexico → Straat van Florida → Noord-Atlantische
+#    Oceaan → Nauw van Calais/Noordzee. Beide kades snappen ruim binnen de
+#    25 km-norm op een MARNET-zeeknoop (Corpus Christi 4,87 km / zeeknoop
+#    4843; Rotterdam 1,73 km / zeeknoop 6812) → geen haven-aanloop nodig.
+# ⚠️ "Aannemelijk: aggregaatcijfers beide zijden, geen cargoniveau-bron" staat
+#    in de beennaam/brief, niet in de lijnstijl — dit is een volledig gemeten
+#    MARNET-zeebeen, geen stippel.
+# ⚠️ Geen fase C/D/E (brief §6): geen bron benoemt welk deel van de MOT-aanvoer
+#    specifiek uit Corpus Christi komt of welke raffinaderij (Pernis, …) de
+#    Amerikaanse partij verwerkt — de brief stopt bij de poort van de MOT.
+bak_olie_corpuschristi_rotterdam() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been         "zee|zeeschip Corpus Christi (South Texas Gateway) → Rotterdam (Maasvlakte Olie Terminal)|27.82677,-97.19447|51.97273,4.06243" \
+    --marker "South Texas Gateway Terminal (Gibson Energy), Ingleside — exportterminal, representatief voor het Corpus Christi Ship Channel-complex, laadplek|27.82677,-97.19447" \
+    --marker "Maasvlakte Olie Terminal (BP/Esso/Shell/TotalEnergies/Vopak/Aramco Overseas), Rotterdam — crude-importsteiger, losplek/stoppunt|51.97273,4.06243" \
+    --routebrief v2/design/routebrieven/olie-corpuschristi-rotterdam.md \
+    --uit    v2/data/stroomroute-olie-corpuschristi-rotterdam.json \
+    --stroom olie-corpuschristi-rotterdam \
+    --titel  "Olie · Corpus Christi (VS) → Rotterdam (Maasvlakte Olie Terminal)"
+}
+
+# ── kobalt · Moa Bay (Cuba) → Halifax → Fort Saskatchewan (mixed-sulfide, om de VS heen, niet actief)
+# Routebrief: v2/design/routebrieven/kobalt-moa-fortsaskatchewan.md (lichte werkwijze M31)
+# ⚠️ Eerste en enige Cubaans-Canadese as in de atlas — geen gedeelde geometrie
+#    met een andere stroom mogelijk.
+# ⚠️ b1 (zee, haven-aanloop Moa Bay) is een STIPPEL: de Punta Gorda-jetty ligt
+#    75,7 km van de dichtstbijzijnde MARNET-zeeknoop, ruim boven de default
+#    max-snap. `maak_havenaanloop.py` vond een pad over water (70,9 km, 49
+#    punten, 0,00 km over land) — geen terugval nodig.
+# ⚠️ b2 (zee) is de MARNET-route zeeknoop → kade, BEWUST OM DE VS HEEN
+#    (sanctie-gevoelige route, brief §1/§2): Caribische Zee → Atlantische
+#    Oceaan. Halifax-kade snapt binnen de default max-snap, dus geen tweede
+#    haven-aanloop.
+# ⚠️ b3 (spoor, 1-op-1-net, BAKE_SUFFIX=-raw) is de CN-hoofdlijn via Moncton —
+#    bewust de Maritimes-omweg i.p.v. de kortere Maine-VS-kortsluiting
+#    (sanctie-conform, brief §2/§4) — zes losse kop→via/via→staart-runs,
+#    gesplitst op elke corridorkeuze (geen --via-vlag op de spoorrouter).
+#    Som 4.821,1 km tegen de indicatieve ~5.000 km uit de brief (−3,6%, ruim
+#    binnen ±15%); vier scherpe bochten (159,6–178,1°) op emplacementen/
+#    rangeerknopen (Winnipeg-nadering, Edmonton-nadering) zijn kopmaak-plekken,
+#    geen fout — komt overeen met de bochten die de handleiding op sporen
+#    verwacht.
+# ⚠️ `co-moa-laad` en `co-halifax-kade` zijn resp. ONZEKER/AANNEMELIJK (brief
+#    §3/§7: geen bron bevestigt een laadbrug/kraan bij Punta Gorda, geen bron
+#    noemt Richmond Terminals met naam voor Sherritt-lading) — dat staat in de
+#    markernaam, niet in de lijnstijl.
+# ⚠️ Geen fase D/E: de raffinaderij is het stoppunt (brief §6) — sinds
+#    22-06-2026 gesloten, geen afzetmarkt gebrond voor toekomstige output.
+bak_kobalt_moa_fortsaskatchewan() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel-geojson "zee|haven-aanloop Moa Bay (schematisch, over water — MARNET reikt niet: 75,7 km)|$BEEN/kobalt-moa-fortsaskatchewan-aanloop-moa.geojson" \
+    --been         "zee|zeeschip Moa Bay → Halifax (Caribische Zee → Atlantische Oceaan, bewust om de VS heen — sanctie-gevoelig)|21.1135,-74.4068|44.6735,-63.6032" \
+    --been-geojson "spoor|trein Halifax → Moncton (CN-hoofdlijn/Intercolonial, kop van de Maritimes-omweg)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-halifax-moncton.geojson" \
+    --been-geojson "spoor|trein Moncton → Québec (CN-hoofdlijn, oeversprong Saint-Laurent bij Gare du Palais)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-moncton-quebec.geojson" \
+    --been-geojson "spoor|trein Québec → Winnipeg (CN-transcontinentale hoofdlijn, oostelijke → westelijke tak)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-quebec-winnipeg.geojson" \
+    --been-geojson "spoor|trein Winnipeg → Saskatoon (CN-hoofdlijn, CN Chappell Yard-rangeerknoop)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-winnipeg-saskatoon.geojson" \
+    --been-geojson "spoor|trein Saskatoon → Edmonton (CN-hoofdlijn, laatste corridorkeuze vóór de aftakking)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-saskatoon-edmonton.geojson" \
+    --been-geojson "spoor|trein Edmonton → Fort Saskatchewan-raffinaderij (kopse aansluiting, staart)|$BEEN/spoorroute-kobalt-moa-fortsaskatchewan-edmonton-fortsask.geojson" \
+    --marker "co-moa-laad — Punta Gorda-aanlegsteiger, Bahía de Moa (Sherritt/GNC Moa JV, onzeker)|20.6372,-74.8549" \
+    --marker "co-halifax-kade — Richmond Terminals, Halifax (overslag zee → spoor, aannemelijk)|44.6735,-63.6032" \
+    --marker "Moncton — spoorstation/CN-junctie (via-punt corridorkeuze: Maritimes-omweg i.p.v. Maine-VS-kortsluiting)|46.0833,-64.7861" \
+    --marker "Québec — Gare du Palais, oeversprong Saint-Laurent (via-punt corridorkeuze)|46.8178,-71.2139" \
+    --marker "Winnipeg — Union Station (via-punt corridorkeuze, oost/west-splitsing)|49.8889,-97.1343" \
+    --marker "Saskatoon — CN Chappell Yard (via-punt corridorkeuze, rangeerknoop)|52.1052,-106.7505" \
+    --marker "Edmonton — CN-knoop vóór de aftakking (via-punt corridorkeuze)|53.5462,-113.4912" \
+    --marker "co-fortsask-raffinaderij — Sherritt Metals Facility, Fort Saskatchewan (losplek/raffinaderij, gesloten, stoppunt)|53.7198,-113.1904" \
+    --routebrief v2/design/routebrieven/kobalt-moa-fortsaskatchewan.md \
+    --uit    v2/data/stroomroute-kobalt-moa-fortsaskatchewan.json \
+    --stroom kobalt-moa-fortsaskatchewan \
+    --titel  "Kobalt · Moa Bay (Cuba) → Halifax → Fort Saskatchewan (Canada)"
+}
+
+# ── uranium · Inkai (Kazachstan, ISR-mijn) → Zhanatas → Aktau → Alyat/Bakoe → Tbilisi → Poti (Georgië)
+# Routebrief: v2/design/routebrieven/uranium-inkai-poti.md (LICHTE werkwijze M31)
+# ⚠️ b1 (truck) is een STIPPEL: `maak_stroombeen_weg.py --profiel
+#    uranium-inkai-poti-inkai-zhanatas` (venster 75 km, geen via-punten) gaf
+#    "geen wegpad tussen punt 0 en 1" — geen doorlopende OSM-weg over de
+#    ~290 km woestijnsteppe Suzak-district → Zjambyl-oblast. Rechte stippel,
+#    geen tweede poging.
+# ⚠️ b2 (spoor, 1-op-1-net, BAKE_SUFFIX=-raw) = 2.407,0 km, verhouding 1,62 —
+#    GEEN gepubliceerde lengte om tegen te toetsen (brief §7), dus dit is
+#    nieuwe informatie. Eén omkering (179,7°, boogstraal ~118 m) bij
+#    47,8187/59,6491 = Shalkar, een echte spoorknoop op de Trans-Aral-lijn
+#    (Aral → Shalkar → Beyneu) — kopmaak op het net, geen verzonnen sluiproute.
+#    Het eerste deel van de route dipt zuidwaarts naar de Shu/Turkestan-
+#    mainline vóór hij westwaarts langs Kyzylorda/Aral/Shalkar/Beyneu naar
+#    Mangystau/Aktau buigt; geografisch aannemelijk, geen bron noemt de
+#    tussenstations (brief §7).
+# ⚠️ b3 (zee) = 468,1 km, al vooraf getoetst (hecht_marnet.py) — Aktau-kade
+#    snapt op 7,4 km (< 25 km-norm, automatisch), Alyat-kade op 49,4 km
+#    (> 25 km-norm) → het hoofdzeebeen eindigt op de MARNET-zeeknoop bij Alyat
+#    (40,21240/49,93290), niet op de kade zelf.
+# ⚠️ b2b (haven-aanloop Aktau, LAR-586, 2026-09-28) is een RECHTE STIPPEL: de
+#    7,4 km-snap liet een naad van 6,8 km (boven de 5 km-norm, §5) tussen spoor
+#    en zeebeen; `maak_havenaanloop.py` liep vast op `timeout 300` (exit 124) —
+#    geen tweede poging, zoals bij Alyat.
+# ⚠️ b3b (haven-aanloop Alyat) is een RECHTE STIPPEL: `maak_havenaanloop.py`
+#    liep vast op `timeout 300` (exit 124) — geen tweede poging, direct
+#    gestippeld per de bak-aanwijzing in de brief.
+# ⚠️ b4 (spoor, 1-op-1-net) is TWEE RUNS met het Tbilisi-via-punt (geen --via-
+#    vlag op de spoorrouter): Alyat/Bakoe → Tbilisi (465,1 km) + Tbilisi →
+#    Poti (303,1 km) = 768,2 km tegen de TRACECA-schatting van 800 km
+#    (Poti-Baku Container Block Train, −4,0%, ruim binnen ±15%). Zonder het
+#    via-punt kan een vrije Dijkstra bij Tbilisi de Bakoe–Tbilisi–Kars-lijn
+#    (Turkije) nemen i.p.v. de doorgaande lijn naar Poti.
+# ⚠️ Geen fase D/E (brief §5/§6): Poti is een zuiver overslagpunt (spoor →
+#    zee), geen verwerkingsknoop; het vervolg naar Montreal/Cameco Blind
+#    River valt buiten deze stroom (brief §1/§6).
+bak_uranium_inkai_poti() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|yellowcake Inkai MPP → Zhanatas-spoorstation (schematisch — geen doorlopende weg in OSM; woestijnweg Suzak-district → Zjambyl-oblast, aannemelijk: één bron)|45.2855,67.5255|43.5610,69.7260" \
+    --been-geojson "spoor|trein Zhanatas-spoorstation → Aktau-kade (Trans-Kazachse lijn via Shu-knoop → Kyzylorda-regio → Aral → Shalkar → Beyneu → Mangystau-tak; 1-op-1-net, geen gepubliceerde lengte)|$BEEN/spoorroute-uranium-inkai-poti-zhanatas-aktau.geojson" \
+    --stippel      "zee|haven-aanloop Aktau (schematisch — 1:10M-kust kent de haven niet; maak_havenaanloop.py timeout 300 s, geen tweede poging)|43.6005,51.2287|43.61220,51.13860" \
+    --been         "zee|zeeschip Aktau-kade → Alyat/Bakoe (Kaspische Zee-oversteek, TITR/Middle Corridor)|43.6005,51.2287|40.21240,49.93290" \
+    --stippel      "zee|haven-aanloop Alyat/Bakoe (schematisch, over water — 1:10M-kust kent de haven niet; maak_havenaanloop.py timeout 300 s, geen tweede poging)|40.21240,49.93290|39.9764,49.4408" \
+    --been-geojson "spoor|trein Alyat/Bakoe-kade → Tbilisi (Bakoe–Tbilisi–Poti-lijn, via-punt corridorkeuze t.o.v. de Bakoe–Tbilisi–Kars-lijn)|$BEEN/spoorroute-uranium-inkai-poti-alat-tbilisi.geojson" \
+    --been-geojson "spoor|trein Tbilisi → Poti-kade (Bakoe–Tbilisi–Poti-lijn, doorgaande tak na de Kars-splitsing)|$BEEN/spoorroute-uranium-inkai-poti-tbilisi-poti.geojson" \
+    --marker "Inkai MPP — hoofdverwerkingsfabriek, JV Inkai (Kazatomprom 60%/Cameco 40%) — laadplek|45.2855,67.5255" \
+    --marker "Zhanatas-spoorstation, Zjambyl-oblast — overslag truck → spoor|43.5610,69.7260" \
+    --marker "Aktau-zeehaven (Kazmortransflot-terrein) — overslag spoor → zee|43.6005,51.2287" \
+    --marker "Bakı Dəniz Ticarət Limanı, Alyat (Qaradağ) — overslag zee → spoor|39.9764,49.4408" \
+    --marker "Poti Sea Port, Georgië — overslag spoor → zee, stoppunt|42.1550,41.6560" \
+    --routebrief v2/design/routebrieven/uranium-inkai-poti.md \
+    --uit    v2/data/stroomroute-uranium-inkai-poti.json \
+    --stroom uranium-inkai-poti \
+    --titel  "Uranium · Inkai (Kazachstan) → Aktau → Bakoe → Poti (Georgië)"
+}
+
+# ── olie · Primorsk (Rusland) → Sikka Marine Terminal → Jamnagar-raffinaderij (India, Rusland-omleiding)
+# Routebrief: v2/design/routebrieven/olie-primorsk-jamnagar.md (LICHTE werkwijze M31)
+# ⚠️ b1 (zee): beide uiteinden liggen BUITEN de 25 km-norm van een MARNET-
+#    zeeknoop (Primorsk 31,0 km, Sikka 40,7 km) — twee haven-aanlopen nodig.
+#    Primorsk-aanloop is een RECHTE STIPPEL: maak_havenaanloop.py liep vast op
+#    timeout 300 (exit 124) — geen tweede poging. Sikka-aanloop lukte wél
+#    (43,5 km over water, omwegfactor 1,068) → --stippel-geojson.
+# ⚠️ b2 (leiding) is een RECHTE STIPPEL: geen enkele OSM man_made=pipeline op
+#    het Sikka→Jamnagar-tracé (Overpass-check, brief §7/§8[16]) — hemelsbreed
+#    16,4 km tussen de twee ankers; het ontwerp noemde ~50 km, in geen bron
+#    terugvonden (bevinding, niet dichtgetrokken).
+# ⚠️ Geen fase D/E (brief §6): de brief stopt bewust bij het Jamnagar-
+#    raffinaderijcomplex; de SEZ/DTA-nuance (sinds 20-11-2025) staat alleen in
+#    de tekst, geen apart anker (conform de lichte werkwijze).
+bak_olie_primorsk_jamnagar() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "zee|haven-aanloop Primorsk-exportterminal (schematisch — 1:10M-kust kent de haven niet; maak_havenaanloop.py timeout 300 s, geen tweede poging)|60.3340,28.7090|60.59370,28.50130" \
+    --been         "zee|zeeschip Primorsk-zeeknoop → Sikka-zeeknoop (Oostzee → Deense Straten → Noordzee → Golf van Biskaje → Gibraltar → Middellandse Zee → Suez → Rode Zee → Bab-el-Mandeb → Arabische Zee)|60.59370,28.50130|22.57340,69.44460" \
+    --stippel-geojson "zee|haven-aanloop Sikka Marine Terminal (schematisch, over water — MARNET reikt hier niet: 40,7 km)|$BEEN/olie-primorsk-jamnagar-aanloop-sikka.geojson" \
+    --stippel      "leiding|eigen crude-pijpleiding Sikka-terminal → Jamnagar-raffinaderij (schematisch — geen OSM-way, geen man_made=pipeline gevonden)|22.4990,69.8330|22.3500,69.8500" \
+    --marker "Primorsk-exportterminal (Transneft, BPS-terminus) — laadplek/kade|60.3340,28.7090" \
+    --marker "Reliance/SPTL Marine Terminal Sikka — overslag zee → leiding|22.4990,69.8330" \
+    --marker "Jamnagar-raffinaderijcomplex (Reliance, SEZ+DTA) — losplek/raffinaderij, stoppunt|22.3500,69.8500" \
+    --routebrief v2/design/routebrieven/olie-primorsk-jamnagar.md \
+    --uit    v2/data/stroomroute-olie-primorsk-jamnagar.json \
+    --stroom olie-primorsk-jamnagar \
+    --titel  "Olie · Primorsk (Rusland) → Sikka → Jamnagar (India)"
+}
+
+# ── kobalt · KFM Kisanfu-plant → Kasumbalesa → Nakonde/Tunduma → Dar es Salaam → Ningbo (hydroxide, volledig truck)
+# Routebrief: v2/design/routebrieven/kobalt-kisanfu-daressalaam.md (LICHTE werkwijze M31)
+# ⚠️ Eigendom gecorrigeerd (brief §7): CMOC Group 71,25% / CATL 23,75% /
+#    DRC-staat 5% (niet 75%/25% zoals het ontwerp noemde).
+# ⚠️ b1 (Kisanfu → Kasumbalesa) is +24,2% BOVEN de eigen schatting (360,3 km
+#    tegen ~290 km hemelsbreed-keten) — buiten ±15%, bevinding, niet
+#    dichtgetrokken: een reële weg is altijd langer dan een hemelsbrede
+#    via-puntenketen, en er is geen gepubliceerde bronlengte om tegen te
+#    toetsen (brief §2). Via-punten Likasi/Lubumbashi/Kasumbalesa hergebruikt
+#    uit koper-kolwezi-durban.md §3/§4.
+# ⚠️ b2 (Kasumbalesa → Nakonde/Tunduma) is -38,6% ONDER de gepubliceerde
+#    schatting (1.075,2 km tegen ~1.750 km) — buiten ±15%, bevinding: de eigen
+#    hemelsbreed-keten (934,5 km) geeft een omwegfactor van 1,15, wat
+#    plausibel is voor een hoofdweg; de "~1.750 km" uit de brief (afgeleid via
+#    "Ndola–Tunduma ≈1.900 km minus Kasumbalesa–Ndola") lijkt de onjuiste
+#    schatting, niet de gemeten weg. Niet dichtgetrokken.
+# ⚠️ b3 (Nakonde/Tunduma → Dar es Salaam) EINDIGT OP EEN HAVENPOORT, NIET OP
+#    DE KADE: het interne wegennet van Container Terminal II is in OSM een
+#    geïsoleerd eiland van 34 knopen, 0,355 km van het doorgaande wegnet, geen
+#    gedeelde vertex (gemeten met een component-scan op de gescande graaf).
+#    Dat laatste stukje is hier een stippel (emplacement/havenpoort — net
+#    reikt niet, bakhandleiding §2). 930,1 km tegen ~950 km = -2,1% [OK].
+# ⚠️ b4 (zee): co-dar-kade snapt binnen de --max-snap-norm (zeeknoop 5310,
+#    20,9 km < 25 km) maar hecht_marnet plakt géén stub — de eerste bake gaf
+#    een naad van 20,9 km tussen de havenpoort-stippel en het zeebeen (buiten
+#    de ≤5 km-norm). `maak_havenaanloop.py` liep vast op timeout 300 (exit
+#    124) — geen tweede poging, terugval op een RECHTE stippel kade→zeeknoop.
+#    De Ningbo-aanloop (zeeknoop → co-ningbo-kade, 11,64 km) is een LETTERLIJKE
+#    KOPIE van kobalt-tfm-quzhou b2a — geen tweede zeeknoop-lookup/aanloop-run.
+# ⚠️ `co-nakonde-tunduma-grens` blijft AANNEMELIJK (brief §3): geen los
+#    aanwijsbaar grensgebouw op de satellietpas, alleen de doorgaande hoofdweg
+#    door de tweelingstad. Bestemming Ningbo Beilun blijft AANNEMELIJK
+#    (generieke China-bestemming, geen mijn-specifieke bron). Geen fase D/E
+#    (brief §6): geen bron koppelt dit hydroxide aan een met naam genoemde
+#    Chinese raffinaderij.
+bak_kobalt_kisanfu_daressalaam() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|kobalthydroxide KFM Kisanfu-plant → Kasumbalesa (mijnweg → RN39 → RN39/RN1 Likasi–Lubumbashi, gedeeld eerste stuk met TFM/KCC)|$BEEN/kobalt-kisanfu-daressalaam-weg-kisanfu-kasumbalesa.geojson" \
+    --been-geojson "truck|kobalthydroxide Kasumbalesa → Nakonde/Tunduma (T2/Great North Road via Ndola–Kapiri Mposhi–Mpika–Isoka)|$BEEN/kobalt-kisanfu-daressalaam-weg-kasumbalesa-nakonde.geojson" \
+    --been-geojson "truck|kobalthydroxide Nakonde/Tunduma → Dar es Salaam-havenpoort (T1 Centraal Corridor/TANZAM via Mbeya–Iringa–Morogoro)|$BEEN/kobalt-kisanfu-daressalaam-weg-nakonde-daressalaam.geojson" \
+    --stippel      "truck|havenpoort → Container Terminal II-kade (emplacement, intern havenwegennet niet in het net — gemeten 0,355 km)|-6.840496,39.293780|-6.8394,39.2968" \
+    --stippel      "zee|haven-aanloop Dar es Salaam (schematisch — maak_havenaanloop.py timeout 300 s, geen tweede poging; rechte lijn kade→zeeknoop 5310, 20,9 km)|-6.8394,39.2968|-6.6537,39.3256" \
+    --been         "zee|zeeschip Dar es Salaam → Ningbo (kobalthydroxide; bestemming Huayou/generieke China-markt, aannemelijk)|-6.8394,39.2968|29.9758,121.9736" \
+    --stippel-geojson "zee|haven-aanloop Ningbo Beilun (schematisch, over water — MARNET reikt niet; letterlijke kopie van kobalt-tfm-quzhou b2a)|$BEEN/kobalt-tfm-quzhou-aanloop-ningbo.geojson" \
+    --marker "KFM – Kisanfu Processing Plant (CMOC Kisanfu Mining SARL) — laadplek (anker, bron-gelegd)|-10.7630,25.9983" \
+    --marker "Kasumbalesa grenspost — DRC/Zambia (hergebruikt anker)|-12.2658,27.7959" \
+    --marker "Nakonde (ZM) / Tunduma (TZ) one-stop grenspost (aannemelijk)|-9.3208,32.7612" \
+    --marker "Dar es Salaam Port, Container Terminal II (Berth 8-11), Kurasini — overslag truck → container → zeeschip|-6.8394,39.2968" \
+    --marker "Beilun Container Terminal Phase 2, Ningbo-Zhoushan — overslag zeeschip → onbekend vervolg (stoppunt, hergebruikt anker)|29.9353,121.8695" \
+    --routebrief v2/design/routebrieven/kobalt-kisanfu-daressalaam.md \
+    --uit    v2/data/stroomroute-kobalt-kisanfu-daressalaam.json \
+    --stroom kobalt-kisanfu-daressalaam \
+    --titel  "Kobalt · KFM Kisanfu → Kasumbalesa → Dar es Salaam → Ningbo (hydroxide)"
+}
+
+# ── uranium · McArthur River-mijn/Key Lake-mill → Blind River → Port Hope → BWXT Toronto → BWXT Peterborough
+# Routebrief: v2/design/routebrieven/uranium-mcarthurriver-porthope.md (LICHTE werkwijze M31)
+# Vijf benen, alle truck, extract "canada" — de CANDU-uitzondering: natuurlijk
+# (onverrijkt) uraan, geen verrijkingsstap.
+# ⚠️ b4+b5 zijn een AFWIJKING op het oorspronkelijke ketenontwerp (dat één been
+#    Port Hope → Peterborough gaf, "aannemelijk: één bron"). Onderzoek (drie
+#    onafhankelijke bronnen, brief §1) toont een tussenstap via BWXT Toronto
+#    (pelletpers); Toronto ligt zuidwestelijk van beide, dus de lijn maakt een
+#    zichtbare lus/driehoek — dat is correct, geen bakfout.
+# ⚠️ b2 CORRIGEERT DE BRIEF OP TWEE PUNTEN (bak-aanwijzing week af van de OSM-
+#    werkelijkheid, geen coördinaat verzonnen — beide correcties op het
+#    gemeten OSM-net/Wikipedia, zie de kop van het profiel in
+#    maak_stroombeen_weg.py):
+#    (1) het via-punt "Points North Landing" (Hwy 905, 58.27,-104.08) heeft
+#        géén wegverbinding met Hwy 914/Key Lake — Sask. Hwy 914 loopt in OSM
+#        van de mijnen zuidwaarts tot een knooppunt met Hwy 165 ten zuiden van
+#        Pinehouse (Wikipedia bevestigt: "begins at Highway 165 south of
+#        Pinehouse … does not intersect with any provincially-owned highways
+#        between Highway 165 and Key Lake Mine"). Via-punt vervangen door dat
+#        Hwy 165/914-knooppunt (55.2348,-106.7898, exact OSM-eindpunt).
+#    (2) Thunder Bay → Sault Ste. Marie sneed over Lake Superior heen (geen
+#        wegpad binnen het venster van 90 km om de rechte lijn); Wawa
+#        (Hwy 17-knooppunt, Nominatim-gelegd) toegevoegd als extra via-punt.
+# ⚠️ Geen stippels: alle vijf benen zijn eigen/openbare weg met een gepubliceerd
+#    of goed beargumenteerd km-cijfer; het net reikt overal tot de zes ankers.
+bak_uranium_mcarthurriver_porthope() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|uraanconcentraat McArthur River-mijn → Key Lake-mill (eigen mijnweg, Athabasca-bekken)|$BEEN/uranium-mcarthurriver-porthope-weg-mcarthurriver-keylake.geojson" \
+    --been-geojson "truck|uraanconcentraat Key Lake-mill → Blind River-raffinaderij (Hwy 914 → 165 → 2 → 16 (Yellowhead) → Trans-Canada Hwy 1/17, via Pinehouse–Saskatoon–Winnipeg–Wawa–Sault Ste. Marie; correctie op de brief, zie kop)|$BEEN/uranium-mcarthurriver-porthope-weg-keylake-blindriver.geojson" \
+    --been-geojson "truck|uraanconcentraat/UO3 Blind River-raffinaderij → Port Hope Conversion Facility (Hwy 17, Sault Ste. Marie–Sudbury–Parry Sound–Barrie–Toronto-omleiding)|$BEEN/uranium-mcarthurriver-porthope-weg-blindriver-porthope.geojson" \
+    --been-geojson "truck|UO2-poeder Port Hope Conversion Facility → BWXT Toronto (pelletpers) (Hwy 401)|$BEEN/uranium-mcarthurriver-porthope-weg-porthope-bwxttoronto.geojson" \
+    --been-geojson "truck|CANDU-pellets BWXT Toronto (pelletpers) → BWXT Peterborough (bundelfabriek) (Hwy 401 → Hwy 115/7; afwijking op het ontwerp, zie kop)|$BEEN/uranium-mcarthurriver-porthope-weg-bwxttoronto-bwxtpeterborough.geojson" \
+    --marker "McArthur River-mijn (Cameco 70% / Orano 30%), Athabasca-bekken|57.7626,-105.0508" \
+    --marker "Key Lake-mill (Cameco), Athabasca-bekken|57.2130,-105.6740" \
+    --marker "Blind River Refinery (Cameco), 328 Eldorado Road|46.1810,-83.0174" \
+    --marker "Port Hope Conversion Facility (Cameco), 1 Eldorado Place|43.9437,-78.2955" \
+    --marker "BWXT Nuclear Energy Canada — Toronto, 1025 Lansdowne Avenue|43.6679,-79.4466" \
+    --marker "BWXT Nuclear Energy Canada — Peterborough, 1160 Monaghan Road|44.2955,-78.3308" \
+    --routebrief v2/design/routebrieven/uranium-mcarthurriver-porthope.md \
+    --uit    v2/data/stroomroute-uranium-mcarthurriver-porthope.json \
+    --stroom uranium-mcarthurriver-porthope \
+    --titel  "Uranium · McArthur River/Key Lake → Blind River → Port Hope → BWXT Peterborough (Canada)"
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom

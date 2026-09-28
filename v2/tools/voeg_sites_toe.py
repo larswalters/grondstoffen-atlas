@@ -45,6 +45,7 @@ V2 = HIER.parent
 EENHEID = {
     "koper": "kt Cu/j", "lithium": "kt LCE/j", "nikkel": "kt Ni/j",
     "kobalt": "kt Co/j", "grafiet": "kt/j", "ree": "kt REO/j", "kolen": "Mt/j",
+    "olie": "kb/d", "uranium": "t U/j",
 }
 
 try:
@@ -71,7 +72,7 @@ def main():
     ap.add_argument("--schrijf", action="store_true")
     ap.add_argument("--grondstof", default="koper",
                     help="sleutel = id-prefix van de stromen (koper, lithium, grafiet, "
-                         "kobalt, nikkel, ree, kolen); bepaalt sitelaag- en doelbestand")
+                         "kobalt, nikkel, ree, kolen, olie, uranium); bepaalt sitelaag- en doelbestand")
     ap.add_argument("--eenheid", default=None,
                     help='capaciteitseenheid voor de teksten, bv. "kt LCE/j" (default per grondstof)')
     a = ap.parse_args()
@@ -114,7 +115,10 @@ def main():
             "lat": round(float(s["lat"]), 5), "level": "site", "parent": None,
             "rol": rol, "grondstof": [gs], "land": s.get("land"),
             "gewicht": float(s["capaciteit_kt"]),
-            "gewicht_bron": f"capaciteit {eenheid} — {s.get('capaciteit_bron','?')}",
+            # Een site met een eigen eenheid (uranium: verrijking in % wereld-SWU)
+            # mag niet als grondstofeenheid gelabeld worden — het getal is niet
+            # optelbaar met de rest.
+            "gewicht_bron": f"capaciteit {s.get('eenheid_site') or eenheid} — {s.get('capaciteit_bron','?')}",
             "bron": s.get("coord_bron", "?"),
             "korrel": f"site-niveau, lichte werkwijze (M29.1); status {s.get('status','?')}",
             "notitie": s.get("notitie", ""),
@@ -156,6 +160,10 @@ def main():
             "(routebrief-licht.md).")
         doc["gewicht_waarschuwing"] = (f"Alle sites dragen capaciteit in {eenheid} (bron per site "
             "in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.")
+        eigen = [s for s in sites if s.get("eenheid_site")]
+        if eigen:
+            doc["gewicht_waarschuwing"] += (f" Uitzondering: {len(eigen)} sites dragen een eigen "
+                "eenheid (staat in gewicht_bron) en zijn niet vergelijkbaar met de rest.")
 
     alle = [k for k in knopen if k.get("level") == "site"]
     print(f"sites in sitelaag: {len(sites)} · nieuw: {nieuw} · vervangen: {vervangen} · "

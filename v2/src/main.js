@@ -19,7 +19,6 @@ import { bouwHavenLaag, zetHavenGrootte, koppelHavenLabel } from "./havens.js?v=
 import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
-import { laadAisPings, ververs as ververspings, zetPingGrootte } from "./aispings.js?v=087";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadStroomroute } from "./stroomroute.js?v=122";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
@@ -236,7 +235,7 @@ function haalAisTracks() {
 // ⚠️ `grondstof` staat hier EXPLICIET (2026-09-26): de HUD groepeert erop
 // (details.srGroep[data-gs]), en het pilotbestand heet niet naar zijn
 // grondstof. Sleutel = de id-prefix uit stroomstijl.js (koper · lithium ·
-// grafiet · kobalt · nikkel · ree · kolen).
+// grafiet · kobalt · nikkel · ree · kolen · olie · uranium).
 const STROMEN = [
   { sleutel: "grafiet", bestand: "stroomroute-pilot.json", grondstof: "grafiet", aan: true },
   { sleutel: "cu-eg", bestand: "stroomroute-koper-escondida-guixi.json", grondstof: "koper", aan: true },
@@ -290,6 +289,25 @@ const STROMEN = [
   { sleutel: "kolen-tb", bestand: "stroomroute-kolen-tavantolgoi-baotou.json", grondstof: "kolen", aan: true },
   { sleutel: "kolen-tv", bestand: "stroomroute-kolen-taldinsky-vostochny.json", grondstof: "kolen", aan: true },
   { sleutel: "kolen-cr", bestand: "stroomroute-kolen-cerrejon-ruhr.json", grondstof: "kolen", aan: true },
+  // ── M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld ──
+  // Sleutels genormaliseerd naar <prefix>-<twee initialen>: olie heeft geen
+  // elementsymbool en volgt kolen (volle naam), uranium = u.
+  { sleutel: "olie-rz", bestand: "stroomroute-olie-rastanura-zhoushan.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-pj", bestand: "stroomroute-olie-primorsk-jamnagar.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-cr", bestand: "stroomroute-olie-corpuschristi-rotterdam.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-hc", bestand: "stroomroute-olie-habshan-chiba.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-bv", bestand: "stroomroute-olie-bonny-vadinar.json", grondstof: "olie", aan: true },
+  { sleutel: "u-ip", bestand: "stroomroute-uranium-inkai-poti.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-mp", bestand: "stroomroute-uranium-mcarthurriver-porthope.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-rw", bestand: "stroomroute-uranium-rossing-walvisbay.json", grondstof: "uranium", aan: true },
+  // Gestaakt sinds 2023 (titel + sitelaag): de weg is gemeten, de lading
+  // stroomt niet — getekend zoals grafiet fase D/E met volume nul.
+  { sleutel: "u-ac", bestand: "stroomroute-uranium-arlit-cotonou.json", grondstof: "uranium", aan: true },
+  { sleutel: "co-kd", bestand: "stroomroute-kobalt-kisanfu-daressalaam.json", grondstof: "kobalt", aan: true },
+  // Alleen de slurryleiding, als rechte stippel (132 km hemelsbreed tegen
+  // 220 km gepubliceerd); het zeebeen is bewust niet getekend (brief §7).
+  { sleutel: "co-at", bestand: "stroomroute-kobalt-ambatovy-toamasina.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-mf", bestand: "stroomroute-kobalt-moa-fortsaskatchewan.json", grondstof: "kobalt", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -398,7 +416,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "124", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "125", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -427,7 +445,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "124", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "125", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -538,7 +556,7 @@ if (TOON.aisgloed) laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
 const GLOEDBESTANDEN = [
   "gloednodes-koper.json", "gloednodes-lithium.json", "gloednodes-grafiet.json",
   "gloednodes-kobalt.json", "gloednodes-nikkel.json", "gloednodes-ree.json",
-  "gloednodes-kolen.json",
+  "gloednodes-kolen.json", "gloednodes-olie.json", "gloednodes-uranium.json",
 ];
 const GLOEDNODES = new Map();         // bestand → laag (alleen wat geladen is)
 window.GLOEDNODES = GLOEDNODES;       // diagnose-handvat
@@ -559,7 +577,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "124", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "125", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);
@@ -574,52 +592,6 @@ for (const bestand of GLOEDBESTANDEN) {
     .catch((e) => console.warn(
       `[atlas v2] gloednodes ${bestand} niet geladen (nog niet gebakken?):`, e.message));
 }
-
-// --- de ruwe AIS-pings als debuglaag (M28, LAR-535) ------------------------
-// Het venster op wat de collector op de VPS binnenkrijgt. Hiermee beoordeel je
-// DEKKING terwijl je kijkt: een leeg stuk rivier in de graaf kan "geen schepen"
-// óf "geen ontvanger" betekenen, en alleen deze laag laat het verschil zien.
-// Puur weergave — de echte tracks worden gebouwd in LAR-530.
-let AISPINGS = null;
-function toonPingNoot() {
-  const noot = document.getElementById("pingNoot");
-  if (!noot || !AISPINGS) return;
-  const s = AISPINGS.stats;
-  const vers = s.jongsteMin === null ? "—"
-    : s.jongsteMin < 60 ? `${s.jongsteMin} min`
-    : `${Math.round(s.jongsteMin / 60)} u`;
-  noot.textContent =
-    `${s.punten.toLocaleString("nl")} pings · ${s.schepen.toLocaleString("nl")} schepen · ` +
-    `laatste ${vers} geleden · ${s.uren} u venster, korrel ${s.korrelMin} min`;
-}
-laadAisPings(VECTOR_R)
-  .then((p) => {
-    AISPINGS = p;
-    GLOBE.globeGroup.add(p.punten);
-    window.AISPINGS = p;
-    const s = p.stats;
-    console.log(
-      `[atlas v2] aispings: ${s.punten.toLocaleString("nl")} punten · ` +
-      `${s.schepen.toLocaleString("nl")} schepen (${s.varend.toLocaleString("nl")} varend) · ` +
-      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
-    );
-    toonPingNoot();
-  })
-  // Zacht falen: de VPS is geen dragende afhankelijkheid van de atlas.
-  .catch((e) => {
-    console.warn("[atlas v2] aispings niet geladen (VPS bereikbaar?):", e.message);
-    const noot = document.getElementById("pingNoot");
-    if (noot) noot.textContent = "geen verbinding met de collector op de VPS";
-  });
-
-// De publisher op de VPS draait elk kwartier; ververs alleen zolang de laag
-// zichtbaar is, zodat een dichtgeklapte HUD geen verkeer veroorzaakt.
-setInterval(() => {
-  if (!AISPINGS || !AISPINGS.punten.visible) return;
-  ververspings(AISPINGS, VECTOR_R)
-    .then(toonPingNoot)
-    .catch((e) => console.warn("[atlas v2] aispings verversen mislukt:", e.message));
-}, 5 * 60 * 1000);
 
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
@@ -639,12 +611,6 @@ GLOBE.onTick(() => {
     // Boven het landnet: waar spoor en water samenkomen hoort water te winnen.
     const op = Math.max(CONFIG.radius * 3e-6, alt * 0.005);
     AISNET.lijnen.scale.setScalar(1 + op / CONFIG.radius);
-  }
-  if (AISPINGS && AISPINGS.punten.visible) {
-    // Zelfde plank als het AIS-net: dit is water-materiaal, geen haven.
-    const op = Math.max(CONFIG.radius * 3.5e-6, alt * 0.0055);
-    AISPINGS.punten.scale.setScalar(1 + op / CONFIG.radius);
-    zetPingGrootte(AISPINGS, GLOBE.getAltitudeKm(), GLOBE.renderer.getPixelRatio());
   }
   if (HAVENLAAG) {
     // Bovenop alles: een haven mag nooit onder een lijn verdwijnen.
@@ -787,17 +753,6 @@ document.querySelectorAll(".gnGa").forEach((knop) => {
   knop.addEventListener("click", () => {
     GLOBE.vliegNaar(+knop.dataset.lon, +knop.dataset.lat, +knop.dataset.km);
   });
-});
-wireButtons(".apBtn", "ap", (mode) => {
-  if (!AISPINGS) return;
-  AISPINGS.punten.visible = (mode === "aan");
-  // Bij aanzetten meteen de verste stand ophalen: de laag kan uren uit hebben
-  // gestaan en dan is de zichtbare data ouder dan het venster suggereert.
-  if (mode === "aan") {
-    ververspings(AISPINGS, VECTOR_R)
-      .then(toonPingNoot)
-      .catch(() => {});
-  }
 });
 wireButtons(".hvBtn", "hv", (mode) => {
   if (HAVENLAAG) HAVENLAAG.punten.visible = (mode === "aan");

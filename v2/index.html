@@ -142,7 +142,7 @@
     </details>
     <!-- M30 · golf 2b (2026-09-26): kobalt + nikkel, lichte werkwijze. -->
     <details class="srGroep" data-gs="kobalt" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">kobalt</span><span class="gsTel">4</span><button type="button" class="gsBtn is-on" data-gs="kobalt">alles</button></summary>
+      <summary><i class="gsBol"></i><span class="gsNaam">kobalt</span><span class="gsTel">7</span><button type="button" class="gsBtn is-on" data-gs="kobalt">alles</button></summary>
       <div class="btnRow">
         <button class="srBtn is-on" data-sr="co-tq">TFM → Durban → Ningbo</button>
         <button class="srBtn is-on" data-sr="co-kl">Kolwezi → Lobito</button>
@@ -150,6 +150,14 @@
       <div class="btnRow">
         <button class="srBtn is-on" data-sr="co-mq">Morowali → Ningbo</button>
         <button class="srBtn is-on" data-sr="co-kk">KCC → Durban → Kokkola</button>
+      </div>
+      <!-- M31 · golf 1 (2026-09-28): drie kobaltketens erbij. -->
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="co-kd">Kisanfu → Dar es Salaam → Ningbo</button>
+        <button class="srBtn is-on" data-sr="co-at">Ambatovy → Toamasina</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="co-mf">Moa → Halifax → Fort Saskatchewan</button>
       </div>
     </details>
     <details class="srGroep" data-gs="nikkel" open>
@@ -195,6 +203,32 @@
       <div class="btnRow">
         <button class="srBtn is-on" data-sr="kolen-tv">Taldinsky → Vostochny</button>
         <button class="srBtn is-on" data-sr="kolen-cr">Cerrejón → Rotterdam → Schwelgern</button>
+      </div>
+    </details>
+    <!-- M31 · golf 1 (2026-09-28): olie en uranium, nieuw in v2, lichte werkwijze. -->
+    <details class="srGroep" data-gs="olie" open>
+      <summary><i class="gsBol"></i><span class="gsNaam">olie</span><span class="gsTel">5</span><button type="button" class="gsBtn is-on" data-gs="olie">alles</button></summary>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="olie-rz">Ras Tanura → Zhoushan</button>
+        <button class="srBtn is-on" data-sr="olie-hc">Habshan → Fujairah → Chiba</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="olie-pj">Primorsk → Sikka → Jamnagar</button>
+        <button class="srBtn is-on" data-sr="olie-bv">Bonny → Vadinar</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="olie-cr">Corpus Christi → Rotterdam</button>
+      </div>
+    </details>
+    <details class="srGroep" data-gs="uranium" open>
+      <summary><i class="gsBol"></i><span class="gsNaam">uranium</span><span class="gsTel">4</span><button type="button" class="gsBtn is-on" data-gs="uranium">alles</button></summary>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="u-ip">Inkai → Aktau → Bakoe → Poti</button>
+        <button class="srBtn is-on" data-sr="u-mp">McArthur River → Peterborough</button>
+      </div>
+      <div class="btnRow">
+        <button class="srBtn is-on" data-sr="u-rw">Rössing → Walvis Bay</button>
+        <button class="srBtn is-on" data-sr="u-ac">Arlit → Cotonou (gestaakt)</button>
       </div>
     </details>
     <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
@@ -291,17 +325,6 @@
     </div>
     <div id="gloedNodeNoot"></div>
 
-    <!-- De ruwe AIS-pings (M28, LAR-535): het venster op wat de collector op de
-         VPS binnenkrijgt. Puur weergave — hiermee beoordeel je DEKKING (leeg
-         stuk rivier = geen station) en leg je de pings naast satelliet en graaf.
-         Standaard uit; ververst zichzelf zolang de laag aan staat. -->
-    <div class="hudLabel">AIS-pings (debug)</div>
-    <div class="btnRow">
-      <button class="apBtn" data-ap="aan">aan</button>
-      <button class="apBtn is-on" data-ap="uit">uit</button>
-    </div>
-    <div id="pingNoot"></div>
-
     <!-- Echte scheepstracks (M28): gevaren lijnen van individuele schepen uit
          vijf AIS-archieven — MarineCadastre (NOAA/USACE), DMA (DK),
          Kystdatahuset (NO), AMSA (AU) en de eigen collector. Amber = opvaart,
@@ -385,6 +408,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=124"></script>
+<script type="module" src="src/main.js?v=125"></script>
 </body>
 </html>

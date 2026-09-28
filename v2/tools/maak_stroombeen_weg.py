@@ -95,6 +95,337 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief kobalt-kisanfu-daressalaam, been b1 (LICHTE werkwijze M31).
+    # Truck kobalthydroxide KFM Kisanfu-plant → mijnweg → RN39 (bij
+    # Kisanfu-dorp) → RN39/RN1 Likasi–Lubumbashi (gedeeld eerste stuk met
+    # TFM/KCC, zie koper-kolwezi-durban.md §4) → Kasumbalesa-grens. Geen
+    # gepubliceerde bronlengte specifiek voor dit traject; gepubliceerdKm =
+    # eigen via-puntenketen (~290 km hemelsbreed), vensterKm ruim omdat de
+    # exacte mijnweg-aansluiting nog niet gemeten is.
+    "kobalt-kisanfu-daressalaam-kisanfu-kasumbalesa": {
+        "via": [
+            ("KFM Kisanfu-plant (anker, bron-gelegd)", (25.9983, -10.7630)),
+            ("Kisanfu-dorp / RN39-aansluiting", (25.9404, -10.6881)),
+            ("Likasi (RN39 → RN1, hergebruikt)", (26.7355, -10.9806)),
+            ("Lubumbashi (RN1, hergebruikt)", (27.4827, -11.6642)),
+            ("Kasumbalesa-grens (hergebruikt anker)", (27.7959, -12.2658)),
+        ],
+        "id": "co-kisanfu-kasumbalesa",
+        "naam": "KFM Kisanfu-plant → Kasumbalesa (mijnweg → RN39 → RN39/RN1, "
+                "gedeeld eerste stuk met TFM/KCC)",
+        "extracts": ["congo-drc"],
+        "refs": ["RN39", "RN1"],
+        "gepubliceerdKm": 290,
+        "bronnoot": "geen gepubliceerde bronlengte; eigen via-puntenketen "
+                    "~289,7 km hemelsbreed (routebrief §7)",
+        "vensterKm": 85,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-kisanfu-daressalaam-weg-kisanfu-kasumbalesa.geojson",
+    },
+    # Routebrief kobalt-kisanfu-daressalaam, been b2 (LICHTE werkwijze M31).
+    # Truck kobalthydroxide Kasumbalesa-grens (hergebruikt) → T2/Great North
+    # Road: Ndola → Kapiri Mposhi (zuidwaartse T2-lus) → Mpika (wissel
+    # Serenje/Chinsali) → Isoka → Nakonde/Tunduma-grens. gepubliceerdKm
+    # ~1.750 (Ndola–Tunduma ≈1.900 minus Kasumbalesa–Ndola); eigen
+    # hemelsbreed-keten 934,5 km ter controle (verwacht ratio ~1,8-1,9 gezien
+    # de Kapiri Mposhi-lus).
+    "kobalt-kisanfu-daressalaam-kasumbalesa-nakonde": {
+        "via": [
+            ("Kasumbalesa-grens (hergebruikt anker)", (27.7959, -12.2658)),
+            ("Ndola (T3 → T2)", (28.6366, -12.9693)),
+            ("Kapiri Mposhi (T2/T3-kruispunt)", (28.6786, -13.9699)),
+            ("Mpika (T2, wissel Serenje/Chinsali)", (31.4555, -11.8432)),
+            ("Isoka", (32.6369, -10.1535)),
+            ("Nakonde/Tunduma-grens", (32.7612, -9.3208)),
+        ],
+        "id": "co-kasumbalesa-nakonde",
+        "naam": "Kasumbalesa → Nakonde/Tunduma (T2/Great North Road via Ndola–"
+                "Kapiri Mposhi–Mpika–Isoka)",
+        "extracts": ["zambia"],
+        "refs": ["T2", "T3", "Great North Road", "Tanzam"],
+        "gepubliceerdKm": 1750,
+        "bronnoot": "Ndola–Tunduma ≈1.900 km [3][4] minus Kasumbalesa–Ndola; "
+                    "eigen hemelsbreed-keten 934,5 km",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-kisanfu-daressalaam-weg-kasumbalesa-nakonde.geojson",
+    },
+    # Routebrief kobalt-kisanfu-daressalaam, been b3 (LICHTE werkwijze M31).
+    # Truck kobalthydroxide Nakonde/Tunduma-grens → T1 Centraal Corridor/
+    # TANZAM (A7): Mbeya (wissel TANZAM → Centraal Corridor) → Iringa →
+    # Morogoro → Dar es Salaam CT2-kade. gepubliceerdKm ~950 [ontwerp]; eigen
+    # hemelsbreed-keten 786,6 km ter controle (verwacht ratio ~1,2).
+    # ⚠️ EINDIGT OP DE HAVENPOORT, NIET OP DE KADE: het interne wegennet van
+    # Container Terminal II (34 knopen) is in OSM een geïsoleerd eiland — 0,355
+    # km van het doorgaande wegnet, geen gedeelde vertex (gemeten: component
+    # van de kade bevat 34 knopen, bereikt het hoofdnet niet). Kade → poort
+    # wordt in de bake een korte stippel (emplacement/havenpoort, net reikt
+    # hier niet — bakhandleiding §2 "Emplacementen...").
+    "kobalt-kisanfu-daressalaam-nakonde-daressalaam": {
+        "via": [
+            ("Nakonde/Tunduma-grens", (32.7612, -9.3208)),
+            ("Mbeya (A7/T1, wissel TANZAM → Centraal Corridor)", (33.4687, -8.9065)),
+            ("Iringa (A7)", (35.6971, -7.7789)),
+            ("Morogoro (A7, wissel richting Dar es Salaam)", (37.6694, -6.8162)),
+            ("Dar es Salaam — havenpoort (doorgaand wegnet, 0,355 km van de kade)", (39.293780, -6.840496)),
+        ],
+        "id": "co-nakonde-daressalaam",
+        "naam": "Nakonde/Tunduma → Dar es Salaam-havenpoort (T1 Centraal Corridor/TANZAM "
+                "via Mbeya–Iringa–Morogoro)",
+        "extracts": ["tanzania"],
+        "refs": ["A7", "T1", "Tanzam"],
+        "gepubliceerdKm": 950,
+        "bronnoot": "~950 km [ontwerp]; eigen hemelsbreed-keten 786,6 km",
+        "vensterKm": 100,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-kisanfu-daressalaam-weg-nakonde-daressalaam.geojson",
+    },
+    # Routebrief uranium-mcarthurriver-porthope, been b1 (LICHTE werkwijze M31).
+    # Truck (uraanconcentraat) McArthur River-mijn → Key Lake-mill, eigen
+    # mijnweg door het Athabasca-bekken. Géén via-punten (geen corridorkeuze).
+    # corridorKlassen ruim gezet: een mijnweg in het boreale woud kan als
+    # tertiary/unclassified/service gekarteerd zijn (nooit als track — die
+    # klasse komt de scanner niet door, werkwijze §valkuilen).
+    "uranium-mcarthurriver-porthope-mcarthurriver-keylake": {
+        "via": [
+            ("McArthur River-mijn (Cameco 70% / Orano 30%, anker, bron-gelegd)", (-105.0508, 57.7626)),
+            ("Key Lake-mill (Cameco, anker, bron-gelegd)", (-105.6740, 57.2130)),
+        ],
+        "id": "u-mcarthurriver-keylake",
+        "naam": "McArthur River-mijn → Key Lake-mill (eigen mijnweg, Athabasca-bekken)",
+        "extracts": ["canada"],
+        "refs": [],
+        "gepubliceerdKm": 80,
+        "bronnoot": "80 km eigen mijnweg (Cameco)",
+        "vensterKm": 30,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "uit": "uranium-mcarthurriver-porthope-weg-mcarthurriver-keylake.geojson",
+    },
+    # Routebrief uranium-mcarthurriver-porthope, been b2 (LICHTE werkwijze M31).
+    # Truck Key Lake-mill → Blind River-raffinaderij, dwars door Canada via
+    # Hwy 914→2→16 (Yellowhead) → Trans-Canada Hwy 1/17, langs via-punten
+    # (knooppuntsteden, niet per snelwegstuk gebrond — brief §7). vensterKm
+    # ruim (90) gezien de lengte (~3.000 km) en de onzekere corridor buiten
+    # Saskatoon/Sault Ste. Marie.
+    # ⚠️ CORRECTIE OP DE BRIEF (bak-aanwijzing): het brief-via-punt "Points
+    # North Landing (Hwy 905/102-knooppunt)" (58.2689,-104.0800) heeft in OSM
+    # GEEN wegverbinding met Hwy 914/Key Lake — eerste scanpoging gaf "geen
+    # wegpad tussen punt 0 en 1" (ook met corridorKlassen ruim). Nagemeten:
+    # Hwy 914 loopt in OSM van McArthur River/Key Lake ZUIDWAARTS tot
+    # (-106.7898,55.2348), waar hij exact aansluit op Hwy 165 — bevestigd door
+    # Wikipedia (Sask. Hwy 914: "begins at Highway 165 south of Pinehouse …
+    # does not intersect with any provincially-owned highways between
+    # Highway 165 and Key Lake Mine"). Points North Landing (Hwy 905, ~1,5°
+    # verder noordoostelijk) ligt niet aan deze corridor. Via-punt vervangen
+    # door de werkelijke Hwy 165/914-aansluiting ten zuiden van Pinehouse
+    # (coördinaat = het gemeten OSM-knooppunt, geen schatting).
+    # ⚠️ TWEEDE CORRECTIE: "geen wegpad tussen punt 7 en 8" (Thunder Bay →
+    # Sault Ste. Marie) — de rechte lijn snijdt over Lake Superior, en de
+    # échte Hwy 17 buigt langs de noordoever ruim buiten een 90 km-venster om
+    # die rechte lijn. Wawa (Hwy 17-knooppunt, tussenstad, bron-gelegd via
+    # Nominatim) toegevoegd als extra via-punt.
+    # ⚠️ DERDE CORRECTIE (na toets_knikken.py): het Saskatoon-via-punt
+    # (52.1318,-106.6608, stadscentrum) snapte op een doodlopende straat en gaf
+    # één echte TERUGLOOP (179,4°, v=29,5) — de doorgaande Hwy 16 loopt hier als
+    # Circle Drive (trunk, OSM ref "16") 2,6 km noordelijker. Via-punt verschoven
+    # naar de gemeten Circle Drive-coördinaat, geen via-punt bijgeschoven om een
+    # km-toets te halen (de lengtetoets stond al binnen norm).
+    "uranium-mcarthurriver-porthope-keylake-blindriver": {
+        "via": [
+            ("Key Lake-mill (Cameco, anker, bron-gelegd)", (-105.6740, 57.2130)),
+            ("Hwy 165/914-knooppunt, ten zuiden van Pinehouse (correctie op de "
+             "brief — Points North Landing ligt niet aan deze corridor, zie boven)",
+             (-106.7898, 55.2348)),
+            ("La Ronge (Hwy 102/2-knooppunt)", (-105.2900, 55.1005)),
+            ("Prince Albert (Hwy 2/55/3-knooppunt)", (-105.7559, 53.2020)),
+            ("Saskatoon (Hwy 16/Circle Drive, gebronde overslagplaats — via-punt "
+             "verschoven van het stadscentrum naar de doorgaande ringweg, zie kop)",
+             (-106.6606, 52.1579)),
+            ("Yorkton (Yellowhead Hwy 16)", (-102.4612, 51.2120)),
+            ("Winnipeg (Hwy 1/17-knooppunt)", (-97.1385, 49.8955)),
+            ("Thunder Bay (Hwy 17-knooppunt)", (-89.2598, 48.4064)),
+            ("Wawa (Hwy 17-knooppunt, extra via-punt — Lake Superior-noordoever)",
+             (-84.7740, 47.9929)),
+            ("Sault Ste. Marie (Hwy 17-knooppunt)", (-84.3330, 46.5127)),
+            ("Blind River Refinery (Cameco, anker, bron-gelegd)", (-83.0174, 46.1810)),
+        ],
+        "id": "u-keylake-blindriver",
+        "naam": "Key Lake-mill → Blind River-raffinaderij (Hwy 914 → 165 → 2 → 16 "
+                "(Yellowhead) → Trans-Canada Hwy 1/17, via Pinehouse–Saskatoon–"
+                "Winnipeg–Wawa–Sault Ste. Marie)",
+        "extracts": ["canada"],
+        "refs": ["914", "165", "2", "16", "1", "17", "Yellowhead Highway", "Trans-Canada Highway"],
+        "gepubliceerdKm": 3000,
+        "bronnoot": "~3.000 km Saskatchewan→Ontario (Watershed Sentinel)",
+        "vensterKm": 90,
+        "uit": "uranium-mcarthurriver-porthope-weg-keylake-blindriver.geojson",
+    },
+    # Routebrief uranium-mcarthurriver-porthope, been b3 (LICHTE werkwijze M31).
+    # Truck Blind River-raffinaderij → Port Hope Conversion Facility, Hwy 17
+    # (Sault Ste. Marie–Sudbury) → Hwy 69 (Georgian Bay-route) → Hwy 400 →
+    # Hwy 401, via Sudbury/Parry Sound/Barrie/Vaughan.
+    "uranium-mcarthurriver-porthope-blindriver-porthope": {
+        "via": [
+            ("Blind River Refinery (Cameco, anker, bron-gelegd)", (-83.0174, 46.1810)),
+            ("Sudbury (Hwy 17/69-knooppunt)", (-80.9912, 46.4927)),
+            ("Parry Sound (Hwy 69/400-knooppunt)", (-80.0337, 45.3436)),
+            ("Barrie (Hwy 400/11-knooppunt)", (-79.6901, 44.3893)),
+            ("Vaughan (Hwy 400/401-knooppunt)", (-79.5268, 43.7942)),
+            ("Port Hope Conversion Facility (Cameco, anker, bron-gelegd)", (-78.2955, 43.9437)),
+        ],
+        "id": "u-blindriver-porthope",
+        "naam": "Blind River-raffinaderij → Port Hope Conversion Facility "
+                "(Hwy 17, Sault Ste. Marie–Sudbury–Parry Sound–Barrie–Toronto-omleiding)",
+        "extracts": ["canada"],
+        "refs": ["17", "69", "400", "401", "Highway 17", "Highway 69", "Highway 400", "Highway 401"],
+        "gepubliceerdKm": 600,
+        "bronnoot": "600 km Blind River→Port Hope (Watershed Sentinel)",
+        "vensterKm": 50,
+        "uit": "uranium-mcarthurriver-porthope-weg-blindriver-porthope.geojson",
+    },
+    # Routebrief uranium-mcarthurriver-porthope, been b4 (LICHTE werkwijze M31).
+    # Truck Port Hope Conversion Facility → BWXT Toronto (pelletpers), rechte
+    # Hwy 401-corridor, geen via-punten nodig.
+    "uranium-mcarthurriver-porthope-porthope-bwxttoronto": {
+        "via": [
+            ("Port Hope Conversion Facility (Cameco, anker, bron-gelegd)", (-78.2955, 43.9437)),
+            ("BWXT Nuclear Energy Canada — Toronto (anker, bron-gelegd)", (-79.4466, 43.6679)),
+        ],
+        "id": "u-porthope-bwxttoronto",
+        "naam": "Port Hope Conversion Facility → BWXT Toronto (pelletpers) (Hwy 401)",
+        "extracts": ["canada"],
+        "refs": ["401", "Highway 401"],
+        "gepubliceerdKm": 112,
+        "bronnoot": "~112 km (webcheck, grootcirkel 97 km × wegfactor)",
+        "vensterKm": 30,
+        "uit": "uranium-mcarthurriver-porthope-weg-porthope-bwxttoronto.geojson",
+    },
+    # Routebrief uranium-mcarthurriver-porthope, been b5 (LICHTE werkwijze M31).
+    # Truck BWXT Toronto (pelletpers) → BWXT Peterborough (bundelfabriek),
+    # Hwy 401 oost dan Hwy 115/7 noord. ⚠️ Dit been + b4 zijn een AFWIJKING op
+    # het oorspronkelijke ontwerp (dat één been Port Hope→Peterborough gaf,
+    # brief §1); Toronto ligt zuidwestelijk van beide, dus de lijn maakt een
+    # zichtbare lus/driehoek — dat is correct, geen bakfout.
+    "uranium-mcarthurriver-porthope-bwxttoronto-bwxtpeterborough": {
+        "via": [
+            ("BWXT Nuclear Energy Canada — Toronto (anker, bron-gelegd)", (-79.4466, 43.6679)),
+            ("BWXT Nuclear Energy Canada — Peterborough (anker, bron-gelegd)", (-78.3308, 44.2955)),
+        ],
+        "id": "u-bwxttoronto-bwxtpeterborough",
+        "naam": "BWXT Toronto (pelletpers) → BWXT Peterborough (bundelfabriek) "
+                "(Hwy 401 → Hwy 115/7)",
+        "extracts": ["canada"],
+        "refs": ["401", "115", "7", "Highway 401", "Highway 115", "Highway 7"],
+        "gepubliceerdKm": 145,
+        "bronnoot": "~145 km (webcheck, grootcirkel 113 km × wegfactor)",
+        "vensterKm": 30,
+        "uit": "uranium-mcarthurriver-porthope-weg-bwxttoronto-bwxtpeterborough.geojson",
+    },
+    # Routebrief uranium-inkai-poti, been b1 (LICHTE werkwijze M31). Truck
+    # (yellowcake) Inkai MPP (JV Inkai, Kazatomprom/Cameco) → Zhanatas-
+    # spoorstation, woestijnsteppe Suzak-district → Zjambyl-oblast, geen
+    # gepubliceerde wegroute (brief §7: "aannemelijk: één bron" voor het feit
+    # van truckvervoer; de weg zelf komt uit OSM). Geen via-punten bekend →
+    # ruim venster, laat de Dijkstra de kortste hoofdweg vinden.
+    "uranium-inkai-poti-inkai-zhanatas": {
+        "via": [
+            ("Inkai MPP — hoofdverwerkingsfabriek (JV Inkai, anker, bron-gelegd)", (67.5255, 45.2855)),
+            ("Zhanatas-spoorstation (anker, bron-gelegd)", (69.7260, 43.5610)),
+        ],
+        "id": "u-inkai-zhanatas",
+        "naam": "Inkai MPP → Zhanatas-spoorstation (woestijnweg Suzak-district → "
+                "Zjambyl-oblast, aannemelijk: één bron)",
+        "extracts": ["kazachstan"],
+        "refs": [],
+        "gepubliceerdKm": 290,
+        "bronnoot": "~290 km hemelsbreed (Cameco 2024 NI 43-101 §18.2: "
+                    "\"shipments... delivered to the Zhanatas rail station\"); "
+                    "geen gepubliceerde wegkm",
+        "vensterKm": 75,
+        "uit": "uranium-inkai-poti-weg-inkai-zhanatas.geojson",
+    },
+    # Routebrief uranium-rossing-walvisbay, been b1 (LICHTE werkwijze M31).
+    # Truck (yellowcake-drums) Rössing-fabriek (Arandis) → Walvis Bay-haven,
+    # over de B2 (enige gekarteerde hoofdweg, geen corridorkeuze — geen
+    # via-punten). Modaliteit AANNEMELIJK (brief §7: analogie met Husab).
+    "uranium-rossing-walvisbay": {
+        "via": [
+            ("Rössing-fabriek (Arandis, anker, bron-gelegd)", (15.0405, -22.4635)),
+            ("Walvis Bay-haven, NamPort containerterminal (anker, bron-gelegd)", (14.4840, -22.9465)),
+        ],
+        "id": "u-rossing-walvisbay",
+        "naam": "Rössing-fabriek (Arandis) → Walvis Bay-haven (B2, aannemelijk: "
+                "analogie met Husab)",
+        "extracts": ["namibie"],
+        "refs": ["B2"],
+        "gepubliceerdKm": 90,
+        "bronnoot": "~90 km indicatief (afgeleid: Wikipedia 80 km hemelsbreed "
+                    "NO + B2 Arandis–Walvis Bay 77 km, routebrief §2/§7)",
+        "vensterKm": 40,
+        "uit": "uranium-rossing-walvisbay-weg.geojson",
+    },
+    # Routebrief uranium-arlit-cotonou, been b1 (LICHTE werkwijze M31). Truck
+    # (yellowcake-vaten) SOMAIR-mijn Arlit → Agadez → Tahoua → Niamey → Dosso →
+    # brug Gaya/Malanville (RN1 Niger). Historische exportroute, operationeel
+    # gestaakt sinds de grenssluiting van 26-07-2023 (statusfeit, geen stippel-
+    # reden — het net bestaat en is gemeten, zie brief §2).
+    # ⚠️ Km AANNEMELIJK: geen bron meet dit deelstuk apart; ~1.270 km is
+    #    afgeleid (1.600 km totaal Arlit→Parakou (WNA) minus ~330 km Benin-
+    #    been). Tolerantie ruim nemen.
+    "uranium-arlit-cotonou-arlit-grens": {
+        "via": [
+            ("SOMAIR-mijn/verwerkingscomplex, Arlit (anker, bron-gelegd)",     (7.3443, 18.7731)),
+            ("Agadez",                                                        (7.9907, 16.9726)),
+            ("Tahoua",                                                        (5.2621, 14.8899)),
+            ("Niamey",                                                        (2.1098, 13.5248)),
+            ("Dosso",                                                         (3.1945, 13.0496)),
+            ("Brug Gaya/Malanville (anker, grensovergang, bron-gelegd)",      (3.3961, 11.8807)),
+        ],
+        "id": "u-arlit-grens",
+        "naam": "SOMAIR-mijn Arlit → Agadez → Tahoua → Niamey → Dosso → grens "
+                "Gaya/Malanville (RN1 Niger, aannemelijk: één bron)",
+        "extracts": ["niger"],
+        "refs": ["RN1"],
+        "gepubliceerdKm": 1270,
+        "bronnoot": "afgeleid: 1.600 km totaal Arlit→Parakou (WNA) minus ~330 "
+                    "km Benin-been (routebrief §2/§8[1][8]) — geen directe "
+                    "bron voor dit deelstuk, tolerantie ruim nemen",
+        "vensterKm": 40,
+        # ⚠️ Eerste poging (WEG_HOUD kaal) faalde tussen Tahoua en Niamey:
+        # "geen wegpad tussen punt 2 en 3" — de RN1 draagt daar kennelijk geen
+        # motorway/trunk/primary/secondary-tag over het hele traject.
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "uranium-arlit-cotonou-weg-arlit-grens.geojson",
+    },
+    # Routebrief uranium-arlit-cotonou, been b2 (LICHTE werkwijze M31). Truck
+    # (yellowcake-vaten) brug Gaya/Malanville → Kandi → Bembèrèkè → Parakou-
+    # emplacement (RNIE2 Benin).
+    # ⚠️ Parakou-anker is AANNEMELIJK (brief §3): OSM-punt "Gare" is een gebouw
+    #    in de stad, geen apart vrachtemplacement satelliet-onderscheiden.
+    "uranium-arlit-cotonou-grens-parakou": {
+        "via": [
+            ("Brug Gaya/Malanville (anker, grensovergang, bron-gelegd)",      (3.3961, 11.8807)),
+            ("Kandi",                                                         (2.9322, 11.1311)),
+            ("Bembèrèkè",                                                     (2.7507, 10.2540)),
+            ("Spoorstation Gare, Parakou (anker, aannemelijk)",              (2.6099, 9.3487)),
+        ],
+        "id": "u-grens-parakou",
+        "naam": "grens Gaya/Malanville → Kandi → Bembèrèkè → Parakou-"
+                "emplacement (RNIE2 Benin)",
+        "extracts": ["benin"],
+        "refs": ["RNIE2"],
+        "gepubliceerdKm": 330,
+        "bronnoot": "RNIE2 Cotonou-grens 729 km minus spoorlijn 400 km ≈ 329; "
+                    "kruisbevestigd Rome2Rio Malanville→Parakou ≈322 km "
+                    "(routebrief §2/§8[2][9])",
+        "vensterKm": 40,
+        # ⚠️ Eerste poging (WEG_HOUD kaal) gaf een via-snap van 6,71 km bij
+        # Bembèrèkè — de RNIE2 draagt daar geen primary/secondary-tag
+        # (osmium-check: unclassified op 0,39 km, tertiary op 1,13 km, geen
+        # grotere klasse binnen 8 km).
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "uranium-arlit-cotonou-weg-grens-parakou.geojson",
+    },
     # Routebrief kolen-tavantolgoi-baotou, been b2 (LICHTE werkwijze M29). Truck
     # (cokeskool, grensoverslag) Gashuunsukhait rail-yard (MN) → grenspost Gashuun
     # Sukhait → Chinese poort Ganqimaodu → Ganqimaodu-station/opslagloodsen (CN).

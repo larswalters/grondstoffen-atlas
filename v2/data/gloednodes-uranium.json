@@ -1,0 +1,583 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag uranium voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/uranium-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof uranium: ids 'w-*', gewicht = capaciteit in t U/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in t U/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron. Uitzondering: 10 sites dragen een eigen eenheid (staat in gewicht_bron) en zijn niet vergelijkbaar met de rest.",
+ "knopen": [
+  {
+   "id": "w-inkai",
+   "naam": "Inkai (JV Kazatomprom 60% / Cameco 40%)",
+   "lon": 67.533,
+   "lat": 45.2865,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (ISR)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Kazachstan (Turkestan-oblast, Sozak-district)",
+   "gewicht": 4090.0,
+   "gewicht_bron": "capaciteit t U/j — Cameco 2024 Inkai Technical Report + Kazatomprom Annual Report 2023: JV-productie 2023 ≈ 4.090 tU (100%-basis); 2024-guidance 8,3 Mlb U3O8 (100%-basis, voorwaardelijk aan zwavelzuuraanvoer) ≈ 3.140 tU [B1][B2]",
+   "bron": "Cameco/Kazatomprom technische rapporten (45°16'56\"N 67°32'12\"E) als kandidaat; satelliet z14 (sitelaag-uranium-inkai): kruis lag ~250 m oostelijk van een zichtbaar ISR-verwerkingscomplex (loodsen, tanks, wellfield-wegennet eromheen) — verschoven naar 45.2865/67.5330, op de rand van het complex",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste ISR-uraanmijn ter wereld; JV Inkai LLP. Yellowcake gaat landlocked per spoor door Rusland óf via de Trans-Kaspische route om Rusland heen."
+  },
+  {
+   "id": "w-keylake",
+   "naam": "Key Lake mill (verwerkt erts van McArthur River)",
+   "lon": -105.65917,
+   "lat": 57.20667,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn+molen",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Canada (Saskatchewan, Athabasca-bekken)",
+   "gewicht": 7815.0,
+   "gewicht_bron": "capaciteit t U/j — Cameco 2024 Annual Report / Form 40-F: gezamenlijke verpakte productie McArthur River/Key Lake 2024 = 20,3 Mlb U3O8 = 7.815 tU (100%-basis; wereldrecord voor een molen) [B3][B4]",
+   "bron": "Wikipedia/mindat geohack (57°12'24\"N 105°39'33\"W); geen aparte satellietblik deze ronde (McArthur River-erts, 80 km noordelijker, wél gecheckt — zie w-mcarthurriver-erts in sites_zonder_gewicht)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Cameco 69,805%; erts van McArthur River (80 km noordelijker, ondergronds) wordt hierheen getrukt en hier gemalen tot yellowcake — het gewicht staat bewust op de molen om dubbeltelling met de mijn te vermijden."
+  },
+  {
+   "id": "w-cigarlake",
+   "naam": "Cigar Lake (mijn) / McClean Lake (molen)",
+   "lon": -104.54056,
+   "lat": 58.06861,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn+molen",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Canada (Saskatchewan, Athabasca-bekken)",
+   "gewicht": 7100.0,
+   "gewicht_bron": "capaciteit t U/j — Cameco 2024 Annual Report: Cigar Lake-aandeel Cameco (50%) 9,2 Mlb U3O8 in 2024 → 100%-basis ≈ 18,4 Mlb ≈ 7.100 tU; erts gaat naar de McClean Lake-molen (Orano-beheerd) [B3][B5]",
+   "bron": "Wikipedia geohack (58°04'07\"N 104°32'26\"W); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "JV Cameco (50%, operator) / Orano Canada (37,1%) / andere; rijkste uraanerts ter wereld, ondergronds gevroren-grondmethode. Molen McClean Lake (Orano) ligt op 58,2676/-103,79722, ~90 km oostelijk — evident ontbrekende grote site t.o.v. v1, expliciet toegevoegd (missend in de v1-lijst en in de meegeleverde top_sites)."
+  },
+  {
+   "id": "w-husab",
+   "naam": "Husab (Swakop Uranium, CGN)",
+   "lon": 15.05325,
+   "lat": -22.57769,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Namibië (Erongo)",
+   "gewicht": 5300.0,
+   "gewicht_bron": "capaciteit t U/j — Namibian Uranium Association / The Extractor (2025): 2024-productie 5.232 t U3O8, groei 34% 2020-2024, ontwerpcapaciteit 6.500 t U3O8/j; omgerekend naar U-gehalte (×0,848) ≈ 4.437 tU, maar WNA/MINING.COM noemen Husab voor 2024/2025 als 's werelds grootste open-pit-producent op ~5.300-6.000 tU-basis [B6][B7]",
+   "bron": "mindat-coördinaat (22°34'39\"S 15°03'11\"E) als kandidaat; satelliet z14 (sitelaag-uranium-husab2): kruis ligt midden in de actieve open pit, processing plant + tailings duidelijk zichtbaar ten zuidwesten",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "CGN (Chinees) 90%; momenteel 's werelds grootste open-pit-uraanmijn op productie. Export via Walvis Bay naar de Chinese conversie-/verrijkingsketen. Wikipedia-coördinaat (-22,7667/14,5167) bleek in zee te liggen — bewust verworpen, mindat-punt gebruikt."
+  },
+  {
+   "id": "w-rossing",
+   "naam": "Rössing (CNNC)",
+   "lon": 15.0333,
+   "lat": -22.4833,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Namibië (Erongo, Arandis)",
+   "gewicht": 2920.0,
+   "gewicht_bron": "capaciteit t U/j — WNA / Rössing Uranium jaarcijfers: 2.920 tU in 2023 (laatste volledige jaar met een gepubliceerd cijfer) [B7][B8]",
+   "bron": "Wikipedia-geohack Arandis-omgeving + NASA Earth Observatory 'Rössing Uranium Mine'-beeld; geen aparte satellietblik deze ronde (Husab, 15 km zuidelijker, wel gecheckt)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "CNNC 68,6%; 's werelds oudste nog actieve grootschalige open-pit-uraanmijn (sinds 1976). Export via Walvis Bay naar CNNC-conversie/verrijking in China."
+  },
+  {
+   "id": "w-langerheinrich",
+   "naam": "Langer Heinrich (Paladin Energy)",
+   "lon": 15.3338,
+   "lat": -22.8147,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Namibië (Erongo)",
+   "gewicht": 800.0,
+   "gewicht_bron": "capaciteit t U/j — Paladin Energy kwartaalrapportages 2024/2025: herstart maart 2024, eerste volledige kalenderjaar (2025) op ramp-up richting nameplate ~2.250 tU3O8/j (≈1.900 tU); 2024 (ramp-up, deel van het jaar) ≈ 800 tU indicatief [B9][B10]",
+   "bron": "Wikipedia-geohack (22°48'52.9\"S 15°20'01.7\"E); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Niet-Chinees (Australisch, Paladin Energy) — nuanceert dat niet elke Namibische mijn Chinees is. Heropend 2024 na jarenlange mottenballen (sinds 2018); cijfer is een ramp-up-jaar, geen stabiele jaarproductie."
+  },
+  {
+   "id": "w-olympicdam",
+   "naam": "Olympic Dam (BHP)",
+   "lon": 136.86288,
+   "lat": -30.4393,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (bijproduct koper)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Australië (Zuid-Australië, Roxby Downs)",
+   "gewicht": 4000.0,
+   "gewicht_bron": "capaciteit t U/j — WNA 'Australia's Uranium Mines' / BHP jaarverslag: uraanproductie schommelt rond 3.500-4.800 tU/j als bijproduct van de koper-goud-zilverwinning, 2023/24 ≈ 4.000 tU indicatief [B11][B12]",
+   "bron": "Wikipedia-geohack (30°26'24\"S 136°52'23\"E); satelliet z14 (sitelaag-uranium-olympicdam): kruis ligt midden op het smelter-/verwerkingscomplex, tussen de tailings-cellen en de hoofdinstallatie",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Ondergrondse koper-uraan-goud-zilvermijn; uranium is bijproduct van de koperwinning (net als bij het koper-register). Geen verrijking in Australië — erts/oxide gaat naar westerse converters/verrijkers."
+  },
+  {
+   "id": "w-fourmile",
+   "naam": "Four Mile (Quasar Resources / General Atomics — niet Boss Energy)",
+   "lon": 139.5066,
+   "lat": -30.1468,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (ISR)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Australië (Zuid-Australië, Frome-bekken)",
+   "gewicht": 700.0,
+   "gewicht_bron": "capaciteit t U/j — WNA 'Australia's Uranium Mines': Four Mile ISR-productie indicatief ~700-900 tU/j (recente jaren, 100%-eigendom Quasar/General Atomics sinds 2015) [B11][B13]",
+   "bron": "Wikipedia-geohack (30°08'48.6\"S 139°30'23.9\"E); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "CORRECTIE op de meegeleverde kandidatenlijst: Four Mile is 100% Quasar Resources/General Atomics, niét Boss Energy — Boss Energy's Zuid-Australische ISR-asset is het nabijgelegen, in 2024 heropende Honeymoon (zie sites_zonder_gewicht: productie nog te vers voor een jaarcijfer)."
+  },
+  {
+   "id": "w-priargunsky",
+   "naam": "Priargunsky (Rosatom/ARMZ), Krasnokamensk",
+   "lon": 118.135,
+   "lat": 50.064,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Transbaikal, Zabaikalsky Krai)",
+   "gewicht": 2500.0,
+   "gewicht_bron": "capaciteit t U/j — WNA 'Russia's Nuclear Fuel Cycle': Priargunsky (PIMCU) ≈ 2.500 tU/j, Ruslands grootste binnenlandse uraanmijn [B14]",
+   "bron": "Krasnokamensky District-centrum als kandidaat; satelliet z14 (sitelaag-uranium-priargunsky): kruis ligt exact op het mijn-/verwerkingscomplex naast de open pit en de tailings (duidelijke wingaten, plas, industriegebouwen)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "ARMZ (Rosatom-dochter) 80,3%. Voedt de binnenlandse Russische conversie/verrijking (Seversk/Angarsk)."
+  },
+  {
+   "id": "w-navoi-uchkuduk",
+   "naam": "Navoiyuran — Noordelijk ISR-district (Uchkuduk)",
+   "lon": 63.5667,
+   "lat": 42.1667,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (ISR)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Oezbekistan (Kyzylkum-woestijn, Navoi-provincie)",
+   "gewicht": 3500.0,
+   "gewicht_bron": "capaciteit t U/j — WNA 'Uranium in Uzbekistan': Navoiyuran totale productie ≈ 3.300-3.500 tU/j (2023/24, ISR over meerdere districten incl. Uchkuduk en Zarafshan) [B15]",
+   "bron": "Uchkuduk-stadscentrum als anker voor het noordelijke ISR-district; satelliet z14 (sitelaag-uranium-navoi-uchkuduk): kruis ligt op kaal woestijnterrein aan de rand van Uchkuduk — geen individueel ISR-wellveld te onderscheiden op deze zoom (ISR-putten zijn te klein/verspreid voor z14)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Cijfer dekt het hele Navoiyuran-ISR-complex (meerdere velden: Uchkuduk sinds 1961, Zarafshan/Sugrali ~200 km noordelijker), niet één enkele put — vandaar één geaggregeerd gewicht op de stadsanker."
+  },
+  {
+   "id": "w-porthope",
+   "naam": "Port Hope Conversion Facility (Cameco)",
+   "lon": -78.2942,
+   "lat": 43.9576,
+   "level": "site",
+   "parent": null,
+   "rol": "conversie (naar UF6)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Canada (Ontario)",
+   "gewicht": 12500.0,
+   "gewicht_bron": "capaciteit t U/j — Cameco: vergunde capaciteit 12,5 miljoen kg U als UF6/jaar (= 12.500 tU/j); actuele doorzet ligt lager (fluctueert met de vraag) [B3][B4]",
+   "bron": "Cameco-adres Port Hope, Ontario (aan Lake Ontario); satelliet z14 (sitelaag-uranium-porthope): kruis ligt in het havenstadje bij een industrieterrein aan het meer — het exacte fabrieksterrein op deze zoom niet 100% te onderscheiden van omliggende bebouwing",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Enige conversiefabriek van Canada; verwerkt yellowcake van McArthur River/Key Lake/Cigar Lake tot UF6 voor export naar westerse verrijkers."
+  },
+  {
+   "id": "w-malvesi",
+   "naam": "Orano Malvési (Comurhex I, U3O8→UF4)",
+   "lon": 2.9812,
+   "lat": 43.2074,
+   "level": "site",
+   "parent": null,
+   "rol": "conversie (naar UF4)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Frankrijk (Narbonne, Aude)",
+   "gewicht": 15000.0,
+   "gewicht_bron": "capaciteit t U/j — Orano: Malvési converteert yellowcake naar UF4 (tussenstap vóór UF6 bij Tricastin); vergunde/nameplate capaciteit indicatief ~15.000 tU/j — geen recent los cijfer publiek gevonden deze ronde [B16]",
+   "bron": "mindat/Malvézy-industriezone-coördinaat; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Eerste stap van de Franse conversieketen (U3O8→UF4); tweede stap (UF4→UF6, Comurhex II) staat op het Tricastin-terrein, zie w-tricastin-conversie."
+  },
+  {
+   "id": "w-tricastin-conversie",
+   "naam": "Orano Tricastin — Comurhex II (UF4→UF6)",
+   "lon": 4.7167,
+   "lat": 44.325,
+   "level": "site",
+   "parent": null,
+   "rol": "conversie (naar UF6)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Frankrijk (Pierrelatte/Tricastin, Drôme)",
+   "gewicht": 15000.0,
+   "gewicht_bron": "capaciteit t U/j — Orano Activity Report 2024: Comurhex II-conversiecapaciteit op het Tricastin-platform, nameplate ~15.000 tU/j UF6 [B16][B17]",
+   "bron": "Wikipedia-geohack Tricastin nucleair platform; satelliet z14 (sitelaag-uranium-tricastin): kruis ligt midden in het grote industriecomplex tussen het Donzère-Mondragon-kanaal en de Rhône (herkenbare rijen fabriekshallen, koelvijvers)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Zelfde terrein als de verrijkingsfabriek Georges Besse II (zie w-tricastin-verrijking) — één groot nucleair platform met conversie, verrijking én de EDF-kerncentrale ernaast."
+  },
+  {
+   "id": "w-metropolis",
+   "naam": "Metropolis Works (Honeywell)",
+   "lon": -88.7333,
+   "lat": 37.15,
+   "level": "site",
+   "parent": null,
+   "rol": "conversie (naar UF6)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "VS (Illinois, aan de Ohio)",
+   "gewicht": 15000.0,
+   "gewicht_bron": "capaciteit t U/j — Honeywell/NRC: vergunde capaciteit ~15.000 tU/j UF6; enige VS-conversiefabriek, na een tijdelijke sluiting (2022-2023) weer operationeel [B18]",
+   "bron": "Wikipedia-geohack (Metropolis, IL, aan de Ohio-rivier); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Enige uraanconversiefabriek van de VS; voedt Urenco USA en historisch ook binnenlandse behoefte."
+  },
+  {
+   "id": "w-seversk-conversie",
+   "naam": "Seversk (Rosatom/SKhK) — conversie",
+   "lon": 84.9,
+   "lat": 56.6,
+   "level": "site",
+   "parent": null,
+   "rol": "conversie (naar UF6)",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Tomsk-oblast)",
+   "gewicht": 12000.0,
+   "gewicht_bron": "capaciteit t U/j — WNA 'Russia's Nuclear Fuel Cycle': Seversk (Siberian Chemical Combine) combineert conversie en verrijking; conversiecapaciteit indicatief ~12.000 tU/j, geen publiek exact cijfer gevonden deze ronde [B14]",
+   "bron": "Wikipedia-geohack Seversk (gesloten stad); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Gesloten stad (voormalig ZATO); publieke cijfers zijn schaars en verouderd. Zelfde terrein huisvest ook verrijking (zie w-seversk-verrijking)."
+  },
+  {
+   "id": "w-novouralsk",
+   "naam": "Novouralsk (Rosatom/TVEL, Oeral Elektrochemisch Combinaat)",
+   "lon": 60.0826,
+   "lat": 57.2858,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Sverdlovsk-oblast)",
+   "gewicht": 23.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. relatieve grootte binnen Rosatoms 4 fabrieken — Rosatom/WNA: Rusland (4 fabrieken: Novouralsk, Angarsk, Zelenogorsk, Seversk) samen ≈ 44% wereld-SWU (≈27,1 Mln SWU/j, 2024/25); Novouralsk is de grootste van de vier — aandeel hier geschat op ~23% wereld-SWU, GEEN officieel per-fabriek-cijfer publiek [B19][B20][B21]",
+   "bron": "Wikipedia/NTI-coördinaat (57°17'09\"N 60°04'57\"E); satelliet z14 (sitelaag-uranium-novouralsk): kruis ligt midden op het omheinde industriecomplex met lange fabriekshallen en spooraansluiting — de Oeral Elektrochemisch Combinaat",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "DE flessenhals van de hele uraanketen: Rusland/Rosatom-TVEL levert ~44% van de wereld-verrijkingscapaciteit, geconcentreerd in 4 sites. Novouralsk is daarvan de grootste. Per-site-SWU-cijfers zijn niet publiek uitgesplitst — het percentage hier is een schatting, expliciet gemarkeerd."
+  },
+  {
+   "id": "w-angarsk",
+   "naam": "Angarsk (Rosatom/TVEL, AECC)",
+   "lon": 103.9,
+   "lat": 52.5,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Irkoetsk-oblast)",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Novouralsk (Rosatom 44% totaal over 4 fabrieken); Angarsk (Angarsk Electrolysis Chemical Combine) is de tweede-grootste, aandeel hier geschat op ~8% wereld-SWU [B19][B20]",
+   "bron": "Wikipedia-geohack Angarsk industriezone; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Ook internationale-verrijkingscentrum (IUEC, met Kazachstaanse deelname) — deels los van het zuiver-Russische aandeel."
+  },
+  {
+   "id": "w-zelenogorsk",
+   "naam": "Zelenogorsk (Rosatom/TVEL, EChP)",
+   "lon": 94.5833,
+   "lat": 56.1167,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Krasnojarsk-krai)",
+   "gewicht": 7.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Novouralsk; aandeel geschat op ~7% wereld-SWU [B19][B20]",
+   "bron": "Wikipedia-geohack Zelenogorsk (gesloten stad); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Gesloten stad (voormalig Krasnojarsk-45)."
+  },
+  {
+   "id": "w-seversk-verrijking",
+   "naam": "Seversk (Rosatom/SKhK) — verrijking",
+   "lon": 84.9,
+   "lat": 56.6,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Tomsk-oblast)",
+   "gewicht": 6.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Novouralsk; aandeel geschat op ~6% wereld-SWU [B19][B20]",
+   "bron": "zelfde kandidaat als w-seversk-conversie (Wikipedia-geohack Seversk); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Combineert conversie én verrijking op één terrein — vandaar hetzelfde coördinaat als w-seversk-conversie."
+  },
+  {
+   "id": "w-urenco-almelo",
+   "naam": "Urenco Nederland (Almelo)",
+   "lon": 6.6939,
+   "lat": 52.3383,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Nederland",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. Urenco's totale ~17-19 Mln SWU over 4 fabrieken — Urenco/WNA: Urenco-groep totaal ≈ 17-19 Mln SWU/j (≈28-30% wereld); niet per fabriek gepubliceerd — Almelo (2 lijnen SP4/SP5) aandeel hier geschat op ~8% wereld-SWU [B22][B23]",
+   "bron": "adres Drienemansweg 1, Almelo (52°20'18\"N 6°41'38\"E); geen satellietblik deze ronde (eerste kandidaatpunt, stadscentrum Almelo, bleek fout — gecorrigeerd naar het adres)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "SP5 (sinds 2000) levert >80% van Urenco Nederlands productiecapaciteit."
+  },
+  {
+   "id": "w-urenco-gronau",
+   "naam": "Urenco Deutschland (Gronau)",
+   "lon": 7.0167,
+   "lat": 52.0833,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Duitsland (Noordrijn-Westfalen)",
+   "gewicht": 7.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Urenco Almelo; aandeel geschat op ~7% wereld-SWU [B22][B23]",
+   "bron": "Wikipedia-geohack Gronau nucleaire site; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "-"
+  },
+  {
+   "id": "w-urenco-capenhurst",
+   "naam": "Urenco UK (Capenhurst)",
+   "lon": -2.8833,
+   "lat": 53.2667,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Verenigd Koninkrijk (Cheshire)",
+   "gewicht": 6.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Urenco Almelo; aandeel geschat op ~6% wereld-SWU [B22][B23]",
+   "bron": "Wikipedia-geohack Capenhurst nuclear site; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "-"
+  },
+  {
+   "id": "w-urenco-eunice",
+   "naam": "Urenco USA (Eunice, New Mexico)",
+   "lon": -103.1833,
+   "lat": 32.4667,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "VS (New Mexico)",
+   "gewicht": 9.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting — Zelfde bron als Urenco Almelo; Eunice is de grootste en nog uitbreidende Urenco-vestiging (VS-beleid om minder afhankelijk te zijn van Russisch verrijkt uranium), aandeel geschat op ~9% wereld-SWU, groeiend [B22][B24]",
+   "bron": "Wikipedia-geohack Urenco USA/LES-terrein Eunice/Hobbs, NM; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Enige commerciële verrijkingsfabriek van de VS naast een klein GLE/Centrus-proefinstallatie; capaciteitsuitbreiding aangekondigd 2024/25 als reactie op de Amerikaanse importban op Russisch verrijkt uranium."
+  },
+  {
+   "id": "w-tricastin-verrijking",
+   "naam": "Orano Georges Besse II (Tricastin)",
+   "lon": 4.7167,
+   "lat": 44.325,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Frankrijk (Pierrelatte/Tricastin, Drôme)",
+   "gewicht": 12.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. Orano's totale ~7,5-11 Mln SWU — Orano Activity Report 2024 / WNA: Georges Besse II nameplate ~7,5-11 Mln SWU/j (in uitbreiding), ≈ 12% wereld-SWU indicatief [B17][B19]",
+   "bron": "zelfde satellietpass als w-tricastin-conversie (Wikipedia-geohack + satelliet z14, midden op het Tricastin-industriecomplex)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Zelfde terrein als de Comurhex II-conversiefabriek (zie w-tricastin-conversie) — één groot nucleair platform Pierrelatte/Tricastin."
+  },
+  {
+   "id": "w-cnnc-lanzhou",
+   "naam": "CNNC Lanzhou (verrijking)",
+   "lon": 103.51843,
+   "lat": 36.15074,
+   "level": "site",
+   "parent": null,
+   "rol": "verrijking",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "China (Gansu, Lanzhou/Xigu)",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit % van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. CNNC's totale ~10-12 Mln SWU — IPFM/Belfer Center 'China's Uranium Enrichment Capacity' + WNA China-profiel: CNNC totale verrijkingscapaciteit ≈ 10-12 Mln SWU/j over meerdere sites (Lanzhou grootste, plus Hanzhong en twee nieuwe sites sinds 2023); Lanzhou-aandeel hier geschat op ~10% wereld-SWU [B25][B26]",
+   "bron": "Wikipedia-geohack 'Lanzhou uranium enrichment plant' (36°09'03\"N 103°31'06\"E); satelliet z14 (sitelaag-uranium-cnnc-lanzhou): kruis ligt op een omheind industriecomplex met kassen/loodsen aan de Gele Rivier, in de Anning-industriezone — plausibel maar niet met een naambord bevestigd (China publiceert geen sitecoördinaten)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste verrijkingsfabriek van China (weapon-program-codenaam Plant 504). Zoals bij koper: geen registerbron met coördinaten voor Chinese sites — dit punt komt uit een onafhankelijke geohack-coördinaat, individueel satellietgecheckt, niet uit een lijst."
+  },
+  {
+   "id": "w-westinghouse-columbia",
+   "naam": "Westinghouse Columbia Fuel Fabrication Facility",
+   "lon": -80.9233,
+   "lat": 33.8811,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "VS (South Carolina, Hopkins)",
+   "gewicht": 1400.0,
+   "gewicht_bron": "capaciteit t U/j — NRC-vergunning / Westinghouse: nameplate ≈ 1.400-1.700 t HM/j (uraan als brandstofelementen), grootste splijtstoffabriek van de VS [B27]",
+   "bron": "NRC-vergunningsdocument (33°52'52\"N 80°55'24\"W, Bluff Road, Hopkins/Lower Richland County); satelliet z14 (sitelaag-uranium-westinghouse-columbia): kruis ligt bij een kruising/vijver dicht bij het terrein maar niet duidelijk op de fabriekshallen zelf — coördinaat uit het NRC-document is een vergunningspunt, niet per se het procesgebouw",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "1.156 acre-terrein; enige commerciële splijtstoffabriek voor PWR/BWR-brandstof aan de oostkust van de VS."
+  },
+  {
+   "id": "w-gnf-wilmington",
+   "naam": "Global Nuclear Fuel-Americas (Wilmington)",
+   "lon": -77.9333,
+   "lat": 34.1667,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "VS (North Carolina)",
+   "gewicht": 1200.0,
+   "gewicht_bron": "capaciteit t U/j — GNF/GE-Hitachi: nameplate indicatief ~1.200 t HM/j (BWR-brandstof); geen recent los cijfer publiek gevonden deze ronde [B28]",
+   "bron": "Wikipedia-geohack Wilmington NC nucleaire site; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "JV GE/Hitachi/Toshiba; voedt vooral BWR-reactoren."
+  },
+  {
+   "id": "w-framatome-romans",
+   "naam": "Framatome Romans-sur-Isère",
+   "lon": 4.9667,
+   "lat": 45.05,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Frankrijk (Drôme)",
+   "gewicht": 1600.0,
+   "gewicht_bron": "capaciteit t U/j — Framatome/Orano: nameplate indicatief ~1.600 t HM/j, grootste Franse splijtstoffabriek (voedt het EDF-park) [B29]",
+   "bron": "Wikipedia-geohack Romans-sur-Isère industriezone; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "-"
+  },
+  {
+   "id": "w-framatome-lingen",
+   "naam": "Framatome/ANF Lingen",
+   "lon": 7.3167,
+   "lat": 52.5167,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Duitsland (Nedersaksen)",
+   "gewicht": 800.0,
+   "gewicht_bron": "capaciteit t U/j — Framatome (Advanced Nuclear Fuels): nameplate indicatief ~800-1.000 t HM/j; blijft in bedrijf ondanks de Duitse kernuitstap (exportgerichte productie) [B29]",
+   "bron": "Wikipedia-geohack Lingen industriezone; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "-"
+  },
+  {
+   "id": "w-westinghouse-springfields",
+   "naam": "Westinghouse Springfields",
+   "lon": -2.8,
+   "lat": 53.75,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Verenigd Koninkrijk (Lancashire)",
+   "gewicht": 700.0,
+   "gewicht_bron": "capaciteit t U/j — Westinghouse: nameplate indicatief ~700 t HM/j (AGR- en PWR-brandstof); geen recent los cijfer publiek gevonden deze ronde [B27]",
+   "bron": "Wikipedia-geohack Springfields nuclear site (Preston); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Ook conversie van UF6→UO2-poeder op hetzelfde terrein (niet los meegewogen)."
+  },
+  {
+   "id": "w-tvel-novosibirsk",
+   "naam": "TVEL Novosibirsk (NZHK)",
+   "lon": 82.8833,
+   "lat": 54.9667,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Novosibirsk-oblast)",
+   "gewicht": 1200.0,
+   "gewicht_bron": "capaciteit t U/j — TVEL/Rosatom: nameplate indicatief ~1.200 t HM/j (VVER- en RBMK-brandstof); geen recent los cijfer publiek gevonden deze ronde [B30]",
+   "bron": "Wikipedia-geohack Novosibirsk Chemical Concentrates Plant; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "-"
+  },
+  {
+   "id": "w-tvel-elektrostal",
+   "naam": "TVEL Elektrostal (MSZ)",
+   "lon": 38.4333,
+   "lat": 55.7833,
+   "level": "site",
+   "parent": null,
+   "rol": "splijtstoffabricage",
+   "grondstof": [
+    "uranium"
+   ],
+   "land": "Rusland (Moskou-oblast)",
+   "gewicht": 1200.0,
+   "gewicht_bron": "capaciteit t U/j — TVEL/Rosatom: nameplate indicatief ~1.200 t HM/j — draagt de VVER-brandstofexport naar Midden-Europa (Paks/Dukovany/Kozloduy/Mochovce) [B30]",
+   "bron": "Wikipedia-geohack Machinery-Building Plant Elektrostal; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Draagt letterlijk de VVER-brandstof-lock-in in Midden-Europa: Rusland levert splijtstof voor zijn eigen reactorontwerpen — Westinghouse kwalificeert nu VVER-brandstof om die lock-in te breken."
+  }
+ ]
+}
