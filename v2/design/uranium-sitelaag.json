@@ -177,12 +177,12 @@
    "naam": "Metropolis Works (Honeywell)",
    "land": "VS (Illinois, aan de Ohio)",
    "rol": "conversie (naar UF6)",
-   "lat": 37.15,
-   "lon": -88.7333,
+   "lat": 37.1718,
+   "lon": -88.757,
    "capaciteit_kt": 15000,
    "capaciteit_bron": "Honeywell/NRC: vergunde capaciteit ~15.000 tU/j UF6; enige VS-conversiefabriek, na een tijdelijke sluiting (2022-2023) weer operationeel [B18]",
-   "coord_bron": "Wikipedia-geohack (Metropolis, IL, aan de Ohio-rivier); geen satellietblik deze ronde",
-   "status": "aannemelijk",
+   "coord_bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 5) met het satelliet-gelegde keten-anker `u-metropolis-conversie` uit routebrief uranium-smithranch-metropolis.md (was 37.15, -88.7333 — 3.21 km verschoven). Oorspronkelijk: Wikipedia-geohack (Metropolis, IL, aan de Ohio-rivier); geen satellietblik deze ronde",
+   "status": "bron-gelegd",
    "notitie": "Enige uraanconversiefabriek van de VS; voedt Urenco USA en historisch ook binnenlandse behoefte."
   },
   {

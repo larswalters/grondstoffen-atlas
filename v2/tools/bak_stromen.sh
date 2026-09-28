@@ -5603,6 +5603,894 @@ bak_kobalt_murrinmurrin_kwinana() {
     --titel  "Kobalt · Murrin Murrin (Australië) → Kwinana → Ningbo → Tongxiang (China)"
 }
 
+# ── zilver · Broken Hill Mine (Rasp-mijn, NSW) → Crystal Brook-knooppunt → Nyrstar Port Pirie-smelter (Zuid-Australië)
+# Routebrief: v2/design/routebrieven/zilver-brokenhill-portpirie.md (lichte werkwijze M31 golf 5)
+# ⚠️ Twee spoorbenen, geen zee/weg — de keten stopt bij de smelter (brief §6,
+#    geen fase D/E). Geen last-mile-been mijn→spoor: het gefilterde
+#    concentraat gaat "trucked less than a kilometre to the Rasp rail siding"
+#    (bron [7]), ruim onder de 2 km-drempel — b1 begint direct op het
+#    site-anker.
+# ⚠️ b1 (ag-brokenhill-mijn → ag-crystal-brook-knoop, BAKE_SUFFIX=-raw):
+#    gemeten 370,0 km (verhouding 1,07 t.o.v. de grootcirkel, 0 omkeringen na
+#    de keerstraf). De brief geeft zelf een discrepantie aan: 394,2 km uit een
+#    stations-afstandstabel tegen Wikipedia's 371 km voor de hele lijn. De
+#    gemeten 370,0 km ligt vrijwel op het Wikipedia-getal (−0,3%) en 6,1%
+#    onder de brief-tabel — bevestigt het eigen open punt van het ontwerp,
+#    geen fout van deze bake (brief §7).
+# ⚠️ b2 (ag-crystal-brook-knoop → ag-portpirie-smelter): gemeten 28,6 km
+#    (verhouding 1,06 t.o.v. de grootcirkel van 27,0 km) tegen de
+#    hemelsbreed-schatting uit de brief (~27,5 km, geen wegkm/spoorkm
+#    gepubliceerd) — indicatie, geen ±15%-norm (brief zegt dat expliciet).
+# ⚠️ Geen via-punten (brief §4: geen gedocumenteerde corridorkeuze op b1;
+#    b2 is een kort feederspoor). Geen haven-aanloop (geen zeebeen). Geen
+#    stippels — beide benen zijn doorgetrokken, gemeten spoorroutes.
+bak_zilver_brokenhill_portpirie() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Broken Hill Mine (Rasp-mijn) → Crystal Brook-knooppunt (Crystal Brook–Broken Hill railway line, ARTC-net, ex-Silverton Tramway-tracé)|$BEEN/spoorroute-zilver-brokenhill-portpirie-brokenhill-crystalbrook.geojson" \
+    --been-geojson "spoor|trein Crystal Brook-knooppunt → Nyrstar Port Pirie-smelter (Bowmans Rail-vrachtlijn)|$BEEN/spoorroute-zilver-brokenhill-portpirie-crystalbrook-portpirie.geojson" \
+    --marker "ag-brokenhill-mijn — Broken Hill Mine (Rasp-mijn, Broken Hill Mines/Coolabah Metals sinds okt. 2024) — mijn/verwerkingsfabriek, kop van het spoor|-31.9486,141.4852" \
+    --marker "ag-crystal-brook-knoop — Crystal Brook, spoorzone rond Railway Terrace — spoorknooppunt, splitsing ARTC-hoofdlijn/Bowmans Rail-vrachtlijn (aannemelijk)|-33.3497,138.2020" \
+    --marker "ag-portpirie-smelter — Nyrstar Port Pirie-smelter — losplek/smelter, stoppunt|-33.1684,138.0095" \
+    --routebrief v2/design/routebrieven/zilver-brokenhill-portpirie.md \
+    --uit    v2/data/stroomroute-zilver-brokenhill-portpirie.json \
+    --stroom zilver-brokenhill-portpirie \
+    --titel  "Zilver · Broken Hill (NSW) → Crystal Brook → Port Pirie (Zuid-Australië)"
+}
+
+# ── zilver · Uchucchacua-mijnkamp (Buenaventura, Oyón) → Transportadora Callao-mineraalterminal (Callao-haven)
+# Routebrief: v2/design/routebrieven/zilver-uchucchacua-callao.md (lichte werkwijze M31 golf 5)
+# ⚠️ Eén been (b1, truck), géén zeebeen — de keten stopt BEWUST bij het
+#    exportpunt: geen bron bevestigt dat Uchucchacua-concentraat specifiek
+#    naar Callao/Transportadora Callao gaat versus een eigen Buenaventura-
+#    verwerkingsfabriek elders in Peru (brief §6/§7, bindend uit de
+#    haalbaarheidstoets — Cannington-precedent). Geen fase B/C/D/E.
+# ⚠️ Geen gepubliceerde wegkm binnen budget (brief §7): gepubliceerdKm =
+#    hemelsbreed via-punten-som 243,2 km, expliciet géén ±15%-harde-norm
+#    (Andes-traject Oyón→Sayán, 2-3× de directe hemelsbrede 160 km). Gemeten
+#    wegkm (`maak_stroombeen_weg.py`, extract peru): **305,4 km** — +25,6% t.o.v.
+#    de 243,2 km-indicatie, buiten ±15% maar VERWACHT en GEEN bevinding zoals
+#    de brief het bedoelt (de indicatie is zelf al erkend zwak); zie §9.
+# ⚠️ Mijn-anker AFWIJKEND van de sitelaag-v1-centroïde `w-uchucchacua`
+#    (-10.6200,-76.9200 in v2/design/zilver-sitelaag.json) — die ligt op leeg
+#    Andes-terrein zonder mijninfrastructuur, 25 km WNW van het hier gebruikte,
+#    satelliet-bevestigde mijnkamp-anker (brief §7). Sitelaag zelf NIET
+#    aangeraakt — alleen gemeld (eigen bestanden, zie werkwijze).
+# ⚠️ Callao-anker verscherpt van de generieke havencentroïde `ag-port-callao`
+#    (data/silver.js, -12.05,-77.15) naar de satelliet-bevestigde Transportadora
+#    Callao-mineraalterminal (muelle centro) — vier bulkcarrier-ligplaatsen
+#    naast elkaar tussen de APM- en DP World-containerterminals (brief §3).
+#    `data/silver.js` zelf niet aangeraakt.
+# ⚠️ Geen haven-aanloop: er is geen zeebeen in deze brief. Ter info (brief §7):
+#    de TCSA-kade ligt 60,7 km van de dichtstbijzijnde MARNET-zeeknoop (knoop
+#    394, -12.00000,-77.70000) — ruim boven de 5 km-drempel, dus zou bij een
+#    latere fase B een haven-aanloop-stippel vragen.
+# ⚠️ Geen stippels in b1 — doorgetrokken, gemeten wegcorridor (eindKlassen
+#    ruim + eindToegangPrivaat True voor het mijnkamp- en het havenzone-
+#    uiteinde, profielsleutel zilver-uchucchacua-callao-mijn-tcsa).
+bak_zilver_uchucchacua_callao() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|truck lood/zink-zilverconcentraat Uchucchacua-mijnkamp → Transportadora Callao-mineraalterminal (Oyón–Churín–Sayán–Huacho–Chancay, Panamericana Norte)|$BEEN/zilver-uchucchacua-callao-weg-mijn-tcsa.geojson" \
+    --marker "ag-uchucchacua-mijn — Uchucchacua-mijnkamp (Buenaventura), Oyón, Lima-regio — mijn/laadplek, bron-gelegd|-10.6335,-76.6895" \
+    --marker "ag-callao-tcsa — Transportadora Callao S.A. mineraalterminal (muelle centro), Callao-haven — overslag/exportpunt, stoppunt, bron-gelegd|-12.0499,-77.1446" \
+    --routebrief v2/design/routebrieven/zilver-uchucchacua-callao.md \
+    --uit    v2/data/stroomroute-zilver-uchucchacua-callao.json \
+    --stroom zilver-uchucchacua-callao \
+    --titel  "Zilver · Uchucchacua-mijnkamp (Peru) → Callao (mineraalterminal, stoppunt)"
+}
+
+# ── zilver · Fresnillo/Saucito-mijnencomplex (Fresnillo plc) → Met-Mex Peñoles-raffinaderij Torreón (Mexico, binnenlands)
+# Routebrief: v2/design/routebrieven/zilver-fresnillo-torreon.md (lichte werkwijze M31 golf 5)
+# ⚠️ Eén been, één tool (maak_stroombeen_weg.py, profiel zilver-fresnillo-torreon-
+#    fresnillo-torreon): truck MEX 45/45D (Fresnillo-Río Grande) → MEX 40D/49D
+#    (Cuencamé-Ciudad Lerdo-Torreón), 100% binnenlands, geen zeebeen.
+# ⚠️ Geen bedrijfs-/overheidsopgave van de wegkilometer binnen budget (brief §7):
+#    enige cijfers zijn hemelsbreed 270 km en een route-planner-webcheck van
+#    331 km (mejoresrutas.com). De ±15%-toets tegen 331 km geldt hier als
+#    INDICATIE, niet als harde norm (brief §7, profiel-bronnoot).
+# ⚠️ Geen fase D/E: de raffinaderij is het stoppunt van deze as (brief §6).
+bak_zilver_fresnillo_torreon() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|zilverdoré/-concentraat Fresnillo/Saucito-mijnencomplex → Río Grande → Cuencamé → Ciudad Lerdo → Met-Mex Peñoles-raffinaderij Torreón (MEX 45/45D → 40D/49D)|$BEEN/zilver-fresnillo-torreon-weg-fresnillo-torreon.geojson" \
+    --marker "ag-fresnillo-mijn — Fresnillo/Saucito-mijnencomplex (Fresnillo plc, Zacatecas) — mijn/plant (laad)|23.1580,-102.8600" \
+    --marker "Río Grande (Zacatecas) — via-punt corridorkeuze (MEX 45/45D vs. lokale zijwegen)|23.8269,-103.0338" \
+    --marker "Cuencamé (Durango) — via-punt corridorkeuze (overgang naar MEX 40D/49D)|24.8700,-103.6978" \
+    --marker "Ciudad Lerdo (Durango) — via-punt corridorkeuze (La Laguna-conurbatie)|25.5366,-103.5252" \
+    --marker "ag-penoles-torreon — Met-Mex Peñoles-raffinaderij (Industrias Peñoles, Torreón, Coahuila) — raffinaderij (los, stoppunt)|25.5278,-103.4417" \
+    --routebrief v2/design/routebrieven/zilver-fresnillo-torreon.md \
+    --uit    v2/data/stroomroute-zilver-fresnillo-torreon.json \
+    --stroom zilver-fresnillo-torreon \
+    --titel  "Zilver · Fresnillo/Saucito (Fresnillo plc) → Met-Mex Peñoles Torreón (Mexico)"
+}
+
+# ── uranium · Smith Ranch-Highland ISR-mijn (Wyoming) → Metropolis Works (Illinois)
+# Routebrief: v2/design/routebrieven/uranium-smithranch-metropolis.md (lichte werkwijze M31 golf 5)
+# Eén been (b1, fase A, truck): I-25 zuid (Douglas–Cheyenne) → I-80 oost (Nebraska–Iowa)
+# → I-80/I-39-knik bij LaSalle-Peru/Utica → I-39/I-74/I-57 zuid door Illinois naar
+# Metropolis Works. Bewust om Colorado heen (extract ontbreekt daar, brief §7).
+# ⚠️ gepubliceerdKm = ~2.090 km is een ALGEMENE Wyoming-brede claim ("over 1.300
+#    miles", Cowboy State Daily sept. 2025), niet route-specifiek — de ±15%-toets
+#    geldt hier als INDICATIE, geen harde norm (brief §2/§7). Gemeten: 2.161,8 km
+#    weggeometrie (+3,4% t.o.v. de indicatie) — binnen elke redelijke marge.
+# ⚠️ Geen last-mile-stippel nodig aan beide kanten: de scan (eindKlassen default,
+#    12 km-zone) vond een doorlopend wegpad tot op het mijnterrein (plant → weg
+#    0,06 km) en tot aan de fabriekspoort (weg → kade 0,03 km) — beide ruim onder
+#    de "> ~2 km = last mile"-drempel van de vaste regels van de kaart.
+# ⚠️ SITELAAG-DISCREPANTIE (voor de orkestrator, niet hier gewijzigd): het
+#    bestaande sitelaag-anker `w-metropolis` in v2/design/uranium-sitelaag.json
+#    (37.1500,-88.7333, status "aannemelijk") ligt ~3,2 km ZO van de echte
+#    fabriek — een stadspunt in Metropolis zelf. Deze stroom gebruikt daarom de
+#    Wikipedia-infobox-/satellietbevestigde coördinaat (37.1718,-88.7570) als
+#    eigen anker `u-metropolis-conversie`; de sitelaag zelf is niet aangepast
+#    (brief §3/§7).
+bak_uranium_smithranch_metropolis() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|yellowcake Smith Ranch-Highland ISR-mijn → Metropolis Works (I-25 zuid → I-80 oost → I-39/I-74/I-57 zuid door Illinois)|$BEEN/uranium-smithranch-metropolis-weg-smithranch-metropolis.geojson" \
+    --marker "u-smithranch-mijn — Smith Ranch-Highland ISR-mijn (Cameco Resources), Converse County, Wyoming — mijn (laadplek), bron-gelegd|43.0537,-105.6851" \
+    --marker "u-metropolis-conversie — Honeywell/ConverDyn Metropolis Works, Metropolis, Illinois — conversiefabriek (U3O8 → UF6), stoppunt, bron-gelegd|37.1718,-88.7570" \
+    --routebrief v2/design/routebrieven/uranium-smithranch-metropolis.md \
+    --uit    v2/data/stroomroute-uranium-smithranch-metropolis.json \
+    --stroom uranium-smithranch-metropolis \
+    --titel  "Uranium · Smith Ranch-Highland (Wyoming) → Metropolis Works (Illinois)"
+}
+
+# ── uranium · Orano Malvési (Comurhex I, Narbonne) → Orano Tricastin (Comurhex II + Georges Besse II, Pierrelatte)
+# Routebrief: v2/design/routebrieven/uranium-malvesi-tricastin.md (lichte werkwijze M31 golf 5)
+# ⚠️ Modaliteit-correctie t.o.v. het ketenontwerp: SPOOR, niet truck — Wikipedia (fr)
+#    documenteert de overschakeling naar spoor in 2014 na de blokkade-actie van
+#    12-09-2013, met een gedateerd 2017-cijfer (320 t U/week); een tegensprekende
+#    bron (homonuclearus.fr, 2020) noemt 3-5 vrachtwagens voor dezelfde route
+#    (brief §7). `spoornet_nodig: false` uit het ketenontwerp is hiermee achterhaald.
+# ⚠️ Vier losse runs in reisvolgorde i.p.v. één via-keten (bakhandleiding §2, spoor):
+#    een vrije Dijkstra tussen de site-ankers koos anders een omweg; de drie
+#    via-punten (Gare de Narbonne/Nîmes/Avignon-Centre, brief §4) pinnen de
+#    hoofdcorridor Béziers–Montpellier–Nîmes–Avignon–Pierrelatte. Been 2
+#    (Narbonne→Nîmes) met `--keerstraf=150` (default 25 gaf een extra
+#    terugloop-lus bij 43.8138,4.5126 zonder kortere route; 150 haalt hem weg
+#    op exact dezelfde lengte, 168,0 km). Been 4 blijft op de default 25 —
+#    150 gaf daar juist een omweg (110,9 i.p.v. 67,3 km).
+# ⚠️ Geen gepubliceerde spoorkm om tegen te toetsen (alleen de hemelsbrede 187 km
+#    uit het ontwerp) — gemeten totaal 291,9 km (+56,1% t.o.v. hemelsbreed);
+#    indicatie zoals de brief zelf voorschrijft, geen ±15%-norm.
+# ⚠️ Eén terugloop-lus blijft staan op been 1+2 bij de Narbonne-Malvési-
+#    aftakking (43.187,3.0011, ~55 m boogstraal) — onafhankelijk van keerstraf
+#    (25 én 150 geven 'm) en op precies hetzelfde punt in twee los geroutete
+#    benen: aannemelijk een echte kop-maak-junctie waar de private aftakking
+#    op de hoofdlijn aansluit, geen routeerartefact. Niet weggeschoven (§9).
+# ⚠️ Geen stippel: beide site-ankers liggen op het fabrieksterrein/emplacement
+#    zelf (geen haven-aanloop, geen zee-been, geen last-mile). Géén fase D —
+#    Tricastin → Framatome Romans-sur-Isère is vervallen (brief §6/§7).
+bak_uranium_malvesi_tricastin() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Orano Malvési → Gare de Narbonne (private Malvési-aftakking, 4,9 km, vernieuwd 2020)|$BEEN/spoorroute-uranium-malvesi-tricastin-malvesi-narbonne.geojson" \
+    --been-geojson "spoor|trein Gare de Narbonne → Gare de Nîmes (hoofdlijn Béziers–Montpellier, corridorkeuze i.p.v. Perpignan/Toulouse)|$BEEN/spoorroute-uranium-malvesi-tricastin-narbonne-nimes.geojson" \
+    --been-geojson "spoor|trein Gare de Nîmes → Gare d'Avignon-Centre (corridorkeuze i.p.v. de aftakking Alès/Le Grau-du-Roi)|$BEEN/spoorroute-uranium-malvesi-tricastin-nimes-avignon.geojson" \
+    --been-geojson "spoor|trein Gare d'Avignon-Centre → Orano Tricastin (Rhônevallei noordwaarts, corridorkeuze i.p.v. de lijn naar Marseille)|$BEEN/spoorroute-uranium-malvesi-tricastin-avignon-tricastin.geojson" \
+    --marker "u-malvesi — Orano Malvési, Comurhex I (conversie U3O8→UF4), Narbonne — laadplek, kop van het spoor|43.2074,2.9812" \
+    --marker "u-tricastin — Orano Tricastin, Comurhex II (UF4→UF6) + Georges Besse II-verrijking, Pierrelatte — losplek, stoppunt|44.3250,4.7167" \
+    --routebrief v2/design/routebrieven/uranium-malvesi-tricastin.md \
+    --uit    v2/data/stroomroute-uranium-malvesi-tricastin.json \
+    --stroom uranium-malvesi-tricastin \
+    --titel  "Uranium · Orano Malvési (Narbonne) → Orano Tricastin (Pierrelatte)"
+}
+
+# ── zilver · Rampura Agucha-mijn (Hindustan Zinc, Bhilwara) → Chanderiya Lead-Zinc Smelter (Chittorgarh)
+# Routebrief: v2/design/routebrieven/zilver-rampuraagucha-pantnagar.md (lichte werkwijze M31 golf 5)
+# ⚠️ EENBENIGE KETEN, BINDEND INGEKORT (brief §6): het tweede, zwak onderbouwde spoorbeen naar
+#    Pantnagar (Uttarakhand) en `spoornet_nodig` zijn na de haalbaarheidstoets vervallen — Wikipedia
+#    (Hindustan Zinc) bevestigt alleen dat Pantnagar "initially intended" was voor zilversmelt, niet
+#    dat er vandaag een zilverstroom loopt. Chanderiya (produceert zelf al "zinc, lead, cadmium and
+#    other precious metals") is het sterker gedocumenteerde stoppunt.
+# ⚠️ b1 (truck, geofabrik india-extract) is GEMETEN en doorgetrokken, geen stippel, geen via-punt
+#    bijgeschoven. Geen gepubliceerde wegkm binnen budget (brief §7/§8[8]): gepubliceerdKm = hemelsbreed
+#    98,0 km tussen de satelliet-gelegde ankers, toets-bindend als indicatie (geen harde ±15%-norm); een
+#    niet-officiële OSRM-schatting over dezelfde NH48-corridor gaf ~119,4 km. Gemeten: 126,5 km over de
+#    NH48 via Gulabpura → Bhilwara-bypass → Chittorgarh → Chanderiya-afslag (+29,1% tegen de indicatieve
+#    98,0 km — buiten de ±10%-tool-waarschuwing maar dicht bij de eigen OSRM-indicatie van 119,4 km,
+#    dus binnen de vooraf verwachte orde van grootte; bevinding, geen via-punt bijgeschoven).
+# ⚠️ Anker→weg-verbinding bij de mijn 0,51 km (net > de 0,5 km-norm, bevinding, geen tweede poging) —
+#    de mijn/concentrator ligt op een klein-klasse toegangsweg vlak naast de doorgaande NH48-aftakking.
+bak_zilver_rampuraagucha_pantnagar() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|truck Rampura Agucha-mijn/concentrator (Hindustan Zinc) → Chanderiya Lead-Zinc Smelter, NH48 via Gulabpura, Bhilwara-bypass, Chittorgarh|$BEEN/zilver-rampuraagucha-pantnagar-weg-rampuraagucha-chanderiya.geojson" \
+    --marker "ag-rampuraagucha-mijn — Rampura Agucha-mijn en concentrator (Hindustan Zinc), Bhilwara — laadplek, bron-gelegd|25.8416,74.7332" \
+    --marker "ag-chanderiya-smelter — Chanderiya Lead-Zinc Smelter Complex (Hindustan Zinc), Chittorgarh — losplek, stoppunt, bron-gelegd|24.9632,74.6580" \
+    --routebrief v2/design/routebrieven/zilver-rampuraagucha-pantnagar.md \
+    --uit    v2/data/stroomroute-zilver-rampuraagucha-pantnagar.json \
+    --stroom zilver-rampuraagucha-pantnagar \
+    --titel  "Zilver · Rampura Agucha-mijn (Hindustan Zinc) → Chanderiya Lead-Zinc Smelter (Chittorgarh)"
+}
+
+# ── uranium · Kharasan ISR-complex (Zuid-Kazachstan) → Zhanakorgan-station → Alashankou-station (grensovergang China)
+# Routebrief: v2/design/routebrieven/uranium-kharasan-alashankou.md (lichte werkwijze M31 golf 5)
+# ⚠️ b1 (truck) is GEEN stippel: de scanner vond wél een doorgaand wegpad
+#    (34,3 km, kleine wegklassen tot 12 km van plant/kade mee) tegen ~31 km
+#    hemelsbreed in de brief (+10,8% — buiten ±10% maar de brief geeft geen
+#    echte wegkm, dus dit is indicatie, geen norm; brief §2/§7).
+# ⚠️ b2 (spoor) is ZEVEN aparte segmenten in reisvolgorde (geen --via bestaat
+#    in de spoorrouter, uranium-inkai-poti-patroon): Zhanakorgan → Turkestan
+#    → Shymkent → Taraz → Almaty-2 → Aktogay (via-punt bij benadering, brief
+#    §4) → Dostyk (grensovergang, bogiewissel 1520→1435mm) → Alashankou.
+#    Route 1.967,0 km tegen ~1.850 km hemelsbreed-som via-punten (brief, geen
+#    gepubliceerde spoorkm) = +6,3% — indicatie, geen harde norm (brief §2/§7,
+#    "het gemeten getal wordt de nieuwe waarheid"). Het laatste stukje
+#    Dostyk→Alashankou (17,1 km) is apart gehouden zoals de brief voorstelt
+#    voor de gauge-breuk, al liep de router er zonder blokkade doorheen (OSM-
+#    topologie is gauge-onafhankelijk; de wissel zelf is niet als apart been
+#    gemodelleerd, brief §7).
+# ⚠️ Geen zeebenen, geen leiding, geen lucht in deze keten (brief §1/§6).
+#    Geen fase D/E: de brief stopt bij het Alashankou-spoorstation (§6),
+#    geen verwerkingsknoop na de grensovergang.
+# ⚠️ Open punten (brief §7): Kharasan als bronmijn niet individueel bevestigd
+#    voor de SNURDC/SPIC/CNUC-contracten (alleen Kazatomprom als staats-
+#    exporteur); Kharasan-coördinaat verfijnd van 2 naar 4 decimalen via
+#    satellietblik, geen NI 43-101-rapport gevonden; spoorcorridor Trans-
+#    Aral→Turksib→Aktogay→Dostyk is geografisch afgeleid (geen bron noemt de
+#    tussenstations); Aktogay-via-punt is zelf een benadering.
+bak_uranium_kharasan_alashankou() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|yellowcake Kharasan ISR-complex → Zhanakorgan-spoorstation (steppepiste/toegangsweg, geen bron voor exact traject)|$BEEN/uranium-kharasan-alashankou-weg-kharasan-zhanakorgan.geojson" \
+    --been-geojson "spoor|trein Zhanakorgan-station → Turkestan-station (Trans-Aral-lijn zuidwaarts)|$BEEN/spoorroute-uranium-kharasan-alashankou-zhanakorgan-turkestan.geojson" \
+    --been-geojson "spoor|trein Turkestan-station → Shymkent-station (Trans-Aral-lijn, naar de Arys-knoop)|$BEEN/spoorroute-uranium-kharasan-alashankou-turkestan-shymkent.geojson" \
+    --been-geojson "spoor|trein Shymkent-station → Taraz-station (Turksib-lijn oostwaarts)|$BEEN/spoorroute-uranium-kharasan-alashankou-shymkent-taraz.geojson" \
+    --been-geojson "spoor|trein Taraz-station → Almaty-2-station (Turksib-lijn oostwaarts)|$BEEN/spoorroute-uranium-kharasan-alashankou-taraz-almaty2.geojson" \
+    --been-geojson "spoor|trein Almaty-2-station → Aktogay (spoorknoop, tak naar Dostyk/China, via-punt bij benadering)|$BEEN/spoorroute-uranium-kharasan-alashankou-almaty2-aktogay.geojson" \
+    --been-geojson "spoor|trein Aktogay → Dostyk-station (grensovergang, laatste Kazachse station vóór de bogiewissel)|$BEEN/spoorroute-uranium-kharasan-alashankou-aktogay-dostyk.geojson" \
+    --been-geojson "spoor|trein Dostyk-station → Alashankou-station (grensovergang, bogiewissel 1520→1435mm, stoppunt)|$BEEN/spoorroute-uranium-kharasan-alashankou-dostyk-alashankou.geojson" \
+    --marker "u-kharasan-plant — Kharasan ISR-complex, Uranium One-JV/Rosatom (Kazatomprom, Zuid-Kazachstan-regio) — mijn/verwerkingscomplex (laadplek, bron-gelegd)|43.8427,66.8640" \
+    --marker "u-zhanakorgan-station — Zhanakorgan-spoorstation, Kyzylorda-oblast — overslag truck → spoor (bron-gelegd)|43.9005,67.2467" \
+    --marker "u-alashankou-station — Alashankou-spoorstation (阿拉山口站), Xinjiang — overslag spoor, grensovergang (stoppunt, bron-gelegd)|45.1703,82.5705" \
+    --routebrief v2/design/routebrieven/uranium-kharasan-alashankou.md \
+    --uit    v2/data/stroomroute-uranium-kharasan-alashankou.json \
+    --stroom uranium-kharasan-alashankou \
+    --titel  "Uranium · Kharasan (Kazachstan) → Zhanakorgan → Alashankou (grensovergang China)"
+}
+
+# ── ree · Chavara → Aluva (India, Zuid-Azië-reserve-as naast As1 OSCOM→Aluva)
+# Routebrief: v2/design/routebrieven/ree-chavara-aluva.md (lichte werkwijze M31 golf 5).
+# EÉN wegbeen (b1, truck): monaziet-houdend mineraalconcentraat IREL Chavara
+# Mineral Division (Mannumala-mijnsite, Kollam) → IREL Rare Earths Division
+# (RED), Udyogamandal/Edayar, Aluva — NH-66 kustweg → NH-544. Geen zee/spoor/
+# leiding/overslag; fase D/E vervallen (brief §6: geen bron voor een specifieke
+# magneetfabriek/afnemer voor déze corridor).
+# ⚠️ Geen gepubliceerde wegkm (brief §7): hemelsbreed 124,3 km tussen de
+#    site-ankers, via-puntensom 129,1 km. Gemeten wegkm = 143,0 km (ratio 1,15
+#    tegen hemelsbreed — binnen de typische wegfactor 1,1-1,3x); de ±15%-toets
+#    geldt hier als indicatie, niet als harde norm (brief §2/§7). Geen stippel:
+#    beide ankers snappen <0,12 km op het wegnet (industrieterrein met normale
+#    toegangswegen), 5 keerlussen gesnoeid (146,4 → 143,0 km).
+# ⚠️ ree-aluva-red (10,08133/76,29761) ligt 190 m van het onafhankelijk
+#    satellietgelegde `udyogamandal`-anker van de parallelle keten
+#    ree-oscom-aluva (10,08300/76,29800, zelfde naar-site) — brief §7 beveelt
+#    aan de twee bij het bakken/de sitelaag gelijk te trekken; hier bewust
+#    NIET gedaan (raakt andermans brief/anker niet) — gemeld in het eindrapport.
+# Deze keten wordt per ontwerp NIET gelijktijdig met ree-oscom-aluva gebakken
+# (zelfde naar-site, zou een schijn-duplicaat zijn) — alleen inzetten als As1 vastloopt.
+bak_ree_chavara_aluva() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Chavara -> RED Aluva (NH-66 -> NH-544)|$BEEN/ree-chavara-aluva-weg-chavara-aluva.geojson" \
+    --marker "ree-chavara-scheiding|8.98583,76.52485" \
+    --marker "ree-aluva-red|10.08133,76.29761" \
+    --routebrief v2/design/routebrieven/ree-chavara-aluva.md \
+    --uit    v2/data/stroomroute-ree-chavara-aluva.json \
+    --stroom ree-chavara-aluva \
+    --titel  "Zeldzame aardmetalen · Chavara -> Aluva (India)"
+}
+
+# ── uranium · Jaduguda-mijn (UCIL, Jharkhand) → NFC Hyderabad (India, binnenlandse splijtstofroute, zonder verrijking)
+# Routebrief: v2/design/routebrieven/uranium-jaduguda-hyderabad.md (LICHTE werkwijze M31 golf 5)
+# EEN BEEN, TRUCK, DOORGETROKKEN — geen zee/spoor in deze keten (India's eigen
+# winningsland, tweede "geen-verrijking"-uitzondering naast Canada's CANDU).
+# ⚠️ Eindanker u-nfc-hyderabad-stop is de ECIL X-Roads-kruising, GEEN
+# fabriekspoort — NFC's eigen site-coördinaat is niet gevonden (Wikipedia
+# zonder {{coord}}, Wikidata Q7067950 zonder P625, Nominatim/Photon/Overpass
+# 0 hits; brief §6/§7). Geen last-mile-stippel naar de poort: er is geen
+# tweede coördinaat om naartoe te stippelen.
+# ⚠️ De zes via-punten zijn OSRM-routepunten met Nominatim-naambevestiging,
+# geen gepubliceerd NH-tracé per segment (brief §4/§7) — de wegscan koos een
+# vergelijkbaar maar niet per-se identiek tracé; alle snaps ≤0,04 km.
+# ⚠️ De gemeten weglijn (1.295,7 km) wijkt −3,2% af van de gepubliceerde
+# OSRM-wegroute (1.339 km, ECHTE wegkm) en ruim onder Wikipedia's indicatieve
+# "~1.200 km" — binnen de ±15%-toets, die hier als indicatie geldt (brief §7).
+bak_uranium_jaduguda_hyderabad() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|geel-koek Jaduguda-mijn (UCIL) → Hat Gamharia → Deogarh → Bolangir → Jagdalpur (Bastar) → Hanamkonda/Warangal → Bhongir → ECIL X-Roads, Hyderabad (India's binnenlandse splijtstofroute, zonder verrijking)|$BEEN/uranium-jaduguda-hyderabad-weg-jaduguda-hyderabad.geojson" \
+    --marker "Jaduguda-mijn (UCIL), Purbi Singhbhum, Jharkhand — mijn/molen (laadplek, geel-koek)|22.6533,86.3466" \
+    --marker "ECIL X-Roads-kruising, Kapra, Hyderabad — net-uiteinde bij NFC (GEEN poort, fabriekssite niet gevonden)|17.4733,78.5708" \
+    --routebrief v2/design/routebrieven/uranium-jaduguda-hyderabad.md \
+    --uit    v2/data/stroomroute-uranium-jaduguda-hyderabad.json \
+    --stroom uranium-jaduguda-hyderabad \
+    --titel  "Uranium · Jaduguda-mijn → Hyderabad (NFC, India — binnenlandse splijtstofroute)"
+}
+
+# ── zilver · Boliden Garpenberg (Dalarna) → Gävle-haven → Rönnskär-smelter (Skelleftehamn, Zweden)
+# Routebrief: v2/design/routebrieven/zilver-garpenberg-ronnskar.md (LICHTE werkwijze M31 golf 5)
+# Modaliteit BINDEND gecorrigeerd (brief §2): geen spoor zoals het ketenontwerp
+# veronderstelde — Boliden's eigen NI 43-101-rapport zegt letterlijk dat het
+# Zn/Pb-concentraat (met het zilver) per truck naar Gävle-haven gaat en per
+# schip naar de smelters in Finland/Zweden/Noorwegen; alleen het koperconcentraat
+# gaat per spoor naar Rönnskär. spoornet_nodig = false.
+# ⚠️ b1 (truck): Hofors–Storvik–Sandviken is een geografische afleiding (brief
+#    §4/§7, NIET gebrond met een bron). Gemeten wegkm 105,7 km tegen hemelsbreed
+#    69,8 km (+51,5%) — BUITEN de ±15%-toets, maar die geldt hier bindend alleen
+#    als indicatie (geen gepubliceerde wegkm, brief §2/§8[9]): een reële weg via
+#    drie tussenplaatsen is langer dan de rechte lijn, bevinding, niet dichtgetrokken.
+#    eindKlassen bewust ZONDER "unclassified" (zie kop van het profiel in
+#    maak_stroombeen_weg.py): met "unclassified" erbij snapt de Gävle-kade op een
+#    geïsoleerde stub-way (component van 5 knopen, geen pad naar Sandviken) i.p.v.
+#    het doorgaande net — gemeten, niet aangenomen. Beide ankers liggen ≤0,45 km
+#    van het net (OK, geen last-mile-stippel nodig).
+# ⚠️ b2 (zee): kade Gävle ligt 19,2 km van zeeknoop 8841 (60.74660,17.54600) —
+#    ruim boven de 5 km-drempel (LAR-586), dus haven-aanloop VERPLICHT óók al
+#    snapt de router binnen de 25 km (bakhandleiding §2). maak_havenaanloop.py
+#    slaagde (cel 0,005° kaal, 22,2 km, omwegfactor 1,155, 0,19 km over land —
+#    uitsluitend aan het kade-uiteinde, geen landkruising midden op de lijn) →
+#    --stippel-geojson; het hoofd-zeebeen begint daarom op de zeeknoop, niet op
+#    de kade. Rönnskär-zijde GEEN aanloop nodig: kade 1,5 km van zeeknoop 8833
+#    (64.66680,21.30040), ruim binnen de 5 km-drempel.
+# ⚠️ Geen fase D/E (brief §6): geen bron noemt een fabriek/afnemer na Rönnskär
+#    voor dit specifieke Garpenberg-concentraat — stoppunt bij de smelterkade.
+# ⚠️ Geen gedeelde benen: eerste stroom die Garpenberg, Gävle of Rönnskär raakt.
+bak_zilver_garpenberg_ronnskar() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Garpenberg → Gävle-haven (Gästrikland via Hofors–Storvik–Sandviken, aannemelijk: geografische corridor)|$BEEN/zilver-garpenberg-ronnskar-weg-garpenberg-gavle.geojson" \
+    --stippel-geojson "zee|haven-aanloop Gävle (schematisch, over water — MARNET reikt niet: kade 19,2 km van de zeeknoop)|$BEEN/zilver-garpenberg-ronnskar-aanloop-gavle.geojson" \
+    --been         "zee|zeeschip Gävle-zeeknoop → Rönnskär-kade (Botnische Golf)|60.74660,17.54600|64.6704,21.2699" \
+    --marker "ag-garpenberg-mijn — Boliden Garpenberg, Dalarna (mijn, zink/lood-bijproduct, kop wegbeen)|60.3129,16.1933" \
+    --marker "ag-gavle-kade — Gävle Hamn, Fredriksskans-terminal (overslag truck → zee)|60.6922,17.2103" \
+    --marker "ag-ronnskar-kade — Boliden Rönnskär, Skelleftehamn (smelter/losplek, stoppunt)|64.6704,21.2699" \
+    --routebrief v2/design/routebrieven/zilver-garpenberg-ronnskar.md \
+    --uit    v2/data/stroomroute-zilver-garpenberg-ronnskar.json \
+    --stroom zilver-garpenberg-ronnskar \
+    --titel  "Zilver · Garpenberg (Boliden) → Gävle → Rönnskär (Skelleftehamn, Zweden)"
+}
+
+# ── grafiet · Molo (Madagaskar) → Toliara → Rotterdam → Duisburg
+# Routebrief: v2/design/routebrieven/grafiet-molo-duisburg.md (LICHTE werkwijze M31 golf 5).
+# b1 (truck, doorgetrokken): profiel "grafiet-molo-duisburg-molo-toliara" in
+#    maak_stroombeen_weg.py — regionale weg Fotadrevo → Ampanihy (RN10-
+#    aansluiting) → Betioky Atsimo → Andranovory (RN10/RN7-kruispunt) → RN7
+#    naar Toliara. Geen gepubliceerde wegkm (brief §2/§7); corridorKlassen
+#    tertiary/unclassified/residential/service nodig — WEG_HOUD kaal (t/m
+#    secondary) lag >25 km van Andranovory (RN10 is een onverharde
+#    secundaire weg, geen OSM `secondary`). Gebakken: 378,4 km (na het
+#    snoeien van 6 keerlussen, 516,8 → 378,4 km) tegen hemelsbreed ~165 km —
+#    +129% is GEEN norm-overschrijding: de brief zegt zelf dat de werkelijke
+#    wegkm door de zuidelijke omweg over Ampanihy "ruim boven 165 km" ligt en
+#    dat de ±15%-toets hier niet geldt.
+# ⚠️ b2 (zee, stippel): `maak_havenaanloop.py` (timeout 300) vond bij 0,005°
+#    kaal al een 0%-over-land-pad (118,6 km) maar werd bij het schrijven
+#    door de timeout afgekapt (exit 124, geen bestand op schijf) — exact het
+#    beeld uit de haalbaarheidstoets (>7 min, geen uitvoer). Geen tweede
+#    poging (bakhandleiding §2): rechte stippel, reden "1:10M-kust kent de
+#    haven niet". Zeeknoop 5303 is bindend uit de haalbaarheidstoets
+#    (hecht_marnet.marnet_zee), 111,16 km van de kade.
+# b3 (zee, MARNET, doorgetrokken): kade → kade, router kiest zelf
+#    Mozambiquekanaal/Kaap of Malakka/Suez (geen vooraf geschatte km).
+# b4-b6 (binnenvaart, doorgetrokken, LETTERLIJKE KOPIE van koper-lobito-
+#    duisburg benen 5-7 in bak_koper_lobito() hierboven — zelfde GRAAF_RIJN,
+#    zelfde geojson-bestand (`rivierbeen-wesel.geojson`), geen eigen versie
+#    gebakken): Waalhaven → Emmerich-vak (161,1 km, AIS-graaf rijn) →
+#    Wesel-vak (66,6 km, echte OSM-loop, geen AIS-dekking) → Duisport
+#    Ruhrort (7,3 km, AIS-graaf rijn) = 235,0 km Rijn-segment.
+# Geen fase D/E: thyssenkrupp Materials Trading heeft geen eigen coördinaat/
+#    adres gevonden (brief §6/§7) — de brief en deze bake stoppen bij
+#    Duisburg-Ruhrort Becken A (entrepot, stoppunt).
+bak_grafiet_molo_duisburg() {
+  # ⚠️ eigen graaf: deze stroom vaart de Rijn, niet de Mississippi (koper-lobito-patroon).
+  local GRAAF_RIJN="v2/build-cache/ais/graaf/rijn"
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF_RIJN" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|SuperFlake-vlokgrafiet Molo-mijn → Toliara-kade (RN10 → RN7)|$BEEN/grafiet-molo-duisburg-weg-molo-toliara.geojson" \
+    --stippel      "zee|haven-aanloop Toliara (schematisch — 1:10M-kust kent de haven niet)|-23.3778,43.6648|-22.8572,42.7368" \
+    --been         "zee|zeeschip Toliara-kade → Rotterdam (Waalhaven) (Mozambiquekanaal/Kaap óf Malakka/Suez — MARNET kiest)|-22.8572,42.7368|51.8935,4.4585" \
+    --been         "binnenvaart|containerbinnenschip Waalhaven → Emmerich-vak|51.8935,4.4585|51.754,6.366" \
+    --been-geojson "binnenvaart|Wesel-vak — echte Rijnloop uit OSM (geen AIS-dekking: 0 van 35.237 tracks)|$BEEN/rivierbeen-wesel.geojson" \
+    --been         "binnenvaart|containerbinnenschip Wesel-vak → Duisport Ruhrort|51.4,6.745|51.4518,6.7565" \
+    --marker "Molo-mijn (NextSource) — SuperFlake-vlokgrafiet, mijn/laadplek|-24.0045,45.1244" \
+    --marker "Toliara-kade — Port de Tuléar, overslag truck → zee|-23.3778,43.6648" \
+    --marker "Rotterdam — RHB, Waalhaven Noordzijde 4 (gedeeld anker)|51.8935,4.4585" \
+    --marker "Duisburg — Duisport Ruhrort, Becken A (gedeeld anker, stoppunt)|51.4518,6.7565" \
+    --routebrief v2/design/routebrieven/grafiet-molo-duisburg.md \
+    --uit    v2/data/stroomroute-grafiet-molo-duisburg.json \
+    --stroom grafiet-molo-duisburg \
+    --titel  "Grafiet · Molo (Madagaskar) → Toliara → Rotterdam → Duisburg"
+}
+
+# ── ree · OSCOM REEP (Chatrapur, Odisha) → RED Aluva (Udyogamandal, Kerala), India
+# Routebrief: v2/design/routebrieven/ree-oscom-aluva.md (lichte werkwijze M31 golf 5)
+# EÉN wegbeen (b1, truck, doorgetrokken, geen stippel): mixed rare earth chloride
+# (MRCL) van de OSCOM-monazietextractie naar de RED Aluva-scheidingsfabriek, over
+# NH-16 (Oostkust, via Vijayawada) → NH-544 (Salem-Kochi, via de Palakkad-gap) →
+# NH-66 (Kerala-kust). Modaliteit truck is AANNEMELIJK (geen bron bevestigt hoe
+# MRCL reist, brief §7); geen zee/spoor/leiding/lucht, geen fase D/E (brief §6:
+# geen bron voor een afnemer van RED Aluva's HPRE-oxiden).
+# ⚠️ Geen gepubliceerde wegkm (brief §7): hemelsbreed 1.386 km — de ±15%-toets
+#    geldt hier alleen als INDICATIE, geen harde norm. Gemeten wegkm = 1.717,6 km
+#    (+23,9% t.o.v. de indicatie, buiten zowel ±10% als ±15% — een BEVINDING, geen
+#    fout: de brief voorzag zelf al 1.700-2.100 km voor de omweg door de Palakkad-
+#    gap, en 1.717,6 valt daarbinnen).
+# ⚠️ RED Aluva-anker gecorrigeerd bij het bakken (brief §3): de parallelle keten
+#    ree-chavara-aluva (andere agent, zelfde M31 golf 5) legde onafhankelijk
+#    hetzelfde IREL RED-terrein satelliet-gelegd op 10.08133/76.29761 — 190 m van
+#    dit brief's oorspronkelijke, onzekere punt. Letterlijk hergebruikt (niet
+#    stilzwijgend in het json, wél gedocumenteerd in de brief §3).
+# ⚠️ Beide ankersnaps ruim binnen norm (plant→weg 0,00 km, weg→kade 0,11 km) —
+#    geen last-mile-stippel nodig, ondanks de brief's verwachting dat er één zou
+#    komen (OSCOM in bosrijk terrein, RED Aluva in dichte industriezone).
+bak_ree_oscom_aluva() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|MRCL OSCOM REEP → RED Aluva (NH-16 → NH-544 → NH-66, via Vijayawada/Chengalpattu/Salem/Coimbatore/Walayar; aannemelijk: modaliteit ongedocumenteerd)|$BEEN/ree-oscom-aluva-weg-oscom-aluva.geojson" \
+    --marker "ree-oscom-reep — OSCOM REEP, Chatrapur, Ganjam-district, Odisha — mijn/extractiefabriek (laadplek, bron-gelegd)|19.3261,84.9449" \
+    --marker "ree-red-aluva — RED Aluva, Udyogamandal, Periyar-rivier, Kerala — scheidingsfabriek (losplek, stoppunt, bron-gelegd)|10.08133,76.29761" \
+    --routebrief v2/design/routebrieven/ree-oscom-aluva.md \
+    --uit    v2/data/stroomroute-ree-oscom-aluva.json \
+    --stroom ree-oscom-aluva \
+    --titel  "Zeldzame aardmetalen · OSCOM REEP (Odisha) → RED Aluva (Kerala, India)"
+}
+
+# ── zeldzame aardmetalen · Chemours Mission Mine (Georgia) → White Mesa Mill (Blanding, Utah)
+# Routebrief: v2/design/routebrieven/ree-georgia-whitemesa.md (lichte werkwijze M31 golf 5)
+# ⚠️ Eén been (b1, fase A, truck, aannemelijke modaliteit — brief §7: geen bron
+#    bevestigt hoe déze 2.600+ km-rit precies verloopt). Geen gepubliceerde
+#    wegkm (brief §2/§7): alleen hemelsbreed 2.620,4 km tussen de site-ankers.
+#    Gemeten weggeometrie 3.518,0 km (+34,3% t.o.v. de hemelsbrede indicatie,
+#    logisch voor een 2.600+ km I-40/US-corridor die niet de grootcirkel volgt)
+#    — de lengtetoets is hier referentie, geen ±15%-norm (brief §2/§7).
+# ⚠️ Profiel `ree-georgia-whitemesa-ga-utah` (maak_stroombeen_weg.py) draagt
+#    TWEE via-punten die NIET in de brief-tabel (§4, 8 punten) staan: Shiprock
+#    NM en Kayenta AZ, om het laatste stuk Gallup→White Mesa (~400 km, buiten
+#    het 8-punten-budget van de brief) op US-491/US-160/163/191 te pinnen —
+#    zie de kopnoot in het profiel + open punt 1 van bak_aanwijzingen. De brief
+#    zelf is ONGEWIJZIGD gelaten (§4-tabel blijft 8 punten).
+# ⚠️ Beide ankersnaps ruim binnen norm (plant→weg 0,07 km, weg→kade 0,36 km,
+#    open punt 2 van bak_aanwijzingen) — GEEN last-mile-stippel nodig bij
+#    Mission Mine, ondanks de brief's vermoeden dat de mijn "continu meebeweegt
+#    met het ertslichaam" (§7). First mile 6,95 km over kleine wegklassen
+#    (service/tertiary/track), last mile 1,67 km (service) — vandaar
+#    eindKlassen incl. track + eindToegangPrivaat in het profiel.
+# ⚠️ w-whitemesa is LETTERLIJK HERGEBRUIKT uit v2/design/ree-sitelaag.json —
+#    niet opnieuw satelliet-gecheckt (brief §3).
+bak_ree_georgia_whitemesa() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|monazietzand Chemours Mission Mine → White Mesa Mill (I-40 → US 491 → US 160/163 → US 191, hemelsbreed 2.620,4 km, geen wegkm; aannemelijk: modaliteit)|$BEEN/ree-georgia-whitemesa-weg-ga-utah.geojson" \
+    --marker "ree-ga-mijn — Chemours Mission Mine, heavy-mineral-sand-mijn (Charlton County, Georgia) — mijn/laadplek, bron-gelegd|31.0276,-81.9772" \
+    --marker "w-whitemesa — White Mesa Mill (Energy Fuels), Blanding, Utah — raffinaderij/losplek, stoppunt, bron-gelegd (hergebruikt anker)|37.5323,-109.5098" \
+    --routebrief v2/design/routebrieven/ree-georgia-whitemesa.md \
+    --uit    v2/data/stroomroute-ree-georgia-whitemesa.json \
+    --stroom ree-georgia-whitemesa \
+    --titel  "Zeldzame aardmetalen · Chemours Mission Mine (Georgia) → White Mesa Mill (Blanding, Utah)"
+}
+
+# ── lithium · Salar de Atacama → Carmen → Antofagasta → Daesan (Zuid-Korea, SK On/Seosan)
+# Routebrief: v2/design/routebrieven/lithium-carmen-pohang.md (LICHTE werkwijze M31 golf 5)
+# ⚠️ b1/b2 (truck) ZIJN LETTERLIJKE KOPIEËN van been 1/2 uit
+#    stroomroute-lithium-atacama-antofagasta.json (profielen lithium-atacama-carmen /
+#    lithium-carmen-antofagasta in maak_stroombeen_weg.py) — GEEN eigen wegscan,
+#    zelfde geojson, geen tweede versie (brief §2 b1/b2, bakhandleiding §0.4).
+# ⚠️ b3 (zee, haven-aanloop Antofagasta) IS OOK EEN LETTERLIJKE KOPIE — hetzelfde
+#    gedeelde bestand als lithium-atacama-antofagasta/koper-aurubis-hamburg
+#    (aanloop-antofagasta.geojson, 97,1 km, MARNET reikt hier niet tot de kade).
+# ⚠️ b4 (zee, MARNET, NIEUW): Antofagasta-zeeknoop → Daesan-zeeknoop, andere lane
+#    dan de bestaande Antofagasta→Yangtze-as (Stille Oceaan, geen zeestraat) —
+#    hemelsbreed 17.827 km stond in de brief als schatting; MARNET bepaalt de
+#    echte lane/km bij het bakken (bevinding, geen venster om dicht te trekken —
+#    zie lithium-pilgangoora-gwangyang §9 voor het precedent).
+# ⚠️ b5 (zee, haven-aanloop Daesan, NIEUW): Daesan-havenfront ligt 17,1 km van de
+#    dichtstbijzijnde MARNET-zeeknoop (>5 km ⇒ verplichte haven-aanloop per
+#    bakhandleiding §2/LAR-586, ook al zou de router binnen 25 km snappen).
+#    maak_havenaanloop.py vond een pad over water (17,4 km, 16 punten, 0,00 km
+#    over land, omwegfactor 1,017) — geen terugval-stippel nodig. De punten
+#    van dat bestand zijn ná het bakken van de aanloop OMGEDRAAID (het tool
+#    bouwt altijd kade→zeeknoop; deze keten reist zeeknoop→kade) zodat de lijn
+#    in reisvolgorde ligt en de naadmeting niet vals uitslaat.
+# ⚠️ GEEN fase D/E: de keten stopt bij li-daesan-kade — geen bron zegt dat SQM's
+#    lading specifiek in Daesan wordt gelost of van daar naar Seosan rijdt
+#    (bindende uitkomst van de haalbaarheidstoets, brief §6/§7 — het
+#    oorspronkelijke Pohang-fabrieksanker is geschrapt).
+bak_lithium_carmen_pohang() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|tankwagens SQM Salar de Atacama → PQL Carmen (plantweg → Ruta B-39 → Baquedano → Ruta 5) — LETTERLIJKE KOPIE lithium-atacama-antofagasta been b1|$BEEN/lithium-carmen-pohang-weg-atacama-carmen.geojson" \
+    --been-geojson "truck|carbonaat/hydroxide (containers) PQL Carmen → Puerto Antofagasta ATI (Ruta 5 → Ruta 26 → Av. Salvador Allende) — LETTERLIJKE KOPIE lithium-atacama-antofagasta been b2|$BEEN/lithium-carmen-pohang-weg-carmen-antofagasta.geojson" \
+    --stippel-geojson "zee|haven-aanloop Antofagasta (schematisch, over water — MARNET reikt hier niet: 97 km; gedeeld met lithium-atacama-antofagasta/koper-aurubis-hamburg — LETTERLIJKE KOPIE)|$BEEN/lithium-carmen-pohang-aanloop-antofagasta.geojson" \
+    --been         "zee|zeeschip Antofagasta → Daesan (Stille Oceaan, andere lane dan de bestaande Antofagasta→Yangtze-as; hemelsbreed-schatting 17.827 km, MARNET bepaalt de echte lane)|-23.80,-71.30|37.16690,126.41420" \
+    --stippel-geojson "zee|haven-aanloop Daesan (schematisch, over water — Daesan-havenfront ligt 17,1 km van de MARNET-zeeknoop, >5 km ⇒ verplichte haven-aanloop LAR-586)|$BEEN/lithium-carmen-pohang-aanloop-daesan.geojson" \
+    --marker "SQM Salar de Atacama — lithiumplant (laadplek tankwagens, hergebruikt anker)|-23.5675,-68.4000" \
+    --marker "SQM Planta Química de Litio Carmen — verwerkingsknoop (LiCl → Li2CO3/LiOH, hergebruikt anker)|-23.6335,-70.2600" \
+    --marker "Puerto Antofagasta, ATI — kade (containers, hergebruikt anker)|-23.6500,-70.4088" \
+    --marker "Daesan-havenfront, Seosan — algemene-vracht-/containerterminal (nieuw anker, satelliet-gecheckt), stoppunt|37.0131,126.4243" \
+    --routebrief v2/design/routebrieven/lithium-carmen-pohang.md \
+    --uit    v2/data/stroomroute-lithium-carmen-pohang.json \
+    --stroom lithium-carmen-pohang \
+    --titel  "Lithium · Salar de Atacama → Antofagasta → Daesan (Zuid-Korea)"
+}
+
+# ── lithium · Greenbushes-mijn (WA) → Kemerton lithium hydroxide plant (Albemarle)
+# Routebrief: v2/design/routebrieven/lithium-greenbushes-kemerton.md (LICHTE werkwijze M31 golf 5).
+# Eén enkel truckbeen (fase A), zoals lithium-silverpeak-mccarran — geen zee,
+# geen haven-aanloop, geen spoor/leiding/binnenvaart. Deelt alleen het START-
+# ANKER met lithium-greenbushes-bunbury (116.05505,-33.86495); ander eindpunt,
+# dus GEEN gedeeld-been-kopie (het is een nieuw profiel, ~66 km overlapt
+# corridormatig met de Bunbury-as maar dat is geen letterlijke kopie).
+# ⚠️ Beennaam draagt "(aannemelijk: eigendomsrelatie, geen brondocument)" —
+#    geen bron koppelt Greenbushes-concentraat specifiek aan Kemerton; de as
+#    steunt uitsluitend op gedeeld eigendom (Albemarle 49% Greenbushes + 100%
+#    Kemerton), zie brief §7. Kemerton's hydroxidetrein staat grotendeels
+#    stil sinds 2026 (Albemarle-persbericht) — actueel volume onzeker/laag.
+# ⚠️ Kemerton-coördinaat is de GEHARMONISEERDE waarde uit de sitelaag
+#    (-33.2050,115.7604, brief §3) — 0,5 km van de negatieve-ankerwaarde in
+#    lithium-greenbushes-zhangjiagang.md §2a-2, bewust niet die laatste.
+# ⚠️ Geen gepubliceerde wegkm (brief §2): OSRM-routering 100,7 km als
+#    werk-doelwaarde; de bake geeft 101,6 km getekend (102,1 km incl. de twee
+#    korte anker-verbindingen plant→weg 0,06 km en weg→kade 0,45 km) — binnen
+#    1,4% van de OSRM-waarde. ±15%-toets hier indicatie, geen norm.
+bak_lithium_greenbushes_kemerton() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|spodumeenconcentraat Greenbushes-mijn → Kemerton lithium hydroxide plant (South Western Hwy N → Wilman Wadandi Hwy (Bunbury-omleiding) → Forrest Hwy N → Marriott Rd; aannemelijk: eigendomsrelatie, geen brondocument)|$BEEN/lithium-greenbushes-kemerton-weg-greenbushes-kemerton.geojson" \
+    --marker "li-gb-laadplek — Greenbushes-concentraatloods (Talison: Tianqi/IGO 51% · Albemarle 49%), laadplek — hergebruikt anker|-33.86495,116.05505" \
+    --marker "li-kemerton-fabriek — Kemerton lithium hydroxide plant (Albemarle 100%), stoppunt (hydroxidetrein grotendeels stilgelegd sinds 2026)|-33.2050,115.7604" \
+    --routebrief v2/design/routebrieven/lithium-greenbushes-kemerton.md \
+    --uit    v2/data/stroomroute-lithium-greenbushes-kemerton.json \
+    --stroom lithium-greenbushes-kemerton \
+    --titel  "Lithium · Greenbushes-mijn → Kemerton lithium hydroxide plant (West-Australië)"
+}
+
+# ── grafiet · Bogala-mijn (Sri Lanka) → Colombo → Hamburg → Hauzenberg (Duitsland)
+# Routebrief: v2/design/routebrieven/grafiet-bogala-hauzenberg.md (LICHTE werkwijze M31 golf 5)
+# b1 (truck, weg-geojson): Bogala-mijn → Jaya Container Terminal Colombo, lokale
+#    weg → A1 via Kegalle-Warakapola-Nittambuwa-Kadawatha. 93,2 km gebakken
+#    (geen gepubliceerde wegkm — hemelsbreed 54,0 km, alleen referentie).
+# b2a (zee, STIPPEL, VERPLICHTE haven-aanloop LAR-586): de kade ligt 8,89 km van
+#    MARNET-zeeknoop 5328, boven de 5 km-drempel, óók al snapt de router ruim
+#    binnen 25 km. `maak_havenaanloop.py` liep vast op timeout 300 (exit 124) →
+#    per bakhandleiding §2 GEEN tweede poging, terugval op een rechte stippel.
+# b2b (zee, MARNET, geen stippel): Colombo → Hamburg, kade-coördinaten — de
+#    router snapt zelf op zeeknoop 5328 (Colombo, 8,89 km, via de aanloop
+#    hierboven overbrugd) resp. 3944 (Hamburg, 1,41 km, geen aanloop nodig).
+# b3 (truck, weg-geojson): Hamburg Burchardkai → Graphit Kropfmühl Hauzenberg,
+#    A7 → A3 → B12/lokale weg. 851,8 km gebakken (orde ~830-850 km verwacht).
+# ⚠️ Anker-verbinding Hamburg-kant 0,62 km (> 0,5 km-norm, bevinding): het
+#    dichtstbijzijnde OSM-punt bij Container Terminal Burchardkai (0,31 km) is
+#    een geïsoleerd eiland van 20 terminal-service-knopen (2 ways, 0 verbinding
+#    met het publieke wegnet) — gemeten met een BFS-componenttoets op de
+#    gebakken graaf. Profiel-eindKlassen laat daarom bewust 'service' weg
+#    (alleen residential/tertiary/unclassified); het anker snapt dan op 0,62 km
+#    op een knoop in het hoofdcomponent (868.157 knopen) i.p.v. op het eiland.
+# ⚠️ Geen fase D/E (brief §6): geen bron voor de afzet ná Hauzenberg-verwerking.
+bak_grafiet_bogala_hauzenberg() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Bogala-mijn → Jaya Container Terminal Colombo (lokale weg → A1 via Kegalle-Warakapola-Nittambuwa-Kadawatha)|$BEEN/grafiet-bogala-hauzenberg-weg-bogala-colombo.geojson" \
+    --stippel      "zee|haven-aanloop Colombo (schematisch — 1:10M-kust kent de haven niet; maak_havenaanloop.py timeout 300/exit 124, geen tweede poging)|6.9449,79.8527|6.99460,79.78960" \
+    --been         "zee|zeeschip Colombo → Hamburg (Indische Oceaan → Arabische Zee → Rode Zee → Suez → Middellandse Zee → Straat van Gibraltar → Golf van Biskaje → Het Kanaal → Noordzee → Elbe-estuarium)|6.9449,79.8527|53.5328,9.9223" \
+    --been-geojson "truck|vrachtwagen Container Terminal Burchardkai → Graphit Kropfmühl GmbH Hauzenberg (A7 → A3 → B12/lokale weg; anker-verbinding Hamburg-kant 0,62 km, zie ⚠️-noot)|$BEEN/grafiet-bogala-hauzenberg-weg-hamburg-hauzenberg.geojson" \
+    --marker "Bogala-mijn, Aruggammana, Kegalle District — ondergrondse ader-/klompgrafietmijn|7.1164,80.3106" \
+    --marker "Jaya Container Terminal, Colombo — overslag truck → zee|6.9449,79.8527" \
+    --marker "Container Terminal Burchardkai, Waltershof, Hamburg — overslag zee → truck|53.5328,9.9223" \
+    --marker "Graphit Kropfmühl GmbH, Hauzenberg (Kropfmühl) — losplek/verwerker, stoppunt (Asbury Carbons Inc.)|48.6218,13.6599" \
+    --routebrief v2/design/routebrieven/grafiet-bogala-hauzenberg.md \
+    --uit    v2/data/stroomroute-grafiet-bogala-hauzenberg.json \
+    --stroom grafiet-bogala-hauzenberg \
+    --titel  "Grafiet · Bogala-mijn (Sri Lanka) → Colombo → Hamburg → Hauzenberg (Duitsland)"
+}
+
+# ── lithium · AMG Mibra-mijn/concentrator (Nazareno, Brazilië) → Porto de Vitória → Hamburg → AMG Lithium Bitterfeld-Wolfen (Duitsland)
+# Routebrief: v2/design/routebrieven/lithium-mibra-bitterfeld.md (LICHTE werkwijze M31 golf 5)
+# b1 (truck, weg-geojson): AMG Mibra-mijn/concentrator/chem.-conversieterrein
+#    (Nazareno, MG) → BR-265 → MG-285/MG-447 → BR-356 → RJ-186 → ES-297 →
+#    BR-101 → Porto de Vitória. 654,6 km gebakken tegen OSRM-wegreferentie
+#    619,2 km (+5,8%, binnen ±10% — refs uitgebreid met RJ-186/ES-297 t.o.v.
+#    de bak-aanwijzingen, anders koos de scanner zonder soft-preference op die
+#    staatswegen een omweg van 742,4 km/+19,9% tussen Itaperuna en Itapemirim).
+# ⚠️ b2 (zee, STIPPEL) is een LETTERLIJKE KOPIE van been b2 uit de gebakken
+#    stroom lithium-cirilo-vitoria (functie bak_lithium_cirilo_vitoria,
+#    102,7 km haven-aanloop Porto de Vitória → zeeknoop 900) — hetzelfde
+#    geojson-bestand ($BEEN/lithium-cirilo-vitoria-aanloop-vitoria.geojson)
+#    wordt hier rechtstreeks hergebruikt, GEEN nieuwe maak_havenaanloop.py-run.
+# b3 (zee, MARNET, geen stippel): zeeknoop 900 (-20,00000/-39,50000) →
+#    Hamburg CTB-kade. Geen tweede haven-aanloop nodig aan de Duitse kant: de
+#    kade snapt op zeeknoop 3944 op 1,8 km (ruim < 5 km-drempel, bak-
+#    aanwijzingen §"Zeeknoop-check gedaan").
+# b4 (truck, weg-geojson): Hamburg CTB → A7 → A2 → A14 → B6/B185 → B183 →
+#    AMG Lithium Bitterfeld-Wolfen (Areal A). 356,2 km gebakken tegen OSRM-
+#    wegreferentie 362,7 km (-1,9%, binnen ±10%). `eindToegangPrivaat` nodig
+#    aan de Hamburg-kop (containerterminal-toegangswegen, anders "geen
+#    wegpad tussen punt 0 en 1" — airside/privéterrein-klasse, bakhandleiding §2).
+# ⚠️ Geen fase D/E (brief §6): geen bron noemt een specifieke Europese
+#    batterijfabriek als vaste afnemer van dit ronde; de brief stopt bij
+#    battery-grade LiOH·H2O in Bitterfeld.
+# ⚠️ Belangrijkste open punt (brief §7, GEEN bak-blokkade): een Fastmarkets-
+#    citaat van AMG-CEO Fabiano Costa (juli 2025) suggereert dat de vandaag
+#    werkelijk gevaren route mogelijk via China (tolling) loopt i.p.v.
+#    rechtstreeks Mibra→Bitterfeld — deze brief tekent bewust de door de
+#    haalbaarheidstoets opgedragen directe Atlantische as (geplande
+#    eindketen); een vervolgronde zou een aparte keten lithium-mibra-china
+#    moeten uitzoeken.
+bak_lithium_mibra_bitterfeld() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen AMG Mibra-mijn/concentrator → São João del-Rei → Barbacena → Mercês → Cataguases → Muriaé → Itaperuna → Itapemirim → Porto de Vitória (LMG-841 → BR-265 → MG-285/MG-447 → BR-356 → RJ-186 → ES-297 → BR-101)|$BEEN/lithium-mibra-bitterfeld-weg-mibra-vitoria.geojson" \
+    --stippel-geojson "zee|haven-aanloop Porto de Vitória (schematisch, over water — letterlijke kopie van been b2 uit lithium-cirilo-vitoria, 102,7 km, geen nieuwe run)|$BEEN/lithium-cirilo-vitoria-aanloop-vitoria.geojson" \
+    --been         "zee|zeeschip Vitória → Hamburg (Zuid-Atlantische Oceaan → Noordzee, MARNET beslist; hemelsbreed ~9.446 km tussen de zeeknopen, geen zeekm-citaat)|-20.00000,-39.50000|53.5290,9.9278" \
+    --been-geojson "truck|vrachtwagen HHLA Container Terminal Burchardkai → Wedemark → Lehrte → Peine → Hohe Börde → Bernburg → Südliches Anhalt → AMG Lithium Bitterfeld-Wolfen (A7 → A2 → A14 → B6/B185 → B183)|$BEEN/lithium-mibra-bitterfeld-weg-hamburg-bitterfeld.geojson" \
+    --marker "li-mibra-plant — AMG Brasil, Mina/Complexo Volta Grande (Mibra), Nazareno MG — mijn + concentrator + chem.-conversieterrein|-21.0834,-44.5893" \
+    --marker "li-vitoria-kade — Porto de Vitória, Vila Rubim/Cais Comercial (hergebruikt anker uit lithium-cirilo-vitoria)|-20.3238,-40.3477" \
+    --marker "li-hamburg-ctb-kade — HHLA Container Terminal Burchardkai, Waltershofer Hafen, Hamburg|53.5290,9.9278" \
+    --marker "li-bitterfeld-plant — AMG Lithium GmbH, Liebigstraße 10, Chemiepark Bitterfeld-Wolfen Areal A, stoppunt (battery-grade LiOH·H2O)|51.6522,12.2580" \
+    --routebrief v2/design/routebrieven/lithium-mibra-bitterfeld.md \
+    --uit    v2/data/stroomroute-lithium-mibra-bitterfeld.json \
+    --stroom lithium-mibra-bitterfeld \
+    --titel  "Lithium · AMG Mibra-mijn (Brazilië) → Porto de Vitória → Hamburg → AMG Lithium Bitterfeld-Wolfen (Duitsland)"
+}
+
+# ── gas · Kårstø (Noorwegen) → Dornum (Duitsland) ──────────────────────────
+# Routebrief: v2/design/routebrieven/gas-karsto-dornum.md (M31 golf 5, lichte
+# werkwijze). Eén been (fase B, leiding): Noors Noordzeegas wordt bij Kårstø
+# behandeld en gaat via Europipe II naar de Gasempfangsanlage bij Dornum/Nesse
+# (Duits invoedingspunt). Fase A (diffuus Statpipe-verzamelnet) vervalt bewust
+# — geen enkelvoudig tracé, zoals de Amerikaanse schaliegasvelden elders.
+#
+# b1 — leiding, Kårstø → Dornum (Europipe II), DOORGETROKKEN, GEEN STIPPEL:
+# ⚠️ De brief vroeg dit als open punt te verifiëren ("offshore-continuïteit
+# NIET geverifieerd deze sessie") — pyosmium-scan op de extracts noorwegen +
+# de-niedersachsen (extract-naam is `noorwegen`, niet `norwegen` zoals de
+# brief schreef) vond een DOORLOPENDE keten van 7 exact aaneensluitende OSM-
+# ways (gedeelde eindpunt-coördinaten, geen enkel gat): 1117764491 →
+# 1117764494 → 1117764490 → 1117764492 → 523930562 → 174152562 (de lange
+# offshore-hoofdway, 70 nodes, NO-landing → DE-landing) → 795944175. Alle
+# dragen `man_made=pipeline`+`substance=gas`, vijf met naam-tag "Europipe II";
+# 795944175 heeft geen eigen naam-tag maar sluit exact aan op 174152562 (zelfde
+# coördinaat) en ligt tussen de DE-landing en de Dornum-aansluiting. Het
+# OUDERE "Europipe" (I, way 174152545 + 1167437586, begint bij Draupner) is
+# NIET meegenomen — aparte way-ids, geen overlap met de II-keten.
+# Gestikte lengte: 655,77 km (181 punten) — tegen ~670 km (Engelse Wikipedia,
+# 13+642+15) is dat −2,1%, tegen de Duitse Wikipedia's ruwe "~660 km" −0,6%;
+# beide binnen de indicatieve marge (de brief noemt ±15% hier indicatief, geen
+# harde norm, gezien de vooraf onbevestigde offshore-continuïteit — die is nu
+# alsnog bevestigd). Marge kop-anker → eerste stitch-punt 0,94 km, staart-
+# anker → laatste stitch-punt 0,16 km — beide < 5 km, dus geen losse stippel
+# nodig (anker ≠ routeerpunt, bakhandleiding §5).
+# Eén marker-paar: gas-karsto-plant (kop) en gas-dornum-netra (staart,
+# stoppunt). Geen zee/haven-aanloop (geen zeebeen), geen luchtbeen, geen
+# gedeeld been (geen andere stroom deelt dit tracé).
+bak_gas_karsto_dornum() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "leiding|Europipe II Kårstø → Dornum (13 km onshore NO + ~642 km offshore NO/DK/DE-sector + 15 km onshore DE, gestikt uit 7 aaneensluitende OSM-ways man_made=pipeline)|$BEEN/gas-karsto-dornum-leiding-karsto-dornum.geojson" \
+    --marker "gas-karsto-plant — Kårstø-gasbehandelingsanlegg (Equinor/Gassco), Tysvær|59.2774,5.5247" \
+    --marker "gas-dornum-netra — Gasempfangsanlage/Heizhaus Europipe (Open Grid Europe/Gasunie Deutschland), Dornum/Nesse — stoppunt|53.6564,7.4039" \
+    --routebrief v2/design/routebrieven/gas-karsto-dornum.md \
+    --uit    v2/data/stroomroute-gas-karsto-dornum.json \
+    --stroom gas-karsto-dornum \
+    --titel  "Gas · Kårstø (Noorwegen) → Dornum (Duitsland) — Europipe II"
+}
+
+# ── gas · Hides Gas Conditioning Plant (Papoea-Nieuw-Guinea) → PNG LNG-plant Caution Bay → Futtsu LNG-terminal (Japan)
+# Routebrief: v2/design/routebrieven/gas-cautionbay-futtsu.md (lichte werkwijze M31 golf 5) — de
+# eerste keten van de atlas in Papoea-Nieuw-Guinea.
+# ⚠️ b1 (leiding, STIPPEL, rechte lijn) heeft GEEN geometrie-bewijs voor het
+#    tracé zelf — de PNG-Geofabrik-extract is gescand in de haalbaarheidstoets
+#    (bindend): 112 man_made=pipeline-ways totaal, precies 1 (3 nodes,
+#    ongenoemd) met substance=gas — het ~700 km-tracé Hides→Caution Bay
+#    (ExxonMobil corporate: "approximately 700-kilometers of onshore and
+#    offshore pipeline"; onafhankelijke bron 292 km onshore + 407 km offshore
+#    = 699 km, brief §8[6][9]) is in OSM vrijwel niet gekarteerd. Alleen kop
+#    (gas-cbf-hides) en staart (gas-cbf-plant) zijn bron-gelegd; de stippel is
+#    een rechte koorde en ligt daarmee fors korter dan de werkelijke offshore-
+#    boog door de Golf van Papoea — dat is INHERENT aan een schematische
+#    stippel (kop-staart, geen geometrie-bewijs) en géén fout. Dit ene been
+#    maakt de keten als geheel niet grotendeels-stippel: de zeeroute is
+#    verreweg het grootste deel van de totale lengte (vergelijk Bingham
+#    Canyon → Garfield, golf 4, dat wél 100% stippel werd en is afgewezen).
+# ⚠️ b2 (zee, MARNET kade → kade) draagt een VERPLICHTE haven-aanloop op BEIDE
+#    uiteinden (LAR-586, eigen meting): Caution Bay ligt 39,3 km van zeeknoop
+#    5906 (-9,60080/147,26620) — buiten het 25 km-snapbereik —
+#    `maak_havenaanloop.py` SLAAGDE (cel 0,01° kaal: 48,2 km · 34 punten ·
+#    2,46 km over land, alle bij het kade-uiteinde — een kade ligt per
+#    definitie óp de 1:10M-kustlijn, geen fout). Futtsu ligt 12,1 km van
+#    zeeknoop 9066 (35,23890/139,79280) — binnen 25 km maar boven de 5 km-
+#    drempel, dus ook hier verplicht; SLAAGDE eveneens (cel 0,01° gebufferd:
+#    14,8 km · 12 punten · 0,90 km over land). Hoofdzeebeen tussen de twee
+#    zeeknopen: Golf van Papoea → Coral Sea/Bismarckzee → Filipijnenzee
+#    (langs Luzon/Taiwan) → Oost-Chinese Zee → Tokiobaai, geen Kaap-omweg.
+#    Km-indicatie hemelsbreed ~5.026 km, geen gepubliceerde scheepvaart-
+#    kilometrage gevonden (brief §2/§7) — geen harde ±15%-toets, alleen ter
+#    indicatie (zelfde klasse als gas-raslaffan-chiba).
+# ⚠️ Geen fase D/E: geen bron benoemt een specifieke fabriek/afnemer
+#    stroomafwaarts van Futtsu (brief §6/§7). Futtsu blijft "aannemelijk: één
+#    bron" — de 2010-afnemerscontracten noemen JERA/Tokyo Electric Power
+#    Company en Osaka Gas als afnemers van PNG LNG in het algemeen, geen bron
+#    koppelt een specifieke lading aan specifiek Futtsu. Het w-futtsu-anker is
+#    letterlijk hergebruikt uit `v2/design/gas-sitelaag.json` (status daar al
+#    aannemelijk, geen eigen satellietronde deze sessie).
+# ⚠️ Geen luchtbeen, geen via-punten, geen gedeeld been met een bestaande
+#    gas-keten (beide benen zijn nieuw voor deze stroom).
+bak_gas_cautionbay_futtsu() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "leiding|Hides→Caution Bay pijpleiding (schematisch — geen doorlopende OSM-way; PNG-extract: 112 pipeline-ways, 1 met substance=gas)|-6.0050,142.8100|-9.3417,147.0231" \
+    --stippel-geojson "zee|haven-aanloop Caution Bay (schematisch, over water — kade 39,3 km van de MARNET-zeeknoop)|$BEEN/gas-cautionbay-futtsu-aanloop-cautionbay.geojson" \
+    --been         "zee|LNG-tanker Caution Bay → Futtsu (Golf van Papoea → Coral Sea/Bismarckzee → Filipijnenzee (Luzon/Taiwan) → Oost-Chinese Zee → Tokiobaai)|-9.60080,147.26620|35.23890,139.79280" \
+    --stippel-geojson "zee|haven-aanloop Futtsu (schematisch, over water — kade 12,1 km van de MARNET-zeeknoop)|$BEEN/gas-cautionbay-futtsu-aanloop-futtsu.geojson" \
+    --marker "gas-cbf-hides — Hides Gas Conditioning Plant, Southern Highlands (ExxonMobil PNG LNG) — laadplek/kop leiding, bron-gelegd|-6.0050,142.8100" \
+    --marker "gas-cbf-plant — PNG LNG-plant, Caution Bay (ExxonMobil PNG Limited) — overslag leiding → zee, bron-gelegd|-9.3417,147.0231" \
+    --marker "w-futtsu — Futtsu LNG-terminal (JERA/Tokyo Electric) — losplek zee, regasificatie + invoeding, stoppunt, aannemelijk|35.3424,139.8322" \
+    --routebrief v2/design/routebrieven/gas-cautionbay-futtsu.md \
+    --uit    v2/data/stroomroute-gas-cautionbay-futtsu.json \
+    --stroom gas-cautionbay-futtsu \
+    --titel  "Gas · Hides (Papoea-Nieuw-Guinea) → Caution Bay → Futtsu (Japan)"
+}
+
+# ── gas · Hassi R'Mel-gasveld (Algerije) → Arzew LNG-complex → Barcelona (Spanje)
+# Routebrief: v2/design/routebrieven/gas-arzew-barcelona.md (lichte werkwijze M31 golf 5) —
+# de eerste korte Middellandse-Zee-as van de kaart.
+# ⚠️ b1 (leiding, fase A, GROTENDEELS DOORGETROKKEN) is gebouwd met een
+#    TOPOLOGISCHE COMPONENT-GRAAF over ALLE 794 man_made=pipeline
+#    substance=gas-ways in de lokale algerije-extract (pyosmium, gedeelde
+#    OSM-node-refs — zelfde methode als bak_gas_bonny_zeebrugge b2, maar hier
+#    WEL verbonden; gereedschap: v2/tools/maak_leidingbeen_gas_hassirmel_arzew.py).
+#    Krechba-In Salah (way 391023450) en GALSI (ways 225282712/379118070/
+#    1393655399) zijn hard uitgesloten op way-id (brief §7, bewezen verkeerde
+#    corridor). De grootste component die BEIDE ankers benadert (775 vertices,
+#    namen "Houd El Hamra"/"LZ2") ligt 7,3 km van Hassi R'Mel en 1,5 km van
+#    Arzew — de Dijkstra daarbinnen geeft een doorlopend pad van 496,0 km
+#    (288 punten, omwegfactor 1,112 t.o.v. de hemelsbrede 446,2 km; brief-
+#    schatting was ~400 km hemelsbreed — indicatie, geen harde norm, brief
+#    §7). GK3-Borg Chegga (ways 469395884/469395885/485487144) ligt NIET op
+#    het gevonden pad (script-uitvoer bevestigt dit expliciet) — de
+#    oostwaartse richting die de brief al vermoedde, dus terecht niet
+#    meegenomen. De twee resterende gaten (veldterrein Hassi R'Mel 7,3 km;
+#    complexterrein Arzew 1,5 km) hebben geen OSM-way en worden gestippeld
+#    met reden — b1 is dus ~98% doorgetrokken, niet de 100%-stippel-klasse
+#    van Bingham Canyon → Garfield (golf 4, afgewezen).
+# ⚠️ b2a/b2b (zee, haven-aanlopen, LAR-586 — beide kades > 5 km van hun
+#    zeeknoop): Arzew (10,35 km van zeeknoop 9074) — `maak_havenaanloop.py`
+#    SLAAGDE (cel 0,005° kaal: 11,6 km · 21 punten · 0,80 km over land, geheel
+#    bij het kade-uiteinde — een kade ligt per definitie óp de 1:10M-kustlijn).
+#    Barcelona (5,09 km van zeeknoop 3723) — `maak_havenaanloop.py` liep vast
+#    op `timeout 300` (exit 124), geen tweede poging (bakhandleiding §2) →
+#    rechte stippel.
+# ⚠️ b2 (zee, MARNET knoop→knoop) is de doorgetrokken hoofdroute zeeknoop 9074
+#    → zeeknoop 3723 door de westelijke Middellandse Zee, rechtstreeks (geen
+#    zeestraat); geen gepubliceerde routelengte, hemelsbreed ~650 km uit het
+#    ontwerp is de enige referentie (indicatie, geen harde norm).
+# ⚠️ Geen fase C/D/E (brief §6): geen bron bevestigt welke van Spanje's zeven
+#    regasterminals het Arzew-volume daadwerkelijk ontvangt — Barcelona is het
+#    enige Algerije-relevante sitelaag-anker in Spanje en blijft "aannemelijk:
+#    één bron" (stoppunt). Geen luchtbeen, geen via-punten, geen gedeeld been
+#    met een bestaande stroom.
+bak_gas_arzew_barcelona() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "leiding|gasveld-verzamelnet Hassi R'Mel → trunkleiding (schematisch — geen OSM-way op het veldterrein, 7,3 km)|32.94722,3.17056|32.94554,3.24879" \
+    --been-geojson "leiding|Houd El Hamra-trunkleiding Hassi R'Mel → Arzew (aannemelijk: exacte way-keten bake-werk, component-graaf op gedeelde OSM-nodes, 496,0 km)|$BEEN/gas-arzew-barcelona-leiding-hassirmel-arzew.geojson" \
+    --stippel      "leiding|trunkleiding → Arzew LNG-complex (schematisch — geen OSM-way op het complexterrein, 1,5 km)|35.79427,-0.24124|35.80780,-0.23950" \
+    --stippel-geojson "zee|haven-aanloop Arzew (schematisch, over water — kade 10,35 km van de MARNET-zeeknoop)|$BEEN/gas-arzew-barcelona-aanloop-arzew.geojson" \
+    --been         "zee|LNG-carrier Arzew → Barcelona (westelijke Middellandse Zee, rechtstreeks)|35.85230,-0.13870|41.31220,2.20940" \
+    --stippel      "zee|haven-aanloop Barcelona (schematisch — 1:10M-kust kent de haven niet; maak_havenaanloop.py timeout 300 s, geen tweede poging)|41.31220,2.20940|41.34050,2.16150" \
+    --marker "gas-hassirmel-veld — Hassi R'Mel-gasveld (Sonatrach) — gasveld/kop leiding, bron-gelegd|32.94722,3.17056" \
+    --marker "gas-arzew-laad — Arzew LNG-complex (GL1Z/GL2Z/GL3Z, Sonatrach) — laadplek/LNG-liquefactie, bron-gelegd|35.80780,-0.23950" \
+    --marker "gas-barcelona-los — Planta de Barcelona (Enagás), Zona Franca — losplek/LNG-regasificatie, stoppunt, aannemelijk|41.34050,2.16150" \
+    --routebrief v2/design/routebrieven/gas-arzew-barcelona.md \
+    --uit    v2/data/stroomroute-gas-arzew-barcelona.json \
+    --stroom gas-arzew-barcelona \
+    --titel  "Gas · Hassi R'Mel (Algerije) → Arzew → Barcelona (Spanje)"
+}
+
+# ── gas · Chajanda-gasveld (Jakoetië, Rusland) → Сила Сибири → RU/CN-grens → 中俄东线 → Nantong (China)
+# Routebrief: v2/design/routebrieven/gas-chayanda-shanghai.md (LICHTE werkwijze M31 golf 5)
+# Eerste volledig-leiding gas-keten zonder zee-leg — 3 benen, alle modaliteit leiding.
+# ⚠️ b1 (fase A, DOORGETROKKEN): OSM-pipeline way-stitch, extract rusland-verrehoosten,
+#    "Сила Сибири", 10 aaneengeschakelde ways (van de 14 kandidaat-way-id's uit de
+#    brief bleken 4 korte parallel-/spurstukken bij compressorstations te zijn, niet
+#    nodig voor een doorlopende keten — pyosmium-graaf op endpoint-matching bevestigt
+#    een sluitende, gatloze verbinding zonder die 4). Veld → RU-grensstation, 2.153,8 km
+#    (was in de brief 2.168,2 km met alle 14) — bevinding, geen via-punt-gesleep. Tegen
+#    "±3.000 km algemeen bekend" (Gazprom, ongemeten) blijft dit −28,2%: OSM-geometrie is
+#    een volledige gesloten keten van veld tot grensstation, dus vertrouwd. Naad met het
+#    veld-anker 2,7 km (binnen de norm, geen actie).
+# ⚠️ b2 (fase B, STIPPEL, ~3,2 km): Amoer-onderdoorgang, dubbele tunnel gereed 2019 —
+#    geen doorlopende OSM-way over de rivier binnen het webbudget, ondanks gedocumenteerde
+#    fysieke tunnel (Wikipedia). Rechte lijn tussen de twee OSM-way-eindpunten.
+# ⚠️ b3 (fase C, China): 6 benoemde clusters, DOORGETROKKEN, 1.062,4 km samen, met 5
+#    tussenliggende stippels (gaten 141,7 · 85,0 · 317,4 · 524,4 · 331,3 km — verdeeld
+#    over de gap-zones, GEEN grote rechte stippel voor de hele 5.111 km, conform het
+#    gas-karsto-dornum-patroon). Vóór het stikken een BREDERE pyosmium-scan zonder
+#    naamfilter gedraaid (bakhandleiding §2 optie a): dat vond 3 extra benoemde
+#    "中俄东线"-ways (1328499370/376/377) die de Qinhuangdao/Tangshan-cluster en de
+#    losse 1336781081-cluster tot ÉÉN doorlopende cluster van 160,8 km samensmeden
+#    (naden 0,66–1,22 km) — een echte verbetering t.o.v. de brief, geen aanname.
+#    De aftakking 长岭-长春支线 (way 1328499381) is NIET meegenomen (expliciet een
+#    zijtak, eigen naam-tag). Way 1328499383 (tiny, 2,3–2,8 km van de Changchun-cluster)
+#    is een losse afsluiter-stub, geen brug over het gat — niet meegenomen.
+#    Cluster "shenyang" en "nantong" zijn omgekeerd t.o.v. hun OSM-node-volgorde om
+#    Noord→Zuid te lopen; "nantong" eindigt exact op het Nantong-anker (stoppunt).
+# ⚠️ Haalbaarheid (§0 in de brief): b3 alléén is 43,1% doorgetrokken / 56,9% stippel,
+#    maar de HELE keten (b1+b2+b3 samen) is 69,6% doorgetrokken / 30,4% stippel — dus
+#    NIET de Bingham-Garfield-klasse (100% stippel); haalbaar.
+# Geen via-punten (leiding volgt de exacte OSM-geometrie), geen fase D/E (brief §6: de
+# brief stopt bewust bij het Nantong-anker, geen bron voor een Shanghai-invoedpunt).
+bak_gas_chayanda_shanghai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "leiding|Сила Сибири Chajanda-veld → RU-grensstation (10 aaneengeschakelde OSM-ways, 2.153,8 km)|$BEEN/gas-chayanda-shanghai-leiding-chayanda-rugrens.geojson" \
+    --stippel      "leiding|Amoer-onderdoorgang (dubbele tunnel, gereed 2019, schematisch — geen doorlopende OSM-way over de rivier)|50.3116,127.3921|50.2926,127.3573" \
+    --been-geojson "leiding|中俄东线, cluster CN-grens → Changchun-omgeving (2 ways, 571,7 km)|$BEEN/gas-chayanda-shanghai-leiding-cn-cn-grens-changchun.geojson" \
+    --stippel      "leiding|中俄东线, tussenstuk Changchun-omgeving → Changchun-Shenyang-cluster (schematisch — geen doorlopende naam-tag)|45.7437,124.9734|44.5561,124.3182" \
+    --been-geojson "leiding|中俄东线, cluster Changchun → Shenyang-omgeving (140,7 km)|$BEEN/gas-chayanda-shanghai-leiding-cn-changchun-shenyang.geojson" \
+    --stippel      "leiding|中俄东线, tussenstuk Shenyang-omgeving (schematisch — geen doorlopende naam-tag)|43.4515,123.6469|42.6992,123.4625" \
+    --been-geojson "leiding|中俄东线, cluster Shenyang-omgeving (27,1 km)|$BEEN/gas-chayanda-shanghai-leiding-cn-shenyang-cluster.geojson" \
+    --stippel      "leiding|中俄东线, tussenstuk Shenyang → Qinhuangdao/Tangshan (schematisch — geen doorlopende naam-tag, 317,4 km)|42.4974,123.3092|40.5257,120.5529" \
+    --been-geojson "leiding|中俄东线, cluster Qinhuangdao/Tangshan (7 ways incl. 3 extra uit de brede scan, 160,8 km)|$BEEN/gas-chayanda-shanghai-leiding-cn-qinhuangdao-tangshan.geojson" \
+    --stippel      "leiding|中俄东线, tussenstuk Qinhuangdao/Tangshan → Linyi/Rizhao (schematisch — geen doorlopende naam-tag, 524,4 km)|39.9265,119.1499|35.2410,118.4750" \
+    --been-geojson "leiding|中俄东线, cluster Linyi/Rizhao (6 ways, 136,8 km)|$BEEN/gas-chayanda-shanghai-leiding-cn-linyi-rizhao.geojson" \
+    --stippel      "leiding|中俄东线, tussenstuk Linyi/Rizhao → Nantong (schematisch — geen doorlopende naam-tag, 331,3 km)|34.3931,119.0752|31.9325,121.0831" \
+    --been-geojson "leiding|中俄东线, cluster Nantong-eindpunt (5 ways, 25,4 km, eindigt op het stoppunt)|$BEEN/gas-chayanda-shanghai-leiding-cn-nantong.geojson" \
+    --marker "gas-chayanda-veld — Chajanda-gasveld, centrale gasbehandelingsinstallatie (Gazprom) — veld/kop leiding, bron-gelegd|60.3545,111.7086" \
+    --marker "gas-ru-grensstation — compressor-/afsluiterstation aan de Amoer, Amoergebied (~20 km NW van Blagovesjtsjensk) — grensovergang RU-zijde, bron-gelegd|50.3116,127.3921" \
+    --marker "gas-cn-grensstation — leidingstation aan de Amoeroever tegenover Blagovesjtsjensk, Heilongjiang — grensovergang CN-zijde, bron-gelegd|50.2926,127.3573" \
+    --marker "gas-nantong-eindpunt — laatste benoemde leidingpunt 中俄东线, Nantong-gebied, Jiangsu — stoppunt, bron-gelegd|31.7231,121.0591" \
+    --routebrief v2/design/routebrieven/gas-chayanda-shanghai.md \
+    --uit    v2/data/stroomroute-gas-chayanda-shanghai.json \
+    --stroom gas-chayanda-shanghai \
+    --titel  "Gas · Chajanda-gasveld (Jakoetië) → Сила Сибири → 中俄东线 → Nantong (China)"
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom

@@ -1,7 +1,7 @@
 {
  "versie": 2,
  "toelichting": "Gloedlaag lithium voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/lithium-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof lithium: ids 'w-*', gewicht = capaciteit in kt LCE/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
- "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt LCE/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in kt LCE/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron. Uitzondering: 9 sites dragen een eigen eenheid (staat in gewicht_bron) en zijn niet vergelijkbaar met de rest.",
  "knopen": [
   {
    "id": "w-li-greenbushes",
@@ -214,7 +214,7 @@
    ],
    "land": "Argentinië",
    "gewicht": 60.0,
-   "gewicht_bron": "capaciteit kt LCE/j — 60 kt Li2CO3 verkocht in 2025 (Rio Tinto Q4-2025-rapport); ontwerpcapaciteit 42,5 kt/j oorspronkelijk, opgehoogd na uitbreidingsfase [B12]",
+   "gewicht_bron": "capaciteit kt Li2CO3/j (= LCE) — 60 kt Li2CO3 verkocht in 2025 (Rio Tinto Q4-2025-rapport); ontwerpcapaciteit 42,5 kt/j oorspronkelijk, opgehoogd na uitbreidingsfase [B12]",
    "bron": "Nominatim ('Salar de Olaroz', wetland-centroïde) -23.4723,-66.7098 — GEEN plant-anker",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "salarcentroïde, geen fabrieksgebouw op deze positie herkend; de carbonaatfabriek ligt ergens aan de rand van de salar, niet apart gelokaliseerd deze ronde."
@@ -232,7 +232,7 @@
    ],
    "land": "Argentinië",
    "gewicht": 40.0,
-   "gewicht_bron": "capaciteit kt LCE/j — ~40 kt Li2CO3/j (ontwerpcapaciteit fase 1, Lithium Argentina/Ganfeng kwartaalrapportage); grootste Argentijnse pekelsite in aanbouw/ramp-up [B13]",
+   "gewicht_bron": "capaciteit kt Li2CO3/j (= LCE) — ~40 kt Li2CO3/j (ontwerpcapaciteit fase 1, Lithium Argentina/Ganfeng kwartaalrapportage); grootste Argentijnse pekelsite in aanbouw/ramp-up [B13]",
    "bron": "Nominatim ('Salar de Cauchari', wetland-centroïde) -23.7362,-66.7286 — GEEN plant-anker",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "salarcentroïde, z13: geen fabrieksbebouwing op dit punt herkenbaar (zoutvlakte); exacte plantlocatie (bekend uit persberichten nabij Olaroz) niet apart satellietgelegd."
@@ -250,7 +250,7 @@
    ],
    "land": "Argentinië",
    "gewicht": 25.0,
-   "gewicht_bron": "capaciteit kt LCE/j — Fenix-plant ~25 kt Li2CO3/j (Arcadium/Rio Tinto, na 2023-uitbreiding); oudste Argentijnse pekeloperatie [B14]",
+   "gewicht_bron": "capaciteit kt Li2CO3/j (= LCE) — Fenix-plant ~25 kt Li2CO3/j (Arcadium/Rio Tinto, na 2023-uitbreiding); oudste Argentijnse pekeloperatie [B14]",
    "bron": "Wikipedia-coördinaat 'Salar del Hombre Muerto' (en) -25.35,-67.07, satellietblik op afgeleid punt",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "z13: alleen de grote witte zoutvlakte zichtbaar, geen fabrieksgebouw op dit brede beeld onderscheiden — vraagt een nauwere pass."
@@ -268,7 +268,7 @@
    ],
    "land": "Argentinië",
    "gewicht": 3.0,
-   "gewicht_bron": "capaciteit kt LCE/j — starter plant 3 kt Li2CO3/j (eerste productie 2024/2025); volledig project (DLE) beoogt ~60 kt/j maar nog niet gerealiseerd (Rio Tinto persberichten) [B15]",
+   "gewicht_bron": "capaciteit kt Li2CO3/j (= LCE) — starter plant 3 kt Li2CO3/j (eerste productie 2024/2025); volledig project (DLE) beoogt ~60 kt/j maar nog niet gerealiseerd (Rio Tinto persberichten) [B15]",
    "bron": "Nominatim/Photon ('Salar del Rincón') -24.0661,-67.0871 — salarcentroïde",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "z13: zoutvlakte, geen plant op deze positie gezien; kleinere bebouwing ~1,5-2 km NO op het beeld, niet hard aan Rio Tinto gekoppeld."
@@ -394,7 +394,7 @@
    ],
    "land": "Zuid-Korea",
    "gewicht": 38.0,
-   "gewicht_bron": "capaciteit kt LCE/j — 43 kt LiOH/j nameplate ≈ 38 kt LCE-equivalent (×0,88); gemeten 2026-tempo lag rond ~14 kt LiOH/j (POSCO-newsroom / ontwerpronde-notitie) [B22]",
+   "gewicht_bron": "capaciteit kt LiOH·H2O/j (× 0,88 = LCE) — 43 kt LiOH/j nameplate ≈ 38 kt LCE-equivalent (×0,88); gemeten 2026-tempo lag rond ~14 kt LiOH/j (POSCO-newsroom / ontwerpronde-notitie) [B22]",
    "bron": "Nominatim ('율촌제1산업단지 / Yulchon industrial complex') 34.8995,127.5909 — industriepark, niet het specifieke pand",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "coördinaat is het industriepark waarin de POSCO-fabriek ligt, niet zelf satellietgelegd op het specifieke pand deze ronde."
@@ -412,7 +412,7 @@
    ],
    "land": "Japan",
    "gewicht": 9.0,
-   "gewicht_bron": "capaciteit kt LCE/j — kleine hydroxidefabriek gevoed met Argentijns carbonaat, ~10 kt LiOH/j-orde ≈ 9 kt LCE-indicatie (Toyota Tsusho-persberichten, niet exact bevestigd) [B23]",
+   "gewicht_bron": "capaciteit kt LiOH·H2O/j (× 0,88 = LCE) — kleine hydroxidefabriek gevoed met Argentijns carbonaat, ~10 kt LiOH/j-orde ≈ 9 kt LCE-indicatie (Toyota Tsusho-persberichten, niet exact bevestigd) [B23]",
    "bron": "v1-registercoördinaat (data/lithium.js li-ref-naraha), stadscentroïde Naraha, niet satellietgelegd op het pand",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
    "notitie": "coördinaat is de gemeente Naraha (Fukushima), niet het specifieke fabrieksterrein — deze ronde niet nader gelokaliseerd."
@@ -448,7 +448,7 @@
    ],
    "land": "Canada",
    "gewicht": 5.0,
-   "gewicht_bron": "capaciteit kt LCE/j — 33,5 kt SC6/j nameplate fase 1 ≈ 5 kt LCE-indicatie (33,5 × 6,0% × 2,473 ≈ 5,0 kt) (Nemaska Lithium/Investissement Québec projectupdates) [B27]",
+   "gewicht_bron": "capaciteit kt SC6/j — 33,5 kt SC6/j nameplate fase 1 ≈ 5 kt LCE-indicatie (33,5 × 6,0% × 2,473 ≈ 5,0 kt) (Nemaska Lithium/Investissement Québec projectupdates) [B27]",
    "bron": "Photon (Mine Whabouchi, industrial) 51.6878,-75.8952",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "z14 gezien: kruis op een gerooide/opgehoogde industriezone aan een meer, met toegangsweg — mijnsite in aanbouw/vroege productie."
@@ -466,7 +466,7 @@
    ],
    "land": "Canada",
    "gewicht": 6.0,
-   "gewicht_bron": "capaciteit kt LCE/j — eerste fase ~7 kt LiOH/j (herstart 2025) ≈ 6 kt LCE-equivalent (Nemaska Lithium/Investissement Québec) [B27]",
+   "gewicht_bron": "capaciteit kt LiOH·H2O/j (× 0,88 = LCE) — eerste fase ~7 kt LiOH/j (herstart 2025) ≈ 6 kt LCE-equivalent (Nemaska Lithium/Investissement Québec) [B27]",
    "bron": "Photon (Nemaska Lithium, construction) 46.3583,-72.3938",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "z14 gezien: kruis direct op het fabriekscomplex in het industriepark van Bécancour, langs de Saint-Laurent."
@@ -474,8 +474,8 @@
   {
    "id": "w-li-bitterfeld",
    "naam": "Bitterfeld (AMG Lithium)",
-   "lon": 12.3167,
-   "lat": 51.6167,
+   "lon": 12.258,
+   "lat": 51.6522,
    "level": "site",
    "parent": null,
    "rol": "raffinaderij",
@@ -484,9 +484,9 @@
    ],
    "land": "Duitsland",
    "gewicht": 18.0,
-   "gewicht_bron": "capaciteit kt LCE/j — ~20 kt LiOH/j fase 1 ≈ 18 kt LCE-equivalent (AMG Lithium-bedrijfsinformatie); eerste EU-hydroxidefabriek, draait op geïmporteerd carbonaat [B32]",
-   "bron": "v1-registercoördinaat (data/lithium.js li-ref-bitterfeld), stadscentroïde Bitterfeld-Wolfen (Wikipedia-coördinaat bevestigt dezelfde plek)",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "gewicht_bron": "capaciteit kt LiOH·H2O/j (× 0,88 = LCE) — ~20 kt LiOH/j fase 1 ≈ 18 kt LCE-equivalent (AMG Lithium-bedrijfsinformatie); eerste EU-hydroxidefabriek, draait op geïmporteerd carbonaat [B32]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 5) met het satelliet-gelegde keten-anker `li-bitterfeld-plant` uit routebrief lithium-mibra-bitterfeld.md (was 51.6167, 12.3167 — 5.66 km verschoven). Oorspronkelijk: v1-registercoördinaat (data/lithium.js li-ref-bitterfeld), stadscentroïde Bitterfeld-Wolfen (Wikipedia-coördinaat bevestigt dezelfde plek)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "stadscoördinaat, niet het specifieke fabrieksterrein — geen satellietblik deze ronde."
   },
   {

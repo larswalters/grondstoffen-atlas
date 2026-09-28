@@ -95,6 +95,514 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief lithium-mibra-bitterfeld, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck spodumeenconcentraat AMG Mibra-mijn/concentrator/chem.-conversieterrein
+    # (Nazareno, MG) → LMG-841 → BR-265 (São João del-Rei–Barbacena–Mercês) →
+    # MG-285 → MG-447 (Cataguases) → BR-356 (Muriaé–Itaperuna) → RJ-186 →
+    # ES-297 (Mimoso do Sul) → BR-101 (Itapemirim–Vitória) → Porto de Vitória.
+    # Geen gepubliceerde wegkm (brief §2/§9): alleen OSRM-wegreferentie 619,2 km
+    # (opgevraagd 2026-09-28) — venster-indicatie, geen harde ±15%-toets zonder
+    # officiële bron.
+    "lithium-mibra-bitterfeld-mibra-vitoria": {
+        "via": [
+            ("AMG Mibra-mijn/concentrator/chem.plant (li-mibra-plant, anker)", (-44.5893, -21.0834)),
+            ("São João del-Rei, BR-265 (corridorkeuze)",                       (-44.2516, -21.1490)),
+            ("Barbacena, BR-265 × BR-040 (corridorkeuze)",                     (-43.7492, -21.2004)),
+            ("Mercês, BR-265/MGC-265 (corridorkeuze)",                         (-43.4242, -21.2334)),
+            ("Cataguases, MG-285 × MG-447 (corridorkeuze)",                    (-42.6742, -21.3640)),
+            ("Muriaé, BR-356 (corridorkeuze)",                                 (-42.3395, -21.1267)),
+            ("Itaperuna (RJ), BR-356 → RJ-186 (corridorkeuze)",                (-41.8550, -21.2095)),
+            ("Itapemirim (ES), ES-297 → BR-101 (corridorkeuze)",               (-41.0778, -20.9252)),
+            ("Porto de Vitória — Vila Rubim/Cais Comercial (li-vitoria-kade, anker, hergebruikt)", (-40.3477, -20.3238)),
+        ],
+        "id": "li-mibra-vitoria-b1",
+        "naam": "AMG Mibra-mijn → São João del-Rei → Barbacena → Mercês → Cataguases → "
+                "Muriaé → Itaperuna → Itapemirim → Porto de Vitória "
+                "(LMG-841 → BR-265 → MG-285/MG-447 → BR-356 → RJ-186 → ES-297 → BR-101)",
+        "extracts": ["brazilie"],
+        "refs": ["BR-265", "BR-356", "RJ-186", "ES-297", "BR-101"],
+        "gepubliceerdKm": 619,
+        "bronnoot": "geen officiële bron — OSRM-wegreferentie 619,2 km (opgevraagd 2026-09-28), "
+                    "±15%-toets hier indicatie, geen norm (brief §9/[10])",
+        "vensterKm": 75,
+        "uit": "lithium-mibra-bitterfeld-weg-mibra-vitoria.geojson",
+    },
+    # Routebrief lithium-mibra-bitterfeld, been b4 (LICHTE werkwijze M31 golf 5).
+    # Truck battery-grade LiOH·H2O AMG Lithium's raffinaderij-inbound: HHLA
+    # Container Terminal Burchardkai, Hamburg → A7 (Wedemark–Lehrte) → A2
+    # (Peine–Hohe Börde/Magdeburg) → A14 → B6/B185 (Bernburg) → B183
+    # (Südliches Anhalt) → AMG Lithium Bitterfeld-Wolfen (Areal A).
+    # Geen gepubliceerde wegkm (brief §2/§9): alleen OSRM-wegreferentie 362,7 km
+    # (opgevraagd 2026-09-28) — venster-indicatie, geen harde ±15%-toets zonder
+    # officiële bron.
+    "lithium-mibra-bitterfeld-hamburg-bitterfeld": {
+        "via": [
+            ("HHLA Container Terminal Burchardkai, Hamburg (li-hamburg-ctb-kade, anker)", (9.9278, 53.5290)),
+            ("Wedemark, A7 (corridorkeuze)",                                   (9.7982, 52.5451)),
+            ("Lehrte, A7 × A2 (corridorkeuze)",                                (9.9593, 52.3903)),
+            ("Peine, A2 (corridorkeuze)",                                      (10.2684, 52.3362)),
+            ("Hohe Börde, A2 × A14 bij Magdeburg (corridorkeuze)",             (11.5446, 52.1613)),
+            ("Bernburg, A14 → B6/B185 (corridorkeuze)",                        (11.6978, 51.8041)),
+            ("Südliches Anhalt, B183 (corridorkeuze)",                         (12.0079, 51.7332)),
+            ("AMG Lithium Bitterfeld-Wolfen, Chemiepark Areal A (li-bitterfeld-plant, anker)", (12.2580, 51.6522)),
+        ],
+        "id": "li-hamburg-bitterfeld-b4",
+        "naam": "Hamburg CTB → Wedemark → Lehrte → Peine → Hohe Börde → Bernburg → "
+                "Südliches Anhalt → AMG Lithium Bitterfeld-Wolfen "
+                "(A7 → A2 → A14 → B6/B185 → B183)",
+        "extracts": ["de-hamburg", "de-niedersachsen", "de-sachsen-anhalt"],
+        "refs": ["A7", "A2", "A14", "B6", "B185", "B183"],
+        "gepubliceerdKm": 363,
+        "bronnoot": "geen officiële bron — OSRM-wegreferentie 362,7 km (opgevraagd 2026-09-28), "
+                    "±15%-toets hier indicatie, geen norm (brief §9/[10])",
+        "vensterKm": 75,
+        "eindToegangPrivaat": True,
+        "uit": "lithium-mibra-bitterfeld-weg-hamburg-bitterfeld.geojson",
+    },
+    # Routebrief lithium-greenbushes-kemerton, been b1 (LICHTE werkwijze M31 golf 5).
+    # Enkel truckbeen (fase A): spodumeenconcentraat Greenbushes-concentraat-
+    # loods → Kemerton lithium hydroxide plant (Albemarle) — South Western Hwy N
+    # (Balingup–Donnybrook–Boyanup) → Wilman Wadandi Hwy (Bunbury-omleiding,
+    # nabij Gelorup) → Forrest Hwy N (Leschenault) → Marriott Rd. Startanker
+    # LETTERLIJK hetzelfde punt als het bestaande profiel "lithium-greenbushes-
+    # bunbury" hierboven (116.05505,-33.86495) — deelt alleen het beginpunt, een
+    # ander eindpunt, dus geen gedeeld-been-kopie (de eerste ~66 km overlappen
+    # corridormatig met de Bunbury-route maar zijn hier een NIEUW profiel).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2): alleen OSRM-routering 100,7 km
+    #    (werk-doelwaarde) en hemelsbreed 78,3 km — beide geen officiële bron,
+    #    dus de ±15%-toets geldt hier als indicatie, niet als norm (brief §2/§7).
+    # eindKlassen: default (residential/service/tertiary/unclassified binnen
+    #    EIND_STRAAL_KM=12) dekt Maranup Ford Rd/Stanifer St bij de mijn al —
+    #    zelfde patroon als het bestaande Greenbushes-profiel, geen override nodig.
+    "lithium-greenbushes-kemerton-greenbushes-kemerton": {
+        "via": [
+            ("Greenbushes-concentraatloods (anker, li-gb-laadplek)", (116.05505, -33.86495)),
+            ("Balingup (op de highway, corridorkeuze)",              (115.9832, -33.7861)),
+            ("Donnybrook (op de highway, corridorkeuze)",            (115.8251, -33.5774)),
+            ("Boyanup (laatste punt gedeelde Bunbury-corridor)",     (115.7289, -33.4844)),
+            ("SWH → Wilman Wadandi Hwy, nabij Gelorup (Bunbury-omleiding)", (115.6981, -33.3997)),
+            ("Wilman Wadandi Hwy → Forrest Hwy, nabij Leschenault",  (115.7522, -33.2651)),
+            ("Forrest Hwy → Marriott Rd, Leschenault",               (115.7223, -33.2158)),
+            ("Kemerton lithium hydroxide plant (anker, li-kemerton-fabriek)", (115.7604, -33.2050)),
+        ],
+        "id": "li-greenbushes-kemerton-b1",
+        "naam": "Greenbushes-concentraatloods → Kemerton lithium hydroxide plant "
+                "(South Western Hwy N → Wilman Wadandi Hwy → Forrest Hwy N → Marriott Rd)",
+        "extracts": ["australie"],
+        "refs": ["1"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen bedrijfs-/overheidsopgave; OSRM-routering op OSM-wegnet "
+                    "100,7 km (werk-doelwaarde) tegen hemelsbreed 78,3 km — "
+                    "±15%-toets hier indicatie, geen norm (brief §2/§7)",
+        "vensterKm": 40,
+        "uit": "lithium-greenbushes-kemerton-weg-greenbushes-kemerton.geojson",
+    },
+    # Routebrief grafiet-bogala-hauzenberg, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck ader-/klompgrafiet Bogala-mijn (Aruggammana, Kegalle District) →
+    # Jaya Container Terminal, Colombo — lokale mijnweg → A1 (Colombo-Kandy
+    # Road) via Kegalle → Warakapola → Nittambuwa → Kadawatha (brief §2/§4).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2): alleen hemelsbreed 54,0 km
+    #    kop-staart / via-som 81,7 km — de ±15%-toets geldt hier niet als
+    #    harde norm, alleen als indicatie (brief §7, orde ~90-100 km verwacht).
+    "grafiet-bogala-hauzenberg-bogala-colombo": {
+        "via": [
+            ("Bogala-mijn, Aruggammana (anker, gr-bogala-mijn)",       (80.3106, 7.1164)),
+            ("Kegalle (aansluiting lokale weg op de A1)",              (80.3454, 7.2532)),
+            ("Warakapola (A1 blijft doorgaand)",                       (80.1965, 7.2250)),
+            ("Nittambuwa (A1 x A6-kruising)",                          (80.0965, 7.1441)),
+            ("Kadawatha (laatste doorgaande A1-punt vóór de havenwegen)", (79.9512, 7.0021)),
+            ("Jaya Container Terminal, Colombo (anker, gr-colombo-jct)", (79.8527, 6.9449)),
+        ],
+        "id": "gr-bogala-hauzenberg-b1",
+        "naam": "Bogala-mijn -> Kegalle -> Warakapola -> Nittambuwa -> Kadawatha -> Jaya Container Terminal Colombo (A1)",
+        "extracts": ["sri-lanka"],
+        "refs": ["A1"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden (routebrief §2/§7); "
+                    "hemelsbreed 54,0 km kop-staart tussen de site-ankers -- "
+                    "lengtetoets is hier referentie, geen norm",
+        "vensterKm": 40,
+        "uit": "grafiet-bogala-hauzenberg-weg-bogala-colombo.geojson",
+    },
+    # Routebrief grafiet-bogala-hauzenberg, been b3 (LICHTE werkwijze M31 golf 5).
+    # Truck vlokgrafiet Container Terminal Burchardkai, Hamburg → Graphit
+    # Kropfmühl GmbH, Hauzenberg (Kropfmühl) — A7 (Hamburg-Hannover-Kassel-
+    # Würzburg) → A3 (Würzburg-Nürnberg-Regensburg-Passau) → B12/lokale weg
+    # Passau-Hauzenberg (brief §2/§4).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2): alleen hemelsbreed 605,1 km
+    #    kop-staart / via-som 726,8 km — de ±15%-toets geldt hier niet als
+    #    harde norm (brief §7, orde ~830-850 km A7/A3 verwacht).
+    "grafiet-bogala-hauzenberg-hamburg-hauzenberg": {
+        "via": [
+            ("Container Terminal Burchardkai, Hamburg (anker, gr-hamburg-burchardkai)", (9.9223, 53.5328)),
+            ("Hannover (A7 blijft zuidwaarts)",                        (9.7386, 52.3745)),
+            ("Kassel (A7/A44-knoop)",                                  (9.4978, 51.3158)),
+            ("Würzburg (A7/A3-knoop)",                                 (9.9435, 49.7780)),
+            ("Nürnberg (A3 blijft doorgaand)",                         (11.0773, 49.4539)),
+            ("Regensburg (A3 langs de Donau)",                         (12.0975, 49.0195)),
+            ("Passau (einde A3, buigt af naar de B12)",                (13.4610, 48.5748)),
+            ("Graphit Kropfmühl GmbH, Hauzenberg (anker, gr-hauzenberg-kropfmuhl)", (13.6599, 48.6218)),
+        ],
+        "id": "gr-bogala-hauzenberg-b3",
+        "naam": "Container Terminal Burchardkai -> Hannover -> Kassel -> Würzburg -> Nürnberg -> Regensburg -> Passau -> Graphit Kropfmühl (A7 -> A3 -> B12)",
+        "extracts": ["de-hamburg", "de-niedersachsen", "de-hessen", "de-bayern"],
+        "refs": ["A7", "A3", "B12"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden (routebrief §2/§7); "
+                    "hemelsbreed 605,1 km kop-staart tussen de site-ankers -- "
+                    "lengtetoets is hier referentie, geen norm",
+        "vensterKm": 40,
+        # ⚠️ 'service' bewust NIET in eindKlassen: het dichtstbijzijnde punt bij
+        # Container Terminal Burchardkai (0,31 km) is een geïsoleerd eiland van
+        # 20 terminal-service-knopen (2 ways, 0 verbinding met het publieke net
+        # in OSM) — gemeten met een BFS-componenttoets op de gebakken graaf.
+        # Zonder 'service' snapt het anker op 0,62 km op een knoop in het
+        # hoofdcomponent (868.157 knopen) en routeert de Dijkstra gewoon door.
+        "eindKlassen": ["residential", "tertiary", "unclassified"],
+        "uit": "grafiet-bogala-hauzenberg-weg-hamburg-hauzenberg.geojson",
+    },
+    # Routebrief grafiet-molo-duisburg, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck SuperFlake-vlokgrafiet van de NextSource Molo-mijn (Fotadrevo/
+    # Ampanihy, Zuid-Madagaskar) naar de Toliara-kade -- regionale weg naar
+    # Ampanihy (RN10-aansluiting) -> Betioky Atsimo -> Andranovory (RN10/RN7-
+    # kruispunt) -> RN7 naar Toliara (brief §2/§4).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2/§7): alleen hemelsbreed ~165 km
+    #    tussen de site-ankers, via een zuidelijke omweg over Ampanihy -- de
+    #    ±15%-toets geldt hier niet als norm, alleen als indicatie.
+    # ⚠️ Ruim venster (75 km) vanwege die zuidelijke omweg (brief bak_aanwijzingen).
+    "grafiet-molo-duisburg-molo-toliara": {
+        "via": [
+            ("NextSource Molo-mijn (anker, gr-molo-mijn)",                 (45.1244, -24.0045)),
+            ("Ampanihy (RN10-aansluiting)",                                (44.7464, -24.6927)),
+            ("Betioky Atsimo (RN10-waypoint)",                             (44.4212, -23.6897)),
+            ("Andranovory (RN10 -> RN7-kruispunt)",                        (44.8053, -23.5420)),
+            ("Port de Tuléar -- Toliara-kade (anker, gr-toliara-kade)",     (43.6648, -23.3778)),
+        ],
+        "id": "gr-molo-duisburg-b1",
+        "naam": "Molo-mijn -> Ampanihy -> Betioky Atsimo -> Andranovory -> Toliara-kade",
+        "extracts": ["madagaskar"],
+        "refs": ["RN10", "RN7"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden (routebrief §2/§7); "
+                    "hemelsbreed ~165 km tussen de site-ankers -- "
+                    "lengtetoets is hier referentie, geen norm",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "uit": "grafiet-molo-duisburg-weg-molo-toliara.geojson",
+    },
+    # Routebrief ree-georgia-whitemesa, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck monazietzand (bijproduct heavy-mineral-sand-winning, aannemelijk:
+    # modaliteit niet bronbevestigd voor déze rit) van Chemours' Mission Mine
+    # (Charlton County, Georgia) naar White Mesa Mill (Energy Fuels), Blanding,
+    # Utah -- I-40 dwars door TN/AR/OK/TX/NM (Chattanooga-Nashville-Memphis-
+    # Little Rock-OKC-Amarillo-Albuquerque-Gallup), dan noordwaarts via
+    # US 491/US 160/US 163/US 191, bewust om Colorado heen (brief §4/§7).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2/§7): alleen hemelsbreed 2.620,4 km
+    #    tussen de site-ankers -- de ±15%-toets geldt hier als indicatie, geen norm.
+    # ⚠️ TWEE EXTRA VIA-PUNTEN (Shiprock NM, Kayenta AZ) t.o.v. de brief-tabel
+    #    (§4, 8 punten): het laatste stuk Gallup->White Mesa (~400 km) had geen
+    #    eigen via-punt binnen het 8-punten-budget van de brief (bak_aanwijzingen,
+    #    open punt 1). Toegevoegd op het doorgaande US 491/US 160/163/191-tracé,
+    #    niet in de brief zelf (die blijft ongewijzigd) -- vastgelegd hier + §9.
+    # ⚠️ Mission Mine is een heavy-mineral-sand-mijn die "continu meebeweegt met
+    #    het ertslichaam" (NPDES-permit); eindKlassen ruim + eindToegangPrivaat
+    #    voor het geval de scanner alleen een onverharde/private laatste km vindt
+    #    (open punt 2 van bak_aanwijzingen).
+    "ree-georgia-whitemesa-ga-utah": {
+        "via": [
+            ("Chemours Mission Mine (anker, ree-ga-mijn)",                 (-81.9772, 31.0276)),
+            ("Chattanooga TN (I-75/I-24-knoop)",                          (-85.3097, 35.0456)),
+            ("Nashville TN (I-24/I-40-knoop)",                            (-86.7816, 36.1627)),
+            ("Memphis TN (I-40, Mississippi-oversteek)",                  (-90.0490, 35.1495)),
+            ("Little Rock AR (op I-40)",                                  (-92.2896, 34.7465)),
+            ("Oklahoma City OK (op I-40)",                                (-97.5164, 35.4676)),
+            ("Amarillo TX (op I-40)",                                     (-101.8313, 35.2220)),
+            ("Albuquerque NM (op I-40)",                                  (-106.6504, 35.0844)),
+            ("Gallup NM (I-40/US 491-knoop)",                             (-108.7426, 35.5281)),
+            ("Shiprock NM (US 491/US 64-knoop, toegevoegd -- zie kopnoot)", (-108.6871, 36.7856)),
+            ("Kayenta AZ (US 160/163-knoop, toegevoegd -- zie kopnoot)",  (-110.2568, 36.7278)),
+            ("White Mesa Mill (anker, w-whitemesa)",                      (-109.5098, 37.5323)),
+        ],
+        "id": "ree-georgia-whitemesa-b1",
+        "naam": "Chemours Mission Mine -> Chattanooga -> Nashville -> Memphis -> Little Rock -> "
+                "OKC -> Amarillo -> Albuquerque -> Gallup -> Shiprock -> Kayenta -> White Mesa Mill "
+                "(I-40 -> US 491 -> US 160/163 -> US 191)",
+        "extracts": ["us-georgia", "us-tennessee", "us-arkansas", "us-oklahoma",
+                     "us-texas", "us-new-mexico", "us-arizona", "us-utah"],
+        "refs": ["I 40", "US 491", "US 160", "US 163", "US 191"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden (routebrief §2/§7); "
+                    "hemelsbreed 2.620,4 km tussen de site-ankers -- "
+                    "lengtetoets is hier referentie, geen norm",
+        "vensterKm": 60,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "ree-georgia-whitemesa-weg-ga-utah.geojson",
+    },
+    # Routebrief uranium-jaduguda-hyderabad, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck uraanerts/geel-koek Jaduguda-mijn (UCIL, Jharkhand) -> Nuclear Fuel
+    # Complex, Kapra/ECIL, Hyderabad (Telangana) -- ruim 1.300 km zuidwaarts
+    # door Jharkhand-Odisha-Chhattisgarh-Telangana, enige doorgaande zuidwaartse
+    # hoofdroute (routebrief §2/§4). Zes via-punten zijn OSRM-routepunten met
+    # Nominatim-naambevestiging, geen gepubliceerd NH-tracé per segment (brief
+    # §4/§7) -- de wegscan bepaalt het definitieve tracé en kan een vergelijkbaar
+    # maar niet identiek pad kiezen. Eindanker u-nfc-hyderabad-stop is de ECIL
+    # X-Roads-kruising (net-uiteinde, GEEN fabriekspoort -- NFC's eigen site is
+    # niet gevonden, brief §6/§7). GepubliceerdKm = 1.339 (OSRM-wegroute over het
+    # reële OSM-net, ECHTE wegkilometer); Wikipedia noemt zelf slechts indicatief
+    # ~1.200 km -- de ±15%-toets geldt hier als indicatie, niet als harde norm
+    # (brief §7). Ruim venster (70 km) en tertiary/unclassified corridor-breed
+    # toegestaan: zeer lang been (4 staten), dunner net door Bastar/
+    # Chhattisgarh. Geen refs (geen NH-nummer per segment binnen budget
+    # bevestigd, brief §7).
+    "uranium-jaduguda-hyderabad-jaduguda-hyderabad": {
+        "via": [
+            ("Jaduguda-mijn (UCIL), Purbi Singhbhum, Jharkhand (anker, u-jaduguda-mine)", (86.3466, 22.6533)),
+            ("Hat Gamharia-corridor, West Singhbhum, Jharkhand", (85.7356, 22.2267)),
+            ("Deogarh, Odisha", (84.7219, 21.5093)),
+            ("Bolangir, Odisha", (83.4864, 20.7050)),
+            ("Jagdalpur (Bastar), Chhattisgarh", (82.0573, 19.0708)),
+            ("Hanamkonda/Warangal, Telangana", (79.5854, 18.0352)),
+            ("Bhongir, Telangana", (78.9003, 17.5113)),
+            ("ECIL X-Roads-kruising, Kapra, Hyderabad (anker, u-nfc-hyderabad-stop)", (78.5708, 17.4733)),
+        ],
+        "id": "u-jaduguda-hyderabad-b1",
+        "naam": "Jaduguda-mijn -> Hat Gamharia -> Deogarh -> Bolangir -> Jagdalpur -> Hanamkonda/Warangal -> Bhongir -> ECIL X-Roads (Hyderabad)",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 1339,
+        "bronnoot": "OSRM-wegroute over het reële OSM-wegennet tussen de twee "
+                    "site-ankers (ECHTE wegkilometer); Wikipedia noemt zelf slechts "
+                    "indicatief ~1.200 km (routebrief §7/§8[1][8]).",
+        "vensterKm": 70,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "uranium-jaduguda-hyderabad-weg-jaduguda-hyderabad.geojson",
+    },
+    # Routebrief ree-chavara-aluva, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck monaziet-houdend mineraalconcentraat IREL Chavara Mineral Division
+    # (Mannumala-mijnsite, Kollam) → IREL Rare Earths Division (RED),
+    # Udyogamandal/Edayar, Aluva — NH-66 kustweg (Kollam-Kayamkulam-Alappuzha-
+    # Cherthala-Aroor) → NH-544 (Edappally-Kalamassery-Aluva). Zes via-punten,
+    # alle op de aangewezen NH-66/NH-544-doorgaande lijn (brief §4), geen
+    # zijtak/centrum. Geen gepubliceerde wegkm binnen budget (brief §7):
+    # hemelsbreed 124,3 km tussen de site-ankers, via-puntensom (rechte
+    # segmenten) 129,1 km — beide alleen als indicatie, de ±15%-toets geldt
+    # hier NIET als harde norm (brief §2/§7). Venster ruim (40 km) omdat er
+    # geen harde referentie-km is; kan naar 75 als de router lokaal uitbuigt.
+    "ree-chavara-aluva-chavara-aluva": {
+        "via": [
+            ("IREL Chavara Mineral Division (anker, ree-chavara-scheiding)", (76.52485, 8.98583)),
+            ("Kayamkulam-bypass (NH-66)", (76.51629, 9.17217)),
+            ("Alappuzha-bypass (NH-66)", (76.31949, 9.48955)),
+            ("Cherthala (NH-66)", (76.32572, 9.69120)),
+            ("Kumbalam-Aroor-brug (NH-66)", (76.30852, 9.88509)),
+            ("Edappally (NH-66 -> NH-544)", (76.30798, 10.02549)),
+            ("Kalamassery (NH-544)", (76.31990, 10.05217)),
+            ("IREL RED Aluva, Udyogamandal/Edayar (anker, ree-aluva-red)", (76.29761, 10.08133)),
+        ],
+        "id": "ree-chavara-aluva-b1",
+        "naam": "Chavara -> ... -> RED Aluva (NH-66 -> NH-544)",
+        "extracts": ["india"],
+        "refs": ["NH66", "NH544", "NH47"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden; hemelsbreed 124,3 km tussen "
+                    "de site-ankers; via-puntensom (rechte segmenten) 129,1 km — "
+                    "gebruik als indicatie, ±15%-toets niet als harde norm (brief §2/§7).",
+        "vensterKm": 40,
+        "uit": "ree-chavara-aluva-weg-chavara-aluva.geojson",
+    },
+    # Routebrief uranium-kharasan-alashankou, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck yellowcake Kharasan ISR-complex (Uranium One-JV/Rosatom, Kazatomprom,
+    # Zuid-Kazachstan) → Zhanakorgan-spoorstation (Kyzylorda-oblast) — steppepiste/
+    # toegangsweg, geen bron voor exact traject (brief §7: aannemelijk, eigen
+    # verbinding). Geen via-punten (geen corridorkeuze gebrond). GeopubliceerdKm =
+    # ~31 km hemelsbreed (eigen berekening, geen wegkm-bron) — de ±15%-toets geldt
+    # hier als indicatie, niet als harde norm (brief §2/§7). Venster ruim (60 km)
+    # omdat het steppegebied mogelijk weinig gekarteerde wegen heeft.
+    "uranium-kharasan-alashankou-kharasan-zhanakorgan": {
+        "via": [
+            ("Kharasan ISR-complex, Uranium One-JV/Rosatom (Kazatomprom) (anker, u-kharasan-plant)", (66.8640, 43.8427)),
+            ("Zhanakorgan-spoorstation, Kyzylorda-oblast (anker, u-zhanakorgan-station)", (67.2467, 43.9005)),
+        ],
+        "id": "u-kharasan-zhanakorgan-weg",
+        "naam": "Kharasan ISR-complex → Zhanakorgan-spoorstation (steppepiste/toegangsweg, geen bron)",
+        "extracts": ["kazachstan"],
+        "refs": [],
+        "gepubliceerdKm": 31,
+        "bronnoot": "geen gepubliceerde wegkm of exact traject (routebrief §7) — ~31 km "
+                    "hemelsbreed tussen de twee satelliet-gelegde ankers is de enige referentie; "
+                    "de ±15%-toets geldt hier alleen als indicatie, niet als harde norm.",
+        "vensterKm": 60,
+        "uit": "uranium-kharasan-alashankou-weg-kharasan-zhanakorgan.geojson",
+    },
+    # Routebrief zilver-uchucchacua-callao, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck lood/zink-zilverconcentraat Uchucchacua-mijnkamp (Buenaventura, Oyón, Lima-
+    # regio) → Oyón → San Juan de Churín → Sayán → Huacho (aansluiting Panamericana
+    # Norte) → Chancay → Transportadora Callao S.A.-mineraalterminal ("muelle centro",
+    # Callao-haven) — bewust STOPPUNT, geen zeebeen (geen bron voor een overzeese
+    # smelter-bestemming, brief §6/§7). Geen gepubliceerde wegkm binnen budget
+    # (brief §7): gepubliceerdKm = hemelsbreed via-punten-som 243,2 km — "geen wegkm",
+    # de ±15%-toets geldt hier NIET als harde norm, alleen als indicatie (Andes-traject
+    # Oyón→Sayán, grote afwijking verwacht). Groot venster (55 km) i.v.m. de bergpas
+    # en de lange kuststrook Huacho→Chancay. Mijnkamp-uiteinde: kamptoegangsweg is
+    # vermoedelijk unclassified/track tot Oyón → eindKlassen verruimd + track,
+    # eindToegangPrivaat True (kamp én afgesloten havenzone bij Callao, brief
+    # "bak_aanwijzingen").
+    "zilver-uchucchacua-callao-mijn-tcsa": {
+        "via": [
+            ("Uchucchacua-mijnkamp (Buenaventura) — anker, ag-uchucchacua-mijn", (-76.6895, -10.6335)),
+            ("Oyón — eerste doorgaande-wegplaats, aansluiting Carretera Huaura–Oyón–Ambo", (-76.7702, -10.6684)),
+            ("San Juan de Churín — Huaura-riviervallei omlaag", (-76.8750, -10.8113)),
+            ("Sayán — corridorknoop, vallei nadert de kustvlakte vóór Huacho", (-77.1934, -11.1335)),
+            ("Huacho — aansluiting Panamericana Norte, buigt zuidwaarts naar Callao", (-77.6103, -11.1085)),
+            ("Chancay — laatste kustplaats op de Panamericana Norte vóór Callao", (-77.2700, -11.5628)),
+            ("Transportadora Callao-mineraalterminal (muelle centro) — anker, ag-callao-tcsa", (-77.1446, -12.0499)),
+        ],
+        "id": "ag-uchucchacua-callao-weg",
+        "naam": "Uchucchacua-mijnkamp → Oyón → San Juan de Churín → Sayán → Huacho → Chancay → Transportadora Callao-mineraalterminal (Panamericana Norte)",
+        "extracts": ["peru"],
+        "refs": [],
+        "gepubliceerdKm": 243.2,
+        "bronnoot": "geen bedrijfs-/overheidsopgave gevonden binnen budget (routebrief §7); "
+                    "243,2 km is de hemelsbreed via-punten-som, geen wegkm — de ±15%-toets "
+                    "geldt hier als INDICATIE, geen harde norm (Andes-traject Oyón→Sayán).",
+        "vensterKm": 55,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "zilver-uchucchacua-callao-weg-mijn-tcsa.geojson",
+    },
+    # Routebrief uranium-smithranch-metropolis, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck yellowcake Smith Ranch-Highland ISR-mijn (Cameco Resources, Converse County,
+    # Wyoming) → Douglas (I-25-oprit) → Cheyenne (I-25/I-80) → North Platte, NE (I-80) →
+    # Lincoln, NE (I-80) → Council Bluffs, IA (Missouri-oversteek) → Des Moines, IA (I-80) →
+    # LaSalle-Peru/Utica, IL (I-80/I-39-knooppunt) → Marion, IL (I-57) → Honeywell/ConverDyn
+    # Metropolis Works, Illinois (routebrief §2/§4) — bewust om Colorado heen (extract
+    # ontbreekt daar, blokkeert niet want de corridor mijdt het bewust, brief §7).
+    # gepubliceerdKm = ~2.090 km, een algemene Wyoming-brede claim ("over 1.300 miles",
+    # Cowboy State Daily sept. 2025) — niet route-specifiek; ±15%-toets geldt hier als
+    # indicatie, niet als harde norm (brief §2/§7).
+    "uranium-smithranch-metropolis": {
+        "via": [
+            ("Smith Ranch-Highland ISR-mijn, Cameco Resources, Converse County WY (anker, u-smithranch-mijn)", (-105.6851, 43.0537)),
+            ("Douglas, WY (I-25-knooppunt)", (-105.3878, 42.7561)),
+            ("Cheyenne, WY (I-25/I-80-knooppunt)", (-104.8202, 41.1400)),
+            ("North Platte, NE (I-80-knooppunt)", (-100.7654, 41.1239)),
+            ("Lincoln, NE (I-80-knooppunt)", (-96.7026, 40.8136)),
+            ("Council Bluffs, IA (I-80, Missouri-oversteek)", (-95.8608, 41.2619)),
+            ("Des Moines, IA (I-80-knooppunt)", (-93.6250, 41.5868)),
+            ("LaSalle-Peru/Utica, IL (I-80/I-39-knooppunt)", (-89.1310, 41.3283)),
+            ("Marion, IL (I-57-knooppunt)", (-88.9331, 37.7273)),
+            ("Honeywell/ConverDyn Metropolis Works, Metropolis IL (anker, u-metropolis-conversie)", (-88.7570, 37.1718)),
+        ],
+        "id": "u-smithranch-metropolis-weg",
+        "naam": "Smith Ranch-Highland ISR-mijn → Douglas → Cheyenne → North Platte → Lincoln → "
+                "Council Bluffs → Des Moines → LaSalle-Peru/Utica → Marion → Metropolis Works "
+                "(I-25 zuid → I-80 oost → I-39/I-74/I-57 zuid)",
+        "extracts": ["us-wyoming", "us-nebraska", "us-iowa", "us-illinois"],
+        "refs": ["I-25", "I-80", "I-39", "I-74", "I-57"],
+        "gepubliceerdKm": 2090,
+        "bronnoot": "Cowboy State Daily / Wyoming State Geological Survey, sept. 2025 — 'over "
+                    "1,300 miles' voor uraantransport van Wyoming-producenten naar Metropolis, "
+                    "Illinois (algemene claim, niet route-specifiek, routebrief §8[1]) — "
+                    "indicatie, geen harde ±15%-norm.",
+        "vensterKm": 70,
+        "uit": "uranium-smithranch-metropolis-weg-smithranch-metropolis.geojson",
+    },
+    # Routebrief zilver-garpenberg-ronnskar, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck Boliden Garpenberg (Dalarna) → Gävle Hamn, Fredriksskans-terminal, via
+    # Gästrikland (Hofors–Storvik–Sandviken, geografische afleiding — consistente
+    # noordwaartse boog t.o.v. de hemelsbrede lijn, NIET gebrond met een bron; brief §4/§7).
+    # Geen gepubliceerde wegkm binnen budget: gepubliceerdKm = hemelsbreed 69,8 km tussen
+    # de twee satelliet-gelegde ankers — "geen wegkm", de ±15%-toets geldt hier alleen als
+    # indicatie, geen harde norm (brief §2/§8[9]).
+    # ⚠️ eindKlassen BEWUST ZONDER "unclassified" (gemeten, niet zelf verzonnen): met de
+    #    default-tuple (incl. unclassified) snapt de Gävle-kade op een geïsoleerde
+    #    unclassified-way (id 1111961047, 4 punten, 0,10 km van het anker maar in een eigen
+    #    component van 5 knopen — geen wegpad naar Sandviken) i.p.v. het doorgaande net op
+    #    0,45 km. Zonder "unclassified" snapt Garpenberg alsnog op 0,21 km (residential/
+    #    tertiary volstaan voor de mijntoegang) én blijft de hele keten één component.
+    "zilver-garpenberg-ronnskar-garpenberg-gavle": {
+        "via": [
+            ("Boliden Garpenberg, Dalarna (anker, ag-garpenberg-mijn)", (16.1933, 60.3129)),
+            ("Hofors (geografische afleiding, niet gebrond)", (16.2855, 60.5455)),
+            ("Storvik (geografische afleiding, niet gebrond)", (16.5350, 60.5853)),
+            ("Sandviken (geografische afleiding, niet gebrond)", (16.7760, 60.6219)),
+            ("Gävle Hamn, Fredriksskans-terminal (anker, ag-gavle-kade)", (17.2103, 60.6922)),
+        ],
+        "id": "ag-garpenberg-gavle-weg",
+        "naam": "Boliden Garpenberg → Hofors → Storvik → Sandviken → Gävle Hamn, Fredriksskans-terminal",
+        "extracts": ["zweden"],
+        "refs": [],
+        "gepubliceerdKm": 69.8,
+        "bronnoot": "geen gepubliceerde wegkm gevonden binnen budget (routebrief §7); 69,8 km is "
+                    "de hemelsbrede afstand tussen de twee satelliet-gelegde ankers — 'geen wegkm', "
+                    "de ±15%-toets geldt hier alleen als indicatie, niet als harde norm (brief §2).",
+        "vensterKm": 50,
+        "eindKlassen": ["residential", "service", "tertiary"],
+        "uit": "zilver-garpenberg-ronnskar-weg-garpenberg-gavle.geojson",
+    },
+    # Routebrief zilver-fresnillo-torreon, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck zilverdoré/-concentraat Fresnillo/Saucito-mijnencomplex (Fresnillo plc,
+    # Zacatecas) → MEX 45/45D (Fresnillo-Río Grande) → MEX 40D/49D (Cuencamé-Ciudad
+    # Lerdo-Torreón) → Met-Mex Peñoles-raffinaderij (Torreón, Coahuila). Eenbenige
+    # keten, geen zeebeen (100% binnenlands). Geen gepubliceerde bedrijfs-/overheids-
+    # opgave van de wegkilometer binnen budget (brief §7/§8[5]): enige cijfers zijn
+    # hemelsbreed 270 km (kop-staart) en een route-planner-webcheck van 331 km
+    # (mejoresrutas.com, via Río Grande-Cuencamé-Ciudad Lerdo/La Lomas) — de ±15%-
+    # toets tegen 331 km geldt als INDICATIE, niet als harde norm (brief §7).
+    # Groot venster (60 km) i.v.m. de afstand (~270 km hemelsbreed).
+    "zilver-fresnillo-torreon-fresnillo-torreon": {
+        "via": [
+            ("Fresnillo/Saucito-mijnencomplex (Fresnillo plc) (anker, ag-fresnillo-mijn)", (-102.8600, 23.1580)),
+            ("Río Grande (Zacatecas) — corridorkeuze MEX 45/45D vs. lokale zijwegen", (-103.0338, 23.8269)),
+            ("Cuencamé (Durango) — overgang MEX 45/45D → MEX 40D/49D richting La Laguna", (-103.6978, 24.8700)),
+            ("Ciudad Lerdo (Durango) — laatste plaats vóór Torreón, La Laguna-conurbatie", (-103.5252, 25.5366)),
+            ("Met-Mex Peñoles-raffinaderij Torreón (Industrias Peñoles) (anker, ag-penoles-torreon)", (-103.4417, 25.5278)),
+        ],
+        "id": "ag-fresnillo-torreon-weg",
+        "naam": "Fresnillo/Saucito-mijnencomplex → Río Grande → Cuencamé → Ciudad Lerdo → Met-Mex Peñoles Torreón (MEX 45/45D → 40D/49D)",
+        "extracts": ["mexico"],
+        "refs": ["MEX 45", "MEX 45D", "MEX 40D", "MEX 49D"],
+        "gepubliceerdKm": 331.0,
+        "bronnoot": "geen bedrijfs-/overheidsopgave gevonden binnen budget (routebrief §7/§8[5]); "
+                    "331 km is een route-planner-webcheck (mejoresrutas.com, geen officiële bron), "
+                    "hemelsbreed 270 km — de ±15%-toets tegen 331 km geldt als INDICATIE, geen harde norm.",
+        "vensterKm": 60,
+        "uit": "zilver-fresnillo-torreon-weg-fresnillo-torreon.geojson",
+    },
+    # Routebrief zilver-rampuraagucha-pantnagar, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck Rampura Agucha-mijn/concentrator (Hindustan Zinc, Bhilwara) → NH48-corridor
+    # via Gulabpura-aansluiting, bypass westelijk van Bhilwara, richting Chittorgarh →
+    # Chanderiya Lead-Zinc Smelter (Chittorgarh). Eenbenige keten — been B naar Pantnagar
+    # en spoornet_nodig zijn bindend vervallen (brief §6). Geen gepubliceerde wegkm binnen
+    # budget (brief §7/§8[8]): gepubliceerdKm = hemelsbreed 98,0 km tussen de twee
+    # satelliet-gelegde ankers — "geen wegkm", toets-bindend als indicatie, geen harde
+    # ±15%-norm. Een niet-officiële OSRM-routeschatting over dezelfde NH48-corridor gaf
+    # ~119,4 km (brief §8[8]), dus een gemeten lengte in die orde (~115-125 km) is
+    # aannemelijk zonder dat de ±15%-toets als harde norm geldt.
+    "zilver-rampuraagucha-pantnagar-rampuraagucha-chanderiya": {
+        "via": [
+            ("Rampura Agucha-mijn/concentrator (Hindustan Zinc) (anker, ag-rampuraagucha-mijn)", (74.7332, 25.8416)),
+            ("NH48-aansluiting bij Gulabpura", (74.6153, 25.7996)),
+            ("NH48-passage westelijk langs Bhilwara (bypass, NH758-knoop)", (74.5755, 25.3480)),
+            ("NH48 nabij Chittorgarh, vóór NH27-aansluiting", (74.6249, 25.0522)),
+            ("NH48-afslag naar Chanderiya", (74.6443, 24.9740)),
+            ("Chanderiya Lead-Zinc Smelter Complex (Hindustan Zinc) (anker, ag-chanderiya-smelter)", (74.6580, 24.9632)),
+        ],
+        "id": "ag-rampuraagucha-chanderiya-weg",
+        "naam": "Rampura Agucha-mijn → Gulabpura → Bhilwara-bypass → Chittorgarh → Chanderiya Lead-Zinc Smelter (NH48)",
+        "extracts": ["india"],
+        "refs": ["NH48"],
+        "gepubliceerdKm": 98.0,
+        "bronnoot": "geen gepubliceerde wegkm gevonden binnen budget (routebrief §7/§8[8]); "
+                    "98,0 km is de hemelsbrede afstand tussen de twee satelliet-gelegde ankers "
+                    "— 'geen wegkm', toets-bindend als indicatie, geen harde ±15%-norm. Een "
+                    "niet-officiële OSRM-routeschatting over dezelfde NH48-corridor gaf ~119,4 km "
+                    "(routebrief §8[8]).",
+        "vensterKm": 45,
+        "uit": "zilver-rampuraagucha-pantnagar-weg-rampuraagucha-chanderiya.geojson",
+    },
     # Routebrief kobalt-murrinmurrin-kwinana, been b1 (LICHTE werkwijze M31 golf 4,
     # reserve-as). Truck Murrin Murrin HPAL-plant (Glencore, Laverton Shire, WA) →
     # Leonora-spoorhoofd (railhead Kalgoorlie–Leonora-lijn), over de eigen
@@ -4380,6 +4888,41 @@ PROFIELEN = {
         # via-punt 2 op 14 km naast de weg).
         "corridorKlassen": ["tertiary"],
         "uit": "stroombeen-oyutolgoi-feishang.geojson",
+    },
+    # Routebrief ree-oscom-aluva, been b1 (LICHTE werkwijze M31 golf 5).
+    # Truck mixed rare earth chloride (MRCL) OSCOM REEP (Chatrapur, Odisha) →
+    # NH-16 (Oostkust, via Vijayawada) → NH-544 (Salem-Kochi, via Coimbatore/
+    # Palakkad-gap) → NH-66 (Kerala-kust) → RED Aluva (Udyogamandal, Kerala).
+    # Modaliteit is een AANNEMELIJKE default (geen bron bevestigt hoe MRCL reist,
+    # brief §7); geen zeebeen, geen leiding, geen luchtbeen. Geen gepubliceerde
+    # wegkm gevonden (brief §7): gepubliceerdKm = hemelsbreed 1.386 km — de
+    # ±15%-toets geldt hier alleen als INDICATIE, geen harde norm; een reële
+    # wegroute door de Palakkad-gap ligt vermoedelijk 1.700-2.100 km. Vijf
+    # via-punten zijn corridor-proxies op stadsniveau (Vijayawada/Chengalpattu/
+    # Salem/Coimbatore/Walayar) — de scan moet de doorgaande bypass-weg vinden,
+    # niet het stadscentrum (brief §4). Extract "india" is een reus-extract.
+    "ree-oscom-aluva-oscom-aluva": {
+        "via": [
+            ("OSCOM REEP, Chatrapur, Ganjam-district, Odisha (anker, ree-oscom-reep)", (84.9449, 19.3261)),
+            ("Vijayawada (bypass) — NH-16 kruist de Krishna-rivier", (80.6160, 16.5115)),
+            ("Chengalpattu — NH-16-splitsing zuid van Chennai", (79.9836, 12.6841)),
+            ("Salem — overstap NH-16/44 naar NH-544 richting Palakkad-gap", (78.1582, 11.6552)),
+            ("Coimbatore — NH-544 door de Palakkad-gap", (76.9628, 11.0018)),
+            ("Walayar — TN-Kerala-grenspost op NH-544", (76.8376, 10.8468)),
+            ("RED Aluva / Udyogamandal, Periyar-rivier, Kerala (anker, ree-red-aluva)", (76.29761, 10.08133)),
+        ],
+        "id": "ree-oscom-aluva-weg",
+        "naam": "OSCOM REEP → Vijayawada → Chengalpattu → Salem → Coimbatore → Walayar → RED Aluva "
+                "(NH-16 → NH-544 → NH-66)",
+        "extracts": ["india"],
+        "refs": ["NH-16", "NH-544", "NH-66"],
+        "gepubliceerdKm": 1386,
+        "bronnoot": "geen gepubliceerde wegkm gevonden binnen budget (routebrief §7); 1.386 km is "
+                    "de hemelsbrede afstand (eigen berekening) — de ±15%-toets geldt hier alleen als "
+                    "INDICATIE, niet als harde norm; een reële wegroute door de Palakkad-gap ligt "
+                    "vermoedelijk 1.700-2.100 km.",
+        "vensterKm": 45,
+        "uit": "ree-oscom-aluva-weg-oscom-aluva.geojson",
     },
 }
 

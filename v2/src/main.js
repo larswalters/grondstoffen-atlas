@@ -399,6 +399,31 @@ const STROMEN = [
   { sleutel: "au-it", bestand: "stroomroute-goud-ity-ticino.json", grondstof: "goud", aan: true },
   { sleutel: "pgm-ai", bestand: "stroomroute-pgm-amandelbult-iselin.json", grondstof: "pgm", aan: true },
   { sleutel: "dia-gg", bestand: "stroomroute-diamant-gahchokue-gaborone.json", grondstof: "diamant", aan: true },
+  // ── M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen ──
+  // bestand heet nog "pantnagar" (het ontwerp), de gebakken keten eindigt bij de Chanderiya-smelter
+  { sleutel: "ag-rp", bestand: "stroomroute-zilver-rampuraagucha-pantnagar.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-ft", bestand: "stroomroute-zilver-fresnillo-torreon.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-gr", bestand: "stroomroute-zilver-garpenberg-ronnskar.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-bp", bestand: "stroomroute-zilver-brokenhill-portpirie.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-uc", bestand: "stroomroute-zilver-uchucchacua-callao.json", grondstof: "zilver", aan: true },
+  { sleutel: "u-sm", bestand: "stroomroute-uranium-smithranch-metropolis.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-jh", bestand: "stroomroute-uranium-jaduguda-hyderabad.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-mt", bestand: "stroomroute-uranium-malvesi-tricastin.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-ka", bestand: "stroomroute-uranium-kharasan-alashankou.json", grondstof: "uranium", aan: true },
+  // bestand heet nog "shanghai" (het ontwerp), de gebakken leiding eindigt bij Nantong
+  { sleutel: "gas-cs", bestand: "stroomroute-gas-chayanda-shanghai.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-kd", bestand: "stroomroute-gas-karsto-dornum.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-cf", bestand: "stroomroute-gas-cautionbay-futtsu.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-ab", bestand: "stroomroute-gas-arzew-barcelona.json", grondstof: "gas", aan: true },
+  { sleutel: "ree-oa", bestand: "stroomroute-ree-oscom-aluva.json", grondstof: "ree", aan: true },
+  { sleutel: "ree-gw", bestand: "stroomroute-ree-georgia-whitemesa.json", grondstof: "ree", aan: true },
+  { sleutel: "ree-ca", bestand: "stroomroute-ree-chavara-aluva.json", grondstof: "ree", aan: true },
+  { sleutel: "gr-md", bestand: "stroomroute-grafiet-molo-duisburg.json", grondstof: "grafiet", aan: true },
+  { sleutel: "gr-bh", bestand: "stroomroute-grafiet-bogala-hauzenberg.json", grondstof: "grafiet", aan: true },
+  { sleutel: "li-mb", bestand: "stroomroute-lithium-mibra-bitterfeld.json", grondstof: "lithium", aan: true },
+  // bestand heet nog "pohang" (het ontwerp), de gebakken keten eindigt op de kade van Daesan
+  { sleutel: "li-cp", bestand: "stroomroute-lithium-carmen-pohang.json", grondstof: "lithium", aan: true },
+  { sleutel: "li-gk", bestand: "stroomroute-lithium-greenbushes-kemerton.json", grondstof: "lithium", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -507,7 +532,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "129", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "130", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -536,7 +561,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "129", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "130", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -670,7 +695,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "129", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "130", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);
