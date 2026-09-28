@@ -47,7 +47,11 @@ die lijst de automatische afleiding (dus álle markers opgeven). Modaliteiten di
 --been "zee|zeeschip <haven> → <haven>|<lat>,<lon>|<lat>,<lon>"
 ```
 Ligt de kade verder dan ~25 km van een zeeknoop (San Antonio 74 km, Matarani 72, Mejillones 136), dan eindigt
-het zeebeen op die zeeknoop met een haven-aanloop ervoor/erachter. De zeeknoop vind je zo:
+het zeebeen op die zeeknoop met een haven-aanloop ervoor/erachter. **Sinds 2026-09-28 (LAR-586): óók binnen de
+25 km een haven-aanloop zodra de kade > 5 km van de zeeknoop ligt.** De router snapt dan wel, maar het zeebeen
+begint op de knoop en niet op de kade. De snap wordt zo een naad > 5 km (§5) met het landbeen ervoor, of de lijn
+stopt kilometers vóór de kade. Voorbeelden uit M31 golf 1: Fujairah 10,5 km, Ras Tanura 11,1 km, Aktau 7,4 km,
+alle drie centraal nagebakken. De zeeknoop vind je zo:
 ```bash
 python - <<'EOF'
 import sys, numpy as np; sys.path.insert(0, "v2/tools"); import hecht_marnet as H
@@ -191,7 +195,8 @@ print("totaal", round(sum(b["km"] for b in B), 1), "km ·", len(d["markers"]), "
 EOF
 ```
    Norm (`routebrief-licht.md` §1): elk gemeten been binnen **±15%** van de km in je benen-tabel (het wegtool
-   waarschuwt al bij ±10%); **geen naad > 5 km** tussen opeenvolgende benen (honderden meters = procesgat, blijft
+   waarschuwt al bij ±10%); **geen naad > 5 km** tussen opeenvolgende benen (een zee-snap > 5 km los je op met een
+   haven-aanloop, §2 — dat is geen via-punt bijschuiven; honderden meters = procesgat, blijft
    staan en komt in §9); markers ≤ ~0,5 km van hun lijn tenzij anker ≠ routeerpunt. Buiten de norm = bevinding
    in §9, geen via-punt bijschuiven om het getal te halen.
 2. **Rijdbaarheid en rechte lijnen:** `python v2/tools/toets_knikken.py --bestand v2/data/stroomroute-<stroom-id>.json`
@@ -208,6 +213,7 @@ EOF
 - [ ] Modaliteit heet `truck`, nooit `weg` (onbekende sleutel wordt wit op de bol).
 - [ ] Spoor met `BAKE_SUFFIX=-raw`; console zegt `3260717 spoor-edges`. Corridorkeuze = meerdere runs met via-punt.
 - [ ] Zee snapt op een ZEE-knoop, niet op de dichtstbijzijnde havenknoop (San Antonio: haven 3 km, zee 74 km).
+- [ ] Kade > 5 km van de zeeknoop → haven-aanloop, óók onder de 25 km (anders een naad buiten de norm).
 - [ ] `maak_havenaanloop.py` altijd onder `timeout 300`; hangt → rechte stippel, geen tweede poging.
 - [ ] Corridor in OSM `tertiary`/`unclassified`/`permit`? → `corridorKlassen` / `eindToegangPrivaat` (OT week 129 km
       westwaarts; Carretera del Cobre "geen wegpad"). `track` en `proposed` komen er nooit door → knippen + stippel.

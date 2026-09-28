@@ -62,7 +62,8 @@ class _KetenActie(argparse.Action):
     def __call__(self, parser, ns, waarde, optie=None):
         if getattr(ns, "keten", None) is None:
             ns.keten = []
-        soort = {"--been": "geojson", "--stippel": "stippel"}[optie]
+        soort = {"--been": "geojson", "--stippel": "stippel",
+                  "--stippel-geojson": "stippel-geojson"}[optie]
         ns.keten.append((soort, waarde))
 
 
@@ -102,6 +103,13 @@ def main():
                     metavar="MOD|NAAM|VAN_LAT,VAN_LON|NAAR_LAT,NAAR_LON",
                     help="herhaalbaar: rechte lijn van twee punten, "
                          "'stippel': true — eigen verbinding of net reikt niet")
+    ap.add_argument("--stippel-geojson", dest="keten", action=_KetenActie,
+                    metavar="MOD|NAAM|PAD",
+                    help="herhaalbaar: zoals --been, maar het been HOUDT zijn "
+                         "'stippel': true — voor geometrie die beter is dan een "
+                         "rechte lijn maar nog steeds geen waargenomen route "
+                         "(een haven-aanloop als kortste pad over water, "
+                         "hecht_marnet.py-equivalent voor post-hoc aanhechten)")
     ap.add_argument("--marker", action="append", default=[],
                     metavar="NAAM|LAT,LON", help="herhaalbaar")
     ap.add_argument("--max-gat-km", type=float, default=1.0,
@@ -130,20 +138,24 @@ def main():
     nieuw = []
     for soort, spec in args.keten:
         deel = spec.split("|")
-        if soort == "geojson":
+        if soort in ("geojson", "stippel-geojson"):
+            vlag = "--been" if soort == "geojson" else "--stippel-geojson"
             if len(deel) != 3:
-                sys.exit(f"--been: verwacht MOD|NAAM|PAD — kreeg {spec!r}")
+                sys.exit(f"{vlag}: verwacht MOD|NAAM|PAD — kreeg {spec!r}")
             mod, naam, pad = deel
             if not os.path.exists(pad):
-                sys.exit(f"--been: bestand niet gevonden: {pad}")
+                sys.exit(f"{vlag}: bestand niet gevonden: {pad}")
             punten = lees_lijn(pad)
             if len(punten) < 2:
-                sys.exit(f"--been: minder dan 2 punten in {pad}")
-            nieuw.append({"modaliteit": mod, "naam": naam,
-                          "km": round(_lengte_km(punten), 1),
-                          "punten": [[round(lo, 5), round(la, 5)]
-                                     for lo, la in punten],
-                          "_bron": os.path.basename(pad)})
+                sys.exit(f"{vlag}: minder dan 2 punten in {pad}")
+            been = {"modaliteit": mod, "naam": naam,
+                    "km": round(_lengte_km(punten), 1),
+                    "punten": [[round(lo, 5), round(la, 5)]
+                               for lo, la in punten],
+                    "_bron": os.path.basename(pad)}
+            if soort == "stippel-geojson":
+                been["stippel"] = True
+            nieuw.append(been)
         else:
             if len(deel) != 4:
                 sys.exit(f"--stippel: verwacht MOD|NAAM|VAN|NAAR — kreeg {spec!r}")

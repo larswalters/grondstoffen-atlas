@@ -1,0 +1,835 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag gas voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/gas-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof gas: ids 'w-*', gewicht = capaciteit in bcm/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in bcm/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-raslaffan",
+   "naam": "Ras Laffan LNG-complex (QatarEnergy LNG)",
+   "lon": 51.5955,
+   "lat": 25.9265,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Qatar",
+   "gewicht": 104.7,
+   "gewicht_bron": "capaciteit bcm/j — 77 Mtpa × 1,36 = 104,7 bcm/j. QatarEnergy/Reuters (9-2-2021): 77 Mtpa in 2021 (21% wereld-LNG-exportaandeel); uitbreiding naar 110 Mtpa (2026, North Field East) en 126 Mtpa (2027, North Field South) in aanbouw [B1]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-raslaffan-chiba.md (anker `gas-raslaffan-kade`): satelliet z16 aldaar bevestigd (kade-eiland/laadperron met 2 opslagtanks en leidingtracé, verbonden via twee trestles met het complex). Eigen satelliet z15 (sitelaag-gas-raslaffan) bevestigde onafhankelijk het bredere tankpark ~1 km zuidwestelijker (zelfde complex).",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "'s Werelds grootste LNG-complex op één locatie. Alle cargo's moeten door de Straat van Hormuz — geen bypass-pijpleiding zoals bij olie."
+  },
+  {
+   "id": "w-sabinepass",
+   "naam": "Sabine Pass LNG Terminal (Cheniere)",
+   "lon": -93.8741,
+   "lat": 29.7541,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Cameron Parish, Louisiana)",
+   "gewicht": 40.8,
+   "gewicht_bron": "capaciteit bcm/j — 30 Mtpa × 1,36 = 40,8 bcm/j. Cheniere: 6 trains, nameplate ≈ 30 Mtpa (T1-5 in bedrijf, T6 in opbouw 2025) [B2]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-sabinepass-rotterdam.md (anker `gas-sabinepass-laad`): satelliet z15 aldaar bevestigd (tankenpark, drie berths, vijf opslagtanks). Eigen satelliet z14 (sitelaag-gas-sabinepass) bevestigde onafhankelijk hetzelfde complex ~600 m zuidelijker, LNG-carrier zichtbaar aangemeerd.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Eerste en grootste Amerikaanse LNG-exportterminal (sinds 2016). Flexibele bestemmingscargo's — vaart naar de hoogste prijs (TTF/JKM)."
+  },
+  {
+   "id": "w-corpuschristi",
+   "naam": "Corpus Christi LNG (Cheniere)",
+   "lon": -97.2645,
+   "lat": 27.8797,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Texas)",
+   "gewicht": 20.4,
+   "gewicht_bron": "capaciteit bcm/j — 15 Mtpa × 1,36 = 20,4 bcm/j. Cheniere: Stage 1+2 nameplate 15 Mtpa (2021); Stage 3 (~10 Mtpa, 7 mid-scale trains) in opbouw 2024-25, niet meegeteld [B2]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-corpuschristi-incheon.md (anker `gas-corpuschristi-kade`): satelliet z17 aldaar bevestigd (LNG-tanker aan steiger, drie liquefactietrains met tanks 700 m landinwaarts)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "-"
+  },
+  {
+   "id": "w-freeport",
+   "naam": "Freeport LNG",
+   "lon": -95.3263,
+   "lat": 28.92537,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Texas, Quintana Island)",
+   "gewicht": 20.4,
+   "gewicht_bron": "capaciteit bcm/j — 15 Mtpa × 1,36 = 20,4 bcm/j. Freeport LNG/FERC: 3 trains, nameplate 15 Mtpa [B3]",
+   "bron": "OSM landuse=industrial 'Freeport LNG Liquefaction' (Photon); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-cameron",
+   "naam": "Cameron LNG (Sempra)",
+   "lon": -93.33836,
+   "lat": 30.03547,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Hackberry, Louisiana)",
+   "gewicht": 16.3,
+   "gewicht_bron": "capaciteit bcm/j — 12 Mtpa × 1,36 = 16,3 bcm/j. Sempra Infrastructure: 3 trains, nameplate 12 Mtpa [B4]",
+   "bron": "Wikidata Q30975076; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-calcasieu",
+   "naam": "Calcasieu Pass LNG (Venture Global)",
+   "lon": -93.33348,
+   "lat": 29.77428,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Cameron Parish, Louisiana)",
+   "gewicht": 13.6,
+   "gewicht_bron": "capaciteit bcm/j — 10 Mtpa × 1,36 = 13,6 bcm/j. Venture Global: 18 mid-scale trains, nameplate 10 Mtpa [B5]",
+   "bron": "OSM 'Calcasieu Pass LNG' (Photon); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-plaquemines",
+   "naam": "Plaquemines LNG (Venture Global)",
+   "lon": -89.8885,
+   "lat": 29.60154,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VS (Plaquemines Parish, Louisiana)",
+   "gewicht": 27.2,
+   "gewicht_bron": "capaciteit bcm/j — 20 Mtpa × 1,36 = 27,2 bcm/j. Venture Global: fase 1+2 doelcapaciteit ~20 Mtpa; eerste LNG december 2024, nog opstartend/rampend in 2025 — geen vol gebrond kalenderjaar productie [B6]",
+   "bron": "OSM landuse=industrial 'Venture Global Plaquemines LNG Terminal' (Photon); satelliet z14 (sitelaag-gas-plaquemines): kruis ligt midden op het procesterrein aan de Mississippi, tanks en trains duidelijk zichtbaar, LNG-vaartuigen aan de kade",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "OPSTARTEND: cargo's varen al (2024-2025), maar de nameplate is een doel geen gemeten jaarproductie — volgende ronde het eerste volle-jaarcijfer nemen."
+  },
+  {
+   "id": "w-bonny",
+   "naam": "Nigeria LNG (Bonny Island, NLNG)",
+   "lon": 7.16157,
+   "lat": 4.41836,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Nigeria",
+   "gewicht": 29.9,
+   "gewicht_bron": "capaciteit bcm/j — 22 Mtpa × 1,36 = 29,9 bcm/j. Wikipedia 'List of LNG terminals': 6 trains, totaal 22 Mtpa (NNPC Limited/Shell/TotalEnergies/Eni) [B7]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-bonny-zeebrugge.md (anker `gas-bonny-nlng`): satelliet z15 aldaar bevestigd (procestreinen, tankenpark, twee steigers). Eigen satelliet z14 (sitelaag-gas-bonny) bevestigde onafhankelijk hetzelfde terrein ~1,3 km noordelijker.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "West-Afrika's grootste LNG-bron; associated gas uit de Nigerdelta."
+  },
+  {
+   "id": "w-yamal-sabetta",
+   "naam": "Yamal LNG (Sabetta)",
+   "lon": 72.0725,
+   "lat": 71.2733,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Rusland (Jamal-schiereiland)",
+   "gewicht": 23.7,
+   "gewicht_bron": "capaciteit bcm/j — 17,4 Mtpa × 1,36 = 23,7 bcm/j. Novatek: 3 trains + Train 4 (elektrisch debottleneck), nameplate 17,4 Mtpa [B8]",
+   "bron": "Wikipedia-geohack 'Yamal LNG' (en); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Arctisch LNG: west over de Barentszzee naar Europa, oost over de Noordelijke Zeeroute naar China (alleen 's zomers ijsvrij)."
+  },
+  {
+   "id": "w-gorgon",
+   "naam": "Gorgon LNG (Chevron, Barrow Island)",
+   "lon": 115.41,
+   "lat": -20.79,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (WA)",
+   "gewicht": 21.2,
+   "gewicht_bron": "capaciteit bcm/j — 15,6 Mtpa × 1,36 = 21,2 bcm/j. Wikipedia 'List of LNG terminals' (Australië-tabel): 3 trains, 15,6 Mtpa [B9]",
+   "bron": "Wikipedia-geohack 'Gorgon gas project' — dit is een veld-/complexcentroïde, niet het exacte tankpark; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Coordinaat vraagt een satellietronde om het exacte tankpark op Barrow Island te bevestigen."
+  },
+  {
+   "id": "w-karratha",
+   "naam": "Karratha Gas Plant (North West Shelf Venture, Woodside)",
+   "lon": 116.77236,
+   "lat": -20.58969,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (WA)",
+   "gewicht": 22.2,
+   "gewicht_bron": "capaciteit bcm/j — 16,3 Mtpa × 1,36 = 22,2 bcm/j. Wikipedia 'List of LNG terminals': 5 trains, 16,3 Mtpa [B9]",
+   "bron": "Wikidata Q106647965; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-wheatstone",
+   "naam": "Wheatstone LNG (Chevron)",
+   "lon": 115.0063,
+   "lat": -21.6895,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (WA, Ashburton North)",
+   "gewicht": 12.1,
+   "gewicht_bron": "capaciteit bcm/j — 8,9 Mtpa × 1,36 = 12,1 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 8,9 Mtpa [B9]",
+   "bron": "Wikidata Q7991977; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-ichthys",
+   "naam": "Ichthys LNG (INPEX, Darwin)",
+   "lon": 130.9225,
+   "lat": -12.5215,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (NT)",
+   "gewicht": 11.4,
+   "gewicht_bron": "capaciteit bcm/j — 8,4 Mtpa × 1,36 = 11,4 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 8,4 Mtpa [B9]",
+   "bron": "Wikidata Q30972428; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Ichthys-gas komt 890 km per subsea-leiding aan land bij Bladin Point, Darwin."
+  },
+  {
+   "id": "w-darwinlng",
+   "naam": "Darwin LNG (Santos, Wickham Point)",
+   "lon": 130.86546,
+   "lat": -12.52166,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (NT)",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit bcm/j — 3,7 Mtpa × 1,36 = 5,0 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 3,7 Mtpa [B9]",
+   "bron": "OSM landuse=industrial 'Santos Darwin LNG Power Plant' (Photon, benoemd object); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-pluto",
+   "naam": "Pluto LNG (Woodside, Karratha)",
+   "lon": 116.7755,
+   "lat": -20.5905,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (WA)",
+   "gewicht": 5.8,
+   "gewicht_bron": "capaciteit bcm/j — 4,3 Mtpa × 1,36 = 5,8 bcm/j. Wikipedia 'List of LNG terminals': 1 trein, 4,3 Mtpa (Train 2, 2023, niet in deze tabel meegeteld — dus onderschat) [B9]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-karratha-rudong.md (anker `gas-kr-pluto`): satelliet z15/z16 aldaar bevestigd (tankfarm, procestrains, twee steigers)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Train 2 (2023) voegt naar schatting nog eens enkele Mtpa toe — niet in dit cijfer verwerkt, open punt."
+  },
+  {
+   "id": "w-prelude",
+   "naam": "Prelude FLNG (Shell)",
+   "lon": 123.3199,
+   "lat": -13.78923,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (Browse Basin, Timorzee)",
+   "gewicht": 4.9,
+   "gewicht_bron": "capaciteit bcm/j — 3,6 Mtpa × 1,36 = 4,9 bcm/j. Wikipedia 'List of LNG terminals': 3,6 Mtpa [B9]",
+   "bron": "Wikidata Q7240065; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drijvend platform (FLNG), geen vast terrein."
+  },
+  {
+   "id": "w-qclng",
+   "naam": "Queensland Curtis LNG (QCLNG, Shell/BG)",
+   "lon": 151.196,
+   "lat": -23.77,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (Curtis Island, QLD)",
+   "gewicht": 11.6,
+   "gewicht_bron": "capaciteit bcm/j — 8,5 Mtpa × 1,36 = 11,6 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 8,5 Mtpa [B9]",
+   "bron": "Wikidata Q30972400; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drie LNG-complexen op hetzelfde eiland (QCLNG/GLNG/APLNG) — ankers liggen enkele honderden meters uit elkaar."
+  },
+  {
+   "id": "w-glng",
+   "naam": "Gladstone LNG (GLNG, Santos)",
+   "lon": 151.19549,
+   "lat": -23.77021,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (Curtis Island, QLD)",
+   "gewicht": 10.6,
+   "gewicht_bron": "capaciteit bcm/j — 7,8 Mtpa × 1,36 = 10,6 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 7,8 Mtpa [B9]",
+   "bron": "Wikidata Q5566338; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Coordinaat valt zeer dicht bij QCLNG/APLNG — alle drie op Curtis Island, niet verder uit elkaar gelegd deze ronde."
+  },
+  {
+   "id": "w-aplng",
+   "naam": "Australia Pacific LNG (APLNG, Origin/ConocoPhillips/Sinopec)",
+   "lon": 151.1896,
+   "lat": -23.7554,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Australië (Curtis Island, QLD)",
+   "gewicht": 12.2,
+   "gewicht_bron": "capaciteit bcm/j — 9,0 Mtpa × 1,36 = 12,2 bcm/j. Wikipedia 'List of LNG terminals': 2 trains, 9,0 Mtpa [B9]",
+   "bron": "Wikidata Q30972398; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-malaysialng",
+   "naam": "Petronas LNG-complex (Malaysia LNG)",
+   "lon": 113.0882,
+   "lat": 3.2822,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Maleisië (Bintulu, Sarawak)",
+   "gewicht": 39.8,
+   "gewicht_bron": "capaciteit bcm/j — 29,3 Mtpa × 1,36 = 39,8 bcm/j. Algemeen bekend uit Petronas-communicatie (9 trains, MLNG Satu/Dua/Tiga-complexen samen) — niet dit keer met een verse (2024/2025) bron bevestigd [B10]",
+   "bron": "Wikidata Q7382973 (3,27916/113,074396, stadsniveau); satelliet z17 (sitelaag-gas-malaysialng-z3): kruis verschoven naar het procesterrein tussen de bolvormige LNG-tanks van het complex",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Een van 's werelds oudste LNG-exportcomplexen (sinds 1983). Capaciteitscijfer verdient een verse bronronde."
+  },
+  {
+   "id": "w-tangguh",
+   "naam": "Tangguh LNG (BP)",
+   "lon": 133.13611,
+   "lat": -2.43722,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Indonesië (Bintuni-baai, Papua Barat)",
+   "gewicht": 15.5,
+   "gewicht_bron": "capaciteit bcm/j — 11,4 Mtpa × 1,36 = 15,5 bcm/j. BP: 3 trains (Train 3 in 2023 bijgekomen), nameplate 11,4 Mtpa (7,6+3,8) — algemeen bekend, niet dit keer met verse bron bevestigd [B11]",
+   "bron": "Wikipedia-geohack 'Tangguh gas field' — dit is de veldcoordinaat, niet het exacte fabrieksterrein in Bintuni-baai; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Coordinaat vraagt een aparte satellietronde om het exacte liquefactieterrein te vinden."
+  },
+  {
+   "id": "w-arzew",
+   "naam": "Arzew LNG-complex (GL1Z/GL2Z/GL3Z, Sonatrach)",
+   "lon": -0.2395,
+   "lat": 35.8078,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Algerije",
+   "gewicht": 28.4,
+   "gewicht_bron": "capaciteit bcm/j — 20,9 Mtpa × 1,36 = 28,4 bcm/j. Wikipedia 'List of LNG terminals': GL1Z 7,8 + GL2Z 8,4 + GL3Z 4,7 = 20,9 Mtpa (GL4Z 0,9 Mtpa is sinds april 2010 gesloten, niet meegeteld) [B12]",
+   "bron": "Wikipedia-geohack 'Arzew' (stadscentrum) als kandidaat; satelliet z16 (sitelaag-gas-arzew-z3): kruis verschoven naar de bolvormige LNG-opslagtanks van het complex aan de kade",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Drie liquefactietrajnen (GL1Z/GL2Z/GL3Z) op hetzelfde industrieterrein; GL4Z (het oudste, CAMEL) is buiten bedrijf."
+  },
+  {
+   "id": "w-skikda",
+   "naam": "Skikda LNG (Sonatrach)",
+   "lon": 6.9,
+   "lat": 36.8667,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Algerije",
+   "gewicht": 14.3,
+   "gewicht_bron": "capaciteit bcm/j — 10,5 Mtpa × 1,36 = 14,3 bcm/j. Wikipedia 'List of LNG terminals': GL1K fase 1&2 (1972-1981) 6,0 + nieuwe trein (2013, na de explosie van 2004) 4,5 = 10,5 Mtpa [B12]",
+   "bron": "Wikipedia-geohack 'Skikda' (stadscentrum, kandidaat); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-segas-damietta",
+   "naam": "SEGAS LNG (Damietta)",
+   "lon": 31.74508,
+   "lat": 31.46938,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Egypte",
+   "gewicht": 7.5,
+   "gewicht_bron": "capaciteit bcm/j — 5,5 Mtpa × 1,36 = 7,5 bcm/j. Wikipedia 'List of LNG terminals': 5,5 Mtpa (2004) [B13]",
+   "bron": "OSM 'Damietta LNG Terminal Power Station' (Photon); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Periodes stilgelegd/heropgestart door binnenlands feedgastekort (2012-2017, opnieuw rond 2020-2024) — nameplate, niet gegarandeerd continu operationeel."
+  },
+  {
+   "id": "w-idku",
+   "naam": "Idku LNG (ELNG)",
+   "lon": 30.31719,
+   "lat": 31.34977,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Egypte",
+   "gewicht": 9.8,
+   "gewicht_bron": "capaciteit bcm/j — 7,2 Mtpa × 1,36 = 9,8 bcm/j. Algemeen bekend (Shell/Petronas/EGAS/EGPC/Engie-JV, 2 trains) — niet dit keer met een verse bron bevestigd [B14]",
+   "bron": "Wikidata Q17466774; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-angolalng",
+   "naam": "Angola LNG (Soyo)",
+   "lon": 12.3366,
+   "lat": -6.1196,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Angola",
+   "gewicht": 7.1,
+   "gewicht_bron": "capaciteit bcm/j — 5,2 Mtpa × 1,36 = 7,1 bcm/j. Wikipedia 'List of LNG terminals': 5,2 Mtpa (2013, 1 trein) [B15]",
+   "bron": "Wikidata Q4763742 / Photon (consistent, ~-6,12/12,336); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-omanlng",
+   "naam": "Oman LNG + Qalhat LNG (Sur)",
+   "lon": 59.4057,
+   "lat": 22.6599,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Oman",
+   "gewicht": 14.6,
+   "gewicht_bron": "capaciteit bcm/j — 10,7 Mtpa × 1,36 = 14,6 bcm/j. Oman LNG (3 trains, ~7,4 Mtpa) + Qalhat LNG (1 trein, ~3,3 Mtpa), sinds 2011 operationeel geïntegreerd op hetzelfde terrein bij Sur — algemeen bekend, niet dit keer met een verse bron bevestigd [B16]",
+   "bron": "Photon 'Oman LNG' (Sur); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Twee juridisch aparte bedrijven op één terrein; hier als één site gewogen (dubbeltelling vermeden)."
+  },
+  {
+   "id": "w-dasisland",
+   "naam": "Das Island (ADGAS/ADNOC LNG)",
+   "lon": 52.8667,
+   "lat": 25.15,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VAE (Abu Dhabi)",
+   "gewicht": 7.9,
+   "gewicht_bron": "capaciteit bcm/j — 5,8 Mtpa × 1,36 = 7,9 bcm/j. Algemeen bekend (ADNOC LNG, 3 trains) — niet dit keer met een verse bron bevestigd [B17]",
+   "bron": "Wikidata Q1167106 — dit is het hele eiland, niet het exacte procesterrein; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Coordinaat en capaciteit vragen allebei een verse bronronde."
+  },
+  {
+   "id": "w-sakhalin2",
+   "naam": "Sakhalin-2 LNG (Prigorodnoje)",
+   "lon": 142.9028,
+   "lat": 46.6275,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Rusland (Zuid-Sachalin)",
+   "gewicht": 15.8,
+   "gewicht_bron": "capaciteit bcm/j — 11,6 Mtpa × 1,36 = 15,8 bcm/j. Algemeen bekend (Sakhalin Energy/Gazprom, 2 trains, nameplate na debottlenecking) — niet dit keer met een verse bron bevestigd [B18]",
+   "bron": "Wikipedia-geohack 'Prigorodnoye (seaport)' — het zuidelijke Sachalin-terminal (niet te verwarren met de noordelijker offshore-velden Lunskoje/Piltoen-Astochskoje); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Japan bleef afnemen ondanks de sancties op Rusland (energiezekerheid)."
+  },
+  {
+   "id": "w-atlanticlng",
+   "naam": "Atlantic LNG (Point Fortin)",
+   "lon": -61.69361,
+   "lat": 10.18389,
+   "level": "site",
+   "parent": null,
+   "rol": "liquefactie",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Trinidad en Tobago",
+   "gewicht": 20.4,
+   "gewicht_bron": "capaciteit bcm/j — 15 Mtpa × 1,36 = 20,4 bcm/j. Wikipedia 'Atlantic LNG': 4 trains, nameplate 15 Mtpa; feitelijke doorzet lager door aanhoudend binnenlands feedgastekort (niet elk trein continu in bedrijf) [B19]",
+   "bron": "Wikipedia-geohack 'Atlantic LNG' (en); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Nameplate, geen gemeten actuele doorzet — Trinidad kampt al jaren met een dalend eigen gasaanbod."
+  },
+  {
+   "id": "w-gate",
+   "naam": "Gate terminal",
+   "lon": 4.0689,
+   "lat": 51.9711,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Nederland (Maasvlakte, Rotterdam)",
+   "gewicht": 12.0,
+   "gewicht_bron": "capaciteit bcm/j — 12 bcm/j (regasificatiecapaciteit, oorspronkelijk ontwerp 2011, Gasunie/Vopak) [B20]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-sabinepass-rotterdam.md (anker `gas-gate-kade`): Wikipedia-geocoordinaat, satellietblik aldaar bevestigt het brede tankencomplex maar kon de exacte Gate-steiger niet scherp scheiden van de aangrenzende Maasvlakte Olie Terminal (open punt in die brief)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Tijdens de energiecrisis 2022-2023 tijdelijk extra doorzet via een derde partij (niet in dit cijfer verwerkt)."
+  },
+  {
+   "id": "w-southhook",
+   "naam": "South Hook LNG Terminal",
+   "lon": -5.0778,
+   "lat": 51.7168,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VK (Milford Haven, Wales)",
+   "gewicht": 21.2,
+   "gewicht_bron": "capaciteit bcm/j — 15,6 Mtpa × 1,36 = 21,2 bcm/j. Algemeen bekend als grootste LNG-terminal van het VK (Qatar Petroleum/Shell/ExxonMobil-JV) — niet dit keer met een verse bron bevestigd [B21]",
+   "bron": "Wikipedia-geohack 'South Hook LNG terminal'; satelliet z16 (sitelaag-gas-southhook-z2): kruis ligt tussen de vijf bolvormige LNG-opslagtanks van het complex",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Ontworpen om Qatarese Ras Laffan-cargo's te ontvangen; grootste enkele LNG-importterminal van Europa."
+  },
+  {
+   "id": "w-isleofgrain",
+   "naam": "Grain LNG (National Grid)",
+   "lon": 0.68,
+   "lat": 51.45,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "VK (Isle of Grain, Kent)",
+   "gewicht": 19.6,
+   "gewicht_bron": "capaciteit bcm/j — Algemeen bekend: ~19,6 bcm/j na de laatste uitbreidingsfase (2019, National Grid) — niet dit keer met een verse bron bevestigd [B22]",
+   "bron": "Wikipedia-geohack 'Grain LNG Terminal'; satelliet z14 (sitelaag-gas-isleofgrain): kruis ligt op het tankpark van het complex (meerdere opslagtanks zichtbaar)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "-"
+  },
+  {
+   "id": "w-zeebrugge",
+   "naam": "Zeebrugge LNG-terminal (Fluxys)",
+   "lon": 3.22,
+   "lat": 51.3537,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "België",
+   "gewicht": 9.0,
+   "gewicht_bron": "capaciteit bcm/j — 9 bcm/j (Fluxys, letterlijk gepubliceerd cijfer, geen omrekening). Entered service 1987, storage 560.000 m3, 2 jetties [B23]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-bonny-zeebrugge.md (anker `gas-zeebrugge-lng`): satelliet z15/z16 aldaar bevestigd (4 bolvormige LNG-tanks, twee steigerconstructies)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Sindsdien verder uitgebreid (elders in het project genoemd als 9→11,3 Mtpa) — hier het Wikipedia-brongetal in bcm/j aangehouden."
+  },
+  {
+   "id": "w-montoir",
+   "naam": "Montoir-de-Bretagne LNG-terminal (Elengy/Engie)",
+   "lon": -2.1417,
+   "lat": 47.3028,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Frankrijk",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit bcm/j — 10 bcm/j (Elengy, letterlijk gepubliceerd cijfer, geen omrekening). Entered service 1980, storage 360.000 m3, 2 jetties [B24]",
+   "bron": "Wikidata Q2387693; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-revithoussa",
+   "naam": "Revithoussa LNG Terminal (DESFA)",
+   "lon": 23.4033,
+   "lat": 37.9604,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Griekenland",
+   "gewicht": 12.2,
+   "gewicht_bron": "capaciteit bcm/j — 12,2 bcm/j (DESFA/Wikipedia, letterlijk gepubliceerd cijfer) — dit cijfer oogt hoog t.o.v. Griekenlands totale gasverbruik (<6 bcm/j historisch) en is deze ronde niet onafhankelijk geverifieerd [B26]",
+   "bron": "Wikidata Q7318506; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Capaciteitscijfer heeft een verse, onafhankelijke bron nodig — mogelijk een verouderd of optimistisch nameplate-getal."
+  },
+  {
+   "id": "w-swinoujscie",
+   "naam": "Terminal LNG w Świnoujściu (GAZ-SYSTEM)",
+   "lon": 14.2947,
+   "lat": 53.9092,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Polen",
+   "gewicht": 8.3,
+   "gewicht_bron": "capaciteit bcm/j — Algemeen bekend: 8,3 bcm/j na de uitbreiding van 2023 (GAZ-SYSTEM; was 5 → 6,2 → 8,3 bcm/j in stappen) — niet dit keer met een verse bron bevestigd [B27]",
+   "bron": "Wikidata Q9357429; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Polens enige LNG-terminal; sleutelstuk van de onafhankelijkheid van Russisch pijpgas sinds 2022."
+  },
+  {
+   "id": "w-barcelona",
+   "naam": "Planta de Barcelona (Enagás)",
+   "lon": 2.1615,
+   "lat": 41.3405,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Spanje",
+   "gewicht": 13.2,
+   "gewicht_bron": "capaciteit bcm/j — Algemeen bekend als grootste Spaanse regasterminal (Enagás); indicatief ~13,2 bcm/j — geen vers, exact 2024/2025-cijfer gevonden deze ronde [B28]",
+   "bron": "geen directe naamtreffer via Nominatim/Photon; satelliet z16 (sitelaag-gas-barcelona-z3): kandidaat verschoven naar een herkenbaar LNG-tankencomplex (koepeldaken, eigen havenhoofd) in de haven van Barcelona, Zona Franca",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Coordinaat satelliet-bevestigd op de juiste vorm terreinkenmerken (LNG-tankpark met eigen kade); het exacte Enagás-adres niet met een tekstuele bron gekoppeld — open punt."
+  },
+  {
+   "id": "w-dahej",
+   "naam": "Dahej LNG Terminal (Petronet LNG)",
+   "lon": 72.53532,
+   "lat": 21.67498,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "India (Gujarat)",
+   "gewicht": 23.8,
+   "gewicht_bron": "capaciteit bcm/j — 17,5 Mtpa × 1,36 = 23,8 bcm/j. Wikipedia 'List of LNG terminals': 15 Mtpa uitgebreid naar 17,5 Mtpa eind 2018 [B29]",
+   "bron": "Wikidata Q30972154; satelliet z14 (sitelaag-gas-dahej): kruis ligt op het tankpark van het complex, meerdere steigers zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste Indiase regasterminal; voedt kunstmest/ammoniak + stroom."
+  },
+  {
+   "id": "w-hazira",
+   "naam": "Hazira Terminal (Shell)",
+   "lon": 72.63,
+   "lat": 21.08,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "India (Gujarat)",
+   "gewicht": 6.8,
+   "gewicht_bron": "capaciteit bcm/j — 5 Mtpa × 1,36 = 6,8 bcm/j. Wikipedia 'List of LNG terminals': 5 Mtpa [B29]",
+   "bron": "Wikipedia-geohack 'Hazira Port' (en); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "-"
+  },
+  {
+   "id": "w-pyeongtaek",
+   "naam": "Pyeongtaek LNG Terminal (KOGAS)",
+   "lon": 126.78434,
+   "lat": 37.00242,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 48.8,
+   "gewicht_bron": "capaciteit bcm/j — 1.721,81 bcf/jaar = 48,8 bcm/j (1 bcf = 0,0283168 bcm). Offshore-technology.com/KOGAS (2024): storage 1,54 Mt, regasificatiecapaciteit 1.721,81 bcf/jaar [B30]",
+   "bron": "Photon 'Pyeongtaek LNG' (benoemd object); satelliet z14 (sitelaag-gas-pyeongtaek): kruis ligt midden op het tankpark, meerdere ronde LNG-tanks duidelijk zichtbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "-"
+  },
+  {
+   "id": "w-rudong",
+   "naam": "Rudong LNG Terminal (PetroChina)",
+   "lon": 121.42813,
+   "lat": 32.52881,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "China (Nantong, Jiangsu)",
+   "gewicht": 9.5,
+   "gewicht_bron": "capaciteit bcm/j — 7 Mtpa × 1,36 = 9,5 bcm/j. Global Energy Monitor (via search, 2024): fase I 3,5 Mtpa (3 tanks van 160.000 m3) + fase II 3,5 Mtpa = 7 Mtpa totaal [B31]",
+   "bron": "Global Energy Monitor-coordinaat (32,5292/121,428), onafhankelijk bevestigd door v2/design/routebrieven/gas-karratha-rudong.md (anker `gas-rd-eiland`, satelliet z14/z16: vier bolvormige tanks op kunstmatig eiland) — beide bronnen komen vrijwel exact overeen",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "-"
+  },
+  {
+   "id": "w-dapeng",
+   "naam": "Dapeng LNG Terminal (CNOOC)",
+   "lon": 114.4364,
+   "lat": 22.5766,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "China (Shenzhen, Guangdong)",
+   "gewicht": 9.2,
+   "gewicht_bron": "capaciteit bcm/j — 6,8 Mtpa × 1,36 = 9,2 bcm/j. Global Energy Monitor (via search, 2024): ontwerpcapaciteit 680 × 10.000 t/j = 6,8 Mtpa [B31]",
+   "bron": "Global Energy Monitor-coordinaat (22,5766/114,4364, Shenzhen Dapeng-baai); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Een van de oudste Chinese LNG-terminals (eerste importterminal van het land, 2006)."
+  },
+  {
+   "id": "w-tianjin",
+   "naam": "Tianjin FSRU LNG Terminal (CNOOC)",
+   "lon": 117.8741,
+   "lat": 38.9311,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "China (Tianjin)",
+   "gewicht": 3.0,
+   "gewicht_bron": "capaciteit bcm/j — 2,2 Mtpa × 1,36 = 3,0 bcm/j. Global Energy Monitor (via search, 2024): ontvangstcapaciteit 2,2 Mtpa [B31]",
+   "bron": "Global Energy Monitor-coordinaat (38,9311/117,8741, Tianjin Port); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Drijvende opslag- en regasificatie-eenheid (FSRU), geen vaste tanks."
+  },
+  {
+   "id": "w-sodegaura",
+   "naam": "Sodegaura LNG-terminal (JERA/Tokyo Gas)",
+   "lon": 139.97,
+   "lat": 35.4675,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Japan (Chiba, Tokiobaai)",
+   "gewicht": 32.2,
+   "gewicht_bron": "capaciteit bcm/j — 23,7 Mtpa × 1,36 = 32,2 bcm/j. JOGMEC-journal/oilgas-info.jogmec.go.jp (2024/2025): oorspronkelijk 27,8 Mtpa, verminderd met gedeeltelijke decommissioning −2,8 Mtpa (2022) en −1,3 Mtpa (2024) → 23,7 Mtpa huidig [B32]",
+   "bron": "Hergebruikt van v2/design/routebrieven/gas-raslaffan-chiba.md (anker `gas-sodegaura-term`): satelliet z15 aldaar bevestigd (~8 grote cilindrische/bolvormige LNG-tanks, twee aanlegsteigers). Eigen OSM-match (Photon, '袖ヶ浦火力発電所') lag ~800 m zuidoostelijker, zelfde complex.",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Een van de grootste LNG-terminals ter wereld op opslagcapaciteit (2,66 miljoen m3 tanks); geen los productiecijfer gevonden deze ronde, operationeel bevestigd."
+  },
+  {
+   "id": "w-futtsu",
+   "naam": "Futtsu LNG-terminal (JERA/Tokyo Electric)",
+   "lon": 139.8322,
+   "lat": 35.3424,
+   "level": "site",
+   "parent": null,
+   "rol": "regas",
+   "grondstof": [
+    "gas"
+   ],
+   "land": "Japan (Chiba, Tokiobaai)",
+   "gewicht": 13.6,
+   "gewicht_bron": "capaciteit bcm/j — 10 Mtpa × 1,36 = 13,6 bcm/j (feitelijke jaarlijkse ontvangst, conservatiever dan de nameplate). JOGMEC-journal/JERA-persbericht (2026): nameplate 22,9 Mtpa, ontvangt in de praktijk ~10 Mt LNG/jaar [B32]",
+   "bron": "OSM landuse=industrial '富津火力発電所' (Photon, benoemd object; Futtsu Thermal Power Station, met de LNG-terminal op hetzelfde complex); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Nameplate (22,9 Mtpa) ligt ver boven de feitelijke ontvangst — hier bewust het conservatievere, meer 'productie'-achtige cijfer gebruikt."
+  }
+ ]
+}

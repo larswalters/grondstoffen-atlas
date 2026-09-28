@@ -95,6 +95,545 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief nikkel-sorowako-matsuzaka, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck nikkel-matte PT Vale Indonesia Sorowako-mijn/smelter (Danau Matano) →
+    # rivierhaven Balantang bij Malili, over de Jalan Poros Malili-Soroako (OSM-
+    # naam bevestigd). Geen gepubliceerde km — ~60 km indicatief (ketenontwerp,
+    # brief §2 bron [2]); vensterKm ruim ivm bergterrein.
+    "nikkel-sorowako-matsuzaka-sorowako-balantang": {
+        "via": [
+            ("PT Vale Indonesia — Sorowako-mijn/smelter (anker, ni-sorowako-plant)", (121.3575, -2.5203)),
+            ("Asuli — junctie Jalan Poros Malili-Soroako", (121.3244, -2.5964)),
+            ("Wasuponda", (121.2583, -2.5971)),
+            ("Balambano — PT Vale-nederzetting", (121.2516, -2.6607)),
+            ("Malili — doorgaande weg nabij centrum", (121.1163, -2.6191)),
+            ("Pelabuhan Balantang — exportterminal (anker, ni-balantang-kade)", (121.0732, -2.6428)),
+        ],
+        "id": "ni-sorowako-balantang",
+        "naam": "Sorowako-mijn/smelter → Asuli → Wasuponda → Balambano → Malili → Balantang-kade (Jalan Poros Malili-Soroako)",
+        "extracts": ["indonesie"],
+        "refs": ["Jalan Poros Malili - Soroako"],
+        "gepubliceerdKm": 60,
+        "bronnoot": "niet gepubliceerd; ~60 km indicatief (ketenontwerp M31 golf 2, "
+                    "brief §2 bron [2]) — GEEN harde ±15%-toets ivm ontbrekende "
+                    "operatorbron.",
+        "vensterKm": 75,
+        "uit": "nikkel-sorowako-matsuzaka-weg-sorowako-balantang.geojson",
+    },
+    # Routebrief grafiet-lindijumbo-qingdao, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck natuurlijk vlokgrafiet Lindi Jumbo-mijn (Ndovu Graphite Limited, bij
+    # Matambarale/Ruangwa-district) → Dar es Salaam-containerkade: mijnweg →
+    # Ruangwa → regionale weg Ruangwa-Nyangao-Lindi → T7 "Kilwa Road" (Lindi →
+    # Nangurukuru → Kibiti → Mkuranga → Dar es Salaam). Geen gepubliceerde
+    # totaallengte (brief §2/§7); eigen via-keten 477,9 km hemelsbreed. Venster
+    # ruimer dan default (75 km) omdat de regionale weg Ruangwa-Lindi niet
+    # gepubliceerd is.
+    "grafiet-lindijumbo-qingdao-lindijumbo-daressalaam": {
+        "via": [
+            ("Lindi Jumbo-mijn (Ndovu Graphite Limited) — anker", (38.9160, -9.9135)),
+            ("Ruangwa — wegsplitsing, aansluiting mijnweg op regionale weg", (38.9274, -10.0675)),
+            ("Lindi — aansluiting regionale weg op T7", (39.7144, -9.9969)),
+            ("Nangurukuru — T7-kruispunt, pint de kustweg", (39.3502, -8.7980)),
+            ("Kibiti — T7, Rufiji-delta", (38.9365, -7.7214)),
+            ("Mkuranga — laatste kruispunt vóór Dar es Salaam", (39.2115, -7.1199)),
+            ("Dar es Salaam Port, general cargo-/containerkade (Kurasini-kanaal) — anker", (39.2870, -6.8280)),
+        ],
+        "id": "gr-lindijumbo-daressalaam",
+        "naam": "Lindi Jumbo-mijn → Ruangwa → Lindi → Nangurukuru → Kibiti → Mkuranga → Dar es Salaam (T7 'Kilwa Road')",
+        "extracts": ["tanzania"],
+        "refs": ["T7"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen onafhankelijk gepubliceerde totaallengte — eigen via-puntenketen 477,9 km hemelsbreed (routebrief grafiet-lindijumbo-qingdao §2/§7)",
+        "vensterKm": 75,
+        "uit": "grafiet-lindijumbo-qingdao-weg-lindijumbo-daressalaam.geojson",
+    },
+    # Routebrief grafiet-itapecerica-vitoria, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck vlokgrafiet Nacional de Grafite Itapecerica-vestiging (Tejuco Preto-
+    # mijn + concentratie, Minas Gerais) → Porto de Praia Mole-kade, Vitória
+    # (Espírito Santo), over de BR-262-exportcorridor. Geen gepubliceerde km
+    # (brief §2: ontwerpschatting ~570 km via-keten tegen hemelsbreed 510,5 km) —
+    # ruimere venster/tolerantie omdat er alleen een corridor-redenering is,
+    # geen bron voor de exacte route.
+    "grafiet-itapecerica-vitoria-itapecerica-praiamole": {
+        "via": [
+            ("Nacional de Grafite Itapecerica — mijn/concentratie (kop, anker)", (-45.1300, -20.4420)),
+            ("Nova Serrana — aansluiting lokale weg × BR-262", (-44.9842, -19.8758)),
+            ("Belo Horizonte — BR-262 door de metropoolregio", (-43.4848, -19.9272)),
+            ("São Domingos do Prata — BR-262, Rio Doce-regio", (-42.9658, -19.8671)),
+            ("Manhuaçu — BR-262, grote kruising", (-42.0341, -20.2574)),
+            ("Domingos Martins — BR-262, bergpas MG→ES", (-41.0591, -20.3733)),
+            ("Viana — BR-262, nadering Vitória-metropool", (-40.4949, -20.3894)),
+            ("Porto de Praia Mole — exportterminal (staart, anker)", (-40.2350, -20.28965)),
+        ],
+        "id": "gr-itapecerica-praiamole",
+        "naam": "Itapecerica-vestiging → Porto de Praia Mole (BR-262)",
+        "extracts": ["brazilie"],
+        "refs": ["BR-262"],
+        "gepubliceerdKm": 570,
+        "bronnoot": "geen gepubliceerde km — ontwerpschatting (som via-keten) tegen hemelsbreed 510,5 km, routebrief grafiet-itapecerica-vitoria §2/§7",
+        "vensterKm": 75,
+        "uit": "grafiet-itapecerica-vitoria-weg-itapecerica-praiamole.geojson",
+    },
+    # Routebrief grafiet-skaland-lulea, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck vlokgrafiet Skaland Grafitverk-mijn/plant (Senja) → dorpskade Skaland
+    # (Bergsfjorden), lokale dorpsweg, ~0,7 km eigen meting op satelliet, niet
+    # gepubliceerd. Geen corridorkeuze (kort eigen terrein/dorpspad) dus geen
+    # via-punten.
+    "grafiet-skaland-lulea-skaland-mijn-skaland-kade": {
+        "via": [
+            ("Skaland Grafitverk — mijn/verwerkingsplant (kop, anker)", (17.3279, 69.4462)),
+            ("Skaland fiskerihavn — dorpskade (staart, anker)", (17.3125, 69.4428)),
+        ],
+        "id": "gr-skaland-mijn-kade",
+        "naam": "Skaland-mijn → Skaland-dorpskade (lokale dorpsweg)",
+        "extracts": ["noorwegen"],
+        "refs": [],
+        "gepubliceerdKm": 0.7,
+        "bronnoot": "eigen meting op satelliet, niet gepubliceerd — routebrief grafiet-skaland-lulea §2",
+        "vensterKm": 10,
+        "uit": "grafiet-skaland-lulea-weg-skaland-mijn-skaland-kade.geojson",
+    },
+    # Routebrief koper-olympicdam-portadelaide, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck koperkathode (+U/Au/Ag) Olympic Dam-mijn/smelter/raffinaderij (BHP) →
+    # Aurizon-terminal Pimba, over de Olympic Dam Highway (brief §2/§8[1]) —
+    # rechte weg door dunbevolkt gebied, geen corridorkeuze dus geen via-punten.
+    "koper-olympicdam-portadelaide-olympicdam-pimba": {
+        "via": [
+            ("Olympic Dam mining/metallurgical complex (BHP, Roxby Downs) — anker", (136.8731, -30.4400)),
+            ("Aurizon intermodale terminal, Pimba — anker", (136.7997, -31.2551)),
+        ],
+        "id": "cu-olympicdam-pimba",
+        "naam": "Olympic Dam-mijn → Pimba-terminal (Olympic Dam Highway)",
+        "extracts": ["australie"],
+        "refs": ["B97"],
+        "gepubliceerdKm": 92,
+        "bronnoot": "Wikipedia, 'Olympic Dam Highway' — sealed 92 km, Stuart Highway (Pimba) → Olympic Dam — brief §8[1]",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "koper-olympicdam-portadelaide-weg-olympicdam-pimba.geojson",
+    },
+    # Routebrief koper-sentinel-walvisbay, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck sulfide-concentraat Sentinel-mijn (Kalumbila, First Quantum) → grens
+    # Katima Mulilo/Sesheke: Solwezi-uitvalsweg → Mutanda → Kasempa → Kaoma →
+    # Mongu → Senanga → Sesheke → grensbrug (WCL-tracé, brief §2/§4). Venster
+    # ruim (75 km) want Solwezi–Mutanda (~45 km) is een kaartschatting, geen bron.
+    "koper-sentinel-walvisbay-sentinel-katimamulilo": {
+        "via": [
+            ("Sentinel-mijn (Kalumbila, First Quantum) — anker", (25.3025, -12.2600)),
+            ("Solwezi — provinciehoofdstad, regionale wegknoop", (26.3858, -12.1833)),
+            ("Mutanda — start WCL-upgradetracé", (26.2400, -12.4000)),
+            ("Kasempa — op het WCL-tracé", (25.8350, -13.4550)),
+            ("Kaoma — WCL-tracé, splitst van de noordroute af", (24.8000, -14.8000)),
+            ("Mongu — M10 doorgaande weg (Wikipedia-centroïde 294 m ernaast landde op een geïsoleerde straatjesstomp)", (23.1344278, -15.2764746)),
+            ("Senanga — laatste plaats vóór de Zambezi-vlakte", (23.2667, -16.1167)),
+            ("Sesheke — Zambiaanse grensstad", (24.3000, -17.4667)),
+            ("Grensovergang Katima Mulilo-brug (Zambezi) — anker", (24.2499, -17.4717)),
+        ],
+        "id": "cu-sentinel-katimamulilo",
+        "naam": "Sentinel-mijn → Solwezi → Mutanda → Kasempa → Kaoma → Mongu → Senanga → Sesheke → grens Katima Mulilo",
+        "extracts": ["zambia"],
+        "refs": [],
+        "gepubliceerdKm": 566,
+        "bronnoot": "Sentinel–Solwezi 150 km gepubliceerd [1]; Mutanda–grens 371 km officieel (WCL) [3][4]; Solwezi–Mutanda ~45 km geschat — brief §2",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "koper-sentinel-walvisbay-weg-sentinel-katimamulilo.geojson",
+    },
+    # Routebrief koper-sentinel-walvisbay, been b2 (LICHTE werkwijze M31 golf 2).
+    # Truck concentraat grens Katima Mulilo/Sesheke → Walvis Bay-kade: B8
+    # (Katima Mulilo–Rundu–Otavi) → B1 (Otavi–Otjiwarongo–Karibib) → B2
+    # (Karibib–Walvis Bay) — de Trans-Caprivi-corridor (brief §2/§4).
+    "koper-sentinel-walvisbay-katimamulilo-walvisbay": {
+        "via": [
+            ("Grensovergang Katima Mulilo-brug (Zambezi) — anker", (24.2499, -17.4717)),
+            ("Rundu — eerste grote Namibische stad op de B8", (19.7670, -17.9170)),
+            ("Otavi — wisselpunt B8 → B1", (17.3306, -19.6642)),
+            ("Otjiwarongo — vaste tussenstop op de B1", (16.6528, -20.4642)),
+            ("Karibib — wisselpunt B1 → B2", (15.8544, -21.9381)),
+            ("Walvis Bay-containerterminal — anker", (14.4860, -22.9500)),
+        ],
+        "id": "cu-katimamulilo-walvisbay",
+        "naam": "Grens Katima Mulilo → Rundu → Otavi → Otjiwarongo → Karibib → Walvis Bay (B8 → B1 → B2)",
+        "extracts": ["namibie"],
+        "refs": ["B8", "B1", "B2"],
+        "gepubliceerdKm": 1470,
+        "bronnoot": "opgeteld uit Wikipedia-routebeschrijving (Katima Mulilo–Rundu 510 + Rundu–Otavi–Karibib–Walvis Bay ~960), niet stapsgewijs officieel — brief §2/§7",
+        "vensterKm": 40,
+        "uit": "koper-sentinel-walvisbay-weg-katimamulilo-walvisbay.geojson",
+    },
+    # Routebrief ree-longnan-ganzhou, been b1 (LICHTE werkwijze M31 golf 2). Truck
+    # ionenklei-uitloogconcentraat uitloogput bij Guanxi (关西镇) → Longnan-
+    # scheidingsfabriek: county-weg vanaf de put → provinciale weg S225 door
+    # Longnan-stad naar de ontwikkelingszone. Geen gepubliceerde km (brief §7) —
+    # hemelsbreed 15,5 km, aannemelijk ~20 km over de weg. Venster ruim
+    # (bergterrein); het laatste stuk bij de put kan buiten tertiary/
+    # unclassified vallen (mogelijk alleen track) → corridorKlassen/eindKlassen
+    # verruimd zodat de scan het zelf toetst i.p.v. te falen.
+    "ree-longnan-ganzhou-uitloogput-scheiding": {
+        "via": [
+            ("Longnan-uitloogput, Zudong-district (bij Guanxi 关西镇) — anker", (114.9660, 24.8685)),
+            ("Guanxi-stad (关西镇) — county-weg → weg naar Longnan-stad", (114.9431, 24.8420)),
+            ("赣州稀土（龙南）有色金属有限公司 — Longnan-scheidingsfabriek — anker", (114.81439, 24.84829)),
+        ],
+        "id": "ree-longnan-uitloogput-scheiding",
+        "naam": "Longnan-uitloogput → Guanxi-stad → Longnan-scheidingsfabriek (county-weg → S225)",
+        "extracts": ["china"],
+        "refs": ["S225"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; hemelsbreed 15,5 km, aannemelijk ~20 km over de weg (brief §7)",
+        "vensterKm": 30,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "ree-longnan-ganzhou-weg-uitloogput-scheiding.geojson",
+    },
+    # Routebrief ree-longnan-ganzhou, been b2 (LICHTE werkwijze M31 golf 2). Truck
+    # RE-oxiden Longnan-scheidingsfabriek → JL MAG Rare-Earth magneetfabriek,
+    # Ganzhou: G106 / Longnan–Ganzhou-expressway (S32) via Xinfeng (信丰). Geen
+    # gepubliceerde km (brief §7) — hemelsbreed 110,5 km, aannemelijk ~130-160 km
+    # (ketenontwerp noemde ongebrond 180-220 km). Venster ruim voor bergpassen;
+    # corridorKlassen laat ook tertiary/unclassified toe als de expressway-scan
+    # geen volledige verbinding vindt.
+    "ree-longnan-ganzhou-scheiding-ganzhou": {
+        "via": [
+            ("赣州稀土（龙南）有色金属有限公司 — Longnan-scheidingsfabriek — anker", (114.81439, 24.84829)),
+            ("Xinfeng-stad (信丰) — pint de noordelijke Longnan–Ganzhou-corridor", (114.9721, 25.2784)),
+            ("JL MAG Rare-Earth, Ganzhou (hergebruikt anker w-jlmag-ganzhou) — anker", (114.8663, 25.8406)),
+        ],
+        "id": "ree-longnan-ganzhou-jlmag",
+        "naam": "Longnan-scheidingsfabriek → Xinfeng → JL MAG Ganzhou (G106/S32 Longnan–Ganzhou-expressway)",
+        "extracts": ["china"],
+        "refs": ["G106", "S32"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; hemelsbreed 110,5 km, aannemelijk ~130-160 km — ketenontwerp noemde ongebrond 180-220 km (brief §7)",
+        "vensterKm": 50,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "ree-longnan-ganzhou-weg-scheiding-ganzhou.geojson",
+    },
+    # Routebrief uranium-olympicdam-portadelaide, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck uraanoxideconcentraat (yellowcake) Olympic Dam-fabriek (BHP, Roxby
+    # Downs) → Port Adelaide, Outer Harbor: Stuart Highway (Roxby Downs–Pimba–
+    # Port Augusta) → Augusta Highway/Princes Highway (Port Augusta–Adelaide) —
+    # enige verharde doorgaande route, geen alternatieve corridor. Geen
+    # gepubliceerde km voor dit specifieke traject (brief §7) — ~700 km is een
+    # webcheck-schatting (grootcirkel ~560 km × wegfactor), geen citaat-bron.
+    "uranium-olympicdam-portadelaide": {
+        "via": [
+            ("Olympic Dam Operations (BHP, Roxby Downs) — anker", (136.8731, -30.4400)),
+            ("Pimba — kruising Olympic Dam Highway × Stuart Highway", (136.8264, -31.1756)),
+            ("Port Augusta — kruising Stuart Highway × Augusta Highway", (137.7663, -32.4925)),
+            ("Port Wakefield — overgang Augusta Highway → Princes Highway/Port Wakefield Road", (138.1497, -34.1936)),
+            ("Outer Harbor, Port of Adelaide — anker", (138.4920, -34.7694)),
+        ],
+        "id": "u-olympicdam-portadelaide",
+        "naam": "Olympic Dam → Pimba → Port Augusta → Port Wakefield → Port Adelaide, Outer Harbor (Stuart Hwy → Augusta/Princes Hwy)",
+        "extracts": ["australie"],
+        "refs": ["A87", "A1", "B97"],
+        "gepubliceerdKm": 700,
+        "bronnoot": "webcheck-schatting (grootcirkel ~560 km × wegfactor), geen citaat-bron — brief §7; de ±15%-toets is zwak want de referentiewaarde zelf is zwak",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "uranium-olympicdam-portadelaide-weg-olympicdam-portadelaide.geojson",
+    },
+    # Routebrief zilver-cannington-townsville, been b1 (LICHTE werkwijze M31 golf 2).
+    # Roadtrain (Linfox, 24/7) lood/zilverconcentraat Cannington-mill → Yurbi
+    # rail-overslag: mijnweg → McKinlay (aansluiting op de Landsborough Highway,
+    # Wikipedia) → weer noordwestwaarts via Cloncurry → laatste ~15 km oostwaarts
+    # naar Yurbi. GEEN monotone lijn: de route gaat eerst naar McKinlay (noordoost)
+    # en dan terug naar Cloncurry (noordwest) — venster ruim (55 km) zodat de knik
+    # bij McKinlay niet als omweg/lus wordt afgekeurd. Gepubliceerd: 180 km
+    # (Industry Queensland + Qld-ministerieel statement, brief §2/§8[1][2]).
+    "zilver-cannington-townsville-mill-yurbi": {
+        "via": [
+            ("Cannington-mill (South32) — anker", (140.9155, -21.8595)),
+            ("McKinlay (aansluiting mijnweg → Landsborough Highway)", (141.2902, -21.2713)),
+            ("Cloncurry (Landsborough Highway passeert de stad)", (140.5053, -20.7047)),
+            ("Yurbi rail-overslagfacility — anker", (140.6557, -20.7389)),
+        ],
+        "id": "ag-cannington-yurbi",
+        "naam": "Cannington-mill → McKinlay → Cloncurry → Yurbi-overslag (roadtrain-route, 24/7)",
+        "extracts": ["australie"],
+        "refs": [],
+        "gepubliceerdKm": 180,
+        "bronnoot": "Industry Queensland 'Road trip with a difference' + Qld-ministerieel statement 1026 (brief §8[1][2])",
+        "vensterKm": 55,
+        # ⚠️ Eerste poging (WEG_HOUD kaal) + tweede poging (corridorKlassen
+        # tertiary/unclassified) faalden allebei op "geen wegpad tussen punt 2
+        # en 3" (Cloncurry → Yurbi-overslag, ~15 km) — dit is een bemande,
+        # dagelijkse 24/7-roadtrainroute (Linfox), dus een verhard/berijdbaar
+        # tracé is aannemelijk; de Yurbi-toegangsweg zelf is vermoedelijk
+        # smaller (service/track) dan de standaard-eindzone dekt.
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "zilver-cannington-townsville-weg-mill-yurbi.geojson",
+    },
+    # Routebrief uranium-porthope-almelo, been b3 (LICHTE werkwijze M31 golf 2).
+    # Truck UF6/LEU Rotterdam RHB → Urenco Almelo-verrijkingsfabriek: A20 → A12
+    # (Knp. Gouwe) → A27 (Knp. Lunetten) → A28 (Knp. Rijnsweerd) → A1 (Knp.
+    # Hoevelaken) → A35 (Knp. Buren) → N349/Bornsestraat. Gepubliceerd: OSRM-
+    # webcheck 188,8 km (brief §2/§8[8]); het ketenontwerp noemde ~150 km — de
+    # kortste route schakelt via A27/A28 om Utrecht/Amersfoort i.p.v.
+    # rechtstreeks A12→A1 (bekend open punt, niet dichtgetrokken).
+    "uranium-porthope-almelo-rotterdam-almelo": {
+        "via": [
+            ("Rotterdam RHB Stevedoring & Warehousing — anker", (4.4585, 51.8935)),
+            ("Knooppunt Gouwe (A20 × A12)", (4.6542, 52.0222)),
+            ("Knooppunt Lunetten (A12 × A27)", (5.1444, 52.0550)),
+            ("Knooppunt Rijnsweerd (A27 × A28)", (5.1611, 52.0919)),
+            ("Knooppunt Hoevelaken (A28 × A1)", (5.4276, 52.1756)),
+            ("Knooppunt Buren (A1 × A35)", (6.7432, 52.2855)),
+            ("Urenco Almelo-verrijkingsfabriek — anker", (6.6922, 52.3391)),
+        ],
+        "id": "u-rotterdam-almelo",
+        "naam": "Rotterdam RHB → Knp. Gouwe → Knp. Lunetten → Knp. Rijnsweerd → Knp. Hoevelaken → Knp. Buren → Urenco Almelo (A20/A12/A27/A28/A1/A35)",
+        "extracts": ["nederland"],
+        "refs": ["A20", "A12", "A27", "A28", "A1", "A35"],
+        "gepubliceerdKm": 189,
+        "bronnoot": "OSRM-webcheck (publieke demo-router), 188,8 km; ontwerp noemde ~150 km — bekend open punt, niet dichtgetrokken (brief §7)",
+        "vensterKm": 40,
+        "uit": "uranium-porthope-almelo-weg-rotterdam-almelo.geojson",
+    },
+    # Routebrief kobalt-huayou-gunsan, been b1 (LICHTE werkwijze M31 golf 2). Truck
+    # kobalttetroxide/-sulfaat Huayou Tongxiang-raffinaderij → Ningbo Beilun-kade:
+    # G60/G92 Tongxiang–Ningbo (Hangzhou-ringweg-corridor). Geen gepubliceerd exact
+    # tracé (brief §7/8[2][3]) — alleen ~150 km ontwerp-webcheck; geen via-punten
+    # (Wikipedia/Nominatim/Photon rate-limited deze sessie, brief §7) — de wegscan
+    # levert zelf corridorpunten op via het china-extract.
+    "kobalt-huayou-gunsan-tongxiang-ningbo": {
+        "via": [
+            ("Huayou Tongxiang-raffinaderij — anker", (120.5629, 30.6167)),
+            ("Ningbo Beilun-containerkade — anker", (121.8695, 29.9353)),
+        ],
+        "id": "co-tongxiang-ningbo",
+        "naam": "Huayou Tongxiang-raffinaderij → Ningbo Beilun-kade (G60/G92 Tongxiang–Ningbo)",
+        "extracts": ["china"],
+        "refs": ["G60", "G92"],
+        "gepubliceerdKm": 150,
+        "bronnoot": "ontwerp-webcheck, niet onafhankelijk geverifieerd; hemelsbreed 146,6 km",
+        "vensterKm": 40,
+        "uit": "kobalt-huayou-gunsan-weg-tongxiang-ningbo.geojson",
+    },
+    # Routebrief zilver-penasquito-onsan, been b1 (LICHTE werkwijze M31 golf 2). Truck
+    # Zn/Pb-concentraat (met meegesleept zilver) Peñasquito-mijn → Manzanillo-terminal:
+    # Fed 54D/200D-corridor via Fresnillo → Zacatecas → Guadalajara → Colima. Geen
+    # gepubliceerd exact tracé (brief §7[3]) — Wood Mackenzie noemt alleen de afstand
+    # (~800 km, webcheck); groot venster i.v.m. de lange afstand.
+    "zilver-penasquito-onsan-mijn-manzanillo": {
+        "via": [
+            ("Peñasquito-mijn (Newmont) — anker", (-101.6982, 24.6377)),
+            ("Fresnillo", (-102.8675, 23.1750)),
+            ("Zacatecas (stad)", (-102.5736, 22.7736)),
+            ("Guadalajara", (-103.3475, 20.6767)),
+            ("Colima (stad)", (-103.7247, 19.2433)),
+            ("Manzanillo-terminal (TIMSA/OCUPA-zone) — anker", (-104.2975, 19.0810)),
+        ],
+        "id": "ag-penasquito-manzanillo",
+        "naam": "Peñasquito-mijn → Fresnillo → Zacatecas → Guadalajara → Colima → Manzanillo-terminal (Fed 54D/200D)",
+        "extracts": ["mexico"],
+        "refs": ["54D", "200D"],
+        "gepubliceerdKm": 800,
+        "bronnoot": "Wood Mackenzie webcheck, geen exact tracé (brief §7[3]); via-punten hemelsbreed 729 km",
+        "vensterKm": 65,
+        "uit": "zilver-penasquito-onsan-weg-mijn-manzanillo.geojson",
+    },
+    # Routebrief kobalt-bouazzer-guemassa, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck kobalterts/concentraat CTT Bou Azzer-mijn → CTT Guemassa-complex: N9
+    # Ouarzazate-Marrakech (Tizi n'Tichka-pas) → binnenstedelijk Marrakech als
+    # "Avenue Guemassa" → terrein. Geen gepubliceerde wegkm (brief §7/§8[8]) —
+    # alleen het gemeten getal geldt, geen ±15%-referentie.
+    # ⚠️ via4 (Marrakech-zuid/Avenue Guemassa, lat 31.5791) ligt noordelijker dan
+    #    de eindbestemming (lat 31.3825) — de weg buigt na Marrakech weer
+    #    zuidwaarts naar Guemassa.
+    "kobalt-bouazzer-guemassa-bouazzer-guemassa": {
+        "via": [
+            ("Mine Bou Azzer (CTT, Managem) — anker", (-6.9134, 30.5184)),
+            ("Ouarzazate — aansluiting mijnweg op de N9", (-6.9170, 30.9170)),
+            ("Tizi n'Tichka-pas (2.260 m, Hoge Atlas)", (-7.3808, 31.2858)),
+            ("Aït Ourir — N9 tussen pas en Marrakech", (-7.6628, 31.5644)),
+            ("Marrakech-zuid, N8/Avenue Guemassa-aftakking", (-8.0583, 31.5791)),
+            ("CTT Guemassa-complex (Managem) — anker", (-8.0635, 31.3825)),
+        ],
+        "id": "co-bouazzer-guemassa",
+        "naam": "Bou Azzer-mijn → Ouarzazate → Tizi n'Tichka-pas → Aït Ourir → Marrakech-zuid → Guemassa-complex (N9/N8)",
+        "extracts": ["marokko"],
+        "refs": ["N9", "N8"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkilometers gevonden voor N9/R203 Ouarzazate-Marrakech "
+                    "(brief §7[8]); ontwerpschatting ~280 km, geen referentiewaarde voor de ±15%-toets",
+        "vensterKm": 40,
+        "uit": "kobalt-bouazzer-guemassa-weg-bouazzer-guemassa.geojson",
+    },
+    # Routebrief ree-kuantan-japan, been b1 (LICHTE werkwijze M31 golf 2). Truck
+    # NdPr-/Dy-/Tb-oxide LAMP Gebeng → Westport (Pulau Indah, Port Klang): Gebeng-
+    # industrieweg → Lebuhraya Pantai Timur (E8) → Karak Highway (E8/E9) → KL–
+    # Klang-corridor (KESAS/Federal Highway). Geen gepubliceerde km (brief §7,
+    # Time.com noemt alleen de route zelf); ~290 km ontwerpschatting, vensterKm
+    # ruim omdat de brief-km zelf al een schatting is.
+    "ree-kuantan-japan-gebeng-westport": {
+        "via": [
+            ("Lynas Advanced Materials Plant (LAMP), Gebeng — anker (hergebruikt uit ree-mtweld-kuantan)", (103.3775, 4.0034)),
+            ("Kuantan (aansluiting Gebeng-industrieweg → Lebuhraya Pantai Timur E8)", (103.3333, 3.8167)),
+            ("Bentong (Karak Highway-interchange, richting Kuala Lumpur)", (101.9167, 3.5167)),
+            ("Genting Sempah (bergpas/tunnel door de Titiwangsa-bergketen)", (101.7806, 3.3497)),
+            ("Gombak-tolplein (einde Karak Highway, aansluiting KL-ringweg)", (101.7272, 3.2420)),
+            ("Shah Alam (KESAS/Federal Highway richting Port Klang)", (101.5167, 3.0722)),
+            ("Pulau Indah (oprit naar het Westport-schiereiland)", (101.3317, 2.9489)),
+            ("Westports Malaysia, Pulau Indah — anker", (101.3076, 2.9498)),
+        ],
+        "id": "ree-kuantan-japan-westport-kade",
+        "naam": "LAMP Gebeng → Westport (Lebuhraya Pantai Timur E8 → Karak Highway E8/E9 → KL–Klang-corridor)",
+        "extracts": ["maleisie"],
+        "refs": ["E8", "E9"],
+        "gepubliceerdKm": 290,
+        "bronnoot": "geen gepubliceerde kilometrage (brief §7, alleen Time.com noemt de route zelf); "
+                    "~290 km kaartschatting op de beschreven corridor",
+        "vensterKm": 70,
+        "uit": "ree-kuantan-japan-weg-gebeng-westport.geojson",
+    },
+    # Routebrief lithium-hombremuerto-bessemercity, been b1 (LICHTE werkwijze M31
+    # golf 2). Truck carbonaat Fénix-plant (Salar del Hombre Muerto) → grens
+    # Paso de San Francisco: RN-43/provinciale hooggebergteweg via Antofagasta
+    # de la Sierra en El Peñón. Ontwerpschatting 150-200 km (brief §2, niet
+    # gepubliceerd op wegniveau).
+    # ⚠️ Hooggebergte-secundaire wegen, zelfde risico als lithium-olaroz-naraha
+    #    RN52 → corridorKlassen laat tertiary/unclassified toe, venster ruim
+    #    (75 km) voor de Puna-omweg.
+    "lithium-hombremuerto-bessemercity-hombremuerto-elpenon": {
+        "via": [
+            ("Fénix-plant (Arcadium Lithium/Rio Tinto), Salar del Hombre Muerto — anker", (-67.1415, -25.3508)),
+            ("Antofagasta de la Sierra (aansluiting RN-40/RN-43)", (-67.4066, -26.0592)),
+            ("El Peñón (laatste plaats vóór de grensklim) — anker (net eindigt hier)", (-67.2653, -26.4754)),
+        ],
+        "id": "li-hombremuerto-elpenon",
+        "naam": "Fénix-plant → El Peñón (RN-43 via Antofagasta de la Sierra)",
+        "extracts": ["argentina", "chili"],
+        "refs": ["RN43", "43", "RN40", "40"],
+        "gepubliceerdKm": 175,
+        "bronnoot": "ontwerpschatting 150-200 km voor het hele been plant→grens (midden 175); "
+                    "El Peñón→grens heeft geen doorlopende OSM-weg (zie stippel in de bake)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "lithium-hombremuerto-bessemercity-weg-hombremuerto-elpenon.geojson",
+    },
+    # Routebrief lithium-hombremuerto-bessemercity, been b2 (LICHTE werkwijze M31
+    # golf 2). Truck carbonaat grens Paso de San Francisco → Puerto Antofagasta
+    # (ATI-kade, gedeeld anker): Ruta 31/Ruta 23 via Diego de Almagro en
+    # Chañaral naar Ruta 5 noordwaarts. Ontwerpschatting 475-525 km (midden
+    # 500); b1+b2 samen ≈675 km tegen Arcadium/Livent's eigen "675 km driving
+    # distance via Route 5" (brief bron [1]).
+    # ⚠️ NIEUW PROFIEL, GEEN HERGEBRUIK: Ruta 5 hier is de noordwaartse
+    #    kustcorridor vanuit het zuiden — anders dan de bestaande
+    #    lithium-atacama-antofagasta-profielen die van Baquedano/oosten komen.
+    "lithium-hombremuerto-bessemercity-grens-antofagasta": {
+        "via": [
+            ("grens Paso de San Francisco — anker", (-68.3014, -26.8764)),
+            ("Diego de Almagro (aansluiting op Ruta 5)", (-70.0459, -26.3911)),
+            ("Chañaral (Ruta 5 kustcorridor)", (-70.6224, -26.3479)),
+            ("Puerto Antofagasta, ATI-kade — anker (gedeeld met lithium-atacama-antofagasta)", (-70.4088, -23.6500)),
+        ],
+        "id": "li-grens-antofagasta",
+        "naam": "grens Paso de San Francisco → Puerto Antofagasta (Ruta 31/23 via Diego de Almagro/Chañaral → Ruta 5 noordwaarts)",
+        "extracts": ["chili"],
+        "refs": ["Ruta 31", "31", "Ruta 23", "23", "Ruta 5", "5", "CH-5"],
+        "gepubliceerdKm": 500,
+        "bronnoot": "ontwerpschatting 475-525 km (midden 500); b1+b2 samen ≈675 km tegen "
+                    "Arcadium/Livent's eigen 'driving distance via Route 5' van 675 km (brief bron [1])",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-hombremuerto-bessemercity-weg-grens-antofagasta.geojson",
+    },
+    # Routebrief lithium-hombremuerto-bessemercity, been b4 (LICHTE werkwijze M31
+    # golf 2). Truck (containers) Charleston (Hugh K. Leatherman Terminal) →
+    # Arcadium Bessemer City-fabriek: I-26 westwaarts via Columbia en
+    # Spartanburg → I-85 noordwaarts via Gastonia. Kruist twee extracts
+    # (SC → NC). Ontwerpschatting 530-560 km (midden 545).
+    "lithium-hombremuerto-bessemercity-charleston-bessemer": {
+        "via": [
+            ("Hugh K. Leatherman Terminal, Charleston — anker", (-79.9352, 32.8392)),
+            ("Columbia, SC (I-26 richting NW)", (-81.0352, 34.0008)),
+            ("Spartanburg, SC (I-26 → I-85)", (-81.9320, 34.9498)),
+            ("Gastonia, NC (I-85 → laatste stuk naar Bessemer City)", (-81.1838, 35.2623)),
+            ("Arcadium Lithium Bessemer City — anker", (-81.3060, 35.2795)),
+        ],
+        "id": "li-charleston-bessemer",
+        "naam": "Charleston (Hugh K. Leatherman Terminal) → Bessemer City (I-26 via Columbia/Spartanburg → I-85 via Gastonia)",
+        "extracts": ["us-south-carolina", "us-north-carolina"],
+        "refs": ["I-26", "26", "I-85", "85"],
+        "gepubliceerdKm": 545,
+        "bronnoot": "ontwerpschatting 530-560 km (midden 545), niet gepubliceerd op wegniveau",
+        "vensterKm": 40,
+        "uit": "lithium-hombremuerto-bessemercity-weg-charleston-bessemer.geojson",
+    },
+    # Routebrief lithium-cirilo-vitoria, been b1 (LICHTE werkwijze M31 golf 2).
+    # ⚠️ Stroom-id is lithium-cirilo-vitoria, NIET lithium-cirilo-ilheus: de brief
+    # §7 (haalbaarheidstoets, bindend) stelt vast dat Sigma Lithium 100% per truck
+    # naar Vitória (Espírito Santo) vervoert — geen spoorcorridor via FCA/VLI naar
+    # Porto Sul/Ilhéus (Bahia). Dat was alleen het destijds GEPLANDE exportkanaal in
+    # het NI 43-101-technisch rapport, niet het uitgevoerde tracé.
+    # Truck spodumeenconcentraat Grota do Cirilo (Sigma Lithium, Araçuaí, MG) → BR-367
+    # → Itaobim → BR-116 → Governador Valadares → BR-259 → Colatina → João Neiva →
+    # BR-101 → Porto de Vitória. Geen gepubliceerd truck-km: ontwerpschatting
+    # ~650-700 km (via-keten hemelsbreed 558,6 km × 1,15-1,25 routefactor) — venster-
+    # indicatie, geen harde ±15%-toets zonder gepubliceerd cijfer (bevinding in §9).
+    "lithium-cirilo-vitoria-plant-kade": {
+        "via": [
+            ("Grota do Cirilo — DMS/flotatie-complex (Sigma Lithium)", (-41.8878, -16.7328)),   # anker
+            ("Itaobim, BR-367 × BR-116",                                (-41.5025, -16.5619)),
+            ("Governador Valadares, BR-116 × BR-259",                   (-41.9439, -18.8574)),
+            ("Colatina, BR-259 (ES)",                                   (-40.7193, -19.4720)),
+            ("João Neiva, BR-259 × BR-101",                             (-40.4338, -19.7272)),
+            ("Porto de Vitória — Vila Rubim/Cais Comercial",            (-40.3477, -20.3238)),   # anker
+        ],
+        "id": "li-cirilo-vitoria-plant-kade",
+        "naam": "Grota do Cirilo → Itaobim → Gov. Valadares → Colatina → João Neiva → Porto de Vitória (BR-367 → BR-116 → BR-259 → BR-101)",
+        "extracts": ["brazilie"],
+        "refs": ["BR-367", "BR-116", "BR-259", "BR-101"],
+        "gepubliceerdKm": 675, "bronnoot": "geen harde bron — ontwerpschatting 650-700 km (via-keten hemelsbreed 558,6 km); venster, geen ±15%-toets afdwingen",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary"],
+        "uit": "lithium-cirilo-vitoria-weg-plant-kade.geojson",
+    },
+    # Routebrief lithium-silverpeak-mccarran, been b1 (LICHTE werkwijze M31 golf 2).
+    # Truck lithiumcarbonaat Albemarle Silver Peak-brineoperatie (Clayton
+    # Valley) → NV-265 → US-95 N (Tonopah–Mina–Hawthorne–Schurz) → US-95A
+    # (Silver Springs–Fernley) → I-80 W → Tesla Gigafactory Nevada (TRIC).
+    # Enige been van de keten; geen zee/spoor/leiding/binnenvaart. Geen
+    # gepubliceerde weg-km: ontwerpschatting 300-330 km (gebruikt als 315),
+    # eigen hemelsbreed-som over de zes via-punten 330,8 km (brief §8).
+    # ⚠️ Silver Peak zelf hangt aan NV-265, een tweebaans landelijke
+    #    staatsweg; bij Tonopah/Mina/Hawthorne/Schurz loopt de route recht
+    #    door de plaatsen (geen omleiding nodig — dit zijn de doorgaande
+    #    wegen zelf) → corridorKlassen laat tertiary/unclassified toe.
+    # ⚠️ eindKlassen verruimd met track/residential/service — de laatste
+    #    ~1-2 km naar de brine-operatie kan een unclassified/track-
+    #    toegangsweg zijn (patroon van lithium-olaroz-naraha/-bougouni-yangpu).
+    "lithium-silverpeak-mccarran-silverpeak-gigafactory": {
+        "via": [
+            ("Albemarle Silver Peak — brineoperatie (laadplek, anker)", (-117.5768, 37.7693)),
+            ("Tonopah (junctie US-6/US-95)", (-117.2251, 38.1001)),
+            ("Mina (junctie US-95/SR-359)", (-118.1087, 38.3905)),
+            ("Hawthorne (US-95 langs Walker Lake)", (-118.6270, 38.5254)),
+            ("Schurz (splitsing US-95 → US-95A)", (-118.8385, 38.9762)),
+            ("Silver Springs (junctie US-95A/US-50 ALT)", (-119.2267, 39.3736)),
+            ("Fernley (junctie met I-80)", (-119.2506, 39.6079)),
+            ("Tesla Gigafactory Nevada — TRIC (losplek, anker)", (-119.4390524, 39.5403926)),
+        ],
+        "id": "li-silverpeak-gigafactory",
+        "naam": "Albemarle Silver Peak → Tesla Gigafactory Nevada (NV-265 → "
+                "US-95 N → US-95A → I-80 W)",
+        "extracts": ["us-nevada"],
+        "refs": ["US 95", "US 95A", "I 80", "NV 265"],
+        "gepubliceerdKm": 315,
+        "bronnoot": "niet gepubliceerd; ontwerpschatting 300-330 km, gebruikt "
+                    "als middenwaarde 315; eigen hemelsbreed-som over de "
+                    "zes via-punten 330,8 km (brief §8)",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "lithium-silverpeak-mccarran-weg-silverpeak-gigafactory.geojson",
+    },
     # Routebrief kobalt-kisanfu-daressalaam, been b1 (LICHTE werkwijze M31).
     # Truck kobalthydroxide KFM Kisanfu-plant → mijnweg → RN39 (bij
     # Kisanfu-dorp) → RN39/RN1 Likasi–Lubumbashi (gedeeld eerste stuk met

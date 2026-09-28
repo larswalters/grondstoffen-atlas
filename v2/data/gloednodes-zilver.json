@@ -1,0 +1,457 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag zilver voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/zilver-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof zilver: ids 'w-*', gewicht = capaciteit in t Ag/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in t Ag/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-fresnillo-saucito",
+   "naam": "Fresnillo / Saucito",
+   "lon": -102.86,
+   "lat": 23.158,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (primair)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Mexico",
+   "gewicht": 1050.0,
+   "gewicht_bron": "capaciteit t Ag/j — Fresnillo plc jaarverslag 2024/2025: Fresnillo-district (Fresnillo + Saucito-mijnen samen) ≈ 33,7 Moz Ag in 2024 (≈1.048 t) — grootste primaire zilverproducent ter wereld [B1][B2]",
+   "bron": "satelliet z14→z16 (sitelaag-zilver-fresnillo/-2/-3): startpunt (23.18,-102.87) uit data/silver.js lag midden in het stadscentrum van Fresnillo; kruis verschoven naar het tailings-/plantcomplex NW van de stad (zichtbaar tailingsbekken + fabrieksgebouwen op 23.156–23.166, -102.855–-102.862) — geen benoemd OSM-mijnobject gevonden, dus dit is een satelliet-schatting op het zichtbare complex, niet het exacte putcentrum",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Fresnillo plc; combinatie van de ondergrondse Fresnillo- en Saucito-mijnen op hetzelfde district. Doré per truck naar de eigen Peñoles-raffinaderij in Torreón (andere eigenaar, Industrias Peñoles — de Mexicaanse zilverketen loopt dwars door concurrerende bedrijven)."
+  },
+  {
+   "id": "w-penasquito",
+   "naam": "Peñasquito",
+   "lon": -101.69707,
+   "lat": 24.65508,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (goud/zink/lood-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Mexico",
+   "gewicht": 650.0,
+   "gewicht_bron": "capaciteit t Ag/j — Newmont jaarverslag/kwartaalrapportages 2024: Peñasquito ≈ 20,9 Moz Ag-bijproduct in 2024 (≈650 t), een van de grootste polymetaal-zilverbronnen ter wereld [B3][B4]",
+   "bron": "Wikipedia-geohack 'Peñasquito Mine' (en); satelliet z14 (sitelaag-zilver-penasquito): kruis ligt exact tussen de twee open putten, op de rand van de plant/tailings-ponds",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Newmont (na de 2023-overname van Goldcorp); Zacatecas. Zilver als bijproduct van goud/zink/lood; doré/concentraat over land naar Mexicaanse en Amerikaanse smelters."
+  },
+  {
+   "id": "w-kghm-rudna",
+   "naam": "KGHM Rudna (representatief voor Lubin/Polkowice-Sieroszowice/Rudna)",
+   "lon": 16.1073,
+   "lat": 51.5015,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Polen",
+   "gewicht": 1300.0,
+   "gewicht_bron": "capaciteit t Ag/j — KGHM jaarverslag 2024/2025: metaalzilver in concentraat van de drie Neder-Silezische kopermijnen samen ≈ 1.300 t Ag/j — grootste bijproduct-zilverbron van één onderneming ter wereld [B7][B8]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-rudna, Wikipedia-geohack 'Rudna mine', landmark) — het cijfer dekt het hele drie-mijnen-complex (Lubin/Polkowice-Sieroszowice/Rudna), Rudna is als representatieve site-coördinaat gekozen",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "KGHM Polska Miedź; drie ondergrondse kopermijnen voeden samen de Głogów- en Legnica-smelters. Cijfer is het drie-mijnen-totaal, niet Rudna alleen — vermijdt dubbeltelling met een los Lubin/Polkowice-punt."
+  },
+  {
+   "id": "w-escondida-ag",
+   "naam": "Escondida-cluster",
+   "lon": -69.07,
+   "lat": -24.27,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Chili",
+   "gewicht": 1050.0,
+   "gewicht_bron": "capaciteit t Ag/j — World Silver Survey/USGS: Chileense koperbijproduct-zilverproductie zwaar geconcentreerd bij Escondida (BHP); indicatief ≈ 1.000-1.100 t Ag/j uit het koperconcentraat [B5][B9]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-escondida, Wikipedia-geohack + satelliet z14: kruis in de hoofdput, bron-gelegd)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "BHP 57,5%; grootste kopermijn ter wereld. Zilver reist mee met het koperconcentraat naar Chinese/Japanse smelters, plus een klein deel via SX-EW-kathode (draagt geen zilver mee)."
+  },
+  {
+   "id": "w-antamina-ag",
+   "naam": "Antamina",
+   "lon": -77.0611,
+   "lat": -9.5372,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper/zink-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Peru",
+   "gewicht": 520.0,
+   "gewicht_bron": "capaciteit t Ag/j — Antamina/Glencore/Teck jaarcijfers: zilver-bijproduct in koper/zink-concentraat ≈ 500-540 t Ag/j (2024) [B10][B11]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-antamina, Wikipedia-geohack + satelliet z14: kruis in de open pit, bron-gelegd)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "BHP/Glencore/Teck/Mitsubishi JV; concentraat per 302 km-pijpleiding naar Punta Lobitos (Huarmey), Peru."
+  },
+  {
+   "id": "w-cannington",
+   "naam": "Cannington",
+   "lon": 140.907,
+   "lat": -21.8564,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (lood/zink-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Australië",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — South32 jaarverslag: Cannington ≈ 12-14 Moz Ag/j (≈ 380-435 t) uit lood/zink-concentraat, een van 's werelds grootste zilver-loodmijnen op volume [B12][B13]",
+   "bron": "Wikipedia-geohack 'Cannington Mine' (en) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "South32; Queensland. Concentraat per spoor naar Townsville, dan de Koraalzee op naar Oost-Aziatische smelters."
+  },
+  {
+   "id": "w-sancristobal",
+   "naam": "San Cristóbal",
+   "lon": -67.15,
+   "lat": -21.05,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (zink/lood-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Bolivia",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — World Silver Survey/Sumitomo-rapportages: San Cristóbal ≈ 12-14 Moz Ag/j (≈ 380-435 t) uit zink/lood-concentraat [B5][B14]",
+   "bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Sinds 2023 San Cristóbal Mining Inc. (voorheen Minera San Cristóbal/Sumitomo); Nor Lípez, Potosí. Landlocked — concentraat per spoor/truck naar Antofagasta/Mejillones, Chili."
+  },
+  {
+   "id": "w-dukat",
+   "naam": "Dukat",
+   "lon": 155.2942,
+   "lat": 62.5717,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (primair)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Rusland",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — Polymetal/Solidcore-jaarcijfers (laatste publieke vóór de herstructurering): Dukat-cluster ≈ 12-13 Moz Ag/j (≈ 375-400 t), Ruslands grootste primaire zilvermijn [B15][B16]",
+   "bron": "OSM landuse=industrial 'рудник Дукат' (Nominatim)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Omsukchansky District, Magadan Oblast (Russisch Verre Oosten). Sanctiegevoelig sinds 2022; afzet verschoven van Europa naar Azië (China) via de Zee van Ochotsk."
+  },
+  {
+   "id": "w-kazzinc-ridder",
+   "naam": "Kazzinc (Ridder)",
+   "lon": 83.53,
+   "lat": 50.2,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (zink/lood + koper-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Kazachstan",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — Glencore/Kazzinc jaarcijfers: Oost-Kazachstaanse polymetaal-cluster ≈ 380-420 t Ag/j uit zink/lood/koper-concentraat [B5][B17]",
+   "bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Glencore/Kazzinc; Oost-Kazachstan. Landlocked — deels binnenlands geraffineerd, deels over land naar Chinese raffinage (Xinjiang-grens)."
+  },
+  {
+   "id": "w-uchucchacua",
+   "naam": "Uchucchacua",
+   "lon": -76.92,
+   "lat": -10.62,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (primair)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Peru",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — Buenaventura jaarverslag 2024: Uchucchacua ≈ 12-13 Moz Ag/j (≈ 375-400 t) primair zilver + lood/zink [B18][B19]",
+   "bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Buenaventura; Oyón, Andes. Concentraat over de Andes naar Callao, dan de Stille Oceaan over naar Aziatische smelters."
+  },
+  {
+   "id": "w-collahuasi-ag",
+   "naam": "Collahuasi",
+   "lon": -68.6386,
+   "lat": -20.9914,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Chili",
+   "gewicht": 180.0,
+   "gewicht_bron": "capaciteit t Ag/j — Indicatieve schatting o.b.v. het koperconcentraat-volume (Glencore/Anglo American FY2024: 558,6 kt Cu) en een typische Chileense byproduct-zilvergehalte; geen los gepubliceerd Ag-cijfer gevonden binnen budget [B20]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-collahuasi, Wikipedia-geohack + satelliet z14: kruis in de Rosario-put, bron-gelegd)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Anglo American/Glencore 44/44; concentraat per slurryleiding naar Patache. Zilvergehalte is een AFGELEIDE schatting, geen gepubliceerd Ag-cijfer — zwakker onderbouwd dan de andere Cu-bijproductsites in deze lijst."
+  },
+  {
+   "id": "w-greens-creek",
+   "naam": "Greens Creek",
+   "lon": -134.63,
+   "lat": 58.07,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (primair + zink)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "VS (Alaska)",
+   "gewicht": 270.0,
+   "gewicht_bron": "capaciteit t Ag/j — Hecla Mining jaarverslag 2024: Greens Creek ≈ 8,6-9 Moz Ag/j (≈ 265-280 t) [B21][B22]",
+   "bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Hecla Mining; Admiralty Island bij Juneau. Doré per schip langs de Pacific-kust naar de Amerikaanse raffinage."
+  },
+  {
+   "id": "w-bingham-canyon-ag",
+   "naam": "Bingham Canyon (Kennecott)",
+   "lon": -112.151,
+   "lat": 40.523,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper/goud-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "VS (Utah)",
+   "gewicht": 260.0,
+   "gewicht_bron": "capaciteit t Ag/j — Rio Tinto Kennecott jaarcijfers: Bingham Canyon ≈ 8-8,5 Moz Ag-bijproduct/j (≈ 250-265 t) [B23][B24]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-bingham-canyon, Wikipedia-geohack)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Rio Tinto; volledig binnenlandse keten (Copperton → Garfield-smelter/raffinaderij, Magna, Utah)."
+  },
+  {
+   "id": "w-garpenberg",
+   "naam": "Garpenberg",
+   "lon": 16.1983,
+   "lat": 60.3158,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (zink/lood-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Zweden",
+   "gewicht": 260.0,
+   "gewicht_bron": "capaciteit t Ag/j — Boliden jaarverslag 2024: Garpenberg ≈ 8-8,5 Moz Ag/j (≈ 250-265 t) uit zink/lood-concentraat [B25][B26]",
+   "bron": "OSM place=village 'Garpenberg' (Nominatim) — dorpscentrum, geen apart mijnobject gevonden binnen budget",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Boliden; Dalarna. Een van de modernste ondergrondse mijnen ter wereld; concentraat naar de eigen Rönnskär-smelter."
+  },
+  {
+   "id": "w-lucky-friday",
+   "naam": "Lucky Friday",
+   "lon": -115.7832,
+   "lat": 47.4708,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (primair)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "VS (Idaho)",
+   "gewicht": 100.0,
+   "gewicht_bron": "capaciteit t Ag/j — Hecla Mining kwartaal-/jaarrapportages 2024: Lucky Friday ≈ 3,2-3,6 Moz Ag/j (≈ 100-112 t), herstellend na de schachtstremming van 2021-2022 [B22][B27]",
+   "bron": "OSM landuse=quarry 'Lucky Friday Mine' (Nominatim)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Hecla Mining; Coeur d'Alene-district, Shoshone County. Diepe ondergrondse ader-mijn; doré over land naar Amerikaanse raffinage."
+  },
+  {
+   "id": "w-palmarejo",
+   "naam": "Palmarejo",
+   "lon": -108.411,
+   "lat": 27.398,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (goud-zilver, primair)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Mexico (Chihuahua)",
+   "gewicht": 140.0,
+   "gewicht_bron": "capaciteit t Ag/j — Coeur Mining jaarverslag 2024: Palmarejo ≈ 4,5-5 Moz Ag/j (≈ 140-155 t) [B28][B29]",
+   "bron": "OSM place=village 'Palmarejo' (Nominatim), Chínipas-gemeente — dorpscentrum bij het mijncomplex, geen apart mijnobject gevonden binnen budget",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Coeur Mining; Sierra Madre. Coördinaat is het dorp waar de mijn naar genoemd is, niet het putterrein zelf — geen satellietblik deze ronde."
+  },
+  {
+   "id": "w-ref-penoles",
+   "naam": "Met-Mex Peñoles (Torreón)",
+   "lon": -103.42,
+   "lat": 25.55,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Mexico",
+   "gewicht": 1800.0,
+   "gewicht_bron": "capaciteit t Ag/j — Industrias Peñoles bedrijfsopgave: ≈ 1.800 t geraffineerd zilver/j, gepresenteerd als grootste zilverraffinaderij ter wereld [B30][B31]",
+   "bron": "v1-register (data/silver.js), stadscentroïde Torreón; satelliet z14 (sitelaag-zilver-penoles): kruis landde in het stadscentrum, het Met-Mex-complex ligt aantoonbaar noordelijker op het industrieterrein — dit ronde niet exact gelokaliseerd",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Industrias Peñoles; verwerkt Mexicaanse doré (Fresnillo, Peñasquito e.a.) tot good-delivery baren. Coördinaat is stadsniveau, geen terreinanker — open punt voor een volgende ronde."
+  },
+  {
+   "id": "w-ref-kghm-glogow",
+   "naam": "KGHM Głogów-smelter",
+   "lon": 15.9778,
+   "lat": 51.6872,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Polen",
+   "gewicht": 1400.0,
+   "gewicht_bron": "capaciteit t Ag/j — KGHM jaarverslag 2024/2025: Głogów I+II verwerken het overgrote deel van het KGHM-koperzilver tot ≈ 1.300-1.400 t Ag/j [B7][B8]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-glogow, OSM man_made=works + satelliet z14: kruis op het smeltercomplex, bron-gelegd)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "KGHM Polska Miedź; geïntegreerd met de Lubin/Polkowice-Sieroszowice/Rudna-mijnen. Grootste zilver-output uit één koper-smeltcomplex ter wereld."
+  },
+  {
+   "id": "w-ref-onsan",
+   "naam": "Korea Zinc / LS-Nikko (Onsan)",
+   "lon": 129.34,
+   "lat": 35.42,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Zuid-Korea",
+   "gewicht": 2000.0,
+   "gewicht_bron": "capaciteit t Ag/j — Korea Zinc bedrijfsopgave/World Silver Survey: Onsan-complex ≈ 2.000 t geraffineerd zilver/j, 's werelds grootste base-metaal-smeltcomplex qua zilver-terugwinning [B32][B33]",
+   "bron": "satelliet z14 (sitelaag-zilver-onsan): kruis ligt midden in het Onsan Industrial Complex (Ulsan) — dicht opeengepakte smelter-/petrochemieterreinen, exact welk gebouw Korea Zinc is niet op deze zoom te onderscheiden van naburige fabrieken (LS MnM-kopersmelter ligt in dezelfde zone, zie koper-sitelaag w-onsan)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Korea Zinc; verwerkt zink/lood-concentraat van over de hele wereld (Peru/Bolivia/Australië) en wint het zilver terug. Zone bevestigd, exacte plant-toewijzing binnen de zone niet."
+  },
+  {
+   "id": "w-ref-trail",
+   "naam": "Teck Trail-smelter",
+   "lon": -117.7125,
+   "lat": 49.1,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Canada",
+   "gewicht": 450.0,
+   "gewicht_bron": "capaciteit t Ag/j — Teck Resources bedrijfsopgave: Trail Operations, grootste geïntegreerde zink-lood-zilversmeltcomplex van Noord-Amerika, indicatief ≈ 400-500 t Ag/j [B34][B35]",
+   "bron": "Wikipedia-geohack 'Teck Cominco smelter' (en) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Teck Resources; British Columbia, aan de Columbia-rivier. Exacte recente Ag-tonnage niet gepubliceerd gevonden binnen budget — indicatieve bandbreedte."
+  },
+  {
+   "id": "w-ref-aurubis-hh",
+   "naam": "Aurubis (Hamburg)",
+   "lon": 10.0408,
+   "lat": 53.5186,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter (koper, zilver-bijproduct)",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Duitsland",
+   "gewicht": 800.0,
+   "gewicht_bron": "capaciteit t Ag/j — Aurubis jaarverslag: precious-metals-output (grotendeels zilver) uit koperconcentraat + recyclingmateriaal, indicatief ≈ 700-900 t Ag/j (v1-register noemde eerder 1.200 t, dit ronde niet herbevestigd — bandbreedte verlaagd naar het conservatievere cijfer) [B36]",
+   "bron": "hergebruikt anker uit v2/design/koper-sitelaag.json (w-aurubis-hamburg, Wikipedia-geohack, aannemelijk)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Europa's grootste koperraffinaderij; zilver als bijproduct, levert direct de Europese industrie + recyclingschroot terug in de keten."
+  },
+  {
+   "id": "w-ref-ronnskar",
+   "naam": "Boliden Rönnskär",
+   "lon": 21.2699,
+   "lat": 64.6704,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Zweden",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Ag/j — Boliden jaarverslag: Rönnskär verwerkt het Garpenberg-concentraat + e-waste tot ≈ 400 t Ag/j [B25][B26]",
+   "bron": "OSM landuse=industrial 'Rönnskärsverken' (Nominatim)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Boliden; Skelleftehamn. Baren de Oostzee op via de Deense Straten."
+  },
+  {
+   "id": "w-ref-chanderiya",
+   "naam": "Chanderiya Lead-Zinc Smelter (Hindustan Zinc)",
+   "lon": 74.6283,
+   "lat": 24.9393,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "India (Rajasthan, Chittorgarh)",
+   "gewicht": 700.0,
+   "gewicht_bron": "capaciteit t Ag/j — Hindustan Zinc (Vedanta) bedrijfsopgave: geraffineerd zilver ≈ 700-750 t Ag/j, gepresenteerd als 's werelds grootste geïntegreerde zilverproductielijn op één locatie [B37][B38]",
+   "bron": "OSM place=village 'Chanderiya' (Nominatim) — dorpsniveau, het exacte smeltercomplex niet apart benoemd in OSM; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Verwerkt erts van de Hindustan Zinc-mijnen Rampura Agucha en Sindesar Khurd (zie sites_zonder_gewicht — hun eigen Ag-bijdrage is niet los gepubliceerd, dus het gewicht staat bewust hier om dubbeltelling te vermijden, het McArthur River/Key Lake-patroon uit de uraniumronde)."
+  },
+  {
+   "id": "w-ref-valcambi",
+   "naam": "Valcambi (Balerna, Ticino)",
+   "lon": 9.005,
+   "lat": 45.845,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Zwitserland",
+   "gewicht": 600.0,
+   "gewicht_bron": "capaciteit t Ag/j — v1-register (data/silver.js): Valcambi good-delivery baren (ook goud) ≈ 600 t Ag/j indicatief, geen aparte bronronde deze golf [B39]",
+   "bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Vooral premium-/beleggingszilver uit geïmporteerd doré; cijfer is niet dit ronde herbevestigd, blijft de v1-schatting."
+  },
+  {
+   "id": "w-ref-japan",
+   "naam": "Mitsubishi Materials / Dowa (Naoshima e.o.)",
+   "lon": 136.6,
+   "lat": 34.9,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "zilver"
+   ],
+   "land": "Japan",
+   "gewicht": 500.0,
+   "gewicht_bron": "capaciteit t Ag/j — v1-register (data/silver.js): tech-zilver + geïmporteerd concentraat ≈ 500 t Ag/j indicatief, geen aparte bronronde deze golf [B39]",
+   "bron": "v1-register (data/silver.js), regio-centroïde — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Voedt de Japanse elektronica-/halfgeleiderindustrie; verwerkt ook urban-mining-schroot. Coördinaat is regio-niveau, niet op een specifiek fabrieksterrein."
+  }
+ ]
+}

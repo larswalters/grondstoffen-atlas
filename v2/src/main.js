@@ -235,7 +235,7 @@ function haalAisTracks() {
 // ⚠️ `grondstof` staat hier EXPLICIET (2026-09-26): de HUD groepeert erop
 // (details.srGroep[data-gs]), en het pilotbestand heet niet naar zijn
 // grondstof. Sleutel = de id-prefix uit stroomstijl.js (koper · lithium ·
-// grafiet · kobalt · nikkel · ree · kolen · olie · uranium).
+// grafiet · kobalt · nikkel · ree · kolen · olie · uranium · zilver · gas).
 const STROMEN = [
   { sleutel: "grafiet", bestand: "stroomroute-pilot.json", grondstof: "grafiet", aan: true },
   { sleutel: "cu-eg", bestand: "stroomroute-koper-escondida-guixi.json", grondstof: "koper", aan: true },
@@ -308,6 +308,46 @@ const STROMEN = [
   // 220 km gepubliceerd); het zeebeen is bewust niet getekend (brief §7).
   { sleutel: "co-at", bestand: "stroomroute-kobalt-ambatovy-toamasina.json", grondstof: "kobalt", aan: true },
   { sleutel: "co-mf", bestand: "stroomroute-kobalt-moa-fortsaskatchewan.json", grondstof: "kobalt", aan: true },
+  // ── M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld ──
+  // Eén workflow van 135 agenten (Sonnet 5): ontwerp → toets → brief → bake → keuring per keten.
+  // zilver-antamina-huarmey is volledig stippel (slurryleiding zonder OSM-way), net als co-at.
+  { sleutel: "ag-lg", bestand: "stroomroute-zilver-lubin-glogow.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-sa", bestand: "stroomroute-zilver-sancristobal-antofagasta.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-po", bestand: "stroomroute-zilver-penasquito-onsan.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-ct", bestand: "stroomroute-zilver-cannington-townsville.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-ah", bestand: "stroomroute-zilver-antamina-huarmey.json", grondstof: "zilver", aan: true },
+  { sleutel: "gas-sr", bestand: "stroomroute-gas-sabinepass-rotterdam.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-rc", bestand: "stroomroute-gas-raslaffan-chiba.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-ci", bestand: "stroomroute-gas-corpuschristi-incheon.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-kr", bestand: "stroomroute-gas-karratha-rudong.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-bz", bestand: "stroomroute-gas-bonny-zeebrugge.json", grondstof: "gas", aan: true },
+  { sleutel: "cu-sw", bestand: "stroomroute-koper-sentinel-walvisbay.json", grondstof: "koper", aan: true },
+  { sleutel: "cu-op", bestand: "stroomroute-koper-olympicdam-portadelaide.json", grondstof: "koper", aan: true },
+  { sleutel: "cu-aj", bestand: "stroomroute-koper-aktogay-jinchuan.json", grondstof: "koper", aan: true },
+  { sleutel: "li-cv", bestand: "stroomroute-lithium-cirilo-vitoria.json", grondstof: "lithium", aan: true },
+  { sleutel: "li-hb", bestand: "stroomroute-lithium-hombremuerto-bessemercity.json", grondstof: "lithium", aan: true },
+  { sleutel: "li-sm", bestand: "stroomroute-lithium-silverpeak-mccarran.json", grondstof: "lithium", aan: true },
+  { sleutel: "gr-lq", bestand: "stroomroute-grafiet-lindijumbo-qingdao.json", grondstof: "grafiet", aan: true },
+  { sleutel: "gr-iv", bestand: "stroomroute-grafiet-itapecerica-vitoria.json", grondstof: "grafiet", aan: true },
+  { sleutel: "gr-sl", bestand: "stroomroute-grafiet-skaland-lulea.json", grondstof: "grafiet", aan: true },
+  { sleutel: "ni-vl", bestand: "stroomroute-nikkel-voiseysbay-longharbour.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-sm", bestand: "stroomroute-nikkel-sorowako-matsuzaka.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-on", bestand: "stroomroute-nikkel-obi-ningbo.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ree-lg", bestand: "stroomroute-ree-longnan-ganzhou.json", grondstof: "ree", aan: true },
+  { sleutel: "ree-kj", bestand: "stroomroute-ree-kuantan-japan.json", grondstof: "ree", aan: true },
+  { sleutel: "ree-bn", bestand: "stroomroute-ree-baotou-ningbo.json", grondstof: "ree", aan: true },
+  { sleutel: "kolen-ep", bestand: "stroomroute-kolen-ermelo-portqasim.json", grondstof: "kolen", aan: true },
+  { sleutel: "kolen-mh", bestand: "stroomroute-kolen-muswellbrook-hekinan.json", grondstof: "kolen", aan: true },
+  { sleutel: "kolen-tf", bestand: "stroomroute-kolen-tabalong-fangchenggang.json", grondstof: "kolen", aan: true },
+  { sleutel: "olie-tn", bestand: "stroomroute-olie-tengiz-novorossiysk.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-ap", bestand: "stroomroute-olie-albasrah-paradip.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-kd", bestand: "stroomroute-olie-kharg-dongjiakou.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-kod", bestand: "stroomroute-olie-kozmino-dalian.json", grondstof: "olie", aan: true },
+  { sleutel: "u-is", bestand: "stroomroute-uranium-inkai-stpetersburg.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-pa", bestand: "stroomroute-uranium-porthope-almelo.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-op", bestand: "stroomroute-uranium-olympicdam-portadelaide.json", grondstof: "uranium", aan: true },
+  { sleutel: "co-hg", bestand: "stroomroute-kobalt-huayou-gunsan.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-bg", bestand: "stroomroute-kobalt-bouazzer-guemassa.json", grondstof: "kobalt", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -416,7 +456,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "125", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "126", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -445,7 +485,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "125", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "126", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -557,6 +597,7 @@ const GLOEDBESTANDEN = [
   "gloednodes-koper.json", "gloednodes-lithium.json", "gloednodes-grafiet.json",
   "gloednodes-kobalt.json", "gloednodes-nikkel.json", "gloednodes-ree.json",
   "gloednodes-kolen.json", "gloednodes-olie.json", "gloednodes-uranium.json",
+  "gloednodes-zilver.json", "gloednodes-gas.json",
 ];
 const GLOEDNODES = new Map();         // bestand → laag (alleen wat geladen is)
 window.GLOEDNODES = GLOEDNODES;       // diagnose-handvat
@@ -577,7 +618,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "125", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "126", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);

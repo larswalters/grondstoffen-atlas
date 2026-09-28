@@ -45,7 +45,7 @@ V2 = HIER.parent
 EENHEID = {
     "koper": "kt Cu/j", "lithium": "kt LCE/j", "nikkel": "kt Ni/j",
     "kobalt": "kt Co/j", "grafiet": "kt/j", "ree": "kt REO/j", "kolen": "Mt/j",
-    "olie": "kb/d", "uranium": "t U/j",
+    "olie": "kb/d", "uranium": "t U/j", "zilver": "t Ag/j", "gas": "bcm/j",
 }
 
 try:
@@ -72,7 +72,7 @@ def main():
     ap.add_argument("--schrijf", action="store_true")
     ap.add_argument("--grondstof", default="koper",
                     help="sleutel = id-prefix van de stromen (koper, lithium, grafiet, "
-                         "kobalt, nikkel, ree, kolen, olie, uranium); bepaalt sitelaag- en doelbestand")
+                         "kobalt, nikkel, ree, kolen, olie, uranium, zilver, gas); bepaalt sitelaag- en doelbestand")
     ap.add_argument("--eenheid", default=None,
                     help='capaciteitseenheid voor de teksten, bv. "kt LCE/j" (default per grondstof)')
     a = ap.parse_args()
