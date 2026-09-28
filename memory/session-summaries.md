@@ -1,6 +1,30 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (avond, laat) - M31 golf 4 live op `?v=129` (LAR-604, commit `4352bcd`)
+
+Lars: *"Nog een golf met reserve ketens"* (sessielimiet op 69%).
+
+**Workflow `wf_bbf33baf-fed`** (46 agenten, Sonnet 5, 0 fouten, 13,2M tokens, ~42 min): de 21 reserve-assen uit golf 2/3, zonder ontwerpstap; de 9 ongetoetste eerst getoetst.
+
+**Resultaat — 12 gebakken en gekeurd:**
+- gas: raslaffan-rotterdam, sabetta-zeebrugge
+- koper: antamina-daye, binghamcanyon-garfield (100% stippel)
+- kolen: gillette-robertsbank
+- olie: westridge-ulsan
+- kobalt: murrinmurrin-kwinana, obi-ganzhou (eindigt in Xiamen)
+- goud: metalor-istanbul, ity-ticino
+- PGM: amandelbult-iselin
+- diamant: gahchokue-gaborone
+
+**9 afgevallen:** 8 in de toets (Dukat, Greens Creek, Jixi, Dong Pao, Nechalacho, Navoi → China, Cigar Lake, PGM → Hongkong). Diamant Mirny → Dubai is niet gestart.
+
+**Centraal:** via-punt Bern uit Metalor → ZRH (195 → 152,6 km); registersleutels en HUD-knoppen in acht groepen.
+
+**Bol:** 137 stromen, 14 gloedlagen, 375 px zonder horizontale scroll.
+
+Vault: [[2026-09-28-grondstoffen-atlas-m31-golf4-reserves]].
+
 ## 2026-09-28 (laat) - uraniumgloed + M31 golf 3 live op `?v=128` (LAR-599..603, commit `54ae5c1`)
 
 Lars: *"kan je de uranium gloed maken, laat de gestippelde ketens maar staan, voor golf 3 lucht maken is goed."*

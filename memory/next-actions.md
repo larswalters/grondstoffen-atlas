@@ -1,5 +1,14 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (uraniumgloed + modaliteit lucht `?v=127`; M31 golf 3 LIVE `?v=128` — 125 stromen over 14 grondstoffen)*
+*Last updated: 2026-09-28 (M31 golf 4 LIVE `?v=129` — reserve-assen, 137 stromen over 14 grondstoffen)*
+
+## 🔴 NIEUW 2026-09-28 (avond, laat) — na golf 4 live
+
+1. **Lars kijkt:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=129
+2. **Volgende kiezen:**
+   - (a) een nieuwe ontwerpgolf voor de dunste grondstoffen (zilver 5, uranium 7, gas 7, REE 8). Er zijn geen reserves meer;
+   - (b) de visuele fase LAR-490. Met 137 stromen standaard aan zijn leesbaarheid en telefoonprestaties de open vraag.
+3. **Bingham Canyon → Garfield** bestaat voor 100% uit stippel; het is de derde, na Ambatovy en Antamina. Laten staan, net als die twee?
+4. De golf 3-punten hieronder (bestandsnamen die niet bij de keten passen) staan nog.
 
 ## 🔴 NIEUW 2026-09-28 (laat) — na golf 3 live
 

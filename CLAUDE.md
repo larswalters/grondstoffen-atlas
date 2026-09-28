@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 3 LIVE ?v=128 — luchtvracht, goud/PGM/diamant; 125 stromen over 14 grondstoffen, 14 gloedlagen; commit 54ae5c1. Daarvoor ?v=127: uraniumgloed + modaliteit lucht)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 4 LIVE ?v=129 — de reserve-assen, 12 ketens; 137 stromen over 14 grondstoffen; commit 4352bcd)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · M31 GOLF 4 LIVE `?v=129` (LAR-604, `4352bcd`).** De reserve-assen uit golf 2/3, zonder ontwerpstap:
+  46 agenten, 12 van de 21 gebakken. De toets is bindend: 8 afgewezen, waaronder Navoi → China (handelsdata: export naar India).
+  Een via-punt dat een omweg afdwingt wordt centraal verwijderd (Bern, Zug).
 - **2026-09-28 · M31 GOLF 3 LIVE `?v=128` (LAR-601..603, `54ae5c1`).** 110 agenten, 34 ketens goud/PGM/diamant, 32
   luchtbenen. Sitelaag-coördinaten worden centraal gelijkgetrokken met de satelliet-gelegde keten-ankers (17 punten lagen
   0,6–26 km ernaast). Een airside-vrachtplatform krijgt een korte stippel naar de openbare weg.

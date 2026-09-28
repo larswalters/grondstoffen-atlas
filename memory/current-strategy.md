@@ -1,5 +1,11 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (uraniumgloed + modaliteit lucht `?v=127`; M31 golf 3 LIVE `?v=128` — 125 stromen over 14 grondstoffen)*
+*Last updated: 2026-09-28 (M31 golf 4 LIVE `?v=129` — reserve-assen, 137 stromen over 14 grondstoffen)*
+
+## Stand 2026-09-28 (avond, laat) — M31 golf 4 live: de reserve-assen
+
+- **Op de bol (`?v=129`, commit `4352bcd`):** 137 gemeten stromen over 14 grondstoffen: koper 15 · goud 15 · diamant 13 · kobalt 11 · kolen 10 · olie 10 · PGM 10 · lithium 9 · nikkel 9 · grafiet 8 · ree 8 · gas 7 · uranium 7 · zilver 5.
+- **Reserve-golf zonder ontwerpstap:** een as die al ontworpen en getoetst is, gaat direct naar brief → bake → keuring. Een ongetoetste as krijgt eerst een eigen toets per keten. Dat kostte 46 agenten voor 12 ketens.
+- **Er zijn geen reserve-assen meer.** Een volgende golf vraagt een nieuwe ontwerpronde.
 
 ## Stand 2026-09-28 (laat) — M31 golf 3 live: luchtvracht
 

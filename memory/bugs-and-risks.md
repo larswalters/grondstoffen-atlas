@@ -1,5 +1,10 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 3 live `?v=128`: bevindingen uit de integratie)*
+*Last updated: 2026-09-28 (M31 golf 4 live `?v=129`)*
+
+## 🟡 NIEUW 2026-09-28 (avond, laat) — uit golf 4
+
+18. **Derde 100%-stippelketen:** `koper-binghamcanyon-garfield`. De leiding en band van Kennecott hebben geen OSM-way. Beslissing van Lars nodig, net als bij Ambatovy en Antamina.
+19. **Via-punten in steden of op de verkeerde as blijven terugkomen** (Zug → Bern), ook met de regel in de prompt. De omwegcheck in de keuring (> 1,6× hemelsbreed) vangt ze nu; de centrale nameting blijft nodig.
 
 ## 🟡 NIEUW 2026-09-28 (laat) — uit golf 3
 

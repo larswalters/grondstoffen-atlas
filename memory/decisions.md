@@ -1,5 +1,12 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (uraniumgloed = voeding-equivalent; lucht boogt in elke lijnmodus; golf 3)*
+*Last updated: 2026-09-28 (golf 4: reserve-golf zonder ontwerpstap)*
+
+## 2026-09-28 (avond, laat) — golf 4
+
+- **2026-09-28 · ✅ LARS — "Nog een golf met reserve ketens"** (sessielimiet op 69%, weeklimiet nauwelijks aangesproken).
+- **RESERVE-GOLF ZONDER ONTWERPSTAP.** De as en het toetsoordeel staan in een bestand (`golf4-assen.json`) dat elke agent zelf leest; een ongetoetste as krijgt eerst een eigen toets per keten. Door de toets afgewezen assen gaan niet opnieuw in de pijplijn.
+- **DE TOETS IS BINDEND, OOK VOOR RESERVES.** 8 van de 9 ongetoetste assen sneuvelden, allemaal met reden. Navoi → China werd weerlegd door handelsdata: Oezbekistan exporteert naar India. Liever 12 goede ketens dan 21 met gaten.
+- **Een via-punt dat een omweg afdwingt wordt centraal verwijderd, met een ⚠️-noot** (Bern in golf 4, Zug in golf 3). De keuring meet nu de verhouding wegbeen ÷ hemelsbreed en meldt > 1,6.
 
 ## 2026-09-28 (laat) — uraniumgloed, luchtvracht, golf 3
 
