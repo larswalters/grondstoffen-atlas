@@ -385,6 +385,20 @@ const STROMEN = [
   { sleutel: "dia-ld", bestand: "stroomroute-diamant-letseng-dubai.json", grondstof: "diamant", aan: true },
   { sleutel: "dia-sh", bestand: "stroomroute-diamant-surat-hongkong.json", grondstof: "diamant", aan: true },
   { sleutel: "dia-mn", bestand: "stroomroute-diamant-mumbai-newyork.json", grondstof: "diamant", aan: true },
+  // ── M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3 ──
+  { sleutel: "gas-rr", bestand: "stroomroute-gas-raslaffan-rotterdam.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-sz", bestand: "stroomroute-gas-sabetta-zeebrugge.json", grondstof: "gas", aan: true },
+  { sleutel: "cu-ad", bestand: "stroomroute-koper-antamina-daye.json", grondstof: "koper", aan: true },
+  { sleutel: "cu-bg", bestand: "stroomroute-koper-binghamcanyon-garfield.json", grondstof: "koper", aan: true },
+  { sleutel: "kolen-gr", bestand: "stroomroute-kolen-gillette-robertsbank.json", grondstof: "kolen", aan: true },
+  { sleutel: "olie-wu", bestand: "stroomroute-olie-westridge-ulsan.json", grondstof: "olie", aan: true },
+  { sleutel: "co-mk", bestand: "stroomroute-kobalt-murrinmurrin-kwinana.json", grondstof: "kobalt", aan: true },
+  // bestand heet nog "ganzhou" (het ontwerp), de gebakken keten eindigt op de kade van Xiamen Haicang
+  { sleutel: "co-og", bestand: "stroomroute-kobalt-obi-ganzhou.json", grondstof: "kobalt", aan: true },
+  { sleutel: "au-mi", bestand: "stroomroute-goud-metalor-istanbul.json", grondstof: "goud", aan: true },
+  { sleutel: "au-it", bestand: "stroomroute-goud-ity-ticino.json", grondstof: "goud", aan: true },
+  { sleutel: "pgm-ai", bestand: "stroomroute-pgm-amandelbult-iselin.json", grondstof: "pgm", aan: true },
+  { sleutel: "dia-gg", bestand: "stroomroute-diamant-gahchokue-gaborone.json", grondstof: "diamant", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -493,7 +507,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "128", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "129", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -522,7 +536,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "128", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "129", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -656,7 +670,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "128", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "129", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);

@@ -95,6 +95,149 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief kobalt-murrinmurrin-kwinana, been b1 (LICHTE werkwijze M31 golf 4,
+    # reserve-as). Truck Murrin Murrin HPAL-plant (Glencore, Laverton Shire, WA) →
+    # Leonora-spoorhoofd (railhead Kalgoorlie–Leonora-lijn), over de eigen
+    # toegangsweg → Goldfields Highway. Geen gepubliceerde wegkm gevonden (brief
+    # §2/§8[10]); gepubliceerdKm = de hemelsbrede afstand tussen de twee ankers
+    # (56,4 km, "geen wegkm" — toets-bindend als indicatie, geen harde ±15%-norm).
+    # Geen via-punten: enige toegangsweg, geen corridorkeuze gevonden.
+    "kobalt-murrinmurrin-kwinana-plant-leonora": {
+        "via": [
+            ("Murrin Murrin HPAL-plant (Glencore/Minara Resources) (anker, co-murrinmurrin-plant)", (121.8940, -28.7680)),
+            ("Leonora-spoorhoofd (railhead Kalgoorlie–Leonora-lijn) (anker, co-leonora-spoorhoofd)", (121.3308, -28.8845)),
+        ],
+        "id": "co-murrinmurrin-leonora-weg",
+        "naam": "Murrin Murrin HPAL-plant → Leonora-spoorhoofd (eigen toegangsweg → Goldfields Highway)",
+        "extracts": ["australie"],
+        "refs": [],
+        "gepubliceerdKm": 56.4,
+        "bronnoot": "geen gepubliceerde wegkm gevonden; 56,4 km is de hemelsbrede afstand "
+                    "tussen de twee ankers (routebrief §2/§8[1][10]) — 'geen wegkm', "
+                    "toets-bindend als indicatie, geen harde ±15%-norm.",
+        "vensterKm": 40,
+        "uit": "kobalt-murrinmurrin-kwinana-weg-plant-leonora.geojson",
+    },
+    # Routebrief pgm-amandelbult-iselin, been b1 (LICHTE werkwijze M31 golf 4).
+    # Truck Amandelbult-mijn (Anglo American Platinum / Valterra Platinum, Noord-Bushveld)
+    # → Rustenburg PMR (Waterval-smelter-/RBMR-complex), via Northam op de R510
+    # (Rustenburg–Northam–Thabazimbi). Geen gepubliceerde wegkm gevonden binnen het
+    # webbudget (routebrief §2/§7) → gepubliceerdKm = de hemelsbrede afstand tussen de
+    # twee ankers (96,6 km, toets-bindend "geen wegkm"); de scan hieronder levert de
+    # echte routekm. Northam is het enige gevonden corridorpunt op de R510.
+    "pgm-amandelbult-iselin-amandelbult-rustenburg": {
+        "via": [
+            ("Amandelbult-mijn (Anglo American Platinum / Valterra Platinum) (anker, pgm-amandelbult)", (27.2650, -24.8080)),
+            ("Northam (R510-doorgangsplaats)", (27.2660, -24.9500)),
+            ("Rustenburg PMR — Waterval-smelter-/RBMR-complex (anker, pgm-rustenburg-pmr)", (27.3180, -25.6750)),
+        ],
+        "id": "pgm-amandelbult-rustenburg-weg",
+        "naam": "Amandelbult-mijn → Northam → Rustenburg PMR (R510)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R510"],
+        "gepubliceerdKm": 96.6,
+        "bronnoot": "geen gepubliceerde wegkm gevonden binnen het webbudget; 96,6 km is de "
+                    "hemelsbrede afstand tussen de twee ankers (Major Mines & Projects noemt "
+                    "'94 km north from Rustenburg', routebrief §2/§8[2]) — 'geen wegkm', "
+                    "toets-bindend totdat deze scan een echte routekm geeft.",
+        "vensterKm": 40,
+        "uit": "pgm-amandelbult-iselin-weg-amandelbult-rustenburg.geojson",
+    },
+    # Routebrief pgm-amandelbult-iselin, been b4 (LICHTE werkwijze M31 golf 4).
+    # Truck JFK South Cargo Area vrachtterminal (Queens, New York) → Metivo (voorheen BASF
+    # ECMS), 33 Wood Avenue South, Iselin NJ, via NJ Turnpike/I-95. Gepubliceerd 43 mijl /
+    # ~69 km (travelmath.com routeplanner) — geen officiële overheids-/bedrijfsopgave, dus
+    # de bake-uitvoer is de echte controle tegen de ±15%-indicatie (routebrief §2/§7).
+    "pgm-amandelbult-iselin-jfk-iselin": {
+        "via": [
+            ("JFK South Cargo Area vrachtterminal (anker, pgm-jfk-cargo)", (-73.7952, 40.6587)),
+            ("Metivo (voorheen BASF ECMS), 33 Wood Ave South, Iselin NJ (anker, pgm-basf-ecms-iselin)", (-74.3288, 40.5650)),
+        ],
+        "id": "pgm-jfk-iselin-weg",
+        "naam": "JFK South Cargo Area vrachtterminal → Metivo/BASF ECMS, Iselin NJ (NJ Turnpike/I-95)",
+        "extracts": ["us-new-york", "us-new-jersey"],
+        "refs": [],
+        "gepubliceerdKm": 69,
+        "bronnoot": "Travelmath.com, 'Driving Distance from JFK to Iselin, NJ' — 43 mijl / "
+                    "~69 km, ~55 min (routebrief §2/§8[4]) — schatting uit een routeplanner, "
+                    "geen officiële overheids-/bedrijfsopgave; de bake-uitvoer is de echte "
+                    "controle tegen de ±15%-indicatie.",
+        "vensterKm": 25,
+        "uit": "pgm-amandelbult-iselin-weg-jfk-iselin.geojson",
+    },
+    # Routebrief goud-ity-ticino, been b1 (LICHTE werkwijze M31 golf 4, reserve-as).
+    # Truck Ity-mijn (Endeavour Mining, West-Ivoorkust) → Abidjan (ABJ) vrachtterminal,
+    # via Zouan-Hounien → Man → Daloa → Yamoussoukro (routebrief §2/§4). Geen gepubliceerde
+    # wegkm gevonden binnen het webbudget; brief gebruikt hemelsbreed via-punten-som
+    # (≈594 km) + ontwerp (≈600 km) puur als venster-referentie, geen harde ±15%-toets.
+    # vensterKm ruim (75) want de via-punten zijn indicatieve corridorsteden, niet zelf
+    # OSM-wegvertex-geverifieerd (routebrief §7).
+    "goud-ity-ticino-ity-abidjan": {
+        "via": [
+            ("Ity-mijn, verwerkingsinstallatie (Endeavour Mining) (anker, au-ity-mijn)", (-8.1195, 6.8830)),
+            ("Zouan-Hounien (departementshoofdstad, ~15 km van Ity)", (-8.2089, 6.9198)),
+            ("Man (regionale corridorknoop, Tonkpi/Montagnes)", (-7.5504, 7.4103)),
+            ("Daloa (corridorknoop, Haut-Sassandra)", (-6.4530, 6.8869)),
+            ("Yamoussoukro (hoofdstad, corridorknoop naar Abidjan)", (-5.2776, 6.8200)),
+            ("Abidjan (ABJ) vrachtterminal (anker, au-abidjan-vrachtterminal)", (-3.9298, 5.2628)),
+        ],
+        "id": "au-ity-abidjan-weg",
+        "naam": "Ity-mijn → Zouan-Hounien → Man → Daloa → Yamoussoukro → Abidjan (ABJ) vrachtterminal",
+        "extracts": ["ivoorkust"],
+        "refs": [],
+        "gepubliceerdKm": 600,
+        "bronnoot": "geen wegkm gevonden binnen het webbudget; ontwerp ≈600 km, hemelsbreed "
+                    "via-punten-som ≈594 km (routebrief §2/§7) — beide zijn een indicatie, geen "
+                    "harde bron, dus de ±15%-toets geldt hier niet als norm.",
+        "vensterKm": 75,
+        "uit": "goud-ity-ticino-weg-ity-abidjan.geojson",
+    },
+    # Routebrief goud-metalor-istanbul, been b1 (LICHTE werkwijze M31 golf 4, reserve-as).
+    # Truck Metalor-raffinaderij, Marin-Epagnier → Zürich Airport vrachtplatform, via
+    # Biel/Bienne (A5/A6-knoop) en Bern (A6/A1-knoop) — A5 → A6/A1. Been eindigt op het
+    # openbare-wegpunt vlak bij het ZRH-vrachtplatform (47.472087,8.554523), niet op het
+    # platform zelf: het platform is airside/privéterrein zonder aansluiting op het
+    # openbare net (zelfde patroon als goud-loulo-ticino / goud-pamp-shanghai) — de
+    # bak-functie sluit af met een korte --stippel naar 47.4647,8.5492.
+    "goud-metalor-istanbul-marin-zrh": {
+        "via": [
+            ("Metalor SA, Marin-Epagnier (anker, au-ref-metalor)", (7.0112, 47.0107)),
+            ("Biel/Bienne (A5/A6-knoop)", (7.2439, 47.1402)),
+            # ⚠️ Centraal verwijderd (2026-09-28): via-punt "Bern (A6/A1-knoop)" (7.4522,
+            #    46.9485) ligt niet op de doorgaande route Biel → Zürich (A5 langs
+            #    Solothurn → A1 bij Luterbach); het dwong een omweg van ~35 km af
+            #    (been 195 km, 1,53× hemelsbreed). Zelfde klasse als Zug in golf 3.
+            ("ZRH-vrachtplatform, openbare-wegpunt (anker, au-zrh-vrachtterminal, last mile)", (8.554523, 47.472087)),
+        ],
+        "id": "au-marin-zrh-weg",
+        "naam": "Metalor Marin-Epagnier → Biel/Bienne → Solothurn → Zürich Airport vrachtplatform (A5 → A1)",
+        "extracts": ["zwitserland"],
+        "refs": ["A5", "A6", "A1"],
+        "gepubliceerdKm": 180,
+        "bronnoot": "ontwerp ≈180 km (routebrief §2); hemelsbreed 126,6 km berekend — grote afwijking is "
+                    "normaal, de corridor via Bern maakt een boog.",
+        "vensterKm": 40,
+        "uit": "goud-metalor-istanbul-weg-marin-zrh.geojson",
+    },
+    # Routebrief goud-metalor-istanbul, been b3 (LICHTE werkwijze M31 golf 4, reserve-as).
+    # Truck Istanbul Airport (IST) vrachtterminal → Kuyumcukent-complex, Yenibosna —
+    # binnenstedelijke corridor over TEM-otoyolu/Basın Ekspress Yolu. Geen via-punten in
+    # de brief (korte, ondubbelzinnige corridor); de router mag zelf 1-2 via-punten
+    # toevoegen als een omweg/lus optreedt (brief §4, werkregel uit goud-loulo-ticino.md).
+    "goud-metalor-istanbul-ist-kuyumcukent": {
+        "via": [
+            ("IST-vrachtterminal (iGA), Tayakadın (anker, au-ist-vrachtterminal)", (28.71278, 41.25528)),
+            ("Kuyumcukent-goud-/sieradencomplex, Yenibosna (anker, au-kuyumcukent)", (28.8148, 41.0035)),
+        ],
+        "id": "au-ist-kuyumcukent-weg",
+        "naam": "Istanbul Airport (IST) vrachtterminal → Kuyumcukent-complex, Yenibosna (TEM-otoyolu/Basın Ekspress Yolu)",
+        "extracts": ["turkije"],
+        "refs": [],
+        "gepubliceerdKm": 30,
+        "bronnoot": "ontwerp ≈30 km (routebrief §2); hemelsbreed 29,3 km berekend.",
+        "vensterKm": 40,
+        "uit": "goud-metalor-istanbul-weg-ist-kuyumcukent.geojson",
+    },
     # Routebrief goud-dubai-delhi, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
     # Truck DMCC-raffinagezone (Gold & Diamond Park, Al Quoz 3) → DXB-vrachtterminal
     # (Emirates SkyCargo) — Sheikh Zayed Rd → Al Rebat St/Cargo Village Rd. Gepubliceerd
