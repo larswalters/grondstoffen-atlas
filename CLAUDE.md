@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 5 LIVE ?v=130 — nieuwe ontwerpgolf, 21 ketens voor de zes dunste grondstoffen; 158 stromen over 14 grondstoffen; commit e6fdf7c)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · M31 GOLF 6 LIVE `?v=131` (LAR-615, `04a97b1`).** Een grote ontwerpronde: 99 agenten, 24 ketens over elf grondstoffen,
+  waaronder de eerste olieleidingen (BTC, SUMED, Keystone) en TurkStream. Een keten die volledig uit stippel bestaat wordt ook na een
+  positieve keuring niet geregistreerd. Registersleutels worden centraal op botsingen gecontroleerd. Volgende stap: de visuele fase LAR-490.
 - **2026-09-28 · M31 GOLF 5 LIVE `?v=130` (LAR-614, `e6fdf7c`).** Een nieuwe ontwerpgolf voor de zes dunste grondstoffen:
   75 agenten, 21 ketens, waaronder de eerste gasleidingen (Power of Siberia; Europipe II uit OSM) en de uraniumconversie.
   De golfomvang wordt afgestemd op de weeklimiet (~7% per 75 Sonnet-agenten). Sitelaag-centroïdes worden centraal gelijkgetrokken met de keten-ankers.

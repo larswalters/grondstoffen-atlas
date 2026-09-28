@@ -1,6 +1,37 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (nacht) - M31 golf 6 live op `?v=131` (LAR-615, commit `04a97b1`)
+
+Lars: *"Doe maar nog een grote ontwerpronde, de sessielimiet wordt over 1,5 uur weer gereset. Daarna doen we visuals."*
+
+**Workflow `wf_0c1f784d-7dc`** (99 agenten, Sonnet 5, 0 fouten, 27,3M tokens, ~75 min): elf grondstoffen, ontwerp → toets → brief → bake → keuring.
+
+**Resultaat — 24 geregistreerd:**
+- nikkel: cerromatoso-cartagena, sotkamo-kokkola, oncapuma-saoluis
+- kolen: elkview-neptune, moatize-nacala, pocahontas-norfolk
+- olie: sangachal-ceyhan (BTC), rastanura-sidikerir (SUMED), hardisty-cushing (Keystone)
+- PGM: unki-rustenburg, mimosa-springs
+- grafiet: zavallya-constanta
+- zilver: valcambi-londen (lucht), imiter-guemassa, luckyfriday-trail
+- kobalt: mutanda-walvisbay, wedabay-tongxiang
+- uranium: priargunsky-seversk, eunice-columbia
+- gas: bintulu-pyeongtaek, anapa-kiyikoy (TurkStream)
+- REE: ganzhou-hanau
+- lithium: whabouchi-becancour, arcadia-beira
+
+**Niet geregistreerd:** ree-phaxay-namcan (100% stippel) en grafiet-sahamamy-toamasina (niet gebakken). **De toets wees 15 assen af.**
+
+**Centraal:**
+- naden Beira en Matagami gedicht;
+- acht sitelaag-centroïdes gelijkgetrokken;
+- gloed voor vijf grondstoffen opnieuw geschreven;
+- sleutels ni-tk, olie-kc en kolen-pn.
+
+**Controle:** 182 = 182, 0 consolefouten, 375 px ok.
+
+**Kosten:** weeklimiet 73 → 79%.
+
 ## 2026-09-28 (avond, laatst) - M31 golf 5 live op `?v=130` (LAR-614, commit `e6fdf7c`)
 
 Lars: *"Bingham mag blijven, doe maar een nieuwe ontwerpgolf"*, in de middelgrote variant (weeklimiet 66%).

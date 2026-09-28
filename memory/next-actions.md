@@ -1,6 +1,19 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 5 LIVE `?v=130` — de zes dunste grondstoffen, 158 stromen)*
+*Last updated: 2026-09-28 (M31 golf 6 LIVE `?v=131` — grote ontwerpronde, 182 stromen)*
 
+
+
+## 🔴 NIEUW 2026-09-28 (nacht) — na golf 6 live
+
+1. **Lars kijkt:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=131. Nieuw zijn de olieleidingen BTC, SUMED en Keystone, TurkStream, en de kolencorridors Elk Valley, Moatize → Nacala en Norfolk.
+2. **Volgende: de visuele fase LAR-490** (keuze Lars: *"daarna doen we visuals"*). 182 stromen staan standaard aan (364 fetches); leesbaarheid en telefoonprestaties zijn nooit gemeten.
+3. **Geen nieuwe ontwerpronde vóór 3 oktober:** de weeklimiet staat op 79%.
+4. **Niet geregistreerd, wel op schijf:**
+   - `ree-phaxay-namcan`: 100% stippel, want de laos-extract gaf geen wegpad;
+   - `grafiet-sahamamy-toamasina`: alleen een brief, geen site-anker.
+5. **Bestandsnamen die niet bij het eindpunt passen** (commentaar in `STROMEN`): `nikkel-cerromatoso-cartagena` (→ Ningbo), `zilver-imiter-guemassa` (→ Tanger Med), `ree-ganzhou-hanau` (→ Schijndel), `lithium-arcadia-beira` (→ Zhangjiagang).
+6. **Oude naad:** `lithium-bikita-zhangjiagang` heeft nog de Beira-naad van 7,8 km. In `lithium-arcadia-beira` is die nu gedicht met een haven-aanloop; hetzelfde kan in Bikita, maar dat vraagt een herbake.
+7. **Reserves uit golf 6** (door de toets gekomen, niet gebakken): `olie-abqaiq-yanbu`, `zilver-sanbartolome-arica`, `zilver-dubai-mumbai`, `kobalt-sudbury-kristiansand`, `uranium-tricastin-romans`, `uranium-mccleanlake-porthope`, `gas-nyhamna-easington`, `gas-galkynysh-khorgos`, `ree-steenkampskraal-kaapstad`, `ree-baotou-hanau`, `lithium-mtholland-kwinana`.
 
 ## 🔴 NIEUW 2026-09-28 (avond, laatst) — na golf 5 live
 

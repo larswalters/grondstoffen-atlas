@@ -1,6 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 5 live `?v=130`)*
+*Last updated: 2026-09-28 (M31 golf 6 live `?v=131`)*
 
+
+
+## 🟡 NIEUW 2026-09-28 (nacht) — uit golf 6
+
+23. **De keuring liet een keten door die volledig uit stippel bestaat** (`ree-phaxay-namcan`, "goed-met-bevindingen") en twee naden > 5 km (Beira, Matagami) zonder herstel. De centrale nameting blijft dus nodig. Een mogelijke verbetering: de keuring moet "niet-registreren" geven zodra het stippelaandeel boven 50% ligt, en een naad > 5 km altijd dichten.
+24. **Bak-agenten kiezen registersleutels zonder de andere stromen te kennen:** twee botsingen in golf 6.
+25. **Sitelaag-centroïdes blijken keer op keer 10–25 km naast het terrein te liggen** (Terrafame, Mimosa, Onça Puma). Na drie golven zijn er 21 gelijkgetrokken. Sitelaagpunten zonder keten-anker blijven onzeker.
+26. **Veiligheidsclassifier niet beschikbaar** (rate-limit) bij de brief-agent van `ree-ganzhou-hanau`. Achteraf gecontroleerd: alleen de eigen brief geschreven, met gewone bronnen.
+- **Nog altijd open (#11):** 182 stromen standaard aan (364 fetches); de telefoonprestaties zijn nooit gemeten. Dit is de kern van LAR-490.
 
 ## 🟡 NIEUW 2026-09-28 (avond, laatst) — uit golf 5
 

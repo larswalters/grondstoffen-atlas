@@ -1,6 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 5 LIVE `?v=130` — de zes dunste grondstoffen, 158 stromen)*
+*Last updated: 2026-09-28 (M31 golf 6 LIVE `?v=131` — grote ontwerpronde, 182 stromen)*
 
+
+
+## Stand 2026-09-28 (nacht) — M31 golf 6 live: de grote ontwerpronde
+
+- **Op de bol (`?v=131`, commit `04a97b1`):** 182 gemeten stromen over 14 grondstoffen: koper 15 · goud 15 · lithium 14 · kobalt 13 · kolen 13 · olie 13 · uranium 13 · zilver 13 · gas 13 · diamant 13 · nikkel 12 · REE 12 · PGM 12 · grafiet 11.
+- **M31 is inhoudelijk "vol genoeg" voor de visuele fase:** elke grondstof heeft 11–15 ketens, en elke modaliteit komt voor (zee, spoor, truck, leiding, binnenvaart, lucht).
+- **Wat de toets nu vooral tegenhoudt:** assen zonder anker op site-niveau (Chinese clusters, Zuid-Afrikaanse smelters, Koreaanse fabrieken) en mijnen die nog niet produceren. Daar zit de grens van de lichte werkwijze.
+- **Kostenijk:** ~100 Sonnet-agenten ≈ 6% van de weeklimiet (golf 6: 73 → 79%).
 
 ## Stand 2026-09-28 (avond, laatst) — M31 golf 5 live: de zes dunste grondstoffen
 

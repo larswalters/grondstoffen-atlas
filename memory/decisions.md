@@ -1,6 +1,14 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (golf 5: nieuwe ontwerpgolf, dunste grondstoffen)*
+*Last updated: 2026-09-28 (golf 6: grote ontwerpronde)*
 
+
+
+## 2026-09-28 (nacht) — golf 6
+
+- **2026-09-28 · ✅ LARS — "Doe maar nog een grote ontwerpronde, de sessielimiet wordt over 1,5 uur weer gereset. Daarna doen we visuals."** Lars koos bewust voor een grote ronde met de weeklimiet op 73%.
+- **Een keten die volledig uit stippel bestaat wordt niet geregistreerd, ook niet als de keuring haar doorlaat** (`ree-phaxay-namcan`). De regel "grotendeels stippel = niet haalbaar" gaat vóór het keuringsoordeel. Ambatovy, Antamina en Bingham blijven staan; dat was een eerdere keuze van Lars.
+- **Een naad > 5 km die een agent "geërfd" heeft uit een gekopieerd been wordt in de nieuwe keten toch gedicht** (Beira). De oude keten blijft staan zonder herbake.
+- **Registersleutels controleer ik centraal op botsingen** (`ni-sk` en `olie-hc` bestonden al). Een agent kent alleen zijn eigen keten.
 
 ## 2026-09-28 (avond, laatst) — golf 5
 
