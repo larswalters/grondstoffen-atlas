@@ -1,6 +1,29 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 - M31 golf 1: twaalf ketens gebakken (olie 5, uranium 4, kobalt 3), integratie open
+
+Lars: v2 toont veel minder stromen dan v1 (578 over 14 grondstoffen tegen 42 ketens over 7) — "dat mogen er nog wel meer
+worden". Gekozen: M30-kwaliteit, gemengde golven, één golf per keer.
+
+**Workflow** `wf_d400f985-f9a`:
+- per grondstof ontwerp → skeptische toets → sitelaag ∥ (brief → bake per keten);
+- 32 agenten op Sonnet 5, 0 fouten, ~2 u, 10,7 mln subagent-tokens.
+
+**Gebakken:**
+- **olie:** rastanura-zhoushan, primorsk-jamnagar, corpuschristi-rotterdam, habshan-chiba (Hormuz-bypass ADCOP als leiding), bonny-vadinar;
+- **uranium:** inkai-poti (Trans-Kaspisch), mcarthurriver-porthope (5 truckbenen), rossing-walvisbay, arlit-cotonou (gestaakt sinds 2023);
+- **kobalt:** kisanfu-daressalaam, ambatovy-toamasina (alleen stippel-leiding), moa-fortsaskatchewan.
+
+**Sitelagen:** olie 39 sites (kb/d, 32 met gewicht), uranium 32 (t U/j + eenheid_site, 9 zonder gewicht).
+
+**Verder:**
+- AIS-pings-knop uit de HUD en `aispings.js` gewist (lokaal geverifieerd: 42 knoppen, 0 consolefouten).
+- Linear: M31 + LAR-583..586 In Progress.
+
+**Open:** registreren, gloedlagen, `?v=125`, bol-check, commit/push (zie next-actions). Vault:
+`wiki/projects/General/grondstoffen-atlas/2026-09-28-grondstoffen-atlas-m31-golf1-gebakken.md`.
+
 ## 2026-09-27 - AIS-collector opgeheven (infra-besluit, in de Insiderly-sessie)
 
 De VPS-schijf stond op 94%; meting: `/var/lib/ais-collector` 45 GB, +~1,2 GB/dag. Lars: *"die ais collector en de data mag

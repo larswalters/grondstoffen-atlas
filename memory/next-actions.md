@@ -1,9 +1,32 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-27 (AIS-collector opgeheven → opruimwerk; product: M30 af, `?v=124`)*
+*Last updated: 2026-09-28 (M31 golf 1 gebakken — 12 ketens op schijf, integratie + `?v=125` staat open)*
+
+## 🔴 NIEUW 2026-09-28 — M31 golf 1: centraal integreren (LAR-586), dan Lars laten kijken
+
+**Op schijf, niet gecommit:**
+- 12 brieven `v2/design/routebrieven/{olie,uranium,kobalt}-*.md` (§9 = bak-noot);
+- 12 `v2/data/stroomroute-*.json`;
+- 12 functies in `v2/tools/bak_stromen.sh` + profielen in `maak_stroombeen_weg.py`;
+- `v2/design/{olie,uranium}-sitelaag.{md,json}`;
+- AIS-pings-knop verwijderd (`v2/index.html`, `v2/src/main.js`, `v2/src/aispings.js` gewist).
+
+1. **Beoordelen vóór registratie** (de brieven §9 hebben de details):
+   - `kobalt-ambatovy-toamasina` is alleen een rechte stippel-leiding van 132 km (−40% t.o.v. 220 km, geen OSM-way gevonden) zonder zeebeen. Registreren of alleen als brief laten? Eerst proberen of OSM de Ambatovy-slurryleiding wél heeft (`man_made=pipeline` rond Moramanga–Toamasina).
+   - `olie-habshan-chiba`: naad leiding→zee 10,5 km (Fujairah-anker ≠ MARNET-zeeknoop) → evt. haven-aanloop-stippel ertussen.
+   - bestanden > 300 KB: `uranium-mcarthurriver-porthope` 512 KB, `kobalt-kisanfu-daressalaam` 504 KB (lange wegbenen).
+   - `uranium-inkai-poti` b1 = rechte stippel van 259 km (Inkai → Zhanatas, geen doorlopende OSM-weg).
+2. **Registreren:** 12 regels in `STROMEN` (`v2/src/main.js`). De agentsleutels zijn niet uniform (`ol-rz`, `corpuschristi-rotterdam`, `u-…`, `co-…`) → normaliseren naar `ol-xx` / `u-xx` / `co-xx`, `grondstof: "olie" | "uranium" | "kobalt"`.
+3. **Gloedlagen:** `python v2/tools/voeg_sites_toe.py --grondstof olie --eenheid "kb/d" --schrijf` en idem uranium. Controleer eerst de vlaggen met `--help` en een droge run. Daarna `gloednodes-olie.json` + `gloednodes-uranium.json` in de gloedlijst (`main.js` ~r. 539).
+4. **Versie:** datalaag `laadStroomroute(VECTOR_R, "124", …)` → `"125"`, `?v=124` → `?v=125` in `v2/index.html` (+ imports waar nodig).
+5. **Bol-check:** preview `grondstoffen-atlas` (8732) → `?vers=…`: 54 stroomknoppen, 0 consolefouten, per grondstof + donker.
+6. **Commit alleen eigen bestanden** (géén `git add -A`), push, link `https://larswalters.github.io/grondstoffen-atlas/v2/?v=125`. LAR-583..586 → Done.
+7. **Daarna Lars laten kijken en golf 2 kiezen.** Kandidaten: zilver (past op het gereedschap) + de reserve-assen uit het ontwerp (olie-kharg-dongjiakou, olie-tengiz-novorossiysk, uranium-olympicdam-portadelaide, uranium-inkai-stpetersburg, kobalt-murrinmurrin-kwinana, kobalt-bouazzer-guemassa) + extra ketens voor een bestaande grondstof. Gas vraagt eerst pijpleidinggeometrie; goud/PGM/diamant eerst een modaliteit `lucht` (stroomstijl + hecht_marnet).
+8. **Uraniumsitelaag:** de Kazachse JV-mijnen (~40% van de wereldwinning) hebben nog geen coördinaat (NI 43-101-rapporten per JV).
+   **Olie-sitelaag:** 8 sites staan op een algemene coördinaat, omdat het zoekbudget en de Firecrawl-credits op waren.
 
 ## 🔵 2026-09-27 — AIS-collector opgeheven: opruimwerk in de atlas
 
-1. **Debug-toggle "AIS-pings" uit de HUD halen.** Het endpoint `ais.187.124.169.172.nip.io` bestaat niet meer (container
+1. ✅ **(2026-09-28, lokaal — gaat mee in de M31-commit) Debug-toggle "AIS-pings" uit de HUD halen.** Het endpoint `ais.187.124.169.172.nip.io` bestaat niet meer (container
    weg). Ruim ook `haal_ais_data.py` en verwijzingen naar de VPS-pings op.
 2. ✅ **AIS-backlog gecanceld (2026-09-27, akkoord Lars):** LAR-489 (AIS-realisme-check), LAR-531 (terminal-nodes uit
    ligplaats-pings), LAR-532 (MARNET↔AIS-stitching), en evt. LAR-482 (AIS-dichtheid-toggle). Het dok-bewijs voor

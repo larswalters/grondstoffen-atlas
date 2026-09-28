@@ -1,5 +1,17 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-27 (infra: AIS-collector opgeheven; product-stand = M30 `?v=124`)*
+*Last updated: 2026-09-28 (M31 golf 1 gebakken, integratie open; live = M30 `?v=124`)*
+
+## Stand 2026-09-28 — M31: meer stromen, in gemengde golven richting v1-dichtheid
+
+- **Doel (Lars):** v2 toont 42 ketens over 7 grondstoffen; v1 had 578 stromen over 14 → "dat mogen er nog wel meer worden".
+- **Werkwijze = M30, ongewijzigd in kwaliteit.** Per grondstof een ontwerp en een skeptische toets. Daarna per keten een lichte brief met webonderzoek en satellietblik, en een bake volgens `bakhandleiding-licht.md`.
+- **Nieuw in de orkestratie:** alles in één gepipelinede workflow, zonder tussenstop:
+  - per grondstof ontwerp → toets → (sitelaag ∥ per keten brief → bake);
+  - de toets-aanpassing is bindend voor de briefschrijver;
+  - elke keten stroomt door zodra zijn grondstof getoetst is.
+- **Golfgrootte die past:** ~12 ketens + 2 sitelagen = 32 agenten op Sonnet 5 (`model` via args, vast vanaf de start zodat hervatten de cache houdt). Dat was ~2 uur, 10,7 mln subagent-tokens, geen sessielimiet.
+- **Gemengd per golf:** één of twee nieuwe grondstoffen + extra ketens voor een bestaande. Na elke golf centraal integreren (register, gloedlaag, `?v=`, bol-check, push) en Lars laten kijken vóór de volgende.
+- **Wat per grondstof centrale voorbereiding vraagt:** olie/zilver/uranium niets; gas pijpleidinggeometrie (OSM/GEM, licentie!); goud/PGM/diamant een modaliteit `lucht` (bol + `hecht_marnet`).
 
 ## Stand 2026-09-27 (infra-besluit) — AIS-collector opgeheven
 

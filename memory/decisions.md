@@ -1,5 +1,20 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-27 (AIS-collector opgeheven, ruwe pings gewist)*
+*Last updated: 2026-09-28 (M31: meer stromen in gemengde golven, M30-kwaliteit)*
+
+## 2026-09-28 — M31: meer stromen richting v1-dichtheid
+
+- **2026-09-28 · ✅ LARS — "DAT MOGEN ER NOG WEL MEER WORDEN"** (v2 42 ketens over 7 grondstoffen tegen v1 578 over 14).
+  Drie opties voorgelegd: extra licht op v1-basis / zelfde als M30 / mechanisch alles tegelijk. **Gekozen: zelfde als M30.**
+  De kwaliteit van de gemeten ketens blijft de maat, ook al gaat het langzamer.
+- **2026-09-28 · ✅ LARS — GEMENGDE GOLVEN, ÉÉN PER KEER, DAN KIJKEN.** Elke golf = nieuwe grondstof(fen) + extra ketens voor
+  een bestaande. Golf 1: olie 5 + uranium 4 (nieuw) + kobalt 3. Kobalt koos ik omdat het de dunste v2-dekking had (4 ketens,
+  v1 37 stromen). Olie en uranium omdat ze zonder centrale voorbereiding op het gereedschap passen.
+- **2026-09-28 · ÉÉN GEPIPELINEDE WORKFLOW VOOR ONTWERP → TOETS → BRIEF → BAKE.** In M30 waren ontwerp en golven aparte
+  workflows met de orkestrator ertussen. Nu stroomt een keten door zodra zijn grondstof getoetst is. De toets-aanpassing is
+  bindend, en een keten die de toets afwijst valt terug op een reserve-as. Resultaat: 32 agenten, 0 fouten, ~2 u.
+- **2026-09-28 · DE AIS-PINGS-DEBUGLAAG IS UIT DE ATLAS GEHAALD** (niet achter een vlag): de laag had geen rol meer sinds de
+  collector is opgeheven en het endpoint bestaat niet. `aispings.js` gewist. De VPS-tools blijven in de repo als bron van
+  de uitgeschakelde `/opt/ais-collector`-code.
 
 ## 2026-09-27 — AIS-collector opgeheven, ruwe pings gewist
 

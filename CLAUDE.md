@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-26 (laatst: M30 zes grondstoffen verhaal-compleet in drie golven — 42 stromen, 7 gloedlagen, live ?v=124)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 1 gebakken — olie 5 + uranium 4 nieuw, kobalt +3; integratie + ?v=125 open; live = ?v=124)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · ✅ LARS — MEER STROMEN (M31), ZELFDE KWALITEIT ALS M30, GEMENGDE GOLVEN, ÉÉN PER KEER.** v2 42 ketens/7
+  grondstoffen tegen v1 578/14. Eén gepipelinede workflow per golf (ontwerp → toets → sitelaag ∥ brief → bake, 32 agenten op
+  Sonnet 5). Golf 1: olie 5 + uranium 4 + kobalt 3 gebakken; AIS-pings-debuglaag uit de atlas (`aispings.js` gewist).
 - **2026-09-27 · ✅ LARS — AIS-COLLECTOR OPGEHEVEN, RUWE PINGS GEWIST ("gebruiken we uiteindelijk niet").** Services disabled,
   container `ais-pings` weg, 45 GB gewist (VPS-schijf 94% → 22%). De gebakken `aistracks`/`aisgloed` blijven; de
   debug-toggle "AIS-pings" en `haal_ais_data.py` zijn dood → opruimen. AIS-backlog LAR-489/531/532 is kandidaat voor cancel.

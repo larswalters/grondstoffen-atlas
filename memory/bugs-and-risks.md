@@ -1,10 +1,24 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-27 (AIS-collector opgeheven: dode debug-toggle + haal_ais_data.py)*
+*Last updated: 2026-09-28 (M31 golf 1: bevindingen uit de bakes)*
+
+## 🟡 NIEUW 2026-09-28 — M31 golf 1 (nog niet geregistreerd)
+
+1. **Werk staat ongecommit op schijf** (12 ketens, 2 sitelagen, AIS-verwijdering). Integreren vóór iemand anders in deze tree
+   werkt; nooit `git add -A` (sectie J).
+2. **`kobalt-ambatovy-toamasina` is inhoudelijk dun:** één rechte stippel van 132 km (de slurryleiding niet in OSM gevonden)
+   en geen zeebeen. De toets sloeg aan (−40%).
+3. **`olie-habshan-chiba`:** naad van 10,5 km tussen het leiding-eind (Fujairah) en de MARNET-zeeknoop. Het zeebeen is +20,7% t.o.v. een
+   niet-gemeten schatting.
+4. **Bestandsgrootte:** McArthur River 512 KB en Kisanfu 504 KB (plus de twee M30-bestanden > 300 KB). Mobiele laadtijd groeit;
+   evt. een simplify op de tekenlaag, nooit op de graaf.
+5. **Lange rechte stippels:** Inkai→Zhanatas 259 km (geen doorlopende OSM-weg), Ras Tanura-gathering 94 km. Eerlijk, maar
+   ze vallen op.
+6. **Onderzoeksbudget liep op in één golf:** het olie-sitelaag-agent had het webzoekbudget (~28 zoekopdrachten) en de
+   Firecrawl-credits op → 8 sites met algemene coördinaat. Voor golf 2 rekening houden (Firecrawl-credits checken).
 
 ## 🔵 NIEUW 2026-09-27 — na het opheffen van de AIS-collector
 
-1. **De HUD-toggle "AIS-pings (debug)" wijst naar een dood endpoint** (`ais.187…nip.io`), dus hij faalt stil of logt een
-   fetch-fout. Uit de HUD halen.
+1. ✅ **(2026-09-28, lokaal) De HUD-toggle "AIS-pings (debug)" wees naar een dood endpoint** — verwijderd.
 2. **`haal_ais_data.py` werkt niet meer**: de bron op de VPS is weg.
 3. **Er komt geen nieuwe AIS-data meer.** Ideeën die op trackuiteinden of ligplaatsen leunen (dok-bewijs, terminal-nodes)
    hebben een andere bron nodig.
