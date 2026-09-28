@@ -127,12 +127,12 @@
    "land": "Indonesië",
    "rol": "HPAL → MHP",
    "eenheid_site": "kt Co-inhoud/j (MHP ≈ 4-5% Co)",
-   "lat": 0.4783,
-   "lon": 127.9836,
+   "lat": 0.497,
+   "lon": 127.967,
    "capaciteit_kt": 15,
    "capaciteit_bron": "Nameplate 120 kt Ni + 15 kt Co per jaar (4e-generatie HPAL, in bedrijf sinds juli 2023) [B15]",
-   "coord_bron": "Wikipedia-geohack 'Weda Bay Industrial Park' (IWIP-parkcentroïde) 0°28'42\"N 127°59'01\"E — apart Huafei-gebouw niet onderscheiden binnen het park",
-   "status": "aannemelijk",
+   "coord_bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `co-wedabay-huafei` uit routebrief kobalt-wedabay-tongxiang.md (was 0.4783, 127.9836 — 2.78 km verschoven). Oorspronkelijk: Wikipedia-geohack 'Weda Bay Industrial Park' (IWIP-parkcentroïde) 0°28'42\"N 127°59'01\"E — apart Huafei-gebouw niet onderscheiden binnen het park",
+   "status": "bron-gelegd",
    "notitie": "Huayou (China) / Tsingshan / EVE Energy-joint venture op Weda Bay Industrial Park (IWIP), Halmahera. Correctie op het ontwerp: Huafei zit op IWIP (Weda Bay), niet op IMIP zoals één van de top-sites-regels suggereerde."
   },
   {

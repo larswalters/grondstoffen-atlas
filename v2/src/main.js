@@ -424,6 +424,35 @@ const STROMEN = [
   // bestand heet nog "pohang" (het ontwerp), de gebakken keten eindigt op de kade van Daesan
   { sleutel: "li-cp", bestand: "stroomroute-lithium-carmen-pohang.json", grondstof: "lithium", aan: true },
   { sleutel: "li-gk", bestand: "stroomroute-lithium-greenbushes-kemerton.json", grondstof: "lithium", aan: true },
+  // ── M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen ──
+  // bestand heet "cartagena" (de exporthaven), de gebakken keten vaart door tot Ningbo/Beilun
+  { sleutel: "ni-cc", bestand: "stroomroute-nikkel-cerromatoso-cartagena.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-tk", bestand: "stroomroute-nikkel-sotkamo-kokkola.json", grondstof: "nikkel", aan: true },
+  { sleutel: "ni-os", bestand: "stroomroute-nikkel-oncapuma-saoluis.json", grondstof: "nikkel", aan: true },
+  { sleutel: "kolen-en", bestand: "stroomroute-kolen-elkview-neptune.json", grondstof: "kolen", aan: true },
+  { sleutel: "kolen-mn", bestand: "stroomroute-kolen-moatize-nacala.json", grondstof: "kolen", aan: true },
+  { sleutel: "kolen-pn", bestand: "stroomroute-kolen-pocahontas-norfolk.json", grondstof: "kolen", aan: true },
+  { sleutel: "olie-sc", bestand: "stroomroute-olie-sangachal-ceyhan.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-rs", bestand: "stroomroute-olie-rastanura-sidikerir.json", grondstof: "olie", aan: true },
+  { sleutel: "olie-kc", bestand: "stroomroute-olie-hardisty-cushing.json", grondstof: "olie", aan: true },
+  { sleutel: "pgm-ur", bestand: "stroomroute-pgm-unki-rustenburg.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-ms", bestand: "stroomroute-pgm-mimosa-springs.json", grondstof: "pgm", aan: true },
+  { sleutel: "gr-zc", bestand: "stroomroute-grafiet-zavallya-constanta.json", grondstof: "grafiet", aan: true },
+  { sleutel: "ag-vl", bestand: "stroomroute-zilver-valcambi-londen.json", grondstof: "zilver", aan: true },
+  // bestand heet nog "guemassa" (het ontwerp), de gebakken keten eindigt in Tanger Med
+  { sleutel: "ag-ig", bestand: "stroomroute-zilver-imiter-guemassa.json", grondstof: "zilver", aan: true },
+  { sleutel: "ag-lt", bestand: "stroomroute-zilver-luckyfriday-trail.json", grondstof: "zilver", aan: true },
+  { sleutel: "co-mw", bestand: "stroomroute-kobalt-mutanda-walvisbay.json", grondstof: "kobalt", aan: true },
+  { sleutel: "co-wt", bestand: "stroomroute-kobalt-wedabay-tongxiang.json", grondstof: "kobalt", aan: true },
+  { sleutel: "u-ps", bestand: "stroomroute-uranium-priargunsky-seversk.json", grondstof: "uranium", aan: true },
+  { sleutel: "u-ec", bestand: "stroomroute-uranium-eunice-columbia.json", grondstof: "uranium", aan: true },
+  { sleutel: "gas-bp", bestand: "stroomroute-gas-bintulu-pyeongtaek.json", grondstof: "gas", aan: true },
+  { sleutel: "gas-ak", bestand: "stroomroute-gas-anapa-kiyikoy.json", grondstof: "gas", aan: true },
+  // bestand heet nog "hanau" (het ontwerp), de gebakken keten eindigt bij JL MAG Europe in Schijndel
+  { sleutel: "ree-gh", bestand: "stroomroute-ree-ganzhou-hanau.json", grondstof: "ree", aan: true },
+  { sleutel: "li-wb", bestand: "stroomroute-lithium-whabouchi-becancour.json", grondstof: "lithium", aan: true },
+  // bestand heet "beira" (de exporthaven), de gebakken keten vaart door tot Zhangjiagang
+  { sleutel: "li-ab", bestand: "stroomroute-lithium-arcadia-beira.json", grondstof: "lithium", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -532,7 +561,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "130", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -561,7 +590,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "130", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -695,7 +724,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "130", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "131", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);

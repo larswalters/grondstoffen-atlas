@@ -258,8 +258,8 @@
   {
    "id": "w-seversk-conversie",
    "naam": "Seversk (Rosatom/SKhK) — conversie",
-   "lon": 84.9,
-   "lat": 56.6,
+   "lon": 84.858,
+   "lat": 56.618,
    "level": "site",
    "parent": null,
    "rol": "conversie (naar UF6)",
@@ -269,8 +269,8 @@
    "land": "Rusland (Tomsk-oblast)",
    "gewicht": 12000.0,
    "gewicht_bron": "capaciteit t U/j — WNA 'Russia's Nuclear Fuel Cycle': Seversk (Siberian Chemical Combine) combineert conversie en verrijking; conversiecapaciteit indicatief ~12.000 tU/j, geen publiek exact cijfer gevonden deze ronde [B14]",
-   "bron": "Wikipedia-geohack Seversk (gesloten stad); geen satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `u-seversk-skhk` uit routebrief uranium-priargunsky-seversk.md (was 56.6, 84.9 — 3.26 km verschoven). Oorspronkelijk: Wikipedia-geohack Seversk (gesloten stad); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Gesloten stad (voormalig ZATO); publieke cijfers zijn schaars en verouderd. Zelfde terrein huisvest ook verrijking (zie w-seversk-verrijking)."
   },
   {
@@ -402,8 +402,8 @@
   {
    "id": "w-urenco-eunice",
    "naam": "Urenco USA (Eunice, New Mexico)",
-   "lon": -103.1833,
-   "lat": 32.4667,
+   "lon": -103.0796,
+   "lat": 32.4356,
    "level": "site",
    "parent": null,
    "rol": "verrijking",
@@ -413,8 +413,8 @@
    "land": "VS (New Mexico)",
    "gewicht": 5850.0,
    "gewicht_bron": "capaciteit t U/j — OMGEREKEND, SCHATTING: ~9% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 5850 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Urenco Almelo; Eunice is de grootste en nog uitbreidende Urenco-vestiging (VS-beleid om minder afhankelijk te zijn van Russisch verrijkt uranium), aandeel geschat op ~9% wereld-SWU, groeiend [B22][B24]",
-   "bron": "Wikipedia-geohack Urenco USA/LES-terrein Eunice/Hobbs, NM; geen satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `u-eunice-verrijking` uit routebrief uranium-eunice-columbia.md (was 32.4667, -103.1833 — 10.33 km verschoven). Oorspronkelijk: Wikipedia-geohack Urenco USA/LES-terrein Eunice/Hobbs, NM; geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Enige commerciële verrijkingsfabriek van de VS naast een klein GLE/Centrus-proefinstallatie; capaciteitsuitbreiding aangekondigd 2024/25 als reactie op de Amerikaanse importban op Russisch verrijkt uranium."
   },
   {

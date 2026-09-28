@@ -240,8 +240,8 @@
   {
    "id": "w-unki",
    "naam": "Unki mijn (Anglo American Platinum / Valterra Platinum)",
-   "lon": 30.0,
-   "lat": -19.68,
+   "lon": 30.095,
+   "lat": -19.6246,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -251,15 +251,15 @@
    "land": "Zimbabwe (Great Dyke, bij Shurugwi)",
    "gewicht": 5.9,
    "gewicht_bron": "capaciteit t PGM/j — Anglo American Platinum jaarcijfers 2023: Unki ~190 koz 6E; koz ÷ 32,15 ≈ 5,9 t/j [B1][B9]",
-   "bron": "geografische aanduiding 'near Shurugwi' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `pgm-unki-mijn` uit routebrief pgm-unki-rustenburg.md (was -19.68, 30.0 — 11.70 km verschoven). Oorspronkelijk: geografische aanduiding 'near Shurugwi' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Ondergrondse mijn met eigen concentrator; matte gaat naar Rustenburg PMR (Zuid-Afrika). 6E-conventie."
   },
   {
    "id": "w-mimosa",
    "naam": "Mimosa mijn (Sibanye-Stillwater / Implats, JV)",
-   "lon": 30.07,
-   "lat": -20.33,
+   "lon": 29.8368,
+   "lat": -20.3179,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -269,8 +269,8 @@
    "land": "Zimbabwe (Great Dyke, bij Zvishavane)",
    "gewicht": 4.0,
    "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater / Implats jaarcijfers 2023: Mimosa ~130 koz 6E (100%-basis, indicatief); koz ÷ 32,15 ≈ 4,0 t/j [B4][B9]",
-   "bron": "geografische aanduiding 'near Zvishavane' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `pgm-mimosa-mijn` uit routebrief pgm-mimosa-springs.md (was -20.33, 30.07 — 24.35 km verschoven). Oorspronkelijk: geografische aanduiding 'near Zvishavane' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "50/50 JV Sibanye-Stillwater / Implats; ondergrondse mijn. 6E-conventie."
   },
   {

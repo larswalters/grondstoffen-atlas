@@ -95,6 +95,556 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief nikkel-oncapuma-saoluis, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck ferronikkel-granulaat Onça Puma-smelter (Vale, Ourilândia do Norte,
+    # Pará) → spoorwegstation Parauapebas (EFC-instappunt). Brief §4/§7/bak-
+    # aanwijzing: PA-279 bij de smelter zelf loopt ZUIDWAARTS naar Xinguara/
+    # Tucumã en is NIET de corridor; geen gepubliceerde route of via-punten.
+    # ⚠️ VIA-PUNTEN KOMEN UIT EEN OSRM-ROUTECONTROLE (router.project-osrm.org,
+    #    driving, geen alternatieve route gevonden), NIET uit een bronnenronde —
+    #    binnen het WEBBUDGET gehouden (curl, geen WebSearch). OSRM routeert zelf
+    #    over OSM-wegen, dus dit is een VOORSPELLING VAN DE CORRIDOR, geen bron;
+    #    de scan hieronder routeert zelf opnieuw over de lokale extract en kan
+    #    afwijken. Reverse-geocode (Nominatim) van de bochtpunten bevestigt: de
+    #    route loopt niet rechtstreeks oostwaarts maar buigt eerst ZUIDOOST via
+    #    Água Azul do Norte en dan pas noordoost door Canaã dos Carajás naar
+    #    Parauapebas — 289,4 km over de weg tegen 146,9 km hemelsbreed (+97%).
+    #    Groter dan de ±15%-norm, maar die geldt hier uitdrukkelijk als indicatie
+    #    (geen gepubliceerde wegkm, brief §2/§7): het OSRM-resultaal + het
+    #    ontbreken van een kortere alternatieve route (alternatives=true gaf 1
+    #    route) wijzen op een structureel dunne wegennet in dit Amazone-
+    #    grensgebied, niet op een verkeerd gelegde via.
+    # ⚠️ Canaã dos Carajás is dezelfde plaats die de haalbaarheidstoets (brief
+    #    open punt 5) eerder als schematisch instappunt verwierp — dat gold de
+    #    PRIVATE S11D-ertsspoorlus bij die plaats, niet de openbare WEG erdoorheen
+    #    die hier als truckcorridor wordt gebruikt. Geen tegenspraak.
+    "nikkel-oncapuma-saoluis-smelter-parauapebas": {
+        "via": [
+            ("Onça Puma-smelter (Vale Base Metals), Ourilândia do Norte, Pará (anker ni-oncapuma-smelter)", (-51.0900, -6.5730)),
+            ("Ourilândia do Norte — bocht zuidoostwaarts (OSRM-routecontrole; PA-279 gaat hier NIET verder oostwaarts)", (-51.0672, -6.7472)),
+            ("tussenpunt op de doorgaande weg richting Água Azul do Norte (OSRM-routecontrole)", (-50.4593, -6.8034)),
+            ("Água Azul do Norte — zuidelijkste bocht van de corridor (OSRM-routecontrole)", (-50.1971, -6.9237)),
+            ("tussenpunt op de doorgaande weg richting Canaã dos Carajás (OSRM-routecontrole)", (-50.0148, -6.4986)),
+            ("Canaã dos Carajás — bocht noordwaarts naar Parauapebas (OSRM-routecontrole)", (-49.8322, -6.2544)),
+            ("Spoorwegstation Parauapebas (Estrada de Ferro Carajás) (anker ni-parauapebas-efc)", (-49.8949, -5.9942)),
+        ],
+        "id": "ni-oncapuma-saoluis-b1",
+        "naam": "Onça Puma-smelter → Ourilândia do Norte → Água Azul do Norte → "
+                "Canaã dos Carajás → Parauapebas-station (geen gepubliceerd wegnummer, "
+                "corridor uit OSRM-routecontrole)",
+        "extracts": ["brazilie"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm (brief §2/§7) — hemelsbreed 146,9 km (berekend); "
+                    "OSRM-routecontrole (2026-09-28) geeft 289,4 km over de weg, geen kortere "
+                    "alternatieve route gevonden. De ±15%-toets geldt hier als indicatie, niet "
+                    "als norm (werkwijze §1 bij een hemelsbrede schatting).",
+        "vensterKm": 25,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "nikkel-oncapuma-saoluis-weg-smelter-parauapebas.geojson",
+    },
+    # Routebrief nikkel-cerromatoso-cartagena, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck ferronikkel-granulaat Cerro Matoso-mijn+smelter (Montelíbano, Córdoba)
+    # over de Troncal de Occidente (Ruta 25): Planeta Rica → Sincelejo → Turbaco
+    # → SPRC-exportkade (Manga, Cartagena).
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2/§7): bronnen noemen alleen "per truck
+    #    naar Cartagena, ~440 t/dag" zonder route of km — hemelsbreed 278 km
+    #    (berekend); de ±15%-toets geldt hier als indicatie, geen norm.
+    # ⚠️ Via-punten zijn indicatief (bekende steden op de Troncal de Occidente/
+    #    Ruta 25, brief §4) — de scan routeert over het echte OSM-wegnet en kan
+    #    afwijken.
+    "nikkel-cerromatoso-cartagena-mina-sprc": {
+        "via": [
+            ("Cerro Matoso — open-pit mijn + ferronikkelsmelter (CoreX Holding, ex-South32), Montelíbano, Córdoba (anker ni-cerromatoso-mina)", (-75.5516, 7.9049)),
+            ("Planeta Rica — eerste corridorknoop N van de mijn; pint de Troncal de Occidente (Ruta 25) i.p.v. een oostelijke omweg via San Marcos/Magangué", (-75.5840, 8.4077)),
+            ("Sincelejo — regionale hoofdknoop op de doorgaande N-25; sluit een westelijkere kustroute via Lorica/Coveñas uit", (-75.3927, 9.2973)),
+            ("Turbaco — laatste knoop vóór Cartagena; pint de aansluiting op de SPRC-kade in Manga i.p.v. een noordelijkere invalsweg naar Mamonal", (-75.4127, 10.3306)),
+            ("Sociedad Portuaria de Cartagena (SPRC), Manga — exportkade (anker ni-cartagena-sprc)", (-75.5342, 10.4062)),
+        ],
+        "id": "ni-cerromatoso-cartagena-b1",
+        "naam": "Cerro Matoso → Planeta Rica → Sincelejo → Turbaco → SPRC-kade Cartagena (Troncal de Occidente/Ruta 25)",
+        "extracts": ["colombia"],
+        "refs": [],  # Ruta 25/Troncal de Occidente is een zachte aanname, geen hard bevestigd wegnummer
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm — bronnen noemen alleen \"per truck naar Cartagena, "
+                    "~440 t/dag\" (mining-technology.com/newint.org); hemelsbreed 278 km (berekend). "
+                    "De ±15%-toets geldt hier als indicatie, niet als norm.",
+        "vensterKm": 40,
+        "uit": "nikkel-cerromatoso-cartagena-weg-mina-sprc.geojson",
+    },
+    # Routebrief ree-phaxay-namcan, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck zware-REE-ionkleierts Phaxay-ionkleimijngebied (onzeker — exacte put
+    # niet gelokaliseerd, RFA 2022 alleen district-niveau; brief §7) over de
+    # Laotiaanse Route 7 (Phonsavan -> Muang Kham -> Nong Het) en de lokale
+    # grensweg naar Nam Kan/Nam Can (Laos-Vietnam-grensdoorlaat Nong Het/Nam Can,
+    # bron-gelegd, stoppunt — de brief stopt hier bewust, brief §6).
+    # ⚠️ GEEN gedocumenteerde corridor tussen mijn en Route 7 (brief §4) — geen
+    #    vaste via-punten, ruim venster (75 km) en corridorKlassen
+    #    tertiary/unclassified laten de scan zelf naar Route 7 zoeken. Laotiaans
+    #    binnenland is dun gekarteerd (Kachin-precedent) — mogelijk gedeeltelijk
+    #    stippel.
+    # ⚠️ GEEN gepubliceerde wegkm (brief §2/§7): alleen hemelsbreed ~106 km
+    #    tussen de site-ankers — mijnsite niet exact gelokaliseerd. De
+    #    ±15%-toets geldt hier als indicatie, geen norm.
+    "ree-phaxay-namcan-phaxay-namcan": {
+        "via": [
+            ("Phaxay-ionkleimijngebied (onzeker)",   (103.0991, 19.2810)),   # anker
+            # GEEN vaste via-punten (brief §4) — geen gedocumenteerde corridor
+            # tussen mijn en Route 7; corridorKlassen + een ruim vensterKm
+            # laten de scan zelf richting Route 7 zoeken.
+            ("Nam Can-grensdorp (bron-gelegd)",      (104.0907, 19.4684)),   # anker
+        ],
+        "id": "ree-phaxay-namcan-b1",
+        "naam": "Phaxay-ionkleimijngebied → Route 7 (Phonsavan-Nong Het) → Nam Kan/Nam Can-grens",
+        "extracts": ["laos", "vietnam"],
+        "refs": [],  # geen bekende wegnummer voor het eerste stuk; Route 7 zelf
+                     # heeft geen vaste ref-tag geverifieerd
+        "gepubliceerdKm": None,
+        "bronnoot": "geen publicatie; hemelsbreed ~106 km, geen wegkm (brief §2/§7) — "
+                    "de ±15%-toets geldt hier alleen als indicatie",
+        "vensterKm": 75,  # ruim, want de exacte corridor tussen mijn en Route 7 is onbekend
+        "corridorKlassen": ["tertiary", "unclassified"],  # Laotiaans binnenland vaak
+                                                            # dun gekarteerd (Kachin-precedent)
+        "uit": "ree-phaxay-namcan-weg-phaxay-namcan.geojson",
+        # ⚠️ SCAN-UITKOMST (M31 golf 6): op vensterKm 75 vindt de scan GEEN pad
+        # ("geen wegpad tussen punt 0 en 1" — Laotiaans binnenland te dun
+        # gekarteerd om de twee ankers binnen een redelijk venster te verbinden).
+        # Diagnostisch op vensterKm 150 verruimd: dan wél een pad, maar 598,4 km
+        # tegen hemelsbreed ~106 km (ratio 5,6) — geen "redelijk pad", een
+        # netwerk-omweg die de scan door heel Vietnam/Laos trekt. Conform de
+        # eigen aanwijzing in de brief blijft dit been daarom een STIPPEL
+        # "last mile (geen net op deze korrel, mijnsite onzeker)" i.p.v. het
+        # anker te verschuiven of deze 598 km-lijn te gebruiken. Dit profiel
+        # blijft staan als bewijs van de poging (generator-driftregel).
+    },
+    # Routebrief uranium-eunice-columbia, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck verrijkt UF6 (30B-cilinder/UX-30-verpakking) van Urenco USA/National
+    # Enrichment Facility (Eunice/Lea County, New Mexico) -> I-20 oostwaarts
+    # (Odessa/Midland -> Fort Worth -> Shreveport -> Jackson -> Birmingham ->
+    # Atlanta -> Augusta) -> I-77/I-26 -> Westinghouse Columbia Fuel Fabrication
+    # Facility (Hopkins/Lower Richland County, South Carolina), stoppunt.
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2/§7): veiligheidsgevoelig UF6-transport,
+    #    NRC/DOT publiceren geen routedetails -- alleen hemelsbreed ~2.065 km
+    #    tussen de site-ankers. De ±15%-toets geldt hier als indicatie, geen norm
+    #    (vensterKm daarom ruim: 65 km).
+    # ⚠️ I-20/I-77/I-26 is de enig plausibele doorgaande corridor (brief §7),
+    #    "aannemelijk" -- niet route-specifiek gebrond. Acht via-punten uit de
+    #    brief pinnen de knikken (Odessa/Fort Worth/Shreveport/Jackson/
+    #    Birmingham/Atlanta/Augusta/Columbia-I-77-I-26-knoop); refs zijn een
+    #    zachte voorkeur (factor 3), geen harde eis.
+    # ⚠️ "service" UIT eindKlassen (default bevat 'm wel, zie EIND_KLASSEN_DEFAULT):
+    #    het NEF-terrein draagt een geïsoleerd service-lusje (way/905682611,
+    #    11 punten, 0,115 km van het anker) dat nergens op het wegennet
+    #    aansluit -- gemeten met een BFS-componenttelling (component van
+    #    11 knopen; NM 176/Andrews Highway op 0,663 km ligt in de hoofdcomponent
+    #    van 1.463.845 knopen). Zonder deze uitsluiting snapt het anker op die
+    #    isolaat en geeft de Dijkstra "geen wegpad tussen punt 0 en 1"; met
+    #    residential/tertiary/unclassified snapt hij op NM 176 en routeert de
+    #    hele keten door tot Odessa/Columbia. Zie §9.
+    "uranium-eunice-columbia-eunice-columbia": {
+        "via": [
+            ("Urenco USA / National Enrichment Facility, Eunice/Lea County NM (anker, u-eunice-verrijking)", (-103.0796, 32.4356)),
+            ("Odessa TX (I-20-oprit)",                                    (-102.3432, 31.8314)),
+            ("Fort Worth TX (I-20 door de DFW-metroplex)",                 (-97.5909, 32.7283)),
+            ("Shreveport LA (I-20/I-49-knooppunt)",                       (-93.8277, 32.4593)),
+            ("Jackson MS (I-20-hoofdknooppunt)",                          (-90.2494, 32.2884)),
+            ("Birmingham AL (I-20/I-59/I-65-knooppunt)",                  (-86.9026, 33.4980)),
+            ("Atlanta GA (I-20 doorgaande snelweg)",                      (-84.4662, 33.7547)),
+            ("Augusta GA (I-20, oversteek Savannah-rivier)",              (-82.0557, 33.5047)),
+            ("Columbia SC (I-20/I-77/I-26-knooppunt)",                    (-80.9521, 34.0128)),
+            ("Westinghouse Columbia Fuel Fabrication Facility, Hopkins SC (anker, u-columbia-fabricage)", (-80.9194, 33.8831)),
+        ],
+        "id": "u-eunice-columbia-b1",
+        "naam": "Urenco USA (Eunice NM) -> Odessa -> Fort Worth -> Shreveport -> Jackson -> "
+                "Birmingham -> Atlanta -> Augusta -> Columbia -> Westinghouse Columbia FFF (SC) "
+                "(I-20 oost -> I-77/I-26)",
+        "extracts": ["us-new-mexico", "us-texas", "us-louisiana", "us-mississippi",
+                     "us-alabama", "us-georgia", "us-south-carolina"],
+        "refs": ["I 20", "I 77", "I 26"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm gevonden (veiligheidsgevoelig UF6-transport, "
+                    "routebrief §2/§7); hemelsbreed ~2.065 km tussen de site-ankers -- "
+                    "lengtetoets is hier indicatie, geen norm",
+        "vensterKm": 65,
+        "eindKlassen": ["residential", "tertiary", "unclassified"],
+        "uit": "uranium-eunice-columbia-weg-eunice-columbia.geojson",
+    },
+    # Routebrief ree-ganzhou-hanau, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck NdFeB-magneten JL MAG Ganzhou-fabriek → Longnan (G4511 粤赣高速) →
+    # Heyuan (惠河高速) → Huizhou → Yantian-containerterminal (Shenzhen). Geen
+    # gepubliceerde wegkm (brief §2/§7) — alleen hemelsbreed 367 km + een
+    # corridor-aanname (~450-500 km over de expressway). ±15%-toets geldt
+    # daarom als indicatie, niet als harde norm.
+    "ree-ganzhou-hanau-ganzhou-yantian": {
+        "via": [
+            ("JL MAG Rare-Earth, Ganzhou — anker ree-ganzhou-jlmag, hergebruikt uit de ree-sitelaag (w-jlmag-ganzhou)", (114.8663, 25.8406)),
+            ("Longnan (Jiangxi, county-stad op de provinciegrens) — pint de zuidelijke G4511-corridor, sluit een oostelijkere omweg via Xunwu uit", (114.7998, 24.9047)),
+            ("Heyuan (Guangdong) — knooppunt op de aansluitende 惠河高速, sluit een westelijkere route via Guangzhou uit", (114.7002, 23.7443)),
+            ("Huizhou (Guangdong) — laatste grote stad vóór Shenzhen op deze corridor", (114.4160, 23.1120)),
+            ("Yantian International Container Terminals, Shenzhen — anker ree-yantian-kade", (114.2741, 22.5734)),
+        ],
+        "id": "ree-ganzhou-yantian",
+        "naam": "JL MAG Ganzhou → Longnan → Heyuan → Huizhou → Yantian-containerterminal (Shenzhen)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm — hemelsbreed 367 km (berekend), aannemelijk ~450-500 km "
+                    "over de expressway (brief §2/§7); ±15%-toets is indicatief, niet bindend.",
+        "vensterKm": 60,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "ree-ganzhou-hanau-weg-ganzhou-yantian.geojson",
+    },
+    # Routebrief ree-ganzhou-hanau, been b3 (LICHTE werkwijze M31 golf 6).
+    # Truck NdFeB-magneten Rotterdam RHB (Waalhaven Noordzijde 4) → Gorinchem
+    # (A15) → 's-Hertogenbosch (A59-aansluiting) → JL MAG Europe, Schijndel.
+    # Geen gepubliceerde wegkm — hemelsbreed 76 km, aannemelijk ~100-110 km.
+    "ree-ganzhou-hanau-rhb-schijndel": {
+        "via": [
+            ("Rotterdam RHB, Waalhaven Noordzijde 4 — anker ree-rotterdam-rhb, hergebruikt (routebrief-licht.md §1)", (4.4585, 51.8935)),
+            ("Gorinchem (A15-corridor) — doorgaande A15 oostwaarts, sluit een zuidelijkere route via Breda/Tilburg (A16/A58) uit", (4.9746, 51.8422)),
+            ("'s-Hertogenbosch (A59-aansluiting) — laatste knoop vóór de A59-afslag naar Schijndel", (5.3031, 51.6889)),
+            ("JLMAG Rare-earth Co (Europe) B.V., Schijndel — anker ree-schijndel-jlmageu, stoppunt", (5.4676, 51.6078)),
+        ],
+        "id": "ree-rhb-schijndel",
+        "naam": "Rotterdam RHB → Gorinchem (A15) → 's-Hertogenbosch (A59) → JL MAG Europe, Schijndel",
+        "extracts": ["nederland"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm — hemelsbreed 76 km (berekend), aannemelijk ~100-110 km "
+                    "over de weg (brief §2/§7); ±15%-toets is indicatief, niet bindend.",
+        "vensterKm": 25,
+        "corridorKlassen": [],
+        "uit": "ree-ganzhou-hanau-weg-rhb-schijndel.geojson",
+    },
+    # Routebrief uranium-priargunsky-seversk, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck uraanerts Priargunsky-mijn (ARMZ/Rosatom, Krasnokamensk, gesloten
+    # mijnstad) → lokaal spoorstation (aansluiting Borzya-lijn). Geen bron voor
+    # het exacte traject (brief §2/§7); alleen een eigen hemelsbrede schatting
+    # (~11 km) — de ±15%-toets geldt hier dus als indicatie, niet als norm.
+    # vensterKm ruim (60) omdat er geen gepubliceerde bronlengte is. Vindt de
+    # scanner geen doorgaand OSM-wegpad over de steppe, dan valt de bak-functie
+    # terug op een stippel "last mile (geen net op deze korrel)" (brief §2).
+    "uranium-priargunsky-seversk-priargunsky-krasnokamensk": {
+        "via": [
+            ("Priargunsky Mining and Chemical Production Association (ARMZ/Rosatom), Krasnokamensk — anker u-priargunsky-mijn, letterlijk hergebruikt uit de uranium-sitelaag (w-priargunsky), laadplek", (118.1350, 50.0640)),
+            ("Krasnokamensk-spoorstation (aansluiting Borzya-lijn) — anker u-krasnokamensk-station, satelliet-gelegd op z15 (spoorbundel + stationsgebouwen), overslag truck → spoor", (118.0610, 50.1498)),
+        ],
+        "id": "u-priargunsky-krasnokamensk",
+        "naam": "Priargunsky-mijn → Krasnokamensk-spoorstation (steppepiste/toegangsweg, geen bron voor exact traject)",
+        "extracts": ["rusland-siberie"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "hemelsbreed ~11 km, geen wegkm (eigen berekening, geen gepubliceerde bron) — de ±15%-toets geldt hier als indicatie, niet als norm (brief §2/§7).",
+        "vensterKm": 60,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "uranium-priargunsky-seversk-weg-priargunsky-krasnokamensk.geojson",
+    },
+    # Routebrief lithium-whabouchi-becancour, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck spodumeenconcentraat Whabouchi-mijn/concentrator (Nemaska Lithium,
+    # Eeyou Istchee James Bay, Quebec) → Route du Nord (mijn-uitgang, oost-west)
+    # → junctie Route Billy-Diamond (James Bay Road, ≈km 276/278) → zuidwaarts
+    # over de doorgaande James Bay Road (via Rupert-rivierkruising, km 232,
+    # km 6-halte) → Matagami-overslagpunt (truck→spoor, intermodaal). 405 km
+    # is een letterlijk bedrijfscijfer (nemaskalithium.com); ±15%-toets bindend.
+    # Eindanker Matagami is voorlopig de plaats-centroïde (brief §3/§7, sat_check
+    # vond geen rangeersporen); pas aanpassen als de scan een railway=yard/
+    # station-tag dichter bij het echte overslagpunt vindt (zie §9 bij het bakken).
+    "lithium-whabouchi-becancour-whabouchi-matagami": {
+        "via": [
+            ("Whabouchi-mijn/concentrator (Nemaska Lithium), anker li-wh-laadplek, hergebruikt uit de lithium-sitelaag (w-li-whabouchi)", (-75.8952, 51.6878)),
+            ("Route du Nord × Route Billy-Diamond, junctie ≈ km 276/278 — hier verlaat de as de oost-westverbinding en slaat zuidwaarts af op de doorgaande James Bay Road", (-77.2785, 51.5082)),
+            ("Halte des Cascades de la Rivière Rupert, km 257, Route Billy-Diamond — rivierkruising Rupert, vaste doorgaande route", (-77.4202, 51.3532)),
+            ("km 232, Route Billy-Diamond (mijlpaal) — zelfde doorgaande corridor zuidwaarts", (-77.4657, 51.1835)),
+            ("Halte de la route de la Baie-James, km 6, Route Billy-Diamond — laatste punt vóór Matagami", (-77.5759, 49.7723)),
+            ("Matagami-overslagpunt (railyard, plaats-centroïde), anker li-mg-overslag — overslag truck → spoor, onzeker (§3/§7)", (-77.62194, 49.75833)),
+        ],
+        "id": "li-whabouchi-matagami",
+        "naam": "Whabouchi-mijn/concentrator → Route du Nord → Route Billy-Diamond (James Bay Road) → Matagami-overslagpunt",
+        "extracts": ["canada"],
+        "refs": [],
+        "gepubliceerdKm": 405,
+        "bronnoot": "405 km — expliciet bedrijfscijfer (nemaskalithium.com/en/the-whabouchi-mine/: "
+                    "\"transported 405km by truck on an all weather road using b-double trucks to the "
+                    "established railyard in Matagami\"); ±15%-toets bindend.",
+        "vensterKm": 70,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-whabouchi-becancour-weg-whabouchi-matagami.geojson",
+    },
+    # Routebrief kobalt-mutanda-walvisbay, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck kobalthydroxide (+koperkathode) Mutanda-mijn (Glencore, Lualaba) →
+    # Likasi (RN39) → Lubumbashi (RN1) → Kasumbalesa-grens — zelfde via-punten
+    # als koper-kolwezi-durban/kobalt-kisanfu-daressalaam. Geen gepubliceerde
+    # wegkm (brief §2): ~290,0 km hemelsbreed is de enige toets, dus vensterKm
+    # ruim. corridorKlassen verruimd naar analogie van kobalt-kisanfu-
+    # daressalaam b1 (mijnpoort hangt vaak aan tertiary/unclassified).
+    "kobalt-mutanda-walvisbay-mutanda-kasumbalesa": {
+        "via": [
+            ("Mutanda-mijn (Glencore, Lualaba) — anker", (25.8082, -10.7858)),
+            ("Likasi — RN39 → RN1-knoop (hergebruikt)", (26.7355, -10.9806)),
+            ("Lubumbashi — pint de RN1 richting Kasumbalesa (hergebruikt)", (27.4827, -11.6642)),
+            ("Kasumbalesa-grens — anker (hergebruikt)", (27.7959, -12.2658)),
+        ],
+        "id": "co-mutanda-kasumbalesa",
+        "naam": "Mutanda-mijn → Likasi → Lubumbashi → Kasumbalesa-grens",
+        "extracts": ["congo-drc"],
+        "refs": [],
+        "gepubliceerdKm": 290,
+        "bronnoot": "geen gepubliceerde wegkm — eigen berekening, ~290,0 km hemelsbreed (brief §2, zelfde via-puntenset als kobalt-kisanfu-daressalaam b1)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-mutanda-walvisbay-weg-mutanda-kasumbalesa.geojson",
+    },
+    # Routebrief kobalt-mutanda-walvisbay, been b2 (LICHTE werkwijze M31 golf 6).
+    # Truck Kasumbalesa-grens → Chililabombwe (T3) → Chingola (T3→T5) → Solwezi
+    # (einde T5). Beide wegen bevestigd bestaand (brief §8 [6][7]); Solwezi-
+    # coördinaat is een eigen live Wikipedia-query (-12,1433), correctie op de
+    # afgeronde -12,1833 uit koper-sentinel-walvisbay.
+    "kobalt-mutanda-walvisbay-kasumbalesa-solwezi": {
+        "via": [
+            ("Kasumbalesa-grens — anker (hergebruikt)", (27.7959, -12.2658)),
+            ("Chililabombwe — op de T3, 17 km zuid van Kasumbalesa", (27.8278, -12.3667)),
+            ("Chingola — wisselpunt T3 → T5", (27.8600, -12.5475)),
+            ("Solwezi — einde T5, aansluiting WCL-tracé (eigen Wikipedia-query)", (26.3858, -12.1433)),
+        ],
+        "id": "co-kasumbalesa-solwezi",
+        "naam": "Kasumbalesa-grens → Chililabombwe → Chingola → Solwezi (T3 → T5)",
+        "extracts": ["zambia"],
+        "refs": ["T3", "T5"],
+        "gepubliceerdKm": 198,
+        "bronnoot": "geen gepubliceerde wegkm — eigen berekening, ~198,4 km hemelsbreed via Chililabombwe/Chingola-coördinaten (brief §2 [6][9])",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-mutanda-walvisbay-weg-kasumbalesa-solwezi.geojson",
+    },
+    # Routebrief kobalt-mutanda-walvisbay, been b3 (LICHTE werkwijze M31 golf 6).
+    # Truck Solwezi → Mutanda(ZM) → Kasempa → Kaoma → Mongu → Senanga → Sesheke
+    # → grens Katima Mulilo (WCL-Trans-Caprivi-tracé) — zelfde via-punten als
+    # koper-sentinel-walvisbay b1, ander beginpunt (Solwezi i.p.v. Sentinel-
+    # mijn). Mongu gebruikt de bij koper-sentinel-walvisbay GECORRIGEERDE
+    # routeercoördinaat (23,1344278/-15,2764746), niet de Wikipedia-centroïde
+    # (die landde op een geïsoleerde graafcomponent, zie de kop bij dat
+    # profiel). Gepubliceerd 906,3 km = hergebruikt gemeten cijfer uit
+    # koper-sentinel-walvisbay §9 (b1-subtraject Solwezi→grens); de toets is
+    # dus of dit been dat cijfer reproduceert, geen brief-schatting.
+    "kobalt-mutanda-walvisbay-solwezi-katimamulilo": {
+        "via": [
+            ("Solwezi — einde b2, start WCL-tracé", (26.3858, -12.1433)),
+            ("Mutanda (Zambia) — start WCL-upgradetracé (hergebruikt)", (26.2400, -12.4000)),
+            ("Kasempa — op het WCL-tracé (hergebruikt)", (25.8350, -13.4550)),
+            ("Kaoma — WCL-tracé, splitst van de noordroute af (hergebruikt)", (24.8000, -14.8000)),
+            ("Mongu — gecorrigeerde routeercoördinaat uit koper-sentinel-walvisbay (hergebruikt)", (23.1344278, -15.2764746)),
+            ("Senanga — laatste plaats vóór de Zambezi-vlakte (hergebruikt)", (23.2667, -16.1167)),
+            ("Sesheke — Zambiaanse grensstad (hergebruikt)", (24.3000, -17.4667)),
+            ("Grensovergang Katima Mulilo-brug (Zambezi) — anker (hergebruikt)", (24.2499, -17.4717)),
+        ],
+        "id": "co-solwezi-katimamulilo",
+        "naam": "Solwezi → Mutanda(ZM) → Kasempa → Kaoma → Mongu → Senanga → Sesheke → grens Katima Mulilo",
+        "extracts": ["zambia"],
+        "refs": [],
+        "gepubliceerdKm": 906,
+        "bronnoot": "906,3 km gemeten, hergebruikt uit koper-sentinel-walvisbay §9 (b1-subtraject Solwezi→grens: Mutanda(ZM) 33,4 + Kasempa 147,3 + Kaoma 219,1 + Mongu 190,6 + Senanga 103,6 + Sesheke 206,4 + grens 5,9 km) — vervangt de ontwerp-schatting ~416 km die op de ontkrachte WCL-\"371 km\"-bronfout berustte",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "kobalt-mutanda-walvisbay-weg-solwezi-katimamulilo.geojson",
+    },
+    # Routebrief lithium-arcadia-beira, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck lithiumsulfaat Arcadia-mijn/Huayou-fabriek (Goromonzi, 38 km O van
+    # Harare) → Ruwa-inrit → Marondera → Rusape → Nyazura → Mutare →
+    # Forbes/Machipanda-grenspost (mijnweg → A3/R5 Highway). Gepubliceerde km
+    # ≈241 (270,8 km Harare–Mutare [Wikipedia R5/A3] − 38 + 8, brief §7);
+    # ±15%-toets bindend (geen indicatie — brief geeft een echte wegkm-afleiding).
+    "lithium-arcadia-beira-plant-forbes": {
+        "via": [
+            ("Arcadia-mijn + Huayou-lithiumsulfaatfabriek, anker li-arcadia-plant", (31.4243, -17.7715)),
+            ("Ruwa, A3-inrit (Goromonzi-district)", (31.2371, -17.8972)),
+            ("Marondera, A3 (kruispunt P3 naar Murehwa)", (31.5455, -18.1901)),
+            ("Rusape, A3 (kruispunt A14 naar Nyanga)", (32.1257, -18.5335)),
+            ("Nyazura, A3 (kruispunt R6 naar Chivhu)", (32.1675, -18.7141)),
+            ("Mutare, A3/N6-aansluiting richting Forbes", (32.6705, -18.9747)),
+            ("Forbes Border Post (ZW) / Machipanda (MZ), N6, anker li-forbes-grens", (32.7123, -19.0052)),
+        ],
+        "id": "li-arcadia-forbes",
+        "naam": "Arcadia-mijn/fabriek → Ruwa → Marondera → Rusape → Nyazura → Mutare → Forbes/Machipanda-grens (A3/R5)",
+        "extracts": ["zimbabwe"],
+        "refs": ["A3"],
+        "gepubliceerdKm": 241,
+        "bronnoot": "270,8 km Harare–Mutare (Wikipedia R5/A3 Highway) − 38 km (Arcadia ligt al voorbij Harare op de corridor) + 8 km (Mutare→Forbes); geen directe bron voor de rit als geheel (brief §7); ±15%-toets bindend.",
+        "vensterKm": 40,
+        "uit": "lithium-arcadia-beira-weg-plant-forbes.geojson",
+    },
+    # Routebrief pgm-mimosa-springs, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck PGM-concentraat Mimosa Mine (Sibanye-Stillwater/Implats 50:50 JV,
+    # Zvishavane/Bannockburn, Zimbabwe) → Zvishavane → Masvingo (A9→A4-wissel,
+    # hergebruikt anker) → Ngundu → Rutenga → Beitbridge-grens (A9 Zvishavane–
+    # Masvingo → A4 Masvingo–Beitbridge). Ruim venster i.v.m. optelsom-km
+    # (brief §7: geen doorgaande bronopgave, 32+97+288=417 km uit drie bronnen).
+    # ⚠️ Laatste ~150 km (Masvingo–Beitbridge) overlapt reëel met
+    # pgm-unki-rustenburg b1, maar diens via-lijst (Masvingo → Beitbridge
+    # rechtstreeks) bevat niet dezelfde via-punten als hier (Ngundu, Rutenga) —
+    # dus GEEN letterlijke kopie, eigen scan (zie brief §9/rapport).
+    "pgm-mimosa-springs-mijn-beitbridge": {
+        "via": [
+            ("Mimosa Mine (concentrator on-site), anker pgm-mimosa-mijn", (29.8368, -20.3179)),
+            ("Zvishavane — A9-corridor, mijnstad", (30.0527, -20.3159)),
+            ("Masvingo — A9→A4-wissel, hergebruikt anker", (30.8332, -20.0745)),
+            ("Ngundu — A4-corridor", (30.8009, -20.8015)),
+            ("Rutenga — A4-corridor, spoorknoop", (30.7275, -21.2327)),
+            ("Beitbridge-grens — Limpopo-brug, anker pgm-beitbridge-grens, hergebruikt", (29.9865, -22.2244)),
+        ],
+        "id": "pgm-mimosa-springs-mijn-beitbridge",
+        "naam": "Mimosa Mine → Zvishavane → Masvingo → Ngundu → Rutenga → Beitbridge-grens (A9 → A4)",
+        "extracts": ["zimbabwe"],
+        "refs": ["A9", "A4"],
+        "gepubliceerdKm": 417,
+        "bronnoot": "optelsom van drie gepubliceerde deeltrajecten (mijn→Zvishavane 32 + Zvishavane→Masvingo 97 + Masvingo→Beitbridge 288 via A4), geen doorgaande bronopgave (brief §7); ±15%-toets indicatief, niet bindend.",
+        "vensterKm": 60,
+        "uit": "pgm-mimosa-springs-weg-mijn-beitbridge.geojson",
+    },
+    # Routebrief pgm-mimosa-springs, been b2 (LICHTE werkwijze M31 golf 6).
+    # Truck PGM-matte/concentraat Beitbridge-grens → Musina → Polokwane →
+    # Pretoria (N1/N4-wissel) → Marikana → Impala Rustenburg-mijnencluster/
+    # smelter (N1 Musina–Polokwane–Pretoria → N4 Pretoria–Rustenburg). NIEUW
+    # wegprofiel, geen letterlijke kopie (brief §9). Marikana-via hergebruikt
+    # uit pgm-springs-zurich; de overige drie uit pgm-zimplats-rustenburg.
+    "pgm-mimosa-springs-beitbridge-rustenburg": {
+        "via": [
+            ("Beitbridge-grens — anker pgm-beitbridge-grens, hergebruikt", (29.9865, -22.2244)),
+            ("Musina — eerste stad na de grens, hergebruikt", (30.0269, -22.3454)),
+            ("Polokwane — N1, hergebruikt", (29.4803, -23.9218)),
+            ("Pretoria N1/N4-wissel — hergebruikt", (28.2761, -25.6357)),
+            ("Marikana — N4-corridor, hergebruikt uit pgm-springs-zurich", (27.4794, -25.7043)),
+            ("Impala Rustenburg-mijnencluster/smelter, anker pgm-rustenburg-mijn, hergebruikt", (27.2176, -25.5535)),
+        ],
+        "id": "pgm-mimosa-springs-beitbridge-rustenburg",
+        "naam": "Beitbridge-grens → Musina → Polokwane → Pretoria → Marikana → Impala Rustenburg-mijncluster (N1 → N4)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N1", "N4"],
+        "gepubliceerdKm": 475,
+        "bronnoot": "distance.to driving-distance calculator (brief §2/§7)",
+        "vensterKm": 60,
+        "uit": "pgm-mimosa-springs-weg-beitbridge-rustenburg.geojson",
+    },
+    # Routebrief grafiet-zavallya-constanta, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck battery-grade grafietconcentraat/-poeder Zavallya-mijn/fabriek
+    # (Zavalievsky Graphite / Volt Resources, Kirovohrad Oblast) → Balta → Podilsk
+    # → Artsyz → Bolhrad → Reni-Donauhaven (Odesa-oblast/Budjak-regio) — oorlogs-
+    # gebied, geen gepubliceerde wegkilometer. Eigen meting kop-staart-grootcirkel
+    # 334,0 km (correctie op het ketenontwerp's ~220 km), via-punten-som 367,9 km
+    # (brief §7) — geen referentiewaarde voor de ±15%-toets, hier indicatief.
+    # Ruim venster (70 km) i.v.m. onbekende exacte corridor en mogelijke OSM-
+    # gaten/onlogische wegkeuzes rond de Kirovohrad/Odesa-oblast-grens.
+    "grafiet-zavallya-constanta-zavallya-reni": {
+        "via": [
+            ("Zavallya-mijn/fabriek (Zavalievsky Graphite / Volt Resources), anker gr-zavallya-mijn, hergebruikt uit de grafiet-sitelaag (w-zavallya)", (30.0199, 48.2167)),
+            ("Balta — corridor blijft op de zuidwaartse as, sluit een oostelijke omweg via Pervomaisk/Voznesensk uit", (29.6219, 47.9400)),
+            ("Podilsk — doorgaande route zuidwaarts, sluit een afbuiging naar Odesa-stad uit", (29.5350, 47.7419)),
+            ("Artsyz — route komt de Budjak-regio binnen, knoop richting de Bolhrad-Reni-as i.p.v. verder oostwaarts naar Izmail", (29.4322, 45.9944)),
+            ("Bolhrad — laatste knoop vóór Reni, sluit de alternatieve bestemming Izmail uit", (28.6128, 45.6672)),
+            ("Reni-Donauhaven (Ренійський морський торговельний порт), anker gr-reni-haven, stoppunt van dit been", (28.2814, 45.4586)),
+        ],
+        "id": "gr-zavallya-reni-b1",
+        "naam": "Zavallya-mijn/fabriek → Balta → Podilsk → Artsyz → Bolhrad → Reni-Donauhaven "
+                "(regionale weg Kirovohrad-oblast → Odesa-oblast/Budjak-regio)",
+        "extracts": ["oekraine"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkilometer gevonden (brief §2/[2], alleen \"road, rail, river, "
+                    "and sea freight\" zonder specifieke lijn); eigen meting kop-staart-grootcirkel 334,0 km, "
+                    "via-punten-som 367,9 km (brief §7) — ±15%-toets hier indicatie, geen norm",
+        "vensterKm": 70,
+        "uit": "grafiet-zavallya-constanta-weg-zavallya-reni.geojson",
+    },
+    # Routebrief zilver-imiter-guemassa, been b1 (LICHTE werkwijze M31 golf 6). Truck
+    # zilveranodes/-ingots Imiter-mijn (SMI/Managem, eigen smelter) → Ouarzazate (N10→N9-
+    # aansluiting, zelfde punt als kobalt-bouazzer-guemassa) → Tizi n'Tichka-pas (zelfde
+    # punt als kobalt-bouazzer-guemassa) → Marrakech A7-noordaansluiting (hier buigt de
+    # corridor NOORDWAARTS af, i.p.v. zuidwaarts naar Guemassa zoals de kobaltketen) →
+    # Settat → Casablanca A7/A1-knooppunt → Kenitra → Tanger Med-exportcomplex (stoppunt).
+    # Geen gepubliceerde wegkm; hemelsbreed via-punten-som 794,7 km (brief §7/§2, aannemelijk:
+    # één zwakke bron voor de bestemming zelf) — de ±15%-toets geldt hier niet als harde norm.
+    # Ruim venster (70 km) i.v.m. de lengte (~795 km hemelsbreed) en de bergpas.
+    "zilver-imiter-guemassa-imiter-tangermed": {
+        "via": [
+            ("Imiter-mijn — eigen smelter (SMI/Managem), anker ag-imiter-mijn", (-5.7230, 31.3501)),
+            ("Ouarzazate — aansluiting mijnweg op de N9, gedeeld punt met kobalt-bouazzer-guemassa", (-6.9170, 30.9170)),
+            ("Tizi n'Tichka-pas (2.260 m, Hoge Atlas), gedeeld punt met kobalt-bouazzer-guemassa", (-7.3808, 31.2858)),
+            ("Marrakech — A7-noordaansluiting (corridor buigt hier noordwaarts, niet naar Guemassa)", (-7.9811, 31.6295)),
+            ("Settat — A7-doorgaand punt", (-7.6167, 33.0000)),
+            ("Casablanca — A7/A1-knooppunt", (-7.5833, 33.5333)),
+            ("Kenitra — A1-doorgaand punt", (-6.5833, 34.2500)),
+            ("Tanger Med-havencomplex — exportpoort, anker ag-tangermed-poort, stoppunt", (-5.5207, 35.8750)),
+        ],
+        "id": "ag-imiter-tangermed",
+        "naam": "Imiter-mijn → Ouarzazate → Tizi n'Tichka-pas → Marrakech → Settat → Casablanca → Kenitra → Tanger Med",
+        "extracts": ["marokko"],
+        "refs": ["N10", "N9", "A7", "A1"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkilometer gevonden (brief §7[8]); hemelsbreed "
+                    "via-punten-som 794,7 km, geen referentiewaarde voor de ±15%-toets",
+        "vensterKm": 70,
+        "uit": "zilver-imiter-guemassa-weg-imiter-tangermed.geojson",
+    },
+    # Routebrief pgm-unki-rustenburg, been b1 (LICHTE werkwijze M31 golf 6).
+    # Truck PGM-matte Unki Mine (Anglo/Valterra, Shurugwi) → Beitbridge-grens,
+    # A9 (Shurugwi–Zvishavane–Masvingo) → A4/R1 (Masvingo–Beitbridge). Ruim
+    # venster (90 km) i.v.m. onzekere exacte corridor (brief §7: Masvingo/A4
+    # gevolgd conform ontwerphint/Chirundu-Beitbridge-handelscorridor, niet het
+    # geografisch directere Mbalabala/A6-alternatief — bak-agent mag afwijken
+    # als de scan dat logischer maakt, zie bak_aanwijzingen in de brief).
+    "pgm-unki-rustenburg-unki-beitbridge": {
+        "via": [
+            ("Unki Mine — mijn/on-site smelter (Anglo American Platinum/Valterra Platinum), anker pgm-unki-mijn", (30.0950, -19.6246)),
+            ("Shurugwi — A9-corridor, dichtst bij de mijn", (30.0000, -19.6667)),
+            ("Zvishavane — A9/P7, junctie met A18", (30.0333, -20.3333)),
+            ("Masvingo — A9→A4-wissel, hergebruikt anker (pgm-zimplats-rustenburg/koper-kolwezi-durban)", (30.8332, -20.0745)),
+            ("Beitbridge-grens — Limpopo-brug (Zimbabwe ↔ Zuid-Afrika), anker pgm-beitbridge-grens, hergebruikt", (29.9865, -22.2244)),
+        ],
+        "id": "pgm-unki-rustenburg-unki-beitbridge",
+        "naam": "Unki Mine → Shurugwi → Zvishavane → Masvingo → Beitbridge-grens (A9 → A4/R1)",
+        "extracts": ["zimbabwe"],
+        "refs": ["A9", "A4", "R1"],
+        "gepubliceerdKm": 428,
+        "bronnoot": "hemelsbreed ~428 km (via-puntensom: Unki-Shurugwi 11,0 + Shurugwi-Zvishavane 74,2 + Zvishavane-Masvingo 88,3 + Masvingo-Beitbridge 254,7); geen gepubliceerde wegkm-bron gevonden binnen het webbudget — ±15%-toets indicatief, niet bindend (routebrief §7).",
+        "vensterKm": 90,
+        "uit": "pgm-unki-rustenburg-weg-unki-beitbridge.geojson",
+    },
+    # Routebrief zilver-luckyfriday-trail, been b1 (LICHTE werkwijze M31 golf 6).
+    # EENBENIGE KETEN, BINDEND: uitsluitend truck (geen spoor — haalbaarheidstoets
+    # heeft spoor expliciet weerlegd, brief §bak_aanwijzingen). Lood-zink-zilver-
+    # concentraat Hecla Lucky Friday-mijn (Mullan, Idaho) → I-90 (Coeur d'Alene) →
+    # WA-20/US-2 (Newport–Ione–Metaline Falls) → grensovergang Nelway → BC Hwy 6
+    # (Salmo) → BC Hwy 3B → Teck Trail-smelter (Trail, BC).
+    # gepubliceerdKm = 336,3 km (209 miles), Hecla Mining eigen 10-K-bedrijfsopgave
+    # van de vervoersroute — BINDEND uit de haalbaarheidstoets, vervangt de
+    # ~250 km hemelsbrede ontwerpschatting. Sanity: via-punten geven samen ~291 km
+    # hemelsbreed, omwegfactor ~1,15 tegen de 10-K-opgave (plausibel, bergachtige
+    # tweebaans corridor over een landsgrens).
+    "zilver-luckyfriday-trail-luckyfriday-trail": {
+        "via": [
+            ("Lucky Friday-mijn (Hecla Mining, Mullan, Idaho) — ag-luckyfriday-mijn, anker", (-115.7832, 47.4708)),
+            ("Coeur d'Alene (Idaho) — I-90 eindigt hier als doorgaande corridor westwaarts", (-116.7812, 47.6743)),
+            ("Newport (Washington) — staatsgrens ID/WA, corridor US-2/WA-20", (-117.0433, 48.1796)),
+            ("Ione (Washington) — WA-20-knooppunt richting de grens", (-117.4205, 48.7413)),
+            ("Metaline Falls (Washington) — laatste VS-plaats vóór de grens, WA-31", (-117.3719, 48.8636)),
+            ("Nelway (British Columbia) — grensovergang WA-31 ↔ BC Hwy 6", (-117.2993, 49.0007)),
+            ("Salmo (British Columbia) — BC Hwy 6 → BC Hwy 3B, doorgaande route naar Trail", (-117.2787, 49.1934)),
+            ("Teck Trail-smelter (Trail, BC) — ag-trail-smelter, anker, stoppunt", (-117.7125, 49.1000)),
+        ],
+        "id": "ag-luckyfriday-trail-b1",
+        "naam": "Lucky Friday-mijn → Coeur d'Alene → Newport → Ione → Metaline Falls → "
+                "grensovergang Nelway → Salmo → Teck Trail-smelter "
+                "(I-90 → WA-20/US-2 → WA-31 → BC Hwy 6 → BC Hwy 3B)",
+        "extracts": ["us-idaho", "us-washington", "canada"],
+        "refs": ["I-90", "WA-20", "US-2", "WA-31", "BC-6", "BC-3B"],
+        "gepubliceerdKm": 336.3,
+        "bronnoot": "Hecla Mining Company Form 10-K (SEC-jaarverslag): \"Concentrates produced at "
+                    "the Lucky Friday mill are transported 209 miles to the Teck lead-zinc smelter "
+                    "in Trail, British Columbia, Canada in highway trucks operated by a contract "
+                    "shipper\" — BINDEND, vervangt de ~250 km hemelsbrede ontwerpschatting (brief §2/[1]).",
+        "vensterKm": 60,
+        "uit": "zilver-luckyfriday-trail-weg-luckyfriday-trail.geojson",
+    },
     # Routebrief lithium-mibra-bitterfeld, been b1 (LICHTE werkwijze M31 golf 5).
     # Truck spodumeenconcentraat AMG Mibra-mijn/concentrator/chem.-conversieterrein
     # (Nazareno, MG) → LMG-841 → BR-265 (São João del-Rei–Barbacena–Mercês) →

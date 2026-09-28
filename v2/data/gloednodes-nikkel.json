@@ -258,8 +258,8 @@
   {
    "id": "w-terrafame-sotkamo",
    "naam": "Terrafame (Sotkamo)",
-   "lon": 28.3833,
-   "lat": 64.1333,
+   "lon": 27.9998,
+   "lat": 63.9782,
    "level": "site",
    "parent": null,
    "rol": "mijn + sulfaatfabriek",
@@ -269,8 +269,8 @@
    "land": "Finland",
    "gewicht": 37.4,
    "gewicht_bron": "capaciteit kt Ni/j — Terrafame battery chemicals plant: nameplate 170 kt nikkelsulfaat/j = 37,4 kt Ni-inhoud/j (+ 7,4 kt kobaltsulfaat) [B24]",
-   "bron": "Wikipedia-geohack 'Sotkamo' (en) — géén satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `ni-sotkamo-terrafame` uit routebrief nikkel-sotkamo-kokkola.md (was 64.1333, 28.3833 — 25.41 km verschoven). Oorspronkelijk: Wikipedia-geohack 'Sotkamo' (en) — géén satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Bioheap-leaching + eigen sulfaatfabriek: één van de weinige geïntegreerde EU-batterijnikkelbronnen."
   },
   {
@@ -618,8 +618,8 @@
   {
    "id": "w-onca-puma",
    "naam": "Onça Puma (Vale)",
-   "lon": -51.15,
-   "lat": -6.75,
+   "lon": -51.09,
+   "lat": -6.573,
    "level": "site",
    "parent": null,
    "rol": "mijn + smelter (ferronikkel)",
@@ -629,8 +629,8 @@
    "land": "Brazilië",
    "gewicht": 40.0,
    "gewicht_bron": "capaciteit kt Ni/j — Vale: nameplate 40 kt Ni/j na de opstart van de tweede oven (was 25 kt met één oven na de 2012-schade) [B50]",
-   "bron": "Ourilândia do Pará-regio — géén precieze plantcoördinaat of satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `ni-oncapuma-smelter` uit routebrief nikkel-oncapuma-saoluis.md (was -6.75, -51.15 — 20.77 km verschoven). Oorspronkelijk: Ourilândia do Pará-regio — géén precieze plantcoördinaat of satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Herstelde van een dubbele ovenstoring (2012); onderdeel van Vale's Braziliaanse ferronikkeltak naast Barro Alto."
   },
   {

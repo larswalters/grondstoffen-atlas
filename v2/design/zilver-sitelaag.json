@@ -307,12 +307,12 @@
    "naam": "Valcambi (Balerna, Ticino)",
    "land": "Zwitserland",
    "rol": "raffinaderij",
-   "lat": 45.845,
-   "lon": 9.005,
+   "lat": 45.8385,
+   "lon": 9.0051,
    "capaciteit_kt": 600,
    "capaciteit_bron": "v1-register (data/silver.js): Valcambi good-delivery baren (ook goud) ≈ 600 t Ag/j indicatief, geen aparte bronronde deze golf [B39]",
-   "coord_bron": "v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
-   "status": "onzeker",
+   "coord_bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28, golf 6) met het satelliet-gelegde keten-anker `ag-ref-valcambi` uit routebrief zilver-valcambi-londen.md (was 45.845, 9.005 — 0.72 km verschoven). Oorspronkelijk: v1-register (data/silver.js), centroïde ~1 km — geen satellietblik deze ronde",
+   "status": "bron-gelegd",
    "notitie": "Vooral premium-/beleggingszilver uit geïmporteerd doré; cijfer is niet dit ronde herbevestigd, blijft de v1-schatting."
   },
   {
