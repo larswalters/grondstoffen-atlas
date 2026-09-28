@@ -1,5 +1,22 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 gebakken, integratie open; live = M30 `?v=124`)*
+*Last updated: 2026-09-28 (M31 golf 1 LIVE `?v=125` — 54 stromen over 9 grondstoffen; Lars kijkt, dan golf 2)*
+
+## Stand 2026-09-28 (later) — M31 golf 1 live
+
+- **Op de bol (`?v=125`, commit `c88468c`):**
+  - 54 gemeten stromen over 9 grondstoffen: koper 10 · lithium 6 · grafiet 5 · kobalt 7 · nikkel 6 · ree 5 · kolen 6 · olie 5 · uranium 4;
+  - 9 gloedlagen met 298 sites.
+- **Integratie per golf (vast patroon):**
+  - registerregels in `STROMEN` (sleutel `<prefix>-<twee initialen>`, gelijk aan `data-sr`);
+  - bij een nieuwe grondstof een HUD-groep `details.srGroep[data-gs]`;
+  - `voeg_sites_toe.py --grondstof <gs> --schrijf` (droge run eerst) + het bestand in `GLOEDBESTANDEN`;
+  - datalaag en `main.js?v=` bumpen;
+  - bol-check (0 consolefouten, per grondstof + donker, HUD op 375 px);
+  - commit alleen de golfbestanden, push, link.
+- **Naden:** een kade binnen 25 km van de zeeknoop geeft een naad ter grootte van de snap. Boven 5 km krijgt die een
+  haven-aanloop als stippel (zie decisions 2026-09-28). De handleiding (§2/§5) moet dat nog zeggen.
+- **Open in de weergave:** de gloedstraal schaalt per grondstof in de eigen eenheid (globale `kmPerWortelGewicht`). Uranium
+  (t) wordt groot en kolen (Mt) klein. De verrijking in % valt weg. Wacht op Lars' keuze.
 
 ## Stand 2026-09-28 — M31: meer stromen, in gemengde golven richting v1-dichtheid
 

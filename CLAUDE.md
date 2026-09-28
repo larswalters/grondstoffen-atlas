@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 1 gebakken — olie 5 + uranium 4 nieuw, kobalt +3; integratie + ?v=125 open; live = ?v=124)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 1 LIVE ?v=125 — olie 5 + uranium 4 nieuw, kobalt +3; 54 stromen, 9 gloedlagen; commit c88468c)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · M31 GOLF 1 LIVE `?v=125` (LAR-586, `c88468c`).** Registersleutels `<prefix>-<twee initialen>` (`olie-` ·
+  `u-` · `co-`). Naden > 5 km (de zee-snap binnen 25 km) worden gedicht met een haven-aanloop als stippel, ook onder de
+  25 km. `voeg_sites_toe.py` labelt `eenheid_site` eerlijk. Open: de uraniumgloed (verrijking in % SWU) is een keuze voor Lars.
 - **2026-09-28 · ✅ LARS — MEER STROMEN (M31), ZELFDE KWALITEIT ALS M30, GEMENGDE GOLVEN, ÉÉN PER KEER.** v2 42 ketens/7
   grondstoffen tegen v1 578/14. Eén gepipelinede workflow per golf (ontwerp → toets → sitelaag ∥ brief → bake, 32 agenten op
   Sonnet 5). Golf 1: olie 5 + uranium 4 + kobalt 3 gebakken; AIS-pings-debuglaag uit de atlas (`aispings.js` gewist).

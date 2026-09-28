@@ -1,14 +1,36 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1: bevindingen uit de bakes)*
+*Last updated: 2026-09-28 (M31 golf 1 live `?v=125`: bevindingen uit de integratie)*
 
-## 🟡 NIEUW 2026-09-28 — M31 golf 1 (nog niet geregistreerd)
+## 🟡 NIEUW 2026-09-28 (later) — uit de integratie van golf 1 (LAR-586)
 
-1. **Werk staat ongecommit op schijf** (12 ketens, 2 sitelagen, AIS-verwijdering). Integreren vóór iemand anders in deze tree
-   werkt; nooit `git add -A` (sectie J).
+7. **Uraniumgloed: eenheden gemengd.** De verrijkingssites dragen % wereld-SWU (6–23) naast t U/j (tot 15.000).
+   `gloednodes.js`:
+   - rekent de straal absoluut: `0,30 km × √gewicht`;
+   - normaliseert de helderheid per bestand.
+   Gevolg: verrijking (het knelpunt van het uraniumverhaal, Rosatom ~44%) wordt ~1,4 km en valt weg. Conversie
+   (15.000) wordt ~37 km, de grootste gloed op de bol. `gewicht_bron` labelt de eenheid nu eerlijk
+   (`voeg_sites_toe.py` → `eenheid_site`), maar de weergave niet. **Keuze bij Lars** (next-actions #2).
+8. **Bakhandleiding spreekt zichzelf tegen:**
+   - §2: haven-aanloop pas boven ~25 km snap;
+   - §5: geen naad > 5 km.
+   Een kade op 5–25 km van de zeeknoop geeft dus altijd een naad buiten de norm. Golf 1 had er drie (centraal gedicht);
+   live ketens hebben er vijf (Sangatta 21,8 · Grasberg 9,0 · Bikita 7,8 · Balama–Laixi 5,6 · Goonyella 5,6). Een
+   snelle naadcheck moet `vertakt_van` volgen: `nikkel-taganito-niihama` "2.802 km" en Lobito fase D zijn aftakkingen,
+   geen naden.
+9. **Lokale bol-check na een herbake onder hetzelfde `?v=`:** de browser serveert de oude json uit de cache (fetch-URL
+   ongewijzigd). Controleer via een andere origin (`127.0.0.1:8732` naast `localhost:8732`) of bump `?v=` pas ná de
+   laatste herbake. Voor Lars geen risico zolang een `?v=` pas live gaat als hij af is.
+10. **`maak_havenaanloop.py` hangt vaker in de Kaspische Zee** (Alyat én Aktau: timeout 300) → rechte stippel. Fujairah en
+    Ras Tanura lukten wel (±1 min).
+
+## 🟡 2026-09-28 — M31 golf 1 (bij het bakken; status na integratie)
+
+1. ✅ **(opgelost 2026-09-28, `c88468c`) Werk stond ongecommit op schijf** (12 ketens, 2 sitelagen, AIS-verwijdering).
+   Integreren vóór iemand anders in deze tree werkt; nooit `git add -A` (sectie J).
 2. **`kobalt-ambatovy-toamasina` is inhoudelijk dun:** één rechte stippel van 132 km (de slurryleiding niet in OSM gevonden)
    en geen zeebeen. De toets sloeg aan (−40%).
-3. **`olie-habshan-chiba`:** naad van 10,5 km tussen het leiding-eind (Fujairah) en de MARNET-zeeknoop. Het zeebeen is +20,7% t.o.v. een
-   niet-gemeten schatting.
+3. ✅ **(naad gedicht 2026-09-28, haven-aanloop Fujairah 12,2 km over water) `olie-habshan-chiba`:** naad van 10,5 km
+   tussen het leiding-eind (Fujairah) en de MARNET-zeeknoop. Blijft: het zeebeen is +20,7% t.o.v. een niet-gemeten schatting.
 4. **Bestandsgrootte:** McArthur River 512 KB en Kisanfu 504 KB (plus de twee M30-bestanden > 300 KB). Mobiele laadtijd groeit;
    evt. een simplify op de tekenlaag, nooit op de graaf.
 5. **Lange rechte stippels:** Inkai→Zhanatas 259 km (geen doorlopende OSM-weg), Ras Tanura-gathering 94 km. Eerlijk, maar

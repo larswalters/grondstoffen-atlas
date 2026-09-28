@@ -1,9 +1,51 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 gebakken — 12 ketens op schijf, integratie + `?v=125` staat open)*
+*Last updated: 2026-09-28 (M31 golf 1 LIVE `?v=125`, commit `c88468c` — Lars kijkt, dan golf 2)*
 
-## 🔴 NIEUW 2026-09-28 — M31 golf 1: centraal integreren (LAR-586), dan Lars laten kijken
+## 🔴 NIEUW 2026-09-28 (later) — na golf 1 live: Lars kijkt, dan golf 2
 
-**Op schijf, niet gecommit:**
+1. **Lars kijkt op de bol:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=125 (atlasmodus *per grondstof* +
+   *donker*). Twijfelgevallen die hij daar ziet:
+   - Ambatovy (rechte stippel-leiding, geen zeebeen);
+   - Inkai→Zhanatas (stippel 259 km);
+   - Arlit→Cotonou (gestaakt, staat aan).
+2. **Keuze uraniumgloed (Lars):** verrijking staat in % wereld-SWU (6–23) naast t U/j (tot 15.000). Daardoor krijgt
+   verrijking ~1,4 km straal, terwijl conversie met ~37 km de grootste gloed van de bol is. Opties:
+   - (a) laten;
+   - (b) omrekenen naar t U-voeding (1% ≈ ~650 t U/j, schatting);
+   - (c) verrijking alleen als marker.
+   Breder: de straal schaalt per grondstof in de eigen eenheid (`kmPerWortelGewicht` is globaal), dus kolen (Mt) blijft
+   klein en uranium (t) groot.
+3. **Bakhandleiding §2/§5 rechttrekken** vóór golf 2: een haven-aanloop ook binnen de 25 km-snap zodra de naad > 5 km is.
+   De agenten volgden §2 en lieten naden van 7–11 km staan; bij LAR-586 zijn die centraal gedicht.
+4. **Optioneel:** de naden > 5 km in live ketens op dezelfde manier dichten:
+   - Sangatta 21,8 km;
+   - Grasberg 9,0 km;
+   - Bikita 7,8 km;
+   - Balama–Laixi 5,6 km;
+   - Goonyella 5,6 km.
+   Per keten `maak_havenaanloop.py` (timeout 300) + `--stippel-geojson` in de functie + herbake (~13 s).
+5. **Golf 2 kiezen** (één golf, dan kijken). Kandidaten:
+   - zilver (past op het gereedschap);
+   - de reserve-assen: olie-kharg-dongjiakou · olie-tengiz-novorossiysk · uranium-olympicdam-portadelaide ·
+     uranium-inkai-stpetersburg · kobalt-murrinmurrin-kwinana · kobalt-bouazzer-guemassa.
+   Gas vraagt eerst pijpleidinggeometrie; goud/PGM/diamant eerst een modaliteit `lucht`. Firecrawl-credits checken
+   vóór de sitelaag-agenten.
+6. **Sitelagen aanvullen:**
+   - uranium: de Kazachse JV-mijnen (~40% van de wereldwinning) hebben geen coördinaat (NI 43-101-rapporten per JV);
+   - olie: 8 sites staan op een algemene coördinaat.
+
+## ✅ AFGEROND 2026-09-28 — M31 golf 1 centraal geïntegreerd (LAR-586), live `?v=125`
+
+Uitgevoerd:
+- 12 registerregels met genormaliseerde sleutels `olie-rz/pj/cr/hc/bv` · `u-ip/mp/rw/ac` · `co-kd/at/mf`;
+- HUD-groepen olie en uranium; gloedlagen olie/uranium;
+- datalaag `"125"`;
+- naden Fujairah/Ras Tanura/Aktau gedicht met een haven-aanloop;
+- commit `c88468c`, gepusht; LAR-583..586 Done.
+
+Oorspronkelijke lijst hieronder ter referentie.
+
+**Was op schijf, niet gecommit:**
 - 12 brieven `v2/design/routebrieven/{olie,uranium,kobalt}-*.md` (§9 = bak-noot);
 - 12 `v2/data/stroomroute-*.json`;
 - 12 functies in `v2/tools/bak_stromen.sh` + profielen in `maak_stroombeen_weg.py`;

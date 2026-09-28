@@ -1,7 +1,23 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31: meer stromen in gemengde golven, M30-kwaliteit)*
+*Last updated: 2026-09-28 (M31 golf 1 live `?v=125`: naden, sleutels, eenheid_site)*
 
 ## 2026-09-28 — M31: meer stromen richting v1-dichtheid
+
+- **2026-09-28 · ✅ LARS — "JA PAK 586 OP"** op het voorstel om de naad Habshan→Chiba te dichten, de rest te integreren en de
+  twijfelgevallen op de bol te laten zien in plaats van eerst een controleronde (bouwen boven meten).
+- **2026-09-28 · NADEN > 5 KM IN NIEUWE KETENS DICHT MET EEN HAVEN-AANLOOP, OOK BINNEN DE 25 KM-SNAP.** Drie ketens hadden de
+  zee-snap als naad: Habshan→Chiba 10,5 · Ras Tanura→Zhoushan 11,1 · Inkai→Poti 6,8 km. Het patroon is dat uit de
+  handleiding: `maak_havenaanloop.py` → `--stippel-geojson`, anders een rechte `--stippel`. Er zijn géén via-punten
+  bijgeschoven, en de stippel blijft "hier reikt het net niet". De live ketens met dezelfde naden zijn bewust níét
+  aangeraakt (raak niet aan wat werkt); dat is een optionele vervolgstap.
+- **2026-09-28 · REGISTERSLEUTELS = `<prefix>-<twee initialen>`:** olie → `olie-` (geen elementsymbool, zoals `kolen-`),
+  uranium → `u-`, kobalt → `co-`. De sleutel moet gelijk zijn aan `data-sr` in de HUD. De kleur volgt het stroom-id
+  (`grondstofVan`), niet de sleutel.
+- **2026-09-28 · EEN GESTAAKTE STROOM STAAT AAN** (Arlit→Cotonou, sinds 2023), met "(gestaakt)" in de knop en de titel.
+  Zelfde logica als grafiet fase D/E met volume nul: de weg is gemeten, de lading niet.
+- **2026-09-28 · `eenheid_site` WINT IN `gewicht_bron`.** Een site met een eigen eenheid (uranium-verrijking in % wereld-SWU)
+  mag niet als grondstofeenheid gelabeld worden. De waarschuwing noemt de uitzondering; de kopertak blijft byte-identiek.
+  De WEERGAVE van die gemengde eenheden is nog open (bugs-and-risks #7): dat is een keuze voor Lars.
 
 - **2026-09-28 · ✅ LARS — "DAT MOGEN ER NOG WEL MEER WORDEN"** (v2 42 ketens over 7 grondstoffen tegen v1 578 over 14).
   Drie opties voorgelegd: extra licht op v1-basis / zelfde als M30 / mechanisch alles tegelijk. **Gekozen: zelfde als M30.**

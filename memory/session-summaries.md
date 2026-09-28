@@ -1,6 +1,39 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (later) - M31 golf 1 live op `?v=125` (LAR-586, commit `c88468c`)
+
+Lars: *"Ja pak 586 op."*
+
+**Gedaan:**
+- De 12 ketens zijn geregistreerd met genormaliseerde sleutels (`olie-xx` · `u-xx` · `co-xx`).
+- HUD-groepen olie (5) en uranium (4), kobalt 7.
+- Gloedlagen olie (32) en uranium (32) via `voeg_sites_toe.py`. Dat script kent nu olie/uranium en labelt `eenheid_site`.
+- Datalaag `"125"`, `main.js?v=125`, en de AIS-pings-knop is weg.
+
+**Nameting:**
+- De bestandsgroottes (512/504 KB) vallen binnen wat live staat (tot 672 KB).
+- Drie naden > 5 km, alle drie de zee-snap binnen 25 km. Gedicht met een haven-aanloop als stippel:
+  - Fujairah 12,2 km en Ras Tanura 11,8 km over water;
+  - Aktau 7,4 km recht, na een timeout.
+- De recepten in `bak_stromen.sh` en de brieven §9 zijn bijgewerkt.
+
+**Bol-check:**
+- 54 stromen, 9 gloedlagen (298 sites), 0 consolefouten en 0 waarschuwingen; HUD op 375 px.
+- Eerst op een gecachte `?v=125` gekeken, daarna schoon via `127.0.0.1`.
+
+**Commit en Linear:**
+- Commit `c88468c` (36 bestanden, expliciet gestaged), gepusht, Pages gebouwd.
+- LAR-583..586 Done.
+
+**Open:**
+- De uraniumgloed: verrijking in % SWU valt weg naast conversie in t U/j; keuze voor Lars.
+- Bakhandleiding §2/§5 rechttrekken.
+- Optioneel: de live naden dichten.
+- Golf 2.
+
+Vault: `wiki/projects/General/grondstoffen-atlas/2026-09-28-grondstoffen-atlas-m31-golf1-live.md`.
+
 ## 2026-09-28 - M31 golf 1: twaalf ketens gebakken (olie 5, uranium 4, kobalt 3), integratie open
 
 Lars: v2 toont veel minder stromen dan v1 (578 over 14 grondstoffen tegen 42 ketens over 7) — "dat mogen er nog wel meer
