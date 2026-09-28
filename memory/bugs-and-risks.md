@@ -1,5 +1,13 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 2 live `?v=126`: bevindingen uit de integratie)*
+*Last updated: 2026-09-28 (M31 golf 3 live `?v=128`: bevindingen uit de integratie)*
+
+## 🟡 NIEUW 2026-09-28 (laat) — uit golf 3
+
+14. **Sitelaag- en keten-agenten leggen dezelfde site onafhankelijk, en de sitelaag-agent is slordiger.** Kandidaatpunten uit v1 lagen 7–26 km naast de satelliet-gelegde keten-ankers: Impala Springs 26 km, Loulo 25 km, MMTC-PAMP 20 km. Ze zijn centraal gelijkgetrokken. Voor een volgende golf: laat de sitelaag-agent ná de brieven draaien en de keten-ankers verplicht overnemen.
+15. **Goudgloed: raffinaderijcapaciteit (nameplate, Valcambi 2.000 t) naast mijnproductie (5–80 t).** Ticino domineert daardoor. Dat is inhoudelijk het verhaal, maar het is capaciteit en geen doorzet.
+16. **Het gedeelde weg-slot is een knelpunt bij lange scans.** `goud-pamp-shanghai` haalde zijn wegscans niet binnen de sessie en is centraal afgemaakt. Overweeg een hogere slot-timeout of een aparte scanfase.
+17. **Truckbenen naar luchthavens wijken vaak meer dan 15% af** van een hemelsbrede brief-schatting (Loulo +26%, Valcambi +34%, PAMP +32%). Het zijn bevindingen, geen fouten, maar brieven moeten een echte wegkilometer opzoeken.
+- **Nog altijd open (#11):** 125 stromen staan standaard aan, en de telefoonprestaties zijn nooit gemeten.
 
 ## 🟡 NIEUW 2026-09-28 (avond) — uit golf 2
 

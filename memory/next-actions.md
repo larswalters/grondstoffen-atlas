@@ -1,5 +1,21 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 2 LIVE `?v=126`, commit `98af548` — Lars kijkt, dan golf 3 kiezen)*
+*Last updated: 2026-09-28 (uraniumgloed + modaliteit lucht `?v=127`; M31 golf 3 LIVE `?v=128` — 125 stromen over 14 grondstoffen)*
+
+## 🔴 NIEUW 2026-09-28 (laat) — na golf 3 live
+
+1. **Lars kijkt:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=128 (stand *per grondstof* + *donker*; de bogen vanuit zuidelijk Afrika).
+2. ✅ Afgehandeld:
+   - de uraniumgloed (LAR-599);
+   - de luchtvracht-modaliteit (LAR-600);
+   - de stippelketens: blijven staan (keuze Lars).
+3. **Volgende golf of fase kiezen:**
+   - (a) **de reserve-assen**: 6 uit golf 3 (goud-metalor-istanbul, goud-ity-ticino, pgm-amandelbult-iselin, pgm-rustenburg-hongkong, diamant-gahchokue-gaborone, diamant-mirny-dubai) + 15 uit golf 2;
+   - (b) **de visuele fase LAR-490**: 125 stromen staan standaard aan, en leesbaarheid en telefoonprestaties zijn nooit gemeten.
+4. **Kleine open punten uit golf 3:**
+   - `pgm-sudbury-actonuk` eindigt in Port Colborne (het Acton-deel ontbreekt; over zee naar het VK zou nog kunnen);
+   - `diamant-namdeb-gaborone` vliegt naar Antwerpen;
+   - beide bestandsnamen kloppen niet met de keten, maar hernoemen = herbakken, dus ze blijven.
+5. **Optioneel:** de vijf oude naden > 5 km (zie hieronder).
 
 ## 🔴 NIEUW 2026-09-28 (avond) — na golf 2 live
 

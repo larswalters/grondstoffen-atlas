@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 2 LIVE ?v=126 — zilver + gas nieuw, negen grondstoffen aangevuld; 91 stromen, 11 gloedlagen; commit 98af548)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 3 LIVE ?v=128 — luchtvracht, goud/PGM/diamant; 125 stromen over 14 grondstoffen, 14 gloedlagen; commit 54ae5c1. Daarvoor ?v=127: uraniumgloed + modaliteit lucht)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,13 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · M31 GOLF 3 LIVE `?v=128` (LAR-601..603, `54ae5c1`).** 110 agenten, 34 ketens goud/PGM/diamant, 32
+  luchtbenen. Sitelaag-coördinaten worden centraal gelijkgetrokken met de satelliet-gelegde keten-ankers (17 punten lagen
+  0,6–26 km ernaast). Een airside-vrachtplatform krijgt een korte stippel naar de openbare weg.
+- **2026-09-28 · MODALITEIT LUCHT (LAR-600, `?v=127`).** Een vlucht is een grootcirkel tussen twee satelliet-gelegde
+  vrachtterminals (`maak_luchtbeen.py`), doorgetrokken, en boogt in élke lijnmodus: een vlucht ligt echt in de lucht,
+  het besluit "lijnen op de grond" gaat over routes op de grond. Uraniumgloed (LAR-599): verrijking als t U
+  voeding-equivalent (aandeel wereld-SWU × ~65.000 t U/j, een schatting).
 - **2026-09-28 · M31 GOLF 2 LIVE `?v=126` (LAR-595..598, `98af548`).** Na Lars' kalibratie ("golf 1 kostte 15% van de
   sessielimiet") één workflow van 135 agenten: 37 ketens, zilver + gas nieuw. Een keuring per keten is vast onderdeel.
   Na elke golf centraal: een diff op gedeelde bestanden buiten de golf, en sitelagen zonder aggregaten of centroïdes.

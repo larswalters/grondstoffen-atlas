@@ -1,5 +1,18 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 2 LIVE `?v=126` — 91 stromen over 11 grondstoffen; Lars kijkt, dan golf 3 kiezen)*
+*Last updated: 2026-09-28 (uraniumgloed + modaliteit lucht `?v=127`; M31 golf 3 LIVE `?v=128` — 125 stromen over 14 grondstoffen)*
+
+## Stand 2026-09-28 (laat) — M31 golf 3 live: luchtvracht
+
+- **Op de bol (`?v=128`, commit `54ae5c1`):**
+  - 125 gemeten stromen. Nieuw: goud 13 · PGM 9 · diamant 12;
+  - 14 gloedlagen; de nieuwe zijn goud 37, PGM 20 en diamant 25 sites.
+- **Modaliteit `lucht`** (`?v=127`, commit `92b9405`):
+  - een grootcirkel tussen twee satelliet-gelegde vrachtterminals (`maak_luchtbeen.py` → `--been-geojson "lucht|…"`);
+  - doorgetrokken, en boogt in élke lijnmodus;
+  - 32 luchtbenen in golf 3.
+- **Uraniumgloed:** verrijking als t U voeding-equivalent (een schatting).
+- **Werkwijze golf 3** = die van golf 2 plus twee regels: "raak alleen je eigen bestanden aan" en "geen aggregaten of centroïdes met gewicht". De centrale nameting blijft nodig: in golf 3 lagen sitelaag-kandidaatpunten 7–26 km naast de keten-ankers.
+- **Stippelketens** Ambatovy en Antamina blijven staan (keuze Lars).
 
 ## Stand 2026-09-28 (avond) — M31 golf 2 live
 

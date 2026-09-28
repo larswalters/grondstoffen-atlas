@@ -1,6 +1,33 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (laat) - uraniumgloed + M31 golf 3 live op `?v=128` (LAR-599..603, commit `54ae5c1`)
+
+Lars: *"kan je de uranium gloed maken, laat de gestippelde ketens maar staan, voor golf 3 lucht maken is goed."*
+
+**`?v=127` (commit `92b9405`):**
+- de uraniumgloed: verrijking als voeding-equivalent (aandeel × ~65.000 t U/j; Novouralsk ~14.950 t U/j);
+- de modaliteit `lucht` in `stroomstijl.js`: limoengeel, boogt in elke lijnmodus;
+- `verdicht()` slaat luchtbenen over; komeet 8.000 km/dag, HUD-label en legenda;
+- `maak_luchtbeen.py`, handleiding §2 "Lucht", en `toets_rechte_benen.py` slaat lucht over;
+- getoetst met een tijdelijke JNB → LHR (piek 1,10 R).
+
+**Workflow `wf_e34d33df-202`** (110 agenten, Sonnet 5, 0 fouten, 32,1M tokens, ~2 u):
+- 34 ketens: goud 13, PGM 9, diamant 12;
+- 33 gebakken door agenten, 32 luchtbenen, ~221.800 km;
+- keuring: 30 goed-met-bevindingen, 3 goed, 1 herstel (pgm-mogalakwena: JNB-luchtbeen op de marker).
+
+**Centraal:**
+- goud-pamp-shanghai afgemaakt: ZRH airside → stippel, via-punt Zug weg, 263 km;
+- goud-sitelaag: drie aggregaten zonder gewicht (Emirates+Kaloti, Krastsvetmet, NGM-JV);
+- 17 coördinaten gelijkgetrokken met de keten-ankers;
+- registersleutels `au-`/`pgm-`/`dia-`, met `dia-md` gesplitst in `dia-ma` en `dia-mb`;
+- HUD-groepen goud/PGM/diamant; gloedlagen goud 37, PGM 20, diamant 25.
+
+**Bol:** 125 stromen, 14 gloedlagen, 0 consolefouten, 375 px zonder horizontale scroll. Linear LAR-599..603 Done.
+
+Vault: [[2026-09-28-grondstoffen-atlas-m31-golf3-luchtvracht]].
+
 ## 2026-09-28 (avond) - M31 golf 2 live op `?v=126` (LAR-595..598, commit `98af548`)
 
 Lars: golf 1 kostte maar 15% van de sessielimiet → *"3/4x zoveel kan ook zonder problemen."*

@@ -1,5 +1,23 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 live `?v=125`: naden, sleutels, eenheid_site)*
+*Last updated: 2026-09-28 (uraniumgloed = voeding-equivalent; lucht boogt in elke lijnmodus; golf 3)*
+
+## 2026-09-28 (laat) — uraniumgloed, luchtvracht, golf 3
+
+- **2026-09-28 · ✅ LARS — "kan je de uranium gloed maken, laat de gestippelde ketens maar staan, voor golf 3 lucht maken is goed".**
+- **URANIUMGLOED = VOEDING-EQUIVALENT (optie b).**
+  - Formule: aandeel wereld-SWU × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte).
+  - Waarom: een percentage naast tonnen valt in de gloed weg.
+  - Het is een schatting op een schatting. Daarom staat "OMGEREKEND, SCHATTING" vooraan in `capaciteit_bron`, en het % in `aandeel_wereld_swu_pct`.
+- **LUCHT BOOGT IN ÉLKE LIJNMODUS, ook in "onze routes".**
+  - Het besluit "de lijnen blijven op de grond" (2026-08-07) gaat over routes die óp de grond liggen. Een vlucht ligt echt in de lucht, dus daar is de boog de eerlijke weergave (M6-precedent).
+  - Wie een gemeten route op land of water optilt, draait het oude besluit alsnog om.
+- **EEN VLUCHT = GROOTCIRKEL TUSSEN TWEE SATELLIET-GELEGDE VRACHTTERMINALS, DOORGETROKKEN.**
+  - Luchtwegen zijn niet te meten, dus de claim is "van terminal A naar B", niet "langs deze lijn".
+  - Geen stippel, want een gedocumenteerde vlucht is geen gat.
+  - Alleen met een bron dat de lading vliegt; een hub alleen met bron.
+- **AIRSIDE-VRACHTPLATFORM → het wegbeen eindigt op de openbare weg, en een korte stippel sluit af** (ZRH, 0,91 km).
+- **SITELAAG-COÖRDINATEN WORDEN CENTRAAL GELIJKGETROKKEN met satelliet-gelegde keten-ankers van dezelfde site.** In golf 3 lagen 17 punten 0,6–26 km ernaast. Het oude punt blijft in `coord_bron`.
+- **Bestandsnaam ≠ keten wordt niet hernoemd** (`pgm-sudbury-actonuk`, `diamant-namdeb-gaborone`): hernoemen betekent herbakken, en de registersleutel en het HUD-label zeggen het juiste.
 
 ## 2026-09-28 — M31: meer stromen richting v1-dichtheid
 
