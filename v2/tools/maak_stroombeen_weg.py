@@ -95,6 +95,1612 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief goud-dubai-delhi, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck DMCC-raffinagezone (Gold & Diamond Park, Al Quoz 3) → DXB-vrachtterminal
+    # (Emirates SkyCargo) — Sheikh Zayed Rd → Al Rebat St/Cargo Village Rd. Gepubliceerd
+    # ≈20 km (eigen meting, hemelsbreed 19,8 km); geen officiële wegbeheerder-lengte.
+    "goud-dubai-delhi-dmcc-dxb": {
+        "via": [
+            ("DMCC-raffinagezone, Gold & Diamond Park, Al Quoz 3 (anker, au-dmcc-refine)", (55.2089, 25.1261)),
+            ("Trade Centre-kruispunt (Sheikh Zayed Rd × Financial Centre Rd)", (55.2867, 25.2225)),
+            ("Al Garhoud-kruising, nadering DXB", (55.3364, 25.2436)),
+            ("DXB-vrachtterminal (Emirates SkyCargo) (anker, au-air-dxb)", (55.3434, 25.2560)),
+        ],
+        "id": "au-dmcc-dxb-weg",
+        "naam": "DMCC-raffinagezone → Trade Centre-kruispunt → Al Garhoud → DXB-vrachtterminal (Sheikh Zayed Rd → Al Rebat St)",
+        "extracts": ["gcc-staten"],
+        "refs": [],
+        "gepubliceerdKm": 20,
+        "bronnoot": "≈20 km eigen meting, hemelsbreed 19,8 km (routebrief §2/§8); geen officiële "
+                    "wegbeheerder-lengte gepubliceerd.",
+        "vensterKm": 40,
+        "uit": "goud-dubai-delhi-weg-dmcc-dxb.geojson",
+    },
+    # Routebrief goud-dubai-delhi, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck DEL-vrachtterminal (Delhi Air Cargo Complex) → MMTC-PAMP-raffinaderij
+    # (Rojka Meo, Sohna) — NH48 (Delhi–Gurugram Expwy) → Sohna Road → Rojka Meo.
+    # Gepubliceerd ≈50–55 km (eigen meting, hemelsbreed 38,3 km + corridoromweg via
+    # Gurugram/Sohna); ⚠️ "Manesar" in de ketennaam ≠ de plaats Manesar (28,3553/76,9327,
+    # andere corridor) — route volgt Rojka Meo/Sohna (routebrief §7).
+    "goud-dubai-delhi-del-mmtc": {
+        "via": [
+            ("DEL-vrachtterminal, Delhi Air Cargo Complex (anker, au-air-del)", (77.1000, 28.5570)),
+            ("Rajokri, NH48-kruising Delhi/Haryana-grens", (77.1111, 28.5031)),
+            ("Gurugram, Sohna Road-afslag", (77.0290, 28.4560)),
+            ("Sohna", (77.0700, 28.2500)),
+            ("MMTC-PAMP-raffinaderij, Rojka Meo, Sohna (anker, au-ref-mmtc)", (77.0611, 28.2140)),
+        ],
+        "id": "au-del-mmtc-weg",
+        "naam": "DEL-vrachtterminal → Rajokri → Gurugram/Sohna Road → Sohna → MMTC-PAMP Rojka Meo (NH48 → Sohna Road)",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 52,
+        "bronnoot": "≈50–55 km eigen meting, hemelsbreed 38,3 km + corridoromweg via Gurugram/Sohna "
+                    "(routebrief §2/§8); geen officiële bronlengte voor dit exacte traject.",
+        "vensterKm": 45,
+        "uit": "goud-dubai-delhi-weg-del-mmtc.geojson",
+    },
+    # Routebrief goud-pamp-shanghai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck MKS PAMP-raffinaderij (Castel San Pietro, Ticino) → Zürich Airport
+    # vrachtterminal (ZRH) — A2 Ticino → Gotthard → A2/A4 Zürich. Vijf via-punten
+    # pinnen de doorgaande A2/A4-corridor (routebrief §4): Bellinzona (A2-knoop) →
+    # Göschenen (noordportaal Gotthard, vaste doorgang) → Erstfeld (Reuss-dal) →
+    # Rotkreuz (A2/A4-knoop) → Zug (A4-corridor). Gepubliceerd ~200 km (ontwerp),
+    # ~198 km hemelsbreed via de punten (routebrief §2). ZRH-anker hergebruikt uit
+    # pgm-springs-zurich/goud-loulo-ticino/goud-yanacocha-ticino (47.4647,8.5492).
+    "goud-pamp-shanghai-pamp-zrh": {
+        "via": [
+            ("MKS PAMP SA, succursale Ticino — Via alle Zocche 1, Castel San Pietro (anker, au-pamp-raffinaderij)", (9.0025, 45.8546)),
+            ("Bellinzona (A2-knoop) — vóór de Gotthard-klim", (9.0297, 46.1954)),
+            ("Göschenen (noordportaal Gotthard) — vaste doorgang, geen alternatieve vrachtcorridor", (8.5887, 46.6676)),
+            ("Erstfeld (Reuss-dal, Uri)", (8.6500, 46.8215)),
+            ("Rotkreuz (A2/A4-knoop)", (8.4313, 47.1408)),
+            # ⚠️ Centraal verwijderd (2026-09-28): via-punt "Zug (A4-corridor)" (8.5169,
+            #    47.1681) lag in de stad; de A4 Rotkreuz → Zürich gaat door het
+            #    Knonaueramt en niet door Zug. Gemeten: Rotkreuz → Zug 31,2 km voor
+            #    6,5 km hemelsbreed, heel been 266,7 km (+33%).
+            # ⚠️ Centraal hersteld (2026-09-28): het vrachtplatform zelf (8.5492,47.4647)
+            #    ligt airside en gaf "geen wegpad tussen punt 5 en 6" — dezelfde
+            #    bevinding als goud-loulo-ticino/goud-yanacocha-ticino. Het wegbeen
+            #    eindigt op de openbare weg (0,91 km); de bake sluit af met een stippel.
+            ("Openbare weg bij Zürich Airport vrachtplatform (last-mile-aansluiting)", (8.554523, 47.472087)),
+        ],
+        "id": "au-pamp-zrh-weg",
+        "naam": "MKS PAMP → Bellinzona → Göschenen → Erstfeld → Rotkreuz → Zug → Zürich Airport vrachtterminal (A2 Gotthard → A4)",
+        "extracts": ["zwitserland"],
+        "refs": ["A2", "A4"],
+        "gepubliceerdKm": 200,
+        "bronnoot": "~200 km (ontwerp) · ~198 km hemelsbreed via de vijf punten (routebrief §2).",
+        "vensterKm": 40,
+        "uit": "goud-pamp-shanghai-weg-pamp-zrh.geojson",
+    },
+    # Routebrief goud-pamp-shanghai, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Shanghai Pudong (PVG) vrachtterminal → SGE-kluiszone Lujiazui (Bank of
+    # Communications) — binnenstedelijk Pudong, S1/A20-type expressway-corridor.
+    # Geen via-punten (routebrief §4): geen aanwijsbare corridorkeuze binnen het
+    # webbudget, laat de router de kortste plausibele weg kiezen. Eindanker is een
+    # ZONE (financiële wijk, geen kluispand gepubliceerd) → grotere marge acceptabel.
+    "goud-pamp-shanghai-pvg-sge": {
+        "via": [
+            ("Shanghai Pudong International Airport vrachtplatform (PVG) (anker, au-pvg-vrachtterminal)", (121.8025, 31.1335)),
+            ("Lujiazui financiële wijk / SGE-kluiszone (Bank of Communications), Yincheng-corridor (anker, au-sge-kluiszone)", (121.5008, 31.2355)),
+        ],
+        "id": "au-pvg-sge-weg",
+        "naam": "Shanghai Pudong vrachtterminal → SGE-kluiszone Lujiazui (binnenstedelijk Pudong)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 35,
+        "bronnoot": "~35 km (ontwerp, hemelsbreed) — geen gepubliceerd getal, verwachte "
+                    "uitkomst rond de 25-35 km (routebrief §2/§7).",
+        "vensterKm": 30,
+        "uit": "goud-pamp-shanghai-weg-pvg-sge.geojson",
+    },
+    # Routebrief goud-kalgoorlie-singapore, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Kalgoorlie Super Pit/Fimiston-mill (KCGM) → Perth Mint, East Perth —
+    # Great Eastern Highway via Coolgardie–Southern Cross–Merredin–Cunderdin–
+    # Northam–Midland (routebrief §2/§4). Gepubliceerd 590 km (Wikipedia);
+    # hemelsbreed 549,8 km berekend (ratio 1,07).
+    "goud-kalgoorlie-singapore-kalgoorlie-perth": {
+        "via": [
+            ("Kalgoorlie Super Pit / KCGM Fimiston-mill (anker, au-kalgoorlie-mill)", (121.4990, -30.7897)),
+            ("Coolgardie — eerste stad op de Great Eastern Highway, corridor buigt hier af", (121.1640, -30.9530)),
+            ("Southern Cross — doorgaande corridorstad, geen zijtak", (119.3278, -31.2306)),
+            ("Merredin — regionale hub op de corridor", (118.2790, -31.4820)),
+            ("Cunderdin — doorgaande corridorstad in de Wheatbelt", (117.2400, -31.6600)),
+            ("Northam — hier voegt de Great Southern Highway aan, corridor buigt de Avon-vallei in", (116.6661, -31.6531)),
+            ("Midland — rand van de Perth-agglomeratie, overgang naar stedelijke wegen", (116.0100, -31.8880)),
+            ("The Perth Mint, East Perth (anker, au-ref-perth)", (115.8700, -31.9550)),
+        ],
+        "id": "au-kalgoorlie-perth-weg",
+        "naam": "Kalgoorlie Super Pit → Coolgardie → Southern Cross → Merredin → Cunderdin → Northam → Midland → Perth Mint (Great Eastern Highway)",
+        "extracts": ["australie"],
+        "refs": [],
+        "gepubliceerdKm": 590,
+        "bronnoot": "590 km gepubliceerd (Wikipedia, Great Eastern Highway); hemelsbreed 549,8 km "
+                    "berekend (ratio 1,07), routebrief §2/§8[10].",
+        "vensterKm": 45,
+        "uit": "goud-kalgoorlie-singapore-weg-kalgoorlie-perth.geojson",
+    },
+    # Routebrief goud-kalgoorlie-singapore, been b2 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Perth Mint, East Perth → Perth Airport (PER), vrachtterminal
+    # (Qantas Freight Int'l Terminal, Affleck Road, Ascot) — binnenstedelijk
+    # Perth, Great Eastern Highway → Tonkin Highway (routebrief §2/§4). Geen
+    # via-punten nodig: <15 km, één voor de hand liggende route.
+    "goud-kalgoorlie-singapore-perth-percargo": {
+        "via": [
+            ("The Perth Mint, East Perth (anker, au-ref-perth)", (115.8700, -31.9550)),
+            ("Perth Airport (PER), Qantas Freight Int'l Terminal, Affleck Road, Ascot (anker, au-per-cargo)", (115.9764, -31.9460)),
+        ],
+        "id": "au-perth-percargo-weg",
+        "naam": "Perth Mint, East Perth → Perth Airport (PER) vrachtterminal (Great Eastern Hwy → Tonkin Hwy)",
+        "extracts": ["australie"],
+        "refs": [],
+        "gepubliceerdKm": 12,
+        "bronnoot": "hemelsbreed 10,1 km berekend; ontwerp ≈12 km (routebrief §2/§8[1]), geen aparte "
+                    "gepubliceerde wegbeheerder-lengte.",
+        "vensterKm": 20,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-kalgoorlie-singapore-weg-perth-percargo.geojson",
+    },
+    # Routebrief goud-argor-mumbai, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck Argor-Heraeus SA, Mendrisio (Ticino) → Milaan-Malpensa (MXP)
+    # vrachtterminal — A2 (CH) → grens Chiasso → A9/A8 (IT) (routebrief §2/§4).
+    # gepubliceerdKm 70 is een ontwerp-schatting (geen officiële wegbeheerder-
+    # bron, grensoverschrijdend CH→IT); via-puntensom hemelsbreed 64,1 km ligt
+    # daar logisch onder.
+    "goud-argor-mumbai-argor-mxp": {
+        "via": [
+            ("Argor-Heraeus SA, Mendrisio (Ticino) (anker, au-ref-argor)", (8.9818, 45.8749)),
+            ("Chiasso — grenspost CH/IT", (9.0333, 45.8333)),
+            ("San Fermo della Battaglia (Como-tunnels A9)", (9.0486, 45.8084)),
+            ("Fino Mornasco", (9.0476, 45.7429)),
+            ("Lainate — A9/A8-knooppunt", (9.0317, 45.5632)),
+            ("Busto Arsizio (A8)", (8.8518, 45.6119)),
+            ("Cardano al Campo (A8-afslag Malpensa)", (8.7725, 45.6457)),
+            ("Milano Malpensa Cargo, Cargo City Sud (MXP) (anker, au-air-mxp)", (8.7186, 45.6142)),
+        ],
+        "id": "au-argor-mxp-weg",
+        "naam": "Argor-Heraeus Mendrisio → A2 → Chiasso → A9 → A8 → Malpensa-vrachtterminal",
+        "extracts": ["zwitserland", "italie"],
+        "refs": ["A2", "A9", "A8"],
+        "gepubliceerdKm": 70,
+        "bronnoot": "geen officiële wegbeheerder-lengte gevonden (grensoverschrijdend CH→IT); "
+                    "70 km is een ontwerp-schatting, via-puntensom hemelsbreed 64,1 km (brief §2).",
+        "vensterKm": 45,
+        "uit": "goud-argor-mumbai-weg-argor-mxp.geojson",
+    },
+    # Routebrief goud-argor-mumbai, been b3 (LICHTE werkwijze M31 golf 3).
+    # Truck Mumbai (BOM) vrachtterminal → Zaveri Bazaar-sieradenmarkt —
+    # Western Express Highway → S.V. Road → Dr. Annie Besant Road (§2/§4).
+    # Zaveri Bazaar ligt in nauwe marktstraten van Kalbadevi; kleine
+    # wegklassen binnen 12 km toegelaten, laatste meters evt. korte stippel.
+    # ⚠️ Het anker au-air-bom (72.8660,19.0954) snapt op een geïsoleerd
+    # airside-wegcomponent (BFS op de india-scan: componentgrootte 9 tegen
+    # 178.739 op het publieke net) — geen COMPONENT-toegang, dus
+    # eindToegangPrivaat lost dit niet op. Eerste via-punt is daarom het
+    # dichtstbijzijnde routeerpunt op het publieke net (72.865345,19.096391,
+    # 0,13 km van het anker); de bake tekent anker → routeerpunt als korte
+    # stippel (bakhandleiding §2 Lucht: "korter dan ~2 km").
+    "goud-argor-mumbai-bom-zaveri": {
+        "via": [
+            ("Openbare-wegaansluiting bij BOM-vrachtterminal (routeerpunt; anker au-air-bom ligt 0,13 km verderop op het airside-net)", (72.865345, 19.096391)),
+            ("Vile Parle (Western Express Highway)", (72.8440, 19.0999)),
+            ("Bandra West", (72.8303, 19.0583)),
+            ("Mahim", (72.8398, 19.0423)),
+            ("Worli (Dr. Annie Besant Road)", (72.8157, 19.0308)),
+            ("Crawford Market", (72.8345, 18.9473)),
+            ("Zaveri Bazaar-sieradenmarkt, Mumbai (anker, au-mkt-zaveri)", (72.8307, 18.9518)),
+        ],
+        "id": "au-bom-zaveri-weg",
+        "naam": "BOM-vrachtterminal → Western Express Highway → S.V. Road → Dr. Annie Besant Road → Zaveri Bazaar",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 25,
+        "bronnoot": "geen officiële wegbeheerder-lengte gevonden; 25 km is een ontwerp-schatting, "
+                    "via-puntensom hemelsbreed 22,2 km (brief §2).",
+        "vensterKm": 20,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "trimStaart": True,
+        "uit": "goud-argor-mumbai-weg-bom-zaveri.geojson",
+    },
+    # Routebrief goud-malartic-ottawa, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck Canadian Malartic-mijn (Agnico Eagle, Québec) → Royal Canadian Mint
+    # Ottawa — Route 117 → Route 105 → Autoroute 5 (routebrief §2/§4/§7).
+    # ⚠️ Geen gepubliceerde route-km (brief §7): ontwerp-schatting ≈480 km tegen
+    # een via-puntensom hemelsbreed van 398,0 km (+21% bochtopslag, plausibel
+    # voor het ~250 km rechte La Vérendrye-reservaat-stuk + twee regionale
+    # wegen). vensterKm ruim (60) i.v.m. het lange rechte reservaat-traject.
+    "goud-malartic-ottawa-malartic-ottawa": {
+        "via": [
+            ("Canadian Malartic-mijn (Agnico Eagle), Malartic, Québec (anker, au-malartic-mijn)", (-78.0942, 48.1176)),
+            ("Route 117 bij Louvicourt (oostzijde Val-d'Or)", (-77.3779, 48.0657)),
+            ("Route 117 door de Réserve faunique La Vérendrye", (-77.1100, 47.3300)),
+            ("Grand-Remous — knooppunt Route 117 / Route 105", (-75.9158, 46.6192)),
+            ("Route 105 bij Kazabazua", (-76.0226, 45.9074)),
+            ("Route 105 bij Low", (-75.9526, 45.8117)),
+            ("Wakefield — noordelijk eindpunt Autoroute 5 / aansluiting Route 105", (-75.9293, 45.6400)),
+            ("Macdonald-Cartier Bridge (grens Québec/Ontario)", (-75.7030, 45.4370)),
+            ("Royal Canadian Mint, 320 Sussex Drive, Ottawa (anker, au-rcm-ottawa)", (-75.6993, 45.4315)),
+        ],
+        "id": "au-malartic-ottawa-weg",
+        "naam": "Canadian Malartic-mijn → Route 117 → Route 105 → Autoroute 5 → Royal Canadian Mint Ottawa",
+        "extracts": ["canada"],
+        "refs": ["117", "105", "5"],
+        "gepubliceerdKm": 480,
+        "bronnoot": "geen gepubliceerde route-km gevonden voor Malartic→Ottawa over de weg; "
+                    "480 km is een ontwerp-schatting, via-puntensom hemelsbreed 398,0 km "
+                    "(+21% bochtopslag) — de lengtetoets (±15%) staat dus tegen een schatting, "
+                    "niet een harde bron (brief §7).",
+        "vensterKm": 60,
+        "uit": "goud-malartic-ottawa-weg-malartic-ottawa.geojson",
+    },
+    # Routebrief goud-siguiri-dubai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Siguiri-mijn (AngloGold Ashanti/SMD, Kintinian) → Conakry Int'l (CKY)
+    # vrachtterminal — N1-corridor via Kouroussa–Dabola–Mamou–Kindia–Coyah
+    # (routebrief §2/§4/§7). Lange corridor (~850 km ontwerp, som via-punten
+    # hemelsbreed ≈557 km — typisch 30-50% korter dan de wegafstand) → venster ruim.
+    "goud-siguiri-dubai-siguiri-cky": {
+        "via": [
+            ("Siguiri-mijn — AngloGold Ashanti/SMD, Kintinian, Boure-gebied (anker, au-siguiri-mijn)", (-9.3567, 11.5695)),
+            ("Kouroussa — eerste stadsknoop op de N1", (-9.8810, 10.6514)),
+            ("Dabola — tussenstad op de N1, enige doorgaande route naar Mamou", (-11.1065, 10.7422)),
+            ("Mamou — knooppuntstad waar de N1 richting kust ombuigt", (-12.0836, 10.3741)),
+            ("Kindia — laatste grote tussenstad vóór de kustregio", (-12.8260, 10.0368)),
+            ("Coyah — laatste knoop vóór de Conakry-stadsrand/luchthavenweg", (-13.3890, 9.7090)),
+            ("Conakry Int'l (CKY), vracht-/GA-apron (anker, au-cky-cargo)", (-13.6205, 9.5748)),
+        ],
+        "id": "au-siguiri-cky-weg",
+        "naam": "Siguiri-mijn → Kouroussa → Dabola → Mamou → Kindia → Coyah → Conakry Int'l (CKY) (N1)",
+        "extracts": ["guinee"],
+        "refs": ["N1"],
+        "gepubliceerdKm": 850,
+        "bronnoot": "~850 km ontwerp (routebrief §2/§7) — geen gepubliceerde wegkilometrage voor de "
+                    "N1 Siguiri–Conakry-corridor gevonden binnen het webbudget; som via-punten "
+                    "hemelsbreed ≈557 km, niet onafhankelijk bevestigd.",
+        "vensterKm": 60,
+        "uit": "goud-siguiri-dubai-weg-siguiri-cky.geojson",
+    },
+    # Routebrief goud-siguiri-dubai, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Dubai Intl (DXB) vrachtterminal → DMCC-raffinagezone (Emirates Gold/
+    # Kaloti, Almas Tower) — Sheikh Zayed Road (E11), enige doorgaande corridor
+    # (routebrief §2/§4/§7). Zelfde fysieke corridor als diamant-marange-dubai
+    # (DXB-cargo → DMCC/Almas Tower) — die geometrie is letterlijk hergebruikt
+    # (zie bak_stromen.sh, geen tweede scan). Dit profiel staat voor de volledigheid.
+    "goud-siguiri-dubai-dxb-dmcc": {
+        "via": [
+            ("Dubai Intl (DXB), Emirates Air Cargo-gebouw, Al Garhoud (anker, au-dxb-cargo)", (55.3406, 25.2575)),
+            ("Dubai World Trade Centre-interchange — enige doorgaande snelweg (E11) tussen DXB en JLT", (55.2888, 25.2276)),
+            ("Mall of the Emirates-interchange — tweede vaste interchange, vlak vóór JLT/DMCC", (55.2006, 25.1181)),
+            ("DMCC, Almas Tower, Jumeirah Lake Towers (anker, au-dubai-dmcc)", (55.1412, 25.0691)),
+        ],
+        "id": "au-dxb-dmcc-weg",
+        "naam": "Dubai Intl (DXB) vrachtterminal → DMCC/Almas Tower (Sheikh Zayed Road E11)",
+        "extracts": ["gcc-staten"],
+        "refs": ["E11"],
+        "gepubliceerdKm": 20,
+        "bronnoot": "~20 km ontwerp (routebrief §2/§7); anker-tot-anker hemelsbreed ≈29 km — ligt onder "
+                    "de gemeten wegroute, verwacht bij de lengtetoets een afwijking ruim boven +15% "
+                    "(bevinding, geen bijschuiven). Zelfde E11-corridor als diamant-marange-dubai, "
+                    "waar dit been al eerder gebakken werd (geometrie hergebruikt, zie bak_stromen.sh).",
+        "vensterKm": 20,
+        "uit": "goud-siguiri-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief goud-mponeng-londen, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Mponeng-mijn (Harmony Gold) → Rand Refinery Germiston — N12/R28-
+    # industriecorridor Witwatersrand via Westonaria → Soweto (routebrief §2/§4/§7).
+    # Geen harde gepubliceerde km; eigen berekening ≈77 km (rechte afstand
+    # 76,2 km), corridor N12 vs R28 niet bevonden → venster ruim.
+    "goud-mponeng-londen-mponeng-randrefinery": {
+        "via": [
+            ("Mponeng-mijn — schacht + oppervlaktecomplex (anker, au-mponeng-mijn)", (27.4306, -26.4361)),
+            ("Westonaria — West-Rand-mijngordel, pint de N12/R28-corridor", (27.6506, -26.3178)),
+            ("Soweto — op de rechte lijn Westonaria→Germiston, pint de N12-route", (27.8585, -26.2678)),
+            ("Rand Refinery, Germiston (anker, au-randrefinery)", (28.1550, -26.2189)),
+        ],
+        "id": "au-mponeng-randrefinery-weg",
+        "naam": "Mponeng-mijn → Westonaria → Soweto → Rand Refinery, Germiston (N12/R28)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N12", "R28"],
+        "gepubliceerdKm": 77,
+        "bronnoot": "≈77 km eigen berekening (routebrief §2/§7; rechte afstand 76,2 km) — "
+                    "geen gepubliceerde bron; corridor N12 vs R28 niet bevonden, ±15%-toets soepel.",
+        "vensterKm": 45,
+        "uit": "goud-mponeng-londen-weg-mponeng-randrefinery.geojson",
+    },
+    # Routebrief goud-mponeng-londen, been b2 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Rand Refinery Germiston → OR Tambo (JNB) vrachtterminal — R21/N12,
+    # korte stadsleg (routebrief §2/§4). Geen via-punten nodig. Gepubliceerd
+    # ≈15 km (redactionele schatting ontwerp, niet hard); rechte afstand 11,2 km.
+    # ⚠️ Eerste poging (geen eindToegangPrivaat) faalde op "geen wegpad" — het
+    # JNB-vrachtapron is airside/deels privéterrein (zoals dia-jnb-cargo elders
+    # in dit bestand, 28.227/-26.143, hetzelfde patroon); eindToegangPrivaat +
+    # bredere eindKlassen erbij.
+    "goud-mponeng-londen-randrefinery-jnb": {
+        "via": [
+            ("Rand Refinery, Germiston (anker, au-randrefinery)", (28.1550, -26.2189)),
+            ("OR Tambo (JNB) vrachtterminal (anker, au-jnb-vracht)", (28.2295, -26.1440)),
+        ],
+        "id": "au-randrefinery-jnb-weg",
+        "naam": "Rand Refinery, Germiston → OR Tambo (JNB) vrachtterminal (R21/N12)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R21", "N12"],
+        "gepubliceerdKm": 15,
+        "bronnoot": "≈15 km redactionele schatting uit het ontwerp (routebrief §2/§7), geen aparte "
+                    "bron; rechte afstand 11,2 km.",
+        "vensterKm": 25,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-mponeng-londen-weg-randrefinery-jnb.geojson",
+    },
+    # Routebrief goud-mponeng-londen, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Heathrow-vrachtterminal → LBMA-kluis City of London — M4/A4 via
+    # Hounslow → Chiswick → Hammersmith (routebrief §2/§4). Gepubliceerd ≈27 km
+    # (eigen berekening; ontwerp noemde ≈25 km via M4). Stedelijk eindstuk:
+    # standaard-eindklassen eerst proberen, verruimen als de City-straten niet
+    # gevonden worden.
+    "goud-mponeng-londen-lhr-lbma": {
+        "via": [
+            ("Heathrow-vrachtterminal (anker, au-lhr-vracht)", (-0.4680, 51.4605)),
+            ("Hounslow — eerste grote plaats op de M4/A4-corridor", (-0.3750, 51.4668)),
+            ("Chiswick — A4 vóór de overgang naar centraal Londen", (-0.2600, 51.4900)),
+            ("Hammersmith — bekend knooppunt (Hammersmith flyover) op de A4", (-0.2228, 51.4933)),
+            ("LBMA-kluis, City of London (anker, au-lbma-kluis)", (-0.0880, 51.5140)),
+        ],
+        "id": "au-lhr-lbma-weg",
+        "naam": "Heathrow-vrachtterminal → Hounslow → Chiswick → Hammersmith → LBMA-kluis City of London (M4/A4)",
+        "extracts": ["groot-brittannie"],
+        "refs": ["M4", "A4"],
+        "gepubliceerdKm": 27,
+        "bronnoot": "≈27 km eigen berekening (routebrief §2/§7; ontwerp noemde ≈25 km via M4) — "
+                    "vrijwel gelijk aan de rechte afstand (27,0 km).",
+        "vensterKm": 25,
+        "uit": "goud-mponeng-londen-weg-lhr-lbma.geojson",
+    },
+    # Routebrief goud-tarkwa-dubai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Gold Fields Tarkwa — CIL-verwerkingsfabriek (mijn/mill, anker
+    # au-tarkwa-mill) → Kotoka/Accra Intl vrachtterminal (anker au-air-acc-
+    # cargo) — inland-corridor via Twifo Praso → Assin Fosu → Agona Swedru →
+    # Kasoa → Accra (routebrief §2/§4/§7). N-wegnummer niet onafhankelijk
+    # gebrond; via-punten op geografische aannemelijkheid + OSM/Photon-
+    # coördinaten. Gepubliceerd ≈300 km (Gold Fields: "approximately 300
+    # kilometres by road" naar Tema/Accra); ruim venster want lange landelijke
+    # corridor. Geen refs (geen N-wegnummer gebrond).
+    "goud-tarkwa-dubai-mill-acc": {
+        "via": [
+            ("Gold Fields Tarkwa — CIL-verwerkingsfabriek (anker, au-tarkwa-mill)", (-2.0215, 5.3275)),
+            ("Twifo Praso — pint de inland-route naar Kasoa/Accra i.p.v. de kustomweg", (-1.5497, 5.6116)),
+            ("Assin Fosu — doorgaande knoop op dezelfde inland-corridor", (-1.2769, 5.7005)),
+            ("Agona Swedru — corridor buigt hier zuidoostwaarts naar Kasoa", (-0.7008, 5.5345)),
+            ("Kasoa — laatste grote knoop vóór Accra/Kotoka", (-0.4375, 5.5326)),
+            ("Kotoka/Accra Intl vrachtterminal (anker, au-air-acc-cargo)", (-0.1745, 5.5985)),
+        ],
+        "id": "au-tarkwa-acc-weg",
+        "naam": "Gold Fields Tarkwa (mill) → Twifo Praso → Assin Fosu → Agona Swedru → Kasoa → Kotoka/Accra Intl vrachtterminal (inland-route)",
+        "extracts": ["ghana"],
+        "refs": [],
+        "gepubliceerdKm": 300,
+        "bronnoot": "Gold Fields: ~300 km naar Tema/Accra; via-punten niet individueel "
+                    "gebrond, zie routebrief §7.",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "goud-tarkwa-dubai-weg-mill-acc.geojson",
+    },
+    # Routebrief goud-tarkwa-dubai, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Dubai Intl vrachtterminal (Emirates SkyCargo, anker au-air-dxb-
+    # cargo) → DMCC-goudzone/Al Etihad Gold Refinery (anker au-dmcc-refine) —
+    # Sheikh Zayed Road (E11) via Trade Centre Roundabout (kn. 1) → Mall of
+    # the Emirates-knoop (kn. 4) → Interchange bij Al Thanyah/JLT (routebrief
+    # §2/§4). Gepubliceerd ≈31 km (eigen meting via de drie via-punten, ná
+    # satellietcheck van beide ankers).
+    "goud-tarkwa-dubai-dxb-dmcc": {
+        "via": [
+            ("Dubai Intl vrachtterminal (Emirates SkyCargo, anker, au-air-dxb-cargo)", (55.3431, 25.2560)),
+            ("Trade Centre Roundabout (Interchange 1, Sheikh Zayed Rd)", (55.2909, 25.2294)),
+            ("Mall of the Emirates-knoop (Interchange 4)", (55.1997, 25.1202)),
+            ("Interchange bij Al Thanyah/JLT (nabij DMCC)", (55.1410, 25.0680)),
+            ("DMCC-goudzone, Dubai — Al Etihad Gold Refinery (anker, au-dmcc-refine)", (55.1352, 25.0602)),
+        ],
+        "id": "au-dxb-dmcc-weg",
+        "naam": "Dubai Intl vrachtterminal (DXB) → Trade Centre Roundabout → Mall of the Emirates → Al Thanyah/JLT → DMCC-goudzone (Sheikh Zayed Road)",
+        "extracts": ["gcc-staten"],
+        "refs": ["Sheikh Zayed Road", "E11"],
+        "gepubliceerdKm": 31,
+        "bronnoot": "Eigen meting via de drie via-punten, ná satellietcheck van beide "
+                    "ankers (routebrief §2/§7); ontwerp noemde ≈20 km, hier gecorrigeerd.",
+        "vensterKm": 30,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "uit": "goud-tarkwa-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief goud-valcambi-londen, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Valcambi-raffinaderij (Balerna, Ticino) → Milaan-Malpensa
+    # Cargo City Sud-vrachtterminal — A2 (Chiasso-grensovergang) → A9
+    # (Como–Lomazzo) → A8 (Gallarate) → laatste stuk naar Malpensa (routebrief
+    # §2/§4). Gepubliceerd ≈78 km (eigen kaartlezing, ontwerp-indicatie ≈75 km,
+    # geen aparte gepubliceerde bron) — de bake-lengte is de echte controle.
+    "goud-valcambi-londen-valcambi-mxp": {
+        "via": [
+            ("Valcambi SA, Balerna (anker, au-ref-valcambi)", (9.0051, 45.8385)),
+            ("Chiasso — grensovergang CH–IT (A2)", (9.0333, 45.8333)),
+            ("Como — A9 langs het Comomeer", (9.0833, 45.8167)),
+            ("Lomazzo — A9/A8-knooppunt, tak naar Malpensa", (9.0333, 45.7000)),
+            ("Gallarate — A8, laatste plaats vóór de afslag naar Malpensa", (8.7932, 45.6599)),
+            ("Milano Malpensa Cargo, Cargo City Sud (anker, au-mxp-cargo)", (8.7186, 45.6142)),
+        ],
+        "id": "au-valcambi-mxp-weg",
+        "naam": "Valcambi, Balerna → Chiasso → Como → Lomazzo → Gallarate → Malpensa Cargo City Sud (A2/A9/A8)",
+        "extracts": ["zwitserland", "italie"],
+        "refs": ["A2", "A9", "A8", "SS336"],
+        "gepubliceerdKm": 78,
+        "bronnoot": "≈78 km eigen kaartlezing (routebrief §2/§7, ontwerp-indicatie ≈75 km) — "
+                    "geen aparte gepubliceerde bronwaarde.",
+        "vensterKm": 50,
+        "uit": "goud-valcambi-londen-weg-valcambi-mxp.geojson",
+    },
+    # Routebrief goud-valcambi-londen, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Heathrow World Cargo Centre-vrachtterminal → LBMA-kluis / Bank of
+    # England, City of London — M4 (Heathrow-spur) → A4 (Chiswick,
+    # Hammersmith) → Hyde Park Corner → Fleet Street (routebrief §2/§4).
+    # Gepubliceerd ≈25 km (eigen kaartlezing, geen aparte gepubliceerde bron).
+    # Stedelijke eindnadering: rond de Bank of England ligt een voetgangerszone
+    # (routebrief §7) — het laatste stukje kan een korte last-mile-stippel
+    # vragen, ter beoordeling ná de bake.
+    "goud-valcambi-londen-lhr-boe": {
+        "via": [
+            ("Heathrow World Cargo Centre / IAG Cargo (anker, au-lhr-cargo)", (-0.4629, 51.4605)),
+            ("M4 J4/J4b — Heathrow-spur naar het Londense hoofdnet", (-0.4595, 51.4870)),
+            ("Chiswick Roundabout — overgang M4 → A4", (-0.2814, 51.4911)),
+            ("Hammersmith Flyover — doorgaande A4-tak", (-0.2240, 51.4912)),
+            ("Hyde Park Corner — corridor buigt naar de City", (-0.1543, 51.5027)),
+            ("Fleet Street — laatste doorgaande straat vóór de City", (-0.1119, 51.5137)),
+            ("Bank of England, Threadneedle Street (anker, au-hub-london)", (-0.0883, 51.5139)),
+        ],
+        "id": "au-lhr-boe-weg",
+        "naam": "Heathrow World Cargo Centre → M4 → Chiswick → Hammersmith → Hyde Park Corner → Fleet Street → Bank of England",
+        "extracts": ["groot-brittannie"],
+        "refs": ["M4", "A4"],
+        "gepubliceerdKm": 25,
+        "bronnoot": "≈25 km eigen kaartlezing (routebrief §2/§7) — geen aparte gepubliceerde bronwaarde.",
+        "vensterKm": 40,
+        "eindKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "uit": "goud-valcambi-londen-weg-lhr-boe.geojson",
+    },
+    # Routebrief goud-olimpiada-dubai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Olimpiada-mijn (Polyus, Severo-Jenisejsk-district) → Krastsvetmet-
+    # raffinaderij, Krasnojarsk — regionale weg eerst noordwaarts naar de
+    # districtshoofdplaats Severo-Jenisejsk (vóór het doorgaande wegennet
+    # zuidwaarts begint), dan zuidwaarts via Jenisejsk/Lesosibirsk (Jenisej-
+    # oversteek, begin van de P409) → Bolsjaja Moerta → Krasnojarsk (routebrief
+    # §2/§4). Gepubliceerd ≈550 km (ontwerpcijfer, niet apart gebrond — de
+    # bake-lengte is de echte controle). Langste/onzekerste been van de keten
+    # (routebrief §7): aannemelijke corridor uit nederzettingsgeografie, geen
+    # gepubliceerde routebeschrijving; dunbevolkt taigagebied rond
+    # Severo-Jenisejsk kan OSM-gaten hebben.
+    "goud-olimpiada-dubai-olimpiada-krastsvetmet": {
+        "via": [
+            ("Olimpiada-mijn (Polyus), open dagbouwput (anker, au-olimpiada-mijn)", (92.9156, 59.8650)),
+            ("Severo-Jenisejsk — districtshoofdplaats, mijnweg buigt hier eerst noordwaarts", (93.0330, 60.3747)),
+            ("Jenisejsk / Lesosibirsk — Jenisej-oversteek, begin doorgaande P409 zuidwaarts", (92.1333, 58.4667)),
+            ("Bolsjaja Moerta — vaste tussenstop op de P409-corridor", (93.1393, 56.9093)),
+            ("Krastsvetmet OJSC, Krasnojarsk (anker, au-krastsvetmet)", (92.9998, 56.0160)),
+        ],
+        "id": "au-olimpiada-krastsvetmet-weg",
+        "naam": "Olimpiada-mijn → Severo-Jenisejsk → Jenisejsk/Lesosibirsk → Bolsjaja Moerta → Krastsvetmet, Krasnojarsk (P409)",
+        "extracts": ["rusland-siberie"],
+        "refs": ["P409"],
+        "gepubliceerdKm": 550,
+        "bronnoot": "≈550 km (ontwerpcijfer, routebrief §2/§7) — geen gepubliceerde "
+                    "routebeschrijving, aannemelijke corridor uit nederzettingsgeografie.",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "goud-olimpiada-dubai-weg-olimpiada-krastsvetmet.geojson",
+    },
+    # Routebrief goud-olimpiada-dubai, been b2 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Krastsvetmet-raffinaderij, Krasnojarsk → Jemeljanovo (KJA)
+    # vrachtterminal — stadsrand Krasnojarsk, P409/ringweg noordwaarts naar het
+    # vliegveld (routebrief §2/§4). Korte stadsrand-corridor, geen aparte
+    # via-punten nodig. Gepubliceerd ≈30 km (ontwerpcijfer).
+    "goud-olimpiada-dubai-krastsvetmet-kja": {
+        "via": [
+            ("Krastsvetmet OJSC, Krasnojarsk (anker, au-krastsvetmet)", (92.9998, 56.0160)),
+            ("Jemeljanovo (KJA) vrachtterminal (anker, au-kja-cargo)", (92.4630, 56.1837)),
+        ],
+        "id": "au-krastsvetmet-kja-weg",
+        "naam": "Krastsvetmet, Krasnojarsk → Jemeljanovo (KJA) vrachtterminal (P409/ringweg noordwaarts)",
+        "extracts": ["rusland-siberie"],
+        "refs": ["P409"],
+        "gepubliceerdKm": 30,
+        "bronnoot": "≈30 km (ontwerpcijfer, routebrief §2/§7).",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-olimpiada-dubai-weg-krastsvetmet-kja.geojson",
+    },
+    # Routebrief goud-olimpiada-dubai, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Dubai International Airport (DXB) — Emirates SkyCargo-vrachtterminal
+    # → DMCC-vrijzone, Jumeirah Lake Towers — Sheikh Zayed Road via de Trade
+    # Centre-rotonde → Mall of the Emirates/Interchange 4 (routebrief §2/§4).
+    # Grote, goed gekarteerde snelweg-corridor, geen stippel verwacht.
+    # Gepubliceerd ≈20 km (ontwerpcijfer).
+    "goud-olimpiada-dubai-dxb-dmcc": {
+        "via": [
+            ("Dubai International Airport (DXB) — Emirates SkyCargo (anker, au-dxb-cargo)", (55.3434, 25.2560)),
+            ("Trade Centre-rotonde — begin doorgaande Sheikh Zayed Road-corridor", (55.2888, 25.2276)),
+            ("Mall of the Emirates (Interchange 4) — laatste keuzepunt vóór JLT/DMCC", (55.2004, 25.1180)),
+            ("DMCC (Dubai Multi Commodities Centre), Jumeirah Lake Towers (anker, au-dmcc)", (55.1387, 25.0709)),
+        ],
+        "id": "au-dxb-dmcc-weg",
+        "naam": "Dubai International Airport (DXB, Emirates SkyCargo) → Trade Centre → Mall of the Emirates → DMCC-vrijzone (Sheikh Zayed Road)",
+        "extracts": ["gcc-staten"],
+        "refs": ["Sheikh Zayed Road", "E11"],
+        "gepubliceerdKm": 20,
+        "bronnoot": "≈20 km (ontwerpcijfer, routebrief §2/§7).",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "goud-olimpiada-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief goud-nevada-saltlakecity, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck Goldstrike-complex (Nevada Gold Mines, Carlin Trend, Barrick 61,5%/Newmont
+    # 38,5%) → Asahi Refining USA, Salt Lake City — I-80 via de eigen mijnweg NV-766
+    # (Goldstrike → Carlin) → Elko → Wells → West Wendover → Knolls → Lake Point.
+    # Bewust GEEN luchtvracht (routebrief §1/§7): één doorgaand truckbeen. Gepubliceerd
+    # ≈450 km (brief meet dit uit gepubliceerde deeltrajecten; ontwerp noemde ≈550 km,
+    # zie brief §7 — de bake-lengte is leidend, norm ±15%). corridorKlassen niet gezet:
+    # I-80 en NV-766 zijn beide doorgaande, publiek gekarteerde wegen; bij "geen wegpad"
+    # eerst checken of NV-766 als tertiary/unclassified in het us-nevada-extract zit.
+    "goud-nevada-saltlakecity-nevada-saltlakecity": {
+        "via": [
+            ("Goldstrike-complex, Betze-Post open pit + autoclaaf-/roaster (Nevada Gold Mines, anker au-nevada-mijn)", (-116.3789, 40.9816)),
+            ("Carlin, NV — mijnweg NV-766/Boone Springs Road sluit hier aan op I-80", (-116.1071, 40.7131)),
+            ("Elko, NV — I-80/US-93-knooppunt", (-115.74028, 40.83889)),
+            ("Wells, NV — I-80/US-93-splitsing", (-114.96722, 41.12)),
+            ("West Wendover, NV — staatsgrens Nevada/Utah op I-80", (-114.07517, 40.74097)),
+            ("Knolls, UT — I-80-afrit rand Bonneville Salt Flats", (-113.28971, 40.72299)),
+            ("Lake Point, UT — I-80 langs zuidoever Great Salt Lake (op de doorgaande I-80-lijn, niet het dorp)", (-112.2617, 40.6957)),
+            ("South Frontage Road vóór Asahi Refining (routeerpunt — het anker au-saltlakecity-asahi/laaddock ligt ~100 m verder op een OSM-geïsoleerde parkeerlus, niet aangesloten op het net)", (-112.000339, 40.725566)),
+        ],
+        "id": "au-nevada-saltlakecity-weg",
+        "naam": "Goldstrike-complex → Carlin → Elko → Wells → West Wendover → Knolls → Lake Point → South Frontage Road (Asahi Refining SLC, I-80/NV-766)",
+        "extracts": ["us-nevada", "us-utah"],
+        "refs": ["I-80", "NV-766"],
+        "gepubliceerdKm": 450,
+        "bronnoot": "≈450 km (routebrief-eigen optelling: Elko→Salt Lake City 370 km via "
+                    "I-80 [DistanceCalc] + Carlin→Elko ≈39 km + mijnweg Goldstrike→Carlin "
+                    "≈30 km over NV-766); ontwerp noemde ≈550 km, zie brief §7 — de bake "
+                    "geldt als leidend. ⚠️ Diagnose (weggraaf, 2026-09-28): het "
+                    "au-saltlakecity-asahi-anker (laaddock/parkeerlus, 40.72471,-112.00077) "
+                    "snapt op een OSM-component van slechts 8 knopen (twee losse "
+                    "'service'-ways, way 742154031/742154032) die niet aan het publieke net "
+                    "hangt — een echte topologiebreuk, geen te ruim venster. Dichtstbijzijnde "
+                    "knoop op het hoofdnet: South Frontage Road, 102 m verderop "
+                    "(40.725566,-112.000339). Wegbeen eindigt daar; de laatste ~100 m gaat als "
+                    "korte stippel in de bake (bakhandleiding §2, <2 km).",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "goud-nevada-saltlakecity-weg-nevada-saltlakecity.geojson",
+    },
+    # Routebrief goud-loulo-ticino, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Loulo-Gounkoto-mijncomplex (Barrick, West-Mali) → Bamako-Sénou
+    # vrachtterminal (BKO) — mijnweg → Kéniéba (RN-verbindingsweg) → Kita
+    # (corridorknoop, buigt oostwaarts naar Bamako) → Bamako (routebrief §2/§4).
+    # Gepubliceerd ≈380 km (ontwerp); hemelsbreed 380,5 km (berekend).
+    # eindToegangPrivaat: het BKO-terreincluster is airside/deels militair
+    # terrein (routebrief §7) — korte eindstukjes evt. stippel bij het bakken.
+    "goud-loulo-ticino-loulo-bamako": {
+        "via": [
+            ("Loulo-Gounkoto-mijncomplex (anker, au-loulo-mijn)", (-11.4118, 13.0868)),
+            ("Kéniéba — RN-verbindingsweg (Dakar-Bamako-corridor)", (-11.232153, 12.8407105)),
+            ("Kita — corridorknoop, buigt oostwaarts naar Bamako", (-9.4889798, 13.0408383)),
+            ("Bamako-Sénou vrachtterminal, BKO (anker, au-bamako-vrachtterminal)", (-7.9488, 12.5353)),
+        ],
+        "id": "au-loulo-bamako-weg",
+        "naam": "Loulo-Gounkoto-mijncomplex → Bamako-Sénou vrachtterminal (BKO) (Kéniéba–Kita–Bamako-corridor)",
+        "extracts": ["mali"],
+        "refs": [],
+        "gepubliceerdKm": 380,
+        "bronnoot": "≈380 km (ontwerp); eigen hemelsbreed berekend 380,5 km (routebrief §2).",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "goud-loulo-ticino-weg-loulo-bamako.geojson",
+    },
+    # Routebrief goud-loulo-ticino, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Zürich Airport vrachtplatform (ZRH) → Valcambi-raffinaderij, Balerna
+    # (Ticino) — A4 (Zürich-Zug-Luzern, verplichte aansluiting op de A2-as) →
+    # A2/Gotthard-as via Bellinzona → Lugano → Chiasso (routebrief §2/§4).
+    # Gepubliceerd ≈200 km (ontwerp); hemelsbreed 184,1 km (berekend).
+    # ⚠️ Twee mislukte pogingen ("geen wegpad tussen punt 0 en 1", ook mét Zug/
+    #    Luzern en eindToegangPrivaat): het vrachtplatform zelf (8.5492,47.4647)
+    #    snapt op een geïsoleerde apron-service-way (airside/privéterrein zonder
+    #    aansluiting op het openbare net) — exact dezelfde bevinding als het
+    #    analoge been in goud-yanacocha-ticino-valcambi (zelfde ZRH-anker,
+    #    zelfde golf). Profiel start daarom op het dichtstbijzijnde punt van het
+    #    openbare wegennet (8.554523,47.472087, 0,91 km van het platform, komt
+    #    uit dat andere profiel); de bak-functie sluit dat stukje af met een
+    #    korte stippel "last mile" (airside/privé).
+    "goud-loulo-ticino-zrh-valcambi": {
+        "via": [
+            ("Openbare weg bij Zürich Airport vrachtplatform (last-mile-aansluiting)", (8.554523, 47.472087)),
+            ("Zug — A4 vanaf Zürich Airport, verplichte aansluiting richting Luzern", (8.5174, 47.1680)),
+            ("Luzern — A4 sluit hier aan op de A2 zuidwaarts (Gotthard-as)", (8.3000, 47.0500)),
+            ("Bellinzona — A2 komt hier het Ticino-dal in (na de Gotthard-tunnel)", (9.0205888, 46.1920538)),
+            ("Lugano — doorgaande A2-corridor tussen Bellinzona en Chiasso", (8.9512275, 46.0038007)),
+            ("Chiasso — grens, laatste punt vóór de afslag naar Balerna", (9.0290169, 45.8355209)),
+            ("Valcambi SA, Balerna (anker, au-ref-valcambi)", (9.0051, 45.8385)),
+        ],
+        "id": "au-zrh-valcambi-loulo-weg",
+        "naam": "Zürich Airport vrachtplatform → Valcambi-raffinaderij, Balerna (A4 Zug-Luzern → A2/Gotthard-as via Bellinzona–Lugano–Chiasso)",
+        "extracts": ["zwitserland"],
+        "refs": ["A4", "A2"],
+        "gepubliceerdKm": 200,
+        "bronnoot": "≈200 km (ontwerp); eigen hemelsbreed berekend 184,1 km (routebrief §2).",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "goud-loulo-ticino-weg-zrh-valcambi.geojson",
+    },
+    # Routebrief diamant-letseng-dubai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Letšeng-mijn (Gem Diamonds + regering Lesotho, 3.100 m) → O.R. Tambo
+    # vrachtapron (JNB), eigen $3,7 mln-bergweg Mokhotlong → Oxbow/Tlaeeng-Moteng-pas
+    # (A1) → Butha-Buthe → Caledonspoort-grens → Fouriesburg → Bethlehem (N5-knoop) →
+    # Villiers (N3) → Johannesburg (routebrief §2/§4). Via-punten indicatief, niet
+    # satelliet-gelegd (routebrief §4); alleen de twee ankers zijn dat (routebrief §3).
+    # Gepubliceerd ~450 km (ontwerp; GIA bevestigt alleen Letšeng↔Maseru 214 km, niet
+    # apart geverifieerd op JNB-afstand, routebrief §7). corridorKlassen ruim gezet:
+    # een bergpascorridor in Lesotho en de Vrijstaat-grensstreek kan op tertiary/
+    # unclassified vallen.
+    "diamant-letseng-dubai-letseng-jnb": {
+        "via": [
+            ("Letšeng-mijn (Gem Diamonds + regering Lesotho), 3.100 m (anker, dia-letseng-mijn)", (28.86194, -29.00028)),
+            ("Oxbow (Tlaeeng-/Moteng-pas) — enige doorgaande bergpas-corridor (A1)", (28.6396, -28.7712)),
+            ("Butha-Buthe — laatste Lesothaanse plaats vóór de grens", (28.2333, -28.7833)),
+            ("Caledonspoort-grensovergang Lesotho → Zuid-Afrika", (28.2338, -28.6949)),
+            ("Fouriesburg (Zuid-Afrika) — eerste plaats na de grens", (28.2109, -28.6228)),
+            ("Bethlehem (Zuid-Afrika) — knooppunt N5/N3 richting Johannesburg", (28.3110, -28.2240)),
+            ("Villiers (Zuid-Afrika) — N3 tussen Free State en Gauteng", (28.6000, -27.0333)),
+            ("O.R. Tambo vrachtapron (JNB), Kempton Park (anker, dia-jnb-cargo)", (28.22700, -26.14300)),
+        ],
+        "id": "dia-letseng-jnb-weg",
+        "naam": "Letšeng-mijn → Oxbow → Butha-Buthe → Caledonspoort → Fouriesburg → Bethlehem → Villiers → O.R. Tambo vrachtapron (JNB)",
+        "extracts": ["lesotho", "zuid-afrika"],
+        "refs": ["A1", "N5", "N3"],
+        "gepubliceerdKm": 450,
+        "bronnoot": "~450 km (ontwerp, routebrief §2/§7); GIA/G&G bevestigt alleen de "
+                    "$3,7 mln-bergweg en Letšeng↔Maseru 214 km, niet de exacte km naar "
+                    "Johannesburg — niet apart geverifieerd.",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "diamant-letseng-dubai-weg-letseng-jnb.geojson",
+    },
+    # Routebrief diamant-letseng-dubai, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck DXB-vrachtterminal (Dubai Cargo Village/Cargo Gateway, Al Garhoud) →
+    # DMCC/Almas Tower (JLT), Sheikh Zayed Road (E11) — enige zinnige doorgaande
+    # corridor binnen Dubai, geen corridorkeuze (routebrief §2/§4/§7). Eigen anker
+    # dia-dxb-cargo (25,2644/55,3661, satelliet-gelegd op de Dubai Cargo Village-
+    # loodsenrij, routebrief §3) ligt ~2,7 km van het dia-dxb-cargo-anker van de
+    # zusterbrieven diamant-marange-dubai/diamant-mbujimayi-dubai (andere kandidaat
+    # binnen hetzelfde vrachtcomplex) — bewust NIET hergebruikt, eigen wegscan met
+    # het eigen satelliet-gelegde anker.
+    "diamant-letseng-dubai-dxb-dmcc": {
+        "via": [
+            ("DXB-vrachtterminal, Dubai Cargo Village/Cargo Gateway, Al Garhoud (anker, dia-dxb-cargo)", (55.36610, 25.26440)),
+            ("DMCC / Almas Tower, Jumeirah Lake Towers (anker, dia-dmcc-almas)", (55.14120, 25.06890)),
+        ],
+        "id": "dia-letseng-dxb-dmcc-weg",
+        "naam": "DXB-vrachtterminal → DMCC/Almas Tower (Al Garhoud → Sheikh Zayed Road E11 → JLT)",
+        "extracts": ["gcc-staten"],
+        "refs": ["Sheikh Zayed Road", "E11"],
+        "gepubliceerdKm": 31,
+        "bronnoot": "geen gepubliceerd getal; ~31 km hemelsbreed (routebrief §2), "
+                    "wegafstand naar verwachting 35-40 km.",
+        "vensterKm": 30,
+        "uit": "diamant-letseng-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief goud-yanacocha-ticino, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Minera Yanacocha (Newmont) → Lima Cargo City, Jorge Chávez Int'l (LIM) —
+    # Carretera Panamericana Norte / Cajamarca-Lima-corridor, via Chilete (bergdal-afdaling)
+    # → Pacasmayo (aansluiting doorgaande Panamericana Norte) → Trujillo → Chimbote →
+    # Barranca → Huacho (laatste kustplaats vóór Lima). Gepubliceerd ~850 km (ontwerpcijfer,
+    # wegafstand Cajamarca-Lima).
+    "goud-yanacocha-ticino-lim": {
+        "via": [
+            ("Minera Yanacocha (Newmont) — mijn/laadplek (anker, au-yanacocha-mijn)", (-78.5099, -6.9858)),
+            ("Chilete — afdaling bergdal naar de kust", (-78.8390, -7.2215)),
+            ("Pacasmayo — aansluiting op de doorgaande Panamericana Norte", (-79.5685, -7.4029)),
+            ("Trujillo — grote kustplaats op de Panamericana Norte", (-79.0288, -8.1120)),
+            ("Chimbote — volgende kustplaats op de Panamericana Norte", (-78.5936, -9.0745)),
+            ("Barranca — volgende kustplaats richting Lima", (-77.7609, -10.7541)),
+            ("Huacho — laatste grote kustplaats vóór Lima", (-77.6050, -11.1067)),
+            ("Lima Cargo City, LIM — vrachtterminal (anker, au-lim-vrachtterminal)", (-77.1039, -12.0289)),
+        ],
+        "id": "au-yanacocha-lim-weg",
+        "naam": "Yanacocha-mijn → Lima Cargo City (LIM) (Carretera Panamericana Norte)",
+        "extracts": ["peru"],
+        "refs": ["Panamericana Norte", "PE-1N", "PE-3N"],
+        "gepubliceerdKm": 850,
+        "bronnoot": "~850 km (ontwerpcijfer, gepubliceerde wegafstand Cajamarca-Lima via de "
+                    "Panamericana Norte).",
+        "vensterKm": 40,
+        "uit": "goud-yanacocha-ticino-weg-yanacocha-lim.geojson",
+    },
+    # Routebrief goud-yanacocha-ticino, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Zürich Airport vrachtplatform → Valcambi-raffinaderij, Balerna (Ticino) —
+    # A4 (Zürich-Zug-Luzern) → A2/Gotthard-as (Luzern-Bellinzona-Chiasso). Gepubliceerd
+    # ~200 km (ontwerpcijfer, A2/Gotthard-as).
+    # ⚠️ Het vrachtplatform zelf (8.5492,47.4647) snapt op een geïsoleerde
+    #    apron-service-way (component-grootte 2, gemeten) — airside/privéterrein
+    #    zonder aansluiting op het openbare net, ook niet met eindToegangPrivaat
+    #    (zelfde bevinding als pgm-springs-zurich, ZRH→Kloten-kluis). Het profiel
+    #    start daarom op het dichtstbijzijnde punt van het openbare wegennet
+    #    (8.554523,47.472087, 0,91 km van het platform, gemeten); de bak-functie
+    #    sluit dat stukje af met een korte stippel "last mile" (airside/privé).
+    "goud-yanacocha-ticino-valcambi": {
+        "via": [
+            ("Openbare weg bij Zürich Airport vrachtplatform (last-mile-aansluiting)", (8.554523, 47.472087)),
+            ("Zug — A4 vanaf Zürich Airport, corridorkeuze richting Luzern", (8.5174, 47.1680)),
+            ("Luzern — A4 sluit hier aan op de A2 zuidwaarts (Gotthard-as)", (8.3000, 47.0500)),
+            ("Gotthard Base Tunnel-as — verplicht punt van de A2-Gotthard-corridor", (8.6465, 46.8359)),
+            ("Bellinzona — de A2 komt hier het Ticino-dal in", (9.0297, 46.1954)),
+            ("Chiasso — grenscorridor-punt vlak vóór de afslag naar Balerna", (9.0333, 45.8333)),
+            ("Valcambi SA, Balerna — raffinaderij (anker, au-valcambi-raffinaderij)", (9.0051, 45.8385)),
+        ],
+        "id": "au-zrh-valcambi-weg",
+        "naam": "Zürich Airport vrachtplatform → Valcambi-raffinaderij, Balerna (A4 → A2/Gotthard-as)",
+        "extracts": ["zwitserland"],
+        "refs": ["A4", "A2"],
+        "gepubliceerdKm": 200,
+        "bronnoot": "~200 km (ontwerpcijfer, A2/Gotthard-as).",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-yanacocha-ticino-weg-zrh-valcambi.geojson",
+    },
+    # Routebrief diamant-catoca-dubai, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck ruwe diamant Catoca-mijn (Lunda Sul) → Sodiam/Endiama-exportkantoor
+    # Luanda, EN230 Saurimo–Malanje + EN220 Malanje–N'dalatando–Luanda (routebrief
+    # §2/§4). Via-punten uit de brief (Saurimo/Malanje/Cacuso/N'dalatando).
+    # Gepubliceerd ~850 km (ontwerp); eigen hemelsbreed-som via de 4 via-punten
+    # 826,6 km — komt goed overeen (routebrief §2).
+    # ⚠️ corridorKlassen tertiary/unclassified/service: eerste poging (WEG_HOUD
+    # kaal) gaf "geen wegpad tussen punt 0 en 1" — de dichtstbijzijnde secondary
+    # bij de mijn ligt op 19,6 km, EIND_STRAAL_KM is 12 km, dus zonder corridor-
+    # brede kleine klassen mist de scanner het stuk ertussen (nagemeten:
+    # tertiary op 11,16 km, dan alleen unclassified/track tot de secondary).
+    "diamant-catoca-dubai-catoca-luanda": {
+        "via": [
+            ("Catoca-mijn, Lunda Sul (anker, dia-catoca-mijn)", (20.30083, -9.39889)),
+            ("Saurimo — knoop mijnweg/EN230", (20.39811, -9.65893)),
+            ("Malanje — einde EN230, aansluiting EN220", (16.35000, -9.53333)),
+            ("Cacuso — tussenplaats EN220", (15.74067, -9.42203)),
+            ("N'dalatando — laatste knoop vóór Luanda", (14.91450, -9.29848)),
+            ("Sodiam/Endiama-exportkantoor, Luanda (anker, dia-luanda-sodiam)", (13.23578, -8.81291)),
+        ],
+        "id": "diamant-catoca-dubai-catoca-luanda",
+        "naam": "Catoca-mijn → Luanda (Sodiam/Endiama) — EN230 Saurimo–Malanje / EN220 Malanje–N'dalatando–Luanda",
+        "extracts": ["angola"],
+        "refs": ["EN230", "EN220"],
+        "gepubliceerdKm": 850,
+        "bronnoot": "~850 km (ontwerp); eigen hemelsbreed-som via de 4 via-punten 826,6 km (routebrief §2); lengtetoets ±15%.",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "diamant-catoca-dubai-weg-catoca-luanda.geojson",
+    },
+    # Routebrief diamant-catoca-dubai, been b2 (LICHTE werkwijze M31 golf 3).
+    # Truck Sodiam-kantoor Luanda → NBJ-vrachtterminal (nieuwe luchthaven Dr.
+    # António Agostinho Neto, Bom Jesus/Ícolo e Bengo), nieuwe luchthaven-
+    # toegangsweg/expresweg (routebrief §2/§4). Geen corridorkeuze binnen het
+    # brief-onderzoek gevonden; geen via-punten in de brief, ruim venster.
+    "diamant-catoca-dubai-luanda-nbj": {
+        "via": [
+            ("Sodiam/Endiama-exportkantoor, Luanda (anker, dia-luanda-sodiam)", (13.23578, -8.81291)),
+            ("NBJ-vrachtterminal, Bom Jesus (anker, dia-nbj-vracht)", (13.51400, -9.03350)),
+        ],
+        "id": "diamant-catoca-dubai-luanda-nbj",
+        "naam": "Luanda (Sodiam) → NBJ-vrachtterminal (nieuwe luchthaven-toegangsweg)",
+        "extracts": ["angola"],
+        "refs": [],
+        "gepubliceerdKm": 40,
+        "bronnoot": "~40 km (ontwerp/haalbaarheidstoets); eigen hemelsbreed 39,6 km (routebrief §2); lengtetoets ±15%.",
+        "vensterKm": 40,
+        "uit": "diamant-catoca-dubai-weg-luanda-nbj.geojson",
+    },
+    # Routebrief pgm-mogalakwena-londen, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Mogalakwena-concentrator (Valterra Platinum, Mokopane) → Rustenburg
+    # PMR (Waterval-complex), N1 (Mokopane-Mookgophong-Bela-Bela-Pretoria-Noord)
+    # → R24 "Platinum Highway" (Pretoria-Rustenburg). Geen operator-bron voor de
+    # km; eigen OSRM-meting 341 km tegen het ontwerpcijfer ~180 km (routebrief
+    # §7 — forse afwijking, bevinding, niet dichtgetrokken). Ruim venster om de
+    # lange corridor.
+    "pgm-mogalakwena-londen-mogalakwena-rustenburg": {
+        "via": [
+            ("Mogalakwena-concentrator (anker, pgm-mogalakwena-mijn)", (28.9160, -23.9805)),
+            ("Mokopane (N1-aansluiting)", (29.0167, -24.1833)),
+            ("Mookgophong (N1)", (28.7163, -24.5144)),
+            ("Bela-Bela (N1)", (28.2905, -24.8806)),
+            ("Akasia (N1 → R24 \"Platinum Highway\"-wissel)", (28.1136, -25.6548)),
+            ("Rustenburg PMR — Waterval-complex (anker, pgm-rustenburg-pmr)", (27.3180, -25.6750)),
+        ],
+        "id": "pgm-mogalakwena-londen-mogalakwena-rustenburg",
+        "naam": "Mogalakwena-concentrator → Rustenburg PMR (N1 → R24 Platinum Highway)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N1", "R24"],
+        "gepubliceerdKm": 341,
+        "bronnoot": "geen operator-bron; 341 km eigen OSRM-meting (routebrief pgm-mogalakwena-londen §7), werkcijfer tegen het ontwerpcijfer ~180 km.",
+        "vensterKm": 50,
+        "uit": "pgm-mogalakwena-londen-weg-mogalakwena-rustenburg.geojson",
+    },
+    # Routebrief pgm-mogalakwena-londen, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Heathrow (LHR) World Cargo Centre → Johnson Matthey Royston, M4 →
+    # M25 (westring) → A1(M) → A505 Baldock-Royston. BINDEND-tekst noemt ~50 km
+    # via M25/A10/A505; gemeten (OSRM) 97 km via M25/A1(M)/A505 — de A1(M) is
+    # hier het functionele equivalent van de genoemde A10 (beide sluiten aan op
+    # de A505 bij Baldock, routebrief §7).
+    "pgm-mogalakwena-londen-heathrow-royston": {
+        "via": [
+            ("Heathrow (LHR) World Cargo Centre (anker, pgm-lhr-cargo)", (-0.4195, 51.4703)),
+            ("Denham (M25-west)", (-0.5351, 51.5741)),
+            ("Abbots Langley (M25-noord, Hertfordshire)", (-0.4059, 51.7131)),
+            ("Welwyn (A1(M))", (-0.2285, 51.8100)),
+            ("Baldock Bypass (A1(M) → A505-wissel)", (-0.1928, 51.9663)),
+            ("Johnson Matthey Royston (anker, pgm-jm-royston)", (-0.0351, 52.0550)),
+        ],
+        "id": "pgm-mogalakwena-londen-heathrow-royston",
+        "naam": "Heathrow World Cargo Centre → Johnson Matthey Royston (M4 → M25 → A1(M) → A505)",
+        "extracts": ["groot-brittannie"],
+        "refs": ["M4", "M25", "A1(M)", "A505"],
+        "gepubliceerdKm": 97,
+        "bronnoot": "BINDEND noemde ~50 km via M25/A10/A505; eigen OSRM-meting 97 km via M25/A1(M)/A505 (routebrief pgm-mogalakwena-londen §7).",
+        "vensterKm": 30,
+        "eindToegangPrivaat": True,
+        "uit": "pgm-mogalakwena-londen-weg-heathrow-royston.geojson",
+    },
+    # Routebrief diamant-surat-hongkong, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Surat Diamond Bourse → Bharat Diamond Bourse (BKC), NH48 Surat–Mumbai via
+    # Navsari/Vapi/Boisar/Vasai-Virar/Dahisar. Gepubliceerd ~280 km (ontwerp); via-punten-
+    # som komt op 235,6 km — de NH48 maakt waarschijnlijk stadsomwegen in Surat/Mumbai die
+    # de rechte via-keten niet meeneemt, dus een ruim venster.
+    # ⚠️ DREAM City (Surat Diamond Bourse) heeft een EIGEN wegenstelsel dat in OSM een
+    # geïsoleerd component van 57 knopen vormt — een echt topologiegat (gemeten
+    # 2026-09-28 op de india-scan: `_wegen_graaf` + BFS geeft component-grootte 57 vanaf
+    # de bourse-anchor tegen 1.780.308 vanaf Navsari; het dichtstbijzijnde punt op het
+    # publieke net ligt 17 m van dat interne component, in totaal 0,325 km van het
+    # ankerpunt). `eindToegangPrivaat` lost een ACCESS-filter op, geen COMPONENT-
+    # scheiding, dus dat hielp niet. Eerste via-punt is daarom het routeerpunt op het
+    # publieke net (NH48-zijstraat); de bake tekent het stukje anker → routeerpunt als
+    # korte stippel (anker ≠ routeerpunt, bakhandleiding §2/§5).
+    "diamant-surat-hongkong-surat-bdb": {
+        "via": [
+            ("NH48-aansluiting bij DREAM City (routeerpunt; anker dia-surat-bourse ligt 0,33 km verderop op het interne wegenstelsel)", (72.79343, 21.112178)),
+            ("Navsari",                                            (72.9300, 20.9500)),
+            ("Vapi",                                                (72.9170, 20.3720)),
+            ("Boisar",                                              (72.7560, 19.8036)),
+            ("Vasai-Virar",                                         (72.8000, 19.4700)),
+            ("Dahisar (Mumbai-stadsgrens/toll naka)",               (72.859347, 19.250069)),
+            ("Bharat Diamond Bourse, BKC (anker, dia-bdb)",         (72.8646, 19.0641)),
+        ],
+        "id": "dia-surat-bdb-weg",
+        "naam": "Surat Diamond Bourse (NH48-aansluiting) → Bharat Diamond Bourse (NH48 Surat–Mumbai)",
+        "extracts": ["india"],
+        "refs": ["NH48"],
+        "gepubliceerdKm": 280,
+        "bronnoot": "~280 km (ontwerp); via-punten-som 235,6 km / hemelsbreed 227,6 km "
+                    "(berekend) — de NH48 maakt waarschijnlijk stadsomwegen in Surat/Mumbai "
+                    "die de rechte via-keten niet meeneemt.",
+        "vensterKm": 75,
+        "eindToegangPrivaat": True,
+        "uit": "diamant-surat-hongkong-weg-surat-bdb.geojson",
+    },
+    # Routebrief diamant-surat-hongkong, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Cathay Pacific Cargo Terminal (HKG) → Hong Kong Diamond Exchange Building,
+    # North Lantau Highway → Tsing Ma Bridge → Kwai Chung Interchange → Western Harbour
+    # Crossing → Central. Geen harde bron; via-punten-som 32,4 km. Luchthaventerrein is
+    # airside/privé, dus eindToegangPrivaat aan de kop.
+    "diamant-surat-hongkong-hkgcargo-hkexchange": {
+        "via": [
+            ("Cathay Pacific Cargo Terminal, HKG (anker, dia-hkg-cargo)", (113.9247, 22.2975)),
+            ("North Lantau Highway",                                      (113.9924, 22.3143)),
+            ("Tsing Ma Bridge",                                            (114.07417, 22.35139)),
+            ("Kwai Chung Interchange",                                     (114.1250, 22.36667)),
+            ("Western Harbour Crossing (HK-portaal)",                      (114.15667, 22.30139)),
+            ("Hong Kong Diamond Exchange Building, Central (anker, dia-hk-exchange)", (114.1570, 22.2797)),
+        ],
+        "id": "dia-hkgcargo-hkexchange-weg",
+        "naam": "Cathay Pacific Cargo Terminal (HKG) → Hong Kong Diamond Exchange Building "
+                "(North Lantau Hwy → Tsing Ma Bridge → Kwai Chung → Western Harbour Crossing)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 32.4,
+        "bronnoot": "geen harde bron; via-punten-som 32,4 km / hemelsbreed 24,0 km (berekend).",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "diamant-surat-hongkong-weg-hkgcargo-hkexchange.geojson",
+    },
+    # Routebrief diamant-gaborone-surat, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck DTCB/DBGSS-sightaggregatie, Gaborone → GBE-vrachtapron (Sir Seretse Khama Intl
+    # Airport) — binnen Gaborone, A1/Western Bypass Road, geen corridorkeuze, geen via-
+    # punten (routebrief §2/§4). Hemelsbreed 3,7 km; ketenontwerp noemde ~15 km (afwijking
+    # genoteerd in de brief §7, niet gecorrigeerd — venster ruim vanwege het verschil).
+    "diamant-gaborone-surat-dtc-gbe": {
+        "via": [
+            ("DTCB/DBGSS-diamanthub, Gaborone (anker, dia-gaborone-dtc)", (25.9144, -24.5859)),
+            ("GBE-vrachtapron, Sir Seretse Khama Intl Airport (anker, dia-gbe-cargo)", (25.9286, -24.5550)),
+        ],
+        "id": "diamant-gaborone-surat-dtc-gbe",
+        "naam": "DTCB/DBGSS-diamanthub → GBE-vrachtapron (A1/Western Bypass Road)",
+        "extracts": ["botswana"],
+        "refs": [],
+        "gepubliceerdKm": 3.7,
+        "bronnoot": "3,7 km hemelsbreed gemeten (routebrief §2/§7); ketenontwerp noemde ~15 km, niet gecorrigeerd in het ontwerp.",
+        "vensterKm": 15,
+        "uit": "diamant-gaborone-surat-weg-dtc-gbe.geojson",
+    },
+    # Routebrief diamant-gaborone-surat, been b3 (LICHTE werkwijze M31 golf 3, haalbaar-
+    # heidstoets-aanpassing — vervangt de oorspronkelijke STV-fase C). Truck CSMIA Air Cargo
+    # Complex (BOM, Mumbai) → Surat Diamond Bourse (DREAM City) over de NH48 Mumbai–
+    # Ahmedabad Highway, via Manor–Talasari–Vapi–Valsad–Navsari–Sachin (routebrief §2/§4).
+    # Gepubliceerd ~280 km (haalbaarheidstoets); eigen via-puntensom hemelsbreed 231,1 km.
+    # ⚠️ Eerste poging (WEG_HOUD kaal) gaf "geen wegpad tussen punt 6 en 7" (Navsari→Sachin,
+    # het stuk waar de corridor van de NH48 afbuigt naar de Hajira-Sachin Bypass Road) →
+    # corridorKlassen tertiary/unclassified toegevoegd (de Bypass Road is geen motorway/
+    # secondary in OSM). Tweede poging (tertiary/unclassified(/service)) faalde daarna
+    # tussen punt 3 en 4 (Vapi→Valsad) — gediagnosticeerd (component-scan op de gescande
+    # graaf): het brief-punt "Valsad" (72,9260/20,6100, Wikipedia-centroïde) snapt op 113 m
+    # naar een geïsoleerd stompje van 3 knopen, terwijl de échte doorgaande NH48 (trunk) ~3 km
+    # zuidwestelijker loopt en de stad bewust omzeilt (bypass) — de brief-coördinaat is dus de
+    # stadscentroïde, geen wegpunt. Via-punt verplaatst naar een vertex ÓP de NH48-trunk-way
+    # (72,9512/20,5968) — bevinding, geen km-toets-manipulatie (werkwijze: via-punten op de
+    # doorgaande weg, niet in een stadscentrum). Derde faal (tussen punt 6 en 7, Sachin→SDB):
+    # het SDB-ANKER zelf (72,7953/21,1097, satelliet-gelegd) snapt op 134 m naar een
+    # geïsoleerd DREAM City-interne-weg-stompje van 57 knopen; het doorgaande netwerk ligt
+    # 287 m verderop (72,796653/21,107445, tertiary). Laatste via-punt is dat ROUTEERPUNT
+    # (anker ≠ routeerpunt, staand projectpatroon — Napoleon Ave/RHB-klasse); de marker in de
+    # bake blijft op het satelliet-gelegde ankerpunt, de resterende ~0,29 km last-mile-stub
+    # komt in §9 als bevinding, niet als stippel (< 0,5 km toetsnorm).
+    "diamant-gaborone-surat-bom-sdb": {
+        "via": [
+            ("CSMIA Air Cargo Complex, Mumbai/BOM (anker, dia-bom-cargo, hergebruikt)", (72.8673, 19.0994)),
+            ("Manor (Palghar-district) — NH48-knooppunt", (72.9096, 19.7228)),
+            ("Talasari — Maharashtra–Gujarat-grens, NH48-flyover", (72.9164, 20.1222)),
+            ("Vapi — eerste grote Gujarat-industriestad op de NH48", (72.9170, 20.3720)),
+            ("Valsad-bypass — NH48-trunk (verplaatst van de stadscentroïde 72,9260/20,6100, die 3 km van de weg ligt)", (72.9512158, 20.5967851)),
+            ("Navsari — doorgaande NH48-stad vlak vóór Surat", (72.9300, 20.9500)),
+            ("Sachin — hier buigt de corridor af naar de Hajira-Sachin Bypass Road", (72.8805, 21.0853)),
+            ("Surat Diamond Bourse — routeerpunt op het doorgaande net (anker dia-sdb ligt 0,29 km verderop, geïsoleerd DREAM City-wegje)", (72.796653, 21.107445)),
+        ],
+        "id": "diamant-gaborone-surat-bom-sdb",
+        "naam": "CSMIA Air Cargo Complex (BOM) → Manor → Talasari → Vapi → Valsad → Navsari → Sachin → Surat Diamond Bourse (NH48)",
+        "extracts": ["india"],
+        "refs": ["NH48"],
+        "gepubliceerdKm": 280,
+        "bronnoot": "~280 km (haalbaarheidstoets, NH48 Mumbai–Ahmedabad Highway); eigen via-puntensom 231,1 km hemelsbreed (routebrief §2/§7).",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "uit": "diamant-gaborone-surat-weg-bom-sdb.geojson",
+    },
+    # Routebrief diamant-marange-dubai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Marange-diamantvelden (ZCDC) → Harare (HRE) vrachtterminal, A9
+    # Mutare–Harare via Mutare/Rusape/Marondera (routebrief §2/§4). Geen
+    # gepubliceerde wegkm gevonden binnen het webbudget → ontwerp-schatting
+    # ~270 km als gepubliceerdKm (som via-punten hemelsbreed 275,4 km),
+    # ruim venster (40 km, standaardcorridor, geen bekende sterke uitbuiging).
+    # ⚠️ Eerste poging (mijnanker als punt 0, corridorKlassen tertiary/
+    #    unclassified/service + eindToegangPrivaat) faalde op "geen wegpad
+    #    tussen punt 0 en 1" — gemeten (osmium-connectiviteitscheck op de
+    #    zimbabwe-extract): het mijnanker snapt op een geïsoleerd 8-knopen-
+    #    eilandje (0,14 km) van vooral `track`-ways, dat NIET verbonden is met
+    #    de grote wegcomponent (2,25 mln knopen, incl. Mutare/de P4). De
+    #    dichtstbijzijnde `service`-weg die WEL in die grote component zit ligt
+    #    op 0,79 km van het mijnanker (-19,5956/32,3469) — dus via-punt hier
+    #    ingevoegd als de echte start van het gescande wegbeen; de 0,79 km
+    #    tussen het mijnanker en dit punt gaat als stippel "last mile (geen
+    #    net op deze korrel — track-only mijnwegen)" in de bak-functie.
+    "diamant-marange-dubai-marange-hre": {
+        "via": [
+            ("Marange-mijnweg — aansluiting doorgaand wegnet (0,79 km vanaf mijnanker dia-marange-mijn)", (32.3469, -19.5956)),
+            ("Mutare — eerste stadsknoop op de A9 (op de R5/Harare-Mutare Highway, geprojecteerd vanaf het stadscentrum 32.6333/-18.9667 — dat punt snapt op een geïsoleerde wegstomp, gemeten met een osmium-connectiviteitscheck)", (32.6426, -18.9511)),
+            ("Rusape — tussenstad op de A9", (32.1247, -18.5367)),
+            ("Marondera — laatste tussenstad vóór Harare", (31.5467, -18.1897)),
+            ("Robert Gabriel Mugabe Intl (HRE), vrachtterminal (anker, dia-hre-cargo)", (31.0946, -17.9218)),
+        ],
+        "id": "diamant-marange-dubai-marange-hre",
+        "naam": "Marange-mijnweg-aansluiting → Harare (HRE) vrachtterminal (A9 Mutare–Harare)",
+        "extracts": ["zimbabwe"],
+        "refs": [],
+        "gepubliceerdKm": 270,
+        "bronnoot": "geen gepubliceerde wegkm gevonden; ~270 km ontwerpcijfer (routebrief §2), som via-punten hemelsbreed 275,4 km; lengtetoets ±15%.",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "eindToegangPrivaat": True,
+        "uit": "diamant-marange-dubai-weg-marange-hre.geojson",
+    },
+    # Routebrief diamant-marange-dubai, been b3 (LICHTE werkwijze M31 golf 3,
+    # toegevoegd op de haalbaarheidstoets). Truck Dubai Intl (DXB) vrachtterminal
+    # → DMCC/Almas Tower (JLT), Sheikh Zayed Road (E11) — enige doorgaande
+    # corridor (routebrief §2/§4). Ankers hergebruikt van de zusterbrief
+    # diamant-mbujimayi-dubai (dezelfde DXB-vrachtterminal en DMCC-coördinaten,
+    # beide bron-gelegd in deze golf).
+    "diamant-marange-dubai-dxb-dmcc": {
+        "via": [
+            ("Dubai Intl (DXB), vrachtterminal (anker, dia-dxb-cargo, hergebruikt)", (55.3406, 25.2575)),
+            ("Dubai World Trade Centre-interchange — eerste vaste interchange op de E11", (55.2888, 25.2276)),
+            ("Mall of the Emirates-interchange — tweede vaste interchange, vlak vóór JLT/DMCC", (55.2006, 25.1181)),
+            ("DMCC / Almas Tower, Jumeirah Lake Towers (anker, dia-dmcc, hergebruikt)", (55.1412, 25.0691)),
+        ],
+        "id": "diamant-marange-dubai-dxb-dmcc",
+        "naam": "Dubai Intl (DXB) vrachtterminal → DMCC/Almas Tower (Sheikh Zayed Road E11)",
+        "extracts": ["gcc-staten"],
+        "refs": ["Sheikh Zayed Road", "E11"],
+        "gepubliceerdKm": 34,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 29,0 km (routebrief §2), verwacht ~32-38 km werkelijke wegafstand; lengtetoets ±15%.",
+        "vensterKm": 20,
+        "uit": "diamant-marange-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief pgm-norilsk-krasnojarsk, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Yemelyanovo-vrachtplatform (KJA) → Krastsvetmet-raffinaderij, Krasnoyarsk.
+    # Overpass was onbereikbaar bij het schrijven van de brief; via-punten hier
+    # zelf gepind met pyosmium op de lokale rusland-siberie-extract (bbox-scan
+    # op highway=trunk/primary rond Krasnoyarsk): R-255 "Sibir" (luchthavenweg,
+    # geen R257 zoals de brief vermoedde — dat is de andere kant van de stad)
+    # → Северное шоссе/Енисейский тракт-ringwegknoop → Октябрьский мост
+    # (Jenisej-oversteek) → Krastsvetmet-terrein. Hemelsbreed-keten via deze
+    # via-punten 37,5 km, tegen 34,5 km directe hemelsbreed-afstand — dicht bij
+    # de door de briefschrijver herziene richtwaarde ~35-40 km (het ontwerp gaf
+    # ten onrechte 25 km, gebaseerd op R257 i.p.v. de echte R-255/Северное
+    # шоссе/Октябрьский мост-corridor).
+    # ⚠️ Eerste via-punt is NIET de vrachtterminal-anker zelf: het hele kleine-
+    # klasse-wegennet rond de cargoterminal bestaat uit OSM-eilandjes (4-7
+    # knopen) die geen gedeelde knoop met het doorgaande net delen (component-
+    # scan op de gescande graaf, zelfde klasse als Beilun-havenspoor/
+    # cu-beilun-laadspoor) — de eerste PRIMARY-vertex van 04А-300 (0,8 km van
+    # het anker) is wél in het hoofdcomponent; de bake-functie tekent dat
+    # laatste stukje als korte stippel truck vanaf het echte anker.
+    "pgm-norilsk-krasnojarsk-yemelyanovo-krastsvetmet": {
+        "via": [
+            ("04А-300 — eerste primary-knoop bij Yemelyanovo (0,8 km van het anker)", (92.5275, 56.1718)),
+            ("R-255 \"Sibir\" — hoofdweg Yemelyanovo → Krasnojarsk", (92.7361, 56.1315)),
+            ("Северное шоссе / Енисейский тракт — ringweg-knoop noord", (92.9345, 56.0807)),
+            ("Октябрьский мост — Jenisej-oversteek", (92.9440, 56.0245)),
+            ("Krastsvetmet-raffinaderij, Krasnojarsk (anker, pgm-krastsvetmet-raffinaderij)", (92.9998, 56.0160)),
+        ],
+        "id": "pgm-yemelyanovo-krastsvetmet-weg",
+        "naam": "Yemelyanovo-vrachtterminal (KJA) → R-255 → Северное шоссе → Октябрьский мост → Krastsvetmet-raffinaderij",
+        "extracts": ["rusland-siberie"],
+        "refs": ["Р-255", "04К-044"],
+        "gepubliceerdKm": 40,
+        "bronnoot": "ontwerp gaf 25 km (R257-aanname); hemelsbreed gemeten 34,5 km, "
+                    "eigen via-puntenketen 37,5 km → 40 km als toetswaarde "
+                    "(brief §2/§7, herzien van de ontwerp-indicatie).",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "uit": "pgm-norilsk-krasnojarsk-weg-yemelyanovo-krastsvetmet.geojson",
+    },
+    # Routebrief diamant-venetia-antwerpen, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck ruwe diamant Venetia-mijn (De Beers, Limpopo) → O.R. Tambo vrachtterminal
+    # (JNB), N1/R572 via Louis Trichardt/Makhado, Polokwane, Mokopane, Bela-Bela,
+    # Pretoria, Kempton Park N1/R21-knoop. Gepubliceerd ~440 km (ontwerp); webcheck
+    # OSRM 491,1 km.
+    "diamant-venetia-antwerpen-venetia-jnb": {
+        "via": [
+            ("Venetia-mijn (De Beers), open put (anker, dia-venetia-mijn)", (29.3175, -22.4362)),
+            ("Louis Trichardt/Makhado — N1/R572-knoop", (29.9000, -23.0500)),
+            ("Polokwane — N1", (29.4500, -23.9000)),
+            ("Mokopane — N1", (29.0167, -24.1833)),
+            ("Bela-Bela — N1", (28.2833, -24.8833)),
+            ("Pretoria — N1-ring", (28.1881, -25.7461)),
+            ("Kempton Park — N1/R21-knoop", (28.2333, -26.1000)),
+            ("O.R. Tambo vrachtterminal, Kempton Park (anker, dia-jnb-cargo)", (28.2300, -26.1400)),
+        ],
+        "id": "dia-venetia-jnb-weg",
+        "naam": "Venetia-mijn → O.R. Tambo vrachtterminal (N1/R572 via Polokwane)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N1", "R572", "R21"],
+        "gepubliceerdKm": 491.1,
+        "bronnoot": "~440 km (ontwerp); webcheck OSRM 491,1 km — leidend (bakhandleiding §2).",
+        "vensterKm": 75,
+        "eindToegangPrivaat": True,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "diamant-venetia-antwerpen-weg-venetia-jnb.geojson",
+    },
+    # Routebrief diamant-mbujimayi-dubai, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck MIBA-terrein/exportkantoor Mbuji-Mayi → Mbuji-Mayi Airport (MJM),
+    # Avenue Inga — stadsverbinding, geen corridorkeuze, geen via-punten
+    # (routebrief §2/§4). Geen betrouwbare wegreferentie → venster ruim.
+    "diamant-mbujimayi-dubai-miba-mjm": {
+        "via": [
+            ("MIBA-terrein/exportkantoor, Mbuji-Mayi (anker, dia-mbm-miba)", (23.6000, -6.1300)),
+            ("Mbuji-Mayi Airport (MJM) (anker, dia-mbm-mjm)", (23.5682265, -6.1188177)),
+        ],
+        "id": "diamant-mbujimayi-dubai-miba-mjm",
+        "naam": "MIBA-terrein/exportkantoor → Mbuji-Mayi Airport (MJM)",
+        "extracts": ["congo-drc"],
+        "refs": [],
+        "gepubliceerdKm": 5,
+        "bronnoot": "~5 km ontwerpcijfer (routebrief §2), hemelsbreed 3,7 km; geen betrouwbare gepubliceerde wegreferentie.",
+        "vensterKm": 15,
+        "uit": "diamant-mbujimayi-dubai-weg-miba-mjm.geojson",
+    },
+    # Routebrief diamant-mbujimayi-dubai, been b4 (LICHTE werkwijze M31 golf 3,
+    # toegevoegd door de haalbaarheidstoets). Truck DXB-vrachtterminal →
+    # DMCC/Almas Tower, Airport Road → Sheikh Zayed Road/Al Ittihad Road —
+    # binnen Dubai, geen corridorkeuze. Geen gepubliceerde wegkm.
+    "diamant-mbujimayi-dubai-dxb-dmcc": {
+        "via": [
+            ("Dubai Intl Airport (DXB), vrachtcomplex (anker, dia-dxb-cargo)", (55.3405972, 25.2574524)),
+            ("DMCC / Almas Tower, Dubai (anker, dia-dmcc)", (55.1411656, 25.0690625)),
+        ],
+        "id": "diamant-mbujimayi-dubai-dxb-dmcc",
+        "naam": "DXB-vrachtterminal → DMCC/Almas Tower (Airport Road → Sheikh Zayed Road/Al Ittihad Road)",
+        "extracts": ["gcc-staten"],
+        "refs": ["Sheikh Zayed Road", "Airport Road", "Al Ittihad Road"],
+        "gepubliceerdKm": 34,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 29,0 km, verwacht ~32-38 km werkelijke wegafstand.",
+        "vensterKm": 30,
+        "uit": "diamant-mbujimayi-dubai-weg-dxb-dmcc.geojson",
+    },
+    # Routebrief diamant-mumbai-newyork, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck Bharat Diamond Bourse (BKC, Mumbai) → Sahar/CSMIA Air Cargo Complex
+    # (BOM) — binnen Mumbai, <4 km hemelsbreed, geen corridorkeuze, geen
+    # via-punten (routebrief §2/§4). Gepubliceerd ~10 km (ontwerp).
+    "diamant-mumbai-newyork-bdb-bomcargo": {
+        "via": [
+            ("Bharat Diamond Bourse, BKC, Mumbai (anker, dia-bdb, hergebruikt)", (72.8646, 19.0641)),
+            ("Sahar/CSMIA Air Cargo Complex, Mumbai (anker, dia-bom-cargo, hergebruikt)", (72.8673, 19.0994)),
+        ],
+        "id": "diamant-mumbai-newyork-bdb-bomcargo",
+        "naam": "Bharat Diamond Bourse → Sahar/CSMIA Air Cargo Complex (BKC-connector/Airport Road)",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 10,
+        "bronnoot": "geen gepubliceerde km; ~10 km ontwerpcijfer (routebrief §2), hemelsbreed 3,9 km; lengtetoets ±15%.",
+        "vensterKm": 40,
+        "uit": "diamant-mumbai-newyork-weg-bdb-bomcargo.geojson",
+    },
+    # Routebrief diamant-mumbai-newyork, been b3 (LICHTE werkwijze M31 golf 3).
+    # Truck JFK South Cargo Area (JFK) → 47th Street Diamond Exchange,
+    # Manhattan — Van Wyck Expressway (I-678) → Kew Gardens Interchange →
+    # Long Island Expressway → Queens-Midtown Tunnel → Manhattan (routebrief §4).
+    "diamant-mumbai-newyork-jfk-47th": {
+        "via": [
+            ("JFK South Cargo Area (anker, dia-jfk-cargo)", (-73.7952, 40.6587)),
+            ("Van Wyck Expressway, nabij JFK", (-73.8051, 40.6504)),
+            ("Van Wyck Expressway, ter hoogte van Kew Gardens", (-73.8166, 40.7033)),
+            ("Kew Gardens Interchange", (-73.8279, 40.7165)),
+            ("Queens-Midtown Tunnel, Queens-portaal (Long Island City)", (-73.9522, 40.7418)),
+            ("Queens-Midtown Tunnel, Manhattan-portaal (Tudor City)", (-73.9719, 40.7463)),
+            ("47th Street Diamond Exchange, Manhattan (anker, dia-ny-47th)", (-73.9817, 40.7578)),
+        ],
+        "id": "diamant-mumbai-newyork-jfk-47th",
+        "naam": "JFK South Cargo Area → 47th Street Diamond Exchange (Van Wyck → Kew Gardens → LIE → Queens-Midtown Tunnel)",
+        "extracts": ["us-new-york"],
+        "refs": ["I-678", "I-495"],
+        "gepubliceerdKm": 25,
+        "bronnoot": "geen gepubliceerde km; ~25 km ontwerpcijfer (routebrief §2), hemelsbreed 19,2 km; lengtetoets ±15%.",
+        "vensterKm": 40,
+        "uit": "diamant-mumbai-newyork-weg-jfk-47th.geojson",
+    },
+    # Routebrief diamant-namdeb-gaborone, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck ruwe diamant Namdeb-terrein Oranjemund → NDTC/Namdeb-sortering
+    # Windhoek: B4 (Oranjemund-omgeving → Rosh Pinah → Aus → Keetmanshoop) →
+    # B1 (Keetmanshoop → Mariental → Rehoboth → Windhoek). Lange corridor met
+    # een C13/B4-knik bij Rosh Pinah — venster ruim (75 km). Gepubliceerd
+    # ~900 km (ontwerp/brief §2), refs leeg (B4/B1 zijn de enige doorgaande
+    # noord-zuidcorridor in Zuid-Namibië, geen alternatieve routekeuze).
+    "diamant-namdeb-gaborone-oranjemund-windhoek": {
+        "via": [
+            ("Namdeb-terrein, Oranjemund (anker, dia-namdeb-oranjemund)", (16.42375, -28.55284)),
+            ("Rosh Pinah — B4-aansluiting", (16.7600, -27.9650)),
+            ("Aus — B4-bocht naar oost", (16.2667, -26.6667)),
+            ("Keetmanshoop — wisselpunt B4→B1", (18.1333, -26.5786)),
+            ("Mariental — B1", (17.9667, -24.6333)),
+            ("Rehoboth — B1, laatste plaats vóór Windhoek", (17.0833, -23.3167)),
+            ("NDTC/Namdeb-sortering, Windhoek (anker, dia-ndtc-windhoek)", (17.08384, -22.56482)),
+        ],
+        "id": "diamant-namdeb-gaborone-oranjemund-windhoek",
+        "naam": "Namdeb-terrein Oranjemund → NDTC/Namdeb-sortering Windhoek (B4 → B1)",
+        "extracts": ["namibie"],
+        "refs": [],
+        "gepubliceerdKm": 900,
+        "bronnoot": "geen gepubliceerde km; ~900 km ontwerpcijfer via de via-keten (routebrief §2), lengtetoets ±15%.",
+        "vensterKm": 75,
+        "uit": "diamant-namdeb-gaborone-weg-oranjemund-windhoek.geojson",
+    },
+    # Routebrief diamant-namdeb-gaborone, been b2 (LICHTE werkwijze M31 golf 3).
+    # Truck NDTC/Namdeb-sortering Windhoek → Hosea Kutako Airport (WDH), B6
+    # oostwaarts uit Windhoek — geen via-punten nodig (<50 km, B6 eenduidig).
+    # Gepubliceerd 45 km (Wikipedia: "45 km ten oosten van de stad"); eigen
+    # hemelsbreed-meting ~40 km.
+    "diamant-namdeb-gaborone-windhoek-wdh": {
+        "via": [
+            ("NDTC/Namdeb-sortering, Windhoek (anker, dia-ndtc-windhoek)", (17.08384, -22.56482)),
+            ("Hosea Kutako Airport WDH, vrachtapron (anker, dia-wdh-cargo)", (17.4643, -22.4863)),
+        ],
+        "id": "diamant-namdeb-gaborone-windhoek-wdh",
+        "naam": "NDTC/Namdeb-sortering Windhoek → Hosea Kutako Airport WDH (B6)",
+        "extracts": ["namibie"],
+        "refs": ["B6"],
+        "gepubliceerdKm": 45,
+        "bronnoot": "Wikipedia: Hosea Kutako Airport '45 km ten oosten van' Windhoek; hemelsbreed ~40 km (routebrief §2).",
+        "vensterKm": 40,
+        "uit": "diamant-namdeb-gaborone-weg-windhoek-wdh.geojson",
+    },
+    # Routebrief pgm-rustenburg-tokio, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck geraffineerd PGM Rustenburg PMR (Valterra Platinum) → OR Tambo
+    # vrachtterminal (JNB), N4 (Platinum Highway) via Kroondal → Brits →
+    # N4/N1-knoop Pretoria-West → N1/R21-knoop Allandale → R21. ⚠️ PMR-anker
+    # gecorrigeerd t.o.v. de eigen brief (open punt §7: -25,9500/27,3000 bleek
+    # landbouwgrond): hergebruikt het satelliet-gelegde Waterval-smelter/RBMR/
+    # PMR-complex-anker uit de zusterbrieven van dezelfde golf/grondstof
+    # (pgm-rustenburg-shanghai.md / pgm-zimplats-rustenburg.md / pgm-
+    # mogalakwena-londen.md, alle "bron-gelegd" op z15-z17), -25,6750/27,3180.
+    # Gepubliceerd ~120 km (ontwerp, brief §2), lengtetoets ±15%.
+    "pgm-rustenburg-tokio-rustenburg-jnb": {
+        "via": [
+            ("Rustenburg PMR — Waterval-complex (anker, pgm-rustenburg-pmr, hergebruikt+gecorrigeerd)", (27.3180, -25.6750)),
+            ("Kroondal — R565/N4-oprit", (27.3078, -25.7253)),
+            ("Brits — N4-kruispunt", (27.7814, -25.6350)),
+            ("Pretoria-West — N4/N1-knoop (Proefplaas)", (28.1425, -25.7615)),
+            ("Allandale — N1/R21-knoop", (28.1234, -25.9977)),
+            ("OR Tambo vrachtterminal (anker, pgm-jnb-vracht)", (28.2300, -26.1400)),
+        ],
+        "id": "pgm-rustenburg-tokio-rustenburg-jnb",
+        "naam": "Rustenburg PMR → OR Tambo vrachtterminal (N4/N1)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N4", "N1", "R21"],
+        "gepubliceerdKm": 120,
+        "bronnoot": "geen gepubliceerde km; ~120 km ontwerpcijfer (routebrief pgm-rustenburg-tokio §2), lengtetoets ±15%.",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "pgm-rustenburg-tokio-weg-rustenburg-jnb.geojson",
+    },
+    # Routebrief pgm-rustenburg-tokio, been b3 (LICHTE werkwijze M31 golf 3).
+    # Truck Narita vrachtterminal (NRT) → Tanaka Kikinzoku Kogyo, Tokio
+    # (Nihonbashi-Kayabacho, Chuo-ku), Higashi-Kanto Jidoshado → Keiyo-weg →
+    # Shuto-Wangan-route. Gepubliceerd ~65 km (ontwerp, brief §2).
+    "pgm-rustenburg-tokio-narita-tanaka": {
+        "via": [
+            ("Narita vrachtterminal (anker, pgm-nrt-vracht)", (140.3797, 35.7743)),
+            ("Narita-IC — Higashi-Kanto Jidoshado", (140.3183, 35.7767)),
+            ("Chiba-kita IC — overgang naar de Keiyo-weg", (140.1064, 35.6073)),
+            ("Ichikawa/Wangan-knoop", (139.8869, 35.6825)),
+            ("Tanaka Kikinzoku Kogyo, Tokio (anker, pgm-tanaka-tokio)", (139.7756, 35.6816)),
+        ],
+        "id": "pgm-rustenburg-tokio-narita-tanaka",
+        "naam": "Narita vrachtterminal → Tanaka Kikinzoku Kogyo, Tokio (Higashi-Kanto → Keiyo → Wangan)",
+        "extracts": ["japan"],
+        "refs": [],
+        "gepubliceerdKm": 65,
+        "bronnoot": "geen gepubliceerde km; ~65 km ontwerpcijfer (routebrief pgm-rustenburg-tokio §2), lengtetoets ±15%.",
+        "vensterKm": 40,
+        "uit": "pgm-rustenburg-tokio-weg-narita-tanaka.geojson",
+    },
+    # Routebrief diamant-jwaneng-antwerpen, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck ruwe diamant Jwaneng-mijn (Debswana) → Diamond Technology Park,
+    # Gaborone (De Beers/DBGSS sight-aggregatie), Trans-Kalahari Corridor (A2)
+    # via Sese–Kanye–Moshupa–Gabane. Gepubliceerd 170 km (Wikipedia); webcheck
+    # OSRM 166,7 km. Vrijwel één hoofdweg — de vijf via-punten pinnen de
+    # corridor, geen echte routekeuze (routebrief §7).
+    "diamant-jwaneng-antwerpen-jwaneng-gaborone": {
+        "via": [
+            ("Jwaneng-mijn — concentrator/fabriekscomplex (anker, dia-jwaneng-mill)", (24.7083, -24.5303)),
+            ("Sir Seretse Khama Ave / Trans-Kalahari-aansluiting", (24.7299, -24.5914)),
+            ("Trans-Kalahari Corridor bij Sese", (25.0140, -24.8079)),
+            ("Trans-Kalahari Corridor bij Kanye", (25.2955, -24.9502)),
+            ("Moshupa, Thamaga Road-kruising", (25.4426, -24.7586)),
+            ("Gabane, nabij Gaborone", (25.8030, -24.6531)),
+            ("Diamond Technology Park, Gaborone (anker, dia-gaborone-dtp)", (25.9149, -24.5899)),
+        ],
+        "id": "dia-jwaneng-gaborone-weg",
+        "naam": "Jwaneng-mijn → Gaborone Diamond Technology Park (Trans-Kalahari Corridor/A2)",
+        "extracts": ["botswana"],
+        "refs": [],
+        "gepubliceerdKm": 170,
+        "bronnoot": "170 km SW of Gaborone (Wikipedia, Jwaneng diamond mine); webcheck OSRM 166,7 km.",
+        "vensterKm": 40,
+        "uit": "diamant-jwaneng-antwerpen-weg-jwaneng-gaborone.geojson",
+    },
+    # Routebrief diamant-jwaneng-antwerpen, been b2 (LICHTE werkwijze M31 golf 3).
+    # Truck Gaborone Diamond Technology Park → GBE-vrachtapron (Sir Seretse
+    # Khama International Airport), Airport Road — korte stadsrand-hop binnen
+    # de Diamond Hub SEZ. Webcheck OSRM 5,0 km (corrigeert het ontwerp-cijfer
+    # van ~15 km).
+    "diamant-jwaneng-antwerpen-gaborone-gbe": {
+        "via": [
+            ("Diamond Technology Park, Gaborone (anker, dia-gaborone-dtp)", (25.9149, -24.5899)),
+            ("Airport Road, aftakking bij DTP", (25.9168, -24.5874)),
+            ("Sir Seretse Khama Int'l Airport — vrachtapron/hangaar (anker, dia-gbe-cargo)", (25.9242, -24.5576)),
+        ],
+        "id": "dia-gaborone-gbe-weg",
+        "naam": "Gaborone DTP → GBE-vrachtapron (Airport Road)",
+        "extracts": ["botswana"],
+        "refs": [],
+        "gepubliceerdKm": 5,
+        "bronnoot": "ontwerp ~15 km; webcheck OSRM 5,0 km (DTP ligt al in de Diamond Hub SEZ vlak bij de luchthaven) — gecorrigeerd cijfer.",
+        "vensterKm": 15,
+        "uit": "diamant-jwaneng-antwerpen-weg-gaborone-gbe.geojson",
+    },
+    # Routebrief diamant-jwaneng-antwerpen, been b4 (LICHTE werkwijze M31 golf 3).
+    # Truck Brucargo (Brussels Airport) → AWDC/Diamond Office, Antwerpen, E19
+    # via Mechelen. Gepubliceerd ~40 km (ontwerp); webcheck OSRM 37,7 km.
+    "diamant-jwaneng-antwerpen-brucargo-antwerpen": {
+        "via": [
+            ("Brucargo, Brussels Airport (anker, dia-bru-cargo)", (4.4576, 50.9056)),
+            ("E19 bij Mechelen", (4.4481, 51.0213)),
+            ("E19/R1-knooppunt Antwerpen-Zuid (Wilrijk)", (4.4319, 51.1103)),
+            ("AWDC / Diamond Office, Hoveniersstraat (anker, dia-antwerp-awdc)", (4.4185, 51.2154)),
+        ],
+        "id": "dia-brucargo-antwerpen-weg",
+        "naam": "Brucargo → AWDC Antwerpen (E19 via Mechelen)",
+        "extracts": ["belgie"],
+        "refs": ["E19"],
+        "gepubliceerdKm": 40,
+        "bronnoot": "~40 km (ontwerp); webcheck OSRM 37,7 km.",
+        "vensterKm": 20,
+        "uit": "diamant-jwaneng-antwerpen-weg-brucargo-antwerpen.geojson",
+    },
+    # Routebrief pgm-rustenburg-shanghai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck geraffineerd Pt/Pd/Rh Rustenburg PMR (Valterra Platinum, Waterval-
+    # complex) → OR Tambo (JNB) vrachtterminal, N4 (Rustenburg-Brits-Pretoria)
+    # → N1/R21 (Pretoria-Midrand-Kempton Park). Toetswaarde ~120 km
+    # (ontwerpcijfer, indicatief — routebrief §7).
+    "pgm-rustenburg-shanghai-rustenburg-jnb": {
+        "via": [
+            ("Rustenburg PMR — Waterval-complex (anker, pgm-rustenburg-pmr)", (27.3180, -25.6750)),
+            ("Brits (N4-knoop)", (27.7811, -25.6344)),
+            ("Pretoria (N4/N1-knoop, Proefplein-omgeving)", (28.1881, -25.7461)),
+            ("Midrand (N1-corridor)", (28.1264, -25.9992)),
+            ("Kempton Park (N1/R21-knoop)", (28.2333, -26.1000)),
+            ("OR Tambo (JNB) vrachtterminal (anker, pgm-jnb-cargo)", (28.2270, -26.1380)),
+        ],
+        "id": "pgm-rustenburg-shanghai-rustenburg-jnb",
+        "naam": "Rustenburg PMR → OR Tambo (JNB) vrachtterminal (N4 → N1/R21)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N4", "N1", "R21"],
+        "gepubliceerdKm": 120,
+        "bronnoot": "geen gepubliceerde km; ~120 km ontwerpcijfer (routebrief pgm-rustenburg-shanghai §2/§7), lengtetoets ±15%.",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "pgm-rustenburg-shanghai-weg-rustenburg-jnb.geojson",
+    },
+    # Routebrief diamant-ekati-antwerpen, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Brucargo (Brussels Airport vrachtterminal) → AWDC/Diamond Office
+    # Antwerpen, E19 (Vilvoorde → Mechelen-west → Antwerpen-Zuid/R1). De drie
+    # via-punten zijn indicatief (brief §4/§7) — E19 is de enige doorgaande
+    # motorwegcorridor Brussel–Antwerpen, geen alternatieve routekeuze.
+    # Toetswaarde ~40 km (ontwerp); hemelsbreed 35,2 km.
+    "diamant-ekati-antwerpen-brucargo-awdc": {
+        "via": [
+            ("Brucargo, Brussels Airport (anker, dia-brucargo)", (4.45584, 50.90628)),
+            ("Vilvoorde — E19-knoop", (4.434, 50.933)),
+            ("Mechelen — E19 westzijde", (4.460, 51.020)),
+            ("Antwerpen-Zuid — R1/E19-knoop", (4.400, 51.190)),
+            ("AWDC / Diamond Office, Hoveniersstraat (anker, dia-awdc)", (4.41870, 51.21520)),
+        ],
+        "id": "dia-brucargo-awdc-weg",
+        "naam": "Brucargo → AWDC Antwerpen (E19)",
+        "extracts": ["belgie"],
+        "refs": ["E19"],
+        "gepubliceerdKm": 40,
+        "bronnoot": "geen gepubliceerde km; ~40 km uit het ketenontwerp, hemelsbreed 35,2 km.",
+        "vensterKm": 40,
+        "uit": "diamant-ekati-antwerpen-weg-brucargo-awdc.geojson",
+    },
+    # Routebrief pgm-zimplats-rustenburg, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck PGM-matte Zimplats Selous Metallurgical Complex (SMC) → grensovergang
+    # Beitbridge, A5 (Chegutu-Harare) → A4/A1 (Harare-Beatrice-Chivhu-Masvingo-
+    # Beitbridge). Gepubliceerd ~450 km (ketenontwerp); eigen via-puntensom komt
+    # aanzienlijk hoger uit (~600-650 km) — venster ruim gezet, verwacht een
+    # afwijking buiten ±15% (bevinding, zie routebrief §7, geen reden om
+    # via-punten te schrappen).
+    "pgm-zimplats-rustenburg-smc-beitbridge": {
+        "via": [
+            ("Zimplats SMC — smelter/concentrator (anker, pgm-zimplats-smc)", (30.4334, -18.0328)),
+            ("Chegutu (A5-knooppunt)", (30.1460, -18.1305)),
+            ("Harare (A5 → A4-wissel)", (31.0467, -17.8362)),
+            ("Beatrice (begin A4 zuidwaarts)", (30.8544, -18.2581)),
+            ("Chivhu (A4 tussenstop)", (30.8969, -19.0187)),
+            ("Masvingo (A4 = R1)", (30.8332, -20.0745)),
+            ("Beitbridge — grensovergang (anker, pgm-beitbridge-grens)", (29.9865, -22.2244)),
+        ],
+        "id": "pgm-zimplats-beitbridge-weg",
+        "naam": "Zimplats SMC → Beitbridge (A5 → A4/A1)",
+        "extracts": ["zimbabwe"],
+        "refs": ["A5", "A4", "A1", "R1"],
+        "gepubliceerdKm": 450,
+        "bronnoot": "~450 km ketenontwerp; eigen via-puntensom ~600-650 km, buiten ±15% verwacht (routebrief §7).",
+        "vensterKm": 90,
+        "uit": "pgm-zimplats-rustenburg-weg-smc-beitbridge.geojson",
+    },
+    # Routebrief pgm-zimplats-rustenburg, been b2 (LICHTE werkwijze M31 golf 3).
+    # Truck PGM-matte grensovergang Beitbridge → Rustenburg PMR (Valterra
+    # Platinum), N1 (Musina-Polokwane-Pretoria) → N4 (Pretoria-Rustenburg).
+    # Gepubliceerd ~500 km (ketenontwerp); eigen via-puntensom ~526 km, past
+    # binnen ±15%.
+    "pgm-zimplats-rustenburg-beitbridge-rustenburg": {
+        "via": [
+            ("Beitbridge — grensovergang (anker, pgm-beitbridge-grens)", (29.9865, -22.2244)),
+            ("Musina (eerste stad na de grens)", (30.0269, -22.3454)),
+            ("Polokwane (N1)", (29.4803, -23.9218)),
+            ("Pretoria — N1/N4-wissel (N4-afslag Rustenburg)", (28.2761, -25.6357)),
+            ("Rustenburg — N4/R24-kruising", (27.2572, -25.7031)),
+            ("Rustenburg PMR — Waterval-complex (anker, pgm-rustenburg-pmr)", (27.3272, -25.6838)),
+        ],
+        "id": "pgm-beitbridge-rustenburg-weg",
+        "naam": "Beitbridge → Rustenburg PMR (N1 → N4)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N1", "N4", "R24"],
+        "gepubliceerdKm": 500,
+        "bronnoot": "~500 km ketenontwerp; eigen via-puntensom ~526 km, sluit goed aan (binnen ±15%).",
+        "vensterKm": 40,
+        "uit": "pgm-zimplats-rustenburg-weg-beitbridge-rustenburg.geojson",
+    },
+    # Routebrief pgm-springs-zurich, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck PGM-erts/matte Impala Rustenburg-mijnencluster → Impala Springs
+    # Refinery, N4 (Rustenburg-Centurion/Pretoria) → N1 (Pretoria-Johannesburg)
+    # → N12 (Johannesburg-Germiston-Springs). Toetswaarde ~160 km (schatting uit
+    # ketenontwerp, geen aparte bron — lengtetoets ±15%).
+    "pgm-springs-zurich-rustenburg-springs": {
+        "via": [
+            ("Impala Rustenburg-mijnencluster (anker, pgm-rustenburg-mijn)", (27.2176, -25.5535)),
+            ("Marikana (N4-corridor)", (27.4794, -25.7043)),
+            ("Centurion (N4/N1-knoop, Pretoria)", (28.1894, -25.8603)),
+            ("Johannesburg N1/N12-knoop", (28.0980, -26.0380)),
+            ("Germiston (N12-corridor)", (28.1672, -26.2178)),
+            ("Impala Refining Services, Springs (anker, pgm-springs-raffinaderij)", (28.4437, -26.2227)),
+        ],
+        "id": "pgm-springs-zurich-rustenburg-springs",
+        "naam": "Impala Rustenburg-mijnencluster → Impala Springs Refinery (N4 → N1 → N12)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N4", "N1", "N12"],
+        "gepubliceerdKm": 160,
+        "bronnoot": "geen gepubliceerde km; ~160 km uit het ketenontwerp (routebrief pgm-springs-zurich §2), behandeld als schatting.",
+        "vensterKm": 40,
+        "uit": "pgm-springs-zurich-weg-rustenburg-springs.geojson",
+    },
+    # Routebrief pgm-springs-zurich, been b2 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck PGM (geraffineerd) Impala Springs Refinery → OR Tambo-vrachtterminal
+    # (JNB), N12/N3 Springs–Johannesburg–Kempton Park. Toetswaarde ~40 km
+    # (schatting uit ketenontwerp).
+    "pgm-springs-zurich-springs-ortambo": {
+        "via": [
+            ("Impala Refining Services, Springs (anker, pgm-springs-raffinaderij)", (28.4437, -26.2227)),
+            ("Boksburg (N12-corridor)", (28.2519, -26.2125)),
+            ("Kempton Park (N3/R21-corridor)", (28.2321, -26.1020)),
+            ("OR Tambo-vrachtterminal (anker, pgm-ortambo-vrachtterminal)", (28.2472, -26.1211)),
+        ],
+        "id": "pgm-springs-zurich-springs-ortambo",
+        "naam": "Impala Springs Refinery → OR Tambo-vrachtterminal (N12 → N3/R21)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N12", "N3", "R21"],
+        "gepubliceerdKm": 40,
+        "bronnoot": "geen gepubliceerde km; ~40 km uit het ketenontwerp (routebrief pgm-springs-zurich §2), behandeld als schatting.",
+        "vensterKm": 40,
+        "uit": "pgm-springs-zurich-weg-springs-ortambo.geojson",
+    },
+    # Routebrief pgm-springs-zurich, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Zürich Airport vrachtplatform → edelmetaalkluis Kloten (Loomis
+    # Schweiz, aannemelijk), binnenstedelijk Zürich-Kloten. Toetswaarde ~15 km
+    # (schatting).
+    "pgm-springs-zurich-zrh-kloten": {
+        "via": [
+            ("Zürich Airport vrachtplatform (anker, pgm-zrh-vrachtterminal)", (8.5492, 47.4647)),
+            ("Edelmetaalkluis Loomis Schweiz, Kloten (anker, pgm-zurich-kluis, aannemelijk)", (8.6046, 47.4474)),
+        ],
+        "id": "pgm-springs-zurich-zrh-kloten",
+        "naam": "Zürich Airport vrachtplatform → edelmetaalkluis Kloten (binnenstedelijk Zürich–Kloten)",
+        "extracts": ["zwitserland"],
+        "refs": [],
+        "eindToegangPrivaat": True,
+        "gepubliceerdKm": 15,
+        "bronnoot": "geen gepubliceerde km; ~15 km schatting (routebrief pgm-springs-zurich §2/§7).",
+        "vensterKm": 15,
+        "uit": "pgm-springs-zurich-weg-zrh-kloten.geojson",
+    },
+    # Routebrief pgm-zondereinde-hanau, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Northam Zondereinde mijn/smelter/BMR → OR Tambo vrachtterminal (JNB),
+    # R510 zuidwaarts → N4 oostwaarts → N1 zuidwaarts. Toetswaarde ~140 km
+    # (ontwerp, niet apart gebrond).
+    "pgm-zondereinde-hanau-zondereinde-ortambo": {
+        "via": [
+            ("Northam Zondereinde-complex (anker, pgm-zondereinde-mijnsmelter)", (27.3669, -24.8333)),
+            ("Northam (dorp aan het R510-begin)", (27.2656, -24.9575)),
+            ("Marikana (R510/N4-omgeving)", (27.4915, -25.6879)),
+            ("Brits (N4)", (27.7842, -25.6297)),
+            ("Pretoria (N4/N1-knoop)", (28.1881, -25.7461)),
+            ("OR Tambo vrachtterminal (anker, pgm-ortambo-vracht)", (28.2330, -26.1290)),
+        ],
+        "id": "pgm-zondereinde-ortambo-weg",
+        "naam": "Zondereinde mijn/smelter/BMR → OR Tambo vrachtterminal (R510 → N4 → N1)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R510", "N4", "N1"],
+        "gepubliceerdKm": 140,
+        "bronnoot": "geen gepubliceerde km; ~140 km uit het ketenontwerp, niet apart gebrond.",
+        "vensterKm": 40,
+        "uit": "pgm-zondereinde-hanau-weg-zondereinde-ortambo.geojson",
+    },
+    # Routebrief pgm-zondereinde-hanau, been b3 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Frankfurt vrachtterminal (Cargo City Süd) → Heraeus Precious Metals
+    # Hanau, A66 Frankfurt–Hanau. Toetswaarde ~25 km (ontwerp).
+    "pgm-zondereinde-hanau-frankfurt-hanau": {
+        "via": [
+            ("Frankfurt vrachtterminal (anker, pgm-frankfurt-vracht)", (8.5552, 50.0244)),
+            ("Heraeus Precious Metals Hanau (anker, pgm-heraeus-hanau)", (8.9315, 50.1328)),
+        ],
+        "id": "pgm-frankfurt-hanau-weg",
+        "naam": "Frankfurt vrachtterminal → Heraeus Hanau (A66)",
+        "extracts": ["de-hessen"],
+        "refs": ["A66"],
+        "gepubliceerdKm": 25,
+        "bronnoot": "geen gepubliceerde km; ~25 km uit het ketenontwerp, niet apart gebrond.",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "pgm-zondereinde-hanau-weg-frankfurt-hanau.geojson",
+    },
+    # Routebrief diamant-mirny-mumbai, been b1 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck Alrosa Mirny-mijn/sorteercentrum → Mirny Airport (MJZ), stadsweg
+    # binnen de Alrosa-bedrijfsstad Mirny, geen doorgaande corridorkeuze.
+    # Toetswaarde ~2,2 km hemelsbreed uit de ankers (brief noemt indicatief
+    # ~3 km wegafstand); geen refs (lokale stadswegen).
+    "diamant-mirny-mumbai-mijn-mjz": {
+        "via": [
+            ("Alrosa Mir-mijn/sorteercentrum (anker, dia-mirny-mijn)", (113.9842, 62.5258)),
+            ("Mirny Airport MJZ, vrachtterminal (anker, dia-mirny-mjz)", (114.0222, 62.5344)),
+        ],
+        "id": "dia-mirny-mjz-weg",
+        "naam": "Mir-mijn/sorteercentrum → Mirny Airport (MJZ) (stadsweg Mirny)",
+        "extracts": ["rusland-verrehoosten"],
+        "refs": [],
+        "gepubliceerdKm": 2.2,
+        "bronnoot": "geen gepubliceerde km; ~2,2 km hemelsbreed uit de ankers, "
+                    "ontwerp/brief noemt indicatief ~3 km wegafstand.",
+        "vensterKm": 15,
+        "uit": "diamant-mirny-mumbai-weg-mijn-mjz.geojson",
+    },
+    # Routebrief diamant-mirny-mumbai, been b4 (LICHTE werkwijze M31 golf 3, §2 Lucht).
+    # Truck CSMIA Air Cargo Complex (BOM) → Bharat Diamond Bourse (BKC), Airport
+    # Road → Western Express Highway/BKC-connector, binnen Mumbai, geen
+    # corridorkeuze. Toetswaarde ~3,9 km hemelsbreed uit de ankers.
+    "diamant-mirny-mumbai-bom-bdb": {
+        "via": [
+            ("CSMIA Air Cargo Complex, Sahar (anker, dia-bom-cargo)", (72.8673, 19.0994)),
+            ("Bharat Diamond Bourse, BKC (anker, dia-bdb)", (72.8646, 19.0641)),
+        ],
+        "id": "dia-bdb-weg",
+        "naam": "CSMIA Air Cargo Complex (BOM) → Bharat Diamond Bourse (Airport Road/BKC-connector)",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 3.9,
+        "bronnoot": "geen gepubliceerde km; ~3,9 km hemelsbreed uit de ankers.",
+        "vensterKm": 15,
+        "uit": "diamant-mirny-mumbai-weg-bom-bdb.geojson",
+    },
+    # Routebrief pgm-stillwater-columbus, been b1 (LICHTE werkwijze M31 golf 3).
+    # Truck PGM-erts (2E, Pd-dominant) Stillwater Mine (Sibanye-Stillwater, Nye,
+    # Stillwater County) → Columbus Metallurgical Complex (smelter + base metal
+    # refinery), over Nye Road/CR-419 (Stillwater River) → Absarokee → MT-78
+    # noordwaarts naar Columbus. Toetswaarde 64 km (40 mi, Encyclopedia.com [7]);
+    # ontwerp gaf indicatief ~50 km. Twee via-punten = eerlijk aan de geografie
+    # (MT-78 is de enige verharde doorgaande corridor Absarokee→Columbus).
+    "pgm-stillwater-columbus": {
+        "via": [
+            ("Stillwater Mine — concentrator/laadplek (anker, pgm-stillwater-laad)", (-109.8920, 45.3880)),
+            ("Nye — mijnweg/Nye Road-knoop", (-109.8037, 45.4350)),
+            ("Absarokee — aansluiting MT-78", (-109.4426, 45.5211)),
+            ("Columbus Metallurgical Complex — smelter/refinery (anker, pgm-columbus-smelter)", (-109.2400, 45.6330)),
+        ],
+        "id": "pgm-stillwater-columbus",
+        "naam": "Stillwater Mine → Nye → Absarokee (MT-78) → Columbus Metallurgical Complex",
+        "extracts": ["us-montana"],
+        "refs": ["MT-78"],
+        "gepubliceerdKm": 64,
+        "bronnoot": "40 miles (Encyclopedia.com [7]) tussen Stillwater Mine en Columbus-smelter; ontwerp gaf indicatief ~50 km — 64 km als toetswaarde.",
+        "vensterKm": 40,
+        "uit": "pgm-stillwater-columbus-weg-stillwater-columbus.geojson",
+    },
     # Routebrief nikkel-sorowako-matsuzaka, been b1 (LICHTE werkwijze M31 golf 2).
     # Truck nikkel-matte PT Vale Indonesia Sorowako-mijn/smelter (Danau Matano) →
     # rivierhaven Balantang bij Malili, over de Jalan Poros Malili-Soroako (OSM-

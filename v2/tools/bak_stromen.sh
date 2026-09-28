@@ -3595,6 +3595,1507 @@ bak_nikkel_sorowako_matsuzaka() {
     --vertakt-van 5
 }
 
+# ── diamant · Alrosa Mirny-mijn (Rusland) → Sheremetyevo-Cargo (Moskou) → CSMIA (Mumbai) → Bharat Diamond Bourse
+# Routebrief: v2/design/routebrieven/diamant-mirny-mumbai.md (lichte werkwijze M31 golf 3, §2 Lucht — eerste
+# lucht-bake van dit project, letterlijk volgens bakhandleiding-licht.md §2 "Lucht").
+# ⚠️ Twee luchtbenen (b2 MJZ→SVO 4.150,4 km · b3 SVO→BOM 5.049,0 km), beide DOORGETROKKEN
+#    grootcirkels tussen satelliet-gelegde vrachtterminals (geen bron noemt een tussenlanding/hub
+#    → één directe vlucht per etappe, aanname in brief §7). Geen gepubliceerde vluchtlengte
+#    (per definitie berekend, is de bron zelf).
+# ⚠️ Twee truckbenen (b1 mijn→MJZ, b4 BOM→BDB), BEIDE doorgetrokken (geen stippel — geen
+#    airside/privéterrein-uitzondering nodig, beide eindigen op de vrachtterminal resp. beginnen
+#    erop via de openbare weg). Geen gepubliceerde km voor beide (brief geeft alleen hemelsbreed-
+#    schattingen); de gebakken weggeometrie valt BUITEN ±15% van die hemelsbreed-schattingen
+#    (b1 3,5 km tegen ~2,2 km hemelsbreed/+59% — ~3 km wegschatting uit het ontwerp geeft +17%;
+#    b4 8,4 km tegen ~3,9 km hemelsbreed/+114%) — dat is geen fout, hemelsbreed is nooit een
+#    wegtoets; blijft staan als bevinding in §9, niet dichtgetrokken.
+# ⚠️ Geen zee-, spoor- of leidingbeen; geen haven-aanloop nodig (geen zeebeen in deze keten).
+# ⚠️ dia-bom-cargo is op OSM-POI-niveau gelegd (parking van het vrachtcomplex, geen los
+#    vrachtgebouw op z15 te onderscheiden — brief §7); dia-bdb is een hergebruikt anker uit een
+#    eerdere keten van deze golf (Bandra-Kurla Complex).
+# ⚠️ Geen fase D/E: de brief stopt bij de beurs (§6) — Bharat Diamond Bourse is een
+#    beurs-/exportgebouw, geen slijperij; geen bron koppelt Mirny-rough aan een specifieke
+#    vervolgfabriek (vermoedelijk Surat, buiten deze keten).
+bak_diamant_mirny_mumbai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Mir-mijn/sorteercentrum → Mirny Airport MJZ (stadsweg Mirny)|$BEEN/diamant-mirny-mumbai-weg-mijn-mjz.geojson" \
+    --been-geojson "lucht|vlucht MJZ → SVO (vrachtvlucht, grootcirkel)|$BEEN/diamant-mirny-mumbai-lucht-mjz-svo.geojson" \
+    --been-geojson "lucht|vlucht SVO → BOM (vrachtvlucht, grootcirkel)|$BEEN/diamant-mirny-mumbai-lucht-svo-bom.geojson" \
+    --been-geojson "truck|vrachtwagen CSMIA Air Cargo Complex → Bharat Diamond Bourse (Airport Road/BKC-connector)|$BEEN/diamant-mirny-mumbai-weg-bom-bdb.geojson" \
+    --marker "dia-mirny-mijn — Alrosa Mir-mijn/sorteercentrum, Mirny — mijn/laadplek, bron-gelegd|62.5258,113.9842" \
+    --marker "dia-mirny-mjz — Mirny Airport (MJZ), vrachtterminal (Alrosa Mirny Air Enterprise) — vertrek luchtvracht, bron-gelegd|62.5344,114.0222" \
+    --marker "dia-svo-cargo — Sheremetyevo-Cargo, Moskou — vrachtterminal aankomst+vertrek (Alrosa verkooporganisatie), bron-gelegd|55.9696,37.4362" \
+    --marker "dia-bom-cargo — CSMIA Air Cargo Complex, Sahar, Mumbai — vrachtterminal aankomst, aannemelijk (OSM-POI-niveau)|19.0994,72.8673" \
+    --marker "dia-bdb — Bharat Diamond Bourse, BKC, Mumbai — beursgebouw/bestemming, stoppunt, bron-gelegd (hergebruikt anker)|19.0641,72.8646" \
+    --routebrief v2/design/routebrieven/diamant-mirny-mumbai.md \
+    --uit    v2/data/stroomroute-diamant-mirny-mumbai.json \
+    --stroom diamant-mirny-mumbai \
+    --titel  "Diamant · Mirny (Rusland) → Moskou (Sheremetyevo-Cargo) → Mumbai (CSMIA/BDB)"
+}
+
+# ── pgm · Stillwater Mine (Nye, Montana) → Columbus Metallurgical Complex
+# Routebrief: v2/design/routebrieven/pgm-stillwater-columbus.md (lichte werkwijze M31 golf 3)
+# ⚠️ Eén been (fase A truck), geen zee/spoor/lucht: fase B/C/D/E vervallen —
+#    Sibanye-Stillwater's eigen 20-F noemt de afnemer van de PGM-rijke filter
+#    cake alleen als "a third-party refiner", zonder naam of locatie (brief §6,
+#    stoppunt bij de smelterpoort; bindende haalbaarheidstoets — geen
+#    vertakking naar een plausibele raffinaderij).
+# ⚠️ Geen stippel: beide uiteinden liggen op het bestaande wegnet — mijn heeft
+#    een verharde toegangsweg naar CR-419 bij Nye, smelterterrein grenst direct
+#    aan Pike Avenue in Columbus (brief §2; gecontroleerd tijdens het bakken,
+#    snap ≤ 2 km op beide ankers).
+# ⚠️ Toetswaarde 64 km (40 mi, Encyclopedia.com [7]), niet de ontwerp-indicatie
+#    van ~50 km (brief §7) — venster 54–74 km (±15%).
+bak_pgm_stillwater_columbus() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Stillwater Mine → Columbus Metallurgical Complex (Nye Road/CR-419 → MT-78)|$BEEN/pgm-stillwater-columbus-weg-stillwater-columbus.geojson" \
+    --marker "pgm-stillwater-laad — Stillwater Mine (Sibanye-Stillwater), Nye, Stillwater County — mijn/concentrator, bron-gelegd|45.3880,-109.8920" \
+    --marker "pgm-columbus-smelter — Columbus Metallurgical Complex (Sibanye-Stillwater) — smelter + base metal refinery, stoppunt, bron-gelegd|45.6330,-109.2400" \
+    --routebrief v2/design/routebrieven/pgm-stillwater-columbus.md \
+    --uit    v2/data/stroomroute-pgm-stillwater-columbus.json \
+    --stroom pgm-stillwater-columbus \
+    --titel  "PGM · Stillwater Mine → Columbus"
+}
+
+# ── diamant · Ekati-mijnvliegveld → Yellowknife (splitsing) → Brussels Brucargo → Antwerpen AWDC
+# Routebrief: v2/design/routebrieven/diamant-ekati-antwerpen.md (LICHTE werkwijze M31 golf 3,
+# EERSTE bake met een luchtbeen — v2/design/bakhandleiding-licht.md §2 "Lucht").
+# ⚠️ ⚠️ EKATI IS SINDS 14-07-2026 IN RECEIVERSHIP (brief §7, bron [12][13]): de mijn wordt
+#    binnen enkele weken daarna afgebouwd/gereclameerd. Deze keten beschrijft de historische/
+#    ontworpen as, niet aantoonbaar de actuele operatie op 28-09-2026 — gemeld, niet
+#    stilzwijgend gebakken.
+# ⚠️ b1+b2 (lucht): DOORGETROKKEN, geen stippel — grootcirkel tussen twee vrachtterminals,
+#    ankers satelliet-gelegd (brief §3/§9 sat_check.py). Gemeten grootcirkel b1 = 311,4 km
+#    (brief noemde 312,4; Wikipedia publiceert ~310 km — binnen norm). b2 YZF→BRU = 6.316,8 km
+#    gemeten (brief noemde 6.319,2; ontwerp-schatting was ~6.700 km, niet gebruikt) — geen
+#    tussenlanding gebrond, één directe vlucht (§7 van de brief).
+# ⚠️ dia-yzf-splitsing blijft AANNEMELIJK: bronnen noemen alleen "een metaal-beklede loods
+#    bij het vliegveld" zonder adres/operator; het anker staat op het GA-vrachtplatform
+#    oostzijde YZF (bron-gelegd voor het terrein, niet voor het specifieke pand).
+# ⚠️ b3 (truck, Brucargo → AWDC, E19): 44,5 km tegen ~40 km ontwerp = +11,3% — buiten ±10%
+#    maar binnen de ±15%-norm, bevinding, niet dichtgetrokken. Beide anker-verbindingen zijn
+#    triviaal klein (0,05 / 0,09 km) → GEEN stippel nodig, geen last-mile-gat.
+# ⚠️ Geen zeebeen, dus geen MARNET/haven-aanloop. Fase D/E vervallen (brief §6, stoppunt AWDC).
+bak_diamant_ekati_antwerpen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "lucht|vlucht Ekati-strip → YZF (vrachtvlucht, grootcirkel)|$BEEN/diamant-ekati-antwerpen-lucht-ekati-yzf.geojson" \
+    --been-geojson "lucht|vlucht YZF → BRU (vrachtvlucht, grootcirkel)|$BEEN/diamant-ekati-antwerpen-lucht-yzf-bru.geojson" \
+    --been-geojson "truck|Brucargo → AWDC Antwerpen (E19)|$BEEN/diamant-ekati-antwerpen-weg-brucargo-awdc.geojson" \
+    --marker "dia-ekati-strip — Ekati Airport (mijnstrip, geen permanente weg) — vertrekpunt lucht, bron-gelegd|64.69891,-110.61439" \
+    --marker "dia-yzf-splitsing — vrachtapron/GA-terrein oostzijde Yellowknife Airport — overslag lucht→lucht, aannemelijk|62.46850,-114.42500" \
+    --marker "dia-brucargo — Brucargo, Brussels Airport — vrachtterminal, overslag lucht→truck, bron-gelegd|50.90628,4.45584" \
+    --marker "dia-awdc — AWDC/Diamond Office, Hoveniersstraat, Antwerpen — handels-/certificeringshub, stoppunt, bron-gelegd|51.21520,4.41870" \
+    --routebrief v2/design/routebrieven/diamant-ekati-antwerpen.md \
+    --uit    v2/data/stroomroute-diamant-ekati-antwerpen.json \
+    --stroom diamant-ekati-antwerpen \
+    --titel  "Diamant · Ekati (Canada) → Yellowknife → Brussel (Brucargo) → Antwerpen (AWDC)"
+}
+
+# ── pgm · Copper Cliff-smelter (Vale, Sudbury, ON) → Port Colborne-raffinaderij (Vale, ON)
+# Routebrief: v2/design/routebrieven/pgm-sudbury-actonuk.md (LICHTE werkwijze M31 golf 3)
+# ⚠️ ALLEEN been b1 (fase A, spoor) gebakken: b2 (exporthaven Canada — Montreal
+#    of Halifax, geen bron kiest), b3 (zeeoversteek) en b4 (VK-haven → Acton)
+#    zijn NIET getekend — drie ankers staan open (brief §7), geen coördinaat
+#    verzonnen. De brief eindigt bij Vale Europe's Acton-raffinaderij in tekst;
+#    de getekende lijn stopt bij Port Colborne (brief §6, stoppunt).
+# ⚠️ Geen lucht: geen bron noemt luchtvracht/beveiligde koerier voor deze as
+#    (bron_voor_luchtvracht: n.v.t. in het ontwerp) — golf 3's "lucht"-
+#    tooling is voor déze keten niet van toepassing.
+# ⚠️ b1 is VIER RUNS op het 1-op-1-spoornet (BAKE_SUFFIX=-raw, "3260717
+#    spoor-edges" bevestigd), kop → via MacTier → via Hamilton/CPKC Kinnear
+#    Yard → via Welland → staart: 233,0 + 266,2 + 68,0 + 35,6 = 602,8 km.
+#    Geen gepubliceerde lengte om tegen te toetsen (de ~700 km in de brief is
+#    een webcheck-schatting, geen harde norm, brief §2/§7) — 602,8 km is de
+#    gemeten vervanging.
+# ⚠️ TWEE OMKERINGEN blijven staan, beide vlak bij het Port Colborne-eind van
+#    de reis (Hamilton→Welland-run: 178,9°, boogstraal ~171 m, 42,96070/
+#    -79,27110; Welland→Port Colborne-run: 180,0°, boogstraal ~55 m,
+#    42,96850/-79,20050) — zelfde klasse als de kopmaak-omkeringen bij
+#    nikkel-sudbury-kristiansand/nikkel-norilsk-monchegorsk: reëel op een
+#    emplacement/industrieel spoor bij een raffinaderij, niet dichtgetrokken
+#    (werkwijze §5: buiten de norm = bevinding).
+# ⚠️ Geen haven-aanloop: geen zeebeen in dit stuk (brief §2/bak_aanwijzingen).
+# ⚠️ `pgm-coppercliff-smelter` en `pgm-portcolborne-refinery` zijn beide
+#    bron-gelegd op z15/z16 (brief §3, satcheck-PNG's in de brief-bronnenlijst).
+bak_pgm_sudbury_actonuk() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Copper Cliff-smelter → MacTier (CP Parry Sound Subdivision — trekt de route zuidwaarts richting Toronto/Zuid-Ontario)|$BEEN/spoorroute-pgm-sudbury-actonuk-coppercliff-mactier.geojson" \
+    --been-geojson "spoor|trein MacTier → Hamilton/CPKC Kinnear Yard (CP-hoofdlijn, grootste rangeerknoop in de Golden Horseshoe)|$BEEN/spoorroute-pgm-sudbury-actonuk-mactier-hamilton.geojson" \
+    --been-geojson "spoor|trein Hamilton/CPKC Kinnear Yard → Welland (Welland-corridor, route buigt hier zuidwaarts naar Port Colborne)|$BEEN/spoorroute-pgm-sudbury-actonuk-hamilton-welland.geojson" \
+    --been-geojson "spoor|trein Welland → Port Colborne-raffinaderij (Welland-corridor, doorgaande tak)|$BEEN/spoorroute-pgm-sudbury-actonuk-welland-portcolborne.geojson" \
+    --marker "pgm-coppercliff-smelter — Vale Copper Cliff Complex, smelter, Sudbury, ON — kop van het spoor, bron-gelegd|46.47860,-81.05473" \
+    --marker "pgm-portcolborne-refinery — Vale Port Colborne Refinery, Ontario — tussenraffinaderij (PGM/Au/Ag-intermediair + elektro-kobalt), stoppunt, bron-gelegd|42.88350,-79.24300" \
+    --routebrief v2/design/routebrieven/pgm-sudbury-actonuk.md \
+    --uit    v2/data/stroomroute-pgm-sudbury-actonuk.json \
+    --stroom pgm-sudbury-actonuk \
+    --titel  "PGM · Copper Cliff (Sudbury) → Port Colborne (Ontario)"
+}
+
+# ── pgm · Zimplats SMC (Zimbabwe) → Beitbridge → Rustenburg PMR (Zuid-Afrika, matte over land)
+# Routebrief: v2/design/routebrieven/pgm-zimplats-rustenburg.md (LICHTE werkwijze M31 golf 3)
+# ⚠️ Geen luchtbeen in deze as (brief §6/§7): de PGM-matte reist volledig over
+#    land; alleen het geraffineerde metaal ná Rustenburg PMR vliegt, en dat is
+#    hier bewust niet getekend (geen bron noemt een vervolgzending).
+# ⚠️ b1 (Zimplats SMC → Beitbridge) is +47,3% BOVEN het ketenontwerp (663,0 km
+#    tegen ~450 km) — buiten ±15%, bevinding uit de brief zelf (§7): de
+#    ketenontwerp-indicatie lag al duidelijk onder de eigen via-puntensom
+#    (~600-650 km geschat, 663,0 km gemeten). Geen via-punt geschrapt; mogelijk
+#    bestaat een kortere Harare-bypass die niet gevonden is.
+# ⚠️ b2 (Beitbridge → Rustenburg PMR) is +16,4% BOVEN het ketenontwerp
+#    (582,1 km tegen ~500 km) — de eigen via-puntensom (~526 km) lag binnen
+#    ±15%, maar de gemeten weggeometrie (met keerlussen/first-last-mile) komt
+#    er net buiten. Bevinding, niet dichtgetrokken.
+# ⚠️ Beitbridge-anker (pgm-beitbridge-grens, -22.2244,29.9865) is IDENTIEK aan
+#    het bestaande anker in koper-kolwezi-durban.md — bewust hergebruikt.
+#    Harare/Masvingo/Polokwane-via-punten eveneens uit die brief hergebruikt.
+bak_pgm_zimplats_rustenburg() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|matte Zimplats SMC → Chegutu → Harare → Beatrice → Chivhu → Masvingo → Beitbridge (A5 → A4/A1)|$BEEN/pgm-zimplats-rustenburg-weg-smc-beitbridge.geojson" \
+    --been-geojson "truck|matte Beitbridge → Musina → Polokwane → Pretoria → Rustenburg PMR (N1 → N4)|$BEEN/pgm-zimplats-rustenburg-weg-beitbridge-rustenburg.geojson" \
+    --marker "pgm-zimplats-smc — Zimplats Selous Metallurgical Complex, mijn/smelter, bron-gelegd|-18.0328,30.4334" \
+    --marker "pgm-beitbridge-grens — Beitbridge grensovergang (Limpopo-brug), overslag tussen twee truckcorridors, bron-gelegd, gedeeld anker|-22.2244,29.9865" \
+    --marker "pgm-rustenburg-pmr — Rustenburg PMR (Waterval-complex, Valterra Platinum), eindraffinaderij, stoppunt, bron-gelegd|-25.6838,27.3272" \
+    --routebrief v2/design/routebrieven/pgm-zimplats-rustenburg.md \
+    --uit    v2/data/stroomroute-pgm-zimplats-rustenburg.json \
+    --stroom pgm-zimplats-rustenburg \
+    --titel  "PGM · Zimplats SMC (Zimbabwe) → Beitbridge → Rustenburg PMR (Zuid-Afrika)"
+}
+
+# ── diamant · Jwaneng-mijn (Botswana) → Gaborone DTP → GBE-vrachtapron → Brucargo (BRU) → Antwerpen (AWDC)
+# Routebrief: v2/design/routebrieven/diamant-jwaneng-antwerpen.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# Vier benen, ALLE DOORGETROKKEN, geen stippels.
+# ⚠️ b3 (lucht) is een GROOTCIRKEL GBE → BRU (maak_luchtbeen.py), 8.651,7 km —
+#    binnen de verwachte 8.650-8.660 km (eigen sferische berekening 8.652 km;
+#    ontwerp noemde ~8.850 km). Doorgetrokken: een vlucht tussen twee gelegde
+#    vrachtterminals is geen "net reikt niet"-geval. Geen bron voor een
+#    tussenlanding → één directe vlucht aangenomen (brief §7).
+# ⚠️ dia-gbe-cargo (GBE-vrachtapron) is AANNEMELIJK: geen OSM-gebouw met
+#    "Cargo" in de naam, anker = hangaar/apron-cluster naast de terminal
+#    (satellietbeeld z17, brief §3).
+# ⚠️ dia-gaborone-dtp gebruikt de "Diamond Technology Park"-polygoon in de
+#    Diamond Hub SEZ (sinds 2017) i.p.v. het exacte DBGSS-gebouw, dat niet met
+#    naam is gevonden in OSM/Nominatim/Photon (brief §7).
+bak_diamant_jwaneng_antwerpen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|ruwe diamant Jwaneng-mijn → Gaborone Diamond Technology Park (Trans-Kalahari Corridor/A2 via Sese–Kanye–Moshupa–Gabane)|$BEEN/diamant-jwaneng-antwerpen-weg-jwaneng-gaborone.geojson" \
+    --been-geojson "truck|ruwe diamant Gaborone DTP → GBE-vrachtapron (Airport Road)|$BEEN/diamant-jwaneng-antwerpen-weg-gaborone-gbe.geojson" \
+    --been-geojson "lucht|vlucht GBE → BRU (vrachtvlucht, grootcirkel)|$BEEN/diamant-jwaneng-antwerpen-lucht-gbe-bru.geojson" \
+    --been-geojson "truck|ruwe diamant Brucargo → AWDC/Diamond Office Antwerpen (E19 via Mechelen)|$BEEN/diamant-jwaneng-antwerpen-weg-brucargo-antwerpen.geojson" \
+    --marker "dia-jwaneng-mill — Jwaneng-mijn concentrator-/fabriekscomplex (Debswana), laadplek, bron-gelegd|-24.5303,24.7083" \
+    --marker "dia-gaborone-dtp — Diamond Technology Park, Gaborone (De Beers/DBGSS sight-aggregatie, Diamond Hub SEZ), bron-gelegd|-24.5899,25.9149" \
+    --marker "dia-gbe-cargo — Sir Seretse Khama Int'l Airport, vrachtapron/hangaar, aannemelijk|-24.5576,25.9242" \
+    --marker "dia-bru-cargo — Brucargo, Brussels Airport, bron-gelegd|50.9056,4.4576" \
+    --marker "dia-antwerp-awdc — AWDC/Diamond Office, Hoveniersstraat 22 Antwerpen, stoppunt, bron-gelegd|51.2154,4.4185" \
+    --routebrief v2/design/routebrieven/diamant-jwaneng-antwerpen.md \
+    --uit    v2/data/stroomroute-diamant-jwaneng-antwerpen.json \
+    --stroom diamant-jwaneng-antwerpen \
+    --titel  "Diamant · Jwaneng → Gaborone/Brussels Airport → Antwerpen"
+}
+
+# ── diamant · Namdeb Oranjemund (Namibië) → NDTC Windhoek → Hosea Kutako (WDH) → Brussels Airport (BRU) → Antwerpen (AWDC)
+# Routebrief: v2/design/routebrieven/diamant-namdeb-gaborone.md (LICHTE werkwijze M31 golf 3)
+# ⚠️ Bestemming Gaborone VERVANGEN door Antwerpen (brief kop/§1, bindend uit de
+#    haalbaarheidstoets): geen bron dat Namibische rough naar Botswana
+#    doorvliegt; NDTC is een eigen 50/50-JV die zelf in Windhoek sights houdt.
+# ⚠️ Grootste open punt (brief §7, NIET getekend): de fysieke aanvoer van
+#    marien naar de wal is een helikoptersprong (Debmarine-schip → Oranjemund,
+#    3×/week, De Beers Group 2022) — het scheeppunt is varend en dus niet te
+#    pinnen zonder een coördinaat te verzinnen; de keten begint bij het
+#    Namdeb-terrein, niet bij het schip.
+# ⚠️ b1 (truck, Oranjemund → Windhoek): 975,4 km tegen ~900 ontwerp = +8,4%
+#    [binnen ±15%]. dia-namdeb-oranjemund blijft AANNEMELIJK: kantoorpand
+#    (OSM office=company "MRM Namdeb"), niet aantoonbaar het exacte
+#    helikopter-landingsterrein (brief §7).
+# ⚠️ b2 (truck, Windhoek → WDH): 44,6 km tegen 45 (Wikipedia) = -1,0% [OK].
+#    dia-wdh-cargo blijft AANNEMELIJK: terminal-/vrachtapron van een kleine
+#    regionale internationale luchthaven, geen apart Cargo-gebouw te
+#    onderscheiden op z16-z17 (brief §7).
+# ⚠️ b3 (lucht, WDH → BRU): DOORGETROKKEN, geen stippel — grootcirkel tussen
+#    twee vrachtterminals, ankers satelliet-gelegd/hergebruikt (brief §3/§9).
+#    Gemeten grootcirkel 8.260,1 km (brief noemde 8.259,7 — binnen norm). Geen
+#    tussenlanding gebrond, één directe vlucht (brief §7).
+# ⚠️ b4 (truck, Brucargo → AWDC): LETTERLIJKE HERGEBRUIK van het gebakken
+#    geojson van diamant-ekati-antwerpen b3 (identieke Brucargo→AWDC/E19-
+#    route, zelfde twee ankers dia-brucargo/dia-awdc) — geen tweede
+#    weg-scan/profiel. 44,5 km tegen ~40 ontwerp (uit die zusterbrief).
+# ⚠️ Windhoek → Antwerpen (na WDH) is AANNEMELIJK, niet per zending gebrond
+#    voor Namibische rough specifiek — hergebruikt patroon van de andere
+#    diamantketens in deze golf (brief §7).
+bak_diamant_namdeb_gaborone() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|ruwe diamant Namdeb-terrein Oranjemund → NDTC/Namdeb-sortering Windhoek (B4 → B1 via Rosh Pinah–Aus–Keetmanshoop–Mariental–Rehoboth)|$BEEN/diamant-namdeb-gaborone-weg-oranjemund-windhoek.geojson" \
+    --been-geojson "truck|ruwe diamant NDTC/Namdeb-sortering Windhoek → Hosea Kutako Airport WDH-vrachtapron (B6)|$BEEN/diamant-namdeb-gaborone-weg-windhoek-wdh.geojson" \
+    --been-geojson "lucht|vlucht WDH → BRU (vrachtvlucht, grootcirkel)|$BEEN/diamant-namdeb-gaborone-lucht-wdh-bru.geojson" \
+    --been-geojson "truck|ruwe diamant Brucargo → AWDC Antwerpen (E19, letterlijk hergebruikt uit diamant-ekati-antwerpen b3)|$BEEN/diamant-ekati-antwerpen-weg-brucargo-awdc.geojson" \
+    --marker "dia-namdeb-oranjemund — Namdeb-kantoor/terrein, Oranjemund — laadplek (marien, helikopterlanding), aannemelijk|-28.55284,16.42375" \
+    --marker "dia-ndtc-windhoek — NDTC/Namdeb-kantoor, Frans Indongo Street, Windhoek Central — overslag/verwerkingsknoop (sortering/sight), bron-gelegd|-22.56482,17.08384" \
+    --marker "dia-wdh-cargo — Hosea Kutako International Airport (WDH), terminal-/vrachtapron — vrachtterminal, overslag truck→lucht, aannemelijk|-22.4863,17.4643" \
+    --marker "dia-brucargo — Brucargo, Brussels Airport — vrachtterminal, overslag lucht→truck, bron-gelegd (hergebruikt anker)|50.90628,4.45584" \
+    --marker "dia-awdc — AWDC/Diamond Office, Hoveniersstraat, Antwerpen — handels-/certificeringshub, stoppunt, bron-gelegd (hergebruikt anker)|51.21520,4.41870" \
+    --routebrief v2/design/routebrieven/diamant-namdeb-gaborone.md \
+    --uit    v2/data/stroomroute-diamant-namdeb-gaborone.json \
+    --stroom diamant-namdeb-gaborone \
+    --titel  "Diamant · Namdeb Oranjemund (Namibië) → Windhoek → Brussel (Brucargo) → Antwerpen (AWDC)"
+}
+
+# ── pgm · Rustenburg PMR (Valterra Platinum, Zuid-Afrika) → OR Tambo (JNB) → Shanghai Pudong (PVG, China)
+# Routebrief: v2/design/routebrieven/pgm-rustenburg-shanghai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ Eerste luchtbeen-bake in dit project (bakhandleiding §2): grootcirkel JNB→PVG
+#    via maak_luchtbeen.py, 11.787,1 km — DOORGETROKKEN, geen stippel (een vlucht
+#    tussen twee gelegde vrachtterminals is geen gat). Geen tussenlanding aangenomen
+#    (geen bron noemt een hub, routebrief §7).
+# ⚠️ b1 (truck, eindToegangPrivaat) — het wegprofiel geeft 178,0 km tegen het
+#    ~120 km-ontwerpcijfer uit de brief (+48,4%, buiten ±15%). Dit is de gemeten
+#    N4 (Rustenburg–Brits–Pretoria) → N1/R21 (Pretoria–Midrand–Kempton Park), niet
+#    dichtgetrokken (bakhandleiding §5/§6: het ontwerpcijfer was indicatief, de
+#    bake-uitvoer is de echte controle) — bevinding, zie §9 van de brief.
+# ⚠️ Geen stippel nodig: beide ankers liggen aan openbare industrie-/luchthaven-
+#    terreinwegen (snap 0,17/0,04 km); `eindToegangPrivaat` liet de laatste km bij
+#    het JNB-vrachtplatform over kleine wegklassen toe zonder een aparte stippel.
+# ⚠️ Geen fase C/D (brief §6, bindende haalbaarheidstoets): geen met naam genoemde
+#    Chinese eindfabriek/-entrepot gevonden — de stroom eindigt op de PVG-vracht-
+#    terminal.
+bak_pgm_rustenburg_shanghai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Rustenburg PMR → OR Tambo vrachtterminal (N4/N1/R21)|$BEEN/pgm-rustenburg-shanghai-weg-rustenburg-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → PVG (vrachtvlucht, grootcirkel)|$BEEN/pgm-rustenburg-shanghai-lucht-jnb-pvg.geojson" \
+    --marker "pgm-rustenburg-pmr — Rustenburg PMR + Waterval-smelter-/RBMR-complex (Valterra Platinum), laadplek, bron-gelegd|-25.6750,27.3180" \
+    --marker "pgm-jnb-cargo — O.R. Tambo International Airport, vrachtplatform/-loodsen, overslag truck → lucht, bron-gelegd|-26.1380,28.2270" \
+    --marker "pgm-pvg-cargo — Shanghai Pudong International Airport, vrachtplatform/-loodsen, stoppunt, bron-gelegd|31.1335,121.8025" \
+    --routebrief v2/design/routebrieven/pgm-rustenburg-shanghai.md \
+    --uit    v2/data/stroomroute-pgm-rustenburg-shanghai.json \
+    --stroom pgm-rustenburg-shanghai \
+    --titel  "PGM · Rustenburg PMR (Zuid-Afrika) → OR Tambo (JNB) → Shanghai Pudong (PVG)"
+}
+
+# ── pgm · Impala Rustenburg-mijnencluster → Impala Springs Refinery → OR Tambo-vrachtterminal → (vlucht) → Zürich Airport → edelmetaalkluis Kloten
+# Routebrief: v2/design/routebrieven/pgm-springs-zurich.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, NIET stippel) is +59,8% BOVEN de eigen schatting (255,7 km tegen
+#    ~160 km "uit het ketenontwerp, geen aparte bron" — brief §2). Buiten ±15%,
+#    bevinding, niet dichtgetrokken: de N4→N1→N12-corridor via Centurion en
+#    Johannesburg is een reële omweg t.o.v. de hemelsbrede schatting, en er is
+#    geen gepubliceerde bronlengte om tegen te toetsen. Via-punten (Marikana/
+#    Centurion/Johannesburg N1-N12-knoop/Germiston) komen uit de brief zelf.
+# ⚠️ b2 (truck, NIET stippel): 41,3 km tegen ~40 km (+3,2%) [OK].
+# ⚠️ b3 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht
+#    JNB → ZRH als grootcirkel, 8.417,1 km. Geen tussenlanding gebrond (brief
+#    §7: geen bron noemt een hub) → één directe vrachtvlucht, aangenomen als
+#    industriestandaard voor ZA-PGM-luchtvracht (brief §8[1]/[4]/[5]). Beide
+#    vrachtterminal-ankers zijn satelliet-gelegd (bron-gelegd, brief §3).
+# ⚠️ b4 (truck) is een STIPPEL, GEEN gewoon wegbeen: `maak_stroombeen_weg.py`
+#    vond GEEN wegpad tussen het Zürich Airport-vrachtplatform en de Kloten-
+#    kluis, ook niet met `eindToegangPrivaat: True` (twee scans, beide
+#    "corridor niet gerouteerd: geen wegpad tussen punt 0 en 1" — de graaf in
+#    dit venster verbindt de twee ankers niet, geen classificatieprobleem).
+#    Conform de bak-aanwijzing in de opdracht: "tenzij het wegtool geen route
+#    vindt binnen het privéterrein van de kluis, dan --stippel ... met reden."
+#    Dit is dus geen "aannemelijk"-kwestie maar een net-reikt-niet-geval.
+# ⚠️ `pgm-zurich-kluis` (Loomis Schweiz AG, Steinackerstrasse Kloten) staat op
+#    status AANNEMELIJK (brief §3/§7: één indirecte bron, geen bevestigd
+#    huisnummer) — dit been mag gewoon doorgetrokken/gestippeld gebakken
+#    worden (het is een brongeschil over de exacte locatie, geen "net reikt
+#    niet"-geval voor het ANKER zelf); vermeld hier voor de keuring: dit anker
+#    hoort in een latere ronde geverifieerd te worden tegen een primaire
+#    Loomis-bron (brief §7).
+# ⚠️ Geen fase D/E (brief §6): de brief stopt bewust bij de Kloten-kluis, geen
+#    bron noemt een specifieke Zwitserse afnemer/verwerker van déze partij.
+bak_pgm_springs_zurich() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Impala Rustenburg-mijnencluster → Impala Springs Refinery (N4 → N1 → N12)|$BEEN/pgm-springs-zurich-weg-rustenburg-springs.geojson" \
+    --been-geojson "truck|vrachtwagen Impala Springs Refinery → OR Tambo-vrachtterminal (N12 → N3/R21)|$BEEN/pgm-springs-zurich-weg-springs-ortambo.geojson" \
+    --been-geojson "lucht|vlucht JNB → ZRH (vrachtvlucht, grootcirkel, aannemelijk: industriestandaard)|$BEEN/pgm-springs-zurich-lucht-jnb-zrh.geojson" \
+    --stippel      "truck|Zürich Airport vrachtplatform → edelmetaalkluis Kloten (schematisch — geen wegpad gevonden in het OSM-net tussen vrachtplatform en kluis, ook niet met eindToegangPrivaat; last mile Zürich-Kloten)|47.4647,8.5492|47.4474,8.6046" \
+    --marker "pgm-rustenburg-mijn — Impala Platinum Rustenburg-mijnencluster — mijn/laadplek, bron-gelegd|-25.5535,27.2176" \
+    --marker "pgm-springs-raffinaderij — Impala Refining Services, Springs (Implats) — overslag/raffinaderij, bron-gelegd|-26.2227,28.4437" \
+    --marker "pgm-ortambo-vrachtterminal — OR Tambo-vrachtterminal (Swissport/Menzies Cargo, Northern Perimeter Road) — overslag/lucht, bron-gelegd|-26.1211,28.2472" \
+    --marker "pgm-zrh-vrachtterminal — Zürich Airport vrachtplatform — overslag/lucht, bron-gelegd|47.4647,8.5492" \
+    --marker "pgm-zurich-kluis — Edelmetaalkluis Loomis Schweiz AG, Steinackerstrasse, Kloten — losplek/kluis, stoppunt, aannemelijk|47.4474,8.6046" \
+    --routebrief v2/design/routebrieven/pgm-springs-zurich.md \
+    --uit    v2/data/stroomroute-pgm-springs-zurich.json \
+    --stroom pgm-springs-zurich \
+    --titel  "PGM · Impala Rustenburg → Springs → OR Tambo (JNB) → vrachtvlucht → Zürich (ZRH) → Kloten-kluis"
+}
+
+# ── diamant · Mbuji-Mayi (DR Congo) → Kinshasa (N'djili, CEEC) → Dubai (DXB) → DMCC
+# Routebrief: v2/design/routebrieven/diamant-mbujimayi-dubai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ Vier benen, alle DOORGETROKKEN — geen enkele stippel (bakhandleiding §2):
+#    b1/b4 zijn gewone openbare stadswegen boven de "korter dan ~2 km / airside
+#    zonder openbare weg"-stippeldrempel; b2/b3 zijn luchtbenen (per definitie
+#    doorgetrokken, "grootcirkel" staat in de beennaam).
+# ⚠️ b2 (lucht, DOORGETROKKEN): vlucht MJM → FIH als grootcirkel, 919,2 km —
+#    BINNENLANDSE verzamelvlucht binnen DR Congo (geen internationale grens);
+#    aangenomen op één zin in design/diamant.md §4a, niet apart bevestigd op
+#    cargo-niveau (brief §7, open punt).
+# ⚠️ b3 (lucht, DOORGETROKKEN): vlucht FIH → DXB als grootcirkel, 5.421,3 km.
+#    Géén tussenlanding gebrond (brief §7: geen bron noemt een hub) → één
+#    directe vrachtvlucht, aanname staat in de brief.
+# ⚠️ b1 (truck, geen stippel): het wegprofiel geeft 4,2 km tegen het
+#    ~5 km-ontwerpcijfer (-15,7%, net buiten de ±10%-toolwaarschuwing maar
+#    binnen de ±15%-norm van de brief) — geen betrouwbare gepubliceerde
+#    wegreferentie beschikbaar (bakhandleiding §5/§6), bevinding, niet
+#    dichtgetrokken.
+# ⚠️ b4 (truck, geen stippel, door de haalbaarheidstoets toegevoegd): 31,0 km
+#    tegen ~34 km (hemelsbreed 29,0 km + verwachte omweg) = -8,9% [OK].
+# ⚠️ dia-mbm-miba is een stadscentrum-anker (aannemelijk, brief §3/§7): géén
+#    apart MIBA-omheind terrein of pit te onderscheiden op z14. dia-fih-term is
+#    het luchthaventerrein, niet het CEEC-kantoor zelf (CEEC-locatie niet
+#    adresseerbaar binnen budget, brief §7).
+# ⚠️ Geen fase D/E (brief §6, bindende haalbaarheidstoets): de brief stopt
+#    bewust bij DMCC/Almas Tower — geen bron koppelt de rough aan een
+#    specifieke vervolgbestemming (bv. een slijperij in Surat).
+bak_diamant_mbujimayi_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|MIBA-terrein/exportkantoor, Mbuji-Mayi → Mbuji-Mayi Airport (MJM) (Avenue Inga, stadsverbinding)|$BEEN/diamant-mbujimayi-dubai-weg-miba-mjm.geojson" \
+    --been-geojson "lucht|vlucht MJM → FIH (binnenlandse verzamelvlucht, grootcirkel)|$BEEN/diamant-mbujimayi-dubai-lucht-mjm-fih.geojson" \
+    --been-geojson "lucht|vlucht FIH → DXB (vrachtvlucht, grootcirkel)|$BEEN/diamant-mbujimayi-dubai-lucht-fih-dxb.geojson" \
+    --been-geojson "truck|DXB-vrachtterminal → DMCC/Almas Tower (Airport Road → Sheikh Zayed Road/Al Ittihad Road)|$BEEN/diamant-mbujimayi-dubai-weg-dxb-dmcc.geojson" \
+    --marker "dia-mbm-miba — MIBA-terrein/exportkantoor, Mbuji-Mayi — mijn/laadplek, aannemelijk|-6.1300,23.6000" \
+    --marker "dia-mbm-mjm — Mbuji-Mayi Airport (MJM) — vrachtterminal, overslag truck → lucht, bron-gelegd|-6.1188177,23.5682265" \
+    --marker "dia-fih-term — N'djili International Airport (FIH), Kinshasa — vrachtterminal + CEEC-certificering, overslag lucht → lucht, bron-gelegd|-4.3840685,15.4508775" \
+    --marker "dia-dxb-cargo — Dubai Intl Airport (DXB), vrachtcomplex (Emirates SkyCargo/Cargo Village) — overslag lucht → truck, bron-gelegd|25.2574524,55.3405972" \
+    --marker "dia-dmcc — DMCC / Almas Tower, Jumeirah Lake Towers, Dubai — handels-/beurshub, stoppunt, bron-gelegd|25.0690625,55.1411656" \
+    --routebrief v2/design/routebrieven/diamant-mbujimayi-dubai.md \
+    --uit    v2/data/stroomroute-diamant-mbujimayi-dubai.json \
+    --stroom diamant-mbujimayi-dubai \
+    --titel  "Diamant · Mbuji-Mayi (DR Congo) → Kinshasa (N'djili) → Dubai (DXB) → DMCC"
+}
+
+# ── pgm · Rustenburg PMR → OR Tambo-vrachtterminal → (vlucht) → Narita-vrachtterminal → Tanaka Kikinzoku Kogyo, Tokio
+# Routebrief: v2/design/routebrieven/pgm-rustenburg-tokio.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ `pgm-rustenburg-pmr` GECORRIGEERD t.o.v. de eigen brief (§7 open punt): het
+#    v1-registercoördinaat -25,9500/27,3000 bleek op z14 landbouwgrond met
+#    center-pivot-irrigatie, geen raffinaderij. Hergebruikt het satelliet-
+#    gelegde Waterval-smelter/RBMR/PMR-complex-anker (-25,6750/27,3180) uit de
+#    zusterbrieven van dezelfde golf/grondstof: pgm-rustenburg-shanghai.md
+#    (bron-gelegd, z16-z17) + pgm-zimplats-rustenburg.md + pgm-mogalakwena-
+#    londen.md ("hergebruikt anker" + eigen z16-bevestiging). Brief-tekst zelf
+#    NIET gewijzigd (conform de instructie); de correctie staat hier + in §9.
+# ⚠️ b1 (truck, NIET stippel) is +48,3% BOVEN de ~120 km uit het ketenontwerp
+#    (178,0 km gemeten over N4→N1→R21 via Kroondal/Brits/Pretoria-West/
+#    Allandale) — buiten ±15%, bevinding, niet dichtgetrokken: dezelfde
+#    corridor gaf in de zusterbrief pgm-mogalakwena-londen al een eigen
+#    OSRM-check van 166 km tegen hetzelfde ~120 km-ontwerpcijfer; de
+#    N4/N1/R21-corridor is structureel langer dan de hemelsbrede schatting.
+#    `eindToegangPrivaat`/`eindKlassen` gezet voor de OR Tambo-vrachtterminal-
+#    kant (luchthaventerrein deels airside/privé) — de scan vond desondanks een
+#    doorgaand pad, dus geen stippel nodig.
+# ⚠️ b2 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht
+#    JNB → NRT als grootcirkel, 13.582,6 km — de langste luchtafstand van de
+#    negen PGM/goud/diamant-ketens van deze golf (brief §0/§1). Geen
+#    tussenlanding gebrond (brief §7: geen bron noemt een hub) → één directe
+#    vrachtvlucht, aangenomen als industriestandaard voor ZA-PGM-luchtvracht
+#    (brief §8). Beide vrachtterminal-ankers zijn satelliet-gelegd
+#    (bron-gelegd, brief §3).
+# ⚠️ b3 (truck, NIET stippel) is +14,6% BOVEN de ~65 km uit het ketenontwerp
+#    (74,5 km gemeten over Higashi-Kanto Jidoshado → Keiyo-weg → Wangan-route)
+#    — net BUITEN de ±10%-tool-waarschuwing maar BINNEN de ±15%-norm van de
+#    brief [OK].
+# ⚠️ `pgm-tanaka-tokio` is het Tanaka-HOOFDKANTOOR/handelsadres in Chuo-ku,
+#    Tokio, geen bevestigd fabrieksterrein (Tanaka's fabrieken liggen in
+#    Hiratsuka/Isehara, Kanagawa) — status AANNEMELIJK, expliciet open punt
+#    voor Lars in de brief §7, hier ongewijzigd doorgezet als stoppunt.
+# ⚠️ Geen fase D/E (brief §6): de brief stopt bewust bij Tanaka's hoofdkantoor,
+#    géén bron noemt een fabriek/afnemer ná deze ontvangst.
+bak_pgm_rustenburg_tokio() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Rustenburg PMR → OR Tambo vrachtterminal (N4/N1/R21)|$BEEN/pgm-rustenburg-tokio-weg-rustenburg-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → NRT (vrachtvlucht, grootcirkel)|$BEEN/pgm-rustenburg-tokio-lucht-jnb-nrt.geojson" \
+    --been-geojson "truck|Narita vrachtterminal → Tanaka Kikinzoku Kogyo, Tokio (Higashi-Kanto → Keiyo → Wangan)|$BEEN/pgm-rustenburg-tokio-weg-narita-tanaka.geojson" \
+    --marker "pgm-rustenburg-pmr — Rustenburg PMR + Waterval-smelter-/RBMR-complex (Valterra Platinum), laadplek, bron-gelegd (hergebruikt+gecorrigeerd, zie kop)|-25.6750,27.3180" \
+    --marker "pgm-jnb-vracht — O.R. Tambo Cargo Terminal, Kempton Park (JNB), overslag truck → lucht, bron-gelegd|-26.1400,28.2300" \
+    --marker "pgm-nrt-vracht — Narita Cargo Area (NRT), overslag lucht → truck, bron-gelegd|35.7743,140.3797" \
+    --marker "pgm-tanaka-tokio — Tanaka Kikinzoku Kogyo K.K., hoofdkantoor Nihonbashi-Kayabacho, Chuo-ku, Tokio, stoppunt, aannemelijk|35.6816,139.7756" \
+    --routebrief v2/design/routebrieven/pgm-rustenburg-tokio.md \
+    --uit    v2/data/stroomroute-pgm-rustenburg-tokio.json \
+    --stroom pgm-rustenburg-tokio \
+    --titel  "PGM · Rustenburg PMR (Zuid-Afrika) → OR Tambo (JNB) → Narita (NRT) → Tanaka Kikinzoku Kogyo, Tokio"
+}
+
+# ── pgm · Nadezhda-smelter (Norilsk) → Alykel (NSK) → Yemelyanovo (KJA) → Krastsvetmet-raffinaderij (Krasnojarsk)
+# Routebrief: v2/design/routebrieven/pgm-norilsk-krasnojarsk.md (LICHTE werkwijze M31 golf 3, §2 Lucht).
+# ⚠️ b1 (spoor, Norilsk-industrienet) is GEMETEN, geen stippel: beide uiteinden snappen op
+#    hetzelfde geïsoleerde component van 253 km (Nadezhda-knoop 0,73 km / Alykel-knoop 6,17 km),
+#    exact het component uit nikkel-norilsk-monchegorsk.md — de kandidaat-stippel uit de brief
+#    ("component-mismatch") deed zich dus niet voor. 27,3 km over 32 edges, verhouding 1,12.
+# ⚠️ De 6,17 km-snap bij Alykel is een STIPPEL (spoor|…): OSM kent geen doorgaand zijspoor tot op
+#    het vrachtplatform — consistent met de al onzekere Alykel-vrachtterminal-status (brief §3/§7,
+#    geen bron voor een aparte cargo-faciliteit). Naad > 5 km, bakhandleiding §2 "Emplacementen…
+#    missen vaak" — niet dichtgetrokken.
+# ⚠️ b2 (lucht NSK → KJA) is DOORGETROKKEN grootcirkel, 1.484,3 km — gemotiveerd met Norilsk's
+#    aantoonbare isolatie (geen weg/doorgaande spoorverbinding met het nationale net), niet met een
+#    PGM-specifieke bron; bindende aanpassing van de haalbaarheidstoets (brief §7/§8[8]).
+# ⚠️ b3 (truck Yemelyanovo → Krastsvetmet): Overpass was onbereikbaar bij het schrijven van de
+#    brief; via-punten hier zelf gepind met pyosmium op de lokale rusland-siberie-extract. De brief
+#    vermoedde "R257 zuidwaarts" — dat bleek de VERKEERDE kant van de stad (R257/Predmostnaya loopt
+#    juist zuidwestwaarts naar Abakan); de echte luchthavenweg is R-255 "Sibir" → Северное шоссе/
+#    Енисейский тракт → Октябрьский мост (Jenisej-oversteek) → Krastsvetmet-terrein. Gemeten
+#    weglengte 53,2 km tegen de herziene toetswaarde ~40 km = +32,9% — BUITEN ±15%, bevinding, niet
+#    dichtgetrokken (een reële stadsroute via twee ringwegen is nu eenmaal langer dan een
+#    hemelsbreed-keten van vier via-punten; 04А-300/R-255/04К-044 zijn niet-hemelsbrede stadswegen).
+#    Eerste 0,76 km (vrachtterminal-anker → eerste primary-knoop 04А-300) is een STIPPEL: het hele
+#    kleine-klasse-wegennet rond de cargoterminal bestaat in OSM uit eilandjes van 4-7 knopen zonder
+#    gedeelde knoop met het doorgaande net (component-scan, zelfde klasse als cu-beilun-laadspoor).
+# ⚠️ pgm-alykel-vrachtterminal blijft ONZEKER (brief §3): satellietbeeld z17 toont geen apart
+#    vrachtplatform/loods; mogelijk gaat PGM als bijvracht mee, geen aparte cargo-bron gevonden.
+# ⚠️ Geen zeebeen, dus geen haven-aanloop.
+bak_pgm_norilsk_krasnojarsk() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "spoor|trein Nadezhda-smelter → Alykel-vrachtplatform (Norilsk Railway — geïsoleerd industrieel net, ~253 km-component)|$BEEN/spoorroute-pgm-norilsk-krasnojarsk-nadezhda-alykel.geojson" \
+    --stippel      "spoor|laatste zijspoor naar het Alykel-vrachtplatform ontbreekt in OSM (geen doorgaand net tot op het platform — Alykel-status al onzeker, brief §3/§7)|69.3796,87.3598|69.3252,87.3290" \
+    --been-geojson "lucht|vlucht NSK → KJA (vrachtvlucht, grootcirkel)|$BEEN/pgm-norilsk-krasnojarsk-lucht-alykel-yemelyanovo.geojson" \
+    --stippel      "truck|Yemelyanovo-vrachtterminal → doorgaand wegnet 04А-300 (OSM-topologiebreuk — kleine-klasse-wegennet rond de cargoterminal is een los eilandje, geen zijspoor van meer dan 2 km)|56.1785,92.5250|56.1718,92.5275" \
+    --been-geojson "truck|vrachtwagen Yemelyanovo-vrachtterminal → Krastsvetmet-raffinaderij (R-255 \"Sibir\" → Северное шоссе/Енисейский тракт → Октябрьский мост)|$BEEN/pgm-norilsk-krasnojarsk-weg-yemelyanovo-krastsvetmet.geojson" \
+    --marker "pgm-nadezhda-fabriek — Nadezhda Metallurgical Plant, Norilsk (Nornickel Polar Division), mijn/smelter (kop spoor), bron-gelegd (hergebruikt anker ni-nadezhda-fabriek)|69.3275,87.9521" \
+    --marker "pgm-alykel-vrachtterminal — Alykel International Airport (NSK), Norilsk, vrachtplatform (kop lucht), onzeker (geen aparte cargo-bron)|69.3252,87.3290" \
+    --marker "pgm-yemelyanovo-vrachtterminal — Krasnoyarsk International Airport / Yemelyanovo (KJA), vrachtplatform (losplek lucht), bron-gelegd|56.1785,92.5250" \
+    --marker "pgm-krastsvetmet-raffinaderij — Krastsvetmet (Krasnoyarsk Non-Ferrous Metals Plant), Транспортный проезд 1, Krasnojarsk, raffinaderij, stoppunt, bron-gelegd|56.0160,92.9998" \
+    --routebrief v2/design/routebrieven/pgm-norilsk-krasnojarsk.md \
+    --uit    v2/data/stroomroute-pgm-norilsk-krasnojarsk.json \
+    --stroom pgm-norilsk-krasnojarsk \
+    --titel  "PGM · Norilsk (Rusland) → Alykel (NSK) → Krasnojarsk (KJA) → Krastsvetmet"
+}
+
+# ── pgm · Mogalakwena-concentrator (Valterra Platinum, Zuid-Afrika) → Rustenburg PMR → OR Tambo (JNB) → (vlucht) → Heathrow (LHR) → Johnson Matthey Royston (Verenigd Koninkrijk)
+# Routebrief: v2/design/routebrieven/pgm-mogalakwena-londen.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, NIET stippel): Mogalakwena-concentrator → Rustenburg PMR, N1 →
+#    R24 "Platinum Highway". 336,4 km tegen het werkcijfer 341 km (eigen OSRM-
+#    meting, geen operator-bron) = -1,3% [OK]. Ontwerpcijfer ~180 km was fors
+#    onderschat (routebrief §7, bevinding, niet dichtgetrokken).
+# ⚠️ b2 (truck, NIET stippel) — GEDEELD BEEN, LETTERLIJK HERGEBRUIKT: Rustenburg
+#    PMR → OR Tambo is dezelfde corridor als in pgm-rustenburg-shanghai.md
+#    (zelfde golf 3); dit been hergebruikt het al gebakken geojson
+#    `pgm-rustenburg-shanghai-weg-rustenburg-jnb.geojson` (ankers identiek:
+#    -25.6750,27.3180 → -26.1380,28.2270) i.p.v. het een derde keer te bakken
+#    (routebrief §7, bak-aanwijzing).
+# ⚠️ b3 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht
+#    JNB → LHR als grootcirkel, 9.071,9 km, reeds gegenereerd met
+#    maak_luchtbeen.py. Geen tussenlanding gebrond (brief §7) → één directe
+#    vrachtvlucht, aannemelijk analoog aan de goud-/Rand Refinery-luchtvracht-
+#    praktijk vanuit Zuid-Afrika (geen PGM-specifieke bron voor déze vlucht
+#    gevonden binnen het budget).
+# ⚠️ b4 (truck, NIET stippel, eindToegangPrivaat): Heathrow World Cargo Centre
+#    → Johnson Matthey Royston, M4 → M25 → A1(M) → A505. 101,9 km tegen 97
+#    (+5,0% [OK]) — BINDEND-tekst noemde ~50 km via M25/A10/A505; de A1(M) is
+#    hier het functionele equivalent van de genoemde A10 (routebrief §7).
+#    `eindToegangPrivaat` nodig: zonder die vlag vond het wegtool geen pad
+#    tussen Baldock Bypass en het JM Royston-terrein.
+# ⚠️ Geen fase D/E (brief §6, bindende haalbaarheidstoets): Johnson Matthey
+#    Royston is de BINDEND aangewezen eindraffinage (LPPM good-delivery), geen
+#    bron noemt een vervolgzending naar een specifieke afnemer/fabriek.
+bak_pgm_mogalakwena_londen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Mogalakwena-concentrator → Rustenburg PMR (N1 → R24 \"Platinum Highway\")|$BEEN/pgm-mogalakwena-londen-weg-mogalakwena-rustenburg.geojson" \
+    --been-geojson "truck|Rustenburg PMR → OR Tambo vrachtterminal (N4/N1/R21, gedeeld been uit pgm-rustenburg-shanghai)|$BEEN/pgm-rustenburg-shanghai-weg-rustenburg-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → LHR (vrachtvlucht, grootcirkel)|$BEEN/pgm-mogalakwena-londen-lucht-jnb-lhr.geojson" \
+    --been-geojson "truck|Heathrow World Cargo Centre → Johnson Matthey Royston (M4 → M25 → A1(M) → A505)|$BEEN/pgm-mogalakwena-londen-weg-heathrow-royston.geojson" \
+    --marker "pgm-mogalakwena-mijn — Mogalakwena-concentrator, Valterra Platinum, Mokopane, Limpopo, laadplek, bron-gelegd|-23.9805,28.9160" \
+    --marker "pgm-rustenburg-pmr — Rustenburg PMR (Waterval-smelter/RBMR/PMR-complex), Valterra Platinum, overslag, bron-gelegd (hergebruikt anker)|-25.6750,27.3180" \
+    --marker "pgm-jnb-cargo — OR Tambo (JNB) vrachtplatform/-loodsen, Kempton Park, overslag truck → lucht, bron-gelegd (hergebruikt anker)|-26.1380,28.2270" \
+    --marker "pgm-lhr-cargo — Heathrow (LHR) World Cargo Centre, overslag lucht → truck, bron-gelegd|51.4703,-0.4195" \
+    --marker "pgm-jm-royston — Johnson Matthey Royston PGM-raffinaderij, Orchard Road Industrial Estate, Royston, Hertfordshire, stoppunt, bron-gelegd|52.0550,-0.0351" \
+    --routebrief v2/design/routebrieven/pgm-mogalakwena-londen.md \
+    --uit    v2/data/stroomroute-pgm-mogalakwena-londen.json \
+    --stroom pgm-mogalakwena-londen \
+    --titel  "PGM · Mogalakwena (Zuid-Afrika) → Rustenburg PMR → OR Tambo (JNB) → Heathrow (LHR) → Johnson Matthey Royston"
+}
+
+# ── diamant · Bharat Diamond Bourse (Mumbai) → Sahar/CSMIA vracht → JFK South Cargo → 47th Street Diamond Exchange (Manhattan)
+# Routebrief: v2/design/routebrieven/diamant-mumbai-newyork.md (LICHTE werkwijze M31 golf 3)
+# ⚠️ b2 (lucht): DOORGETROKKEN grootcirkel BOM→JFK, 12.530,2 km gemeten — exact
+#    de gepubliceerde ontwerpschatting (~12.530 km, routebrief §2/§8); geen
+#    bron noemt een tussenlanding → één directe vlucht aangenomen (brief §7).
+# ⚠️ b1 (truck BDB→Sahar) is -16,5% tegen het ontwerpcijfer (~10 km, geen
+#    gepubliceerde bron) — buiten de ±15%-norm maar het ontwerpcijfer was zelf
+#    nooit gebrond (alleen hemelsbreed 3,9 km); geen stippel nodig, beide
+#    anker-verbindingen liggen op de openbare weg (≤0,06 km). Bevinding, niet
+#    dichtgetrokken (bakhandleiding §5).
+# ⚠️ b3 (truck JFK→47th Street) is +1,3% tegen ~25 km ontwerp — binnen norm;
+#    alle vijf via-punten snappen ≤0,02 km op de doorgaande corridor
+#    (Van Wyck Expwy → Kew Gardens Interchange → LIE → Queens-Midtown Tunnel).
+# ⚠️ dia-bdb en dia-bom-cargo zijn hergebruikte, al satelliet-gelegde ankers
+#    uit diamant-mirny-mumbai.md (deze golf) — niet opnieuw gecheckt.
+# ⚠️ Geen zee-, spoor- of leidingbeen, geen haven-aanloop. Fase D/E vervallen
+#    (brief §6, stoppunt 47th Street Diamond Exchange — handelsgebouw, geen
+#    bewerkingslocatie; geen bron koppelt deze stroom aan een vervolgfabriek).
+bak_diamant_mumbai_newyork() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Bharat Diamond Bourse → Sahar/CSMIA Air Cargo Complex|$BEEN/diamant-mumbai-newyork-weg-bdb-bomcargo.geojson" \
+    --been-geojson "lucht|vlucht BOM → JFK (vrachtvlucht, grootcirkel)|$BEEN/diamant-mumbai-newyork-lucht-bom-jfk.geojson" \
+    --been-geojson "truck|JFK South Cargo Area → 47th Street Diamond Exchange|$BEEN/diamant-mumbai-newyork-weg-jfk-47th.geojson" \
+    --marker "dia-bdb — Bharat Diamond Bourse, G Block, Bandra-Kurla Complex, Mumbai — beursgebouw/vertrekpunt, bron-gelegd (hergebruikt anker)|19.0641,72.8646" \
+    --marker "dia-bom-cargo — Sahar/CSMIA Air Cargo Complex, Mumbai — vrachtterminal, vertrek luchtvracht, bron-gelegd (hergebruikt anker)|19.0994,72.8673" \
+    --marker "dia-jfk-cargo — JFK South Cargo Area (Cargo Plaza/South Cargo Road), Queens, New York — vrachtterminal, aankomst luchtvracht, bron-gelegd|40.6587,-73.7952" \
+    --marker "dia-ny-47th — 47th Street Diamond Exchange, 1196 Avenue of the Americas, Diamond District, Manhattan — beurs-/handelsgebouw, stoppunt, bron-gelegd|40.7578,-73.9817" \
+    --routebrief v2/design/routebrieven/diamant-mumbai-newyork.md \
+    --uit    v2/data/stroomroute-diamant-mumbai-newyork.json \
+    --stroom diamant-mumbai-newyork \
+    --titel  "Diamant · Mumbai (Bharat Diamond Bourse) → JFK Airport → 47th Street Diamond Exchange (New York)"
+}
+
+# ── diamant · Venetia-mijn (De Beers, Limpopo, ZA) → O.R. Tambo (JNB) → Brucargo (BRU) → AWDC Antwerpen
+# Routebrief: v2/design/routebrieven/diamant-venetia-antwerpen.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b2 is een luchtbeen (bakhandleiding §2, maak_luchtbeen.py): grootcirkel
+#    JNB → BRU, 8.879,6 km — DOORGETROKKEN, geen stippel (vlucht tussen twee
+#    gelegde vrachtterminals is geen gat). Geen tussenlanding gebrond → één
+#    directe vlucht aangenomen (brief §7).
+# ⚠️ b1 (truck, N1/R572 via Polokwane, eindToegangPrivaat + corridorKlassen
+#    tertiary/unclassified) komt op 665,2 km tegen de gepubliceerde/webcheck
+#    491,1 km (+35,4%, ⚠️ BUITEN ±15% — bevinding). Beide instellingen
+#    veranderen het getal nauwelijks (222,4 → 222,6 km voor het eerste
+#    deelbeen Venetia → Louis Trichardt/Makhado, tegen ~90 km hemelsbreed):
+#    dit is geen wegklasse-filter maar een genuine detour in het OSM-wegennet
+#    tussen de mijn en de N1-knoop bij Louis Trichardt (mogelijk via Alldays/
+#    Vivo, sparse net door het Soutpansberg-gebied). Via-punten NIET
+#    bijgeschoven om het getal te forceren (routebrief-licht §1/bakhandleiding
+#    §5) — vergelijkbaar met de eveneens buiten-tolerantie N1/N4-bevinding bij
+#    `pgm-rustenburg-shanghai` b1 (+48,4%).
+# ⚠️ b3 (truck, Brucargo → AWDC, E19 via Mechelen) is een LETTERLIJKE KOPIE
+#    van het reeds gebakken been in `diamant-jwaneng-antwerpen` (identieke
+#    via-punten en vrijwel identieke ankercoördinaten — brief §3/§4, "beide
+#    truckbenen zijn substantiële hoofdwegverbindingen").
+# ⚠️ dia-jnb-cargo (-26,1400/28,2300) is hetzelfde anker als pgm-jnb-vracht
+#    (`pgm-rustenburg-tokio.md`, deze golf) — niet opnieuw satelliet-gelegd.
+#    dia-brucargo/dia-awdc zijn hergebruikte ankers uit `diamant-jwaneng-
+#    antwerpen.md`/`diamant-ekati-antwerpen.md` (deze golf).
+bak_diamant_venetia_antwerpen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Venetia-mijn → O.R. Tambo vrachtterminal (N1/R572 via Polokwane)|$BEEN/diamant-venetia-antwerpen-weg-venetia-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → BRU (vrachtvlucht, grootcirkel)|$BEEN/diamant-venetia-antwerpen-lucht-jnb-bru.geojson" \
+    --been-geojson "truck|Brucargo → AWDC/Diamond Office (E19 via Mechelen, letterlijk hergebruikt uit diamant-jwaneng-antwerpen b3)|$BEEN/diamant-jwaneng-antwerpen-weg-brucargo-antwerpen.geojson" \
+    --marker "dia-venetia-mijn — Venetia-mijn (De Beers), open put + verwerkingsfabriek, Limpopo — mijn/laadplek, bron-gelegd|-22.4362,29.3175" \
+    --marker "dia-jnb-cargo — O.R. Tambo Int'l Airport, vrachtloodsen/-apron, Kempton Park — vrachtterminal (hergebruikt anker), bron-gelegd|-26.1400,28.2300" \
+    --marker "dia-brucargo — Brucargo, Brussels Airport — vrachtterminal (hergebruikt anker), bron-gelegd|50.90628,4.45584" \
+    --marker "dia-awdc — AWDC/Diamond Office, Hoveniersstraat, Antwerpen — beursgebouw/certificeringshub (hergebruikt anker), stoppunt, bron-gelegd|51.21520,4.41870" \
+    --routebrief v2/design/routebrieven/diamant-venetia-antwerpen.md \
+    --uit    v2/data/stroomroute-diamant-venetia-antwerpen.json \
+    --stroom diamant-venetia-antwerpen \
+    --titel  "Diamant · Venetia-mijn (Zuid-Afrika) → O.R. Tambo → Brussel (Brucargo) → Antwerpen (AWDC)"
+}
+
+# ── pgm · Northam Zondereinde-complex (Bushveld, Zuid-Afrika) → OR Tambo (JNB) → (vlucht) → Frankfurt (FRA) → Heraeus Precious Metals Hanau (Duitsland)
+# Routebrief: v2/design/routebrieven/pgm-zondereinde-hanau.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, NIET stippel): Zondereinde mijn/smelter/BMR → OR Tambo
+#    vrachtterminal, R510 zuidwaarts (via Northam-dorp) → N4 oostwaarts (via
+#    Marikana/Brits) → N1 zuidwaarts (via Pretoria). 281,4 km tegen het
+#    ~140 km-ontwerpcijfer (routebrief §1/§2, "niet apart gebrond") = **+101,0%,
+#    ruim buiten ±15%** — bevinding, geen fout: de hemelsbrede afstand tussen
+#    de twee ankers is zelf al ~168 km (het ontwerpcijfer van 140 km was dus
+#    intern al te laag, los van enige routering), en de via-punten uit de
+#    brief (§4, Northam/Marikana/Brits/Pretoria) pinnen de enige doorgaande
+#    corridor R510→N4→N1 — geen via-punt bijgeschoven om het getal te halen.
+#    Anker-verbindingsstukjes 0,28/0,10 km, beide ruim binnen 0,5 km.
+# ⚠️ b2 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht
+#    JNB → FRA als grootcirkel, 8.688,0 km, tegen het ontwerpcijfer ~8.900 km
+#    (−2,4%; het tool zelf gaf bij de losse run "8688.0 km grootcirkel · 349
+#    punten") — een luchtbeen heeft geen ±15%-km-toets (bakhandleiding §5).
+#    Geen tussenlanding: geen bron noemt een hub (brief §7) → één directe
+#    vrachtvlucht JNB → FRA, aannemelijk (industriestandaard voor ZA-PGM-
+#    luchtvracht naar Europese raffinaderijen).
+# ⚠️ b3 (truck, NIET stippel, `eindToegangPrivaat`): Frankfurt vrachtterminal
+#    (Cargo City Süd) → Heraeus Hanau, A66. 35,3 km tegen het ~25 km-
+#    ontwerpcijfer (+41,3%, buiten ±15%) — bevinding, niet dichtgetrokken: de
+#    via-punten uit de brief (§4) liggen op Bahnhofstraße/Edmund-Seng-Straße
+#    in Maintal-centrum, een lokaal stratennet dat in een eigen bereikbaar-
+#    heidscontrole (pyosmium-scan op de de-hessen-extract) niet in hetzelfde
+#    verbonden wegennet zat als de twee ankers, terwijl Frankfurt-vrachtterminal
+#    en Heraeus Hanau dat onderling wél zijn. Maintal is daarmee NIET als
+#    via-punt meegenomen in deze bake (b3 routeert rechtstreeks anker→anker
+#    over A66); dit is een afwijking van routebrief §4 rij "b3 | 1 | Maintal",
+#    die zelf al aangaf géén corridorkeuze te pinnen ("vaste doorgaande knoop,
+#    geen zijtak") — zie ook §9-toelichting hieronder. `eindToegangPrivaat`
+#    was nodig: zonder die vlag gaf het wegtool "geen wegpad tussen punt 0 en
+#    1" bij het Frankfurt-vrachtterminal-anker (airside/privé-servicewegen
+#    van Cargo City Süd, snap 0,01 km met de vlag).
+# ⚠️ Geen fase D/E (brief §6): Heraeus Hanau is het BINDEND aangewezen
+#    toll-raffinagepunt (99,95%); geen bron noemt een vervolgzending naar een
+#    specifieke afnemer/fabriek.
+bak_pgm_zondereinde_hanau() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Zondereinde mijn/smelter/BMR → OR Tambo vrachtterminal (R510 → N4 → N1)|$BEEN/pgm-zondereinde-hanau-weg-zondereinde-ortambo.geojson" \
+    --been-geojson "lucht|vlucht JNB → FRA (vrachtvlucht, grootcirkel)|$BEEN/pgm-zondereinde-hanau-lucht-ortambo-frankfurt.geojson" \
+    --been-geojson "truck|Frankfurt vrachtterminal → Heraeus Precious Metals Hanau (A66)|$BEEN/pgm-zondereinde-hanau-weg-frankfurt-hanau.geojson" \
+    --marker "pgm-zondereinde-mijnsmelter — Northam Zondereinde-complex (mijn/smelter/BMR), Thabazimbi LM, Limpopo, laadplek, bron-gelegd|-24.8333,27.3669" \
+    --marker "pgm-ortambo-vracht — OR Tambo International Airport, vrachtplatform, Kempton Park (JNB), overslag truck → lucht, bron-gelegd|-26.1290,28.2330" \
+    --marker "pgm-frankfurt-vracht — Frankfurt Airport, Cargo City Süd (FRA), overslag lucht → truck, bron-gelegd|50.0244,8.5552" \
+    --marker "pgm-heraeus-hanau — Heraeus Precious Metals, Hanau, stoppunt (toll-raffinage tot 99,95%), bron-gelegd|50.1328,8.9315" \
+    --routebrief v2/design/routebrieven/pgm-zondereinde-hanau.md \
+    --uit    v2/data/stroomroute-pgm-zondereinde-hanau.json \
+    --stroom pgm-zondereinde-hanau \
+    --titel  "PGM · Northam Zondereinde (Zuid-Afrika) → OR Tambo (JNB) → Frankfurt (FRA) → Heraeus Hanau (Duitsland)"
+}
+
+# ── goud · Valcambi-raffinaderij (Balerna, Zwitserland) → Milaan-Malpensa → Londen Heathrow → LBMA-kluis (Bank of England)
+# Routebrief: v2/design/routebrieven/goud-valcambi-londen.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ Drie benen, alle fase D, geen tussenliggende verwerkingsknoop — de
+#    Zwitserland–VK-goudas is een GEAGGREGEERDE marktas (vier Zwitserse
+#    raffinaderijen samen), geen bedrijfsspecifieke route (brief §1/§7).
+# ⚠️ b1 (truck) is DOORGETROKKEN, echte weggeometrie (maak_stroombeen_weg.py,
+#    profiel goud-valcambi-londen-valcambi-mxp): A2 (Chiasso-grensovergang) →
+#    A9 (Como–Lomazzo) → A8 (Gallarate) → Malpensa Cargo City Sud. Geen
+#    gepubliceerde bronwaarde voor de km (≈78 km eigen kaartlezing, brief §7)
+#    — de bake-lengte is de echte controle, venster 50 km (landsgrens).
+# ⚠️ b2 (lucht) is een GROOTCIRKEL (maak_luchtbeen.py), DOORGETROKKEN — stippel
+#    betekent uitsluitend "hier reikt het net niet" en een vlucht tussen twee
+#    gelegde vrachtterminals is geen gat (bakhandleiding §2 Lucht). Malpensa
+#    i.p.v. Zürich als vertrekluchthaven is AANNEMELIJK (brief §7, kortste weg
+#    vanuit Ticino, niet bedrijfsbevestigd); geen tussenlanding bevestigd door
+#    een bron — aanname is één directe vlucht MXP → LHR (brief §7).
+# ⚠️ b3 (truck) is DOORGETROKKEN, echte weggeometrie (profiel
+#    goud-valcambi-londen-lhr-boe): M4 (Heathrow-spur) → A4 (Chiswick,
+#    Hammersmith) → Hyde Park Corner → Fleet Street → Bank of England. Rond de
+#    kluis zelf ligt een voetgangerszone (brief §7) — `eindKlassen` neemt de
+#    kleine stedelijke wegklassen mee zodat de lijn tot vlak bij het gebouw
+#    komt; een eventuele laatste-meters-stippel is ter beoordeling ná de bake.
+# ⚠️ LBMA-kluis in de City (Bank of England, Threadneedle Street) vs. de
+#    praktijk dat veel commerciële LBMA-kluizen bij Heathrow zelf liggen —
+#    Bank of England is een echte, in de City gevestigde LBMA-erkende
+#    kluishouder en hier als anker gekozen conform het ketenontwerp (brief
+#    §7); een bedrijfsspecifieke Heathrow-kluis is niet uitgesloten.
+# ⚠️ Geen fase E: de brief stopt bij de LBMA-kluis/Bank of England (brief §6,
+#    geen bron noemt een vervolgbestemming ná de Londense kluis).
+bak_goud_valcambi_londen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Valcambi, Balerna → Malpensa-vrachtterminal (A2/A9/A8)|$BEEN/goud-valcambi-londen-weg-valcambi-mxp.geojson" \
+    --been-geojson "lucht|vlucht MXP → LHR (vrachtvlucht, grootcirkel)|$BEEN/goud-valcambi-londen-lucht-mxp-lhr.geojson" \
+    --been-geojson "truck|Heathrow World Cargo Centre → Bank of England, City of London (M4/A4)|$BEEN/goud-valcambi-londen-weg-lhr-boe.geojson" \
+    --marker "au-ref-valcambi — Valcambi SA, Via Passeggiata 3, Balerna (Ticino) — raffinaderij/laadplek, bron-gelegd|45.8385,9.0051" \
+    --marker "au-mxp-cargo — Milano Malpensa Cargo, Cargo City Sud — vrachtterminal (vertrek lucht), bron-gelegd|45.6142,8.7186" \
+    --marker "au-lhr-cargo — Heathrow World Cargo Centre / IAG Cargo — vrachtterminal (aankomst lucht), bron-gelegd|51.4605,-0.4629" \
+    --marker "au-hub-london — Bank of England, Threadneedle Street, City of London — LBMA-kluis/beursgebouw, stoppunt, bron-gelegd|51.5139,-0.0883" \
+    --routebrief v2/design/routebrieven/goud-valcambi-londen.md \
+    --uit    v2/data/stroomroute-goud-valcambi-londen.json \
+    --stroom goud-valcambi-londen \
+    --titel  "Goud · Valcambi (Zwitserland) → Milaan-Malpensa → Londen Heathrow → LBMA-kluis (Bank of England)"
+}
+
+# Routebrief goud-olimpiada-dubai.md (LICHTE werkwijze, M31 golf 3, §2 Lucht).
+# Goud (doré/baar) van Polyus' Olimpiada-mijn per truck naar de Krastsvetmet-
+# raffinaderij in Krasnojarsk, per truck naar de vrachtterminal van
+# Krasnojarsk (KJA), per vrachtvlucht (grootcirkel) naar de vrachtterminal
+# van Dubai (DXB), per truck naar de DMCC-vrijzone — de post-2022 route van
+# Russisch goud om de westerse LBMA-schorsing heen.
+# ⚠️ Geen stippels: alle vier de benen zijn doorgetrokken (truck/truck/lucht/
+#    truck), geen enkel wegsegment ontbrak in de lokale extracts.
+# ⚠️ b1 (Olimpiada-mijn → Krastsvetmet) en b2 (Krastsvetmet → KJA) en b4
+#    (DXB → DMCC) meten 615,0 / 45,6 / 33,5 km tegen ontwerpcijfers 550 / 30 /
+#    20 km (+11,8% / +51,9% / +67,4%) — alleen b1 valt binnen ±15%; b2 en b4
+#    zijn een BEVINDING (brief §9): het ontwerpcijfer was een grove schatting,
+#    niet apart gebrond, en de gemeten wegroute (P409/ringweg resp. Sheikh
+#    Zayed Road) is de echte, gekarteerde corridor — niet dichtgetrokken.
+# ⚠️ b3 (lucht KJA → DXB) is een grootcirkel, geen km-toets: 4.548,1 km
+#    gemeten tegen het ontwerpcijfer ≈5.150 km (bron uit 2022, brief §7 —
+#    aannemelijk, kan gewijzigd zijn sinds de sanctieroute uit dat onderzoek).
+# ⚠️ au-kja-cargo is een gedeeld platform (general aviation + vracht +
+#    Volga-Dnepr-hub); de exacte Lufthansa Cargo-loods is op z16 niet apart
+#    te onderscheiden (brief §7).
+bak_goud_olimpiada_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Olimpiada-mijn → Severo-Jenisejsk → Jenisejsk/Lesosibirsk → Bolsjaja Moerta → Krastsvetmet-raffinaderij, Krasnojarsk (P409)|$BEEN/goud-olimpiada-dubai-weg-olimpiada-krastsvetmet.geojson" \
+    --been-geojson "truck|Krastsvetmet-raffinaderij, Krasnojarsk → Jemeljanovo (KJA) vrachtterminal (P409/ringweg noordwaarts)|$BEEN/goud-olimpiada-dubai-weg-krastsvetmet-kja.geojson" \
+    --been-geojson "lucht|vlucht KJA → DXB (vrachtvlucht, grootcirkel, aannemelijk: bron uit 2022, sanctieroute kan gewijzigd zijn)|$BEEN/goud-olimpiada-dubai-lucht-kja-dxb.geojson" \
+    --been-geojson "truck|Dubai International Airport (DXB), Emirates SkyCargo → Trade Centre-rotonde → Mall of the Emirates → DMCC-vrijzone (Sheikh Zayed Road)|$BEEN/goud-olimpiada-dubai-weg-dxb-dmcc.geojson" \
+    --marker "au-olimpiada-mijn — Olimpiada-mijn (Polyus), open dagbouwput — mijn/laadplek, bron-gelegd|59.8650,92.9156" \
+    --marker "au-krastsvetmet — Krastsvetmet OJSC, Transportny proezd, Krasnojarsk — raffinaderij, bron-gelegd|56.0160,92.9998" \
+    --marker "au-kja-cargo — Krasnojarsk (Jemeljanovo/KJA) vracht-/GA-apron — vrachtterminal (vertrek lucht), bron-gelegd|56.1837,92.4630" \
+    --marker "au-dxb-cargo — Dubai International Airport, Emirates SkyCargo-gebouw — vrachtterminal (aankomst lucht), bron-gelegd|25.2560,55.3434" \
+    --marker "au-dmcc — DMCC (Dubai Multi Commodities Centre), Jumeirah Lake Towers — handelshub/vrijzone, stoppunt, bron-gelegd|25.0709,55.1387" \
+    --routebrief v2/design/routebrieven/goud-olimpiada-dubai.md \
+    --uit    v2/data/stroomroute-goud-olimpiada-dubai.json \
+    --stroom goud-olimpiada-dubai \
+    --titel  "Goud · Olimpiada-mijn (Rusland) → Krasnojarsk → Dubai (DXB) → DMCC-vrijzone"
+}
+
+# ── diamant · Catoca-mijn (Angola) → Luanda (Sodiam/Endiama) → NBJ-vrachtterminal → Dubai (DXB) → DMCC/Almas Tower
+# Routebrief: v2/design/routebrieven/diamant-catoca-dubai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, DOORGETROKKEN, echte weggeometrie, profiel diamant-catoca-dubai-
+#    catoca-luanda): Catoca-mijn → Saurimo → Malanje → Cacuso → N'dalatando →
+#    Luanda (EN230/EN220). Eerste poging zonder corridorKlassen faalde ("geen
+#    wegpad tussen punt 0 en 1") — de dichtstbijzijnde secondary bij de mijn
+#    ligt op 19,6 km, EIND_STRAAL_KM is 12 km; met corridorKlassen tertiary/
+#    unclassified/service erbij routeert hij door. Lengtetoets: 1.024,7 km
+#    tegen de briefwaarde ~850 (ontwerp) = **+20,6%, BUITEN ±15%** — een
+#    bevinding, niet dichtgetrokken. Eigen WebSearch-check bevestigt de
+#    afwijking zit in het brief-cijfer, niet in de bake: de EN230 Malanje↔
+#    Saurimo alléén is gepubliceerd op 625–657 km (AFA-herstelproject/
+#    adistanciaentre.com), tegen een hemelsbreed-schatting van ~438 km waar de
+#    briefschrijver zijn ~850 km-totaal op baseerde — de weg zelf windt fors
+#    meer dan de brief aannam.
+# ⚠️ b2 (truck, DOORGETROKKEN, profiel diamant-catoca-dubai-luanda-nbj):
+#    Sodiam-kantoor Luanda → NBJ-vrachtterminal (nieuwe luchthaven-toegangsweg/
+#    Via Expresso). Geen corridorkeuze gevonden (routebrief §4) — 41,9 km
+#    tegen ~40 gepubliceerd = +4,8%, binnen tolerantie.
+# ⚠️ b3 (lucht, GROOTCIRKEL, maak_luchtbeen.py, DOORGETROKKEN): NBJ-
+#    vrachtterminal → DXB-vrachtterminal. Stippel betekent uitsluitend "hier
+#    reikt het net niet" en een vlucht tussen twee gelegde terminals is geen
+#    gat (bakhandleiding §2 Lucht). Geen bron noemt een tussenlanding → één
+#    directe vlucht (routebrief §7). Gemeten 5.919,2 km grootcirkel — vrijwel
+#    identiek aan de eigen briefmeting (5.922 km, tegen het ontwerpcijfer
+#    ~7.300 km dat een ruwe schatting bleek).
+# ⚠️ DXB-vrachtterminal-anker VERVANGEN t.o.v. de brief: de brief zelf noemt
+#    dit anker "onzeker" (§3, officiële luchthaven-referentiecoördinaat
+#    25,25278/55,36444, Cargo Village niet exact gepind, open punt §7).
+#    Bakhandleiding §1/routebrief-licht §1: bestaande ankers uit brieven van
+#    dezelfde grondstof in deze golf hergebruiken. Drie zusterbrieven
+#    (diamant-marange-dubai, diamant-mbujimayi-dubai, diamant-letseng-dubai)
+#    hebben ditzelfde DXB-vrachtcomplex al SATELLIET-GELEGD (z14-z18) op
+#    25,2574524/55,3405972 (Emirates SkyCargo/Cargo Village, Al Garhoud) —
+#    dat scherpere, bron-gelegde anker is hier gebruikt i.p.v. het eigen
+#    onzekere punt, en lost het open punt van de eigen brief §7 op.
+# ⚠️ b4 (truck, DOORGETROKKEN) is een GEDEELD BEEN, LETTERLIJK HERGEBRUIKT:
+#    DXB-vrachtterminal → DMCC/Almas Tower loopt over exact dezelfde corridor
+#    (Sheikh Zayed Road E11) en exact dezelfde twee ankers als de al gebakken
+#    diamant-mbujimayi-dubai-stroom (31,2 km, -8,9% tegen 34 km gepubliceerd,
+#    binnen tolerantie) — diens geojson wordt hier letterlijk hergebruikt
+#    (bakhandleiding §2: "gedeeld been = letterlijke kopie, geen tweede
+#    versie"), geen herbake, geen eigen wegscan nodig.
+# ⚠️ DMCC/Almas Tower-anker (25,0689/55,1412, bron-gelegd, Wikipedia) komt
+#    vrijwel exact overeen met het gedeelde eindpunt van het hergebruikte been
+#    (25,069063/55,141166) — geen aanpassing nodig.
+# ⚠️ Geen haven-aanloop: deze keten bevat geen zeebeen (§ verplicht alleen bij
+#    modaliteit zee). Geen fase D/E: de brief stopt bij de Dubai Diamond
+#    Exchange (§6, geen bron koppelt déze Catoca-lading aan een vervolgbestemming).
+bak_diamant_catoca_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Catoca-mijn → Luanda (Sodiam/Endiama) (EN230 Saurimo–Malanje / EN220 Malanje–N'dalatando–Luanda)|$BEEN/diamant-catoca-dubai-weg-catoca-luanda.geojson" \
+    --been-geojson "truck|Luanda (Sodiam) → NBJ-vrachtterminal (nieuwe luchthaven-toegangsweg)|$BEEN/diamant-catoca-dubai-weg-luanda-nbj.geojson" \
+    --been-geojson "lucht|vlucht NBJ → DXB (vrachtvlucht, grootcirkel)|$BEEN/diamant-catoca-dubai-lucht-nbj-dxb.geojson" \
+    --been-geojson "truck|DXB-vrachtterminal → DMCC/Dubai Diamond Exchange (Almas Tower, JLT) (Sheikh Zayed Road E11; gedeeld been met diamant-mbujimayi-dubai)|$BEEN/diamant-mbujimayi-dubai-weg-dxb-dmcc.geojson" \
+    --marker "dia-catoca-mijn — Catoca-mijn (Sociedade Mineira de Catoca), Lunda Sul — mijn/laadplek, bron-gelegd|-9.39889,20.30083" \
+    --marker "dia-luanda-sodiam — Endiama-hoofdkantoor/Sodiam-exportkantoor, Major Kanhangulo, Luanda — overslag: kantoor/exportadministratie, bron-gelegd|-8.81291,13.23578" \
+    --marker "dia-nbj-vracht — Vrachtterminal (TECA), Aeroporto Internacional Dr. António Agostinho Neto (NBJ), Bom Jesus — overslag truck → lucht, aannemelijk|-9.03350,13.51400" \
+    --marker "dia-dxb-vracht — Dubai Intl Airport (DXB), Cargo Village/Emirates SkyCargo (hergebruikt: diamant-marange-dubai/-mbujimayi-dubai/-letseng-dubai) — overslag lucht → truck, bron-gelegd|25.2574524,55.3405972" \
+    --marker "dia-dmcc-almas — Dubai Diamond Exchange (DMCC), Almas Tower, Jumeirah Lake Towers — eindpunt/beurs, stoppunt, bron-gelegd|25.0689,55.1412" \
+    --routebrief v2/design/routebrieven/diamant-catoca-dubai.md \
+    --uit    v2/data/stroomroute-diamant-catoca-dubai.json \
+    --stroom diamant-catoca-dubai \
+    --titel  "Diamant · Catoca-mijn (Angola) → Luanda → NBJ-vrachtterminal → Dubai (DXB) → DMCC/Almas Tower"
+}
+
+# ── goud · Gold Fields Tarkwa (Ghana) → Kotoka/Accra → Dubai (DXB) → DMCC-goudzone
+# Routebrief: v2/design/routebrieven/goud-tarkwa-dubai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, weg): Tarkwa-mill → Kotoka/Accra-vrachtterminal, inland-route
+#    via Twifo Praso–Assin Fosu–Agona Swedru–Kasoa. Gebakken 279,3 km tegen
+#    ~300 km gepubliceerd (Gold Fields, niet corridor-specifiek) = -6,9%, OK.
+#    Geen N-wegnummer gebrond (brief §7); via-punten op geografische
+#    aannemelijkheid + OSM/Photon.
+# ⚠️ b2 (lucht): vrachtvlucht ACC → DXB, grootcirkel, 6.288,0 km (eigen
+#    haversine ≈6.290 km in de brief) — doorgetrokken, geen stippel
+#    (bakhandleiding §2: een vlucht tussen twee gelegde vrachtterminals is
+#    geen gat). Geen tussenlanding: geen bron noemt een hub-overstap voor
+#    déze corridor (brief §7, aanname).
+# ⚠️ b3 (truck, weg): DXB-vrachtterminal → DMCC-goudzone (Al Etihad Gold
+#    Refinery) via Sheikh Zayed Road (E11), Trade Centre Roundabout → Mall of
+#    the Emirates → Al Thanyah/JLT. Gebakken 38,2 km tegen de brief-schatting
+#    ~31 km (+23,2%, buiten de ±15%-norm) — bevinding, geen via-punt
+#    bijgeschoven: de snaps liggen strak op de weg (0,00-0,03 km) en 38 km is
+#    consistent met de werkelijke afstand DXB↔JLT over Sheikh Zayed Road; de
+#    brief-schatting ("eigen meting via de drie via-punten") was kennelijk
+#    een onderschatting, de bake-lengte is leidend (bakhandleiding §5).
+# ⚠️ Geen haven-aanloop: deze keten bevat geen zeebeen. Geen fase D/E: de
+#    brief stopt bewust bij de DMCC-goudzone (§6, geen bron koppelt déze
+#    Tarkwa-lading aan één met naam genoemde raffinaderij binnen DMCC).
+bak_goud_tarkwa_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Gold Fields Tarkwa (mill) → Kotoka/Accra-vrachtterminal (inland-route via Twifo Praso–Assin Fosu–Agona Swedru–Kasoa)|$BEEN/goud-tarkwa-dubai-weg-mill-acc.geojson" \
+    --been-geojson "lucht|vlucht ACC → DXB (vrachtvlucht, grootcirkel)|$BEEN/goud-tarkwa-dubai-lucht-acc-dxb.geojson" \
+    --been-geojson "truck|Dubai Intl-vrachtterminal (DXB) → DMCC-goudzone (Sheikh Zayed Road E11, via Trade Centre Roundabout en Mall of the Emirates)|$BEEN/goud-tarkwa-dubai-weg-dxb-dmcc.geojson" \
+    --marker "au-tarkwa-mill — Gold Fields Tarkwa, CIL-verwerkingsfabriek — mijn/laadplek, bron-gelegd|5.3275,-2.0215" \
+    --marker "au-air-acc-cargo — Kotoka/Accra Intl Airport, vrachtterminal (Ghana Airport Cargo Center) — overslag truck → lucht, bron-gelegd|5.5985,-0.1745" \
+    --marker "au-air-dxb-cargo — Dubai Intl Airport (DXB), Emirates SkyCargo-terminal (Cargo Village) — overslag lucht → truck, bron-gelegd|25.2560,55.3431" \
+    --marker "au-dmcc-refine — DMCC-goudzone, Dubai — Al Etihad Gold Refinery (naast Emirates Gold/Kaloti) — raffinagezone, stoppunt, bron-gelegd|25.0602,55.1352" \
+    --routebrief v2/design/routebrieven/goud-tarkwa-dubai.md \
+    --uit    v2/data/stroomroute-goud-tarkwa-dubai.json \
+    --stroom goud-tarkwa-dubai \
+    --titel  "Goud · Gold Fields Tarkwa (Ghana) → Kotoka/Accra → Dubai (DXB) → DMCC-goudzone"
+}
+
+# ── diamant · Marange-diamantvelden (ZCDC) → Harare (HRE) → vrachtvlucht → Dubai (DXB) → DMCC
+# Routebrief: v2/design/routebrieven/diamant-marange-dubai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck) begint NIET op het mijnanker zelf: `maak_stroombeen_weg.py` gaf
+#    "geen wegpad tussen punt 0 en 1" met het mijnanker als startpunt, óók met
+#    corridorKlassen ruim (tertiary/unclassified/service) + eindToegangPrivaat.
+#    Gemeten met een osmium-connectiviteitscheck op de zimbabwe-extract: het
+#    mijnanker snapt op een geïsoleerd 8-knopen-eilandje van vooral track-
+#    ways (0,14 km) dat NIET verbonden is met het doorgaande wegnet
+#    (1,9 mln-knopen-component incl. de R5/Harare-Mutare Highway) — een echt
+#    "net reikt niet"-geval voor het mijnterrein zelf, geen wegklassefout.
+#    De dichtstbijzijnde WEL-verbonden weg (service) ligt op 0,79 km van het
+#    mijnanker → getekend als STIPPEL "last mile" met die reden; het
+#    wegprofiel begint op dat verbindingspunt.
+# ⚠️ Het via-punt "Mutare" uit de brief (stadscentrum 32,6333/-18,9667) snapte
+#    op een even geïsoleerde wegstomp (0,048 km, component van 2 knopen) —
+#    dus ook GEEN wegklassefout maar een via-punt náást de doorgaande weg.
+#    Verplaatst naar de R5/Harare-Mutare Highway zelf (32,6426/-18,9511, nog
+#    steeds Mutare-stad), gemeten met dezelfde connectiviteitscheck. Dit is
+#    een via-punt (corridorkeuze), geen anker — geen brief-wijziging nodig.
+# ⚠️ b1 lengtetoets: 357,4 km tegen de ontwerpschatting ~270 km = **+32,4%,
+#    BUITEN ±15%** — BEVINDING, niet dichtgetrokken (geen via-punt bijgeschoven
+#    om het getal te halen; alle vier subsnaps liggen op 0,00–0,13 km). De
+#    brief-schatting van ~270 km was zelf al "geen betrouwbare gepubliceerde
+#    wegreferentie" (§2); de werkelijk gerouteerde afstand via Mutare–Rusape–
+#    Marondera–Harare (R5/A3) is plausibeler voor deze corridor.
+# ⚠️ b2 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht
+#    HRE → DXB als grootcirkel, 5.471,7 km — komt exact overeen met de
+#    brief-schatting (routebrief §2, "5.471,7 km berekende grootcirkel").
+#    Geen tussenlanding gebrond (brief §7) → één directe vrachtvlucht.
+# ⚠️ b3 (truck, doorgetrokken): DXB-vrachtterminal → DMCC/Almas Tower over
+#    Sheikh Zayed Road (E11) — 34,5 km tegen ~34 = +1,4% [OK]. Ankers
+#    hergebruikt van de zusterbrief diamant-mbujimayi-dubai (dezelfde DXB-
+#    vrachtterminal/DMCC-coördinaten, beide bron-gelegd in deze golf).
+# ⚠️ Geen fase D/E (brief §6): DMCC is een handelsbeurs/kluis, geen
+#    verwerkingsknoop — de brief stopt hier bewust.
+bak_diamant_marange_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|last mile Marange-mijn (ZCDC-terrein) → doorgaande weg (geen net op deze korrel — track-only mijnwegen tussen het terrein en de dichtstbijzijnde geclassificeerde weg, 0,79 km, osmium-connectiviteitscheck)|-19.5906,32.3522|-19.5956,32.3469" \
+    --been-geojson "truck|vrachtwagen Marange-mijnwegaansluiting → Harare (HRE) vrachtterminal (via Mutare/Rusape/Marondera, R5/A3-corridor)|$BEEN/diamant-marange-dubai-weg-marange-hre.geojson" \
+    --been-geojson "lucht|vlucht HRE → DXB (vrachtvlucht, grootcirkel)|$BEEN/diamant-marange-dubai-lucht-hre-dxb.geojson" \
+    --been-geojson "truck|vrachtwagen Dubai Intl (DXB) vrachtterminal → DMCC/Almas Tower (Sheikh Zayed Road E11)|$BEEN/diamant-marange-dubai-weg-dxb-dmcc.geojson" \
+    --marker "dia-marange-mijn — Marange-diamantvelden (ZCDC), Chiadzwa — mijn/laadplek, bron-gelegd|-19.5906,32.3522" \
+    --marker "dia-hre-cargo — Robert Gabriel Mugabe Intl (HRE), vracht-/GA-apron, Harare — overslag truck → lucht, bron-gelegd (exploitant niet bevestigd)|-17.9218,31.0946" \
+    --marker "dia-dxb-cargo — Dubai Intl (DXB), Emirates Air Cargo-gebouw, Al Garhoud — overslag lucht → truck, bron-gelegd|25.2575,55.3406" \
+    --marker "dia-dmcc — DMCC / Dubai Diamond Exchange, Almas Tower, Jumeirah Lake Towers — beursgebouw/kluis, stoppunt, bron-gelegd|25.0691,55.1412" \
+    --routebrief v2/design/routebrieven/diamant-marange-dubai.md \
+    --uit    v2/data/stroomroute-diamant-marange-dubai.json \
+    --stroom diamant-marange-dubai \
+    --titel  "Diamant · Marange-diamantvelden (ZCDC) → Harare (HRE) → Dubai (DXB) → DMCC"
+}
+
+# ── goud · Goldstrike-complex (Nevada Gold Mines, Carlin Trend) → Asahi
+#    Refining USA, Salt Lake City (LICHTE werkwijze M31 golf 3)
+# Routebrief: v2/design/routebrieven/goud-nevada-saltlakecity.md
+# ⚠️ Eén been (b1, truck via maak_stroombeen_weg.py), GEEN luchtvracht — de
+#    brief kiest dat bewust (§1/§7): een kort, goed gedocumenteerd landtraject
+#    zonder bron die luchtvracht noemt.
+# ⚠️ De laatste ~100 m bij Asahi Refining zijn een STIPPEL, niet doorgetrokken.
+#    Diagnose (weggraaf, 2026-09-28): het anker au-saltlakecity-asahi
+#    (laaddock/parkeerlus, 40.72471,-112.00077) snapt op een OSM-component van
+#    slechts 8 knopen (twee losse `service`-ways, way 742154031/742154032) die
+#    NIET aan het publieke wegennet hangt — een echte topologiebreuk in OSM,
+#    geen te krap scanvenster (geverifieerd met een BFS-componentenanalyse op
+#    de volledige weggraaf). Dichtstbijzijnde knoop op het hoofdnet: South
+#    Frontage Road, 102 m verderop (40.725566,-112.000339) — het wegbeen
+#    eindigt daar, de laatste 102 m gaan als korte stippel "geen net op deze
+#    korrel" (bakhandleiding §2, <2 km).
+# ⚠️ Lengtetoets: 442,9 km tegen ≈450 km gepubliceerd (brief §2/§7, eigen
+#    optelling uit deelroutes) = −1,6% [OK]. Het ontwerp noemde ≈550 km; de
+#    brief corrigeert dat expliciet (§7) — de bake-lengte is leidend.
+# ⚠️ Beide ankers bron-gelegd (routebrief §3, satelliet z15 via sat_check.py):
+#    au-nevada-mijn = Goldstrike-complex, Betze-Post open pit + autoclaaf-/
+#    roaster (Nevada Gold Mines, Carlin Trend); au-saltlakecity-asahi = Asahi
+#    Refining USA, Inc., 4601 West 2100 South, Salt Lake City.
+# ⚠️ Geen fase D/E (brief §6): de raffinaderij levert baren aan de groothandel/
+#    COMEX-keten, maar geen bron noemt een specifieke afnemersfabriek voor dit
+#    Nevada-doré — de brief stopt bewust bij de poort van Asahi Refining.
+bak_goud_nevada_saltlakecity() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Goldstrike-complex → South Frontage Road (Asahi Refining SLC) via I-80/NV-766 (Carlin·Elko·Wells·West Wendover·Knolls·Lake Point)|$BEEN/goud-nevada-saltlakecity-weg-nevada-saltlakecity.geojson" \
+    --stippel      "truck|last mile Asahi Refining — South Frontage Road → laaddock/parkeerlus (geen net op deze korrel: OSM-service-ways op het terrein hangen niet aan het publieke net, 102 m, componentenanalyse weggraaf)|40.725566,-112.000339|40.72471,-112.00077" \
+    --marker "au-nevada-mijn — Goldstrike-complex, Betze-Post open pit + autoclaaf-/roaster (Nevada Gold Mines, Carlin Trend) — mijn/verwerking, bron-gelegd|40.9816,-116.3789" \
+    --marker "au-saltlakecity-asahi — Asahi Refining USA, Inc., 4601 West 2100 South, Salt Lake City — raffinaderij, stoppunt, bron-gelegd|40.72471,-112.00077" \
+    --routebrief v2/design/routebrieven/goud-nevada-saltlakecity.md \
+    --uit    v2/data/stroomroute-goud-nevada-saltlakecity.json \
+    --stroom goud-nevada-saltlakecity \
+    --titel  "Goud · Goldstrike-complex (Nevada Gold Mines) → Asahi Refining USA (Salt Lake City)"
+}
+
+# ── goud · Siguiri-mijn (AngloGold Ashanti/SMD, Guinee) → Conakry (CKY) → Dubai (DXB) → DMCC
+# Routebrief: v2/design/routebrieven/goud-siguiri-dubai.md (LICHTE werkwijze M31 golf 3,
+# §2 Lucht — derde, onafhankelijke West-Afrikaanse lucht-as naar Dubai in deze golf).
+# ⚠️ b1 (truck): Siguiri-mijn → Kouroussa → Dabola → Mamou → Kindia → Coyah → Conakry
+#    Int'l (CKY) vrachtterminal, N1-corridor — 742,7 km tegen ~850 km ontwerp =
+#    **-12,6%** (binnen ±15%, buiten de ±10% waarschuwing van het tool) — BEVINDING,
+#    niet dichtgetrokken: geen gepubliceerde wegkilometrage voor deze corridor
+#    gevonden binnen het webbudget, ~850 km was zelf al niet onafhankelijk bevestigd.
+#    Geen stippel nodig — alle subsnaps 0,04–1,82 km, geen via-punt >5 km mis.
+# ⚠️ b2 (lucht, DOORGETROKKEN — geen stippel, bakhandleiding §2): vlucht CKY → DXB
+#    als grootcirkel, 7.447,3 km — geen gepubliceerde vluchtlengte (brief §7); geen
+#    bron noemt een tussenlanding → één directe vrachtvlucht, die aanname staat in §7.
+# ⚠️ b3 (truck, doorgetrokken): DXB-vrachtterminal → DMCC/Almas Tower over Sheikh
+#    Zayed Road (E11) — geometrie LETTERLIJK HERGEBRUIKT van de zusterbrief
+#    diamant-marange-dubai (dezelfde ankers au-dxb-cargo/au-dubai-dmcc, coördinaat-
+#    identiek aan dia-dxb-cargo/dia-dmcc, beide bron-gelegd in deze golf) —
+#    34,757 km tegen ~20 km ontwerp = **+73,8%, BUITEN ±15%** — BEVINDING: het
+#    ontwerp-getal lag al onder de anker-tot-anker hemelsbreed-afstand (~29 km),
+#    de gemeten wegroute (34,5 km, enige doorgaande E11-corridor) is leidend.
+# ⚠️ Ankers: au-cky-cargo is AANNEMELIJK, niet bron-gelegd — satellietbeeld (z17)
+#    toont een GA-apron met kleine vliegtuigen, geen duidelijke vrachtloodsen; de
+#    luchthaven bouwt volgens 2025-nieuws een nieuwe, aparte vrachtterminal, dus dit
+#    beeld kan gedateerd zijn (brief §3/§7). Overige drie ankers bron-gelegd.
+# ⚠️ Geen fase D/E (brief §6): de brief stopt bewust bij de DMCC-raffinagezone
+#    (Emirates Gold/Kaloti) — geen bron noemt een vervolgbestemming.
+# ⚠️ Zwakste bronbasis van de golf (brief §7): geen bedrijfsbron koppelt de
+#    Siguiri-mijn specifiek aan een Dubai-luchtvrachtstroom — alleen de regionale
+#    Swissaid/OECD-bevinding dat West-Afrikaans goud overwegend per lucht naar
+#    Dubai gaat, niet mijn-specifiek.
+bak_goud_siguiri_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Siguiri-mijn → Conakry Int'l (CKY) vrachtterminal (N1 via Kouroussa–Dabola–Mamou–Kindia–Coyah)|$BEEN/goud-siguiri-dubai-weg-siguiri-cky.geojson" \
+    --been-geojson "lucht|vlucht CKY → DXB (vrachtvlucht, grootcirkel)|$BEEN/goud-siguiri-dubai-lucht-cky-dxb.geojson" \
+    --been-geojson "truck|vrachtwagen Dubai Intl (DXB) vrachtterminal → DMCC/Almas Tower (Sheikh Zayed Road E11)|$BEEN/goud-siguiri-dubai-weg-dxb-dmcc.geojson" \
+    --marker "au-siguiri-mijn — Siguiri-mijn (AngloGold Ashanti/SMD), Kintinian, Boure-gebied — mijn/laadplek, bron-gelegd|11.5695,-9.3567" \
+    --marker "au-cky-cargo — Conakry Int'l (Ahmed Sékou Touré, CKY), vracht-/GA-apron — overslag truck → lucht, aannemelijk (nieuwe vrachtterminal in aanbouw, 2025-nieuws)|9.5748,-13.6205" \
+    --marker "au-dxb-cargo — Dubai Intl (DXB), Emirates Air Cargo-gebouw, Al Garhoud — overslag lucht → truck, bron-gelegd (hergebruikt anker)|25.2575,55.3406" \
+    --marker "au-dubai-dmcc — DMCC / Emirates Gold-Kaloti, Almas Tower, Jumeirah Lake Towers — raffinage-/handelszone, stoppunt, bron-gelegd (hergebruikt anker)|25.0691,55.1412" \
+    --routebrief v2/design/routebrieven/goud-siguiri-dubai.md \
+    --uit    v2/data/stroomroute-goud-siguiri-dubai.json \
+    --stroom goud-siguiri-dubai \
+    --titel  "Goud · Siguiri-mijn (Guinee) → Conakry (CKY) → Dubai (DXB) → DMCC"
+}
+
+# ── goud · Yanacocha-mijn (Peru) → Lima (LIM) → vrachtvlucht → Zürich (ZRH) →
+#    Valcambi-raffinaderij, Balerna (Ticino) — doré per truck/lucht/truck
+# Routebrief: v2/design/routebrieven/goud-yanacocha-ticino.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b2 is het EERSTE luchtbeen van de atlas (maak_luchtbeen.py, §2 van de
+#    bakhandleiding): grootcirkel LIM → ZRH, 10.667,8 km, DOORGETROKKEN (lucht
+#    is nooit stippel — de onzekerheid over één directe vlucht i.p.v. via
+#    Miami staat in de beennaam/brief §7, niet in de lijnstijl). Bron voor de
+#    modaliteit: Zwitserland raffineert ~70% van 's werelds goud en Valcambi
+#    verwerkte naar verluidt ~70% van het Yanacocha-goud (brief §8, bron [8]).
+# ⚠️ ÉÉN STIPPEL: het Zürich-vrachtplatform (au-zrh-vrachtterminal) snapt op
+#    een geïsoleerde apron-service-way (gemeten: component-grootte 2) —
+#    airside/privéterrein zonder aansluiting op het openbare net, ook niet met
+#    eindToegangPrivaat (zelfde bevinding als pgm-springs-zurich, ZRH→Kloten-
+#    kluis). Been b3 is daarom gescand vanaf het dichtstbijzijnde punt op het
+#    openbare wegennet (0,91 km van het platform, gemeten) en de tussenliggende
+#    0,91 km is hier een korte stippel "last mile" (airside/privé, §2 Lucht).
+# ⚠️ b1 (Yanacocha → Lima) is DOORGETROKKEN: geen deel ligt op privéterrein of
+#    <2 km airside (anker-verbindingen 0,41/0,12 km, beide binnen de norm).
+# ⚠️ b3-LENGTETOETS BUITEN ±15% (267,1 km tegen ~200 km ontwerpcijfer, +33,5%):
+#    bevinding, niet dichtgetrokken — het brief-ontwerpcijfer is een grove
+#    schatting van de A4/A2-Gotthard-as; de gemeten route volgt de weg via de
+#    Gotthard Base Tunnel-as (Erstfeld) en heeft geen rechte-lijn-afsnijding of
+#    lusartefact (521 gesnoeide keerlusmeters uitgezonderd, al verrekend).
+bak_goud_yanacocha_ticino() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Yanacocha-mijn → Lima Cargo City (LIM) (Carretera Panamericana Norte)|$BEEN/goud-yanacocha-ticino-weg-yanacocha-lim.geojson" \
+    --been-geojson "lucht|vlucht LIM → ZRH (vrachtvlucht, grootcirkel, aannemelijk: één directe vlucht i.p.v. via Miami-hub, §7)|$BEEN/goud-yanacocha-ticino-lucht-lim-zrh.geojson" \
+    --stippel      "truck|last mile Zürich Airport vrachtplatform → openbare weg (airside/privéterrein, geen OSM-wegpad tot het platform)|47.4647,8.5492|47.472087,8.554523" \
+    --been-geojson "truck|vrachtwagen Zürich Airport vrachtplatform → Valcambi-raffinaderij, Balerna (A4 → A2/Gotthard-as)|$BEEN/goud-yanacocha-ticino-weg-zrh-valcambi.geojson" \
+    --marker "au-yanacocha-mijn — Minera Yanacocha (Newmont, 100%), Cajamarca — mijn/laadplek, bron-gelegd|-6.9858,-78.5099" \
+    --marker "au-lim-vrachtterminal — Lima Cargo City, Jorge Chávez Int'l (LIM), Callao — overslag/lucht, bron-gelegd|-12.0289,-77.1039" \
+    --marker "au-zrh-vrachtterminal — Zürich Airport vrachtplatform — overslag/lucht, bron-gelegd (hergebruikt anker, pgm-springs-zurich)|47.4647,8.5492" \
+    --marker "au-valcambi-raffinaderij — Valcambi SA, Balerna (Ticino) — losplek/raffinaderij, stoppunt, bron-gelegd|45.8385,9.0051" \
+    --routebrief v2/design/routebrieven/goud-yanacocha-ticino.md \
+    --uit    v2/data/stroomroute-goud-yanacocha-ticino.json \
+    --stroom goud-yanacocha-ticino \
+    --titel  "Goud · Yanacocha-mijn (Peru) → Lima (LIM) → vrachtvlucht → Zürich (ZRH) → Valcambi-raffinaderij (Ticino)"
+}
+
+# ── diamant · Letšeng-mijn (Lesotho) → O.R. Tambo (JNB) → vrachtvlucht → Dubai (DXB) → DMCC/Almas Tower
+# Routebrief: v2/design/routebrieven/diamant-letseng-dubai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, Letšeng-mijn → JNB) is +16,2% BOVEN de ontwerp-indicatie (523,1 km
+#    tegen ~450 km, routebrief §2/§7) — buiten ±15%, bevinding, niet dichtgetrokken.
+#    GIA/G&G bevestigt alleen de $3,7 mln-bergweg en Letšeng↔Maseru 214 km, niet de
+#    exacte km naar Johannesburg; het ontwerpcijfer was zelf al "niet apart
+#    geverifieerd". `eindToegangPrivaat`+`eindKlassen` (incl. `track`) nodig: zonder
+#    die twee vond de scanner GEEN wegpad tussen de mijn en het eerste via-punt
+#    Oxbow (33 km) — de eigen bergwegtoegang bij de mijn draagt in OSM een kleine
+#    klasse (`track`). Geen stippel: na die uitbreiding routeert de hele corridor
+#    door, ankers snappen op 0,04/0,09 km.
+# ⚠️ b2 (lucht) is een GROOTCIRKEL JNB → DXB (maak_luchtbeen.py), 6.415,6 km —
+#    DOORGETROKKEN, geen stippel (bakhandleiding §2: een vlucht tussen twee gelegde
+#    vrachtterminals is geen "net reikt niet"-geval). Dicht bij de ontwerp-indicatie
+#    (6.432,4 km, routebrief §2). Geen bron voor een tussenlanding → één directe
+#    vlucht aangenomen (routebrief §7).
+# ⚠️ b3 (truck, DXB → DMCC) is 37,6 km — binnen de eigen verwachting van de brief
+#    ("wegafstand naar verwachting 35-40 km", §2), ondanks +21,3% tegen de
+#    hemelsbreed-toetswaarde (31 km) die als vervanger diende omdat er geen
+#    gepubliceerd getal bestaat. `dia-dxb-cargo` van DEZE brief (25,2644/55,3661,
+#    eigen sat_check.py-anker, routebrief §3) ligt ~2,7 km van het `dia-dxb-cargo`-
+#    anker dat de zusterbrieven diamant-marange-dubai/diamant-mbujimayi-dubai
+#    gebruiken (andere kandidaat-loods binnen hetzelfde Dubai Cargo Village-complex)
+#    — bewust NIET hergebruikt, eigen wegscan met het eigen anker (geen coördinaat
+#    verzonnen, wel een tweede onafhankelijke DXB↔DMCC-lijn in de graaf-cache).
+# ⚠️ Geen zeebeen (truck + lucht + truck) → geen MARNET/haven-aanloop. Fase D/E
+#    vervallen (routebrief §6, stoppunt DMCC/Almas Tower — handels-/
+#    certificeringshub, geen fysieke bewerking).
+# ⚠️ dia-letseng-mijn/dia-jnb-cargo/dia-dxb-cargo/dia-dmcc-almas zijn alle vier
+#    bron-gelegd (satelliet, routebrief §3/§9); de zes via-punten van b1 zijn
+#    indicatief (bergpas-/grensroute zonder zinnig alternatief), niet zelf
+#    satelliet-gelegd (routebrief §4).
+bak_diamant_letseng_dubai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Letšeng-mijn → O.R. Tambo vrachtapron (JNB) (eigen bergweg → Oxbow/Tlaeeng-Moteng-pas → Butha-Buthe → Caledonspoort → Fouriesburg → Bethlehem → Villiers)|$BEEN/diamant-letseng-dubai-weg-letseng-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → DXB (vrachtvlucht, grootcirkel)|$BEEN/diamant-letseng-dubai-lucht-jnb-dxb.geojson" \
+    --been-geojson "truck|vrachtwagen DXB-vrachtterminal → DMCC/Almas Tower (Al Garhoud → Sheikh Zayed Road E11 → JLT)|$BEEN/diamant-letseng-dubai-weg-dxb-dmcc.geojson" \
+    --marker "dia-letseng-mijn — Letšeng-mijn (Gem Diamonds + regering Lesotho), 3.100 m — mijn/laadplek, bron-gelegd|-29.00028,28.86194" \
+    --marker "dia-jnb-cargo — O.R. Tambo vrachtapron (Golf/Whiskey), Kempton Park — overslag truck→lucht, bron-gelegd|-26.14300,28.22700" \
+    --marker "dia-dxb-cargo — Dubai Cargo Village/Cargo Gateway, Al Garhoud — overslag lucht→truck, bron-gelegd|25.26440,55.36610" \
+    --marker "dia-dmcc-almas — DMCC/Almas Tower, Jumeirah Lake Towers — handels-/certificeringshub, stoppunt, bron-gelegd|25.06890,55.14120" \
+    --routebrief v2/design/routebrieven/diamant-letseng-dubai.md \
+    --uit    v2/data/stroomroute-diamant-letseng-dubai.json \
+    --stroom diamant-letseng-dubai \
+    --titel  "Diamant · Letšeng-mijn (Lesotho) → Johannesburg (JNB) → Dubai (DXB) → DMCC/Almas Tower"
+}
+
+# ── goud · Canadian Malartic-mijn (Agnico Eagle, Québec) → Royal Canadian Mint (Ottawa)
+# Routebrief: v2/design/routebrieven/goud-malartic-ottawa.md (LICHTE werkwijze M31 golf 3)
+# ⚠️ Eén enkel wegbeen (b1), doorgetrokken — geen zee/spoor/lucht (brief §7
+#    bevestigt: truck-only, bakhandleiding §2 "Lucht" niet van toepassing).
+# ⚠️ Geen gepubliceerde route-km: 451,6 km gebakken tegen de ontwerp-schatting
+#    480 km (-5,9%, [OK]) — de brief zegt zelf dat de toets tegen een schatting
+#    staat, niet een harde bron (via-puntensom hemelsbreed 398,0 km).
+# ⚠️ Geen stippels: het hele traject (Route 117 → Route 105 → Autoroute 5) ligt
+#    op doorgaande wegen tot aan het RCM-terrein; de anker-verbindingsstukjes
+#    (plant → weg 0,08 km · weg → kade 0,05 km) zijn ruim binnen de norm.
+# ⚠️ Geen fase D/E: de brief stopt bij de RCM-raffinaderij (§6, geen bron
+#    documenteert een specifieke vervolgzending per lading).
+bak_goud_malartic_ottawa() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Canadian Malartic-mijn → Royal Canadian Mint Ottawa (Route 117 → Route 105 → Autoroute 5)|$BEEN/goud-malartic-ottawa-weg-malartic-ottawa.geojson" \
+    --marker "au-malartic-mijn — Canadian Malartic Mine (Agnico Eagle), Malartic, Québec — mijn/laadplek, bron-gelegd|48.1176,-78.0942" \
+    --marker "au-rcm-ottawa — Royal Canadian Mint, 320 Sussex Drive, Ottawa — raffinaderij/muntslag, stoppunt, bron-gelegd|45.4315,-75.6993" \
+    --routebrief v2/design/routebrieven/goud-malartic-ottawa.md \
+    --uit    v2/data/stroomroute-goud-malartic-ottawa.json \
+    --stroom goud-malartic-ottawa \
+    --titel  "Goud · Canadian Malartic-mijn (Québec) → Royal Canadian Mint (Ottawa)"
+}
+
+# ── goud · Loulo-Gounkoto-mijncomplex (Mali) → Bamako-Sénou → Zürich (ZRH) → Valcambi (Balerna, Ticino)
+# Routebrief: v2/design/routebrieven/goud-loulo-ticino.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, DOORGETROKKEN): Loulo-mijn → Bamako-Sénou vrachtterminal via
+#    Kéniéba–Kita. Gebakken 479,7 km tegen ~380 (ontwerp) = +26,2%, BUITEN de
+#    ±15%-norm — bevinding, niet dichtgetrokken (de brief noemt de via-punten
+#    zelf als "indicatief, niet OSM-wegvertex-geverifieerd binnen het
+#    webbudget"; het echte OSM-wegnet loopt kennelijk verder om dan de
+#    hemelsbrede via-som suggereert).
+# ⚠️ b2 (lucht, DOORGETROKKEN, §2 "Lucht" letterlijk gevolgd): vlucht
+#    BKO → ZRH als grootcirkel, 4.176,8 km — sluit vrijwel exact aan op de
+#    brief-schatting (~4.180 km). Aannemelijk (geen bron voor déze specifieke
+#    lading, West-Afrikaanse doré-export naar Zwitserse raffinaderijen is
+#    industriestandaard, brief §7); geen tussenlanding gebrond → één directe
+#    vlucht.
+# ⚠️ b3 (truck, DOORGETROKKEN): Zürich Airport vrachtplatform → Valcambi
+#    Balerna via A4 (Zug–Luzern) → A2/Gotthard-as (Bellinzona–Lugano–Chiasso).
+#    Het vrachtplatform-anker zelf (au-zrh-vrachtterminal, 47,4647/8,5492)
+#    snapt op een geïsoleerde airside-apron-way zonder aansluiting op het
+#    openbare net (twee mislukte pogingen: "geen wegpad tussen punt 0 en 1",
+#    ook mét eindToegangPrivaat) — exact dezelfde bevinding als het analoge
+#    been in goud-yanacocha-ticino-valcambi (zelfde ZRH-anker, zelfde golf).
+#    Profiel start op het dichtstbijzijnde punt van het openbare wegennet
+#    (47,472087/8,554523, 0,91 km van het platform); de korte tussenliggende
+#    stippel hieronder draagt die 0,91 km airside/privéterrein. Gebakken
+#    268,4 km tegen ~200 (ontwerp) = +34,2%, BUITEN de ±15%-norm — bevinding
+#    (géén betrouwbare alternatieve wegreferentie; via-punten volgen de
+#    A4/A2-Gotthard-as letterlijk, het OSM-wegnet incl. klaverbladlussen bij
+#    Zug/Luzern/Bellinzona maakt de rit langer dan de hemelsbrede schatting).
+# ⚠️ Geen fase D/E: de brief stopt bij Valcambi (§6, geen bron koppelt déze
+#    Mali-doré aan een specifieke vervolgbestemming).
+bak_goud_loulo_ticino() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Loulo-Gounkoto-mijncomplex → Bamako-Sénou vrachtterminal (BKO) (Kéniéba–Kita-corridor)|$BEEN/goud-loulo-ticino-weg-loulo-bamako.geojson" \
+    --been-geojson "lucht|vlucht BKO → ZRH (vrachtvlucht, grootcirkel)|$BEEN/goud-loulo-ticino-lucht-bko-zrh.geojson" \
+    --stippel      "truck|ZRH-vrachtplatform last mile (schematisch — airside/privéterrein zonder aansluiting op het openbare net)|47.4647,8.5492|47.472087,8.554523" \
+    --been-geojson "truck|vrachtwagen Zürich Airport vrachtplatform → Valcambi-raffinaderij, Balerna (A4 Zug-Luzern → A2/Gotthard-as via Bellinzona–Lugano–Chiasso)|$BEEN/goud-loulo-ticino-weg-zrh-valcambi.geojson" \
+    --marker "au-loulo-mijn — Loulo-Gounkoto-mijncomplex, verwerkingsinstallatie (Barrick) — mijn/laadplek, bron-gelegd|13.0868,-11.4118" \
+    --marker "au-bamako-vrachtterminal — Bamako-Sénou Int'l (BKO), terreincluster W van de startbaan — overslag truck → lucht, bron-gelegd (pand onzeker)|12.5353,-7.9488" \
+    --marker "au-zrh-vrachtterminal — Zürich Airport vrachtplatform (hergebruikt anker uit pgm-springs-zurich.md) — overslag lucht → truck, bron-gelegd|47.4647,8.5492" \
+    --marker "au-ref-valcambi — Valcambi SA, Via Passeggiata 3, Balerna — raffinaderij, stoppunt, bron-gelegd|45.8385,9.0051" \
+    --routebrief v2/design/routebrieven/goud-loulo-ticino.md \
+    --uit    v2/data/stroomroute-goud-loulo-ticino.json \
+    --stroom goud-loulo-ticino \
+    --titel  "Goud · Loulo-Gounkoto (Mali) → Bamako-Sénou → Zürich (ZRH) → Valcambi (Balerna, Ticino)"
+}
+
+# ── goud · Kalgoorlie Super Pit → Perth Mint → Perth Airport (PER) → vrachtvlucht → Singapore Changi (SIN) → GoldSilver Central
+# Routebrief: v2/design/routebrieven/goud-kalgoorlie-singapore.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b3 is een LUCHTBEEN (maak_luchtbeen.py, §2 van de bakhandleiding): grootcirkel
+#    PER → SIN, 3.914,5 km, DOORGETROKKEN — een vlucht tussen twee gelegde
+#    vrachtterminals is geen gat. Geen bron voor een tussenlanding → één
+#    rechtstreekse vlucht aangenomen (brief §7).
+# ⚠️ b4 IS EEN STIPPEL, EN DAT IS CENTRAAL WERK, GEEN BAKFOUT: de
+#    'singapore'-Geofabrik-extract ontbreekt lokaal (alleen 'maleisie' staat
+#    er, bevestigd bij het schrijven van de brief én opnieuw bij het bakken) —
+#    "geen net op deze korrel" (bakhandleiding §2). De via-punten liggen al
+#    klaar in de brief §4 voor zodra de extract gedownload is (centraal werk).
+# ⚠️ b2 (Perth Mint → PER-vrachtterminal) is +23,5% BOVEN de ontwerp-schatting
+#    van ~12 km (gemeten 14,8 km) — bevinding, niet dichtgetrokken: 12 km was
+#    een hemelsbreed-afgeleide ontwerpschatting, geen gepubliceerde
+#    wegbeheerder-lengte (brief §2/§8[1]).
+# ⚠️ au-per-cargo (Qantas Freight Int'l Terminal) draagt geen "Cargo"-naam-tag
+#    in OSM; geen bron bevestigt specifiek dat Perth Mint-baren via déze
+#    terminal (i.p.v. dnata) worden verzonden (brief §7).
+bak_goud_kalgoorlie_singapore() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Kalgoorlie Super Pit/Fimiston-mill → Perth Mint, East Perth (Great Eastern Highway)|$BEEN/goud-kalgoorlie-singapore-weg-kalgoorlie-perth.geojson" \
+    --been-geojson "truck|vrachtwagen Perth Mint, East Perth → Perth Airport (PER) vrachtterminal (Great Eastern Hwy → Tonkin Hwy)|$BEEN/goud-kalgoorlie-singapore-weg-perth-percargo.geojson" \
+    --been-geojson "lucht|vlucht PER → SIN (vrachtvlucht, grootcirkel, aannemelijk: één directe vlucht, geen tussenlanding gebrond, §7)|$BEEN/goud-kalgoorlie-singapore-lucht-per-sin.geojson" \
+    --stippel      "truck|geen net op deze korrel (Geofabrik-extract 'singapore' ontbreekt, centraal werk — bakhandleiding §3)|1.37753,103.9976|1.275755,103.8459" \
+    --marker "au-kalgoorlie-mill — Kalgoorlie Super Pit / KCGM Fimiston-mill-complex, Boulder — mijn/laadplek, bron-gelegd|-30.7897,121.4990" \
+    --marker "au-ref-perth — The Perth Mint, East Perth — raffinaderij/verwerkingsknoop, bron-gelegd|-31.9550,115.8700" \
+    --marker "au-per-cargo — Qantas Freight International Terminal, Affleck Road, Ascot (Perth Airport) — overslag truck → lucht, bron-gelegd|-31.9460,115.9764" \
+    --marker "au-sin-cargo — Changi Airfreight Centre / SATS Airfreight Terminal, Singapore Changi Airport — overslag lucht → truck, bron-gelegd|1.37753,103.9976" \
+    --marker "au-sin-vault — GoldSilver Central, #23-16 International Plaza, 10 Anson Road, Singapore — kluis-/handelsgebouw, stoppunt, bron-gelegd|1.275755,103.8459" \
+    --routebrief v2/design/routebrieven/goud-kalgoorlie-singapore.md \
+    --uit    v2/data/stroomroute-goud-kalgoorlie-singapore.json \
+    --stroom goud-kalgoorlie-singapore \
+    --titel  "Goud · Kalgoorlie Super Pit → Perth Mint → Perth (PER) → Singapore (SIN) → GoldSilver Central"
+}
+
+# ── goud · Mponeng-mijn (Harmony, Witwatersrand) → Rand Refinery → OR Tambo (JNB) → Heathrow (LHR) → LBMA-kluis (Londen)
+# Routebrief: v2/design/routebrieven/goud-mponeng-londen.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ Vier benen, alle DOORGETROKKEN — geen enkele stippel in deze keten (geen
+#    zeebeen, geen ontbrekend net).
+# ⚠️ b1 (truck, profiel goud-mponeng-londen-mponeng-randrefinery) via
+#    Westonaria → Soweto (N12/R28-industriecorridor): 85,8 km tegen een eigen
+#    schatting van ≈77 km (+11,2%). Geen gepubliceerde bron (brief §7); de
+#    ±15%-toets is soepel toegepast conform het bak-aanwijzingen-advies (een
+#    uitkomst tussen 76 en ~100 km is plausibel) — 85,8 km valt daarbinnen.
+# ⚠️ b2 (truck, profiel goud-mponeng-londen-randrefinery-jnb) Rand Refinery →
+#    OR Tambo-vrachtterminal: 25,6 km tegen de redactionele schatting van
+#    ≈15 km (+70,8%, BUITEN ±15% — bevinding, niet dichtgetrokken). De brief
+#    noemt die 15 km zelf al als "niet hard" (rechte afstand is al 11,2 km);
+#    de gemeten R21/N12-route is de echte controle. Eerste poging faalde op
+#    "geen wegpad" (JNB-vrachtapron is airside/deels privéterrein, zoals het
+#    dia-jnb-cargo-anker elders in dit bestand) → eindToegangPrivaat +
+#    eindKlassen incl. track toegevoegd aan het profiel, tweede poging slaagde.
+# ⚠️ b3 (lucht, maak_luchtbeen.py) is een GROOTCIRKEL tussen twee vracht-
+#    terminals, DOORGETROKKEN — stippel betekent uitsluitend "hier reikt het
+#    net niet" en een vlucht tussen twee gelegde vrachtterminals is geen gat
+#    (bakhandleiding §2 Lucht). 9.074,3 km, tegen de gepubliceerde ≈9.070 km
+#    (brief §2/§8[1]) — geen km-toets voor een luchtbeen (§5 van de
+#    handleiding). Aanname: één directe vlucht JNB → LHR, geen tussenlanding
+#    (brief §7, geen bron noemt een hub); bron voor de modaliteit is
+#    markt-niveau (LBMA/WGC), niet Rand Refinery-specifiek — vandaar
+#    "aannemelijk: één bron" in de beennaam.
+# ⚠️ b4 (truck, profiel goud-mponeng-londen-lhr-lbma) via Hounslow → Chiswick
+#    → Hammersmith (M4/A4): 30,9 km tegen een eigen schatting van ≈27 km
+#    (+14,4%, binnen ±15%).
+# ⚠️ au-lbma-kluis (51,514/-0,088) is hergebruikt van v1 (au-hub-london uit
+#    `data/goud.js`) — een generiek City-anker (Bank of England-omgeving),
+#    geen specifiek kluisadres van Brink's/Malca-Amit/Loomis (brief §3/§7).
+# ⚠️ Geen fase D/E: de brief stopt bij de LBMA-kluis (brief §6, geen bron
+#    noemt een vervolgbestemming ná de Londense kluis).
+bak_goud_mponeng_londen() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|Mponeng-mijn → Westonaria → Soweto → Rand Refinery, Germiston (N12/R28)|$BEEN/goud-mponeng-londen-weg-mponeng-randrefinery.geojson" \
+    --been-geojson "truck|Rand Refinery, Germiston → OR Tambo (JNB) vrachtterminal (R21/N12)|$BEEN/goud-mponeng-londen-weg-randrefinery-jnb.geojson" \
+    --been-geojson "lucht|vlucht JNB → LHR (vrachtvlucht, grootcirkel, aannemelijk: één bron)|$BEEN/goud-mponeng-londen-lucht-jnb-lhr.geojson" \
+    --been-geojson "truck|Heathrow-vrachtterminal → Hounslow → Chiswick → Hammersmith → LBMA-kluis City of London (M4/A4)|$BEEN/goud-mponeng-londen-weg-lhr-lbma.geojson" \
+    --marker "au-mponeng-mijn — Mponeng Gold Mine, Harmony Gold, Witwatersrand — mijn/laadplek, bron-gelegd|-26.4361,27.4306" \
+    --marker "au-randrefinery — Rand Refinery (Pty) Ltd, Germiston — raffinaderij (overslag truck→truck), bron-gelegd|-26.2189,28.1550" \
+    --marker "au-jnb-vracht — OR Tambo (JNB) vrachtterminal, zuid van de passagiersterminal — overslag truck→lucht, bron-gelegd|-26.1440,28.2295" \
+    --marker "au-lhr-vracht — Heathrow Cargo Centre, Sandringham Road — overslag lucht→truck, bron-gelegd|51.4605,-0.4680" \
+    --marker "au-lbma-kluis — LBMA/Bank of England-omgeving, City of London — losplek/stoppunt, bron-gelegd (hergebruik au-hub-london)|51.5140,-0.0880" \
+    --routebrief v2/design/routebrieven/goud-mponeng-londen.md \
+    --uit    v2/data/stroomroute-goud-mponeng-londen.json \
+    --stroom goud-mponeng-londen \
+    --titel  "Goud · Mponeng-mijn (Zuid-Afrika) → Rand Refinery → OR Tambo (JNB) → Heathrow (LHR) → LBMA-kluis (Londen)"
+}
+
+# ── diamant · Surat Diamond Bourse (India) → Bharat Diamond Bourse (BKC) → CSMIA (BOM) → (vlucht) → Cathay Pacific Cargo Terminal (HKG) → Hong Kong Diamond Exchange Building
+# Routebrief: v2/design/routebrieven/diamant-surat-hongkong.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, KORTE STIPPEL + been-geojson): DREAM City (Surat Diamond Bourse) heeft
+#    een EIGEN wegenstelsel dat in OSM een geïsoleerd component van 57 knopen vormt —
+#    een echt topologiegat, geen access-filter (`eindToegangPrivaat` loste dit dus niet
+#    op). Gemeten (BFS op de india-scan): component vanaf het anker 57 knopen tegen
+#    1.780.308 vanaf Navsari; dichtstbijzijnde publieke-netpunt 17 m van dat interne
+#    component, 0,33 km hemelsbreed vanaf het anker. Korte stippel anker → routeerpunt
+#    (bakhandleiding §2, "korter dan ~2 km"), dan de gemeten weg vanaf het routeerpunt:
+#    279,5 km tegen ~280 km ontwerp = -0,2% [OK].
+# ⚠️ b2 (truck, BDB → CSMIA) is een GESPIEGELDE KOPIE van diamant-mirny-mumbai b4
+#    (CSMIA → BDB, omgekeerde richting): fysiek hetzelfde Airport Road/BKC-connector-
+#    been, geen tweede scan gedraaid (bakhandleiding: hergebruik i.p.v. opnieuw
+#    scannen). Coördinaten gespiegeld, geen enkel punt herberekend.
+# ⚠️ b3 (lucht) DOORGETROKKEN, geen stippel: grootcirkel BOM → HKG, 4.272,8 km — exact
+#    de berekende grootcirkel uit de brief. Geen tussenlanding gebrond (brief §7) → één
+#    directe vlucht.
+# ⚠️ b4 (truck, eindToegangPrivaat) op de china-extract: Cathay Pacific Cargo Terminal
+#    (Chek Lap Kok) ligt airside/op luchthaventerrein, dus de eerste km loopt over
+#    kleine wegklassen (eindToegangPrivaat) zonder aparte stippel. Geen harde
+#    gepubliceerde km (brief §2); via-punten-som 32,4 km, gemeten 40,7 km = +25,8%
+#    [BUITEN ±15% — bevinding, niet dichtgetrokken: HK-tunnels/bruggen maken een
+#    reële omweg t.o.v. de rechte via-keten].
+# ⚠️ dia-bdb en dia-bom-cargo zijn HERGEBRUIKTE ankers uit diamant-mirny-mumbai.md
+#    (deze golf, al satelliet-gelegd) — hier opnieuw als marker opgegeven zodat deze
+#    stroom zelfstandig markers draagt, geen dubbele registratie bedoeld.
+# ⚠️ Geen haven-aanloop nodig: geen zeebenen in deze keten (alleen truck + lucht).
+# ⚠️ Geen fase D/E (brief §6): geen bron koppelt déze stroom aan een vervolgbestemming
+#    ná het Hong Kong Diamond Exchange Building.
+bak_diamant_surat_hongkong() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --stippel      "truck|DREAM City interne toegangsweg → NH48-aansluiting (schematisch — OSM-topologiegat tussen het eigen wegenstelsel van de bourse en het publieke net, 0,33 km hemelsbreed)|21.1099,72.7954|21.112178,72.79343" \
+    --been-geojson "truck|vrachtwagen NH48-aansluiting → Bharat Diamond Bourse (NH48 Surat–Mumbai)|$BEEN/diamant-surat-hongkong-weg-surat-bdb.geojson" \
+    --been-geojson "truck|vrachtwagen Bharat Diamond Bourse → CSMIA Air Cargo Complex (Airport Road/BKC-connector, gespiegeld hergebruikt van diamant-mirny-mumbai b4)|$BEEN/diamant-surat-hongkong-weg-bdb-bomcargo.geojson" \
+    --been-geojson "lucht|vlucht BOM → HKG (vrachtvlucht, grootcirkel)|$BEEN/diamant-surat-hongkong-lucht-bom-hkg.geojson" \
+    --been-geojson "truck|vrachtwagen Cathay Pacific Cargo Terminal (HKG) → Hong Kong Diamond Exchange Building (North Lantau Hwy → Tsing Ma Bridge → Kwai Chung → Western Harbour Crossing)|$BEEN/diamant-surat-hongkong-weg-hkgcargo-hkexchange.geojson" \
+    --marker "dia-surat-bourse — Surat Diamond Bourse, DREAM City, Surat, Gujarat — beursgebouw/vertrekpunt (slijperij-omgeving), laadplek, bron-gelegd|21.1099,72.7954" \
+    --marker "dia-bdb — Bharat Diamond Bourse, BKC, Mumbai — beursgebouw/doorvoerpunt, bron-gelegd (hergebruikt anker)|19.0641,72.8646" \
+    --marker "dia-bom-cargo — CSMIA Air Cargo Complex, Sahar, Mumbai — vrachtterminal, vertrek luchtvracht, bron-gelegd (hergebruikt anker)|19.0994,72.8673" \
+    --marker "dia-hkg-cargo — Cathay Pacific Cargo Terminal, Chek Lap Kok, Hong Kong — vrachtterminal, aankomst luchtvracht, bron-gelegd|22.2975,113.9247" \
+    --marker "dia-hk-exchange — Hong Kong Diamond Exchange Building, 20 Ice House Street, Central — beurs-/handelsgebouw, stoppunt, bron-gelegd|22.2797,114.1570" \
+    --routebrief v2/design/routebrieven/diamant-surat-hongkong.md \
+    --uit    v2/data/stroomroute-diamant-surat-hongkong.json \
+    --stroom diamant-surat-hongkong \
+    --titel  "Diamant · Surat Diamond Bourse (India) → Mumbai (CSMIA) → Hong Kong (Cathay Pacific Cargo/HK Diamond Exchange)"
+}
+
+# ── diamant · Gaborone (DTCB/DBGSS) → GBE-vrachtapron → CSMIA Air Cargo Complex (BOM) → Surat Diamond Bourse
+# Routebrief: v2/design/routebrieven/diamant-gaborone-surat.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# Drie benen doorgetrokken + één korte stippel op het eind — geen zeebeen, dus geen haven-aanloop.
+# ⚠️ b2 (lucht) is een GROOTCIRKEL GBE → BOM (maak_luchtbeen.py), 7.027,6 km — komt exact
+#    overeen met de brief-schatting. Geen bron voor een tussenlanding (JNB/DXB) → één directe
+#    vlucht aangenomen (brief §7).
+# ⚠️ b3 (BOM → Surat Diamond Bourse-omgeving, fase C NIEUW t.o.v. het oorspronkelijke STV-
+#    ontwerp) is ZELF GELEGD — géén bestaand spiegelbeen gevonden (keten diamant-surat-hongkong
+#    bestaat wel in deze golf en deelt hetzelfde SDB-anker, maar is een ANDERE as: Surat→Hongkong
+#    langs de NH48 rícht Mumbai, niet BOM→Surat). Eigen NH48-corridorkeuze met 6 via-punten
+#    (Manor–Talasari–Vapi–Valsad–Navsari–Sachin), 273,3 km tegen ~280 km (haalbaarheidstoets) =
+#    -2,4% [OK]. Twee via-punt-correcties tijdens het bakken (geen km-toets-manipulatie, beide
+#    "geen wegpad"-fouten):
+#    · Valsad: het briefpunt (72,9260/20,6100, Wikipedia-stadscentroïde) snapte op 113 m naar een
+#      geïsoleerd stompje van 3 knopen — de échte NH48 (trunk) omzeilt de stad ~3 km zuidwestelijker
+#      (bypass). Via-punt verplaatst naar een vertex ÓP de NH48-trunk (72,9512/20,5968).
+#    · Surat Diamond Bourse: het ANKER zelf (dia-sdb, 21,1097/72,7953, satelliet-gelegd) snapt op
+#      134 m naar een geïsoleerd DREAM City-wegennet van 57 knopen; het doorgaande publieke net ligt
+#      287 m verderop. Weg-profiel eindigt op dat ROUTEERPUNT (anker ≠ routeerpunt, staand
+#      projectpatroon); de resterende 0,29 km is hieronder een expliciete korte stippel — dezelfde
+#      OSM-topologiegat-klasse die diamant-surat-hongkong (deze golf) voor hetzelfde DREAM
+#      City-terrein al meldt (daar 0,33 km, aan de Mumbai-zijde van het complex).
+# ⚠️ dia-gbe-cargo AANNEMELIJK op naam ("Cargo" niet in OSM), maar SATELLIET-GELEGD (z18: loodsen
+#    + apron met vrachttoestellen, los van de passagiersterminal) — status bron-gelegd volgens de
+#    brief. Een zusterstroom in deze golf (diamant-jwaneng-antwerpen) legt hetzelfde GBE-vrachtapron
+#    ~500 m verderop (-24,5576/25,9242, "aannemelijk") — niet overgenomen: dit stroom-eigen anker
+#    komt uit de eigen z18-satellietpas van déze brief (dia-gbe-cargo, -24,5550/25,9286,
+#    "bron-gelegd") en blijft leidend voor déze stroom (gemeld, niet stilzwijgend samengevoegd).
+# ⚠️ dia-bom-cargo is een HERGEBRUIKT anker (ongewijzigd uit diamant-mirny-mumbai.md, zelfde golf).
+bak_diamant_gaborone_surat() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen DTCB/DBGSS-diamanthub → GBE-vrachtapron (A1/Western Bypass Road)|$BEEN/diamant-gaborone-surat-weg-dtc-gbe.geojson" \
+    --been-geojson "lucht|vlucht GBE → BOM (vrachtvlucht, grootcirkel)|$BEEN/diamant-gaborone-surat-lucht-gbe-bom.geojson" \
+    --been-geojson "truck|ruwe diamant CSMIA Air Cargo Complex (BOM) → Surat Diamond Bourse-omgeving (NH48 Mumbai–Ahmedabad Highway → routeerpunt)|$BEEN/diamant-gaborone-surat-weg-bom-sdb.geojson" \
+    --stippel      "truck|DREAM City interne toegangsweg → NH48-omgeving (schematisch — OSM-topologiegat tussen het eigen wegenstelsel van de bourse en het publieke net, 0,29 km)|21.107445,72.796653|21.1097,72.7953" \
+    --marker "dia-gaborone-dtc — DTCB/DBGSS-diamanthub, Gaborone — mijn/sight-aggregatie, laadplek, bron-gelegd|-24.5859,25.9144" \
+    --marker "dia-gbe-cargo — GBE-vrachtapron, Sir Seretse Khama Intl Airport — vrachtterminal, vertrek luchtvracht, bron-gelegd|-24.5550,25.9286" \
+    --marker "dia-bom-cargo — CSMIA Air Cargo Complex, Sahar, Mumbai — vrachtterminal, aankomst luchtvracht, hergebruikt anker, bron-gelegd|19.0994,72.8673" \
+    --marker "dia-sdb — Surat Diamond Bourse, DREAM City, Surat — beursgebouw + slijperij-cluster, stoppunt, bron-gelegd|21.1097,72.7953" \
+    --routebrief v2/design/routebrieven/diamant-gaborone-surat.md \
+    --uit    v2/data/stroomroute-diamant-gaborone-surat.json \
+    --stroom diamant-gaborone-surat \
+    --titel  "Diamant · Gaborone (DTCB/DBGSS) → GBE → BOM → Surat Diamond Bourse"
+}
+
+# ── goud · DMCC-raffinagezone (Dubai) → DXB-vrachtterminal → vrachtvlucht → DEL-vrachtterminal → MMTC-PAMP (Rojka Meo, Sohna)
+# Routebrief: v2/design/routebrieven/goud-dubai-delhi.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b2 is een LUCHTBEEN (maak_luchtbeen.py, §2 van de bakhandleiding): grootcirkel
+#    DXB → DEL, 2.185,2 km, DOORGETROKKEN — geen bron noemt een tussenlanding →
+#    één rechtstreekse vlucht aangenomen (brief §7). Bron voor de modaliteit is
+#    marktniveau (decennialang gerapporteerde Dubai–India-bullioncorridor,
+#    WGC/RBI/DGFT-importstatistieken), geen vluchtnummer-/AWB-bevestiging.
+# ⚠️ b1 (truck, DMCC-raffinagezone → DXB-vrachtterminal): 22,9 km tegen ≈20 km
+#    eigen meting (+14,5% — binnen ±15%, geen bevinding).
+# ⚠️ b3 (truck, DEL-vrachtterminal → MMTC-PAMP Rojka Meo): 45,3 km tegen ≈50–55 km
+#    eigen meting (-13,0% — binnen ±15%, geen bevinding). ⚠️ "Manesar" in de
+#    ketennaam ≠ de plaats Manesar (28,3553/76,9327, andere corridor via NH48
+#    richting Jaipur) — route/anker volgen het satelliet-bevestigde Rojka Meo-
+#    punt (brief §7).
+# ⚠️ au-air-del (Delhi Air Cargo Complex) blijft "bron-gelegd, met voorbehoud":
+#    cargo-warehouse en een naastgelegen hangaarcomplex liggen dicht tegen elkaar
+#    op het satellietbeeld (brief §3/§7; beheerwissel Celebi → GMR, mei 2025).
+# ⚠️ Geen fase E: de Delhi-sieradenmarkt is niet als apart been getekend (geen
+#    gebronde vervolgzending, brief §6). Geen haven-aanloop, geen zeebeen.
+bak_goud_dubai_delhi() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen DMCC-raffinagezone (Gold & Diamond Park, Al Quoz 3) → DXB-vrachtterminal (Emirates SkyCargo) (Sheikh Zayed Rd → Al Rebat St/Cargo Village Rd)|$BEEN/goud-dubai-delhi-weg-dmcc-dxb.geojson" \
+    --been-geojson "lucht|vlucht DXB → DEL (vrachtvlucht, grootcirkel, aannemelijk: één directe vlucht, geen tussenlanding gebrond, §7)|$BEEN/goud-dubai-delhi-lucht-dxb-del.geojson" \
+    --been-geojson "truck|vrachtwagen DEL-vrachtterminal (Delhi Air Cargo Complex) → MMTC-PAMP-raffinaderij, Rojka Meo, Sohna (NH48 Delhi–Gurugram Expwy → Sohna Road)|$BEEN/goud-dubai-delhi-weg-del-mmtc.geojson" \
+    --marker "au-dmcc-refine — Gold & Diamond Park, Al Quoz Industrial 3, Dubai (DMCC-vergunde precious-metals-zone) — laadplek (raffinage/handelszone), bron-gelegd|25.1261,55.2089" \
+    --marker "au-air-dxb — DXB-vrachtterminal (Emirates SkyCargo) — overslag truck → lucht, bron-gelegd|25.2560,55.3434" \
+    --marker "au-air-del — Delhi Air Cargo Complex, IGI Airport (bij Terminal 3) — overslag lucht → truck, bron-gelegd met voorbehoud|28.5570,77.1000" \
+    --marker "au-ref-mmtc — MMTC-PAMP India Pvt Ltd, Rojka Meo, Sohna (Gurugram/Nuh-district) — raffinaderij, stoppunt, bron-gelegd|28.2140,77.0611" \
+    --routebrief v2/design/routebrieven/goud-dubai-delhi.md \
+    --uit    v2/data/stroomroute-goud-dubai-delhi.json \
+    --stroom goud-dubai-delhi \
+    --titel  "Goud · Dubai (DMCC) → DXB → DEL → MMTC-PAMP (Rojka Meo, Sohna)"
+}
+
+# ── goud · Argor-Heraeus, Mendrisio (Zwitserland) → Milaan-Malpensa (MXP) → vrachtvlucht → Mumbai (BOM) → Zaveri Bazaar
+# Routebrief: v2/design/routebrieven/goud-argor-mumbai.md (LICHTE werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ b1 (truck, doorgetrokken, profiel goud-argor-mumbai-argor-mxp, extracts
+#    zwitserland+italie): Argor-Heraeus, Mendrisio → A2 (CH) → Chiasso-grens
+#    → A9/A8 (IT) → Malpensa-vrachtterminal. 75,9 km tegen ~70 km
+#    (ontwerpschatting, geen officiële wegbeheerder-lengte gevonden voor een
+#    grensoverschrijdend CH→IT-traject) = +8,4%, binnen ±15%. Anker-
+#    verbindingen 0,02/0,09 km — geen stippel nodig. 235 keerlussen
+#    gesnoeid (79,5 → 75,9 km).
+# ⚠️ b2 (lucht, doorgetrokken, maak_luchtbeen.py): grootcirkel Milaan-
+#    Malpensa (MXP) → Mumbai (BOM), **6.508,5 km, 262 punten** — exact de
+#    gemeten waarde uit de brief. Geen km-toets (een luchtbeen ís de
+#    grootcirkel per constructie). Geen tussenlanding gebrond (brief §7) →
+#    één directe vlucht.
+# ⚠️ KORTE STIPPEL vóór b3: het anker au-air-bom (Mumbai Air Cargo Complex,
+#    Sahar, 19,0954/72,8660) snapt op een GEÏSOLEERD airside-wegcomponent —
+#    gemeten met een BFS over de india-scan: componentgrootte 9 vanaf het
+#    anker tegen 178.739 op het publieke net, dichtstbijzijnde publieke-
+#    netknoop 0,117 km van de anker-snap. `eindToegangPrivaat` lost dit niet
+#    op (COMPONENT-scheiding, geen ACCESS-filter — zelfde klasse als
+#    au-zrh-vrachtterminal in goud-yanacocha-ticino en dia-surat-bourse in
+#    diamant-surat-hongkong). Eerste via-punt van b3 is daarom het
+#    routeerpunt op het publieke net (72,865345/19,096391, 0,13 km van het
+#    anker); de korte stippel tekent anker → routeerpunt.
+# ⚠️ b3 (truck, doorgetrokken vanaf het routeerpunt, profiel
+#    goud-argor-mumbai-bom-zaveri, extract india): BOM-vrachtterminal
+#    (routeerpunt) → Vile Parle (Western Express Highway) → Bandra West →
+#    Mahim → Worli (Dr. Annie Besant Road) → Crawford Market → Zaveri
+#    Bazaar. 26,3 km tegen ~25 km (ontwerpschatting) = +5,4%, binnen ±15%.
+#    De brief hield rekening met een mogelijke korte stippel bij Kalbadevi
+#    (smalle marktstraten) — bleek niet nodig: `trimStaart` knipte 1 punt
+#    overschiet-en-terug (26,36 → 26,34 km) en de lijn eindigt gewoon op het
+#    au-mkt-zaveri-anker, 0,01 km snap.
+# ⚠️ Zaveri Bazaar-anker blijft "aannemelijk" (brief §3/§7): een marktwijk
+#    zonder los aan te wijzen gebouw, coördinaat = het Wikipedia-punt van de
+#    bazaar — dat verschijnt in de brief/§7, niet in de lijnstijl (doorgetrokken).
+# ⚠️ Geen fase D/E (brief §6): de brief stopt bewust bij Zaveri Bazaar als
+#    groothandelsschakel; geen bron noemt een specifieke juwelier/beursgebouw
+#    erna.
+bak_goud_argor_mumbai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen Argor-Heraeus, Mendrisio → Milaan-Malpensa (MXP) vrachtterminal (A2 CH → grens Chiasso → A9/A8 IT)|$BEEN/goud-argor-mumbai-weg-argor-mxp.geojson" \
+    --been-geojson "lucht|vlucht MXP → BOM (vrachtvlucht, grootcirkel)|$BEEN/goud-argor-mumbai-lucht-mxp-bom.geojson" \
+    --stippel      "truck|BOM-vrachtterminal (Sahar) → openbare-wegaansluiting (schematisch — OSM-topologiegat: airside-wegcomponent van 9 knopen, geen aansluiting op het publieke net binnen het venster)|19.0954,72.8660|19.096391,72.865345" \
+    --been-geojson "truck|vrachtwagen openbare-wegaansluiting bij BOM → Zaveri Bazaar-sieradenmarkt (Western Express Highway → S.V. Road → Dr. Annie Besant Road)|$BEEN/goud-argor-mumbai-weg-bom-zaveri.geojson" \
+    --marker "au-ref-argor — Argor-Heraeus SA, Mendrisio (Ticino) — raffinaderij/laadplek, bron-gelegd|45.8749,8.9818" \
+    --marker "au-air-mxp — Milano Malpensa Cargo, Cargo City Sud (MXP) — overslag truck → lucht, bron-gelegd|45.6142,8.7186" \
+    --marker "au-air-bom — Mumbai Air Cargo Complex, Sahar (CSMIA/BOM) — overslag lucht → truck, bron-gelegd|19.0954,72.8660" \
+    --marker "au-mkt-zaveri — Zaveri Bazaar-sieradenmarkt, Mumbai — groothandelsmarkt, stoppunt, aannemelijk|18.9518,72.8307" \
+    --routebrief v2/design/routebrieven/goud-argor-mumbai.md \
+    --uit    v2/data/stroomroute-goud-argor-mumbai.json \
+    --stroom goud-argor-mumbai \
+    --titel  "Goud · Argor-Heraeus (Mendrisio) → Malpensa (MXP) → Mumbai (BOM) → Zaveri Bazaar"
+}
+
+# ── goud · MKS PAMP (Castel San Pietro) → Zürich (ZRH) → vrachtvlucht → Shanghai Pudong (PVG) → SGE-kluiszone Lujiazui
+# Routebrief: v2/design/routebrieven/goud-pamp-shanghai.md (lichte werkwijze M31 golf 3, §2 Lucht)
+# ⚠️ CENTRAAL AFGEBAKKEN (2026-09-28): de bak-agent haalde alleen het luchtbeen en
+#    de twee profielen binnen de sessie (wegscans op het gedeelde slot). Twee
+#    profielcorrecties: (1) het wegbeen eindigt op de openbare weg bij het
+#    vrachtplatform (airside, "geen wegpad" — zelfde bevinding als
+#    goud-loulo-ticino/goud-yanacocha-ticino), afgesloten met een stippel van
+#    0,91 km; (2) via-punt Zug verwijderd (lag in de stad, de A4 gaat door het
+#    Knonaueramt) — 266,7 → 263,3 km. Tegen de ~200 km uit de brief is dat +32%:
+#    de brief-km was hemelsbreed; Castel San Pietro → Zürich Airport over de
+#    Gotthard is realistisch ~250 km. Bevinding, geen via-punt bijgeschoven.
+# ⚠️ Het eindanker au-sge-kluiszone is een ZONE (Lujiazui/Yincheng-corridor):
+#    het SGEI-kluispand wordt door geen bron met een adres genoemd → onzeker, en
+#    dat staat in de markernaam.
+bak_goud_pamp_shanghai() {
+  python v2/tools/hecht_marnet.py route \
+    --graaf  "$GRAAF" \
+    --marnet "$MARNET" \
+    --ne     "$NE" \
+    --been-geojson "truck|vrachtwagen MKS PAMP → Zürich Airport (A2 Gotthard → A14/A4 Knonaueramt → A1)|$BEEN/goud-pamp-shanghai-weg-pamp-zrh.geojson" \
+    --stippel      "truck|ZRH-vrachtplatform last mile (schematisch — airside/privéterrein zonder aansluiting op het openbare net)|47.472087,8.554523|47.4647,8.5492" \
+    --been-geojson "lucht|vlucht ZRH → PVG (vrachtvlucht, grootcirkel)|$BEEN/goud-pamp-shanghai-lucht-zrh-pvg.geojson" \
+    --been-geojson "truck|vrachtwagen Shanghai Pudong vrachtterminal → SGE-kluiszone Lujiazui (aannemelijk: kluispand niet gepubliceerd)|$BEEN/goud-pamp-shanghai-weg-pvg-sge.geojson" \
+    --marker "au-pamp-raffinaderij — MKS PAMP SA, Via alle Zocche 1, Castel San Pietro — raffinaderij/laadplek, bron-gelegd|45.8546,9.0025" \
+    --marker "au-zrh-vrachtterminal — Zürich Airport vrachtplatform (hergebruikt anker) — overslag truck → lucht, bron-gelegd|47.4647,8.5492" \
+    --marker "au-pvg-vrachtterminal — Shanghai Pudong vrachtplatform (hergebruikt anker) — overslag lucht → truck, bron-gelegd|31.1335,121.8025" \
+    --marker "au-sge-kluiszone — Lujiazui/Yincheng-corridor, SGE International Board-kluiszone — stoppunt, onzeker (zone)|31.2355,121.5008" \
+    --routebrief v2/design/routebrieven/goud-pamp-shanghai.md \
+    --uit    v2/data/stroomroute-goud-pamp-shanghai.json \
+    --stroom goud-pamp-shanghai \
+    --titel  "Goud · MKS PAMP (Ticino) → Zürich (ZRH) → Shanghai Pudong (PVG) → SGE-kluiszone"
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom

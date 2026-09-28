@@ -348,6 +348,43 @@ const STROMEN = [
   { sleutel: "u-op", bestand: "stroomroute-uranium-olympicdam-portadelaide.json", grondstof: "uranium", aan: true },
   { sleutel: "co-hg", bestand: "stroomroute-kobalt-huayou-gunsan.json", grondstof: "kobalt", aan: true },
   { sleutel: "co-bg", bestand: "stroomroute-kobalt-bouazzer-guemassa.json", grondstof: "kobalt", aan: true },
+  // ── M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht) ──
+  { sleutel: "au-ml", bestand: "stroomroute-goud-mponeng-londen.json", grondstof: "goud", aan: true },
+  { sleutel: "au-td", bestand: "stroomroute-goud-tarkwa-dubai.json", grondstof: "goud", aan: true },
+  { sleutel: "au-sd", bestand: "stroomroute-goud-siguiri-dubai.json", grondstof: "goud", aan: true },
+  { sleutel: "au-lt", bestand: "stroomroute-goud-loulo-ticino.json", grondstof: "goud", aan: true },
+  { sleutel: "au-yt", bestand: "stroomroute-goud-yanacocha-ticino.json", grondstof: "goud", aan: true },
+  { sleutel: "au-ok", bestand: "stroomroute-goud-olimpiada-dubai.json", grondstof: "goud", aan: true },
+  { sleutel: "au-ks", bestand: "stroomroute-goud-kalgoorlie-singapore.json", grondstof: "goud", aan: true },
+  { sleutel: "au-ns", bestand: "stroomroute-goud-nevada-saltlakecity.json", grondstof: "goud", aan: true },
+  { sleutel: "au-mo", bestand: "stroomroute-goud-malartic-ottawa.json", grondstof: "goud", aan: true },
+  { sleutel: "au-vl", bestand: "stroomroute-goud-valcambi-londen.json", grondstof: "goud", aan: true },
+  { sleutel: "au-ps", bestand: "stroomroute-goud-pamp-shanghai.json", grondstof: "goud", aan: true },
+  { sleutel: "au-am", bestand: "stroomroute-goud-argor-mumbai.json", grondstof: "goud", aan: true },
+  { sleutel: "au-dd", bestand: "stroomroute-goud-dubai-delhi.json", grondstof: "goud", aan: true },
+  { sleutel: "pgm-ml", bestand: "stroomroute-pgm-mogalakwena-londen.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-sz", bestand: "stroomroute-pgm-springs-zurich.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-zh", bestand: "stroomroute-pgm-zondereinde-hanau.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-rt", bestand: "stroomroute-pgm-rustenburg-tokio.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-rs", bestand: "stroomroute-pgm-rustenburg-shanghai.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-zr", bestand: "stroomroute-pgm-zimplats-rustenburg.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-nk", bestand: "stroomroute-pgm-norilsk-krasnojarsk.json", grondstof: "pgm", aan: true },
+  { sleutel: "pgm-sc", bestand: "stroomroute-pgm-stillwater-columbus.json", grondstof: "pgm", aan: true },
+  // bestand heet nog "actonuk" (het ontwerp), de gebakken keten eindigt in Port Colborne
+  { sleutel: "pgm-sp", bestand: "stroomroute-pgm-sudbury-actonuk.json", grondstof: "pgm", aan: true },
+  { sleutel: "dia-ja", bestand: "stroomroute-diamant-jwaneng-antwerpen.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-va", bestand: "stroomroute-diamant-venetia-antwerpen.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-ea", bestand: "stroomroute-diamant-ekati-antwerpen.json", grondstof: "diamant", aan: true },
+  // bestand heet nog "gaborone" (het ontwerp), de gebakken keten vliegt vanaf Windhoek naar Antwerpen
+  { sleutel: "dia-oa", bestand: "stroomroute-diamant-namdeb-gaborone.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-gs", bestand: "stroomroute-diamant-gaborone-surat.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-mm", bestand: "stroomroute-diamant-mirny-mumbai.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-cd", bestand: "stroomroute-diamant-catoca-dubai.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-ma", bestand: "stroomroute-diamant-marange-dubai.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-mb", bestand: "stroomroute-diamant-mbujimayi-dubai.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-ld", bestand: "stroomroute-diamant-letseng-dubai.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-sh", bestand: "stroomroute-diamant-surat-hongkong.json", grondstof: "diamant", aan: true },
+  { sleutel: "dia-mn", bestand: "stroomroute-diamant-mumbai-newyork.json", grondstof: "diamant", aan: true },
 ];
 const STROOMROUTES = new Map();
 let STROOMROUTE = null;              // de eerste, als diagnose-handvat
@@ -456,7 +493,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "127", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "128", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -485,7 +522,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "127", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "128", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -598,6 +635,7 @@ const GLOEDBESTANDEN = [
   "gloednodes-kobalt.json", "gloednodes-nikkel.json", "gloednodes-ree.json",
   "gloednodes-kolen.json", "gloednodes-olie.json", "gloednodes-uranium.json",
   "gloednodes-zilver.json", "gloednodes-gas.json",
+  "gloednodes-goud.json", "gloednodes-pgm.json", "gloednodes-diamant.json",
 ];
 const GLOEDNODES = new Map();         // bestand → laag (alleen wat geladen is)
 window.GLOEDNODES = GLOEDNODES;       // diagnose-handvat
@@ -618,7 +656,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "127", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "128", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);

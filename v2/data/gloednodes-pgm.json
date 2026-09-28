@@ -1,0 +1,367 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag pgm voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/pgm-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof pgm: ids 'w-*', gewicht = capaciteit in t PGM/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in t PGM/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron. Uitzondering: 1 sites dragen een eigen eenheid (staat in gewicht_bron) en zijn niet vergelijkbaar met de rest.",
+ "knopen": [
+  {
+   "id": "w-mogalakwena",
+   "naam": "Mogalakwena mijn (Anglo American Platinum / Valterra Platinum)",
+   "lon": 28.916,
+   "lat": -23.9805,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Mokopane-omgeving, Noordelijke rand Bushveld)",
+   "gewicht": 33.9,
+   "gewicht_bron": "capaciteit t 4E/j (Pt+Pd+Rh+Au) — Anglo American Platinum / Valterra jaarcijfers 2023: ~1.090 koz 4E gemijnd (indicatief); koz ÷ 32,15 ≈ 33,9 t/j [B1][B2]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `pgm-mogalakwena-mijn` uit routebrief pgm-mogalakwena-londen.md (was -23.9, 29.0 — 12.37 km verschoven). Oorspronkelijk: geografische aanduiding 'Mokopane, Limpopo' (Wikipedia 'Mogalakwena mine') + de bekende ligging aan de Mogalakwena-rivier noordelijk van Mokopane; DEZE RONDE NIET satelliet-bevestigd op putniveau (webbudget/rate-limits) — open punt, coördinaat is een kandidaat op de goede schaal, niet op de put",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste PGM-mijn ter wereld op tonnage erts; open pit. Concentraat naar Rustenburg PMR/Waterval-smelter. 4E (incl. goud) — niet stilzwijgend in 3E meegeteld."
+  },
+  {
+   "id": "w-amandelbult",
+   "naam": "Amandelbult mijn (Anglo American Platinum / Valterra Platinum)",
+   "lon": 27.265,
+   "lat": -24.808,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Thabazimbi-omgeving, Westelijke rand Bushveld)",
+   "gewicht": 14.5,
+   "gewicht_bron": "capaciteit t PGM/j — Anglo American Platinum / Valterra jaarcijfers 2023: ~465 koz 4E gemijnd (indicatief); koz ÷ 32,15 ≈ 14,5 t/j [B1][B2]",
+   "bron": "Wikipedia-geohack 'Amandelbult' (en, −24,818/27,295) als kandidaat; satelliet z14 (sitelaag-pgm-amandelbult): kruis verschoven naar 45.808S/27.265E — ligt op een duidelijk mijnterrein (gebouwen, wegennet, verstoorde grond) net ten noorden van het kandidaatpunt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Anglo/Valterra-mijn met eigen concentrator; twee delen (Tumela/Dishaba-schachten). 4E (incl. goud)."
+  },
+  {
+   "id": "w-impala-rustenburg",
+   "naam": "Impala Rustenburg mijnencluster (Impala Platinum / Implats)",
+   "lon": 27.2176,
+   "lat": -25.5535,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg, Westelijke rand Bushveld)",
+   "gewicht": 21.8,
+   "gewicht_bron": "capaciteit t PGM/j — Implats jaarverslag FY2023: eigen gemijnde 4E-productie Rustenburg-lease ~700 koz (excl. aangekocht concentraat van derden); koz ÷ 32,15 ≈ 21,8 t/j [B3]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `pgm-rustenburg-mijn` uit routebrief pgm-springs-zurich.md (was -25.63, 27.13 — 12.23 km verschoven). Oorspronkelijk: kandidaat op het aaneengesloten Implats-mijnbouwterrein W van Rustenburg; satelliet z14 (sitelaag-pgm-impala-rustenburg): kruis ligt bij zichtbare mijnhopen/verstoorde grond, geen individuele schacht met naam onderscheiden op dit zoomniveau",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "GEEN gemiddelde/aggregaat van 11 schachten — dit is ÉÉN aaneengesloten mijnbouwlease van Implats (zoals Tenke Fungurume of Las Bambas elders in de atlas één site zijn ondanks meerdere putten/schachten binnen dezelfde vergunning). Bij een volgende ronde: verwijs naar één concrete, genummerde schacht (bv. 16 Shaft) i.p.v. het hele terrein. 4E (incl. goud)."
+  },
+  {
+   "id": "w-sibanye-rustenburg",
+   "naam": "Sibanye-Stillwater Rustenburg Operations (ex-Anglo Rustenburg, sinds 2022)",
+   "lon": 27.1,
+   "lat": -25.78,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg, Westelijke rand Bushveld)",
+   "gewicht": 17.7,
+   "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater jaarverslag FY2023, SA PGM-segment Rustenburg-operaties: ~570 koz 4E; koz ÷ 32,15 ≈ 17,7 t/j [B4]",
+   "bron": "kandidaat o.b.v. v1-register (data/pgm.js, pgm-sib-rustenburg, −25,78/27,10); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "In 2022 door Anglo American Platinum verkocht aan Sibanye-Stillwater (Kroondal/Rustenburg-schachten); apart van de Implats-lease hierboven. 4E."
+  },
+  {
+   "id": "w-marikana",
+   "naam": "Marikana operations (Sibanye-Stillwater, ex-Lonmin)",
+   "lon": 27.4635,
+   "lat": -25.6715,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Marikana, Westelijke rand Bushveld)",
+   "gewicht": 20.2,
+   "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater jaarverslag FY2023, Marikana-segment: ~650 koz 6E (Lonmin-conventie incl. Ir/Ru); koz ÷ 32,15 ≈ 20,2 t/j [B4]",
+   "bron": "Wikipedia-geohack 'Marikana' (en, −25,698/27,472) als kandidaat; satelliet z14 (sitelaag-pgm-marikana): kruis verschoven naar −25,6715/27,4635, op een zichtbaar verwerkingscomplex (gebouwen, silo's, schoorsteen) — de omgeving toont een dichte mijnengordel (tailings/mijnhopen rondom in alle windrichtingen)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Ex-Lonmin (overgenomen door Sibanye 2019); rapporteert historisch in 6E (incl. Ir/Ru naast Pt/Pd/Rh/Au) — niet stilzwijgend vergelijkbaar met 4E-sites."
+  },
+  {
+   "id": "w-booysendal",
+   "naam": "Booysendal mijn (Northam Platinum)",
+   "lon": 30.13,
+   "lat": -24.83,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Mpumalanga/Limpopo-grens, Steelpoort, Oostelijke rand Bushveld)",
+   "gewicht": 9.0,
+   "gewicht_bron": "capaciteit t PGM/j — Northam Platinum jaarverslag FY2023: Booysendal ~290 koz 4E; koz ÷ 32,15 ≈ 9,0 t/j [B5]",
+   "bron": "kandidaat o.b.v. de bekende ligging bij Steelpoort/Lydenburg op de Oostrand; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Noord- en Zuid-complex van Northam op de Oostelijke rand; ondergronds + oppervlaktemijnbouw. 4E."
+  },
+  {
+   "id": "w-two-rivers",
+   "naam": "Two Rivers mijn (Implats / African Rainbow Minerals, JV)",
+   "lon": 30.22,
+   "lat": -24.77,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Steelpoort, Oostelijke rand Bushveld)",
+   "gewicht": 8.7,
+   "gewicht_bron": "capaciteit t PGM/j — Implats jaarverslag FY2023: Two Rivers-aandeel ~280 koz 4E (100%-basis, indicatief); koz ÷ 32,15 ≈ 8,7 t/j [B3]",
+   "bron": "kandidaat o.b.v. de bekende ligging bij Steelpoort; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Implats 45% / ARM 45% / management 10%; ondergrondse UG2-mijn. 4E."
+  },
+  {
+   "id": "w-bafokeng-styldrift",
+   "naam": "Styldrift mijn (Royal Bafokeng Platinum, sinds 2023 Implats-dochter)",
+   "lon": 27.1,
+   "lat": -25.45,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit t PGM/j — Royal Bafokeng Platinum / Implats jaarcijfers 2023: ~320 koz 4E; koz ÷ 32,15 ≈ 10,0 t/j [B3][B6]",
+   "bron": "kandidaat o.b.v. de bekende ligging NO van Rustenburg; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Implats nam Royal Bafokeng Platinum in 2023 volledig over; Styldrift is de belangrijkste operationele mijn van RBPlat. 4E."
+  },
+  {
+   "id": "w-tharisa",
+   "naam": "Tharisa mijn (Tharisa plc)",
+   "lon": 27.63,
+   "lat": -25.63,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
+   "gewicht": 4.8,
+   "gewicht_bron": "capaciteit t PGM/j — Tharisa plc jaarverslag FY2023: ~155 koz 6E-PGM als bijproduct van chroomwinning; koz ÷ 32,15 ≈ 4,8 t/j [B7]",
+   "bron": "kandidaat o.b.v. de bekende ligging op de Western Limb (Vlakfontein); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "PGM is hier BIJPRODUCT van chroomertswinning (Tharisa's hoofdproduct is chroom); 6E-conventie."
+  },
+  {
+   "id": "w-marula",
+   "naam": "Marula mijn (Implats)",
+   "lon": 30.65,
+   "lat": -24.55,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Eastern Bushveld)",
+   "gewicht": 2.8,
+   "gewicht_bron": "capaciteit t PGM/j — Implats jaarverslag FY2023: Marula ~90 koz 4E; koz ÷ 32,15 ≈ 2,8 t/j [B3]",
+   "bron": "kandidaat o.b.v. de bekende ligging bij Burgersfort (Oostrand); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Kleinere ondergrondse Implats-mijn op de Oostelijke rand. 4E."
+  },
+  {
+   "id": "w-modikwa",
+   "naam": "Modikwa mijn (Anglo American Platinum / African Rainbow Minerals, JV)",
+   "lon": 30.23,
+   "lat": -24.68,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Limpopo, Burgersfort, Oostelijke rand Bushveld)",
+   "gewicht": 5.6,
+   "gewicht_bron": "capaciteit t PGM/j — Anglo American Platinum jaarcijfers 2023: Modikwa-aandeel ~180 koz 4E (100%-basis, indicatief); koz ÷ 32,15 ≈ 5,6 t/j [B1]",
+   "bron": "kandidaat o.b.v. de bekende ligging bij Burgersfort; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Anglo/Valterra 50% / ARM 50% JV; ondergrondse UG2-mijn. 4E."
+  },
+  {
+   "id": "w-kroondal",
+   "naam": "Kroondal mijn (Sibanye-Stillwater)",
+   "lon": 27.2,
+   "lat": -25.73,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater jaarverslag FY2023, Kroondal-segment: ~160 koz 4E; koz ÷ 32,15 ≈ 5,0 t/j [B4]",
+   "bron": "kandidaat o.b.v. de bekende ligging tussen Rustenburg en Marikana; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Ondiepe, mechanisch gemijnde UG2-operatie van Sibanye. 4E."
+  },
+  {
+   "id": "w-zimplats-ngezi",
+   "naam": "Zimplats Ngezi mijn",
+   "lon": 30.08,
+   "lat": -18.35,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zimbabwe (Great Dyke, bij Selous)",
+   "gewicht": 19.6,
+   "gewicht_bron": "capaciteit t PGM/j — Zimplats (Implats-dochter) jaarverslag FY2023: ~630 koz 6E; koz ÷ 32,15 ≈ 19,6 t/j [B8]",
+   "bron": "geografische aanduiding 'Ngezi Mine, south of Selous' (Wikipedia 'Great Dyke'/A5 road-artikel); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grootste PGM-mijn van Zimbabwe; open pit + ondergronds, eigen Selous Metallurgical Complex-smelter vlakbij. 6E-conventie (incl. Ir/Ru)."
+  },
+  {
+   "id": "w-unki",
+   "naam": "Unki mijn (Anglo American Platinum / Valterra Platinum)",
+   "lon": 30.0,
+   "lat": -19.68,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zimbabwe (Great Dyke, bij Shurugwi)",
+   "gewicht": 5.9,
+   "gewicht_bron": "capaciteit t PGM/j — Anglo American Platinum jaarcijfers 2023: Unki ~190 koz 6E; koz ÷ 32,15 ≈ 5,9 t/j [B1][B9]",
+   "bron": "geografische aanduiding 'near Shurugwi' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Ondergrondse mijn met eigen concentrator; matte gaat naar Rustenburg PMR (Zuid-Afrika). 6E-conventie."
+  },
+  {
+   "id": "w-mimosa",
+   "naam": "Mimosa mijn (Sibanye-Stillwater / Implats, JV)",
+   "lon": 30.07,
+   "lat": -20.33,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zimbabwe (Great Dyke, bij Zvishavane)",
+   "gewicht": 4.0,
+   "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater / Implats jaarcijfers 2023: Mimosa ~130 koz 6E (100%-basis, indicatief); koz ÷ 32,15 ≈ 4,0 t/j [B4][B9]",
+   "bron": "geografische aanduiding 'near Zvishavane' (Wikipedia 'Great Dyke'); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "50/50 JV Sibanye-Stillwater / Implats; ondergrondse mijn. 6E-conventie."
+  },
+  {
+   "id": "w-rustenburg-pmr",
+   "naam": "Rustenburg Precious Metals Refinery / Waterval-smelter (Anglo American Platinum / Valterra)",
+   "lon": 27.318,
+   "lat": -25.675,
+   "level": "site",
+   "parent": null,
+   "rol": "smelter+raffinaderij",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Noordwest, Rustenburg)",
+   "gewicht": 118.2,
+   "gewicht_bron": "capaciteit t PGM/j — Anglo American Platinum / Valterra jaarcijfers 2023: groepsbreed geraffineerde 4E-productie ~3,8 Moz, grotendeels via dit centrale raffinagecomplex; koz ÷ 32,15 ≈ 118,2 t/j [B1][B2]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `pgm-rustenburg-pmr` uit routebrief pgm-rustenburg-shanghai.md (was -25.66, 27.25 — 7.02 km verschoven). Oorspronkelijk: kandidaat o.b.v. de bekende ligging van het Waterval-smelter/PMR-complex direct W/NW van Rustenburg; DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste PGM-raffinaderij ter wereld; verwerkt concentraat/matte van Mogalakwena, Amandelbult, Unki e.a. Anglo-mijnen tot metaal. Cijfer is GROEPSBREED geraffineerd volume toegeschreven aan dit ene complex, niet een los gepubliceerde plantcapaciteit — zelfde conventie als bij Krastsvetmet hieronder. 4E."
+  },
+  {
+   "id": "w-impala-springs",
+   "naam": "Impala Refineries (Springs)",
+   "lon": 28.4437,
+   "lat": -26.2227,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Zuid-Afrika (Gauteng, Springs)",
+   "gewicht": 93.3,
+   "gewicht_bron": "capaciteit t PGM/j — Implats jaarverslag FY2023: groepsbreed geraffineerde 4E-productie (eigen mijnen + aangekocht concentraat van derden) ~3,0 Moz; koz ÷ 32,15 ≈ 93,3 t/j [B3]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `pgm-springs-raffinaderij` uit routebrief pgm-springs-zurich.md (was -26.28, 28.7 — 26.34 km verschoven). Oorspronkelijk: Wikipedia/v1-register-kandidaat (data/pgm.js, pgm-ref-springs, −26,28/28,70); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Implats' centrale raffinaderij; verwerkt eigen concentraat (Rustenburg, Marula, Two Rivers, Zimplats, Mimosa) én aangekocht materiaal van derden. Cijfer is groepsbreed geraffineerd volume toegeschreven aan dit complex. 4E."
+  },
+  {
+   "id": "w-krastsvetmet",
+   "naam": "Krastsvetmet-raffinaderij (Nornickel)",
+   "lon": 92.9998,
+   "lat": 56.016,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Rusland (Krasnojarsk)",
+   "gewicht": 105.8,
+   "gewicht_bron": "capaciteit t PGM/j — Nornickel jaarcijfers 2023 (groepsbrede verkoop): Pd ~2.754 koz + Pt ~647 koz = 3.401 koz Pt+Pd/j; koz ÷ 32,15 ≈ 105,8 t/j, toegeschreven aan Rusland's centrale edelmetaalraffinaderij [B10][B11]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `pgm-krastsvetmet-raffinaderij` uit routebrief pgm-norilsk-krasnojarsk.md (was 56.025, 92.79 — 13.08 km verschoven). Oorspronkelijk: v1-register-kandidaat (data/pgm.js, pgm-ref-krasnoyarsk, 56,01/92,87); satelliet z14 (sitelaag-pgm-krastsvetmet2): kruis ligt in een gemengde stedelijk-industriële zone van Krasnojarsk — geen individueel fabrieksgebouw met naam onderscheiden op dit zoomniveau",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Grootste edelmetaalraffinaderij van Rusland; verwerkt vrijwel al het Pt/Pd van Nornickel's Noril'sk-erts (via Nadezhda-smelter en Kola MMC). Cijfer is GROEPSBREED (Nornickel-jaarverkoop Pt+Pd) toegeschreven aan deze ene raffinaderij, geen los gepubliceerde plantcapaciteit. 2E-conventie (alleen Pt+Pd, geen Rh/Au/Ir/Ru in dit cijfer)."
+  },
+  {
+   "id": "w-stillwater",
+   "naam": "Stillwater Mine (Sibanye-Stillwater)",
+   "lon": -109.935,
+   "lat": -45.402,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Verenigde Staten (Montana, Stillwater County, Nye)",
+   "gewicht": 14.0,
+   "gewicht_bron": "capaciteit t PGM/j — Sibanye-Stillwater Form 20-F 2023: Stillwater + East Boulder samen ~450 koz 2E (Pt+Pd), NIET apart per mijn gerapporteerd; koz ÷ 32,15 ≈ 14,0 t/j [B12]",
+   "bron": "geografische aanduiding 'Nye, Montana' (bekende ligging J-M Reef); satelliet z14/z15 (sitelaag-pgm-stillwater2): geen ondubbelzinnige mijningang/verwerkingsplant onderscheiden op de geprobeerde kandidaatpunten — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Enige primaire PGM-mijn van de VS (samen met East Boulder, 30 km verderop — zie sites_zonder_gewicht). Cijfer is GECOMBINEERD (Stillwater+East Boulder), hier volledig aan Stillwater toegekend om dubbeltelling te vermijden. 2E-conventie (Pt+Pd, VS-marktconventie, geen Rh)."
+  },
+  {
+   "id": "w-lac-des-iles",
+   "naam": "Lac des Îles mijn (Impala Canada)",
+   "lon": -89.6,
+   "lat": 49.28,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "pgm"
+   ],
+   "land": "Canada (Ontario, N van Thunder Bay)",
+   "gewicht": 4.0,
+   "gewicht_bron": "capaciteit t PGM/j — Implats/Impala Canada jaarcijfers 2023: ~130 koz Pd; koz ÷ 32,15 ≈ 4,0 t/j [B3]",
+   "bron": "v1-register-kandidaat (data/pgm.js, pgm-lac-des-iles, 49,18/−89,60); DEZE RONDE NIET satelliet-bevestigd — open punt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Vrijwel zuivere PALLADIUM-mijn (geen Bushveld-achtige Pt/Pd/Rh-mix) — enige grote Noord-Amerikaanse Pd-primaire mijn naast Stillwater's Pt/Pd. Eenheid is Pd-only, niet vergelijkbaar met 3E/4E/6E-sites."
+  }
+ ]
+}

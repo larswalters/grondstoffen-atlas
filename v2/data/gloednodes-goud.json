@@ -1,0 +1,673 @@
+{
+ "versie": 2,
+ "toelichting": "Gloedlaag goud voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/goud-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof goud: ids 'w-*', gewicht = capaciteit in t Au/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in t Au/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "knopen": [
+  {
+   "id": "w-muruntau",
+   "naam": "Muruntau",
+   "lon": 64.5828,
+   "lat": 41.5089,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Oezbekistan (Navoiy-regio)",
+   "gewicht": 80.0,
+   "gewicht_bron": "capaciteit t Au/j — Navoi MMC (staatsbedrijf) / World Gold Council-schattingen 2024: ≈ 80-85 t/j, grootste open goudmijn ter wereld [B3][B4]",
+   "bron": "v1-register (data/goud.js); satelliet z14 (sitelaag-goud-muruntau): kruis ligt op de rand van de zichtbare open pit + processing-complex (mijnstad Zarafshon direct oostelijk) — kruis licht verschoven naar het complex t.o.v. het v1-startpunt",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Blijft grotendeels binnenlands (eigen raffinage/centrale bank), nauwelijks op de wereldmarkt."
+  },
+  {
+   "id": "w-olimpiada",
+   "naam": "Olimpiada",
+   "lon": 92.6355,
+   "lat": 59.3547,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Rusland (Krasnojarsk kraj, Severo-Jenisejsk)",
+   "gewicht": 42.0,
+   "gewicht_bron": "capaciteit t Au/j — Polyus jaarverslag/kwartaalrapportages 2024: ≈ 42-44 t/j Au [B5][B6]",
+   "bron": "v1-register (data/goud.js); satelliet z14 (sitelaag-goud-olimpiada): kruis ligt in dichte Siberische taiga, GEEN put of fabriek zichtbaar op deze precisie — coordinaat niet bevestigd deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Rusland absorbeert de eigen mijnproductie grotendeels zelf — nauwelijks wereldmarkt-blootstelling."
+  },
+  {
+   "id": "w-grasberg",
+   "naam": "Grasberg",
+   "lon": 137.1146,
+   "lat": -4.0592,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (koper-hoofdproduct, goud-bijproduct)",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Indonesië (Papoea, Mimika)",
+   "gewicht": 55.0,
+   "gewicht_bron": "capaciteit t Au/j — Freeport-McMoRan / PT Freeport Indonesia jaarcijfers 2024: ≈ 1,7-1,8 Moz Au bijproduct (≈ 55-58 t) [B7][B8]",
+   "bron": "v1-register (data/goud.js); satelliet z14 (sitelaag-goud-grasberg): kruis ligt exact in de open pit (duidelijke terraslijnen, tailings zuidwestelijk zichtbaar), gedeeltelijk bewolkt maar de put is ondubbelzinnig",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Goud als bijproduct van koper; concentraat naar de Manyar-smelter (Gresik, Java) en export."
+  },
+  {
+   "id": "w-kalgoorlie",
+   "naam": "Kalgoorlie Super Pit (Fimiston)",
+   "lon": 121.499,
+   "lat": -30.7897,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Australië (West-Australië)",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit t Au/j — Northern Star Resources jaarverslag 2024: KCGM-productie ≈ 480.000-500.000 oz (≈ 15-16 t) [B9][B10]",
+   "bron": "v1-register (data/goud.js); satelliet z14 (sitelaag-goud-kalgoorlie): kruis ligt exact aan de rand van de iconische Super Pit, direct grenzend aan de stad Kalgoorlie-Boulder",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Kalgoorlie Consolidated Gold Mines (KCGM), Northern Star Resources."
+  },
+  {
+   "id": "w-boddington",
+   "naam": "Boddington",
+   "lon": 116.355,
+   "lat": -32.75,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (goud + koper-bijproduct)",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Australië (West-Australië)",
+   "gewicht": 26.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag 2024: ≈ 800.000-850.000 oz Au (≈ 25-27 t) [B11][B12]",
+   "bron": "v1-register gaf -32.7667/116.3833 (in bos, 500 m van het complex); satelliet z14 (sitelaag-goud-boddington) toonde de put + processing plant duidelijk NW van dat punt — kruis verschoven naar het zichtbare complex (plant-cluster net noordoost van de hoofdput)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Newmont; grootste goudmijn van Australië; raffinage bij Perth Mint."
+  },
+  {
+   "id": "w-malartic",
+   "naam": "Canadian Malartic",
+   "lon": -78.0942,
+   "lat": 48.1176,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Canada (Québec)",
+   "gewicht": 19.0,
+   "gewicht_bron": "capaciteit t Au/j — Agnico Eagle jaarverslag 2024: ≈ 590.000-620.000 oz Au (≈ 18-19 t) [B13][B14]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-malartic-mijn` uit routebrief goud-malartic-ottawa.md (was 48.1284, -78.1358 — 3.31 km verschoven). Oorspronkelijk: v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Agnico Eagle (voorheen JV met Yamana); open pit direct naast de stad Malartic."
+  },
+  {
+   "id": "w-detourlake",
+   "naam": "Detour Lake",
+   "lon": -79.7238,
+   "lat": 49.8975,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Canada (Ontario)",
+   "gewicht": 21.0,
+   "gewicht_bron": "capaciteit t Au/j — Agnico Eagle jaarverslag 2024: ≈ 650.000-680.000 oz Au (≈ 20-21 t) [B13][B15]",
+   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Agnico Eagle."
+  },
+  {
+   "id": "w-loulo-gounkoto",
+   "naam": "Loulo-Gounkoto",
+   "lon": -11.4118,
+   "lat": 13.0868,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Mali (Kayes-regio)",
+   "gewicht": 16.0,
+   "gewicht_bron": "capaciteit t Au/j — Barrick jaarverslag 2024: Loulo-Gounkoto-complex ≈ 500.000-540.000 oz Au (≈ 15-17 t) [B16][B17]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-loulo-mijn` uit routebrief goud-loulo-ticino.md (was 12.9833, -11.6167 — 25.00 km verschoven). Oorspronkelijk: v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Barrick; industrieel complex naast enorme artisanale productie in de regio."
+  },
+  {
+   "id": "w-tarkwa",
+   "naam": "Tarkwa",
+   "lon": -2.0215,
+   "lat": 5.3275,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ghana (Western Region)",
+   "gewicht": 16.0,
+   "gewicht_bron": "capaciteit t Au/j — Gold Fields jaarverslag 2024: ≈ 500.000-520.000 oz Au (≈ 16-17 t) [B18][B19]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-tarkwa-mill` uit routebrief goud-tarkwa-dubai.md (was 5.301, -1.989 — 4.65 km verschoven). Oorspronkelijk: v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Gold Fields; Ghana = grootste Afrikaanse producent."
+  },
+  {
+   "id": "w-obuasi",
+   "naam": "Obuasi",
+   "lon": -1.664,
+   "lat": 6.202,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ghana (Ashanti Region)",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit t Au/j — AngloGold Ashanti jaarverslag 2024: ≈ 300.000-330.000 oz Au (≈ 9-10 t), heropend ondergronds [B20][B21]",
+   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "AngloGold Ashanti; heropende ondergrondse mijn."
+  },
+  {
+   "id": "w-tongon",
+   "naam": "Tongon",
+   "lon": -4.9667,
+   "lat": 9.65,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ivoorkust (Korhogo-regio, noord)",
+   "gewicht": 6.0,
+   "gewicht_bron": "capaciteit t Au/j — Barrick jaarverslag 2024: ≈ 190.000-210.000 oz Au (≈ 6-7 t) [B16][B22]",
+   "bron": "getrainde kennis (regio Korhogo, noordelijk Ivoorkust) — geen verse Wikipedia/OSM-bevestiging deze ronde (429-rate-limit)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Barrick; industrieel complex in het noorden van het land."
+  },
+  {
+   "id": "w-ity",
+   "naam": "Ity",
+   "lon": -8.4,
+   "lat": 6.9667,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ivoorkust (Zouan-Hounien-regio, west)",
+   "gewicht": 7.0,
+   "gewicht_bron": "capaciteit t Au/j — Endeavour Mining jaarverslag 2024: ≈ 220.000-240.000 oz Au (≈ 7-8 t) [B23][B24]",
+   "bron": "getrainde kennis (regio Zouan-Hounien/Dané, westelijk Ivoorkust) — geen verse bevestiging deze ronde (429-rate-limit)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Endeavour Mining."
+  },
+  {
+   "id": "w-yanacocha",
+   "naam": "Yanacocha",
+   "lon": -78.5099,
+   "lat": -6.9858,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Peru (Cajamarca)",
+   "gewicht": 10.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag 2024: ≈ 310.000-330.000 oz Au (≈ 10 t), uitgeput rakend — Peru blijft een grote producent [B11][B25]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-yanacocha-mijn` uit routebrief goud-yanacocha-ticino.md (was -6.9833, -78.5167 — 0.80 km verschoven). Oorspronkelijk: v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Newmont."
+  },
+  {
+   "id": "w-buritica",
+   "naam": "Buriticá",
+   "lon": -75.9167,
+   "lat": 6.9833,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Colombia (Antioquia)",
+   "gewicht": 6.0,
+   "gewicht_bron": "capaciteit t Au/j — Zijin Mining (via Continental Gold-overname) jaarcijfers 2024: ≈ 190.000-210.000 oz Au (≈ 6 t) [B26][B27]",
+   "bron": "getrainde kennis (dorp Buriticá, Antioquia) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Zijin Mining (Chinees eigendom sinds 2020, ex-Continental Gold)."
+  },
+  {
+   "id": "w-paracatu",
+   "naam": "Paracatu",
+   "lon": -46.8667,
+   "lat": -17.2167,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Brazilië (Minas Gerais)",
+   "gewicht": 15.0,
+   "gewicht_bron": "capaciteit t Au/j — Kinross Gold jaarverslag 2024: ≈ 460.000-480.000 oz Au (≈ 14-15 t) [B28][B29]",
+   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Kinross Gold."
+  },
+  {
+   "id": "w-mponeng",
+   "naam": "Mponeng",
+   "lon": 27.4306,
+   "lat": -26.4361,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zuid-Afrika (Witwatersrand, Gauteng)",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit t Au/j — Harmony Gold jaarverslag 2024: ≈ 250.000-260.000 oz Au (≈ 8 t) [B30][B31]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-mponeng-mijn` uit routebrief goud-mponeng-londen.md (was -26.42, 27.42 — 2.08 km verschoven). Oorspronkelijk: v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Harmony Gold; diepste mijn ter wereld. Raffinage bij Rand Refinery."
+  },
+  {
+   "id": "w-southdeep",
+   "naam": "South Deep",
+   "lon": 27.85,
+   "lat": -26.35,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zuid-Afrika (Westonaria, Gauteng)",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit t Au/j — Gold Fields jaarverslag 2024: ≈ 250.000-270.000 oz Au (≈ 8-9 t) [B18][B32]",
+   "bron": "getrainde kennis (Westonaria-regio, Witwatersrand) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Gold Fields; diepe ondergrondse mijn."
+  },
+  {
+   "id": "w-lihir",
+   "naam": "Lihir",
+   "lon": 152.6294,
+   "lat": -3.1281,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Papoea-Nieuw-Guinea (New Ireland Province)",
+   "gewicht": 17.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag 2024: ≈ 530.000-560.000 oz Au (≈ 17-18 t) [B11][B33]",
+   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Newmont; vulkaaneiland."
+  },
+  {
+   "id": "w-puebloviejo",
+   "naam": "Pueblo Viejo",
+   "lon": -70.1753,
+   "lat": 18.9396,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Dominicaanse Republiek (Sánchez Ramírez)",
+   "gewicht": 21.0,
+   "gewicht_bron": "capaciteit t Au/j — Barrick jaarverslag 2024: ≈ 650.000-680.000 oz Au (≈ 20-21 t) [B16][B34]",
+   "bron": "Wikipedia MediaWiki-API, vers opgehaald deze ronde (generator=search, 'Pueblo Viejo mine'); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Barrick 60% / Newmont 40% JV."
+  },
+  {
+   "id": "w-penasquito",
+   "naam": "Peñasquito",
+   "lon": -101.69707,
+   "lat": 24.65508,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn (Au/Ag/Pb/Zn-polymetaal)",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Mexico (Zacatecas)",
+   "gewicht": 16.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag/kwartaalrapportages 2024: ≈ 500.000-530.000 oz Au-bijproduct (≈ 16 t) [B11][B35]",
+   "bron": "hergebruikt anker uit v2/design/zilver-sitelaag.json (w-penasquito, Wikipedia-geohack + satelliet z14: kruis tussen de twee putten, bron-gelegd)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Newmont (na de 2023-overname van Goldcorp); polymetaalmijn, goud als bijproduct naast zilver/lood/zink."
+  },
+  {
+   "id": "w-altyntau",
+   "naam": "Altyntau Kokshetau (Vasilkovskoye)",
+   "lon": 69.4,
+   "lat": 53.4,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Kazachstan (Akmola-regio)",
+   "gewicht": 13.0,
+   "gewicht_bron": "capaciteit t Au/j — Altyntau Kazakhstan (Kazakhmys-groep) jaarcijfers: ≈ 400.000-430.000 oz Au (≈ 13 t) [B36][B37]",
+   "bron": "v1-register (data/goud.js, was al aanwezig maar ontbrak in de M31-ontwerplijst — toegevoegd per de oordeel-aanbeveling); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Grotendeels binnenlands/eigen centrale bank; toegevoegd omdat hij groter is dan sommige wel-opgenomen tier-2-mijnen."
+  },
+  {
+   "id": "w-sanshandao",
+   "naam": "Sanshandao Gold Mine",
+   "lon": 120.15,
+   "lat": 37.45,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "China (Shandong, Laizhou)",
+   "gewicht": 18.0,
+   "gewicht_bron": "capaciteit t Au/j — Shandong Gold Mining jaarverslag/productieoverzicht: Sanshandao (onder- en bovengronds gecombineerd) ≈ 550.000-600.000 oz Au (≈ 17-19 t) [B38][B39]",
+   "bron": "getrainde kennis (Laizhou-kust, Shandong) — geen verse Wikipedia/OSM-bevestiging deze ronde (429-rate-limit); benaderde regio-coordinaat, GEEN terreincoordinaat",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "VERVANGT het verboden regionale aggregaat 'Shandong-cluster' uit het ontwerp (M31-golf-2-regel: geen aggregaten met gewicht). Sanshandao is een concrete, met naam aanwijsbare Shandong Gold-mijn, maar de coordinaat is een benadering — status blijft daarom onzeker totdat een terreincoordinaat gevonden is."
+  },
+  {
+   "id": "w-segovia",
+   "naam": "Segovia",
+   "lon": -74.7,
+   "lat": 7.0833,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Colombia (Antioquia)",
+   "gewicht": 5.0,
+   "gewicht_bron": "capaciteit t Au/j — Aris Mining jaarcijfers 2024: ≈ 150.000-170.000 oz Au (≈ 5 t) [B40][B41]",
+   "bron": "getrainde kennis (stad Segovia, Antioquia) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Aris Mining; ondergrondse mijnen rond de stad Segovia."
+  },
+  {
+   "id": "w-kibali",
+   "naam": "Kibali",
+   "lon": 29.5833,
+   "lat": 3.0833,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "DR Congo (Haut-Uele)",
+   "gewicht": 19.0,
+   "gewicht_bron": "capaciteit t Au/j — Barrick / AngloGold Ashanti JV jaarcijfers 2024: ≈ 600.000-640.000 oz Au (≈ 19-20 t), grootste goudmijn van Afrika [B16][B42]",
+   "bron": "getrainde kennis (Haut-Uele-provincie, nabij de Oegandese grens) — geen verse bevestiging deze ronde (429-rate-limit); benaderde regio-coordinaat",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Barrick 45% / AngloGold Ashanti 45% / Congolese staat 10%; eigen waterkrachtcentrales op locatie."
+  },
+  {
+   "id": "w-fruta-del-norte",
+   "naam": "Fruta del Norte",
+   "lon": -78.4333,
+   "lat": -3.7667,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ecuador (Zamora-Chinchipe)",
+   "gewicht": 14.0,
+   "gewicht_bron": "capaciteit t Au/j — Lundin Gold jaarverslag 2024: ≈ 440.000-460.000 oz Au (≈ 14 t) [B43][B44]",
+   "bron": "getrainde kennis (Zamora-Chinchipe, zuidoost Ecuador) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Lundin Gold; hoge-graad ondergrondse mijn."
+  },
+  {
+   "id": "w-ahafo",
+   "naam": "Ahafo",
+   "lon": -2.35,
+   "lat": 7.35,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Ghana (Brong-Ahafo)",
+   "gewicht": 14.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag 2024: ≈ 430.000-460.000 oz Au (≈ 14 t) [B11][B45]",
+   "bron": "getrainde kennis (Brong-Ahafo-regio) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Newmont; tweede grote Ghanese Newmont-site naast Akyem."
+  },
+  {
+   "id": "w-cerronegro",
+   "naam": "Cerro Negro",
+   "lon": -69.75,
+   "lat": -47.15,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Argentinië (Santa Cruz)",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit t Au/j — Newmont jaarverslag 2024: ≈ 250.000-270.000 oz Au (≈ 8 t) [B11][B46]",
+   "bron": "getrainde kennis (Patagonische mijnregio, Santa Cruz) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Newmont."
+  },
+  {
+   "id": "w-veladero",
+   "naam": "Veladero",
+   "lon": -69.9,
+   "lat": -29.35,
+   "level": "site",
+   "parent": null,
+   "rol": "mijn",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Argentinië (San Juan)",
+   "gewicht": 8.0,
+   "gewicht_bron": "capaciteit t Au/j — Barrick jaarverslag 2024: ≈ 250.000-270.000 oz Au (≈ 8 t) [B16][B47]",
+   "bron": "getrainde kennis (San Juan-regio, Andes) — geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Barrick 50% / Shandong Gold 50% JV."
+  },
+  {
+   "id": "w-ref-valcambi",
+   "naam": "Valcambi (Balerna)",
+   "lon": 9.0051,
+   "lat": 45.8385,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zwitserland (Ticino)",
+   "gewicht": 2000.0,
+   "gewicht_bron": "capaciteit t Au/j — Valcambi bedrijfsopgave: nameplate-capaciteit ≈ 2.000 t/j, grootste raffinaderij ter wereld [B48]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-ref-valcambi` uit routebrief goud-loulo-ticino.md (was 45.845, 9.005 — 0.72 km verschoven). Oorspronkelijk: v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-valcambi): kruis in bebouwd centrum van Balerna, geen duidelijk afzonderlijk industrieterrein herkenbaar op deze precisie",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "De grootste van de vier Ticino-huizen; samen ≈ 65-70% van de wereldraffinage."
+  },
+  {
+   "id": "w-ref-argor",
+   "naam": "Argor-Heraeus (Mendrisio)",
+   "lon": 8.9818,
+   "lat": 45.8749,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zwitserland (Ticino)",
+   "gewicht": 1000.0,
+   "gewicht_bron": "capaciteit t Au/j — Argor-Heraeus bedrijfsopgave: nameplate-capaciteit ≈ 1.000 t/j [B49]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-ref-argor` uit routebrief goud-argor-mumbai.md (was 45.87, 8.98 — 0.56 km verschoven). Oorspronkelijk: v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-argor): kruis in het centrum van Mendrisio (straten/gebouwen gemengd), geen afzonderlijk fabrieksterrein herkenbaar op deze precisie",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Ticino; werkelijk adres (Via Moree 14) niet apart geverifieerd deze ronde."
+  },
+  {
+   "id": "w-ref-metalor",
+   "naam": "Metalor (Neuchâtel/Marin)",
+   "lon": 6.93,
+   "lat": 46.99,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zwitserland",
+   "gewicht": 650.0,
+   "gewicht_bron": "capaciteit t Au/j — Metalor bedrijfsopgave: nameplate-capaciteit ≈ 650 t/j [B50]",
+   "bron": "v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-metalor): kruis aan het meer van Neuchâtel, gemengde stadsbebouwing, geen apart fabrieksgebouw herkenbaar op deze precisie",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Buiten Ticino maar Zwitsers; wereldwijde vestigingen (o.a. Hongkong, Singapore, VS)."
+  },
+  {
+   "id": "w-ref-pamp",
+   "naam": "PAMP (Castel San Pietro)",
+   "lon": 9.0025,
+   "lat": 45.8546,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zwitserland (Ticino)",
+   "gewicht": 450.0,
+   "gewicht_bron": "capaciteit t Au/j — MKS PAMP bedrijfsopgave: nameplate-capaciteit ≈ 450 t/j [B51]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-pamp-raffinaderij` uit routebrief goud-pamp-shanghai.md (was 45.877, 9.029 — 3.23 km verschoven). Oorspronkelijk: v1-register gaf 45.87/9.03 (in bos); satelliet z15 (sitelaag-goud-ref-pamp) toonde geen fabrieksgebouw op dat punt — kruis licht verschoven richting het zichtbare dorpscluster van Castel San Pietro, nog steeds geen duidelijk industrieterrein herkenbaar",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "MKS PAMP; premium-baren (\"Lady Fortuna\")."
+  },
+  {
+   "id": "w-ref-rand",
+   "naam": "Rand Refinery (Germiston)",
+   "lon": 28.155,
+   "lat": -26.2189,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Zuid-Afrika (Gauteng)",
+   "gewicht": 600.0,
+   "gewicht_bron": "capaciteit t Au/j — Rand Refinery bedrijfsopgave: nameplate-capaciteit ≈ 600 t/j, historisch grootste raffinaderij ter wereld [B52]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-randrefinery` uit routebrief goud-mponeng-londen.md (was -26.23, 28.16 — 1.33 km verschoven). Oorspronkelijk: v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-rand): kruis ligt op een meer/dam (Homestead Lake-gebied), duidelijk MIS — het echte terrein ligt vermoedelijk enkele honderden meters verderop; coordinaat niet gecorrigeerd zonder zichtbaar bewijs",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "Verwerkt historisch de meeste Zuid-Afrikaanse mijnproductie (Witwatersrand-doré)."
+  },
+  {
+   "id": "w-ref-perth",
+   "naam": "Perth Mint",
+   "lon": 115.87,
+   "lat": -31.955,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Australië (West-Australië)",
+   "gewicht": 400.0,
+   "gewicht_bron": "capaciteit t Au/j — The Perth Mint bedrijfsopgave: nameplate-capaciteit ≈ 400 t/j, raffineert vrijwel alle Australische mijnproductie [B53]",
+   "bron": "v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-perth): kruis in het CBD van Perth (straatkruising), niet op het bekende Mint-gebouw aan Hay Street, East Perth — vermoedelijk enkele honderden meters oostelijk ervan",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "The Perth Mint (overheids-eigendom West-Australië); adres 310 Hay Street, East Perth niet apart geverifieerd."
+  },
+  {
+   "id": "w-ref-mmtcpamp",
+   "naam": "MMTC-PAMP (Manesar)",
+   "lon": 77.0611,
+   "lat": 28.214,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "India (Haryana)",
+   "gewicht": 200.0,
+   "gewicht_bron": "capaciteit t Au/j — MMTC-PAMP bedrijfsopgave: nameplate-capaciteit ≈ 200 t/j [B54]",
+   "bron": "CENTRAAL GELIJKGETROKKEN (2026-09-28) met het satelliet-gelegde keten-anker `au-ref-mmtc` uit routebrief goud-dubai-delhi.md (was 28.35, 76.93 — 19.84 km verschoven). Oorspronkelijk: v1-register (data/goud.js, was 28.10/76.90); positie licht bijgesteld richting het bekende Manesar-industriegebied (Gurgaon-Rewari corridor) — geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
+   "notitie": "MMTC-PAMP; India-import + schroot (Rojka Meo, Haryana)."
+  },
+  {
+   "id": "w-ref-rcm",
+   "naam": "Royal Canadian Mint",
+   "lon": -75.69928,
+   "lat": 45.43135,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij/munt",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Canada (Ottawa, Ontario)",
+   "gewicht": 200.0,
+   "gewicht_bron": "capaciteit t Au/j — Royal Canadian Mint bedrijfsopgave: nameplate-capaciteit ≈ 200 t/j [B56]",
+   "bron": "Wikipedia MediaWiki-API, vers opgehaald deze ronde (generator=search, 'Royal Canadian Mint'); geen satellietblik deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "notitie": "Sussex Drive, Ottawa; Noord-Amerikaanse doré."
+  },
+  {
+   "id": "w-ref-tanaka",
+   "naam": "Tanaka Kikinzoku (Hiratsuka)",
+   "lon": 139.34,
+   "lat": 35.33,
+   "level": "site",
+   "parent": null,
+   "rol": "raffinaderij",
+   "grondstof": [
+    "goud"
+   ],
+   "land": "Japan (Kanagawa)",
+   "gewicht": 150.0,
+   "gewicht_bron": "capaciteit t Au/j — Tanaka Kikinzoku Kogyo bedrijfsopgave: nameplate-capaciteit ≈ 150 t/j [B58]",
+   "bron": "getrainde kennis (Hiratsuka, Kanagawa — gecorrigeerd t.o.v. het v1-register dat een Tokyo-stadscentroide gebruikte); geen verse bevestiging deze ronde",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "notitie": "Correctie op v1: de raffinagevestiging ligt in Hiratsuka, niet centraal Tokio (dat was een stadscentroide, expliciet verworpen conform de M30/M31-regel tegen centroides)."
+  }
+ ]
+}
