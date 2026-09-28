@@ -21,6 +21,16 @@ Al Habtoor Research Centre / RUSI / Wikipedia-Rosatom komen op 44-45% uit, naast
 en CNNC ~10-15%; percentages tellen niet exact tot 100% omdat schattingen van verschillende jaren/definities
 door elkaar lopen — vandaar "indicatief" bij elke losse site).
 
+> **Correctie 2026-09-28 (keuze Lars, "maak de uraniumgloed"):** met het percentage als gewicht vielen de
+> verrijkingssites in de gloed vrijwel weg: 6 tot 23, naast mijnen van 4.000 tot 8.000 tU. Daarom staat er voor
+> verrijking nu een **omgerekend voeding-equivalent in t U/j**: geschat aandeel wereld-SWU × ~65.000 t U/j
+> wereldvoeding (WNA-reactorbehoefte 2023/24). Een aandeel van 1% komt dus neer op ~650 t U/j. Novouralsk komt
+> uit op ~14.950 t U/j, Georges Besse II op ~7.800 en Urenco Almelo op ~5.200.
+> ⚠️ **Dit is een schatting op een schatting.** De aandelen per fabriek zijn zelf geschat en de wereldvoeding is
+> een ordegrootte. Het staat daarom vooraan in `capaciteit_bron` ("OMGEREKEND, SCHATTING") en dus ook in
+> `gewicht_bron` van de gloedlaag. Het oorspronkelijke percentage staat in `aandeel_wereld_swu_pct`.
+> De percentages in de tabel hieronder zijn ongewijzigd: het zijn de bronwaarden.
+
 ## Werkwijze
 
 - **Coördinaten** (WGS-84, lat, lon met decimale punt, 4 decimalen): Wikipedia-geohack, mindat, NRC-vergunnings-

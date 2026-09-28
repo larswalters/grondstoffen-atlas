@@ -1,7 +1,7 @@
 {
  "gemaakt": "2026-09-28",
- "eenheid": "tU/jaar (ton uraan-inhoud) voor winning, conversie en splijtstoffabricage; % wereld-SWU-capaciteit voor verrijking (niet optelbaar in tU — zie eenheid_site per site)",
- "toelichting_eenheid": "Mijnen/conversie/splijtstoffabricage: capaciteit_kt draagt tU/jaar (winning: geproduceerd/verkocht U-gehalte laatste volledige jaar; conversie: vergunde/nameplate UF6-doorzet in tU; splijtstoffabricage: t HM/jaar als tU benaderd). Verrijking is NIET optelbaar in tU (UF6-voeding splitst in verrijkt product + verarmde tails) — voor die rol staat in capaciteit_kt het geschatte aandeel in de wereld-SWU-capaciteit (%), met eenheid_site erbij zodat een optelling nooit per ongeluk % bij tU optelt.",
+ "eenheid": "tU/jaar (ton uraan-inhoud) voor alle rollen. Winning, conversie en splijtstoffabricage: gebronde capaciteit/productie. Verrijking: OMGEREKEND (schatting) naar t U/j voeding-equivalent = geschat aandeel wereld-SWU × ~65.000 t U/j wereldvoeding; het oorspronkelijke aandeel staat in aandeel_wereld_swu_pct (keuze Lars 2026-09-28, uraniumgloed).",
+ "toelichting_eenheid": "Mijnen/conversie/splijtstoffabricage: capaciteit_kt draagt tU/jaar (winning: geproduceerd/verkocht U-gehalte laatste volledige jaar; conversie: vergunde/nameplate UF6-doorzet in tU; splijtstoffabricage: t HM/jaar als tU benaderd). Verrijking is NIET optelbaar in tU (UF6-voeding splitst in verrijkt product + verarmde tails) — voor die rol staat in capaciteit_kt het geschatte aandeel in de wereld-SWU-capaciteit (%), met eenheid_site erbij zodat een optelling nooit per ongeluk % bij tU optelt. || SINDS 2026-09-28 (keuze Lars, 'maak de uraniumgloed'): de verrijkingssites dragen niet meer het percentage (dat verdween in de gloed naast mijnen van 4.000-8.000 tU) maar een OMGEREKEND voeding-equivalent in t U/j: aandeel wereld-SWU × ~65.000 t U/j wereldvoeding. Dat is een schatting — de wereldvoeding is een orde-grootte, de aandelen per fabriek zijn zelf al schattingen — en staat zo vooraan in capaciteit_bron. Het oorspronkelijke percentage staat in aandeel_wereld_swu_pct.",
  "sites": [
   {
    "id": "w-inkai",
@@ -205,12 +205,12 @@
    "rol": "verrijking",
    "lat": 57.2858,
    "lon": 60.0826,
-   "capaciteit_kt": 23,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. relatieve grootte binnen Rosatoms 4 fabrieken",
-   "capaciteit_bron": "Rosatom/WNA: Rusland (4 fabrieken: Novouralsk, Angarsk, Zelenogorsk, Seversk) samen ≈ 44% wereld-SWU (≈27,1 Mln SWU/j, 2024/25); Novouralsk is de grootste van de vier — aandeel hier geschat op ~23% wereld-SWU, GEEN officieel per-fabriek-cijfer publiek [B19][B20][B21]",
+   "capaciteit_kt": 14950,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~23% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 14950 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Rosatom/WNA: Rusland (4 fabrieken: Novouralsk, Angarsk, Zelenogorsk, Seversk) samen ≈ 44% wereld-SWU (≈27,1 Mln SWU/j, 2024/25); Novouralsk is de grootste van de vier — aandeel hier geschat op ~23% wereld-SWU, GEEN officieel per-fabriek-cijfer publiek [B19][B20][B21]",
    "coord_bron": "Wikipedia/NTI-coördinaat (57°17'09\"N 60°04'57\"E); satelliet z14 (sitelaag-uranium-novouralsk): kruis ligt midden op het omheinde industriecomplex met lange fabriekshallen en spooraansluiting — de Oeral Elektrochemisch Combinaat",
    "status": "bron-gelegd",
-   "notitie": "DE flessenhals van de hele uraanketen: Rusland/Rosatom-TVEL levert ~44% van de wereld-verrijkingscapaciteit, geconcentreerd in 4 sites. Novouralsk is daarvan de grootste. Per-site-SWU-cijfers zijn niet publiek uitgesplitst — het percentage hier is een schatting, expliciet gemarkeerd."
+   "notitie": "DE flessenhals van de hele uraanketen: Rusland/Rosatom-TVEL levert ~44% van de wereld-verrijkingscapaciteit, geconcentreerd in 4 sites. Novouralsk is daarvan de grootste. Per-site-SWU-cijfers zijn niet publiek uitgesplitst — het percentage hier is een schatting, expliciet gemarkeerd.",
+   "aandeel_wereld_swu_pct": 23.0
   },
   {
    "id": "w-angarsk",
@@ -219,12 +219,12 @@
    "rol": "verrijking",
    "lat": 52.5,
    "lon": 103.9,
-   "capaciteit_kt": 8,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Novouralsk (Rosatom 44% totaal over 4 fabrieken); Angarsk (Angarsk Electrolysis Chemical Combine) is de tweede-grootste, aandeel hier geschat op ~8% wereld-SWU [B19][B20]",
+   "capaciteit_kt": 5200,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~8% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 5200 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Novouralsk (Rosatom 44% totaal over 4 fabrieken); Angarsk (Angarsk Electrolysis Chemical Combine) is de tweede-grootste, aandeel hier geschat op ~8% wereld-SWU [B19][B20]",
    "coord_bron": "Wikipedia-geohack Angarsk industriezone; geen satellietblik deze ronde",
    "status": "onzeker",
-   "notitie": "Ook internationale-verrijkingscentrum (IUEC, met Kazachstaanse deelname) — deels los van het zuiver-Russische aandeel."
+   "notitie": "Ook internationale-verrijkingscentrum (IUEC, met Kazachstaanse deelname) — deels los van het zuiver-Russische aandeel.",
+   "aandeel_wereld_swu_pct": 8.0
   },
   {
    "id": "w-zelenogorsk",
@@ -233,12 +233,12 @@
    "rol": "verrijking",
    "lat": 56.1167,
    "lon": 94.5833,
-   "capaciteit_kt": 7,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Novouralsk; aandeel geschat op ~7% wereld-SWU [B19][B20]",
+   "capaciteit_kt": 4550,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~7% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 4550 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Novouralsk; aandeel geschat op ~7% wereld-SWU [B19][B20]",
    "coord_bron": "Wikipedia-geohack Zelenogorsk (gesloten stad); geen satellietblik deze ronde",
    "status": "onzeker",
-   "notitie": "Gesloten stad (voormalig Krasnojarsk-45)."
+   "notitie": "Gesloten stad (voormalig Krasnojarsk-45).",
+   "aandeel_wereld_swu_pct": 7.0
   },
   {
    "id": "w-seversk-verrijking",
@@ -247,12 +247,12 @@
    "rol": "verrijking",
    "lat": 56.6,
    "lon": 84.9,
-   "capaciteit_kt": 6,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Novouralsk; aandeel geschat op ~6% wereld-SWU [B19][B20]",
+   "capaciteit_kt": 3900,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~6% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 3900 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Novouralsk; aandeel geschat op ~6% wereld-SWU [B19][B20]",
    "coord_bron": "zelfde kandidaat als w-seversk-conversie (Wikipedia-geohack Seversk); geen satellietblik deze ronde",
    "status": "onzeker",
-   "notitie": "Combineert conversie én verrijking op één terrein — vandaar hetzelfde coördinaat als w-seversk-conversie."
+   "notitie": "Combineert conversie én verrijking op één terrein — vandaar hetzelfde coördinaat als w-seversk-conversie.",
+   "aandeel_wereld_swu_pct": 6.0
   },
   {
    "id": "w-urenco-almelo",
@@ -261,12 +261,12 @@
    "rol": "verrijking",
    "lat": 52.3383,
    "lon": 6.6939,
-   "capaciteit_kt": 8,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. Urenco's totale ~17-19 Mln SWU over 4 fabrieken",
-   "capaciteit_bron": "Urenco/WNA: Urenco-groep totaal ≈ 17-19 Mln SWU/j (≈28-30% wereld); niet per fabriek gepubliceerd — Almelo (2 lijnen SP4/SP5) aandeel hier geschat op ~8% wereld-SWU [B22][B23]",
+   "capaciteit_kt": 5200,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~8% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 5200 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Urenco/WNA: Urenco-groep totaal ≈ 17-19 Mln SWU/j (≈28-30% wereld); niet per fabriek gepubliceerd — Almelo (2 lijnen SP4/SP5) aandeel hier geschat op ~8% wereld-SWU [B22][B23]",
    "coord_bron": "adres Drienemansweg 1, Almelo (52°20'18\"N 6°41'38\"E); geen satellietblik deze ronde (eerste kandidaatpunt, stadscentrum Almelo, bleek fout — gecorrigeerd naar het adres)",
    "status": "aannemelijk",
-   "notitie": "SP5 (sinds 2000) levert >80% van Urenco Nederlands productiecapaciteit."
+   "notitie": "SP5 (sinds 2000) levert >80% van Urenco Nederlands productiecapaciteit.",
+   "aandeel_wereld_swu_pct": 8.0
   },
   {
    "id": "w-urenco-gronau",
@@ -275,12 +275,12 @@
    "rol": "verrijking",
    "lat": 52.0833,
    "lon": 7.0167,
-   "capaciteit_kt": 7,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Urenco Almelo; aandeel geschat op ~7% wereld-SWU [B22][B23]",
+   "capaciteit_kt": 4550,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~7% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 4550 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Urenco Almelo; aandeel geschat op ~7% wereld-SWU [B22][B23]",
    "coord_bron": "Wikipedia-geohack Gronau nucleaire site; geen satellietblik deze ronde",
    "status": "onzeker",
-   "notitie": "-"
+   "notitie": "-",
+   "aandeel_wereld_swu_pct": 7.0
   },
   {
    "id": "w-urenco-capenhurst",
@@ -289,12 +289,12 @@
    "rol": "verrijking",
    "lat": 53.2667,
    "lon": -2.8833,
-   "capaciteit_kt": 6,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Urenco Almelo; aandeel geschat op ~6% wereld-SWU [B22][B23]",
+   "capaciteit_kt": 3900,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~6% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 3900 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Urenco Almelo; aandeel geschat op ~6% wereld-SWU [B22][B23]",
    "coord_bron": "Wikipedia-geohack Capenhurst nuclear site; geen satellietblik deze ronde",
    "status": "onzeker",
-   "notitie": "-"
+   "notitie": "-",
+   "aandeel_wereld_swu_pct": 6.0
   },
   {
    "id": "w-urenco-eunice",
@@ -303,12 +303,12 @@
    "rol": "verrijking",
    "lat": 32.4667,
    "lon": -103.1833,
-   "capaciteit_kt": 9,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting",
-   "capaciteit_bron": "Zelfde bron als Urenco Almelo; Eunice is de grootste en nog uitbreidende Urenco-vestiging (VS-beleid om minder afhankelijk te zijn van Russisch verrijkt uranium), aandeel geschat op ~9% wereld-SWU, groeiend [B22][B24]",
+   "capaciteit_kt": 5850,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~9% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 5850 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Urenco Almelo; Eunice is de grootste en nog uitbreidende Urenco-vestiging (VS-beleid om minder afhankelijk te zijn van Russisch verrijkt uranium), aandeel geschat op ~9% wereld-SWU, groeiend [B22][B24]",
    "coord_bron": "Wikipedia-geohack Urenco USA/LES-terrein Eunice/Hobbs, NM; geen satellietblik deze ronde",
    "status": "aannemelijk",
-   "notitie": "Enige commerciële verrijkingsfabriek van de VS naast een klein GLE/Centrus-proefinstallatie; capaciteitsuitbreiding aangekondigd 2024/25 als reactie op de Amerikaanse importban op Russisch verrijkt uranium."
+   "notitie": "Enige commerciële verrijkingsfabriek van de VS naast een klein GLE/Centrus-proefinstallatie; capaciteitsuitbreiding aangekondigd 2024/25 als reactie op de Amerikaanse importban op Russisch verrijkt uranium.",
+   "aandeel_wereld_swu_pct": 9.0
   },
   {
    "id": "w-tricastin-verrijking",
@@ -317,12 +317,12 @@
    "rol": "verrijking",
    "lat": 44.325,
    "lon": 4.7167,
-   "capaciteit_kt": 12,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. Orano's totale ~7,5-11 Mln SWU",
-   "capaciteit_bron": "Orano Activity Report 2024 / WNA: Georges Besse II nameplate ~7,5-11 Mln SWU/j (in uitbreiding), ≈ 12% wereld-SWU indicatief [B17][B19]",
+   "capaciteit_kt": 7800,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~12% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 7800 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Orano Activity Report 2024 / WNA: Georges Besse II nameplate ~7,5-11 Mln SWU/j (in uitbreiding), ≈ 12% wereld-SWU indicatief [B17][B19]",
    "coord_bron": "zelfde satellietpass als w-tricastin-conversie (Wikipedia-geohack + satelliet z14, midden op het Tricastin-industriecomplex)",
    "status": "bron-gelegd",
-   "notitie": "Zelfde terrein als de Comurhex II-conversiefabriek (zie w-tricastin-conversie) — één groot nucleair platform Pierrelatte/Tricastin."
+   "notitie": "Zelfde terrein als de Comurhex II-conversiefabriek (zie w-tricastin-conversie) — één groot nucleair platform Pierrelatte/Tricastin.",
+   "aandeel_wereld_swu_pct": 12.0
   },
   {
    "id": "w-cnnc-lanzhou",
@@ -331,12 +331,12 @@
    "rol": "verrijking",
    "lat": 36.150744,
    "lon": 103.518431,
-   "capaciteit_kt": 10,
-   "eenheid_site": "% van de wereld-SWU-capaciteit (niet optelbaar in tU) — schatting o.b.v. CNNC's totale ~10-12 Mln SWU",
-   "capaciteit_bron": "IPFM/Belfer Center 'China's Uranium Enrichment Capacity' + WNA China-profiel: CNNC totale verrijkingscapaciteit ≈ 10-12 Mln SWU/j over meerdere sites (Lanzhou grootste, plus Hanzhong en twee nieuwe sites sinds 2023); Lanzhou-aandeel hier geschat op ~10% wereld-SWU [B25][B26]",
+   "capaciteit_kt": 6500,
+   "capaciteit_bron": "OMGEREKEND, SCHATTING: ~10% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 6500 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: IPFM/Belfer Center 'China's Uranium Enrichment Capacity' + WNA China-profiel: CNNC totale verrijkingscapaciteit ≈ 10-12 Mln SWU/j over meerdere sites (Lanzhou grootste, plus Hanzhong en twee nieuwe sites sinds 2023); Lanzhou-aandeel hier geschat op ~10% wereld-SWU [B25][B26]",
    "coord_bron": "Wikipedia-geohack 'Lanzhou uranium enrichment plant' (36°09'03\"N 103°31'06\"E); satelliet z14 (sitelaag-uranium-cnnc-lanzhou): kruis ligt op een omheind industriecomplex met kassen/loodsen aan de Gele Rivier, in de Anning-industriezone — plausibel maar niet met een naambord bevestigd (China publiceert geen sitecoördinaten)",
    "status": "aannemelijk",
-   "notitie": "Grootste verrijkingsfabriek van China (weapon-program-codenaam Plant 504). Zoals bij koper: geen registerbron met coördinaten voor Chinese sites — dit punt komt uit een onafhankelijke geohack-coördinaat, individueel satellietgecheckt, niet uit een lijst."
+   "notitie": "Grootste verrijkingsfabriek van China (weapon-program-codenaam Plant 504). Zoals bij koper: geen registerbron met coördinaten voor Chinese sites — dit punt komt uit een onafhankelijke geohack-coördinaat, individueel satellietgecheckt, niet uit een lijst.",
+   "aandeel_wereld_swu_pct": 10.0
   },
   {
    "id": "w-westinghouse-columbia",

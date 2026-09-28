@@ -27,7 +27,7 @@
 // zodra er een grondstof met grotere getallen bijkomt (kolen in Mt/j).
 
 import { bouwGloed, AFSTEMMING as GLOED_AFSTEMMING } from "./gloed.js?v=118";
-import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=122";
+import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=127";
 
 // Grondstofkleuren komen uit `stroomstijl.js` — de gloed hoort dezelfde taal te
 // spreken als de lijn die er vertrekt.

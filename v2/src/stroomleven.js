@@ -38,7 +38,7 @@ import * as THREE from "three";
 import { Line2 } from "three/addons/lines/Line2.js";
 import { LineGeometry } from "three/addons/lines/LineGeometry.js";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
-import { kleurVan, beenPunten } from "./stroomstijl.js?v=122";
+import { kleurVan, beenPunten } from "./stroomstijl.js?v=127";
 
 // ⚠️ DE KLEURTABEL STOND HIER OOK, EN DAT WAS DE FOUT. Twee kopieën van dezelfde
 // legenda (hier en in stroomroute.js) lopen vroeg of laat uit elkaar; sinds
@@ -54,6 +54,10 @@ const KM_PER_DAG = {
   spoor: 500,
   truck: 600,
   leiding: 2000,   // continu proces, leest als een gestage stroom
+  // Een vrachtvlucht haalt in uren wat een schip in weken doet. 8.000 km/dag
+  // rekent afhandeling mee; het gaat om de verhouding tot zee (700), niet om
+  // de kruissnelheid. JNB → Antwerpen duurt zo ruim één seconde.
+  lucht: 8000,
 };
 
 // ⚠️ EERSTE VERSIE WAS ALLEEN RAND EN GEEN LIJN. Drie zachte additieve schillen

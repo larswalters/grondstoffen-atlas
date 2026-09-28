@@ -96,6 +96,9 @@ export const MODALITEIT_KLEUR = {
   truck: 0xffb04d,        // weg-been + last mile
   spoor: 0xff7ab8,        // landnet — eigen kleur sinds 2026-07-28
   leiding: 0x9b8cff,      // slurryleiding: een eigen verbinding, geen net
+  // Sinds 2026-09-28 (M31 golf 3): goud, PGM en diamant vliegen. Limoengeel is
+  // de enige vrije familie naast blauw/turkoois/amber/roze/paars.
+  lucht: 0xd6ff5a,
 };
 
 const ONBEKEND = 0xffffff;
@@ -159,11 +162,27 @@ const LIFT_MAX = 0.22;
 
 /** Krijgt dit been een boog in deze modus? */
 function tiltOp(modaliteit, lijnModus) {
+  // ⚠️ LUCHT BOOGT IN ÉLKE LIJNMODUS, ook in "onze routes" (M31 golf 3,
+  // 2026-09-28). Het besluit "de lijnen blijven op de grond" (2026-08-07) gaat
+  // over routes die OP de grond liggen: daar zou optillen de gemeten geul of het
+  // gemeten spoor onwaar maken. Een vlucht ligt echt in de lucht, dus hier is de
+  // boog de eerlijke weergave en niet de verzonnen. Zelfde reden als in v1 (M6):
+  // "goud vliegt écht die boog, voor lithium was hij fout". De hoogte blijft
+  // overdreven (een vrachtvliegtuig vliegt op ~11 km); de boog zegt "dit been
+  // gaat door de lucht", niet "op deze hoogte".
+  if (modaliteit === "lucht") return true;
   if (lijnModus === "recht-boog") return true;
   // Zee is de modaliteit waar een rechte lijn het vaakst over land snijdt, dus
-  // daar koopt de boog het meest op. Lucht komt hier later bij (diamant/goud).
-  if (lijnModus === "recht-zeeboog") return modaliteit === "zee" || modaliteit === "lucht";
+  // daar koopt de boog het meest op.
+  if (lijnModus === "recht-zeeboog") return modaliteit === "zee";
   return false;
+}
+
+/** Ligt dit been in deze lijnmodus op het oppervlak (straalfactor 1 overal)?
+ *  Alleen dan mag een aanroeper het been verdichten zonder de hoogte te
+ *  verliezen — `verdicht()` in stroomroute.js zet de straalfactor op 1. */
+export function ligtOpGrond(been, lijnModus) {
+  return lijnModus === "route" && been.modaliteit !== "lucht";
 }
 
 const D2R = Math.PI / 180;
@@ -192,7 +211,9 @@ function hoek(a, b) {
  */
 export function beenPunten(been, lijnModus) {
   const punten = been.punten || [];
-  if (lijnModus === "route" || punten.length < 2) {
+  // Een luchtbeen is gebakken als grootcirkel (maak_luchtbeen.py), dus de boog
+  // hieronder volgt in "onze routes" exact de gebakken lijn, alleen opgetild.
+  if (ligtOpGrond(been, lijnModus) || punten.length < 2) {
     return punten.map((p) => [p[0], p[1], 1]);
   }
 

@@ -30,7 +30,7 @@
 //     de legenda-kleur.
 
 import * as THREE from "three";
-import { kleurVan, beenPunten, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=122";
+import { kleurVan, beenPunten, ligtOpGrond, grondstofVan, GRONDSTOF_KLEUR } from "./stroomstijl.js?v=127";
 import { bouwGloed } from "./gloed.js?v=118";
 
 function opBol(lonDeg, latDeg, r, uit, o) {
@@ -91,7 +91,9 @@ function verdicht(punten, maxKm = 5) {
 /** De punten van een been als [lon, lat, straalfactor], klaar om te tekenen. */
 function puntenVoor(been, lijnModus) {
   const p = beenPunten(been, lijnModus);
-  return lijnModus === "route" ? verdicht(p) : p;
+  // Een luchtbeen boogt ook in route-modus (zie tiltOp in stroomstijl) en
+  // verdicht() zou zijn hoogte platslaan — zijn punten liggen al dicht.
+  return ligtOpGrond(been, lijnModus) ? verdicht(p) : p;
 }
 
 function maakBeen(been, radius, kleur, klemOpHorizon, lijnModus) {

@@ -20,11 +20,11 @@ import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=122";
+import { laadStroomroute } from "./stroomroute.js?v=127";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=122";
-import { laadStroomleven } from "./stroomleven.js?v=122";
-import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=122";
+import { laadGloednodes } from "./gloednodes.js?v=127";
+import { laadStroomleven } from "./stroomleven.js?v=127";
+import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=127";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -359,7 +359,7 @@ let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | 
 
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
-  spoor: "trein", leiding: "leiding",
+  spoor: "trein", leiding: "leiding", lucht: "vliegtuig",
 };
 
 function stroomRegel(s) {
@@ -456,7 +456,7 @@ bouwGrondstofLegenda();
 initStroomGroepen();
 
 for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "126", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomroute(VECTOR_R, "127", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.camera, GLOBE.renderer)
     .then((s) => {
       s.groep.visible = def.aan;
@@ -485,7 +485,7 @@ for (const def of STROMEN) {
 // stroomleven.js voor waarom de lijn op de grond blijft.
 const STROOMLEVEN = new Map();
 for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "126", GLOBE.klemOpHorizon, def.bestand,
+  laadStroomleven(VECTOR_R, "127", GLOBE.klemOpHorizon, def.bestand,
                   GLOBE.renderer, GLOBE.camera)
     .then((l) => {
       l.groep.visible = def.aan;
@@ -618,7 +618,7 @@ function toonGloedNodeNoot() {
 }
 
 for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "126", GLOBE.camera, GLOBE.renderer, bestand)
+  laadGloednodes(VECTOR_R, "127", GLOBE.camera, GLOBE.renderer, bestand)
     .then((g) => {
       g.groep.visible = gloedAan;
       GLOEDNODES.set(bestand, g);
