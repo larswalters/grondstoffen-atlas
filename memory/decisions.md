@@ -3,6 +3,23 @@
 
 ## 2026-09-28 — M31: meer stromen richting v1-dichtheid
 
+- **2026-09-28 · ✅ LARS — "3/4X ZOVEEL KAN OOK ZONDER PROBLEMEN".** Golf 1 (32 agenten, Sonnet 5) kostte ~15% van de
+  sessielimiet, dus kleine golven zijn niet nodig. Golf 2 is één workflow van 135 agenten met 37 ketens.
+- **2026-09-28 · SAMENSTELLING GOLF 2 (orkestrator, gemengd):**
+  - zilver + gas nieuw, omdat ze op het bestaande gereedschap passen (LNG = zee);
+  - de negen bestaande grondstoffen aangevuld op hun grootste v1-gaten;
+  - goud/PGM/diamant bewust niet, want zonder luchtvracht-modaliteit vliegen ze niet.
+- **2026-09-28 · KEURING PER KETEN.** Een onafhankelijke agent meet na de bake opnieuw en herstelt alleen mechanisch
+  (haven-aanloop, ontbrekende marker, recht been zonder stippel). Oordeel: goed / goed-met-bevindingen / niet-registreren.
+  In golf 2 had geen enkele keten herstel nodig: de haven-aanloopregel in de handleiding deed zijn werk.
+- **2026-09-28 · SITELAAG: EEN CLUSTER OF CENTROÏDE KRIJGT GEEN GEWICHT.** Twee geaggregeerde Chinese zilverclusters
+  (4.000/3.400 t) en Kochi (stadscentroïde) staan in `sites_zonder_gewicht`. Anders zou de zwaarste gloed op een punt
+  staan dat geen terrein is.
+- **2026-09-28 · AGENTEN RAKEN GEEN BESTAANDE SITELAGEN AAN.** De wijziging van een koper-agent aan `koper-sitelaag.json`
+  (Olympic Dam: FY2024 215,7 kt → vaag 2005-cijfer) is teruggedraaid. `voeg_been_toe.py --stippel-geojson` is behouden,
+  omdat het additief is en gebruikt wordt. De centrale nameting na elke golf bevat daarom een diff op gedeelde
+  bestanden buiten de golf.
+
 - **2026-09-28 · ✅ LARS — "JA PAK 586 OP"** op het voorstel om de naad Habshan→Chiba te dichten, de rest te integreren en de
   twijfelgevallen op de bol te laten zien in plaats van eerst een controleronde (bouwen boven meten).
 - **2026-09-28 · NADEN > 5 KM IN NIEUWE KETENS DICHT MET EEN HAVEN-AANLOOP, OOK BINNEN DE 25 KM-SNAP.** Drie ketens hadden de

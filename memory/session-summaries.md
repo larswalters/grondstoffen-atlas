@@ -1,6 +1,32 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-09-28 (avond) - M31 golf 2 live op `?v=126` (LAR-595..598, commit `98af548`)
+
+Lars: golf 1 kostte maar 15% van de sessielimiet → *"3/4x zoveel kan ook zonder problemen."*
+
+**Voorbereiding:** de haven-aanloopregel in `bakhandleiding-licht.md` §2/§5/§6, en Linear LAR-595..598.
+
+**Workflow `wf_7bbf0e2a-fef`** (135 agenten, Sonnet 5, 0 fouten, 37,2M tokens, ~1,5 u): ontwerp → toets → brief → bake →
+keuring. Nieuw: slots voor zware runs en een webbudget.
+
+**Resultaat — 37/37 gebakken en goedgekeurd:**
+- zilver 5, gas 5;
+- koper, lithium, grafiet, nikkel, ree en kolen +3; olie +4; uranium +3; kobalt +2.
+
+**Centraal:**
+- eigen nameting: grootste naad 3,6 km;
+- koper-sitelaag teruggedraaid;
+- zilverclusters en Kochi zonder gewicht;
+- `lithium-cirilo-vitoria` (bewust ≠ ilheus);
+- register (`ag-`/`gas-`, `olie-kod`), HUD, gloedlagen zilver 25 / gas 46, `?v=126`.
+
+**Bol-check:** 91/91, 11 gloedlagen (369 sites), 0 fouten; 375 px.
+
+**Open:** uraniumgloed, twee stippelketens, keuze golf 3 (lucht / reserves / visueel).
+
+Vault: `wiki/projects/General/grondstoffen-atlas/2026-09-28-grondstoffen-atlas-m31-golf2-live.md`.
+
 ## 2026-09-28 (later) - M31 golf 1 live op `?v=125` (LAR-586, commit `c88468c`)
 
 Lars: *"Ja pak 586 op."*

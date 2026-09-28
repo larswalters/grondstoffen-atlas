@@ -903,7 +903,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 1 LIVE ?v=125 — olie 5 + uranium 4 nieuw, kobalt +3; 54 stromen, 9 gloedlagen; commit c88468c)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 2 LIVE ?v=126 — zilver + gas nieuw, negen grondstoffen aangevuld; 91 stromen, 11 gloedlagen; commit 98af548)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3177,9 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-09-28 · M31 GOLF 2 LIVE `?v=126` (LAR-595..598, `98af548`).** Na Lars' kalibratie ("golf 1 kostte 15% van de
+  sessielimiet") één workflow van 135 agenten: 37 ketens, zilver + gas nieuw. Een keuring per keten is vast onderdeel.
+  Na elke golf centraal: een diff op gedeelde bestanden buiten de golf, en sitelagen zonder aggregaten of centroïdes.
 - **2026-09-28 · M31 GOLF 1 LIVE `?v=125` (LAR-586, `c88468c`).** Registersleutels `<prefix>-<twee initialen>` (`olie-` ·
   `u-` · `co-`). Naden > 5 km (de zee-snap binnen 25 km) worden gedicht met een haven-aanloop als stippel, ook onder de
   25 km. `voeg_sites_toe.py` labelt `eenheid_site` eerlijk. Open: de uraniumgloed (verrijking in % SWU) is een keuze voor Lars.

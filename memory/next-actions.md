@@ -1,7 +1,21 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 LIVE `?v=125`, commit `c88468c` — Lars kijkt, dan golf 2)*
+*Last updated: 2026-09-28 (M31 golf 2 LIVE `?v=126`, commit `98af548` — Lars kijkt, dan golf 3 kiezen)*
 
-## 🔴 NIEUW 2026-09-28 (later) — na golf 1 live: Lars kijkt, dan golf 2
+## 🔴 NIEUW 2026-09-28 (avond) — na golf 2 live
+
+1. **Lars kijkt:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=126 (atlasmodus *per grondstof* + *donker*).
+2. **Beslissingen die bij Lars liggen:**
+   - de uraniumgloed (#2 hieronder, nog open);
+   - de twee ketens die volledig stippel zijn: `kobalt-ambatovy-toamasina` en `zilver-antamina-huarmey` (houden, of alleen als brief).
+3. **Golf 3 kiezen:**
+   - (a) **luchtvracht-modaliteit** (centraal, vóór de workflow): modaliteit `lucht` in `stroomstijl.js` (kleur + legenda), een grootcirkel-been in `hecht_marnet.py`/`voeg_been_toe.py` (verdicht, niet 2 punten), kometen in `stroomleven.js`. Daarna goud, PGM en diamant.
+   - (b) **de 15 reserve-assen uit golf 2:** koper-antamina-daye · koper-binghamcanyon-garfield · gas-raslaffan-rotterdam · gas-sabetta-zeebrugge · zilver-dukat-krasnojarsk · zilver-greenscreek-trail · uranium-navoi-alashankou · uranium-cigarlake-mcclean · ree-dongpao-yunnan · ree-nechalacho-larochelle · kobalt-murrinmurrin-kwinana · kobalt-obi-ganzhou · grafiet-jixi-ningbo · olie-westridge-ulsan · kolen-gillette-robertsbank. De afgewezen assen staan in het resultaat van `wf_7bbf0e2a-fef`.
+   - (c) **de visuele fase** (LAR-490): met 91 stromen standaard aan wordt leesbaarheid de vraag, net als telefoonprestaties (nooit gemeten).
+4. **Optioneel:** de vijf oude naden > 5 km in ketens van vóór golf 1 dichten (Sangatta 21,8 · Grasberg 9,0 · Bikita 7,8 · Balama–Laixi 5,6 · Goonyella 5,6).
+
+## ✅ AFGEROND 2026-09-28 (avond) — golf 2 (LAR-595..598), live `?v=126`
+
+## 🔵 2026-09-28 (later) — na golf 1 live: Lars kijkt, dan golf 2 (golf 2 is uitgevoerd; #2, #4 en #6 staan nog open)
 
 1. **Lars kijkt op de bol:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=125 (atlasmodus *per grondstof* +
    *donker*). Twijfelgevallen die hij daar ziet:

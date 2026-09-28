@@ -1,5 +1,25 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 LIVE `?v=125` — 54 stromen over 9 grondstoffen; Lars kijkt, dan golf 2)*
+*Last updated: 2026-09-28 (M31 golf 2 LIVE `?v=126` — 91 stromen over 11 grondstoffen; Lars kijkt, dan golf 3 kiezen)*
+
+## Stand 2026-09-28 (avond) — M31 golf 2 live
+
+- **Op de bol (`?v=126`, commit `98af548`):**
+  - 91 gemeten stromen: koper 13 · lithium 9 · grafiet 8 · kobalt 9 · nikkel 9 · ree 8 · kolen 9 · olie 9 · uranium 7 · zilver 5 · gas 5;
+  - 11 gloedlagen met 369 sites.
+- **Werkwijze per golf, bijgesteld:**
+  - Eén workflow per golf van ~100–135 agenten op Sonnet 5 (golf 1 kostte 15% van de sessielimiet).
+  - Stappen: ontwerp → skeptische toets → brief → bake → **keuring** per keten.
+  - De keuring meet naden, markers, rechte benen en §9, herstelt alleen mechanisch en mag afkeuren.
+  - Slots voor wegscans, reus-extracts en bakes; een webbudget van ≤ 3 WebSearch per agent.
+- **Centraal na elke golf, vaste nameting:**
+  - diff op gedeelde bestanden buiten de golf: agenten wijzigden `voeg_been_toe.py` (behouden) en `koper-sitelaag.json` (teruggedraaid);
+  - sitelagen op aggregaten en centroïdes;
+  - de naad-, contract- en stippelcheck zelf;
+  - daarna register, HUD, gloed, `?v=`, bol-check en push.
+- **Volgende keuze (Lars):**
+  - (a) een luchtvracht-modaliteit voor goud/PGM/diamant (centraal engine-werk: `stroomstijl`, `hecht_marnet`, kometen);
+  - (b) de 15 reserve-assen;
+  - (c) de visuele fase LAR-490. Met 91 stromen standaard aan worden leesbaarheid en telefoonprestaties de vraag.
 
 ## Stand 2026-09-28 (later) — M31 golf 1 live
 

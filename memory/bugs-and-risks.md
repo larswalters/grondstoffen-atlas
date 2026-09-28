@@ -1,5 +1,20 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 1 live `?v=125`: bevindingen uit de integratie)*
+*Last updated: 2026-09-28 (M31 golf 2 live `?v=126`: bevindingen uit de integratie)*
+
+## 🟡 NIEUW 2026-09-28 (avond) — uit golf 2
+
+11. **91 stromen staan standaard aan.** Twee fetches per stroom (route + leven). De prestaties op de telefoon zijn nooit
+    gemeten; M29 #9 waarschuwde al bij 12 stromen. Terugvaloptie: per grondstof standaard dicht.
+12. **Agenten wijzigen gedeelde bestanden buiten hun opdracht:**
+    - `koper-sitelaag.json`: een slechter cijfer, teruggedraaid;
+    - `voeg_been_toe.py`: additief, behouden.
+    De prompt verbood het niet expliciet. Voor golf 3 "geen bestaande sitelagen of tools wijzigen, meld het" in de
+    REGELS zetten, en de centrale diff blijft nodig.
+13. **Sitelaag-agenten plaatsen aggregaten op één punt** (Chinese zilverclusters, Kochi-centroïde). Centraal
+    gecorrigeerd; de prompt verbiedt het nu niet expliciet genoeg.
+14. **Twee ketens zijn volledig stippel** (Ambatovy, Antamina), en koper en uranium lopen allebei van Olympic Dam naar
+    Port Adelaide: twee kleuren over (bijna) dezelfde weg.
+15. **De commitboodschap van `98af548` zegt 367 sites; het zijn er 369.** Cosmetisch, niet geamend.
 
 ## 🟡 NIEUW 2026-09-28 (later) — uit de integratie van golf 1 (LAR-586)
 
