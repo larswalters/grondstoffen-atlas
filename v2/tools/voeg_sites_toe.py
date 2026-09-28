@@ -46,6 +46,7 @@ EENHEID = {
     "koper": "kt Cu/j", "lithium": "kt LCE/j", "nikkel": "kt Ni/j",
     "kobalt": "kt Co/j", "grafiet": "kt/j", "ree": "kt REO/j", "kolen": "Mt/j",
     "olie": "kb/d", "uranium": "t U/j", "zilver": "t Ag/j", "gas": "bcm/j",
+    "goud": "t Au/j", "pgm": "t PGM/j", "diamant": "Mct/j",
 }
 
 try:

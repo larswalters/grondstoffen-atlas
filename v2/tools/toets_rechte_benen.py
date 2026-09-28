@@ -54,6 +54,12 @@ def km(a, b):
 
 def beoordeel(been, lengte, factor, punten):
     """Grof gesorteerd naar hoeveel werkelijkheid er in kan verdwijnen."""
+    # Een luchtbeen (M31 golf 3) is per constructie een grootcirkel
+    # (maak_luchtbeen.py) en dus altijd "recht": zijn claim is "van deze
+    # vrachtterminal naar die", niet een lijn over de grond. Die claim toets je
+    # op de ankers, niet hier — anders staat elke vlucht bovenaan als 🔴.
+    if been.get("modaliteit") == "lucht":
+        return None
     recht = punten <= 2 or factor < 1.005
     if not recht:
         return None

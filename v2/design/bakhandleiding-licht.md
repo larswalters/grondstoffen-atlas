@@ -131,6 +131,26 @@ hergebruiken (`rivierbeen-yangtze-tongling-gedeeld.geojson`), geen tweede versie
 **Leiding / band** — OSM `man_made=pipeline` gestikt tot een LineString → `--been-geojson "leiding|…"` (voorbeeld
 `leidingbeen-collahuasi-patache.geojson`); niet gekarteerd → `--stippel "leiding|<naam> (schematisch — geen OSM-way)|lat,lon|lat,lon"`.
 
+**Lucht (sinds 2026-09-28, M31 golf 3: goud, PGM, diamant)** — een vlucht tussen twee VRACHTTERMINALS als
+grootcirkel. Er is geen net in de lucht dat we kunnen meten (luchtwegen verschillen per dag en zijn niet vrij
+beschikbaar), dus de claim van het been is "van deze vrachtterminal naar die", niet "langs deze lijn":
+```bash
+python v2/tools/maak_luchtbeen.py --van "<naam>|LAT,LON" --naar "<naam>|LAT,LON" \
+  --uit "$BEEN/<stroom-id>-lucht-<van>-<naar>.geojson"      # → console: km grootcirkel + aantal punten
+# in de functie:  --been-geojson "lucht|vlucht <IATA> → <IATA> (vrachtvlucht, grootcirkel)|$BEEN/<…>.geojson"
+```
+- **Doorgetrokken, geen stippel**: stippel betekent "hier reikt het net niet", en een vlucht tussen twee gelegde
+  terminals is geen gat. "grootcirkel" staat in de beennaam; de bol tilt het been zelf op (`stroomstijl.js`).
+- **Anker = vrachtterminal of vrachtplatform**, satelliet-gelegd (loodsen + platform met vrachttoestellen), niet
+  het midden van de startbaan en niet de passagiersterminal. Daar sluiten de truckbenen aan.
+- **Alleen een vlucht als een bron die modaliteit noemt** (goudbaren per luchtvracht uit Zuid-Afrika, doré per
+  vlucht naar Zwitserland, rough per beveiligde koerier). Een tussenlanding (JNB, DXB) alleen als een bron de hub
+  noemt; anders één vlucht van vertrek- naar aankomstluchthaven, met die aanname in §7 van de brief.
+- **Truckbenen naar en van de luchthaven** (mijn/raffinaderij → vrachtterminal → kluis/beurs) gaan zoals elk
+  wegbeen via `maak_stroombeen_weg.py`. Korter dan ~2 km, of over een privéterrein / airside zonder openbare weg →
+  `--stippel "truck|…"` met reden. Een geldtransport rijdt over de openbare weg: dat is gewoon een wegbeen.
+- `toets_rechte_benen.py` slaat luchtbenen over (ze zijn per constructie recht); de toets zit op de ankers.
+
 **Vertakking / aanhechten achteraf** — aftakking halverwege een bestaand been, of fase D na de bake:
 ```bash
 python v2/tools/voeg_been_toe.py --stroom v2/data/stroomroute-<stroom-id>.json \
@@ -204,13 +224,14 @@ EOF
    omwegfactor 1,000 hoort een stippel met reden te zijn).
 3. **Laadt het json?** Er is géén node-toets voor stroomroutes (`toets_stromen_14.mjs` is geparkeerd op `marnet.bin`,
    `laad_headless.mjs` heeft geen stroomroute-lezer). Wat wél telt: `json.load` slaagt, `versie == 2`, `punt_formaat ==
-   "lonlat"`, elke `modaliteit` in {zee, binnenvaart, truck, spoor, leiding}, elk been ≥ 2 punten, bestand < ~300 KB.
+   "lonlat"`, elke `modaliteit` in {zee, binnenvaart, truck, spoor, leiding, lucht}, elk been ≥ 2 punten, bestand < ~300 KB.
    De blik op de bol (0 console-fouten, atlasmodus per grondstof + donker) gebeurt centraal ná register en `?v=`-bump.
 
 ## 6 · Valkuilen-checklist (M29, brieven §9 + sessiesamenvatting)
 
 - [ ] `PYTHONIOENCODING=utf-8`; coördinaten `lat,lon` met punt — behalve in `PROFIELEN` (`(lon, lat)`).
-- [ ] Modaliteit heet `truck`, nooit `weg` (onbekende sleutel wordt wit op de bol).
+- [ ] Modaliteit heet `truck`, nooit `weg` (onbekende sleutel wordt wit op de bol). Een vlucht heet `lucht`.
+- [ ] Luchtbeen: ankers op de vrachtterminal (satelliet-gelegd), `maak_luchtbeen.py`, doorgetrokken, "grootcirkel" in de naam.
 - [ ] Spoor met `BAKE_SUFFIX=-raw`; console zegt `3260717 spoor-edges`. Corridorkeuze = meerdere runs met via-punt.
 - [ ] Zee snapt op een ZEE-knoop, niet op de dichtstbijzijnde havenknoop (San Antonio: haven 3 km, zee 74 km).
 - [ ] Kade > 5 km van de zeeknoop → haven-aanloop, óók onder de 25 km (anders een naad buiten de norm).
