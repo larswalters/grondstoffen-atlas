@@ -136,7 +136,10 @@ export const LIJNSTIJL = [
   { naam: "zee",         breedte: 1.8, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
   { naam: "binnenvaart", breedte: 1.3, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
   { naam: "truck",       breedte: 2.0, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 0.6, randAlfa: 0.45 },
-  { naam: "spoor",       breedte: 1.6, periode: 8,  aan: 6, alfaAan: 1.0,  alfaUit: 0.45, kernFractie: 1.0, randAlfa: 1.0 },
+  // ⚠️ Spoor stond eerst op 6 px vol / 2 px op 0,45 — gemeten op 60 km (Guixi) las
+  // dat als een GESTREEPTE lijn, en streepjes zijn hier voorbehouden aan stippel.
+  // Nu andersom: een doorlopende lijn op 0,7 met korte heldere "bielzen" van 2 px.
+  { naam: "spoor",       breedte: 1.6, periode: 8,  aan: 2, alfaAan: 1.0,  alfaUit: 0.7,  kernFractie: 1.0, randAlfa: 1.0 },
   { naam: "leiding",     breedte: 1.6, periode: 12, aan: 9, alfaAan: 0.6,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
   { naam: "lucht",       breedte: 1.0, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
   { naam: "onbekend",    breedte: 1.6, periode: 6,  aan: 3, alfaAan: 1.0,  alfaUit: 0.0,  kernFractie: 1.0, randAlfa: 1.0 },

@@ -7616,6 +7616,25 @@ bak_olie_hardisty_cushing() {
     --titel  "Olie · Hardisty (Alberta) → Steele City (Nebraska) → Cushing (Oklahoma)"
 }
 
+# ── DE BUNDEL (golf 1 van de visuele fase, 2026-10-08) ──────────────────────
+# De bol leest sinds ?v=132 niet de losse stroomroute-*.json maar één afgeleid
+# bundelbestand (v2/data/stromen.json + stromen-basis.bin + stromen-fijn-*.bin),
+# gebakken uit v2/data/stromen-register.json + de stroomroute-*.json + de
+# gloednodes-*.json door v2/tools/bak_stroombundel.py. De bron van waarheid
+# blijft de stroomroute-*.json (bakken is geen deliverable, 2026-08-06).
+# ⚠️ WERKREGEL: elke gebakken, herbakken, geregistreerde of uitgesloten stroom
+#    én elke gloedlaag-wijziging gaat in DEZELFDE commit door `bundel`, en
+#    BUNDEL_VERSIE in v2/src/main.js bumpt mee (de bins hangen aan een eigen
+#    ?v=, los van de code). `bundel-check` (exit 1 bij drift) hoort in de
+#    keuring; de generator↔uitvoer-klasse (cu-guixi-spoor, 741 m) kostte al eens
+#    een ronde. Zie bakhandleiding-licht.md §7.
+bak_bundel() {
+  PYTHONIOENCODING=utf-8 python v2/tools/bak_stroombundel.py --toets
+}
+bak_bundel_check() {
+  PYTHONIOENCODING=utf-8 python v2/tools/bak_stroombundel.py --check
+}
+
 # ── NIEUWE STROOMFUNCTIES HIERBOVEN INVOEGEN (vóór de dispatch) ──
 # Generieke dispatch (2026-09-26): het argument `<grondstof>-<slug>` wordt de
 # functie `bak_<grondstof>_<slug>` (streepje → underscore). Een nieuwe stroom

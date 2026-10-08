@@ -245,3 +245,34 @@ EOF
       "aannemelijk" en "onzeker" staan in de beennaam/markernaam en in §3/§7 van de brief, niet in de lijnstijl.
 - [ ] Extract ontbreekt of Overpass valt weg → melden; niet zelf het register aanpassen, `--bron geofabrik` is de default.
 - [ ] Eindrapport: benen + km + naden, de registerregel voor `main.js`, welke shared-file-edits (profiel, functie), open punten.
+
+## 7 · De bundel: wat de bol écht leest (golf 1 van de visuele fase, 2026-10-08)
+
+De bol laadt sinds `?v=132` **niet** de losse `stroomroute-*.json` (dat waren 382 verzoeken en 51,7 MB,
+elk bestand twee keer) maar één afgeleid bundelartefact — zie `v2/design/atlas-product-golf1.md`:
+
+| bestand | wat | gemaakt door |
+|---|---|---|
+| `v2/data/stromen-register.json` | **het register** (was het `STROMEN`-blok in `main.js`): sleutel, bestand, grondstof, label, aan, noot; plus `uitgesloten` met reden | met de hand — registreren is een besluit |
+| `v2/data/stromen.json` | de index: per stroom en per been de metadata, bbox, offsets in de bins; de sites; sha1 van alle bronnen | `bak_stroombundel.py` |
+| `v2/data/stromen-basis.bin` | L0 (DP 3 km, verdicht 100 km) + L1 (DP 200 m, verdicht 25 km) van alle grondbenen, mét originele km | idem |
+| `v2/data/stromen-fijn-<grondstof>.bin` | de volle resolutie per grondstof (alle bronpunten + verdicht 5 km), lui geladen | idem |
+
+**Werkregel.** Een stroom is pas op de bol als hij (1) in `stromen-register.json` staat (of expliciet in
+`uitgesloten`, anders faalt de baker luid) en (2) de bundel opnieuw gebakken is:
+
+```bash
+bash v2/tools/bak_stromen.sh bundel          # bakt + toetst (182 stromen · 718 benen · 225 stippel · 650 markers · 451 sites)
+bash v2/tools/bak_stromen.sh bundel-check    # exit 1 zodra een bron gewijzigd is sinds de bundel
+```
+
+Daarna **`BUNDEL_VERSIE` in `v2/src/main.js` bumpen** (los van de code-`?v=`: zonder bump serveert de Pages-cache
+tien minuten de oude bins, en mét een bump zonder herbundel downloadt iedereen bit-identieke bestanden). De
+bundel, het register en de gebakken stroom gaan in **dezelfde commit**. Tweemaal bakken is byte-identiek; dat is
+de regressietoets. De oude losse lagen zijn nog te zien met `?laag=los` (pariteitsreferentie, verdwijnt in stap 4
+van golf 1).
+
+**Niet doen:** een `grondstof`-veld of stijlsleutel in de baker verzinnen — de kleur en de lijnstijl komen in de
+browser uit `stroomstijl.js` (de enige bron); de baker asserteert alleen dat het register-`grondstof` gelijk is aan de
+id-prefix van `stroom`. En niet herbakken om een visueel veld toe te voegen: extra velden horen in een los
+metadatabestand (besluit 2026-08-06).
