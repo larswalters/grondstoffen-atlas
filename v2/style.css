@@ -81,6 +81,81 @@ html, body {
 #hud.is-collapsed #hudBody { display: none; }
 #hud.is-collapsed #hudToggle { transform: rotate(-90deg); }
 
+/* --- de chipstrip (golf 1, 2026-10-08) --------------------------------------
+   Eén chip per grondstof, horizontaal scrollend, alleen zichtbaar als het paneel
+   is INGEKLAPT — dan is dit de enige bediening, en op een telefoon de manier om
+   grondstoffen te schakelen zonder de bol te bedekken. Tap-targets ≥ 36 px.
+   Een chip die uit staat is gedimd, niet weg: je ziet wat er wél kan. */
+#chipStrip {
+  display: none;
+  gap: 6px;
+  margin: 8px -4px 0;
+  padding: 2px 4px 4px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+#chipStrip::-webkit-scrollbar { display: none; }
+#hud.is-collapsed #chipStrip { display: flex; }
+.gsChip {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 0 11px;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  cursor: pointer;
+  transition: opacity 0.15s, background 0.15s;
+}
+.gsChip i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid rgba(8, 12, 18, 0.9);
+}
+.gsChip:not(.is-on) { opacity: 0.42; }
+.gsChip:not(.is-on) i { background: #555 !important; box-shadow: none !important; }
+
+/* --- de bouwsectie: alle routewerk-knoppen achter één <details> ------------ */
+#bouw {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 4px;
+}
+#bouw > summary {
+  list-style: none;
+  padding: 8px 2px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  cursor: pointer;
+  user-select: none;
+}
+#bouw > summary::-webkit-details-marker { display: none; }
+#bouw > summary::before {
+  content: "\25B8";
+  display: inline-block;
+  width: 12px;
+  font-size: 10px;
+  transition: transform 0.15s;
+}
+#bouw[open] > summary::before { transform: rotate(90deg); }
+#bouw[open] > summary { color: var(--ink); }
+
+/* De lijnstijl-staaltjes in de legenda (gegenereerd uit LIJNSTIJL). */
+#lijnstijlLegenda { margin-top: 4px; }
+#lijnstijlLegenda span { display: flex; align-items: center; gap: 8px; }
+#lijnstijlLegenda .lsStaal { flex: none; color: var(--ink); opacity: 0.9; }
+#tracksBronnen code { font-size: 9.5px; color: var(--ink); }
+
 .hudTitle { font-size: 13px; font-weight: 600; letter-spacing: 0.04em; }
 .hudSub { font-size: 11px; color: var(--ink-dim); margin-top: 2px; }
 
@@ -499,7 +574,10 @@ html, body {
 #zoomControls button:hover { background: rgba(255, 255, 255, 0.1); }
 
 @media (max-width: 640px) {
-  #hud { top: 10px; left: 10px; padding: 11px 13px; min-width: 0; }
+  /* Uitgeklapt: zo breed als het scherm minus de marge, hooguit 60 % hoog en
+     scrollend binnen het paneel — de bol blijft onder het paneel zichtbaar. */
+  #hud { top: 10px; left: 10px; padding: 11px 13px; min-width: 0; width: calc(100vw - 20px); max-width: calc(100vw - 20px); max-height: 60vh; }
+  #hud.is-collapsed { max-height: none; }
   #stats { display: none; }
   /* Op een telefoon is dít de plek waar de licenties gelezen worden (de HUD
      start ingeklapt). Gemeten op 390 px: gecentreerd liep de balk met de vijf

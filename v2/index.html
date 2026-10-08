@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Grondstoffen Atlas v2 — de nieuwe wereldbol</title>
-<link rel="stylesheet" href="style.css?v=122" />
+<title>Grondstoffen Atlas — de wereldbol</title>
+<link rel="stylesheet" href="style.css?v=132" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
      De importmap vertelt de browser waar "three" vandaan komt; daardoor kunnen
      onze eigen modules gewoon `import * as THREE from "three"` schrijven.
      Let op: sinds r150 levert Three GEEN three.min.js meer — ESM is de enige weg.
+     ⚠️ r185 is GEPIND: stroomlijn.js patcht de shader van LineMaterial op
+     letterlijke ankers en faalt luid bij een andere versie.
      ========================================================================== -->
 <script type="importmap">
 {
@@ -26,6 +28,23 @@
 <div id="app">
   <div id="canvasWrap"></div>
 
+  <!-- ==========================================================================
+       DE HUD ALS PRODUCT (golf 1 van de visuele fase, 2026-10-08; ontwerp in
+       v2/design/atlas-product-golf1.md §6). Van boven naar beneden:
+         1. kop — titel, ondertitel uit het register, ▾ klapt in;
+            ingeklapt blijft een CHIPSTRIP met de grondstoffen staan, zodat je
+            op een telefoon grondstoffen schakelt zonder de bol te bedekken;
+         2. de grondstoffen als hoofdbediening (gegenereerd uit het register);
+         3. de legenda (kleur = grondstof, lijn = transport, gloed, komeet);
+         4. vliegknoppen;
+         5. <details id="bouw"> met álle bouwknoppen van het routewerk — dicht,
+            behalve met ?modus=bouw;
+         6. bronnen (altijd zichtbaar: licentie-eis).
+       Alle klassen die main.js en meet_atlas.mjs aanspreken (.srGroep, .srBtn,
+       .gsBtn, .gsTel, .gsBol, .skBtn, .slBtn, .sdBtn, .bmBtn, .lnBtn, .anBtn,
+       .akBtn, .gnBtn, .bwBtn, .gnGa, .tmBtn, .sunBtn, #stats, #attrib) blijven
+       bestaan; de chips zijn een laag erboven.
+       ========================================================================== -->
   <div id="hud">
     <!-- Kop blijft altijd staan; de ▾-knop vouwt de rest weg zodat op een
          telefoon de bol zichtbaar is en de knoppen niet buiten beeld vallen. -->
@@ -36,234 +55,203 @@
       </div>
       <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
     </div>
+    <!-- De chipstrip: één chip per grondstof, gegenereerd uit het register;
+         tik = alle stromen én sites van die grondstof aan/uit. Alleen zichtbaar
+         als het paneel is ingeklapt (dan is dit de enige bediening). -->
+    <div id="chipStrip" aria-label="Grondstoffen aan/uit"></div>
 
     <div id="hudBody">
 
-    <!-- ⚠️ VIER LAGEN STAAN UIT en hun knoppen zijn hier weg (2026-08-07, op
-         verzoek van Lars): kustlijn · havens · AIS-drukte · AIS-tracks. Ze
-         concurreerden met het beeld dat nu beoordeeld wordt — de AIS-drukte
-         legde een brede witte band over precies de rivieren waar de stromen
-         lopen. Aanzetten = `TOON` bovenin src/main.js; de code is bewust blijven
-         staan, want die lagen dragen rollen (aanhechtpunten, bronmateriaal voor
-         de graaf-stap, de vectorwereld als waarheid) die hier niet opgezegd zijn. -->
-    <div class="hudLabel">Ondergrond</div>
-    <div class="btnRow">
-      <button class="bmBtn is-on" data-bm="satelliet">satelliet</button>
-      <button class="bmBtn" data-bm="kaart">kaart</button>
-      <button class="bmBtn" data-bm="egaal">egaal</button>
-    </div>
-
-    <!-- ⚠️ AIS-OMBOUW (2026-07-24): het oude waternet (marnet zee + binnen-
-         vaart) is bewust WEG — het wordt opnieuw opgebouwd uit World Bank
-         AIS-density (corridor-first, brief = ankers, AIS = geul). De oude
-         stand mét waternet, route-test, keten-router en stromen staat op
-         git-tag `pre-ais-net` (?v=082). -->
-
-    <!-- VIER STROMEN (M28), elk ROUTEBRIEF-gestuurd en elk vertrekkend en
-         aankomend op een SATELLIET-GELEGDE kade (werkwijze §2) — dat is precies
-         waarom de anker-check van 2026-07-28 nodig was:
-           · grafiet Balama → Vidalia — truck (echte N380/N1) → zee (Kaap,
-             Southwest Pass) → barge via Port Allen → last mile per truck.
-           · koper Escondida → Guixi — slurryleiding (stippel, géén net) →
-             zee Coloso → Beilun-losberth → trein over de 甬金-vrachtlijn.
-           · koper Collahuasi → Tongling — slurryleiding over ECHTE OSM-
-             geometrie (192,4 km) → zee → Yangtze naar de TNMG-kade.
-           · koper Lobito → Duisburg — zee → Waalhaven (RHB) → Rijn over echte
-             AIS-tracks, mét het Wesel-vak gestippeld want daar ligt geen enkele
-             track (0 van 35.237, structureel gemeten).
-         Kleur = MODALITEIT, niet grondstof: het punt van deze laag is de
-         overgang tussen de netten zichtbaar maken. Gestippeld = schematische
-         verbinding OF een gedocumenteerd gat — nooit geleende geometrie.
-         MARNET zelf staat niet op de bol; dit is de GEROUTETE stroom. -->
-    <div class="hudLabel">Stromen per grondstof</div>
-    <!-- Per grondstof één inklapbare groep (2026-09-26, voorbereiding op zes
-         grondstoffen). Het bolletje krijgt zijn kleur uit GRONDSTOF_KLEUR via
-         main.js (één bron van waarheid, niet hard-coded hier); de telling is
-         zichtbaar/geladen; "alles" schakelt alle stromen van de groep tegelijk
-         en staat ín de summary, zodat een dichtgeklapte groep bedienbaar blijft.
-         Een groep zonder geladen stroom verbergt main.js; op ≤ 640 px starten
-         de groepen dichtgeklapt. De srBtn-knoppen zijn ongewijzigd (data-sr =
-         sleutel uit STROMEN); alleen het grondstof-voorvoegsel is uit het
-         opschrift, want de groep draagt die naam al. -->
-    <!-- De groepen per grondstof (één <details class="srGroep"> met een .srBtn
-         per stroom) worden sinds golf 1 (2026-10-08) GEGENEREERD uit
-         v2/data/stromen-register.json door main.js — 182 handgeschreven knoppen
+    <!-- 2. DE GRONDSTOFFEN — hoofdbediening. Per grondstof één inklapbare
+         groep (<details class="srGroep">) met een .srBtn per stroom; "alles"
+         in de summary schakelt de hele grondstof. Gegenereerd uit
+         v2/data/stromen-register.json door main.js: 182 handgeschreven knoppen
          en hun golf-commentaren zijn verhuisd naar `label` en `noot` in dat
          register. Dit is de enige lijst; wie een stroom registreert raakt de
          html niet aan. -->
+    <div class="hudLabel">Stromen per grondstof</div>
     <div id="stroomGroepen"></div>
-    <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
-         ROUTEWERK op modaliteit. Twee vragen aan hetzelfde beeld — "waar houdt
-         de zee op en begint de barge?" tijdens het bouwen, "waar gaat het koper
-         heen?" in de atlas. Precies wat de ontwerpbrief al voorschreef
-         (design/lod-ontwerpbrief.md: kleur = grondstof, lijnstijl = modaliteit).
-         ✅ Sinds golf 1 (2026-10-08, keuze Lars) is de ATLAS de default; het
-         routewerk (modaliteit · vol · spoornet · precisiestippen) opent met
-         ?modus=bouw of met deze knop. -->
-    <div class="hudLabel">Kleur van de stromen</div>
-    <div class="btnRow">
-      <button class="skBtn" data-sk="modaliteit">per transport</button>
-      <button class="skBtn is-on" data-sk="grondstof">per grondstof</button>
-    </div>
+    <div id="stroomNoot"></div>
 
-    <!-- De hemelsbreed-varianten staan er alle drie in, want ze zijn alleen
-         naast elkaar te beoordelen. ⚠️ Dit ondergraaft het besluit "de lijnen
-         blijven op de grond" NIET: dat gaat over de ECHTE routes (M23–M28 ging
-         er juist over ze op de gemeten geul te krijgen). Een hemelsbreed-lijn
-         doet die claim per definitie niet, en het optillen maakt zichtbaar dát
-         je naar een schematische verbinding kijkt. -->
-    <div class="hudLabel">Lijnen</div>
-    <div class="btnRow">
-      <button class="slBtn is-on" data-sl="route">onze routes</button>
-      <button class="slBtn" data-sl="recht-plat">recht (plat)</button>
+    <!-- 3. DE LEGENDA. Kleur = grondstof (de bolletjes uit GRONDSTOF_KLEUR),
+         lijn = transport (de staaltjes uit LIJNSTIJL — dezelfde tabel die de
+         shader leest, dus legenda en beeld kunnen niet uit elkaar lopen). In de
+         bouwmodus (kleur per transport) toont #stroomLegenda de modaliteits-
+         kleuren van het routewerk. -->
+    <div class="hudLabel">Legenda</div>
+    <div id="stroomLegendaGrondstof" hidden>
+      <span class="legNoot" style="opacity:.75">stromen van één grondstof delen één kleur · gloed = site of overslagpunt · komeet = beweging</span>
+      <div id="lijnstijlLegenda"></div>
     </div>
-    <div class="btnRow">
-      <button class="slBtn" data-sl="recht-boog">recht (boog)</button>
-      <button class="slBtn" data-sl="recht-zeeboog">boog op zee</button>
-    </div>
-
-    <!-- ✅ De ondergrond dimmen (2026-08-07). Gemeten en niet gekozen: 92
-         materialen in de scene gaan door tone mapping (tegels + bol) en 145
-         niet (lijnen met toneMapped:false + de eigen ShaderMaterials van de
-         gloed en de kometen), dus `toneMappingExposure` raakt per constructie
-         alleen de ondergrond. Zonder dit verdwijnen de gloedhotspots boven een
-         felle ondergrond — dat was op de Atacama meetbaar en boven groen China
-         niet. De kleurknop hierboven zet deze stand mee (atlas → donker,
-         routewerk → vol); daarna kun je hem los bijstellen. -->
-    <div class="hudLabel">Ondergrond dimmen</div>
-    <div class="btnRow">
-      <button class="sdBtn" data-sd="vol">vol</button>
-      <button class="sdBtn" data-sd="gedimd">gedimd</button>
-      <button class="sdBtn is-on" data-sd="donker">donker</button>
-    </div>
-
-    <div id="stroomLegenda">
+    <div id="stroomLegenda" hidden>
       <span><i style="background:#5aa7ff"></i>zee (zeeschip)</span>
       <span><i style="background:#35e0c0"></i>binnenvaart (barge / rivier)</span>
       <span><i style="background:#ffb04d"></i>truck (weg)</span>
       <span><i style="background:#ff7ab8"></i>trein (spoor)</span>
-      <span><i style="background:#9b8cff"></i>slurryleiding — eigen verbinding, geen net</span>
+      <span><i style="background:#9b8cff"></i>leiding — eigen verbinding, geen net</span>
       <span><i style="background:#d6ff5a"></i>vliegtuig (luchtvracht) — boog door de lucht</span>
-      <span style="opacity:.75">gestippeld = schematische verbinding of gedocumenteerd gat (haven-aanloop, last mile, Wesel-vak)</span>
+      <span style="opacity:.75">gestippeld = hier reikt het net niet (haven-aanloop, last mile, gedocumenteerd gat)</span>
     </div>
-    <!-- De kleurregels vult main.js uit GRONDSTOF_KLEUR, voor elke grondstof die
-         in STROMEN voorkomt — niet meer hard-coded per grondstof. -->
-    <div id="stroomLegendaGrondstof" hidden>
-      <span class="legNoot" style="opacity:.75">stromen van één grondstof delen één kleur · gloed = site of overslagpunt · komeet = beweging</span>
-      <!-- De lijnstijl per transport: staaltjes uit LIJNSTIJL (stroomstijl.js),
-           door main.js gegenereerd — dezelfde tabel die de shader leest. -->
-      <div id="lijnstijlLegenda"></div>
-    </div>
-    <div id="stroomNoot"></div>
 
-    <!-- Open ligplaatsen (rest van de anker-check van 2026-07-28). De zeven
-         goedgekeurde correcties staan inmiddels ín de data en de zes
-         goedgekeurde punten hoeven niet meer bekeken; die zijn hier weg, want
-         een rode stip op een al gecorrigeerd punt liegt. Wat blijft zijn de drie
-         plekken waar de ligplaats niet aanwijsbaar was — rood, mét de reden.
-         Elke knop vliegt erheen. Weg zodra ze alle drie een kade hebben. -->
-    <div class="hudLabel">Open ligplaatsen (3)</div>
+    <!-- 4. VLIEGKNOPPEN: de plekken waar de atlas iets laat zien. -->
+    <div class="hudLabel">Vlieg naar</div>
     <div class="btnRow">
-      <button class="akBtn" data-ak="aan">aan</button>
-      <button class="akBtn is-on" data-ak="uit">uit</button>
-    </div>
-    <div id="ankerLegenda">
-      <span><i style="background:#ff3b30"></i>ligplaats nog niet aanwijsbaar</span>
-      <span style="opacity:.75">de productvraag is beantwoord (operator + terminal bekend), de kade niet</span>
-    </div>
-    <div id="ankerLijst"></div>
-    <div id="ankerNoot"></div>
-
-
-    <!-- De uitgezochte knopen als gloed (M26 / LAR-490). Alleen SITES lichten
-         op — dat een complex op wereldhoogte één vlek wordt hoort te ontstaan
-         uit de optelling, niet uit een voorgekookte hotspot-knoop. De vier
-         knoppen springen naar de plekken waar dat te zien is. -->
-    <div class="hudLabel">Gloed (sites + overslagpunten)</div>
-    <div class="btnRow">
-      <button class="gnBtn is-on" data-gn="aan">aan</button>
-      <button class="gnBtn" data-gn="uit">uit</button>
-    </div>
-    <!-- De kometen (golf 1): de lijn zegt waar, de komeet dat er iets beweegt. -->
-    <div class="hudLabel">Beweging (kometen)</div>
-    <div class="btnRow">
-      <button class="bwBtn is-on" data-bw="aan">aan</button>
-      <button class="bwBtn" data-bw="uit">uit</button>
-    </div>
-    <div class="btnRow">
+      <button class="gnGa" data-lon="110" data-lat="28" data-km="9000">wereld</button>
+      <button class="gnGa" data-lon="4.3" data-lat="51.9" data-km="300">Rijnmond</button>
       <button class="gnGa" data-lon="117.79973" data-lat="30.97688" data-km="14">Tongling</button>
       <button class="gnGa" data-lon="117.21919" data-lat="28.33180" data-km="14">Guixi</button>
-      <button class="gnGa" data-lon="117.5" data-lat="29.7" data-km="900">samen</button>
-      <button class="gnGa" data-lon="4.3" data-lat="51.9" data-km="300">Rijnmond</button>
-      <button class="gnGa" data-lon="110" data-lat="28" data-km="9000">wereld</button>
     </div>
-    <div id="gloedNodeNoot"></div>
 
-    <!-- Echte scheepstracks (M28): gevaren lijnen van individuele schepen uit
-         vijf AIS-archieven — MarineCadastre (NOAA/USACE), DMA (DK),
-         Kystdatahuset (NO), AMSA (AU) en de eigen collector. Amber = opvaart,
-         ijsblauw = afvaart. Standaard uit, en het bestand wordt PAS bij de
-         eerste "aan" opgehaald (39,5 MB). -->
-    <!-- ⚠️ DE KNOP IS WEG, DE BRONVERMELDING BLIJFT — en dat is geen slordigheid.
-         Deze lijst stond hier al STATISCH omdat de eis aan de GEPUBLICEERDE DATA
-         hangt, niet aan het aanzetten van de laag: `aistracks-pilot.json` staat
-         nog gewoon op Pages. AMSA is CC BY-NC 3.0 AU en eist naamsvermelding ÉN
+    <!-- 5. DE BOUWMODUS — het routewerk. Dicht op elke breedte; ?modus=bouw
+         opent hem. Hier woont alles wat de atlas niet is maar wat het bouwen
+         en controleren van een route nodig heeft. -->
+    <details id="bouw">
+      <summary>Bouwmodus · routewerk</summary>
+
+      <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
+           ROUTEWERK op modaliteit. Twee vragen aan hetzelfde beeld — "waar houdt
+           de zee op en begint de barge?" tijdens het bouwen, "waar gaat het koper
+           heen?" in de atlas. Precies wat de ontwerpbrief al voorschreef
+           (design/lod-ontwerpbrief.md: kleur = grondstof, lijnstijl = modaliteit).
+           ✅ Sinds golf 1 (2026-10-08, keuze Lars) is de ATLAS de default; het
+           routewerk (modaliteit · vol · spoornet · precisiestippen) opent met
+           ?modus=bouw of met deze knop. De kleurknop zet de belichting mee
+           (atlas → donker, routewerk → vol) en de knoprij springt zichtbaar mee. -->
+      <div class="hudLabel">Kleur van de stromen</div>
+      <div class="btnRow">
+        <button class="skBtn" data-sk="modaliteit">per transport</button>
+        <button class="skBtn is-on" data-sk="grondstof">per grondstof</button>
+      </div>
+
+      <!-- De hemelsbreed-varianten staan er alle drie in, want ze zijn alleen
+           naast elkaar te beoordelen. ⚠️ Dit ondergraaft het besluit "de lijnen
+           blijven op de grond" NIET: dat gaat over de ECHTE routes (M23–M28 ging
+           er juist over ze op de gemeten geul te krijgen). Een hemelsbreed-lijn
+           doet die claim per definitie niet, en het optillen maakt zichtbaar dát
+           je naar een schematische verbinding kijkt. -->
+      <div class="hudLabel">Lijnen</div>
+      <div class="btnRow">
+        <button class="slBtn is-on" data-sl="route">onze routes</button>
+        <button class="slBtn" data-sl="recht-plat">recht (plat)</button>
+      </div>
+      <div class="btnRow">
+        <button class="slBtn" data-sl="recht-boog">recht (boog)</button>
+        <button class="slBtn" data-sl="recht-zeeboog">boog op zee</button>
+      </div>
+
+      <!-- ⚠️ VIER LAGEN STAAN UIT en hun knoppen zijn weg (2026-08-07, op
+           verzoek van Lars): kustlijn · havens · AIS-drukte · AIS-tracks. Ze
+           concurreerden met het beeld dat beoordeeld wordt. Aanzetten = `TOON`
+           bovenin src/main.js; de code is bewust blijven staan, want die lagen
+           dragen rollen (aanhechtpunten, bronmateriaal voor de graaf-stap, de
+           vectorwereld als waarheid) die niet zijn opgezegd. -->
+      <div class="hudLabel">Ondergrond</div>
+      <div class="btnRow">
+        <button class="bmBtn is-on" data-bm="satelliet">satelliet</button>
+        <button class="bmBtn" data-bm="kaart">kaart</button>
+        <button class="bmBtn" data-bm="egaal">egaal</button>
+      </div>
+      <!-- ✅ De ondergrond dimmen (2026-08-07). Gemeten en niet gekozen: de
+           tegels en de bol gaan door tone mapping, de lijnen (toneMapped uit)
+           en de eigen ShaderMaterials van gloed en kometen niet, dus
+           `toneMappingExposure` raakt per constructie alleen de ondergrond.
+           Zonder dit verdwijnen de gloedhotspots boven een felle ondergrond —
+           op de Atacama gemeten, boven groen China niet. -->
+      <div class="btnRow" style="margin-top:6px">
+        <button class="sdBtn" data-sd="vol">vol</button>
+        <button class="sdBtn" data-sd="gedimd">gedimd</button>
+        <button class="sdBtn is-on" data-sd="donker">donker</button>
+      </div>
+
+      <!-- Landnet (M25): het spoor als vierde net, in een eigen bestand met eigen
+           knoop-ids. Sinds golf 1 lui: pas geladen bij de eerste "aan" (10 MB)
+           of met ?modus=bouw. -->
+      <div class="hudLabel">Spoornet (landnet)</div>
+      <div class="btnRow">
+        <button class="lnBtn" data-ln="aan">aan</button>
+        <button class="lnBtn is-on" data-ln="uit">uit</button>
+      </div>
+      <div id="havenLegenda" style="margin-bottom:6px">
+        <span><i style="background:#5fe8c8"></i>normaalspoor (1435)</span>
+        <span><i style="background:#ffb877"></i>breedspoor (1520)</span>
+        <span><i style="background:#c9a6ff"></i>smalspoor</span>
+        <span><i style="background:#a6f0ff"></i>hogesnelheid</span>
+      </div>
+      <div id="landNoot"></div>
+
+      <!-- Het AIS-waternet (M27, pilot): geullijnen uit de AIS-density, vier
+           testvensters (Tongling · Nederland · Patache · Shanghai). Standaard
+           uit en lui — dit is het graaf-zaad, geen atlasbeeld. -->
+      <div class="hudLabel">AIS-waternet (lijnen, pilot)</div>
+      <div class="btnRow">
+        <button class="anBtn" data-an="aan">aan</button>
+        <button class="anBtn is-on" data-an="uit">uit</button>
+      </div>
+      <div id="aisNoot"></div>
+
+      <!-- Open ligplaatsen (rest van de anker-check van 2026-07-28): de drie
+           plekken waar de ligplaats niet aanwijsbaar was — rood, mét de reden.
+           Elke knop vliegt erheen. Weg zodra ze alle drie een kade hebben. -->
+      <div class="hudLabel">Open ligplaatsen (3)</div>
+      <div class="btnRow">
+        <button class="akBtn" data-ak="aan">aan</button>
+        <button class="akBtn is-on" data-ak="uit">uit</button>
+      </div>
+      <div id="ankerLegenda">
+        <span><i style="background:#ff3b30"></i>ligplaats nog niet aanwijsbaar</span>
+        <span style="opacity:.75">de productvraag is beantwoord (operator + terminal bekend), de kade niet</span>
+      </div>
+      <div id="ankerLijst"></div>
+      <div id="ankerNoot"></div>
+
+      <!-- De gloed (M26 / LAR-490): alleen SITES en de overslag-/eindpunten van
+           de stromen lichten op — dat een complex op wereldhoogte één vlek wordt
+           hoort te ontstaan uit de optelling, niet uit een voorgekookte knoop. -->
+      <div class="hudLabel">Gloed (sites + overslagpunten)</div>
+      <div class="btnRow">
+        <button class="gnBtn is-on" data-gn="aan">aan</button>
+        <button class="gnBtn" data-gn="uit">uit</button>
+      </div>
+      <!-- De kometen (golf 1): de lijn zegt waar, de komeet dat er iets beweegt. -->
+      <div class="hudLabel">Beweging (kometen)</div>
+      <div class="btnRow">
+        <button class="bwBtn is-on" data-bw="aan">aan</button>
+        <button class="bwBtn" data-bw="uit">uit</button>
+      </div>
+
+      <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
+      <div class="hudLabel">Beeldverwerking</div>
+      <div class="btnRow">
+        <button class="tmBtn" data-tm="legacy">r128-stijl</button>
+        <button class="tmBtn is-on" data-tm="modern">r185 · ACES</button>
+      </div>
+
+      <div class="hudLabel">Belichting</div>
+      <div class="btnRow">
+        <button class="sunBtn is-on" data-sun="live">zon aan</button>
+        <button class="sunBtn" data-sun="flat">vlak licht</button>
+      </div>
+
+      <div id="stats"></div>
+    </details>
+
+    <!-- 6. BRONNEN — altijd zichtbaar, ook buiten de bouwmodus.
+         ⚠️ DE AIS-KNOP IS WEG, DE BRONVERMELDING BLIJFT — en dat is geen
+         slordigheid. De eis hangt aan de GEPUBLICEERDE DATA, niet aan het
+         aanzetten van de laag: `aistracks-pilot.json` staat nog gewoon op
+         Pages. AMSA is CC BY-NC 3.0 AU en eist naamsvermelding ÉN
          niet-commercieel gebruik. Wie dit blok wil opruimen moet éérst het
          databestand van de publicatie halen, niet andersom. -->
+    <div class="hudLabel">Bronnen</div>
     <div id="tracksBronnen">
-      <span><b>vs</b> — MarineCadastre, NOAA/USACE (publiek domein)</span>
-      <span><b>dk</b> — DMA, Danish Maritime Authority (Denemarken)</span>
-      <span><b>no</b> — Kystdatahuset, Kystverket (NLOD)</span>
-      <span><b>au</b> — © AMSA, Australian Maritime Safety Authority —
-        CC BY-NC 3.0 AU, uitsluitend niet-commercieel gebruik</span>
-      <span><b>wereld</b> — eigen aisstream-collector</span>
+      <span>Stromen: eigen routebrieven op OSM-geometrie (© OpenStreetMap contributors, ODbL), MARNET en AIS-tracks</span>
+      <span>Sites: capaciteiten uit jaarverslagen en registers (zie <code>v2/design/*-sitelaag.md</code>)</span>
+      <span><b>AIS-tracks</b> (gepubliceerde data): <b>vs</b> MarineCadastre, NOAA/USACE (publiek domein) ·
+        <b>dk</b> DMA, Danish Maritime Authority · <b>no</b> Kystdatahuset, Kystverket (NLOD) ·
+        <b>au</b> © AMSA, Australian Maritime Safety Authority — CC BY-NC 3.0 AU, uitsluitend
+        niet-commercieel gebruik · <b>wereld</b> eigen aisstream-collector</span>
     </div>
     <div id="tracksNoot"></div>
-
-    <!-- Het AIS-waternet (M27, pilot): geullijnen uit de AIS-density, vier
-         testvensters (Tongling · Nederland · Patache · Shanghai). Standaard
-         uit — dit is het graaf-zaad, de gloed hierboven is het beeld. -->
-    <div class="hudLabel">AIS-waternet (lijnen, pilot)</div>
-    <div class="btnRow">
-      <button class="anBtn" data-an="aan">aan</button>
-      <button class="anBtn is-on" data-an="uit">uit</button>
-    </div>
-    <div id="aisNoot"></div>
-
-    <!-- Landnet (M25): het spoor als vierde net, in een eigen bestand met eigen
-         knoop-ids. Nog niet gekoppeld aan de router — eerst neerleggen, dan
-         verbinden via aangewezen knooppunten. -->
-    <div class="hudLabel">Landnet (spoor)</div>
-    <div class="btnRow">
-      <button class="lnBtn" data-ln="aan">aan</button>
-      <button class="lnBtn is-on" data-ln="uit">uit</button>
-    </div>
-    <div id="havenLegenda" style="margin-bottom:6px">
-      <span><i style="background:#5fe8c8"></i>normaalspoor (1435)</span>
-      <span><i style="background:#ffb877"></i>breedspoor (1520)</span>
-      <span><i style="background:#c9a6ff"></i>smalspoor</span>
-      <span><i style="background:#a6f0ff"></i>hogesnelheid</span>
-    </div>
-    <div id="landNoot"></div>
-
-
-    <!-- Route-test, keten-router en stromen (M26.x) zijn met het waternet mee
-         geparkeerd op tag `pre-ais-net` — ze komen terug op het AIS-net. -->
-
-    <!-- A/B-schakelaar: hiermee kun je het verschil dat we bespraken zelf zien -->
-    <div class="hudLabel">Beeldverwerking</div>
-    <div class="btnRow">
-      <button class="tmBtn" data-tm="legacy">r128-stijl</button>
-      <button class="tmBtn is-on" data-tm="modern">r185 · ACES</button>
-    </div>
-
-    <div class="hudLabel">Belichting</div>
-    <div class="btnRow">
-      <button class="sunBtn is-on" data-sun="live">zon aan</button>
-      <button class="sunBtn" data-sun="flat">vlak licht</button>
-    </div>
-
-    <div id="stats"></div>
 
     </div><!-- /#hudBody -->
   </div>

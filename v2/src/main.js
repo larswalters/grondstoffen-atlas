@@ -381,10 +381,31 @@ function bouwStroomGroepen(register) {
     }
     houder.append(groep);
   }
+  // De chipstrip in de kop: één chip per grondstof (zichtbaar als het paneel
+  // is ingeklapt — op een telefoon de hoofdbediening).
+  const strip = document.getElementById("chipStrip");
+  if (strip) {
+    strip.textContent = "";
+    for (const gs of grondstoffen) {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "gsChip is-on";
+      chip.dataset.gs = gs;
+      const bol = document.createElement("i");
+      const k = GRONDSTOF_KLEUR[gs];
+      if (k !== undefined) { bol.style.background = hexVan(k); bol.style.boxShadow = `0 0 6px ${hexVan(k)}`; }
+      chip.append(bol, gs);
+      strip.append(chip);
+    }
+  }
 }
 
 function werkGroepenBij() {
   if (!REGISTER) return;
+  for (const chip of document.querySelectorAll(".gsChip")) {
+    const defs = REGISTER.stromen.filter((d) => d.grondstof === chip.dataset.gs);
+    chip.classList.toggle("is-on", defs.some((d) => { const st = stroomStand(d.sleutel); return st.geladen && st.aan; }));
+  }
   for (const groep of document.querySelectorAll(".srGroep")) {
     const gs = groep.dataset.gs;
     const defs = REGISTER.stromen.filter((d) => d.grondstof === gs);
@@ -498,6 +519,19 @@ function koppelStroomKnoppen() {
       const standen = defs.map((d) => [d.sleutel, stroomStand(d.sleutel)]).filter(([, s]) => s.geladen);
       if (!standen.length) return;
       const nieuw = !standen.every(([, s]) => s.aan);
+      if (ATLAS) ATLAS.zetGrondstof(gs, nieuw);
+      else for (const [sleutel] of standen) zetStroomAan(sleutel, nieuw);
+      toonStroomNoot();
+    });
+  }
+  // De chip: staat er íets van de grondstof aan, dan alles uit; anders alles aan.
+  for (const chip of document.querySelectorAll(".gsChip")) {
+    chip.addEventListener("click", () => {
+      const gs = chip.dataset.gs;
+      const defs = REGISTER.stromen.filter((d) => d.grondstof === gs);
+      const standen = defs.map((d) => [d.sleutel, stroomStand(d.sleutel)]).filter(([, s]) => s.geladen);
+      if (!standen.length) return;
+      const nieuw = !standen.some(([, s]) => s.aan);
       if (ATLAS) ATLAS.zetGrondstof(gs, nieuw);
       else for (const [sleutel] of standen) zetStroomAan(sleutel, nieuw);
       toonStroomNoot();
@@ -795,6 +829,11 @@ zetKnopStand(".bwBtn", "bw", "aan");
 }
 zetOndergrondDim(kleurModus === "grondstof" ? "donker" : "vol");
 document.body.dataset.modus = MODUS;
+{
+  // De bouwsectie staat dicht; ?modus=bouw opent hem (het routewerk wil zijn knoppen zien).
+  const bouw = document.getElementById("bouw");
+  if (bouw) bouw.open = (MODUS === "bouw");
+}
 
 // Lijnvorm: de gemeten route of één van de drie hemelsbreed-varianten.
 wireButtons(".slBtn", "sl", (modus) => {

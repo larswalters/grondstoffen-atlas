@@ -56,12 +56,18 @@ const slaap = (ms) => new Promise((r) => setTimeout(r, ms));
 
 // De vier kijkstanden van de ontwerpbrief (wereld · continent · regionaal ·
 // lokaal). Lon/lat/hoogte in km, zoals GLOBE.vliegNaar ze wil.
-const KIJKSTANDEN = [
+const KIJKSTANDEN_STANDAARD = [
   ["wereld",    110,    28,   9000],   // de "wereld"-knop uit de HUD
   ["continent", 10,     50,   3500],   // Europa, van de Noordzee tot de Zwarte Zee
   ["regionaal", 4.3,    51.9,  300],   // Rijnmond → Ruhr
   ["lokaal",    117.80, 30.98,  14],   // Tongling-complex (de gloed-toets)
 ];
+// --kijk "naam:lon:lat:km;naam:lon:lat:km" vervangt de vier standaardstanden
+// (voor een gerichte blik, bv. een spoorbeen op 60 km of een leiding op 150 km).
+const KIJK_ARG = arg("kijk", null);
+const KIJKSTANDEN = KIJK_ARG
+  ? KIJK_ARG.split(";").map((s) => { const [n, lo, la, km] = s.split(":"); return [n, +lo, +la, +km]; })
+  : KIJKSTANDEN_STANDAARD;
 
 // --- minimale CDP-client ---------------------------------------------------
 class CDP {
@@ -236,7 +242,8 @@ async function meetProfiel(profiel) {
       while (zichtbaar && p) { zichtbaar = p.visible; p = p.parent; }
       if (!zichtbaar) return;
       telling.zichtbaar++;
-      const t = o.isLine2 ? "Line2" : (o.isLineSegments ? "LineSegments" : (o.isLine ? "Line" : (o.isPoints ? "Points" : (o.isMesh ? "Mesh" : "overig"))));
+      // LineSegments2/Line2 (de brede lijnen) erven van Mesh — eerst daarop toetsen
+      const t = (o.isLine2 || o.isLineSegments2) ? "Line2" : (o.isLineSegments ? "LineSegments" : (o.isLine ? "Line" : (o.isPoints ? "Points" : (o.isMesh ? "Mesh" : "overig"))));
       telling[t]++;
       const pos = o.geometry.getAttribute && (o.geometry.getAttribute("position") || o.geometry.getAttribute("instanceStart"));
       if (pos) telling.vertices += pos.count;
@@ -285,6 +292,41 @@ async function meetProfiel(profiel) {
     rapport.kijkstanden.push(meting);
   }
 
+  // 5) telefoon: de HUD op 375 px — geen horizontale scroll, chipstrip bruikbaar
+  if (telefoon) {
+    await cdp.send("Emulation.setDeviceMetricsOverride",
+      { width: 375, height: 812, deviceScaleFactor: 3, mobile: true });
+    await slaap(1500);
+    rapport.hud375 = JSON.parse(await evalueer(`(() => {
+      const hud = document.getElementById('hud');
+      const chips = [...document.querySelectorAll('.gsChip')];
+      const r = chips[0] ? chips[0].getBoundingClientRect() : null;
+      return JSON.stringify({
+        scrollWidth: document.documentElement.scrollWidth, innerWidth: innerWidth,
+        hudIngeklapt: hud.classList.contains('is-collapsed'),
+        hudBreedte: Math.round(hud.getBoundingClientRect().width),
+        chips: chips.length, chipZichtbaar: !!(r && r.width > 0 && r.height > 0), chipHoogte: r ? Math.round(r.height) : null,
+        bouwDicht: !document.getElementById('bouw')?.open,
+        amsa: /AMSA/.test(document.getElementById('tracksBronnen')?.textContent || ''),
+        sub: document.getElementById('hudSub')?.textContent,
+      });
+    })()`));
+    rapport.hud375.screenshot = await schiet("hud-375");
+    // en uitgeklapt: past het paneel binnen 60 vh en scrollt het binnenin?
+    await evalueer(`document.getElementById('hudToggle').click(); true`);
+    await slaap(800);
+    rapport.hud375.open = JSON.parse(await evalueer(`(() => {
+      const hud = document.getElementById('hud');
+      const r = hud.getBoundingClientRect();
+      return JSON.stringify({ hoogte: Math.round(r.height), maxToegestaan: Math.round(innerHeight * 0.6),
+        scrollbaar: hud.scrollHeight > hud.clientHeight, scrollWidth: document.documentElement.scrollWidth });
+    })()`));
+    rapport.hud375.screenshotOpen = await schiet("hud-375-open");
+    await evalueer(`document.getElementById('hudToggle').click(); true`);
+    await cdp.send("Emulation.setDeviceMetricsOverride",
+      { width: 390, height: 844, deviceScaleFactor: 3, mobile: true });
+  }
+
   rapport.fouten = { console: rapport.console.length, excepties: rapport.excepties.length };
   await cdp.send("Page.close").catch(() => {});
   return rapport;
@@ -321,6 +363,12 @@ async function main() {
     for (const k of r.kijkstanden) {
       console.log(`  ${k.kijkstand.padEnd(10)} ${String(k.hoogteKm).padStart(5)} km · fps ${k.fpsMediaan} (${k.fpsMin}–${k.fpsMax}) · ` +
         `${k.drawCalls} draw calls · ${(k.driehoeken / 1000).toFixed(0)}k tris · heap ${k.jsHeapMb} MB`);
+    }
+    if (r.hud375) {
+      const h = r.hud375;
+      console.log(`HUD 375 px: scrollWidth ${h.scrollWidth}/${h.innerWidth} · ingeklapt=${h.hudIngeklapt} · breedte ${h.hudBreedte} · ` +
+        `${h.chips} chips (zichtbaar=${h.chipZichtbaar}, ${h.chipHoogte} px) · bouw dicht=${h.bouwDicht} · AMSA=${h.amsa} · "${h.sub}"` +
+        (h.open ? ` · uitgeklapt ${h.open.hoogte} px (≤ ${h.open.maxToegestaan}), scrollt binnenin=${h.open.scrollbaar}, scrollWidth ${h.open.scrollWidth}` : ""));
     }
     console.log(`fouten: ${r.fouten.console} console-warn/err · ${r.fouten.excepties} excepties`);
     for (const c of r.console.slice(0, 5)) console.log(`   · ${c.type}: ${c.tekst}`);
