@@ -2,7 +2,7 @@
 
 **🌍 Live:** https://larswalters.github.io/grondstoffen-atlas/ — werkt op elke PC en mobiel.
 
-**v2 (routes-atlas):** https://larswalters.github.io/grondstoffen-atlas/v2/ — zeven grondstoffen verhaal-compleet (koper, lithium, grafiet, kobalt, nikkel, zeldzame aardmetalen, kolen): 42 gemeten stromen en 234 gloedsites, HUD per grondstof (stand 2026-09-26, `?v=124`). Werkwijze: `v2/design/routebrief-licht.md`, bakken: `v2/design/bakhandleiding-licht.md`.
+**v2 (routes-atlas):** https://larswalters.github.io/grondstoffen-atlas/v2/ — 182 gemeten stromen over 14 grondstoffen en 451 gloedsites, als atlas (kleur = grondstof, lijn = transport, gloed = site of overslag, komeet = beweging; stand 2026-10-08, `?v=132`). De bol leest één bundel (`v2/data/stromen.json` + `stromen-basis.bin` + lui geladen `stromen-fijn-<grondstof>.bin`, gebakken uit `v2/data/stromen-register.json` en de `stroomroute-*.json` door `v2/tools/bak_stroombundel.py`); `?modus=bouw` opent het routewerk. Werkwijze: `v2/design/routebrief-licht.md`, bakken: `v2/design/bakhandleiding-licht.md` (§7 = de bundel), ontwerp van de visuele fase: `v2/design/atlas-product-golf1.md`, meten: `v2/tools/meet_atlas.mjs`.
 
 > **Deploy = GitHub Pages** (branch `main`, root). Elke `git push` naar `origin` werkt de live site automatisch bij (~1-2 min rebuild).
 > Een `.nojekyll`-bestand in de root zorgt dat de `_`-bestanden (`data/_registry.js`, `data/_chokepoints.js`) óók geserveerd worden —

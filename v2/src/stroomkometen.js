@@ -251,6 +251,13 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
           // Een komeet die net vertrokken is heeft nog geen staart achter zich.
           if (f < 0) { dGrootte[i] = 0; dAlfa[i] = 0; continue; }
           opBaan(b, f * b.totaal, dPos, i * 3);
+          // ook elk staartpunt achter de horizon toetsen — anders sleept een
+          // komeet die net over de rand gaat zijn staart door de donkere kant
+          // (review 2026-10-08)
+          const o = i * 3;
+          if (j > 0 && (dPos[o] * rx + dPos[o + 1] * ry + dPos[o + 2] * rz) / radius < horizon) {
+            dGrootte[i] = 0; dAlfa[i] = 0; continue;
+          }
           dGrootte[i] = kopPx * Math.pow(1 - u, 0.55);
           dAlfa[i] = Math.pow(1 - u, 1.8);
         }

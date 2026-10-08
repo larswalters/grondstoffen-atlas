@@ -195,7 +195,7 @@ export function kleurVan(modaliteit, stroomId, kleurModus) {
 function meld(wat) {
   if (gemeld.has(wat)) return;
   gemeld.add(wat);
-  console.warn(`[atlas v2] stroomstijl: onbekende ${wat} → wit getekend`);
+  console.warn(`[atlas v2] stroomstijl: onbekende ${wat} → wit (kleur) of magenta gestreept (lijnstijl) getekend`);
 }
 
 // ── Lijnvorm ───────────────────────────────────────────────────────────────

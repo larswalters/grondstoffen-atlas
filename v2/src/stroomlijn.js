@@ -118,12 +118,10 @@ const PATCHES_VERTEX = [
     uniform sampler2D beenKleur;
     uniform float texBreedte;
     uniform float lodRol;
-    uniform float perEenheidCss;
-    uniform float kmNaarEenheid;
     uniform vec4 patroon[8];
     varying vec3 vKleur;
     varying float vStijl;
-    varying float vAfstandPx;
+    varying float vAfstandKm;
     float sVerborgen = 0.0;
     float sBreedte = 1.0;`],
   ["vec4 end = modelViewMatrix * vec4( instanceEnd, 1.0 );", `vec4 end = modelViewMatrix * vec4( instanceEnd, 1.0 );
@@ -142,11 +140,12 @@ const PATCHES_VERTEX = [
       int stijlI = int( min( vStijl, 7.0 ) );
       sBreedte = patroon[ stijlI ].x * breedteF;
       vKleur = texture2D( beenKleur, texUv ).rgb;
-      // afstand langs het been in css-px, perspectief-gecorrigeerd per vertex:
-      // km → scene-eenheden → pixels op de diepte van déze vertex
-      float afstandKm = ( position.y < 0.5 ) ? instanceAfstandStart : instanceAfstandEnd;
-      float diepte = max( 1e-4, -( ( position.y < 0.5 ) ? start.z : end.z ) );
-      vAfstandPx = afstandKm * kmNaarEenheid * perEenheidCss / diepte;`],
+      // ⚠️ De afstand langs het been gaat in KILOMETERS naar de fragment-shader;
+      // de omrekening naar pixels gebeurt daar met één uniform (km per css-px in
+      // het beeldmidden). Een eerdere versie deelde hier de CUMULATIEVE km door
+      // de diepte van de vertex — dan drijft en rekt het patroon op een lang
+      // been zodra de diepte langs de lijn verandert (review 2026-10-08).
+      vAfstandKm = ( position.y < 0.5 ) ? instanceAfstandStart : instanceAfstandEnd;`],
   ["offset *= linewidth;", "offset *= linewidth * sBreedte;"],
   ["gl_Position = clip;", `// ── stroomlijn: een verborgen been degenereert buiten de clipruimte ──
       if ( sVerborgen > 0.5 ) { clip = vec4( 2.0, 2.0, 2.0, 1.0 ); }
@@ -158,9 +157,10 @@ const PATCHES_FRAGMENT = [
     uniform vec4 patroon[8];
     uniform vec4 patroon2[8];
     uniform float patronenAan;
+    uniform float kmPerCssPx;
     varying vec3 vKleur;
     varying float vStijl;
-    varying float vAfstandPx;`],
+    varying float vAfstandKm;`],
   ["#include <clipping_planes_fragment>", `#include <clipping_planes_fragment>
       // ── stroomlijn: lengtepatroon (alleen alfa), dwarsprofiel, kleur ──
       int si = int( min( floor( vStijl + 0.5 ), 7.0 ) );
@@ -171,7 +171,10 @@ const PATCHES_FRAGMENT = [
       // de modaliteitspatronen alleen als ze aan staan (atlasmodus)
       bool actief = ( pt.y > 0.0 ) && ( patronenAan > 0.5 || si >= 6 );
       if ( actief ) {
-        float fase = mod( vAfstandPx, pt.y );
+        // patroon in schermpixels: km langs het been / (km per css-px in het
+        // beeldmidden). Aan de rand van de bol is de periode wat kleiner
+        // (perspectief), maar hij drijft nergens.
+        float fase = mod( vAfstandKm / max( 1e-6, kmPerCssPx ), pt.y );
         pa = ( fase < pt.z ) ? pt2.x : pt.w;
         if ( pa <= 0.001 ) discard;
       }
@@ -214,7 +217,7 @@ export class StroomLijnMateriaal extends LineMaterial {
     this.extraUniforms = {
       beenInfo: { value: info.infoTex }, beenKleur: { value: info.kleurTex },
       texBreedte: { value: TEX_BREEDTE }, lodRol: { value: lodRol },
-      perEenheidCss: { value: 1 }, kmNaarEenheid: { value: 1 },
+      kmPerCssPx: { value: 1 },
       patroon: { value: a }, patroon2: { value: b }, patronenAan: { value: 1 },
     };
     Object.assign(this.uniforms, this.extraUniforms);
@@ -234,16 +237,16 @@ export function maakLijnMateriaal(info, lodRol, klemOpHorizon) {
   return mat;
 }
 
-/** Schermschaal in één keer op een lijst materialen: css-resolutie (breedte in
- *  css-px), pixels per scene-eenheid op afstand 1 (voor de patronen), en de
- *  km → eenheid-factor van de schil waarop de lijnen liggen. */
-export function zetLijnSchaal(materialen, cssW, cssH, fovDeg, radius) {
-  const perEenheid = cssH / (2 * Math.tan((fovDeg * Math.PI) / 360));
-  for (const m of materialen) {
-    m.resolution.set(cssW, cssH);
-    m.extraUniforms.perEenheidCss.value = perEenheid;
-    m.extraUniforms.kmNaarEenheid.value = radius / 6371;
-  }
+/** Schermschaal op een lijst materialen: css-resolutie, zodat `linewidth` css-px is. */
+export function zetLijnSchaal(materialen, cssW, cssH) {
+  for (const m of materialen) m.resolution.set(cssW, cssH);
+}
+
+/** Km per css-pixel in het beeldmidden (uit kijkhoogte, fov en schermhoogte) —
+ *  de maat waarmee de fragment-shader het lengtepatroon in pixels legt. Elke
+ *  frame zetten: hij verandert bij elke zoom. */
+export function zetKmPerPx(materialen, kmPerCssPx) {
+  for (const m of materialen) m.extraUniforms.kmPerCssPx.value = kmPerCssPx;
 }
 
 export function zetPatronenAan(materialen, aan) {

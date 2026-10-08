@@ -18,11 +18,13 @@ lichte brief incl. §9 (`routebrieven/koper-oyutolgoi-china.md` of `koper-grasbe
    (sleutel `"<stroom-id>-<van>-<naar>"`); functie `bak_<grondstof>_<slug>()` + kopcommentaar in
    `v2/tools/bak_stromen.sh` **direct vóór de regel `case "${1:-}" in`** (functienaam = argument met `-` → `_`);
    je bak-noot in §9 van je eigen brief `v2/design/routebrieven/<stroom-id>.md`.
-4. **Centraal (orkestrator), niet door de bak-agent:** de `STROMEN`-lijst in `v2/src/main.js` én het
-   data-versieliteral `laadStroomroute(VECTOR_R, "121", …)` daar, de `?v=`-bump in `v2/index.html`, een kleur in
-   `GRONDSTOF_KLEUR` (`v2/src/stroomstijl.js`; koper, lithium, grafiet, kobalt, nikkel, goud, zilver, uranium,
-   rare-earths, pgm, olie, gas, diamant, kolen bestaan al), nieuwe extracts (§3), de dispatch (§4), git.
-   Lever in je eindrapport de registerregel: `{ sleutel: "<kort>", bestand: "stroomroute-<stroom-id>.json", aan: true }`.
+4. **Centraal (orkestrator), niet door de bak-agent:** de registratie in `v2/data/stromen-register.json` (sinds
+   golf 1, 2026-10-08 — niet meer in `main.js`), daarna `bash v2/tools/bak_stromen.sh bundel` + `BUNDEL_VERSIE` in
+   `v2/src/main.js` (§7), de `?v=`-bump in `v2/index.html`, een kleur in `GRONDSTOF_KLEUR` (`v2/src/stroomstijl.js`;
+   koper, lithium, grafiet, kobalt, nikkel, goud, zilver, uranium, rare-earths, pgm, olie, gas, diamant, kolen bestaan
+   al), nieuwe extracts (§3), de dispatch (§4), git.
+   Lever in je eindrapport de registerregel: `{ "sleutel": "<kort>", "bestand": "stroomroute-<stroom-id>.json",
+   "grondstof": "<grondstof>", "label": "<Van → Naar>", "aan": true, "noot": "<golf, datum>" }`.
 5. Geen herbakes, geen `git add -A`, geen commit. Geen coördinaat verzinnen; bestaande ankers hergebruiken
    (`routebrief-licht.md` §1, Durban DCT Pier 2 en Lobito in de brieven).
 
@@ -244,7 +246,7 @@ EOF
 - [ ] Gedeeld been = letterlijke kopie; aftakking = `vertakt_van`. Stippel betekent alleen "hier reikt het net niet";
       "aannemelijk" en "onzeker" staan in de beennaam/markernaam en in §3/§7 van de brief, niet in de lijnstijl.
 - [ ] Extract ontbreekt of Overpass valt weg → melden; niet zelf het register aanpassen, `--bron geofabrik` is de default.
-- [ ] Eindrapport: benen + km + naden, de registerregel voor `main.js`, welke shared-file-edits (profiel, functie), open punten.
+- [ ] Eindrapport: benen + km + naden, de registerregel voor `stromen-register.json`, welke shared-file-edits (profiel, functie), open punten.
 
 ## 7 · De bundel: wat de bol écht leest (golf 1 van de visuele fase, 2026-10-08)
 

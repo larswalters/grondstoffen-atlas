@@ -281,15 +281,15 @@ def bak(reg, toets=False):
                 # basis-niveaus
                 for naam, tol, vd in NIVEAUS:
                     np_, nk = niveau_punten(pts, kms, tol, vd)
-                    schrijf_been(basis_blokken[naam], np_, nk)
-                    entry[naam] = [basis_tel[naam], len(np_)]
-                    basis_tel[naam] += len(np_)
+                    n_ = schrijf_been(basis_blokken[naam], np_, nk)
+                    entry[naam] = [basis_tel[naam], n_]
+                    basis_tel[naam] += n_
                 # fijn = alle bronpunten + verdichting 5 km (zoals stroomroute.verdicht)
                 fp, fk = verdicht(pts, kms, FIJN_VERDICHT_KM)
-                schrijf_been(fijn_blok[gs], fp, None)
-                entry["fijn"] = [fijn_tel[gs], len(fp)]
-                fijn_tel[gs] += len(fp)
-                totalen["puntenFijn"] += len(fp)
+                n_ = schrijf_been(fijn_blok[gs], fp, None)
+                entry["fijn"] = [fijn_tel[gs], n_]
+                fijn_tel[gs] += n_
+                totalen["puntenFijn"] += n_
                 # toets: de koorde-som van het fijn-niveau tegen de bron-km
                 if toets and b.get("km"):
                     gemeten = kms[-1]
@@ -366,17 +366,27 @@ def bak(reg, toets=False):
 
 
 def schrijf_been(uit, pts, kms):
-    varint(uit, len(pts))
-    x = y = k = 0
+    # ⚠️ Opeenvolgende punten die ná kwantisatie samenvallen worden overgeslagen:
+    # een segment van lengte nul geeft in de vertex-shader van LineMaterial
+    # normalize(vec2(0)) = NaN (review 2026-10-08: 310 zulke segmenten in de
+    # fijne bins, uit dubbele bronpunten). De bron blijft ongewijzigd; alleen
+    # de bundel slaat het duplicaat over. Geeft het aantal geschreven punten.
+    q = []
     for i, p in enumerate(pts):
         qx, qy = round(p[0] * SCHAAL), round(p[1] * SCHAAL)
+        if q and q[-1][0] == qx and q[-1][1] == qy:
+            continue
+        q.append((qx, qy, None if kms is None else round(kms[i] * KM_SCHAAL)))
+    varint(uit, len(q))
+    x = y = k = 0
+    for qx, qy, qk in q:
         varint(uit, qx - x)
         varint(uit, qy - y)
         x, y = qx, qy
-        if kms is not None:
-            qk = round(kms[i] * KM_SCHAAL)
+        if qk is not None:
             varint(uit, qk - k)
             k = qk
+    return len(q)
 
 
 # ── drift-controle ───────────────────────────────────────────────────────────

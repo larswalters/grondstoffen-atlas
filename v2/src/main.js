@@ -116,7 +116,8 @@ if (TOON.havens) laadHavens()
       `[atlas v2] havens: ${hs.havens.toLocaleString("nl")} getoond van ${hs.bron.toLocaleString("nl")} · ` +
       `${hs.verborgen.toLocaleString("nl")} verborgen (>${hs.aanWaterKm} km van kust/meer/rivier)`
     );
-    document.getElementById("havenNoot").textContent =
+    const havenNoot = document.getElementById("havenNoot");   // niet meer in de HUD sinds golf 1
+    if (havenNoot) havenNoot.textContent =
       `${hs.havens.toLocaleString("nl")} van ${hs.bron.toLocaleString("nl")} getoond — ` +
       `${hs.verborgen.toLocaleString("nl")} liggen >${hs.aanWaterKm} km van kust, meer of rivier`;
     zetAttrib();
@@ -293,6 +294,7 @@ let REGISTER = null;
 let kleurModus = MODUS === "bouw" ? "modaliteit" : "grondstof";
 let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | "recht-zeeboog"
 let gloedAan = true;                 // stand van de gn-knop
+let bewegingAan = true;              // stand van de bw-knop
 
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
@@ -561,6 +563,12 @@ async function startStromen() {
     kleurModus, lijnModus, gloedAan,
   });
   GLOBE.globeGroup.add(ATLAS.groep);
+  // Een klik tijdens het laden (≈ 0,5 s) mag niet verloren gaan: de stand van
+  // nu toepassen, niet die van het moment van aanroepen (review 2026-10-08).
+  ATLAS.zetKleurModus(kleurModus);
+  ATLAS.zetLijnModus(lijnModus);
+  ATLAS.zetGloed(gloedAan);
+  ATLAS.zetBeweging(bewegingAan);
   GLOBE.onTick((dt) => ATLAS.update(dt));
   window.ATLAS = ATLAS;                 // diagnose- en meethandvat (meet_atlas.mjs)
   const st = ATLAS.stats;
@@ -858,7 +866,8 @@ wireButtons(".gnBtn", "gn", (mode) => {
 });
 // Beweging (de kometen) aan/uit — nieuw in golf 1; de lijnen blijven staan.
 wireButtons(".bwBtn", "bw", (mode) => {
-  if (ATLAS) ATLAS.zetBeweging(mode === "aan");
+  bewegingAan = (mode === "aan");
+  if (ATLAS) ATLAS.zetBeweging(bewegingAan);
   for (const l of STROOMLEVEN.values()) l.groep.visible = (mode === "aan");
 });
 document.querySelectorAll(".gnGa").forEach((knop) => {

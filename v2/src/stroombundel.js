@@ -44,7 +44,7 @@ import {
   kleurVan, beenPunten, GRONDSTOF_KLEUR, stijlIndex, LIJNMODI,
 } from "./stroomstijl.js?v=132";
 import {
-  BeenInfo, maakLijnMateriaal, zetLijnSchaal, zetPatronenAan, maakSegmentGeometrie, bouwLijn,
+  BeenInfo, maakLijnMateriaal, zetLijnSchaal, zetKmPerPx, zetPatronenAan, maakSegmentGeometrie, bouwLijn,
   ROL_BASIS, ROL_FIJN, ROL_ALTIJD,
 } from "./stroomlijn.js?v=132";
 import { bouwGloed } from "./gloed.js?v=132";
@@ -240,6 +240,10 @@ export async function laadStroombundel(opts) {
     throw new Error("stromen-register.json en stromen.json lopen uiteen — draai `bash v2/tools/bak_stromen.sh bundel`");
   }
   const { schaal, kmSchaal } = index.codering;
+  // De LOD-toleranties komen uit de bundel zelf (de baker schrijft ze in
+  // niveaus.*.tolKm); de constanten in LOD zijn alleen de terugval.
+  const tolL0 = index.niveaus?.L0?.tolKm ?? LOD.L0TolKm;
+  const tolL1 = index.niveaus?.L1?.tolKm ?? LOD.L1TolKm;
 
   // ── de benen, plat over alle stromen (globale beenindex = textuur-index) ──
   const stromen = index.stromen.map((s, si) => ({
@@ -257,7 +261,10 @@ export async function laadStroombundel(opts) {
     }
   }
   const grondBenen = benen.filter((b) => !b.lucht);
-  const luchtBenen = benen.filter((b) => b.lucht);
+  // Een been zonder geometrie én zonder kop/staart kan niets tekenen: overslaan
+  // (luid in de console), niet de hele bundel laten vallen op een null.
+  const luchtBenen = benen.filter((b) => b.lucht && Array.isArray(b.kopStaart) && b.kopStaart.length === 2);
+  for (const b of benen) if (b.lucht && !luchtBenen.includes(b)) console.warn(`[atlas v2] been ${b.i} (${b.sleutel}) heeft geen geometrie en geen kop/staart — overgeslagen`);
 
   // ── decoderen van de twee basisniveaus ───────────────────────────────────
   for (const naam of ["L0", "L1"]) {
@@ -268,6 +275,9 @@ export async function laadStroombundel(opts) {
   }
   for (const b of grondBenen) { b.kop = b.L0.kop; b.staart = b.L0.staart; }
   for (const b of luchtBenen) { b.kop = b.kopStaart[0]; b.staart = b.kopStaart[1]; }
+  // de benen die in een hemelsbreed-object horen: alles met een kop en staart
+  // behalve lucht — dat heeft zijn eigen object (dezelfde boog in elke modus)
+  const hemelsbreedBenen = [...grondBenen, ...[]];
   const tDecode = performance.now();
 
   // ── de informatietexturen ────────────────────────────────────────────────
@@ -323,16 +333,18 @@ export async function laadStroombundel(opts) {
   const luchtLijn = bouwLijn(luchtSg, matAltijd, 7.5, "lijnen-lucht");
   groep.add(luchtLijn);
 
-  // hemelsbreed-modi: lui, één object per modus, alle 718 benen kop → staart
+  // hemelsbreed-modi: lui, één object per modus, alle grondbenen kop → staart
+  // (lucht niet: dat staat al in lijnen-lucht, en boogt in elke modus hetzelfde —
+  // anders tekent een luchtbeen in deze modi dubbel; review 2026-10-08)
   const hemelsbreed = new Map();  // modus → {lijn, banen: Map(beenindex → {xyz, km})}
   function bouwHemelsbreed(modus) {
     if (hemelsbreed.has(modus)) return hemelsbreed.get(modus);
-    const reeksen = benen.map((b) => puntenNaarXyz(beenPunten({ punten: [b.kop, b.staart], modaliteit: b.modaliteit }, modus), radius));
+    const reeksen = hemelsbreedBenen.map((b) => puntenNaarXyz(beenPunten({ punten: [b.kop, b.staart], modaliteit: b.modaliteit }, modus), radius));
     const nSeg = reeksen.reduce((s, r) => s + Math.max(0, r.km.length - 1), 0);
     const sg = maakSegmentGeometrie(nSeg);
     const banen = new Map();
     let s = 0;
-    benen.forEach((b, i) => { banen.set(b.i, reeksen[i]); s = schrijfSegmenten(sg, s, reeksen[i].xyz, reeksen[i].km, b.i, nSeg); });
+    hemelsbreedBenen.forEach((b, i) => { banen.set(b.i, reeksen[i]); s = schrijfSegmenten(sg, s, reeksen[i].xyz, reeksen[i].km, b.i, nSeg); });
     sg.zetAantal(s); sg.markeerBijgewerkt(s);
     const lijn = bouwLijn(sg, matAltijd, 7.5, `lijnen-${modus}`);
     lijn.visible = false;
@@ -355,7 +367,11 @@ export async function laadStroombundel(opts) {
   function zetAlleBanen() {
     if (lijnModus === "route") { for (const b of benen) zetBaanRoute(b); return; }
     const h = bouwHemelsbreed(lijnModus);
-    for (const b of benen) { const r = h.banen.get(b.i); kometen.zetBaan(b.i, r.xyz, r.km); }
+    for (const b of benen) {
+      const r = h.banen.get(b.i);
+      if (r) kometen.zetBaan(b.i, r.xyz, r.km);
+      else zetBaanRoute(b);              // lucht: zijn eigen boog
+    }
   }
   zetAlleBanen();
 
@@ -549,7 +565,7 @@ export async function laadStroombundel(opts) {
     const w = canvas.clientWidth || canvas.width, h = canvas.clientHeight || canvas.height;
     if (w !== cssW || h !== cssH) {
       cssW = w; cssH = h;
-      zetLijnSchaal(materialen, cssW, cssH, camera.fov, radius);
+      zetLijnSchaal(materialen, cssW, cssH);
     }
     // de bol draait, de camera staat vast: één inverse per frame
     globeGroup.updateMatrix();
@@ -560,13 +576,14 @@ export async function laadStroombundel(opts) {
     // LOD-keuze uit kijkhoogte en schermhoogte, met hysterese
     const hoogte = getAltitudeKm();
     kmPerCssPx = (2 * hoogte * Math.tan((camera.fov * D2R) / 2)) / cssH;
+    zetKmPerPx(materialen, kmPerCssPx);     // het lengtepatroon in schermpixels
     let nieuw = niveau;
-    if (niveau === 0 && kmPerCssPx < LOD.L0TolKm) nieuw = 1;
-    if (niveau === 1 && kmPerCssPx >= LOD.L0TolKm * LOD.hysterese) nieuw = 0;
-    if (niveau === 1 && kmPerCssPx < LOD.L1TolKm) nieuw = 2;
-    if (niveau === 2 && kmPerCssPx >= LOD.L1TolKm * LOD.hysterese) nieuw = 1;
-    if (niveau === 0 && kmPerCssPx < LOD.L1TolKm) nieuw = 2;
-    if (niveau === 2 && kmPerCssPx >= LOD.L0TolKm * LOD.hysterese) nieuw = 0;
+    if (niveau === 0 && kmPerCssPx < tolL0) nieuw = 1;
+    if (niveau === 1 && kmPerCssPx >= tolL0 * LOD.hysterese) nieuw = 0;
+    if (niveau === 1 && kmPerCssPx < tolL1) nieuw = 2;
+    if (niveau === 2 && kmPerCssPx >= tolL1 * LOD.hysterese) nieuw = 1;
+    if (niveau === 0 && kmPerCssPx < tolL1) nieuw = 2;
+    if (niveau === 2 && kmPerCssPx >= tolL0 * LOD.hysterese) nieuw = 0;
     if (nieuw !== niveau) {
       niveau = nieuw;
       if (niveau < 2) wisFijn();
@@ -576,7 +593,7 @@ export async function laadStroombundel(opts) {
     L1.lijn.visible = route && niveau >= 1;
     fijnLijn.visible = route && niveau === 2;
     const nu = performance.now();
-    if (route && (niveau === 2 || kmPerCssPx < LOD.L1TolKm * LOD.prefetchFactor) && nu - laatsteHerzien > LOD.herzienMs) {
+    if (route && (niveau === 2 || kmPerCssPx < tolL1 * LOD.prefetchFactor) && nu - laatsteHerzien > LOD.herzienMs) {
       laatsteHerzien = nu;
       if (niveau === 2) herzieFijn(hoogte, cssW / cssH, nu);
       else {
