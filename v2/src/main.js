@@ -20,11 +20,9 @@ import { laadLandnet } from "./landnet.js?v=070";
 import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
-import { laadStroomroute } from "./stroomroute.js?v=127";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadGloednodes } from "./gloednodes.js?v=127";
-import { laadStroomleven } from "./stroomleven.js?v=127";
-import { GRONDSTOF_KLEUR } from "./stroomstijl.js?v=127";
+import { laadStroombundel } from "./stroombundel.js?v=132";
+import { GRONDSTOF_KLEUR, LIJNSTIJL } from "./stroomstijl.js?v=132";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 
@@ -34,6 +32,25 @@ const GLOBE = createGlobe(document.getElementById("canvasWrap"));
 // Eén constante voor alle lagen, zodat ze onderling per constructie niet uit
 // elkaar kunnen lopen.
 const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
+
+// --- modus en versies (golf 1 van de visuele fase, 2026-10-08) -------------
+// ✅ BESLUIT LARS (2026-10-08): de pagina opent als ATLAS — kleur per grondstof,
+// ondergrond donker, gloed en kometen aan, spoornet uit en niet geladen. Dit
+// vervangt het besluit van 2026-08-07 ("modaliteitsweergave als default"): dat
+// was de bewezen stand van het ROUTEWERK met vijf stromen; met 182 stromen is
+// de atlas het product en het routewerk de bouwmodus. `?modus=bouw` opent het
+// routewerk (modaliteit · vol · spoornet geladen · witte precisiestippen).
+// `?laag=los` laadt de oude per-stroom-lagen (stroomroute/stroomleven/
+// gloednodes) als pariteitsreferentie — weg in stap 4 van golf 1.
+const PARAMS = new URLSearchParams(location.search);
+const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
+const LAAG_LOS = PARAMS.get("laag") === "los";
+const CODE_VERSIE = "132";
+// ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
+// alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
+// bezoeker bit-identieke bins opnieuw.
+const BUNDEL_VERSIE = "132";
+const TELEFOON = window.innerWidth <= 640;
 
 // --- welke lagen meedoen ---------------------------------------------------
 // Op verzoek van Lars (2026-08-07) staan vier lagen uit en zijn hun HUD-knoppen
@@ -107,60 +124,89 @@ if (TOON.havens) laadHavens()
   .catch((e) => console.error("[atlas v2] havens niet geladen:", e));
 
 // --- het landnet (M25) -----------------------------------------------------
-// ⚠️ "082" is de BAKE-versie, niet de codeversie. Die twee zijn bewust
+// ⚠️ "102" is de BAKE-versie, niet de codeversie. Die twee zijn bewust
 // losgekoppeld: het landnet is bij de AIS-ombouw niet opnieuw gebakken, en
 // meebumpen met de code dwingt elke bezoeker ~5 MB opnieuw te downloaden voor
 // een bit-identiek bestand. Bump deze alleen bij een echte bake.
+//
+// ⚠️ LUI SINDS GOLF 1 (2026-10-08): in de atlas wordt het spoornet NIET
+// geladen en niet getoond — het is routeer-gereedschap ("ligt het spoorbeen op
+// het net?"), en op de donkere bol las het cyaan/witte web als een vijftiende
+// grondstof die niet in de legenda staat. Het was ook de grootste enkele
+// post (10 MB, 7,5 MB over de lijn). In de bouwmodus (`?modus=bouw`) laadt het
+// meteen; anders pas bij de eerste "aan" — het haalAisTracks()-patroon. Code,
+// bestand en knop blijven (uitgezette lagen gaan achter een vlag, niet weg).
 let LANDNET = null;
-laadLandnet(VECTOR_R, "102", GLOBE.klemOpHorizon)
-  .then((ln) => {
-    LANDNET = ln;
-    GLOBE.globeGroup.add(ln.lijnen);
-    window.LANDNET = ln;
-    const s = ln.stats;
-    console.log(
-      `[atlas v2] landnet: ${s.netwerkKm.toLocaleString("nl")} km · ` +
-      `${s.knopen.toLocaleString("nl")} knopen · ${s.edges.toLocaleString("nl")} edges · ` +
-      `${s.punten.toLocaleString("nl")} punten · ${s.labels} labels · ` +
-      `${s.kbOverdracht} KB · laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
-    );
-    const noot = document.getElementById("landNoot");
-    if (noot) {
-      noot.textContent =
-        `${Math.round(s.netwerkKm).toLocaleString("nl")} km spoor · ` +
-        `${s.edges.toLocaleString("nl")} edges · ${s.labels} labels`;
-    }
-  })
-  .catch((e) => console.warn("[atlas v2] landnet niet geladen (nog niet gebakken?):", e.message));
+let landnetAan = MODUS === "bouw";
+let landnetBezig = null;
+
+function haalLandnet() {
+  if (landnetBezig) return landnetBezig;
+  const noot = document.getElementById("landNoot");
+  if (noot) noot.textContent = "laden… (10 MB, eenmalig)";
+  landnetBezig = laadLandnet(VECTOR_R, "102", GLOBE.klemOpHorizon)
+    .then((ln) => {
+      LANDNET = ln;
+      ln.lijnen.visible = landnetAan;
+      GLOBE.globeGroup.add(ln.lijnen);
+      window.LANDNET = ln;
+      const s = ln.stats;
+      console.log(
+        `[atlas v2] landnet: ${s.netwerkKm.toLocaleString("nl")} km · ` +
+        `${s.knopen.toLocaleString("nl")} knopen · ${s.edges.toLocaleString("nl")} edges · ` +
+        `${s.punten.toLocaleString("nl")} punten · ${s.labels} labels · ` +
+        `${s.kbOverdracht} KB · laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+      );
+      if (noot) {
+        noot.textContent =
+          `${Math.round(s.netwerkKm).toLocaleString("nl")} km spoor · ` +
+          `${s.edges.toLocaleString("nl")} edges · ${s.labels} labels`;
+      }
+      return ln;
+    })
+    .catch((e) => {
+      landnetBezig = null;
+      if (noot) noot.textContent = "niet geladen (nog niet gebakken?)";
+      console.warn("[atlas v2] landnet niet geladen (nog niet gebakken?):", e.message);
+    });
+  return landnetBezig;
+}
+if (landnetAan) haalLandnet();
 
 // --- het AIS-waternet (M27, pilot) -----------------------------------------
 // De eerste zichtbare stap van de ombouw: vaargeulen afgeleid uit World Bank
 // AIS-density (bake_aisnet.py), vier testvensters — Tongling · Nederland ·
-// Patache · Shanghai. Kijk-laag: eerst moet de lijn in de echte geul liggen,
-// dan pas wordt dit een graaf met knopen en haven-aanhechting.
+// Patache · Shanghai. Kijk-laag; standaard UIT (besluit Lars 2026-07-25) en
+// sinds golf 1 (2026-10-08) ook pas geladen bij de eerste "aan".
 let AISNET = null;
-laadAisnet(VECTOR_R, "085", GLOBE.klemOpHorizon)
-  .then((an) => {
-    AISNET = an;
-    // standaard UIT (besluit Lars 2026-07-25): het beeld komt van de gloed-
-    // laag; de lijnen blijven als graaf-zaad achter hun eigen HUD-knop.
-    an.lijnen.visible = false;
-    GLOBE.globeGroup.add(an.lijnen);
-    window.AISNET = an;
-    const s = an.stats;
-    console.log(
-      `[atlas v2] aisnet: ${s.lijnen.toLocaleString("nl")} lijnen · ` +
-      `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
-      `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
-    );
-    const noot = document.getElementById("aisNoot");
-    if (noot) {
-      noot.textContent =
-        `pilot: ${Object.keys(an.vensters).join(" · ")} — ` +
-        `${s.lijnen.toLocaleString("nl")} geullijnen uit AIS-density`;
-    }
-  })
-  .catch((e) => console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message));
+let aisnetAan = false;
+let aisnetBezig = null;
+
+function haalAisnet() {
+  if (aisnetBezig) return aisnetBezig;
+  aisnetBezig = laadAisnet(VECTOR_R, "085", GLOBE.klemOpHorizon)
+    .then((an) => {
+      AISNET = an;
+      an.lijnen.visible = aisnetAan;
+      GLOBE.globeGroup.add(an.lijnen);
+      window.AISNET = an;
+      const s = an.stats;
+      console.log(
+        `[atlas v2] aisnet: ${s.lijnen.toLocaleString("nl")} lijnen · ` +
+        `${s.segmenten.toLocaleString("nl")} segmenten · ${s.kbOverdracht} KB · ` +
+        `laden ${s.msLaden} ms, verwerken ${s.msVerwerken} ms`
+      );
+      const noot = document.getElementById("aisNoot");
+      if (noot) {
+        noot.textContent =
+          `pilot: ${Object.keys(an.vensters).join(" · ")} — ` +
+          `${s.lijnen.toLocaleString("nl")} geullijnen uit AIS-density`;
+      }
+      return an;
+    })
+    .catch((e) => { aisnetBezig = null; console.warn("[atlas v2] aisnet niet geladen (nog niet gebakken?):", e.message); });
+  return aisnetBezig;
+}
 
 // --- echte scheepstracks (M28, vijf bronnen) -------------------------------
 // De bol-toets van de track-aanpak: gevaren lijnen van individuele schepen uit
@@ -219,320 +265,169 @@ function haalAisTracks() {
   return aistracksBezig;
 }
 
-// --- de stroom-preview: grafiet Balama → VS (M28) ---------------------------
-// De eerste echte grondstofstroom end-to-end op de bol, routebrief-gestuurd
-// (v2/design/routebrieven/grafiet-balama-vidalia.md): truck Balama → Nacala
-// (echte N380/N1-weggeometrie) → gestippelde haven-aanloop → zeeschip
-// Kaap-route → barge via Port Allen → Port of Vidalia (mijl 359) → last mile
-// per truck. Kleur = modaliteit, zodat de overgang tussen de netten
-// zichtbaar is; gestippeld = schematische verbinding. Klein bestand
-// (< 300 KB), dus eager zoals het landnet — niet het lazy aistracks-patroon.
-// ⚠️ VIER STROMEN sinds 2026-07-28, elk met een eigen bestand, een eigen groep
-// en een eigen knop. Ze delen bewust één kleurtabel (kleur = MODALITEIT, niet
-// grondstof): het punt van deze laag is de overgang tussen de netten laten
-// zien, en die overgang moet in elke stroom hetzelfde lezen. Welke stroom je
-// ziet zeg je met de knoppen, niet met de kleur.
-// ⚠️ `grondstof` staat hier EXPLICIET (2026-09-26): de HUD groepeert erop
-// (details.srGroep[data-gs]), en het pilotbestand heet niet naar zijn
-// grondstof. Sleutel = de id-prefix uit stroomstijl.js (koper · lithium ·
-// grafiet · kobalt · nikkel · ree · kolen · olie · uranium · zilver · gas).
-const STROMEN = [
-  { sleutel: "grafiet", bestand: "stroomroute-pilot.json", grondstof: "grafiet", aan: true },
-  { sleutel: "cu-eg", bestand: "stroomroute-koper-escondida-guixi.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-ct", bestand: "stroomroute-koper-collahuasi-tongling.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-ld", bestand: "stroomroute-koper-lobito-duisburg.json", grondstof: "koper", aan: true },
-  // ⚠️ Deze stroom eindigt bewust in de vaargeul vóór Zhangjiagang en niet bij
-  // de fabriek: de losplek en de twee Chinese fabrieksankers staan nog open in
-  // de routebrief (§5). Liever een been dat ophoudt waar het bewijs ophoudt dan
-  // een lijn naar een plausibel-maar-ongelegd punt (de Waalhaven-klasse).
-  { sleutel: "li-gz", bestand: "stroomroute-lithium-greenbushes-zhangjiagang.json", grondstof: "lithium", aan: true },
-  // ── M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25) ──
-  // Eén gemeten keten per handelsas; ankers op site-niveau; stippel = hier
-  // reikt het net niet. Zie v2/design/routebrief-licht.md en de brieven.
-  { sleutel: "cu-td", bestand: "stroomroute-koper-tfm-durban.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-lt", bestand: "stroomroute-koper-lasbambas-tongling.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-cq", bestand: "stroomroute-koper-chuqui-tongling.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-er", bestand: "stroomroute-koper-elteniente-rotterdam.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-gm", bestand: "stroomroute-koper-grasberg-manyar.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-of", bestand: "stroomroute-koper-oyutolgoi-feishang.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-ah", bestand: "stroomroute-koper-aurubis-hamburg.json", grondstof: "koper", aan: true },
-  // ── M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet ──
-  { sleutel: "li-aa", bestand: "stroomroute-lithium-atacama-antofagasta.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-bz", bestand: "stroomroute-lithium-bikita-zhangjiagang.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-pg", bestand: "stroomroute-lithium-pilgangoora-gwangyang.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-on", bestand: "stroomroute-lithium-olaroz-naraha.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-by", bestand: "stroomroute-lithium-bougouni-yangpu.json", grondstof: "lithium", aan: true },
-  { sleutel: "gr-bl", bestand: "stroomroute-grafiet-balama-laixi.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-bs", bestand: "stroomroute-grafiet-balama-saemangeum.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-ld", bestand: "stroomroute-grafiet-lakecharles-desoto.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-jb", bestand: "stroomroute-grafiet-jinzhou-baotou.json", grondstof: "grafiet", aan: true },
-  // ── M30 · golf 2b (2026-09-26): kobalt + nikkel ──
-  { sleutel: "co-tq", bestand: "stroomroute-kobalt-tfm-quzhou.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-kl", bestand: "stroomroute-kobalt-kolwezi-lobito.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-mq", bestand: "stroomroute-kobalt-morowali-quzhou.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-kk", bestand: "stroomroute-kobalt-kcc-kokkola.json", grondstof: "kobalt", aan: true },
-  { sleutel: "ni-wi", bestand: "stroomroute-nikkel-wedabay-iwip.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-mq", bestand: "stroomroute-nikkel-morowali-quzhou.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-tn", bestand: "stroomroute-nikkel-taganito-niihama.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-nm", bestand: "stroomroute-nikkel-norilsk-monchegorsk.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-sk", bestand: "stroomroute-nikkel-sudbury-kristiansand.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-og", bestand: "stroomroute-nikkel-ouaco-gwangyang.json", grondstof: "nikkel", aan: true },
-  // ── M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen ──
-  { sleutel: "ree-bb", bestand: "stroomroute-ree-bayanobo-baotou.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-kg", bestand: "stroomroute-ree-kachin-ganzhou.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-mk", bestand: "stroomroute-ree-mtweld-kuantan.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-mf", bestand: "stroomroute-ree-mountainpass-fortworth.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-sn", bestand: "stroomroute-ree-sillamae-narva.json", grondstof: "ree", aan: true },
-  { sleutel: "kolen-dh", bestand: "stroomroute-kolen-datong-haimen.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-sm", bestand: "stroomroute-kolen-sangatta-mundra.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-gk", bestand: "stroomroute-kolen-goonyella-kalinganagar.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-tb", bestand: "stroomroute-kolen-tavantolgoi-baotou.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-tv", bestand: "stroomroute-kolen-taldinsky-vostochny.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-cr", bestand: "stroomroute-kolen-cerrejon-ruhr.json", grondstof: "kolen", aan: true },
-  // ── M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld ──
-  // Sleutels genormaliseerd naar <prefix>-<twee initialen>: olie heeft geen
-  // elementsymbool en volgt kolen (volle naam), uranium = u.
-  { sleutel: "olie-rz", bestand: "stroomroute-olie-rastanura-zhoushan.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-pj", bestand: "stroomroute-olie-primorsk-jamnagar.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-cr", bestand: "stroomroute-olie-corpuschristi-rotterdam.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-hc", bestand: "stroomroute-olie-habshan-chiba.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-bv", bestand: "stroomroute-olie-bonny-vadinar.json", grondstof: "olie", aan: true },
-  { sleutel: "u-ip", bestand: "stroomroute-uranium-inkai-poti.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-mp", bestand: "stroomroute-uranium-mcarthurriver-porthope.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-rw", bestand: "stroomroute-uranium-rossing-walvisbay.json", grondstof: "uranium", aan: true },
-  // Gestaakt sinds 2023 (titel + sitelaag): de weg is gemeten, de lading
-  // stroomt niet — getekend zoals grafiet fase D/E met volume nul.
-  { sleutel: "u-ac", bestand: "stroomroute-uranium-arlit-cotonou.json", grondstof: "uranium", aan: true },
-  { sleutel: "co-kd", bestand: "stroomroute-kobalt-kisanfu-daressalaam.json", grondstof: "kobalt", aan: true },
-  // Alleen de slurryleiding, als rechte stippel (132 km hemelsbreed tegen
-  // 220 km gepubliceerd); het zeebeen is bewust niet getekend (brief §7).
-  { sleutel: "co-at", bestand: "stroomroute-kobalt-ambatovy-toamasina.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-mf", bestand: "stroomroute-kobalt-moa-fortsaskatchewan.json", grondstof: "kobalt", aan: true },
-  // ── M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld ──
-  // Eén workflow van 135 agenten (Sonnet 5): ontwerp → toets → brief → bake → keuring per keten.
-  // zilver-antamina-huarmey is volledig stippel (slurryleiding zonder OSM-way), net als co-at.
-  { sleutel: "ag-lg", bestand: "stroomroute-zilver-lubin-glogow.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-sa", bestand: "stroomroute-zilver-sancristobal-antofagasta.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-po", bestand: "stroomroute-zilver-penasquito-onsan.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-ct", bestand: "stroomroute-zilver-cannington-townsville.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-ah", bestand: "stroomroute-zilver-antamina-huarmey.json", grondstof: "zilver", aan: true },
-  { sleutel: "gas-sr", bestand: "stroomroute-gas-sabinepass-rotterdam.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-rc", bestand: "stroomroute-gas-raslaffan-chiba.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-ci", bestand: "stroomroute-gas-corpuschristi-incheon.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-kr", bestand: "stroomroute-gas-karratha-rudong.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-bz", bestand: "stroomroute-gas-bonny-zeebrugge.json", grondstof: "gas", aan: true },
-  { sleutel: "cu-sw", bestand: "stroomroute-koper-sentinel-walvisbay.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-op", bestand: "stroomroute-koper-olympicdam-portadelaide.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-aj", bestand: "stroomroute-koper-aktogay-jinchuan.json", grondstof: "koper", aan: true },
-  { sleutel: "li-cv", bestand: "stroomroute-lithium-cirilo-vitoria.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-hb", bestand: "stroomroute-lithium-hombremuerto-bessemercity.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-sm", bestand: "stroomroute-lithium-silverpeak-mccarran.json", grondstof: "lithium", aan: true },
-  { sleutel: "gr-lq", bestand: "stroomroute-grafiet-lindijumbo-qingdao.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-iv", bestand: "stroomroute-grafiet-itapecerica-vitoria.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-sl", bestand: "stroomroute-grafiet-skaland-lulea.json", grondstof: "grafiet", aan: true },
-  { sleutel: "ni-vl", bestand: "stroomroute-nikkel-voiseysbay-longharbour.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-sm", bestand: "stroomroute-nikkel-sorowako-matsuzaka.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-on", bestand: "stroomroute-nikkel-obi-ningbo.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ree-lg", bestand: "stroomroute-ree-longnan-ganzhou.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-kj", bestand: "stroomroute-ree-kuantan-japan.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-bn", bestand: "stroomroute-ree-baotou-ningbo.json", grondstof: "ree", aan: true },
-  { sleutel: "kolen-ep", bestand: "stroomroute-kolen-ermelo-portqasim.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-mh", bestand: "stroomroute-kolen-muswellbrook-hekinan.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-tf", bestand: "stroomroute-kolen-tabalong-fangchenggang.json", grondstof: "kolen", aan: true },
-  { sleutel: "olie-tn", bestand: "stroomroute-olie-tengiz-novorossiysk.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-ap", bestand: "stroomroute-olie-albasrah-paradip.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-kd", bestand: "stroomroute-olie-kharg-dongjiakou.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-kod", bestand: "stroomroute-olie-kozmino-dalian.json", grondstof: "olie", aan: true },
-  { sleutel: "u-is", bestand: "stroomroute-uranium-inkai-stpetersburg.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-pa", bestand: "stroomroute-uranium-porthope-almelo.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-op", bestand: "stroomroute-uranium-olympicdam-portadelaide.json", grondstof: "uranium", aan: true },
-  { sleutel: "co-hg", bestand: "stroomroute-kobalt-huayou-gunsan.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-bg", bestand: "stroomroute-kobalt-bouazzer-guemassa.json", grondstof: "kobalt", aan: true },
-  // ── M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht) ──
-  { sleutel: "au-ml", bestand: "stroomroute-goud-mponeng-londen.json", grondstof: "goud", aan: true },
-  { sleutel: "au-td", bestand: "stroomroute-goud-tarkwa-dubai.json", grondstof: "goud", aan: true },
-  { sleutel: "au-sd", bestand: "stroomroute-goud-siguiri-dubai.json", grondstof: "goud", aan: true },
-  { sleutel: "au-lt", bestand: "stroomroute-goud-loulo-ticino.json", grondstof: "goud", aan: true },
-  { sleutel: "au-yt", bestand: "stroomroute-goud-yanacocha-ticino.json", grondstof: "goud", aan: true },
-  { sleutel: "au-ok", bestand: "stroomroute-goud-olimpiada-dubai.json", grondstof: "goud", aan: true },
-  { sleutel: "au-ks", bestand: "stroomroute-goud-kalgoorlie-singapore.json", grondstof: "goud", aan: true },
-  { sleutel: "au-ns", bestand: "stroomroute-goud-nevada-saltlakecity.json", grondstof: "goud", aan: true },
-  { sleutel: "au-mo", bestand: "stroomroute-goud-malartic-ottawa.json", grondstof: "goud", aan: true },
-  { sleutel: "au-vl", bestand: "stroomroute-goud-valcambi-londen.json", grondstof: "goud", aan: true },
-  { sleutel: "au-ps", bestand: "stroomroute-goud-pamp-shanghai.json", grondstof: "goud", aan: true },
-  { sleutel: "au-am", bestand: "stroomroute-goud-argor-mumbai.json", grondstof: "goud", aan: true },
-  { sleutel: "au-dd", bestand: "stroomroute-goud-dubai-delhi.json", grondstof: "goud", aan: true },
-  { sleutel: "pgm-ml", bestand: "stroomroute-pgm-mogalakwena-londen.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-sz", bestand: "stroomroute-pgm-springs-zurich.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-zh", bestand: "stroomroute-pgm-zondereinde-hanau.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-rt", bestand: "stroomroute-pgm-rustenburg-tokio.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-rs", bestand: "stroomroute-pgm-rustenburg-shanghai.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-zr", bestand: "stroomroute-pgm-zimplats-rustenburg.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-nk", bestand: "stroomroute-pgm-norilsk-krasnojarsk.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-sc", bestand: "stroomroute-pgm-stillwater-columbus.json", grondstof: "pgm", aan: true },
-  // bestand heet nog "actonuk" (het ontwerp), de gebakken keten eindigt in Port Colborne
-  { sleutel: "pgm-sp", bestand: "stroomroute-pgm-sudbury-actonuk.json", grondstof: "pgm", aan: true },
-  { sleutel: "dia-ja", bestand: "stroomroute-diamant-jwaneng-antwerpen.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-va", bestand: "stroomroute-diamant-venetia-antwerpen.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-ea", bestand: "stroomroute-diamant-ekati-antwerpen.json", grondstof: "diamant", aan: true },
-  // bestand heet nog "gaborone" (het ontwerp), de gebakken keten vliegt vanaf Windhoek naar Antwerpen
-  { sleutel: "dia-oa", bestand: "stroomroute-diamant-namdeb-gaborone.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-gs", bestand: "stroomroute-diamant-gaborone-surat.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-mm", bestand: "stroomroute-diamant-mirny-mumbai.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-cd", bestand: "stroomroute-diamant-catoca-dubai.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-ma", bestand: "stroomroute-diamant-marange-dubai.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-mb", bestand: "stroomroute-diamant-mbujimayi-dubai.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-ld", bestand: "stroomroute-diamant-letseng-dubai.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-sh", bestand: "stroomroute-diamant-surat-hongkong.json", grondstof: "diamant", aan: true },
-  { sleutel: "dia-mn", bestand: "stroomroute-diamant-mumbai-newyork.json", grondstof: "diamant", aan: true },
-  // ── M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3 ──
-  { sleutel: "gas-rr", bestand: "stroomroute-gas-raslaffan-rotterdam.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-sz", bestand: "stroomroute-gas-sabetta-zeebrugge.json", grondstof: "gas", aan: true },
-  { sleutel: "cu-ad", bestand: "stroomroute-koper-antamina-daye.json", grondstof: "koper", aan: true },
-  { sleutel: "cu-bg", bestand: "stroomroute-koper-binghamcanyon-garfield.json", grondstof: "koper", aan: true },
-  { sleutel: "kolen-gr", bestand: "stroomroute-kolen-gillette-robertsbank.json", grondstof: "kolen", aan: true },
-  { sleutel: "olie-wu", bestand: "stroomroute-olie-westridge-ulsan.json", grondstof: "olie", aan: true },
-  { sleutel: "co-mk", bestand: "stroomroute-kobalt-murrinmurrin-kwinana.json", grondstof: "kobalt", aan: true },
-  // bestand heet nog "ganzhou" (het ontwerp), de gebakken keten eindigt op de kade van Xiamen Haicang
-  { sleutel: "co-og", bestand: "stroomroute-kobalt-obi-ganzhou.json", grondstof: "kobalt", aan: true },
-  { sleutel: "au-mi", bestand: "stroomroute-goud-metalor-istanbul.json", grondstof: "goud", aan: true },
-  { sleutel: "au-it", bestand: "stroomroute-goud-ity-ticino.json", grondstof: "goud", aan: true },
-  { sleutel: "pgm-ai", bestand: "stroomroute-pgm-amandelbult-iselin.json", grondstof: "pgm", aan: true },
-  { sleutel: "dia-gg", bestand: "stroomroute-diamant-gahchokue-gaborone.json", grondstof: "diamant", aan: true },
-  // ── M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen ──
-  // bestand heet nog "pantnagar" (het ontwerp), de gebakken keten eindigt bij de Chanderiya-smelter
-  { sleutel: "ag-rp", bestand: "stroomroute-zilver-rampuraagucha-pantnagar.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-ft", bestand: "stroomroute-zilver-fresnillo-torreon.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-gr", bestand: "stroomroute-zilver-garpenberg-ronnskar.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-bp", bestand: "stroomroute-zilver-brokenhill-portpirie.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-uc", bestand: "stroomroute-zilver-uchucchacua-callao.json", grondstof: "zilver", aan: true },
-  { sleutel: "u-sm", bestand: "stroomroute-uranium-smithranch-metropolis.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-jh", bestand: "stroomroute-uranium-jaduguda-hyderabad.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-mt", bestand: "stroomroute-uranium-malvesi-tricastin.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-ka", bestand: "stroomroute-uranium-kharasan-alashankou.json", grondstof: "uranium", aan: true },
-  // bestand heet nog "shanghai" (het ontwerp), de gebakken leiding eindigt bij Nantong
-  { sleutel: "gas-cs", bestand: "stroomroute-gas-chayanda-shanghai.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-kd", bestand: "stroomroute-gas-karsto-dornum.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-cf", bestand: "stroomroute-gas-cautionbay-futtsu.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-ab", bestand: "stroomroute-gas-arzew-barcelona.json", grondstof: "gas", aan: true },
-  { sleutel: "ree-oa", bestand: "stroomroute-ree-oscom-aluva.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-gw", bestand: "stroomroute-ree-georgia-whitemesa.json", grondstof: "ree", aan: true },
-  { sleutel: "ree-ca", bestand: "stroomroute-ree-chavara-aluva.json", grondstof: "ree", aan: true },
-  { sleutel: "gr-md", bestand: "stroomroute-grafiet-molo-duisburg.json", grondstof: "grafiet", aan: true },
-  { sleutel: "gr-bh", bestand: "stroomroute-grafiet-bogala-hauzenberg.json", grondstof: "grafiet", aan: true },
-  { sleutel: "li-mb", bestand: "stroomroute-lithium-mibra-bitterfeld.json", grondstof: "lithium", aan: true },
-  // bestand heet nog "pohang" (het ontwerp), de gebakken keten eindigt op de kade van Daesan
-  { sleutel: "li-cp", bestand: "stroomroute-lithium-carmen-pohang.json", grondstof: "lithium", aan: true },
-  { sleutel: "li-gk", bestand: "stroomroute-lithium-greenbushes-kemerton.json", grondstof: "lithium", aan: true },
-  // ── M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen ──
-  // bestand heet "cartagena" (de exporthaven), de gebakken keten vaart door tot Ningbo/Beilun
-  { sleutel: "ni-cc", bestand: "stroomroute-nikkel-cerromatoso-cartagena.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-tk", bestand: "stroomroute-nikkel-sotkamo-kokkola.json", grondstof: "nikkel", aan: true },
-  { sleutel: "ni-os", bestand: "stroomroute-nikkel-oncapuma-saoluis.json", grondstof: "nikkel", aan: true },
-  { sleutel: "kolen-en", bestand: "stroomroute-kolen-elkview-neptune.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-mn", bestand: "stroomroute-kolen-moatize-nacala.json", grondstof: "kolen", aan: true },
-  { sleutel: "kolen-pn", bestand: "stroomroute-kolen-pocahontas-norfolk.json", grondstof: "kolen", aan: true },
-  { sleutel: "olie-sc", bestand: "stroomroute-olie-sangachal-ceyhan.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-rs", bestand: "stroomroute-olie-rastanura-sidikerir.json", grondstof: "olie", aan: true },
-  { sleutel: "olie-kc", bestand: "stroomroute-olie-hardisty-cushing.json", grondstof: "olie", aan: true },
-  { sleutel: "pgm-ur", bestand: "stroomroute-pgm-unki-rustenburg.json", grondstof: "pgm", aan: true },
-  { sleutel: "pgm-ms", bestand: "stroomroute-pgm-mimosa-springs.json", grondstof: "pgm", aan: true },
-  { sleutel: "gr-zc", bestand: "stroomroute-grafiet-zavallya-constanta.json", grondstof: "grafiet", aan: true },
-  { sleutel: "ag-vl", bestand: "stroomroute-zilver-valcambi-londen.json", grondstof: "zilver", aan: true },
-  // bestand heet nog "guemassa" (het ontwerp), de gebakken keten eindigt in Tanger Med
-  { sleutel: "ag-ig", bestand: "stroomroute-zilver-imiter-guemassa.json", grondstof: "zilver", aan: true },
-  { sleutel: "ag-lt", bestand: "stroomroute-zilver-luckyfriday-trail.json", grondstof: "zilver", aan: true },
-  { sleutel: "co-mw", bestand: "stroomroute-kobalt-mutanda-walvisbay.json", grondstof: "kobalt", aan: true },
-  { sleutel: "co-wt", bestand: "stroomroute-kobalt-wedabay-tongxiang.json", grondstof: "kobalt", aan: true },
-  { sleutel: "u-ps", bestand: "stroomroute-uranium-priargunsky-seversk.json", grondstof: "uranium", aan: true },
-  { sleutel: "u-ec", bestand: "stroomroute-uranium-eunice-columbia.json", grondstof: "uranium", aan: true },
-  { sleutel: "gas-bp", bestand: "stroomroute-gas-bintulu-pyeongtaek.json", grondstof: "gas", aan: true },
-  { sleutel: "gas-ak", bestand: "stroomroute-gas-anapa-kiyikoy.json", grondstof: "gas", aan: true },
-  // bestand heet nog "hanau" (het ontwerp), de gebakken keten eindigt bij JL MAG Europe in Schijndel
-  { sleutel: "ree-gh", bestand: "stroomroute-ree-ganzhou-hanau.json", grondstof: "ree", aan: true },
-  { sleutel: "li-wb", bestand: "stroomroute-lithium-whabouchi-becancour.json", grondstof: "lithium", aan: true },
-  // bestand heet "beira" (de exporthaven), de gebakken keten vaart door tot Zhangjiagang
-  { sleutel: "li-ab", bestand: "stroomroute-lithium-arcadia-beira.json", grondstof: "lithium", aan: true },
-];
+// --- de stromen: de bundel (golf 1 van de visuele fase, 2026-10-08) --------
+// Alle 182 gemeten ketens komen uit ÉÉN afgeleid bundelbestand (stromen.json +
+// stromen-basis.bin, gebakken door v2/tools/bak_stroombundel.py uit het
+// register v2/data/stromen-register.json en de stroomroute-*.json, die de
+// bron van waarheid blijven) en staan op de bol als een handvol objecten —
+// zie v2/src/stroombundel.js en v2/design/atlas-product-golf1.md.
+//
+// ⚠️ HET REGISTER WOONT NIET MEER HIER. Het STROMEN-blok van 182 regels is
+// verhuisd naar stromen-register.json (mét de golf-historie als `noot`); dat
+// bestand is de enige bron voor deze HUD, de bundel én de baker. Registreren
+// blijft een besluit (2026-09-28: een keten die volledig stippel is wordt niet
+// geregistreerd) — de baker faalt luid op een bestand dat nergens staat.
+//
+// De oude per-stroom-lagen (stroomroute.js, stroomleven.js, gloednodes.js)
+// leven nog achter `?laag=los` als pariteitsreferentie voor de meting; de drie
+// Maps hieronder zijn alleen in dat pad gevuld.
 const STROOMROUTES = new Map();
-let STROOMROUTE = null;              // de eerste, als diagnose-handvat
+const STROOMLEVEN = new Map();
+const GLOEDNODES = new Map();
+window.STROOMROUTES = STROOMROUTES; window.STROOMLEVEN = STROOMLEVEN; window.GLOEDNODES = GLOEDNODES;
+let ATLAS = null;                    // de bundel-laag
+let REGISTER = null;
 
-// De twee weergave-assen (zie src/stroomstijl.js). Defaults = de bewezen stand
-// van ?v=111, zodat het routewerk er precies zo uit blijft zien als het deed.
-let kleurModus = "modaliteit";       // "modaliteit" | "grondstof"
+// De twee weergave-assen (zie src/stroomstijl.js). Default = de atlas; de
+// bouwmodus zet ze op de bewezen stand van het routewerk (?v=111).
+let kleurModus = MODUS === "bouw" ? "modaliteit" : "grondstof";
 let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | "recht-zeeboog"
+let gloedAan = true;                 // stand van de gn-knop
 
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
   spoor: "trein", leiding: "leiding", lucht: "vliegtuig",
 };
+const hexVan = (k) => "#" + k.toString(16).padStart(6, "0");
 
-function stroomRegel(s) {
+function stroomRegel(benen) {
   // Benen met dezelfde modaliteit tellen op tot één regel — een zeebeen dat op
   // een via-punt uit de routebrief gesplitst is, blijft één zeeschip.
   const per = new Map();
-  for (const b of s.benen) {
+  for (const b of benen) {
     const k = STROOM_LABEL[b.modaliteit] || b.naam || b.modaliteit;
-    per.set(k, (per.get(k) || 0) + b.km);
+    per.set(k, (per.get(k) || 0) + (b.km || 0));
   }
-  return [...per].map(([k, km]) =>
-    `${k} ${Math.round(km).toLocaleString("nl")} km`).join(" · ");
+  return [...per].map(([k, km]) => `${k} ${Math.round(km).toLocaleString("nl")} km`).join(" · ");
+}
+
+// Is een stroom aan, en welke benen heeft hij — uit de bundel, of uit de oude
+// lagen achter ?laag=los. Eén plek, zodat de HUD niet twee waarheden kent.
+function stroomStand(sleutel) {
+  if (ATLAS) {
+    const info = ATLAS.stroomInfo(sleutel);
+    return info ? { geladen: true, aan: ATLAS.isAan(sleutel), benen: info.benen } : { geladen: false };
+  }
+  const s = STROOMROUTES.get(sleutel);
+  return s ? { geladen: true, aan: s.groep.visible, benen: s.benen } : { geladen: false };
+}
+function zetStroomAan(sleutel, aan) {
+  if (ATLAS) { ATLAS.zetStroom(sleutel, aan); return; }
+  const s = STROOMROUTES.get(sleutel);
+  if (!s) return;
+  s.groep.visible = aan;
+  const l = STROOMLEVEN.get(sleutel);
+  if (l) l.groep.visible = aan;
+}
+
+// --- de HUD-groepen per grondstof (2026-09-26, sinds golf 1 gegenereerd) ---
+// Eén <details class="srGroep" data-gs=…> per grondstof, met een .srBtn per
+// stroom (data-sr = sleutel), gegenereerd uit het register in #stroomGroepen.
+// De telling (aan/geladen) en de "alles"-knop in de summary werken zoals
+// voorheen; op een telefoon starten de groepen dichtgeklapt (zelfde grens als
+// de HUD zelf, zie hudToggle verderop).
+function bouwStroomGroepen(register) {
+  const houder = document.getElementById("stroomGroepen");
+  if (!houder) return;
+  houder.textContent = "";
+  const smal = window.innerWidth <= 640;
+  const grondstoffen = [...new Set(register.stromen.map((s) => s.grondstof))];
+  for (const gs of grondstoffen) {
+    const stromen = register.stromen.filter((s) => s.grondstof === gs);
+    const groep = document.createElement("details");
+    groep.className = "srGroep";
+    groep.dataset.gs = gs;
+    groep.open = !smal;
+    const summary = document.createElement("summary");
+    const bol = document.createElement("i");
+    bol.className = "gsBol";
+    const k = GRONDSTOF_KLEUR[gs];
+    if (k !== undefined) { bol.style.background = hexVan(k); bol.style.boxShadow = `0 0 6px ${hexVan(k)}`; }
+    const naam = document.createElement("span");
+    naam.className = "gsNaam";
+    naam.textContent = gs;
+    const tel = document.createElement("span");
+    tel.className = "gsTel";
+    tel.textContent = `${stromen.length}`;
+    const alles = document.createElement("button");
+    alles.type = "button";
+    alles.className = "gsBtn is-on";
+    alles.dataset.gs = gs;
+    alles.textContent = "alles";
+    summary.append(bol, naam, tel, alles);
+    groep.append(summary);
+    for (let i = 0; i < stromen.length; i += 2) {
+      const rij = document.createElement("div");
+      rij.className = "btnRow";
+      for (const s of stromen.slice(i, i + 2)) {
+        const b = document.createElement("button");
+        b.className = "srBtn" + (s.aan === false ? "" : " is-on");
+        b.dataset.sr = s.sleutel;
+        b.textContent = s.label || s.sleutel;
+        if (s.noot) b.title = s.noot;
+        rij.append(b);
+      }
+      groep.append(rij);
+    }
+    houder.append(groep);
+  }
+}
+
+function werkGroepenBij() {
+  if (!REGISTER) return;
+  for (const groep of document.querySelectorAll(".srGroep")) {
+    const gs = groep.dataset.gs;
+    const defs = REGISTER.stromen.filter((d) => d.grondstof === gs);
+    const standen = defs.map((d) => stroomStand(d.sleutel)).filter((s) => s.geladen);
+    const aan = standen.filter((s) => s.aan).length;
+    const tel = groep.querySelector(".gsTel");
+    if (tel) tel.textContent = `${aan}/${standen.length}`;
+    const knop = groep.querySelector(".gsBtn");
+    if (knop) knop.classList.toggle("is-on", standen.length > 0 && aan === standen.length);
+  }
+  for (const knop of document.querySelectorAll(".srBtn")) {
+    const st = stroomStand(knop.dataset.sr);
+    knop.classList.toggle("is-on", !!(st.geladen && st.aan));
+  }
 }
 
 function toonStroomNoot() {
   const noot = document.getElementById("stroomNoot");
-  if (!noot) return;
-  // Eén regel per GRONDSTOF (zichtbare stromen + hun km opgeteld), sinds
-  // 2026-09-26: met twaalf stromen was één regel per stroom op een telefoon een
-  // halve schermhoogte. De km per stroom staan nog in de console bij het laden.
-  const per = new Map();
-  for (const def of STROMEN) {
-    const s = STROOMROUTES.get(def.sleutel);
-    if (!s || !s.groep.visible) continue;
-    const t = per.get(def.grondstof) || { n: 0, km: 0 };
-    t.n += 1;
-    t.km += s.benen.reduce((som, b) => som + (b.km || 0), 0);
-    per.set(def.grondstof, t);
+  if (noot && REGISTER) {
+    // Eén regel per GRONDSTOF (stromen die aan staan + hun km opgeteld).
+    const per = new Map();
+    for (const def of REGISTER.stromen) {
+      const st = stroomStand(def.sleutel);
+      if (!st.geladen || !st.aan) continue;
+      const t = per.get(def.grondstof) || { n: 0, km: 0 };
+      t.n += 1;
+      t.km += st.benen.reduce((som, b) => som + (b.km || 0), 0);
+      per.set(def.grondstof, t);
+    }
+    const regels = [...per].map(([gs, t]) =>
+      `${gs}: ${t.n} ${t.n === 1 ? "stroom" : "stromen"} · ${Math.round(t.km).toLocaleString("nl")} km`);
+    noot.textContent = regels.length ? regels.join("\n") : "geen stroom aan";
   }
-  const regels = [...per].map(([gs, t]) =>
-    `${gs}: ${t.n} ${t.n === 1 ? "stroom" : "stromen"} · ${Math.round(t.km).toLocaleString("nl")} km`);
-  noot.textContent = regels.length ? regels.join("\n") : "geen stroom aan";
   werkGroepenBij();
 }
 
-// --- de HUD-groepen per grondstof (2026-09-26) ------------------------------
-// Eén <details class="srGroep" data-gs=…> per grondstof in index.html. Deze
-// functie houdt de telling (zichtbaar/geladen) en de stand van de "alles"-knop
-// bij, en verbergt een groep waarvan geen enkele stroom geladen is — pas nadat
-// alle stromen van die grondstof geprobeerd zijn, anders knippert hij tijdens
-// het laden. De srBtn-handler verderop is ongewijzigd; hij komt hier via
-// toonStroomNoot() langs.
-const STROOM_KLAAR = new Set();       // sleutels waarvan het laden is afgerond (ok of niet)
-const hexVan = (k) => "#" + k.toString(16).padStart(6, "0");
-
-function werkGroepenBij() {
-  for (const groep of document.querySelectorAll(".srGroep")) {
-    const gs = groep.dataset.gs;
-    const defs = STROMEN.filter((d) => d.grondstof === gs);
-    const geladen = defs.map((d) => STROOMROUTES.get(d.sleutel)).filter(Boolean);
-    const aan = geladen.filter((s) => s.groep.visible).length;
-    const klaar = defs.every((d) => STROOM_KLAAR.has(d.sleutel));
-    groep.hidden = klaar && geladen.length === 0;
-    const tel = groep.querySelector(".gsTel");
-    if (tel) tel.textContent = `${aan}/${geladen.length}`;
-    const knop = groep.querySelector(".gsBtn");
-    if (knop) knop.classList.toggle("is-on", geladen.length > 0 && aan === geladen.length);
-  }
-}
-
-// #stroomLegendaGrondstof: één regel per grondstof die in STROMEN voorkomt,
-// kleur uit GRONDSTOF_KLEUR — niet meer hard-coded koper/lithium/grafiet in de
-// html, zodat een nieuwe grondstof alleen een regel in STROMEN vraagt.
-function bouwGrondstofLegenda() {
+// #stroomLegendaGrondstof: één regel per grondstof uit het register, kleur uit
+// GRONDSTOF_KLEUR — niet hard-coded in de html.
+function bouwGrondstofLegenda(register) {
   const el = document.getElementById("stroomLegendaGrondstof");
   if (!el) return;
   const noot = el.querySelector(".legNoot");
-  for (const gs of [...new Set(STROMEN.map((d) => d.grondstof))]) {
+  for (const gs of [...new Set(register.stromen.map((d) => d.grondstof))]) {
     const k = GRONDSTOF_KLEUR[gs];
     const span = document.createElement("span");
     const bol = document.createElement("i");
@@ -542,78 +437,158 @@ function bouwGrondstofLegenda() {
   }
 }
 
-// Kleurbolletje uit dezelfde tabel, en op een telefoon (zelfde grens als de
-// HUD zelf, zie hudToggle verderop) starten alle groepen dichtgeklapt — de
-// "alles"-knop staat in de summary en blijft dus bereikbaar.
-function initStroomGroepen() {
-  const smal = window.innerWidth <= 640;
-  for (const groep of document.querySelectorAll(".srGroep")) {
-    const k = GRONDSTOF_KLEUR[groep.dataset.gs];
-    const bol = groep.querySelector(".gsBol");
-    if (bol && k !== undefined) {
-      bol.style.background = hexVan(k);
-      bol.style.boxShadow = `0 0 6px ${hexVan(k)}`;
+// De lijnstijl-legenda (kleur = grondstof, LIJN = transport): staaltjes als
+// inline-SVG uit de LIJNSTIJL-tabel van stroomstijl.js — niet met de hand
+// getekend, zodat legenda en shader dezelfde tabel lezen.
+function bouwLijnstijlLegenda() {
+  const el = document.getElementById("lijnstijlLegenda");
+  if (!el) return;
+  el.textContent = "";
+  const NS = "http://www.w3.org/2000/svg";
+  const volgorde = [0, 1, 2, 3, 4, 5, 7];
+  const label = { zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck (weg)", spoor: "trein (spoor)",
+                  leiding: "leiding", lucht: "vliegtuig (boog)", stippel: "gestippeld = hier reikt het net niet" };
+  const lijn = (svg, x1, x2, bw, alfa) => {
+    const l = document.createElementNS(NS, "line");
+    l.setAttribute("x1", x1); l.setAttribute("x2", x2); l.setAttribute("y1", 5); l.setAttribute("y2", 5);
+    l.setAttribute("stroke", "currentColor"); l.setAttribute("stroke-width", bw); l.setAttribute("stroke-opacity", alfa);
+    svg.append(l);
+  };
+  for (const i of volgorde) {
+    const s = LIJNSTIJL[i];
+    const span = document.createElement("span");
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", "0 0 60 10");
+    svg.setAttribute("width", "60"); svg.setAttribute("height", "10");
+    svg.classList.add("lsStaal");
+    const bw = Math.max(1, s.breedte * 1.5);
+    if (s.periode > 0) {
+      for (let x = 0; x < 60; x += s.periode) {
+        lijn(svg, x, Math.min(60, x + s.aan), bw, s.alfaAan);
+        if (s.alfaUit > 0) lijn(svg, Math.min(60, x + s.aan), Math.min(60, x + s.periode), bw, s.alfaUit);
+      }
+    } else {
+      lijn(svg, 0, 60, bw, s.kernFractie < 1 ? 0.8 : 1);
     }
-    if (smal) groep.open = false;
+    span.append(svg, label[s.naam] || s.naam);
+    el.append(span);
   }
 }
-bouwGrondstofLegenda();
-initStroomGroepen();
 
-for (const def of STROMEN) {
-  laadStroomroute(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand,
-                  GLOBE.camera, GLOBE.renderer)
-    .then((s) => {
-      s.groep.visible = def.aan;
-      STROOMROUTES.set(def.sleutel, s);
-      STROOMROUTE = STROOMROUTE || s;
-      GLOBE.globeGroup.add(s.groep);
-      // De knopen zijn gloeiende cirkels geworden en schalen met de kijkafstand
-      // (wereldmaat mét pixel-minimum, dezelfde hybride regel als gloednodes).
-      GLOBE.onTick(() => s.update());
-      // Een stroom die ná een omschakeling binnenkomt, moet in de huidige stand
-      // gaan staan — anders hangt de langzaamste stroom in de oude kleur.
-      s.zetKleurModus(kleurModus);
-      s.zetLijnModus(lijnModus);
-      window.STROOMROUTES = STROOMROUTES;   // diagnose-handvat
-      console.log(`[atlas v2] stroom ${def.sleutel}: ${s.titel} · ${stroomRegel(s)}`);
+// Eén knop per stroom (data-sr = sleutel uit het register) — een schakelaar
+// per stroom, want met 182 stromen op de bol is "welke wil ik nu zien" de
+// vraag. De "alles"-knop in de summary schakelt alle stromen van die grondstof
+// (staan ze allemaal aan dan uit, anders aan). preventDefault +
+// stopPropagation, anders klapt de <details> mee.
+function koppelStroomKnoppen() {
+  for (const knop of document.querySelectorAll(".srBtn")) {
+    knop.addEventListener("click", () => {
+      const st = stroomStand(knop.dataset.sr);
+      if (!st.geladen) return;
+      zetStroomAan(knop.dataset.sr, !st.aan);
       toonStroomNoot();
-    })
-    .catch((e) => console.warn(
-      `[atlas v2] stroom ${def.sleutel} niet geladen (nog niet gebakken?):`, e.message))
-    .finally(() => { STROOM_KLAAR.add(def.sleutel); werkGroepenBij(); });
+    });
+  }
+  for (const knop of document.querySelectorAll(".gsBtn")) {
+    knop.addEventListener("click", (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      const gs = knop.dataset.gs;
+      const defs = REGISTER.stromen.filter((d) => d.grondstof === gs);
+      const standen = defs.map((d) => [d.sleutel, stroomStand(d.sleutel)]).filter(([, s]) => s.geladen);
+      if (!standen.length) return;
+      const nieuw = !standen.every(([, s]) => s.aan);
+      if (ATLAS) ATLAS.zetGrondstof(gs, nieuw);
+      else for (const [sleutel] of standen) zetStroomAan(sleutel, nieuw);
+      toonStroomNoot();
+    });
+  }
 }
 
-// --- de stromen laten leven (M26 / LAR-490) --------------------------------
-// Koker + bewegende deeltjes NAAST stroomroute.js, niet erdoorheen: die laag is
-// bewezen en tekent de exacte lijn in de legenda-kleur. Zie de kop van
-// stroomleven.js voor waarom de lijn op de grond blijft.
-const STROOMLEVEN = new Map();
-for (const def of STROMEN) {
-  laadStroomleven(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand,
-                  GLOBE.renderer, GLOBE.camera)
-    .then((l) => {
-      l.groep.visible = def.aan;
-      STROOMLEVEN.set(def.sleutel, l);
-      GLOBE.globeGroup.add(l.groep);
-      GLOBE.onTick((dt) => l.update(dt));
-      l.zetKleurModus(kleurModus);   // zie de gelijke regel bij stroomroute
-      l.zetLijnModus(lijnModus);
-      window.STROOMLEVEN = STROOMLEVEN;   // diagnose-handvat
-      console.log(
-        `[atlas v2] stroomleven ${def.sleutel}: ${l.stats.benen} benen · ` +
-        `${l.stats.schillen} lijnschillen · ${l.stats.kometen} kometen ` +
-        `(${l.stats.staartpunten} punten)`
-      );
-    })
-    .catch((e) => console.warn(
-      `[atlas v2] stroomleven ${def.sleutel} niet geladen:`, e.message));
+async function startStromen() {
+  const r = await fetch(`data/stromen-register.json?v=${CODE_VERSIE}`);
+  if (!r.ok) throw new Error(`stromen-register.json: HTTP ${r.status}`);
+  REGISTER = await r.json();
+  window.REGISTER = REGISTER;
+  bouwStroomGroepen(REGISTER);
+  bouwGrondstofLegenda(REGISTER);
+  bouwLijnstijlLegenda();
+  koppelStroomKnoppen();
+  const sub = document.getElementById("hudSub");
+  const nGs = new Set(REGISTER.stromen.map((s) => s.grondstof)).size;
+  if (sub) sub.textContent = `${REGISTER.stromen.length} stromen · ${nGs} grondstoffen · kleur = grondstof, lijn = transport`;
+
+  if (LAAG_LOS) return laadLosseLagen(REGISTER);
+
+  ATLAS = await laadStroombundel({
+    radius: VECTOR_R, codeVersie: CODE_VERSIE, bundelVersie: BUNDEL_VERSIE,
+    klemOpHorizon: GLOBE.klemOpHorizon, camera: GLOBE.camera, renderer: GLOBE.renderer,
+    globeGroup: GLOBE.globeGroup, getAltitudeKm: GLOBE.getAltitudeKm, telefoon: TELEFOON,
+    kleurModus, lijnModus, gloedAan,
+  });
+  GLOBE.globeGroup.add(ATLAS.groep);
+  GLOBE.onTick((dt) => ATLAS.update(dt));
+  window.ATLAS = ATLAS;                 // diagnose- en meethandvat (meet_atlas.mjs)
+  const st = ATLAS.stats;
+  console.log(
+    `[atlas v2] stromenbundel ${BUNDEL_VERSIE}: ${st.stromen} stromen · ${st.benen} benen (${st.stippel} stippel) · ` +
+    `${st.markers} knopen · ${st.sites} sites · L0 ${st.segmentenL0.toLocaleString("nl")} / L1 ${st.segmentenL1.toLocaleString("nl")} / ` +
+    `lucht ${st.segmentenLucht.toLocaleString("nl")} segmenten · ${st.kometen.kometen} kometen (K ${st.kometen.K}) · ` +
+    `laden ${st.msLaden} ms, decoderen ${st.msDecoderen} ms`
+  );
+  toonStroomNoot();
 }
-// LineMaterial rekent in pixels en moet de vensterafmeting kennen; bijhouden in
-// de tick is goedkoper dan een resize-listener die de kaart moet kennen.
-GLOBE.onTick(() => {
-  const c = GLOBE.renderer.domElement;
-  for (const l of STROOMLEVEN.values()) l.zetResolutie(c.width, c.height);
+
+// De oude per-stroom-lagen (?laag=los): exact de lus van ?v=131, met de oude
+// modules via dynamische import zodat ze de atlas niet belasten.
+async function laadLosseLagen(register) {
+  const [{ laadStroomroute }, { laadStroomleven }, { laadGloednodes }] = await Promise.all([
+    import("./stroomroute.js?v=127"), import("./stroomleven.js?v=127"), import("./gloednodes.js?v=127"),
+  ]);
+  for (const def of register.stromen) {
+    laadStroomroute(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand, GLOBE.camera, GLOBE.renderer)
+      .then((s) => {
+        s.groep.visible = def.aan !== false;
+        STROOMROUTES.set(def.sleutel, s);
+        GLOBE.globeGroup.add(s.groep);
+        GLOBE.onTick(() => s.update());
+        s.zetKleurModus(kleurModus);
+        s.zetLijnModus(lijnModus);
+        toonStroomNoot();
+      })
+      .catch((e) => console.warn(`[atlas v2] stroom ${def.sleutel} niet geladen:`, e.message));
+    laadStroomleven(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand, GLOBE.renderer, GLOBE.camera)
+      .then((l) => {
+        l.groep.visible = def.aan !== false;
+        STROOMLEVEN.set(def.sleutel, l);
+        GLOBE.globeGroup.add(l.groep);
+        GLOBE.onTick((dt) => l.update(dt));
+        l.zetKleurModus(kleurModus);
+        l.zetLijnModus(lijnModus);
+      })
+      .catch((e) => console.warn(`[atlas v2] stroomleven ${def.sleutel} niet geladen:`, e.message));
+  }
+  GLOBE.onTick(() => {
+    const c = GLOBE.renderer.domElement;
+    for (const l of STROOMLEVEN.values()) l.zetResolutie(c.width, c.height);
+  });
+  for (const gs of new Set(register.stromen.map((s) => s.grondstof))) {
+    const bestand = `gloednodes-${gs}.json`;
+    laadGloednodes(VECTOR_R, "131", GLOBE.camera, GLOBE.renderer, bestand)
+      .then((g) => {
+        g.groep.visible = gloedAan;
+        GLOEDNODES.set(bestand, g);
+        GLOBE.globeGroup.add(g.groep);
+        GLOBE.onTick(() => g.update());
+      })
+      .catch((e) => console.warn(`[atlas v2] gloednodes ${bestand} niet geladen:`, e.message));
+  }
+}
+
+startStromen().catch((e) => {
+  console.error("[atlas v2] stromen niet geladen:", e);
+  const noot = document.getElementById("stroomNoot");
+  if (noot) noot.textContent = `stromen niet geladen: ${e.message}`;
 });
 
 // --- open ligplaatsen: wat er van de anker-check over is --------------------
@@ -626,10 +601,17 @@ GLOBE.onTick(() => {
 // zodat een voorstel voor die drie meteen te beoordelen is.
 // Elke knop vliegt naar het punt: op een telefoon is dat de enige werkbare
 // manier om zo'n plek op straatniveau na te lopen.
+// ⚠️ LUI SINDS GOLF 1 (2026-10-08): standaard uit en pas geladen bij de eerste
+// "aan" — het is een beoordelingslaag voor het routewerk, geen atlasbeeld.
 let ANKERCHECK = null;
-laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
+let ankercheckAan = false;
+let ankercheckBezig = null;
+function haalAnkercheck() {
+  if (ankercheckBezig) return ankercheckBezig;
+  ankercheckBezig = laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
   .then((a) => {
     ANKERCHECK = a;
+    a.groep.visible = ankercheckAan;
     GLOBE.globeGroup.add(a.groep);
     window.ANKERCHECK = a;           // diagnose-handvat
     const lijst = document.getElementById("ankerLijst");
@@ -661,8 +643,11 @@ laadAnkercheck(VECTOR_R, "098", GLOBE.klemOpHorizon)
         : `${open} van ${a.ankers.length} nog open; de rest heeft een voorstel`;
     }
     console.log(`[atlas v2] ankercheck: ${a.titel} · ${open}/${a.ankers.length} open`);
+    return a;
   })
-  .catch((e) => console.warn("[atlas v2] ankercheck niet geladen:", e.message));
+  .catch((e) => { ankercheckBezig = null; console.warn("[atlas v2] ankercheck niet geladen:", e.message); });
+  return ankercheckBezig;
+}
 
 // --- de AIS-drukte als gloed (M27) -----------------------------------------
 // Het dichtheidsveld zélf op de bol (besluit Lars 2026-07-25): de blauwe
@@ -686,59 +671,6 @@ if (TOON.aisgloed) laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
     }
   })
   .catch((e) => console.warn("[atlas v2] aisgloed niet geladen (nog niet gebakken?):", e.message));
-
-// --- de uitgezochte knopen als gloed (M26 / LAR-490) -----------------------
-// De dichtbij-helft van het LOD-ontwerp. Alleen SITES lichten op; dat Tongling
-// en Guixi op wereldhoogte één vlek worden hoort te ONTSTAAN uit de optelling.
-// Zie de kop van gloednodes.js — als hier alsnog een hotspot-object nodig blijkt,
-// klopt de ontwerpbrief niet.
-//
-// ⚠️ ÉÉN BESTAND PER GRONDSTOF (2026-09-26): elk `gloednodes-<grondstof>.json`
-// is een eigen laag met een eigen .catch — een bestand dat nog niet gebakken is
-// geeft één nette waarschuwing en haalt de rest niet onderuit. De helderheid
-// normaliseert per bestand (zie gloednodes.js), dus koper verandert niet als er
-// een grondstof bijkomt.
-const GLOEDBESTANDEN = [
-  "gloednodes-koper.json", "gloednodes-lithium.json", "gloednodes-grafiet.json",
-  "gloednodes-kobalt.json", "gloednodes-nikkel.json", "gloednodes-ree.json",
-  "gloednodes-kolen.json", "gloednodes-olie.json", "gloednodes-uranium.json",
-  "gloednodes-zilver.json", "gloednodes-gas.json",
-  "gloednodes-goud.json", "gloednodes-pgm.json", "gloednodes-diamant.json",
-];
-const GLOEDNODES = new Map();         // bestand → laag (alleen wat geladen is)
-window.GLOEDNODES = GLOEDNODES;       // diagnose-handvat
-let gloedAan = true;                  // stand van de gn-knop, ook voor late laders
-const gloedGrondstof = (bestand) => bestand.replace(/^gloednodes-|\.json$/g, "");
-
-function toonGloedNodeNoot() {
-  const noot = document.getElementById("gloedNodeNoot");
-  if (!noot) return;
-  const delen = [];
-  for (const b of GLOEDBESTANDEN) {
-    const g = GLOEDNODES.get(b);
-    if (g) delen.push(`${gloedGrondstof(b)} ${g.stats.sites}`);
-  }
-  noot.textContent = delen.length
-    ? `sites met capaciteit: ${delen.join(" · ")}`
-    : "geen gloedlaag geladen";
-}
-
-for (const bestand of GLOEDBESTANDEN) {
-  laadGloednodes(VECTOR_R, "131", GLOBE.camera, GLOBE.renderer, bestand)
-    .then((g) => {
-      g.groep.visible = gloedAan;
-      GLOEDNODES.set(bestand, g);
-      GLOBE.globeGroup.add(g.groep);
-      GLOBE.onTick(() => g.update());
-      console.log(
-        `[atlas v2] gloednodes ${bestand}: ${g.stats.sites} sites (${g.stats.complexen} ` +
-        `complexen bewust niet getekend) · laden ${g.stats.msLaden} ms`
-      );
-      toonGloedNodeNoot();
-    })
-    .catch((e) => console.warn(
-      `[atlas v2] gloednodes ${bestand} niet geladen (nog niet gebakken?):`, e.message));
-}
 
 // De vectorlagen liggen precies OP de bol. Om te voorkomen dat ze half in het
 // oppervlak verdwijnen, tillen we ze elke frame een klein beetje op — evenredig
@@ -794,10 +726,14 @@ wireButtons(".clBtn", "cl", (mode) => {
   if (kustlijn) kustlijn.visible = (mode === "aan");
 });
 wireButtons(".lnBtn", "ln", (mode) => {
-  if (LANDNET) LANDNET.lijnen.visible = (mode === "aan");
+  landnetAan = (mode === "aan");
+  if (LANDNET) LANDNET.lijnen.visible = landnetAan;
+  else if (landnetAan) haalLandnet();           // eerste keer: nu pas ophalen (10 MB)
 });
 wireButtons(".anBtn", "an", (mode) => {
-  if (AISNET) AISNET.lijnen.visible = (mode === "aan");
+  aisnetAan = (mode === "aan");
+  if (AISNET) AISNET.lijnen.visible = aisnetAan;
+  else if (aisnetAan) haalAisnet();
 });
 wireButtons(".atBtn", "at", (mode) => {
   aistracksAan = (mode === "aan");
@@ -808,53 +744,15 @@ wireButtons(".atBtn", "at", (mode) => {
     haalAisTracks();                        // eerste keer: nu pas ophalen
   }
 });
-// Eén knop per stroom (data-sr = de sleutel uit STROMEN) — geen aan/uit-paar
-// maar een schakelaar per stroom, want met vier stromen tegelijk op de bol is
-// "welke wil ik nu zien" de vraag, niet "laag aan of uit".
-for (const knop of document.querySelectorAll(".srBtn")) {
-  knop.addEventListener("click", () => {
-    const sleutel = knop.dataset.sr;
-    const s = STROOMROUTES.get(sleutel);
-    if (!s) return;
-    s.groep.visible = !s.groep.visible;
-    // De levenslaag hoort bij dezelfde stroom en volgt dus dezelfde knop —
-    // anders blijven er koker en deeltjes zweven boven een lijn die weg is.
-    const l = STROOMLEVEN.get(sleutel);
-    if (l) l.groep.visible = s.groep.visible;
-    knop.classList.toggle("is-on", s.groep.visible);
-    toonStroomNoot();
-  });
-}
-// De "alles"-knop in de summary van een grondstofgroep (2026-09-26): alle
-// geladen stromen van die grondstof tegelijk — staan ze allemaal aan dan uit,
-// anders aan. preventDefault + stopPropagation, anders klapt de <details> mee.
-for (const knop of document.querySelectorAll(".gsBtn")) {
-  knop.addEventListener("click", (ev) => {
-    ev.preventDefault();
-    ev.stopPropagation();
-    const gs = knop.dataset.gs;
-    const geladen = STROMEN.filter((d) => d.grondstof === gs)
-      .map((d) => [d.sleutel, STROOMROUTES.get(d.sleutel)])
-      .filter(([, s]) => s);
-    if (!geladen.length) return;
-    const nieuw = !geladen.every(([, s]) => s.groep.visible);
-    for (const [sleutel, s] of geladen) {
-      s.groep.visible = nieuw;
-      const l = STROOMLEVEN.get(sleutel);
-      if (l) l.groep.visible = nieuw;
-      const b = document.querySelector(`.srBtn[data-sr="${sleutel}"]`);
-      if (b) b.classList.toggle("is-on", nieuw);
-    }
-    toonStroomNoot();
-  });
-}
 // Kleur van de stromen: per transport (routewerk) ↔ per grondstof (atlas).
 // Beide lagen schakelen mee — de draad/komeet van stroomleven.js hoort per
 // constructie dezelfde kleur te hebben als de exacte lijn eronder.
 wireButtons(".skBtn", "sk", (modus) => {
   kleurModus = modus;
+  if (ATLAS) ATLAS.zetKleurModus(modus);
   for (const s of STROOMROUTES.values()) s.zetKleurModus(modus);
   for (const l of STROOMLEVEN.values()) l.zetKleurModus(modus);
+  toonStroomNoot();
   const modLeg = document.getElementById("stroomLegenda");
   const grLeg = document.getElementById("stroomLegendaGrondstof");
   if (modLeg) modLeg.hidden = (modus === "grondstof");
@@ -879,22 +777,50 @@ function zetOndergrondDim(stand) {
 }
 wireButtons(".sdBtn", "sd", (stand) => GLOBE.zetBelichting(stand));
 
+// De startstand van de knoprijen volgt de modus — zichtbaar, niet verborgen.
+function zetKnopStand(selector, attr, waarde) {
+  for (const b of document.querySelectorAll(selector)) b.classList.toggle("is-on", b.dataset[attr] === waarde);
+}
+zetKnopStand(".skBtn", "sk", kleurModus);
+zetKnopStand(".slBtn", "sl", lijnModus);
+zetKnopStand(".lnBtn", "ln", landnetAan ? "aan" : "uit");
+zetKnopStand(".akBtn", "ak", "uit");
+zetKnopStand(".gnBtn", "gn", "aan");
+zetKnopStand(".bwBtn", "bw", "aan");
+{
+  const modLeg = document.getElementById("stroomLegenda");
+  const grLeg = document.getElementById("stroomLegendaGrondstof");
+  if (modLeg) modLeg.hidden = (kleurModus === "grondstof");
+  if (grLeg) grLeg.hidden = (kleurModus !== "grondstof");
+}
+zetOndergrondDim(kleurModus === "grondstof" ? "donker" : "vol");
+document.body.dataset.modus = MODUS;
+
 // Lijnvorm: de gemeten route of één van de drie hemelsbreed-varianten.
 wireButtons(".slBtn", "sl", (modus) => {
   lijnModus = modus;
+  if (ATLAS) ATLAS.zetLijnModus(modus);
   for (const s of STROOMROUTES.values()) s.zetLijnModus(modus);
   for (const l of STROOMLEVEN.values()) l.zetLijnModus(modus);
 });
 
 wireButtons(".akBtn", "ak", (mode) => {
-  if (ANKERCHECK) ANKERCHECK.groep.visible = (mode === "aan");
+  ankercheckAan = (mode === "aan");
+  if (ANKERCHECK) ANKERCHECK.groep.visible = ankercheckAan;
+  else if (ankercheckAan) haalAnkercheck();
 });
 wireButtons(".glBtn", "gl", (mode) => {
   if (AISGLOED) AISGLOED.groep.visible = (mode === "aan");
 });
 wireButtons(".gnBtn", "gn", (mode) => {
   gloedAan = (mode === "aan");
+  if (ATLAS) ATLAS.zetGloed(gloedAan);
   for (const g of GLOEDNODES.values()) g.groep.visible = gloedAan;
+});
+// Beweging (de kometen) aan/uit — nieuw in golf 1; de lijnen blijven staan.
+wireButtons(".bwBtn", "bw", (mode) => {
+  if (ATLAS) ATLAS.zetBeweging(mode === "aan");
+  for (const l of STROOMLEVEN.values()) l.groep.visible = (mode === "aan");
 });
 document.querySelectorAll(".gnGa").forEach((knop) => {
   knop.addEventListener("click", () => {
@@ -962,6 +888,11 @@ GLOBE.onTick(() => {
     tekst += `\n${(wereldStats.punten / 1000).toFixed(0)}k vectorpunten · ${wereldStats.kbOverdracht} KB`;
   }
   if (t.mislukt) tekst += `\n${t.mislukt} tegels mislukt`;
+  if (ATLAS) {
+    const a = ATLAS.stats;
+    tekst += `\nstromen ${a.stromen} · ${["L0", "L1", "fijn"][a.niveau]} · ${a.objecten} objecten` +
+      (a.fijnSegmenten ? ` · fijn ${a.fijnSegmenten.toLocaleString("nl")} seg` : "");
+  }
   statsEl.textContent = tekst;
 });
 
@@ -971,4 +902,4 @@ GLOBE.onTick(() => {
 window.GLOBE = GLOBE;
 window.TEGELS = TEGELS;
 
-console.log("[atlas v2] three r185 · ACES · tegels tot z19 · schone bol — AIS-waternet in opbouw (oud waternet: tag pre-ais-net)");
+console.log(`[atlas v2] three r185 · ACES · tegels tot z19 · modus ${MODUS}${LAAG_LOS ? " (losse lagen)" : " (stromenbundel " + BUNDEL_VERSIE + ")"}`);

@@ -31,8 +31,8 @@
          telefoon de bol zichtbaar is en de knoppen niet buiten beeld vallen. -->
     <div id="hudKop">
       <div>
-        <div class="hudTitle">Atlas v2 · fundament</div>
-        <div class="hudSub">M28 — AIS-tracknet · de collector verzamelt</div>
+        <div class="hudTitle">Grondstoffen Atlas</div>
+        <div class="hudSub" id="hudSub">stromen laden…</div>
       </div>
       <button id="hudToggle" aria-label="Menu in-/uitklappen" title="Menu in-/uitklappen">▾</button>
     </div>
@@ -75,7 +75,7 @@
          overgang tussen de netten zichtbaar maken. Gestippeld = schematische
          verbinding OF een gedocumenteerd gat — nooit geleende geometrie.
          MARNET zelf staat niet op de bol; dit is de GEROUTETE stroom. -->
-    <div class="hudLabel">Stromen (op de exacte kades)</div>
+    <div class="hudLabel">Stromen per grondstof</div>
     <!-- Per grondstof één inklapbare groep (2026-09-26, voorbereiding op zes
          grondstoffen). Het bolletje krijgt zijn kleur uit GRONDSTOF_KLEUR via
          main.js (één bron van waarheid, niet hard-coded hier); de telling is
@@ -85,493 +85,25 @@
          de groepen dichtgeklapt. De srBtn-knoppen zijn ongewijzigd (data-sr =
          sleutel uit STROMEN); alleen het grondstof-voorvoegsel is uit het
          opschrift, want de groep draagt die naam al. -->
-    <details class="srGroep" data-gs="koper" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">koper</span><span class="gsTel">15</span><button type="button" class="gsBtn is-on" data-gs="koper">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-eg">Escondida → Guixi</button>
-        <button class="srBtn is-on" data-sr="cu-ct">Collahuasi → Tongling</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-ld">Lobito → Duisburg</button>
-        <button class="srBtn is-on" data-sr="cu-td">TFM → Durban → China</button>
-      </div>
-      <!-- M29 · koper verhaal-compleet: één gemeten keten per handelsas (lichte
-           werkwijze, v2/design/routebrief-licht.md). Zeven ketens, 2026-09-24/25. -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-lt">Las Bambas → Tongling</button>
-        <button class="srBtn is-on" data-sr="cu-cq">Chuqui → Mejillones → Tongling</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-er">El Teniente → Rotterdam</button>
-        <button class="srBtn is-on" data-sr="cu-gm">Grasberg → Manyar</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-of">Oyu Tolgoi → Bayannur</button>
-        <button class="srBtn is-on" data-sr="cu-ah">Antofagasta → Aurubis → Emmerich</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-sw">Sentinel → Walvis Bay</button>
-        <button class="srBtn is-on" data-sr="cu-op">Olympic Dam → Port Adelaide</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-aj">Aktogay → Alashankou → Jinchuan</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="cu-ad">Antamina → Huangshi</button>
-        <button class="srBtn is-on" data-sr="cu-bg">Bingham Canyon → Garfield</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="lithium" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">lithium</span><span class="gsTel">14</span><button type="button" class="gsBtn is-on" data-gs="lithium">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-gz">Greenbushes → Zhangjiagang</button>
-        <button class="srBtn is-on" data-sr="li-aa">Atacama → Antofagasta → China</button>
-      </div>
-      <!-- M30 · golf 2 (2026-09-26): één gemeten keten per handelsas, lichte werkwijze. -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-bz">Bikita → Beira → Zhangjiagang</button>
-        <button class="srBtn is-on" data-sr="li-pg">Pilgangoora → Gwangyang</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-on">Olaroz → Buenos Aires → Naraha</button>
-        <button class="srBtn is-on" data-sr="li-by">Bougouni → San Pedro → Yangpu</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-cv">Grota do Cirilo → Vitória → China</button>
-        <button class="srBtn is-on" data-sr="li-hb">Hombre Muerto → Charleston → Bessemer City</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-sm">Silver Peak → Gigafactory Nevada</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-mb">Mibra → Vitória → Bitterfeld</button>
-        <button class="srBtn is-on" data-sr="li-cp">Atacama → Antofagasta → Daesan</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-gk">Greenbushes → Kemerton</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="li-wb">Whabouchi → Matagami → Bécancour</button>
-        <button class="srBtn is-on" data-sr="li-ab">Arcadia → Beira → Zhangjiagang</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="grafiet" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">grafiet</span><span class="gsTel">11</span><button type="button" class="gsBtn is-on" data-gs="grafiet">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="grafiet">Balama → VS</button>
-        <button class="srBtn is-on" data-sr="gr-bl">Balama → Qingdao → Laixi</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-bs">Balama → Saemangeum</button>
-        <button class="srBtn is-on" data-sr="gr-ld">Lake Charles → De Soto</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-jb">Jinzhou → Baotou</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-lq">Lindi Jumbo → Dar es Salaam → Qingdao</button>
-        <button class="srBtn is-on" data-sr="gr-iv">Itapecerica → Vitória</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-sl">Skaland → Luleå</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-md">Molo → Toliara → Duisburg</button>
-        <button class="srBtn is-on" data-sr="gr-bh">Bogala → Hamburg → Hauzenberg</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gr-zc">Zavallya → Reni → Constanța</button>
-      </div>
-    </details>
-    <!-- M30 · golf 2b (2026-09-26): kobalt + nikkel, lichte werkwijze. -->
-    <details class="srGroep" data-gs="kobalt" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">kobalt</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="kobalt">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-tq">TFM → Durban → Ningbo</button>
-        <button class="srBtn is-on" data-sr="co-kl">Kolwezi → Lobito</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-mq">Morowali → Ningbo</button>
-        <button class="srBtn is-on" data-sr="co-kk">KCC → Durban → Kokkola</button>
-      </div>
-      <!-- M31 · golf 1 (2026-09-28): drie kobaltketens erbij. -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-kd">Kisanfu → Dar es Salaam → Ningbo</button>
-        <button class="srBtn is-on" data-sr="co-at">Ambatovy → Toamasina</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-mf">Moa → Halifax → Fort Saskatchewan</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-hg">Tongxiang → Ningbo → Busan</button>
-        <button class="srBtn is-on" data-sr="co-bg">Bou Azzer → Guemassa</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-mk">Murrin Murrin → Tongxiang</button>
-        <button class="srBtn is-on" data-sr="co-og">Obi → Xiamen</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="co-mw">Mutanda → Katima Mulilo → Walvis Bay</button>
-        <button class="srBtn is-on" data-sr="co-wt">Weda Bay → Ningbo → Tongxiang</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="nikkel" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">nikkel</span><span class="gsTel">12</span><button type="button" class="gsBtn is-on" data-gs="nikkel">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-wi">Weda Bay → IWIP</button>
-        <button class="srBtn is-on" data-sr="ni-mq">Morowali → Ningbo → Quzhou</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-tn">Taganito → Niihama</button>
-        <button class="srBtn is-on" data-sr="ni-nm">Norilsk → Moermansk → Monchegorsk</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-sk">Sudbury → Québec → Kristiansand</button>
-        <button class="srBtn is-on" data-sr="ni-og">Ouaco → Gwangyang → Pohang</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-vl">Voisey's Bay → Long Harbour</button>
-        <button class="srBtn is-on" data-sr="ni-sm">Sorowako → Matsusaka / Niihama</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-on">Obi → Ningbo</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-cc">Cerro Matoso → Cartagena → Ningbo</button>
-        <button class="srBtn is-on" data-sr="ni-tk">Sotkamo → Kokkola</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ni-os">Onça Puma → Carajás → São Luís</button>
-      </div>
-    </details>
-    <!-- M30 · golf 2c (2026-09-26): zeldzame aardmetalen + kolen, lichte werkwijze. -->
-    <details class="srGroep" data-gs="ree" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">zeldzame aardmetalen</span><span class="gsTel">12</span><button type="button" class="gsBtn is-on" data-gs="ree">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-bb">Bayan Obo → Baotou</button>
-        <button class="srBtn is-on" data-sr="ree-kg">Kachin → Tengchong</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-mk">Mt Weld → Kuantan</button>
-        <button class="srBtn is-on" data-sr="ree-mf">Mountain Pass → Fort Worth</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-sn">Sillamäe → Narva</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-lg">Longnan → Ganzhou</button>
-        <button class="srBtn is-on" data-sr="ree-kj">Gebeng → Port Klang → Yokohama</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-bn">Baotou → Ningbo</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-oa">OSCOM (Odisha) → Aluva</button>
-        <button class="srBtn is-on" data-sr="ree-gw">Mission Mine → White Mesa</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-ca">Chavara → Aluva</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ree-gh">Ganzhou → Rotterdam → Schijndel</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="kolen" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">kolen</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="kolen">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-dh">Datong → Qinhuangdao → Haimen</button>
-        <button class="srBtn is-on" data-sr="kolen-sm">Sangatta → Mundra</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-gk">Goonyella → Dhamra → Kalinganagar</button>
-        <button class="srBtn is-on" data-sr="kolen-tb">Tavan Tolgoi → Baotou</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-tv">Taldinsky → Vostochny</button>
-        <button class="srBtn is-on" data-sr="kolen-cr">Cerrejón → Rotterdam → Schwelgern</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-ep">Ermelo → Richards Bay → Port Qasim</button>
-        <button class="srBtn is-on" data-sr="kolen-mh">Mount Arthur → Newcastle → Hekinan</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-tf">Tabalong → Taboneo → Fangchenggang</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-gr">Gillette → Roberts Bank</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-en">Elkview → Neptune (Vancouver)</button>
-        <button class="srBtn is-on" data-sr="kolen-mn">Moatize → Malawi → Nacala</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="kolen-pn">Buchanan → Lambert's Point (Norfolk)</button>
-      </div>
-    </details>
-    <!-- M31 · golf 1 (2026-09-28): olie en uranium, nieuw in v2, lichte werkwijze. -->
-    <details class="srGroep" data-gs="olie" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">olie</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="olie">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-rz">Ras Tanura → Zhoushan</button>
-        <button class="srBtn is-on" data-sr="olie-hc">Habshan → Fujairah → Chiba</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-pj">Primorsk → Sikka → Jamnagar</button>
-        <button class="srBtn is-on" data-sr="olie-bv">Bonny → Vadinar</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-cr">Corpus Christi → Rotterdam</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-tn">Tengiz → Novorossiysk</button>
-        <button class="srBtn is-on" data-sr="olie-ap">Basra → Paradip</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-kd">Kharg → Dongjiakou</button>
-        <button class="srBtn is-on" data-sr="olie-kod">Kozmino → Dalian</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-wu">Westridge → Ulsan</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-sc">Sangachal → BTC → Ceyhan</button>
-        <button class="srBtn is-on" data-sr="olie-rs">Ras Tanura → SUMED → Sidi Kerir</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="olie-kc">Hardisty → Keystone → Cushing</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="uranium" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">uranium</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="uranium">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-ip">Inkai → Aktau → Bakoe → Poti</button>
-        <button class="srBtn is-on" data-sr="u-mp">McArthur River → Peterborough</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-rw">Rössing → Walvis Bay</button>
-        <button class="srBtn is-on" data-sr="u-ac">Arlit → Cotonou (gestaakt)</button>
-      </div>
-      <!-- M31 · golf 2 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-is">Inkai → Jekaterinenburg → Sint-Petersburg</button>
-        <button class="srBtn is-on" data-sr="u-pa">Port Hope → Rotterdam → Almelo</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-op">Olympic Dam → Port Adelaide</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-sm">Smith Ranch → Metropolis</button>
-        <button class="srBtn is-on" data-sr="u-jh">Jaduguda → Hyderabad</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-mt">Malvési → Tricastin</button>
-        <button class="srBtn is-on" data-sr="u-ka">Kharasan → Dostyk → Alashankou</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="u-ps">Priargunsky → Trans-Sib → Seversk</button>
-        <button class="srBtn is-on" data-sr="u-ec">Eunice → Columbia (UF6)</button>
-      </div>
-    </details>
-    <!-- M31 · golf 2 (2026-09-28): zilver en gas, nieuw in v2, lichte werkwijze. -->
-    <details class="srGroep" data-gs="zilver" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">zilver</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="zilver">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-lg">Polkowice → Głogów</button>
-        <button class="srBtn is-on" data-sr="ag-sa">San Cristóbal → Mejillones</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-po">Peñasquito → Manzanillo → Onsan</button>
-        <button class="srBtn is-on" data-sr="ag-ct">Cannington → Townsville</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-ah">Antamina → Huarmey</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-rp">Rampura Agucha → Chanderiya</button>
-        <button class="srBtn is-on" data-sr="ag-ft">Fresnillo → Torreón</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-gr">Garpenberg → Gävle → Rönnskär</button>
-        <button class="srBtn is-on" data-sr="ag-bp">Broken Hill → Port Pirie</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-uc">Uchucchacua → Callao</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-vl">Valcambi → MXP → Londen</button>
-        <button class="srBtn is-on" data-sr="ag-ig">Imiter → Tizi n'Tichka → Tanger Med</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="ag-lt">Lucky Friday → Trail</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="gas" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">gas</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="gas">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-sr">Sabine Pass → Rotterdam</button>
-        <button class="srBtn is-on" data-sr="gas-rc">Ras Laffan → Sodegaura</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-ci">Corpus Christi → Incheon</button>
-        <button class="srBtn is-on" data-sr="gas-kr">Karratha → Rudong</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-bz">Bonny → Zeebrugge</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-rr">Ras Laffan → Rotterdam</button>
-        <button class="srBtn is-on" data-sr="gas-sz">Sabetta → Zeebrugge</button>
-      </div>
-      <!-- M31 · golf 5 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-cs">Chajanda → Heihe → Nantong</button>
-        <button class="srBtn is-on" data-sr="gas-kd">Kårstø → Dornum (Europipe II)</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-cf">Hides → Caution Bay → Futtsu</button>
-        <button class="srBtn is-on" data-sr="gas-ab">Hassi R'Mel → Arzew → Barcelona</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="gas-bp">Bintulu → Pyeongtaek</button>
-        <button class="srBtn is-on" data-sr="gas-ak">TurkStream: Anapa → Kıyıköy</button>
-      </div>
-    </details>
-    <!-- M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen. -->
-    <details class="srGroep" data-gs="goud" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">goud</span><span class="gsTel">15</span><button type="button" class="gsBtn is-on" data-gs="goud">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-ml">Mponeng → Londen</button>
-        <button class="srBtn is-on" data-sr="au-td">Tarkwa → Dubai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-sd">Siguiri → Dubai</button>
-        <button class="srBtn is-on" data-sr="au-lt">Loulo → Ticino</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-yt">Yanacocha → Ticino</button>
-        <button class="srBtn is-on" data-sr="au-ok">Olimpiada → Dubai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-ks">Kalgoorlie → Singapore</button>
-        <button class="srBtn is-on" data-sr="au-ns">Goldstrike → Salt Lake City</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-mo">Malartic → Ottawa</button>
-        <button class="srBtn is-on" data-sr="au-vl">Valcambi → Londen</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-ps">PAMP → Shanghai</button>
-        <button class="srBtn is-on" data-sr="au-am">Argor → Mumbai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-dd">Dubai → Delhi</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="au-mi">Metalor → Istanbul</button>
-        <button class="srBtn is-on" data-sr="au-it">Ity → Ticino</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="pgm" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">PGM</span><span class="gsTel">12</span><button type="button" class="gsBtn is-on" data-gs="pgm">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-ml">Mogalakwena → Royston</button>
-        <button class="srBtn is-on" data-sr="pgm-sz">Impala → Zürich</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-zh">Zondereinde → Hanau</button>
-        <button class="srBtn is-on" data-sr="pgm-rt">Rustenburg → Tokio</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-rs">Rustenburg → Shanghai</button>
-        <button class="srBtn is-on" data-sr="pgm-zr">Zimplats → Rustenburg</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-nk">Norilsk → Krasnojarsk</button>
-        <button class="srBtn is-on" data-sr="pgm-sc">Stillwater → Columbus</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-sp">Sudbury → Port Colborne</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-ai">Amandelbult → Iselin</button>
-      </div>
-      <!-- M31 · golf 6 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="pgm-ur">Unki → Beitbridge → Rustenburg</button>
-        <button class="srBtn is-on" data-sr="pgm-ms">Mimosa → Beitbridge → Springs</button>
-      </div>
-    </details>
-    <details class="srGroep" data-gs="diamant" open>
-      <summary><i class="gsBol"></i><span class="gsNaam">diamant</span><span class="gsTel">13</span><button type="button" class="gsBtn is-on" data-gs="diamant">alles</button></summary>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-ja">Jwaneng → Antwerpen</button>
-        <button class="srBtn is-on" data-sr="dia-va">Venetia → Antwerpen</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-ea">Ekati → Antwerpen</button>
-        <button class="srBtn is-on" data-sr="dia-oa">Oranjemund → Antwerpen</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-gs">Gaborone → Surat</button>
-        <button class="srBtn is-on" data-sr="dia-mm">Mirny → Mumbai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-cd">Catoca → Dubai</button>
-        <button class="srBtn is-on" data-sr="dia-ma">Marange → Dubai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-mb">Mbuji-Mayi → Dubai</button>
-        <button class="srBtn is-on" data-sr="dia-ld">Letšeng → Dubai</button>
-      </div>
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-sh">Surat → Hongkong</button>
-        <button class="srBtn is-on" data-sr="dia-mn">Mumbai → New York</button>
-      </div>
-      <!-- M31 · golf 4 (2026-09-28). -->
-      <div class="btnRow">
-        <button class="srBtn is-on" data-sr="dia-gg">Gahcho Kué → Gaborone</button>
-      </div>
-    </details>
+    <!-- De groepen per grondstof (één <details class="srGroep"> met een .srBtn
+         per stroom) worden sinds golf 1 (2026-10-08) GEGENEREERD uit
+         v2/data/stromen-register.json door main.js — 182 handgeschreven knoppen
+         en hun golf-commentaren zijn verhuisd naar `label` en `noot` in dat
+         register. Dit is de enige lijst; wie een stroom registreert raakt de
+         html niet aan. -->
+    <div id="stroomGroepen"></div>
     <!-- ✅ BESLUIT LARS (2026-08-07): de ATLAS kleurt op grondstof, het
          ROUTEWERK op modaliteit. Twee vragen aan hetzelfde beeld — "waar houdt
          de zee op en begint de barge?" tijdens het bouwen, "waar gaat het koper
          heen?" in de atlas. Precies wat de ontwerpbrief al voorschreef
          (design/lod-ontwerpbrief.md: kleur = grondstof, lijnstijl = modaliteit).
-         Default blijft modaliteit: dat is de bewezen stand van ?v=111. -->
+         ✅ Sinds golf 1 (2026-10-08, keuze Lars) is de ATLAS de default; het
+         routewerk (modaliteit · vol · spoornet · precisiestippen) opent met
+         ?modus=bouw of met deze knop. -->
     <div class="hudLabel">Kleur van de stromen</div>
     <div class="btnRow">
-      <button class="skBtn is-on" data-sk="modaliteit">per transport</button>
-      <button class="skBtn" data-sk="grondstof">per grondstof</button>
+      <button class="skBtn" data-sk="modaliteit">per transport</button>
+      <button class="skBtn is-on" data-sk="grondstof">per grondstof</button>
     </div>
 
     <!-- De hemelsbreed-varianten staan er alle drie in, want ze zijn alleen
@@ -600,9 +132,9 @@
          routewerk → vol); daarna kun je hem los bijstellen. -->
     <div class="hudLabel">Ondergrond dimmen</div>
     <div class="btnRow">
-      <button class="sdBtn is-on" data-sd="vol">vol</button>
+      <button class="sdBtn" data-sd="vol">vol</button>
       <button class="sdBtn" data-sd="gedimd">gedimd</button>
-      <button class="sdBtn" data-sd="donker">donker</button>
+      <button class="sdBtn is-on" data-sd="donker">donker</button>
     </div>
 
     <div id="stroomLegenda">
@@ -617,7 +149,10 @@
     <!-- De kleurregels vult main.js uit GRONDSTOF_KLEUR, voor elke grondstof die
          in STROMEN voorkomt — niet meer hard-coded per grondstof. -->
     <div id="stroomLegendaGrondstof" hidden>
-      <span class="legNoot" style="opacity:.75">stromen van één grondstof delen één kleur — de overslag zie je aan de knopen, gestippeld blijft "hier reikt het net niet"</span>
+      <span class="legNoot" style="opacity:.75">stromen van één grondstof delen één kleur · gloed = site of overslagpunt · komeet = beweging</span>
+      <!-- De lijnstijl per transport: staaltjes uit LIJNSTIJL (stroomstijl.js),
+           door main.js gegenereerd — dezelfde tabel die de shader leest. -->
+      <div id="lijnstijlLegenda"></div>
     </div>
     <div id="stroomNoot"></div>
 
@@ -629,8 +164,8 @@
          Elke knop vliegt erheen. Weg zodra ze alle drie een kade hebben. -->
     <div class="hudLabel">Open ligplaatsen (3)</div>
     <div class="btnRow">
-      <button class="akBtn is-on" data-ak="aan">aan</button>
-      <button class="akBtn" data-ak="uit">uit</button>
+      <button class="akBtn" data-ak="aan">aan</button>
+      <button class="akBtn is-on" data-ak="uit">uit</button>
     </div>
     <div id="ankerLegenda">
       <span><i style="background:#ff3b30"></i>ligplaats nog niet aanwijsbaar</span>
@@ -644,15 +179,22 @@
          op — dat een complex op wereldhoogte één vlek wordt hoort te ontstaan
          uit de optelling, niet uit een voorgekookte hotspot-knoop. De vier
          knoppen springen naar de plekken waar dat te zien is. -->
-    <div class="hudLabel">Gloed-knopen (koper, pilot)</div>
+    <div class="hudLabel">Gloed (sites + overslagpunten)</div>
     <div class="btnRow">
       <button class="gnBtn is-on" data-gn="aan">aan</button>
       <button class="gnBtn" data-gn="uit">uit</button>
+    </div>
+    <!-- De kometen (golf 1): de lijn zegt waar, de komeet dat er iets beweegt. -->
+    <div class="hudLabel">Beweging (kometen)</div>
+    <div class="btnRow">
+      <button class="bwBtn is-on" data-bw="aan">aan</button>
+      <button class="bwBtn" data-bw="uit">uit</button>
     </div>
     <div class="btnRow">
       <button class="gnGa" data-lon="117.79973" data-lat="30.97688" data-km="14">Tongling</button>
       <button class="gnGa" data-lon="117.21919" data-lat="28.33180" data-km="14">Guixi</button>
       <button class="gnGa" data-lon="117.5" data-lat="29.7" data-km="900">samen</button>
+      <button class="gnGa" data-lon="4.3" data-lat="51.9" data-km="300">Rijnmond</button>
       <button class="gnGa" data-lon="110" data-lat="28" data-km="9000">wereld</button>
     </div>
     <div id="gloedNodeNoot"></div>
@@ -693,8 +235,8 @@
          verbinden via aangewezen knooppunten. -->
     <div class="hudLabel">Landnet (spoor)</div>
     <div class="btnRow">
-      <button class="lnBtn is-on" data-ln="aan">aan</button>
-      <button class="lnBtn" data-ln="uit">uit</button>
+      <button class="lnBtn" data-ln="aan">aan</button>
+      <button class="lnBtn is-on" data-ln="uit">uit</button>
     </div>
     <div id="havenLegenda" style="margin-bottom:6px">
       <span><i style="background:#5fe8c8"></i>normaalspoor (1435)</span>
@@ -740,6 +282,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=131"></script>
+<script type="module" src="src/main.js?v=132"></script>
 </body>
 </html>

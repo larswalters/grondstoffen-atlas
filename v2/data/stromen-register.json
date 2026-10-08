@@ -1,0 +1,1475 @@
+{
+ "versie": 1,
+ "toelichting": [
+  "HET REGISTER van de stromen op de bol (sinds 2026-10-08, golf 1 van de visuele fase; was het STROMEN-blok in main.js).",
+  "Enige bron voor main.js (HUD-generatie), stroombundel.js en v2/tools/bak_stroombundel.py. Volgorde = volgorde in de HUD en in de bundel.",
+  "Een stroomroute-*.json dat hier niet in `stromen` of `uitgesloten` staat laat de baker LUID falen: registreren is een besluit, geen glob.",
+  "`grondstof` staat expliciet (de HUD groepeert erop; het pilotbestand heet niet naar zijn grondstof) en de baker asserteert dat hij gelijk is aan de id-prefix van `stroom` in het json.",
+  "`label` is de knoptekst; ontbreekt hij, dan toont de HUD de `titel` uit het json (zichtbaar, niet stil). `noot` = de golf-historie uit de oude html/js-commentaren.",
+  "Na elke registratie of herbake: `bash v2/tools/bak_stromen.sh bundel` in dezelfde commit (zie bakhandleiding §7)."
+ ],
+ "stromen": [
+  {
+   "sleutel": "grafiet",
+   "bestand": "stroomroute-pilot.json",
+   "grondstof": "grafiet",
+   "label": "Balama → VS",
+   "aan": true,
+   "noot": "M28 · pilot Balama → Casa Grande (2026-07-28, fasen A–E 2026-08-05); eindigt bij De Soto/Casa Grande, naam 'VS' uit de HUD"
+  },
+  {
+   "sleutel": "cu-eg",
+   "bestand": "stroomroute-koper-escondida-guixi.json",
+   "grondstof": "koper",
+   "label": "Escondida → Guixi",
+   "aan": true,
+   "noot": "M28 · koper Escondida → Guixi (2026-07-28); fase D tot de walsdraadfabriek, fase E bestaat niet (2026-08-05)"
+  },
+  {
+   "sleutel": "cu-ct",
+   "bestand": "stroomroute-koper-collahuasi-tongling.json",
+   "grondstof": "koper",
+   "label": "Collahuasi → Tongling",
+   "aan": true,
+   "noot": "M28 · koper Collahuasi → Tongling (2026-07-28); fase D tot de foliefabriek (2026-08-06)"
+  },
+  {
+   "sleutel": "cu-ld",
+   "bestand": "stroomroute-koper-lobito-duisburg.json",
+   "grondstof": "koper",
+   "label": "Lobito → Duisburg",
+   "aan": true,
+   "noot": "M28 · koper Lobito → Duisburg (2026-07-28); fase D als aftakking naar Emmerich (2026-09-24, vertakt_van)"
+  },
+  {
+   "sleutel": "li-gz",
+   "bestand": "stroomroute-lithium-greenbushes-zhangjiagang.json",
+   "grondstof": "lithium",
+   "label": "Greenbushes → Zhangjiagang",
+   "aan": true,
+   "noot": "M28 · lithium Greenbushes → Zhangjiagang (2026-07-30); eindigt bewust op de kade (fabrieksankers open)"
+  },
+  {
+   "sleutel": "cu-td",
+   "bestand": "stroomroute-koper-tfm-durban.json",
+   "grondstof": "koper",
+   "label": "TFM → Durban → China",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-lt",
+   "bestand": "stroomroute-koper-lasbambas-tongling.json",
+   "grondstof": "koper",
+   "label": "Las Bambas → Tongling",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-cq",
+   "bestand": "stroomroute-koper-chuqui-tongling.json",
+   "grondstof": "koper",
+   "label": "Chuqui → Mejillones → Tongling",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-er",
+   "bestand": "stroomroute-koper-elteniente-rotterdam.json",
+   "grondstof": "koper",
+   "label": "El Teniente → Rotterdam",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-gm",
+   "bestand": "stroomroute-koper-grasberg-manyar.json",
+   "grondstof": "koper",
+   "label": "Grasberg → Manyar",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-of",
+   "bestand": "stroomroute-koper-oyutolgoi-feishang.json",
+   "grondstof": "koper",
+   "label": "Oyu Tolgoi → Bayannur",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "cu-ah",
+   "bestand": "stroomroute-koper-aurubis-hamburg.json",
+   "grondstof": "koper",
+   "label": "Antofagasta → Aurubis → Emmerich",
+   "aan": true,
+   "noot": "M29 · koper verhaal-compleet (lichte werkwijze, 2026-09-24/25)"
+  },
+  {
+   "sleutel": "li-aa",
+   "bestand": "stroomroute-lithium-atacama-antofagasta.json",
+   "grondstof": "lithium",
+   "label": "Atacama → Antofagasta → China",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "li-bz",
+   "bestand": "stroomroute-lithium-bikita-zhangjiagang.json",
+   "grondstof": "lithium",
+   "label": "Bikita → Beira → Zhangjiagang",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "li-pg",
+   "bestand": "stroomroute-lithium-pilgangoora-gwangyang.json",
+   "grondstof": "lithium",
+   "label": "Pilgangoora → Gwangyang",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "li-on",
+   "bestand": "stroomroute-lithium-olaroz-naraha.json",
+   "grondstof": "lithium",
+   "label": "Olaroz → Buenos Aires → Naraha",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "li-by",
+   "bestand": "stroomroute-lithium-bougouni-yangpu.json",
+   "grondstof": "lithium",
+   "label": "Bougouni → San Pedro → Yangpu",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "gr-bl",
+   "bestand": "stroomroute-grafiet-balama-laixi.json",
+   "grondstof": "grafiet",
+   "label": "Balama → Qingdao → Laixi",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "gr-bs",
+   "bestand": "stroomroute-grafiet-balama-saemangeum.json",
+   "grondstof": "grafiet",
+   "label": "Balama → Saemangeum",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "gr-ld",
+   "bestand": "stroomroute-grafiet-lakecharles-desoto.json",
+   "grondstof": "grafiet",
+   "label": "Lake Charles → De Soto",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "gr-jb",
+   "bestand": "stroomroute-grafiet-jinzhou-baotou.json",
+   "grondstof": "grafiet",
+   "label": "Jinzhou → Baotou",
+   "aan": true,
+   "noot": "M30 · golf 2, lichte werkwijze (2026-09-26): lithium + grafiet"
+  },
+  {
+   "sleutel": "co-tq",
+   "bestand": "stroomroute-kobalt-tfm-quzhou.json",
+   "grondstof": "kobalt",
+   "label": "TFM → Durban → Ningbo",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "co-kl",
+   "bestand": "stroomroute-kobalt-kolwezi-lobito.json",
+   "grondstof": "kobalt",
+   "label": "Kolwezi → Lobito",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "co-mq",
+   "bestand": "stroomroute-kobalt-morowali-quzhou.json",
+   "grondstof": "kobalt",
+   "label": "Morowali → Ningbo",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "co-kk",
+   "bestand": "stroomroute-kobalt-kcc-kokkola.json",
+   "grondstof": "kobalt",
+   "label": "KCC → Durban → Kokkola",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-wi",
+   "bestand": "stroomroute-nikkel-wedabay-iwip.json",
+   "grondstof": "nikkel",
+   "label": "Weda Bay → IWIP",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-mq",
+   "bestand": "stroomroute-nikkel-morowali-quzhou.json",
+   "grondstof": "nikkel",
+   "label": "Morowali → Ningbo → Quzhou",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-tn",
+   "bestand": "stroomroute-nikkel-taganito-niihama.json",
+   "grondstof": "nikkel",
+   "label": "Taganito → Niihama",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-nm",
+   "bestand": "stroomroute-nikkel-norilsk-monchegorsk.json",
+   "grondstof": "nikkel",
+   "label": "Norilsk → Moermansk → Monchegorsk",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-sk",
+   "bestand": "stroomroute-nikkel-sudbury-kristiansand.json",
+   "grondstof": "nikkel",
+   "label": "Sudbury → Québec → Kristiansand",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ni-og",
+   "bestand": "stroomroute-nikkel-ouaco-gwangyang.json",
+   "grondstof": "nikkel",
+   "label": "Ouaco → Gwangyang → Pohang",
+   "aan": true,
+   "noot": "M30 · golf 2b (2026-09-26): kobalt + nikkel"
+  },
+  {
+   "sleutel": "ree-bb",
+   "bestand": "stroomroute-ree-bayanobo-baotou.json",
+   "grondstof": "ree",
+   "label": "Bayan Obo → Baotou",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "ree-kg",
+   "bestand": "stroomroute-ree-kachin-ganzhou.json",
+   "grondstof": "ree",
+   "label": "Kachin → Tengchong",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "ree-mk",
+   "bestand": "stroomroute-ree-mtweld-kuantan.json",
+   "grondstof": "ree",
+   "label": "Mt Weld → Kuantan",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "ree-mf",
+   "bestand": "stroomroute-ree-mountainpass-fortworth.json",
+   "grondstof": "ree",
+   "label": "Mountain Pass → Fort Worth",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "ree-sn",
+   "bestand": "stroomroute-ree-sillamae-narva.json",
+   "grondstof": "ree",
+   "label": "Sillamäe → Narva",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-dh",
+   "bestand": "stroomroute-kolen-datong-haimen.json",
+   "grondstof": "kolen",
+   "label": "Datong → Qinhuangdao → Haimen",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-sm",
+   "bestand": "stroomroute-kolen-sangatta-mundra.json",
+   "grondstof": "kolen",
+   "label": "Sangatta → Mundra",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-gk",
+   "bestand": "stroomroute-kolen-goonyella-kalinganagar.json",
+   "grondstof": "kolen",
+   "label": "Goonyella → Dhamra → Kalinganagar",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-tb",
+   "bestand": "stroomroute-kolen-tavantolgoi-baotou.json",
+   "grondstof": "kolen",
+   "label": "Tavan Tolgoi → Baotou",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-tv",
+   "bestand": "stroomroute-kolen-taldinsky-vostochny.json",
+   "grondstof": "kolen",
+   "label": "Taldinsky → Vostochny",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "kolen-cr",
+   "bestand": "stroomroute-kolen-cerrejon-ruhr.json",
+   "grondstof": "kolen",
+   "label": "Cerrejón → Rotterdam → Schwelgern",
+   "aan": true,
+   "noot": "M30 · golf 2c (2026-09-26): zeldzame aardmetalen (ree) + kolen"
+  },
+  {
+   "sleutel": "olie-rz",
+   "bestand": "stroomroute-olie-rastanura-zhoushan.json",
+   "grondstof": "olie",
+   "label": "Ras Tanura → Zhoushan",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "olie-pj",
+   "bestand": "stroomroute-olie-primorsk-jamnagar.json",
+   "grondstof": "olie",
+   "label": "Primorsk → Sikka → Jamnagar",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "olie-cr",
+   "bestand": "stroomroute-olie-corpuschristi-rotterdam.json",
+   "grondstof": "olie",
+   "label": "Corpus Christi → Rotterdam",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "olie-hc",
+   "bestand": "stroomroute-olie-habshan-chiba.json",
+   "grondstof": "olie",
+   "label": "Habshan → Fujairah → Chiba",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "olie-bv",
+   "bestand": "stroomroute-olie-bonny-vadinar.json",
+   "grondstof": "olie",
+   "label": "Bonny → Vadinar",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "u-ip",
+   "bestand": "stroomroute-uranium-inkai-poti.json",
+   "grondstof": "uranium",
+   "label": "Inkai → Aktau → Bakoe → Poti",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "u-mp",
+   "bestand": "stroomroute-uranium-mcarthurriver-porthope.json",
+   "grondstof": "uranium",
+   "label": "McArthur River → Peterborough",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "u-rw",
+   "bestand": "stroomroute-uranium-rossing-walvisbay.json",
+   "grondstof": "uranium",
+   "label": "Rössing → Walvis Bay",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "u-ac",
+   "bestand": "stroomroute-uranium-arlit-cotonou.json",
+   "grondstof": "uranium",
+   "label": "Arlit → Cotonou (gestaakt)",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "co-kd",
+   "bestand": "stroomroute-kobalt-kisanfu-daressalaam.json",
+   "grondstof": "kobalt",
+   "label": "Kisanfu → Dar es Salaam → Ningbo",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "co-at",
+   "bestand": "stroomroute-kobalt-ambatovy-toamasina.json",
+   "grondstof": "kobalt",
+   "label": "Ambatovy → Toamasina",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "co-mf",
+   "bestand": "stroomroute-kobalt-moa-fortsaskatchewan.json",
+   "grondstof": "kobalt",
+   "label": "Moa → Halifax → Fort Saskatchewan",
+   "aan": true,
+   "noot": "M31 · golf 1 (2026-09-28): olie + uranium (nieuw in v2) + kobalt aangevuld"
+  },
+  {
+   "sleutel": "ag-lg",
+   "bestand": "stroomroute-zilver-lubin-glogow.json",
+   "grondstof": "zilver",
+   "label": "Polkowice → Głogów",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ag-sa",
+   "bestand": "stroomroute-zilver-sancristobal-antofagasta.json",
+   "grondstof": "zilver",
+   "label": "San Cristóbal → Mejillones",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ag-po",
+   "bestand": "stroomroute-zilver-penasquito-onsan.json",
+   "grondstof": "zilver",
+   "label": "Peñasquito → Manzanillo → Onsan",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ag-ct",
+   "bestand": "stroomroute-zilver-cannington-townsville.json",
+   "grondstof": "zilver",
+   "label": "Cannington → Townsville",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ag-ah",
+   "bestand": "stroomroute-zilver-antamina-huarmey.json",
+   "grondstof": "zilver",
+   "label": "Antamina → Huarmey",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gas-sr",
+   "bestand": "stroomroute-gas-sabinepass-rotterdam.json",
+   "grondstof": "gas",
+   "label": "Sabine Pass → Rotterdam",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gas-rc",
+   "bestand": "stroomroute-gas-raslaffan-chiba.json",
+   "grondstof": "gas",
+   "label": "Ras Laffan → Sodegaura",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gas-ci",
+   "bestand": "stroomroute-gas-corpuschristi-incheon.json",
+   "grondstof": "gas",
+   "label": "Corpus Christi → Incheon",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gas-kr",
+   "bestand": "stroomroute-gas-karratha-rudong.json",
+   "grondstof": "gas",
+   "label": "Karratha → Rudong",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gas-bz",
+   "bestand": "stroomroute-gas-bonny-zeebrugge.json",
+   "grondstof": "gas",
+   "label": "Bonny → Zeebrugge",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "cu-sw",
+   "bestand": "stroomroute-koper-sentinel-walvisbay.json",
+   "grondstof": "koper",
+   "label": "Sentinel → Walvis Bay",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "cu-op",
+   "bestand": "stroomroute-koper-olympicdam-portadelaide.json",
+   "grondstof": "koper",
+   "label": "Olympic Dam → Port Adelaide",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "cu-aj",
+   "bestand": "stroomroute-koper-aktogay-jinchuan.json",
+   "grondstof": "koper",
+   "label": "Aktogay → Alashankou → Jinchuan",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "li-cv",
+   "bestand": "stroomroute-lithium-cirilo-vitoria.json",
+   "grondstof": "lithium",
+   "label": "Grota do Cirilo → Vitória → China",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "li-hb",
+   "bestand": "stroomroute-lithium-hombremuerto-bessemercity.json",
+   "grondstof": "lithium",
+   "label": "Hombre Muerto → Charleston → Bessemer City",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "li-sm",
+   "bestand": "stroomroute-lithium-silverpeak-mccarran.json",
+   "grondstof": "lithium",
+   "label": "Silver Peak → Gigafactory Nevada",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gr-lq",
+   "bestand": "stroomroute-grafiet-lindijumbo-qingdao.json",
+   "grondstof": "grafiet",
+   "label": "Lindi Jumbo → Dar es Salaam → Qingdao",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gr-iv",
+   "bestand": "stroomroute-grafiet-itapecerica-vitoria.json",
+   "grondstof": "grafiet",
+   "label": "Itapecerica → Vitória",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "gr-sl",
+   "bestand": "stroomroute-grafiet-skaland-lulea.json",
+   "grondstof": "grafiet",
+   "label": "Skaland → Luleå",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ni-vl",
+   "bestand": "stroomroute-nikkel-voiseysbay-longharbour.json",
+   "grondstof": "nikkel",
+   "label": "Voisey's Bay → Long Harbour",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ni-sm",
+   "bestand": "stroomroute-nikkel-sorowako-matsuzaka.json",
+   "grondstof": "nikkel",
+   "label": "Sorowako → Matsusaka / Niihama",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ni-on",
+   "bestand": "stroomroute-nikkel-obi-ningbo.json",
+   "grondstof": "nikkel",
+   "label": "Obi → Ningbo",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ree-lg",
+   "bestand": "stroomroute-ree-longnan-ganzhou.json",
+   "grondstof": "ree",
+   "label": "Longnan → Ganzhou",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ree-kj",
+   "bestand": "stroomroute-ree-kuantan-japan.json",
+   "grondstof": "ree",
+   "label": "Gebeng → Port Klang → Yokohama",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "ree-bn",
+   "bestand": "stroomroute-ree-baotou-ningbo.json",
+   "grondstof": "ree",
+   "label": "Baotou → Ningbo",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "kolen-ep",
+   "bestand": "stroomroute-kolen-ermelo-portqasim.json",
+   "grondstof": "kolen",
+   "label": "Ermelo → Richards Bay → Port Qasim",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "kolen-mh",
+   "bestand": "stroomroute-kolen-muswellbrook-hekinan.json",
+   "grondstof": "kolen",
+   "label": "Mount Arthur → Newcastle → Hekinan",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "kolen-tf",
+   "bestand": "stroomroute-kolen-tabalong-fangchenggang.json",
+   "grondstof": "kolen",
+   "label": "Tabalong → Taboneo → Fangchenggang",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "olie-tn",
+   "bestand": "stroomroute-olie-tengiz-novorossiysk.json",
+   "grondstof": "olie",
+   "label": "Tengiz → Novorossiysk",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "olie-ap",
+   "bestand": "stroomroute-olie-albasrah-paradip.json",
+   "grondstof": "olie",
+   "label": "Basra → Paradip",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "olie-kd",
+   "bestand": "stroomroute-olie-kharg-dongjiakou.json",
+   "grondstof": "olie",
+   "label": "Kharg → Dongjiakou",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "olie-kod",
+   "bestand": "stroomroute-olie-kozmino-dalian.json",
+   "grondstof": "olie",
+   "label": "Kozmino → Dalian",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "u-is",
+   "bestand": "stroomroute-uranium-inkai-stpetersburg.json",
+   "grondstof": "uranium",
+   "label": "Inkai → Jekaterinenburg → Sint-Petersburg",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "u-pa",
+   "bestand": "stroomroute-uranium-porthope-almelo.json",
+   "grondstof": "uranium",
+   "label": "Port Hope → Rotterdam → Almelo",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "u-op",
+   "bestand": "stroomroute-uranium-olympicdam-portadelaide.json",
+   "grondstof": "uranium",
+   "label": "Olympic Dam → Port Adelaide",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "co-hg",
+   "bestand": "stroomroute-kobalt-huayou-gunsan.json",
+   "grondstof": "kobalt",
+   "label": "Tongxiang → Ningbo → Busan",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "co-bg",
+   "bestand": "stroomroute-kobalt-bouazzer-guemassa.json",
+   "grondstof": "kobalt",
+   "label": "Bou Azzer → Guemassa",
+   "aan": true,
+   "noot": "M31 · golf 2 (2026-09-28): zilver + gas (nieuw in v2) + negen grondstoffen aangevuld"
+  },
+  {
+   "sleutel": "au-ml",
+   "bestand": "stroomroute-goud-mponeng-londen.json",
+   "grondstof": "goud",
+   "label": "Mponeng → Londen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-td",
+   "bestand": "stroomroute-goud-tarkwa-dubai.json",
+   "grondstof": "goud",
+   "label": "Tarkwa → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-sd",
+   "bestand": "stroomroute-goud-siguiri-dubai.json",
+   "grondstof": "goud",
+   "label": "Siguiri → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-lt",
+   "bestand": "stroomroute-goud-loulo-ticino.json",
+   "grondstof": "goud",
+   "label": "Loulo → Ticino",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-yt",
+   "bestand": "stroomroute-goud-yanacocha-ticino.json",
+   "grondstof": "goud",
+   "label": "Yanacocha → Ticino",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-ok",
+   "bestand": "stroomroute-goud-olimpiada-dubai.json",
+   "grondstof": "goud",
+   "label": "Olimpiada → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-ks",
+   "bestand": "stroomroute-goud-kalgoorlie-singapore.json",
+   "grondstof": "goud",
+   "label": "Kalgoorlie → Singapore",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-ns",
+   "bestand": "stroomroute-goud-nevada-saltlakecity.json",
+   "grondstof": "goud",
+   "label": "Goldstrike → Salt Lake City",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-mo",
+   "bestand": "stroomroute-goud-malartic-ottawa.json",
+   "grondstof": "goud",
+   "label": "Malartic → Ottawa",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-vl",
+   "bestand": "stroomroute-goud-valcambi-londen.json",
+   "grondstof": "goud",
+   "label": "Valcambi → Londen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-ps",
+   "bestand": "stroomroute-goud-pamp-shanghai.json",
+   "grondstof": "goud",
+   "label": "PAMP → Shanghai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-am",
+   "bestand": "stroomroute-goud-argor-mumbai.json",
+   "grondstof": "goud",
+   "label": "Argor → Mumbai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "au-dd",
+   "bestand": "stroomroute-goud-dubai-delhi.json",
+   "grondstof": "goud",
+   "label": "Dubai → Delhi",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-ml",
+   "bestand": "stroomroute-pgm-mogalakwena-londen.json",
+   "grondstof": "pgm",
+   "label": "Mogalakwena → Royston",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-sz",
+   "bestand": "stroomroute-pgm-springs-zurich.json",
+   "grondstof": "pgm",
+   "label": "Impala → Zürich",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-zh",
+   "bestand": "stroomroute-pgm-zondereinde-hanau.json",
+   "grondstof": "pgm",
+   "label": "Zondereinde → Hanau",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-rt",
+   "bestand": "stroomroute-pgm-rustenburg-tokio.json",
+   "grondstof": "pgm",
+   "label": "Rustenburg → Tokio",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-rs",
+   "bestand": "stroomroute-pgm-rustenburg-shanghai.json",
+   "grondstof": "pgm",
+   "label": "Rustenburg → Shanghai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-zr",
+   "bestand": "stroomroute-pgm-zimplats-rustenburg.json",
+   "grondstof": "pgm",
+   "label": "Zimplats → Rustenburg",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-nk",
+   "bestand": "stroomroute-pgm-norilsk-krasnojarsk.json",
+   "grondstof": "pgm",
+   "label": "Norilsk → Krasnojarsk",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-sc",
+   "bestand": "stroomroute-pgm-stillwater-columbus.json",
+   "grondstof": "pgm",
+   "label": "Stillwater → Columbus",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "pgm-sp",
+   "bestand": "stroomroute-pgm-sudbury-actonuk.json",
+   "grondstof": "pgm",
+   "label": "Sudbury → Port Colborne",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-ja",
+   "bestand": "stroomroute-diamant-jwaneng-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Jwaneng → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-va",
+   "bestand": "stroomroute-diamant-venetia-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Venetia → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-ea",
+   "bestand": "stroomroute-diamant-ekati-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Ekati → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-oa",
+   "bestand": "stroomroute-diamant-namdeb-gaborone.json",
+   "grondstof": "diamant",
+   "label": "Oranjemund → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-gs",
+   "bestand": "stroomroute-diamant-gaborone-surat.json",
+   "grondstof": "diamant",
+   "label": "Gaborone → Surat",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-mm",
+   "bestand": "stroomroute-diamant-mirny-mumbai.json",
+   "grondstof": "diamant",
+   "label": "Mirny → Mumbai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-cd",
+   "bestand": "stroomroute-diamant-catoca-dubai.json",
+   "grondstof": "diamant",
+   "label": "Catoca → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-ma",
+   "bestand": "stroomroute-diamant-marange-dubai.json",
+   "grondstof": "diamant",
+   "label": "Marange → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-mb",
+   "bestand": "stroomroute-diamant-mbujimayi-dubai.json",
+   "grondstof": "diamant",
+   "label": "Mbuji-Mayi → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-ld",
+   "bestand": "stroomroute-diamant-letseng-dubai.json",
+   "grondstof": "diamant",
+   "label": "Letšeng → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-sh",
+   "bestand": "stroomroute-diamant-surat-hongkong.json",
+   "grondstof": "diamant",
+   "label": "Surat → Hongkong",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "dia-mn",
+   "bestand": "stroomroute-diamant-mumbai-newyork.json",
+   "grondstof": "diamant",
+   "label": "Mumbai → New York",
+   "aan": true,
+   "noot": "M31 · golf 3 (2026-09-28): goud, PGM en diamant — de eerste stromen die vliegen (modaliteit lucht)"
+  },
+  {
+   "sleutel": "gas-rr",
+   "bestand": "stroomroute-gas-raslaffan-rotterdam.json",
+   "grondstof": "gas",
+   "label": "Ras Laffan → Rotterdam",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "gas-sz",
+   "bestand": "stroomroute-gas-sabetta-zeebrugge.json",
+   "grondstof": "gas",
+   "label": "Sabetta → Zeebrugge",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "cu-ad",
+   "bestand": "stroomroute-koper-antamina-daye.json",
+   "grondstof": "koper",
+   "label": "Antamina → Huangshi",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "cu-bg",
+   "bestand": "stroomroute-koper-binghamcanyon-garfield.json",
+   "grondstof": "koper",
+   "label": "Bingham Canyon → Garfield",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "kolen-gr",
+   "bestand": "stroomroute-kolen-gillette-robertsbank.json",
+   "grondstof": "kolen",
+   "label": "Gillette → Roberts Bank",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "olie-wu",
+   "bestand": "stroomroute-olie-westridge-ulsan.json",
+   "grondstof": "olie",
+   "label": "Westridge → Ulsan",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "co-mk",
+   "bestand": "stroomroute-kobalt-murrinmurrin-kwinana.json",
+   "grondstof": "kobalt",
+   "label": "Murrin Murrin → Tongxiang",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "co-og",
+   "bestand": "stroomroute-kobalt-obi-ganzhou.json",
+   "grondstof": "kobalt",
+   "label": "Obi → Xiamen",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "au-mi",
+   "bestand": "stroomroute-goud-metalor-istanbul.json",
+   "grondstof": "goud",
+   "label": "Metalor → Istanbul",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "au-it",
+   "bestand": "stroomroute-goud-ity-ticino.json",
+   "grondstof": "goud",
+   "label": "Ity → Ticino",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "pgm-ai",
+   "bestand": "stroomroute-pgm-amandelbult-iselin.json",
+   "grondstof": "pgm",
+   "label": "Amandelbult → Iselin",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "dia-gg",
+   "bestand": "stroomroute-diamant-gahchokue-gaborone.json",
+   "grondstof": "diamant",
+   "label": "Gahcho Kué → Gaborone",
+   "aan": true,
+   "noot": "M31 · golf 4 (2026-09-28): reserve-assen uit golf 2 en 3"
+  },
+  {
+   "sleutel": "ag-rp",
+   "bestand": "stroomroute-zilver-rampuraagucha-pantnagar.json",
+   "grondstof": "zilver",
+   "label": "Rampura Agucha → Chanderiya",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ag-ft",
+   "bestand": "stroomroute-zilver-fresnillo-torreon.json",
+   "grondstof": "zilver",
+   "label": "Fresnillo → Torreón",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ag-gr",
+   "bestand": "stroomroute-zilver-garpenberg-ronnskar.json",
+   "grondstof": "zilver",
+   "label": "Garpenberg → Gävle → Rönnskär",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ag-bp",
+   "bestand": "stroomroute-zilver-brokenhill-portpirie.json",
+   "grondstof": "zilver",
+   "label": "Broken Hill → Port Pirie",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ag-uc",
+   "bestand": "stroomroute-zilver-uchucchacua-callao.json",
+   "grondstof": "zilver",
+   "label": "Uchucchacua → Callao",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "u-sm",
+   "bestand": "stroomroute-uranium-smithranch-metropolis.json",
+   "grondstof": "uranium",
+   "label": "Smith Ranch → Metropolis",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "u-jh",
+   "bestand": "stroomroute-uranium-jaduguda-hyderabad.json",
+   "grondstof": "uranium",
+   "label": "Jaduguda → Hyderabad",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "u-mt",
+   "bestand": "stroomroute-uranium-malvesi-tricastin.json",
+   "grondstof": "uranium",
+   "label": "Malvési → Tricastin",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "u-ka",
+   "bestand": "stroomroute-uranium-kharasan-alashankou.json",
+   "grondstof": "uranium",
+   "label": "Kharasan → Dostyk → Alashankou",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gas-cs",
+   "bestand": "stroomroute-gas-chayanda-shanghai.json",
+   "grondstof": "gas",
+   "label": "Chajanda → Heihe → Nantong",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gas-kd",
+   "bestand": "stroomroute-gas-karsto-dornum.json",
+   "grondstof": "gas",
+   "label": "Kårstø → Dornum (Europipe II)",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gas-cf",
+   "bestand": "stroomroute-gas-cautionbay-futtsu.json",
+   "grondstof": "gas",
+   "label": "Hides → Caution Bay → Futtsu",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gas-ab",
+   "bestand": "stroomroute-gas-arzew-barcelona.json",
+   "grondstof": "gas",
+   "label": "Hassi R'Mel → Arzew → Barcelona",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ree-oa",
+   "bestand": "stroomroute-ree-oscom-aluva.json",
+   "grondstof": "ree",
+   "label": "OSCOM (Odisha) → Aluva",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ree-gw",
+   "bestand": "stroomroute-ree-georgia-whitemesa.json",
+   "grondstof": "ree",
+   "label": "Mission Mine → White Mesa",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ree-ca",
+   "bestand": "stroomroute-ree-chavara-aluva.json",
+   "grondstof": "ree",
+   "label": "Chavara → Aluva",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gr-md",
+   "bestand": "stroomroute-grafiet-molo-duisburg.json",
+   "grondstof": "grafiet",
+   "label": "Molo → Toliara → Duisburg",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "gr-bh",
+   "bestand": "stroomroute-grafiet-bogala-hauzenberg.json",
+   "grondstof": "grafiet",
+   "label": "Bogala → Hamburg → Hauzenberg",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "li-mb",
+   "bestand": "stroomroute-lithium-mibra-bitterfeld.json",
+   "grondstof": "lithium",
+   "label": "Mibra → Vitória → Bitterfeld",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "li-cp",
+   "bestand": "stroomroute-lithium-carmen-pohang.json",
+   "grondstof": "lithium",
+   "label": "Atacama → Antofagasta → Daesan",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "li-gk",
+   "bestand": "stroomroute-lithium-greenbushes-kemerton.json",
+   "grondstof": "lithium",
+   "label": "Greenbushes → Kemerton",
+   "aan": true,
+   "noot": "M31 · golf 5 (2026-09-28): nieuwe ontwerpgolf voor de zes dunste grondstoffen"
+  },
+  {
+   "sleutel": "ni-cc",
+   "bestand": "stroomroute-nikkel-cerromatoso-cartagena.json",
+   "grondstof": "nikkel",
+   "label": "Cerro Matoso → Cartagena → Ningbo",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ni-tk",
+   "bestand": "stroomroute-nikkel-sotkamo-kokkola.json",
+   "grondstof": "nikkel",
+   "label": "Sotkamo → Kokkola",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ni-os",
+   "bestand": "stroomroute-nikkel-oncapuma-saoluis.json",
+   "grondstof": "nikkel",
+   "label": "Onça Puma → Carajás → São Luís",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "kolen-en",
+   "bestand": "stroomroute-kolen-elkview-neptune.json",
+   "grondstof": "kolen",
+   "label": "Elkview → Neptune (Vancouver)",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "kolen-mn",
+   "bestand": "stroomroute-kolen-moatize-nacala.json",
+   "grondstof": "kolen",
+   "label": "Moatize → Malawi → Nacala",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "kolen-pn",
+   "bestand": "stroomroute-kolen-pocahontas-norfolk.json",
+   "grondstof": "kolen",
+   "label": "Buchanan → Lambert's Point (Norfolk)",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "olie-sc",
+   "bestand": "stroomroute-olie-sangachal-ceyhan.json",
+   "grondstof": "olie",
+   "label": "Sangachal → BTC → Ceyhan",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "olie-rs",
+   "bestand": "stroomroute-olie-rastanura-sidikerir.json",
+   "grondstof": "olie",
+   "label": "Ras Tanura → SUMED → Sidi Kerir",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "olie-kc",
+   "bestand": "stroomroute-olie-hardisty-cushing.json",
+   "grondstof": "olie",
+   "label": "Hardisty → Keystone → Cushing",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "pgm-ur",
+   "bestand": "stroomroute-pgm-unki-rustenburg.json",
+   "grondstof": "pgm",
+   "label": "Unki → Beitbridge → Rustenburg",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "pgm-ms",
+   "bestand": "stroomroute-pgm-mimosa-springs.json",
+   "grondstof": "pgm",
+   "label": "Mimosa → Beitbridge → Springs",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "gr-zc",
+   "bestand": "stroomroute-grafiet-zavallya-constanta.json",
+   "grondstof": "grafiet",
+   "label": "Zavallya → Reni → Constanța",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ag-vl",
+   "bestand": "stroomroute-zilver-valcambi-londen.json",
+   "grondstof": "zilver",
+   "label": "Valcambi → MXP → Londen",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ag-ig",
+   "bestand": "stroomroute-zilver-imiter-guemassa.json",
+   "grondstof": "zilver",
+   "label": "Imiter → Tizi n'Tichka → Tanger Med",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ag-lt",
+   "bestand": "stroomroute-zilver-luckyfriday-trail.json",
+   "grondstof": "zilver",
+   "label": "Lucky Friday → Trail",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "co-mw",
+   "bestand": "stroomroute-kobalt-mutanda-walvisbay.json",
+   "grondstof": "kobalt",
+   "label": "Mutanda → Katima Mulilo → Walvis Bay",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "co-wt",
+   "bestand": "stroomroute-kobalt-wedabay-tongxiang.json",
+   "grondstof": "kobalt",
+   "label": "Weda Bay → Ningbo → Tongxiang",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "u-ps",
+   "bestand": "stroomroute-uranium-priargunsky-seversk.json",
+   "grondstof": "uranium",
+   "label": "Priargunsky → Trans-Sib → Seversk",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "u-ec",
+   "bestand": "stroomroute-uranium-eunice-columbia.json",
+   "grondstof": "uranium",
+   "label": "Eunice → Columbia (UF6)",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "gas-bp",
+   "bestand": "stroomroute-gas-bintulu-pyeongtaek.json",
+   "grondstof": "gas",
+   "label": "Bintulu → Pyeongtaek",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "gas-ak",
+   "bestand": "stroomroute-gas-anapa-kiyikoy.json",
+   "grondstof": "gas",
+   "label": "TurkStream: Anapa → Kıyıköy",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "ree-gh",
+   "bestand": "stroomroute-ree-ganzhou-hanau.json",
+   "grondstof": "ree",
+   "label": "Ganzhou → Rotterdam → Schijndel",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "li-wb",
+   "bestand": "stroomroute-lithium-whabouchi-becancour.json",
+   "grondstof": "lithium",
+   "label": "Whabouchi → Matagami → Bécancour",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "li-ab",
+   "bestand": "stroomroute-lithium-arcadia-beira.json",
+   "grondstof": "lithium",
+   "label": "Arcadia → Beira → Zhangjiagang",
+   "aan": true,
+   "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  }
+ ],
+ "uitgesloten": [
+  {
+   "bestand": "stroomroute-ree-phaxay-namcan.json",
+   "reden": "volledig stippel (de laos-extract gaf geen wegpad) — niet geregistreerd, besluit 2026-09-28 (M31 golf 6)"
+  }
+ ]
+}

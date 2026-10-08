@@ -1,37 +1,40 @@
-// gloed.js — het GLOED-MECHANISME, losgemaakt van zijn eerste gebruiker.
+// gloed.js — het GLOED-MECHANISME, sinds golf 1 van de visuele fase als ÉÉN
+// object voor alle knopen samen (2026-10-08, LAR-617).
 //
 // Waarom dit bestaat: `gloednodes.js` bouwde de koepel-gloed voor de 36
 // uitgezochte kopersites, en op 2026-08-07 vroeg Lars om ook de belangrijke
 // punten van een stroom (mijn · overslag · fabriek) zo te laten oplichten —
 // *"die witte ballen met cirkel erom moeten eigenlijk de gloedbron worden … zowel
 // stroom, gloed als die belangrijke punten moeten die gloeihotspots worden."*
-// Dat is één mechanisme met twee bronnen, dus het mechanisme hoort hier en niet
-// in een van de twee.
+// Dat is één mechanisme met twee bronnen, dus het mechanisme hoort hier.
 //
 // ⚠️ EN HET IS OOK EEN INHOUDELIJK PUNT, GEEN OPRUIMING. De ontwerpbrief zegt dat
-// de wereld-hotspot moet **ONTSTAAN** uit de optelling van losse glows. Zolang
-// alleen `gloednodes-koper.json` gloeide, kon dat alleen in China gebeuren — daar
-// staan de enige uitgezochte sites. Met de stroomknopen erbij lichten Balama,
-// Nacala, Vidalia, Greenbushes, Lobito en Duisburg óók op, en telt de gloed op
-// waar een stroom door een complex loopt. Dat is de eerste keer dat de
-// optel-claim buiten één land te toetsen is.
+// de wereld-hotspot moet **ONTSTAAN** uit de optelling van losse glows. Met de
+// stroomknopen erbij lichten Balama, Nacala, Vidalia, Greenbushes, Lobito en
+// Duisburg óók op, en telt de gloed op waar een stroom door een complex loopt.
 //
-// HET MECHANISME (ongewijzigd overgenomen uit gloednodes.js, waar het is bewezen):
-// de glow-radius schaalt mee met de kijkafstand via een hybride regel — een echte
+// HET MECHANISME (ongewijzigd sinds gloednodes.js, waar het is bewezen): de
+// glow-radius schaalt mee met de kijkafstand via een hybride regel — een echte
 // wereldmaat (meters, uit het gewicht) MET een pixel-minimum. Dichtbij wint de
 // wereldmaat → elke faciliteit een eigen scherpe bol. Veraf zakt die onder het
 // minimum → alle knopen worden even groot, buren van 3 km vallen op dezelfde
 // pixels en tellen additief op. Eén formule, twee gedragingen, geen zoomdrempel
-// en dus per constructie geen pop-in.
+// en dus per constructie geen pop-in. Zonder pixel-minimum zou een fabriek van
+// 2 km op wereldhoogte kleiner dan een pixel worden en verdwijnen — dat minimum
+// ÍS het mechanisme, geen ondergrens tegen onzichtbaarheid.
 //
-// Zonder pixel-minimum zou een fabriek van 2 km op wereldhoogte kleiner dan een
-// pixel worden en simpelweg verdwijnen — dan is er niets om op te tellen en kan
-// de hotspot niet ontstaan. Dat minimum ÍS het mechanisme, geen ondergrens tegen
-// onzichtbaarheid.
+// ⚠️ WAT ER IN GOLF 1 VERANDERDE IS ALLEEN DE IMPLEMENTATIE. ?v=131 had per
+// bron een eigen groep van vijf Points (182 stromen + 14 sitelagen = 1.164
+// objecten in atlasmodus). Nu liggen de vijf schillen van ALLE knopen als
+// vertex-reeksen in één Points (additief is commutatief, dus de tekenvolgorde
+// binnen de koepel draagt niets). AFSTEMMING, SCHILLEN en de shader zijn
+// letterlijk hetzelfde; de per-frame maat blijft in JS (gemeten < 0,3 ms voor
+// alle knopen — de winst zat nooit in die lus maar in de objecten). De camera
+// komt binnen in GROEP-LOKALE ruimte (de bol draait, de camera staat vast), dus
+// er is geen localToWorld per punt meer.
 //
 // ⚠️ HORIZON VIA GROOTTE 0, NIET VIA EEN CLIPPINGPLANE — een eigen ShaderMaterial
-// zou anders de clipping-chunks nodig hebben, en bij enkele tientallen punten is
-// de CPU-toets gratis.
+// zou anders de clipping-chunks nodig hebben, en de CPU-toets is gratis.
 
 import * as THREE from "three";
 
@@ -50,12 +53,9 @@ export const AFSTEMMING = {
 // een halve bol (breedte = √(1−u²)); additief opgeteld leest dat als één volume
 // dat boven het terrein uitsteekt.
 //
-// ⚠️ DIT IS GEEN OMKERING VAN BESLUIT 2 UIT DE ONTWERPBRIEF. Dat besluit zegt
-// "glow-bollen, géén hoogte-pilaren" en gaat over CAPACITEIT-ALS-HOOGTE — een
-// staaf waarvan je de lengte moet aflezen. Hier draagt de hoogte geen betekenis:
-// de koepel is even hoog als hij breed is, dus capaciteit blijft in de grootte
-// zitten en de hoogte is puur volume. Wie hem later tóch op volume laat groeien,
-// heeft besluit 2 wél omgedraaid en hoort dat op te schrijven.
+// ⚠️ DIT IS GEEN OMKERING VAN BESLUIT 2 UIT DE ONTWERPBRIEF ("glow-bollen, géén
+// hoogte-pilaren" = capaciteit-als-hoogte). Hier draagt de hoogte geen betekenis:
+// de koepel is even hoog als hij breed is, capaciteit blijft in de grootte.
 //
 // [u = fractie van de koepelhoogte, breedtefactor, helderheidsfactor]
 export const SCHILLEN = [
@@ -107,121 +107,137 @@ void main() {
 }
 `;
 
-/** Bouw een gloedlaag.
+/** Bouw de gloedlaag als één Points.
  *
  * @param knopen  [{lon, lat, straalKm, kleur (0xRRGGBB), helder (0..1)}]
  * @param radius  de schil waarop de laag ligt (CONFIG.vectorLift-schil)
- * @param camera/renderer  nodig voor de per-frame pixelmaat
- * @param renderOrder  basis; elke schil telt er 0,001 bij op
- * @returns {groep, update, zetKleur, aantal}
+ * @param renderOrder
+ * @returns {groep, punten, update(camLocaal, perEenheid), zetAan(i, aan),
+ *           zetKleur(i, hex), aantal}
+ *
+ * `update` wil de camera in de LOKALE ruimte van de groep waarin deze laag
+ * hangt (globeGroup): één inverse matrix per frame bij de aanroeper, geen
+ * localToWorld per punt. `perEenheid` = pixels per scene-eenheid op afstand 1
+ * (h / (2·tan(fov/2)), met h = css-hoogte — zoals gloednodes.js hem altijd gaf).
  */
-export function bouwGloed(knopen, radius, camera, renderer, renderOrder = 7.6) {
+export function bouwGloed(knopen, radius, renderOrder = 7.6, ...rest) {
+  // ⚠️ COMPATIBILITEIT met de oude aanroep bouwGloed(knopen, radius, camera,
+  // renderer, renderOrder) van stroomroute.js en gloednodes.js — die modules
+  // leven nog achter `?laag=los` als pariteitsreferentie (stap 1–3 van golf 1)
+  // en importeren dit bestand onder een oud ?v=. Hun update() krijgt geen
+  // camera mee; die halen we dan zelf uit de wereldmatrix van de groep.
+  if (renderOrder && renderOrder.isCamera) {
+    const camera = renderOrder, renderer = rest[0], ro = rest[1] ?? 7.6;
+    const laag = bouwGloed(knopen, radius, ro);
+    const inv = new THREE.Matrix4();
+    const cam = new THREE.Vector3();
+    const update = laag.update;
+    laag.update = () => {
+      if (!laag.groep.visible) return;
+      laag.groep.updateWorldMatrix(true, false);
+      inv.copy(laag.groep.matrixWorld).invert();
+      cam.copy(camera.position).applyMatrix4(inv);
+      const h = renderer.domElement.height / (renderer.getPixelRatio() || 1);
+      update(cam, h / (2 * Math.tan((camera.fov * Math.PI) / 360)));
+    };
+    const zetKleur = laag.zetKleur;
+    laag.zetKleur = (hex) => { for (let i = 0; i < laag.aantal; i++) zetKleur(i, hex); laag.commitKleur(); };
+    return laag;
+  }
   const n = knopen.length;
   const groep = new THREE.Group();
-  if (!n) return { groep, update() {}, zetKleur() {}, aantal: 0 };
+  groep.name = "gloed";
+  if (!n) return { groep, punten: null, update() {}, zetAan() {}, zetKleur() {}, commitKleur() {}, aantal: 0 };
 
+  const S = SCHILLEN.length;
   const straal = new Float32Array(n);
-  const kleur = new Float32Array(n * 3);
+  const aan = new Uint8Array(n).fill(1);
+  const pos = new Float32Array(n * S * 3);
+  const kleur = new Float32Array(n * S * 3);
+  const helder = new Float32Array(n * S);
+  const breedte = new Float32Array(n * S);   // breedtefactor van de schil, per vertex
+  const grootte = new Float32Array(n * S);
   const c = new THREE.Color();
 
   knopen.forEach((k, i) => {
     straal[i] = (k.straalKm / AARDSTRAAL_KM) * radius;
     c.setHex(k.kleur);
-    kleur[i * 3] = c.r; kleur[i * 3 + 1] = c.g; kleur[i * 3 + 2] = c.b;
-  });
-
-  const schillen = [];   // {pos, grootte, attrGrootte, attrKleur, breedte}
-
-  SCHILLEN.forEach(([u, breedteF, helderF], si) => {
-    const pos = new Float32Array(n * 3);
-    const helder = new Float32Array(n);
-    const grootte = new Float32Array(n);
-    const kl = kleur.slice();   // elke schil een eigen buffer, zodat zetKleur werkt
-
-    for (let i = 0; i < n; i++) {
-      // De schil ligt op u × koepelhoogte boven het oppervlak.
+    SCHILLEN.forEach(([u, breedteF, helderF], si) => {
+      const v = si * n + i;                      // schil-major: alle knopen van schil 0, dan schil 1, …
       const hoogte = AFSTEMMING.koepelHoogte * straal[i] * u;
-      const [x, y, z] = opBol(knopen[i].lon, knopen[i].lat, radius + hoogte);
-      pos[i * 3] = x; pos[i * 3 + 1] = y; pos[i * 3 + 2] = z;
-      helder[i] = (knopen[i].helder ?? 1) * helderF * AFSTEMMING.sterkte;
-    }
-
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
-    const attrKleur = new THREE.BufferAttribute(kl, 3);
-    geo.setAttribute("kleur", attrKleur);
-    geo.setAttribute("helder", new THREE.BufferAttribute(helder, 1));
-    const attrGrootte = new THREE.BufferAttribute(grootte, 1);
-    attrGrootte.setUsage(THREE.DynamicDrawUsage);
-    geo.setAttribute("grootte", attrGrootte);
-
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: VERT,
-      fragmentShader: FRAG,
-      blending: THREE.AdditiveBlending,
-      transparent: true,
-      depthTest: false,
-      depthWrite: false,
+      const [x, y, z] = opBol(k.lon, k.lat, radius + hoogte);
+      pos[v * 3] = x; pos[v * 3 + 1] = y; pos[v * 3 + 2] = z;
+      kleur[v * 3] = c.r; kleur[v * 3 + 1] = c.g; kleur[v * 3 + 2] = c.b;
+      helder[v] = (k.helder ?? 1) * helderF * AFSTEMMING.sterkte;
+      breedte[v] = breedteF;
     });
-
-    const punten = new THREE.Points(geo, mat);
-    // Hoger in de koepel = later tekenen, zodat de top bovenop de basis ligt.
-    punten.renderOrder = renderOrder + si * 0.001;
-    punten.frustumCulled = false;   // wij bepalen zichtbaarheid zelf, per punt
-    groep.add(punten);
-    schillen.push({ pos, grootte, attrGrootte, attrKleur, breedte: breedteF });
   });
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  const attrKleur = new THREE.BufferAttribute(kleur, 3);
+  geo.setAttribute("kleur", attrKleur);
+  geo.setAttribute("helder", new THREE.BufferAttribute(helder, 1));
+  const attrGrootte = new THREE.BufferAttribute(grootte, 1);
+  attrGrootte.setUsage(THREE.DynamicDrawUsage);
+  geo.setAttribute("grootte", attrGrootte);
+  geo.boundingSphere = new THREE.Sphere(new THREE.Vector3(), radius * 2);
+
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: VERT, fragmentShader: FRAG,
+    blending: THREE.AdditiveBlending, transparent: true,
+    depthTest: false, depthWrite: false,
+  });
+  const punten = new THREE.Points(geo, mat);
+  punten.renderOrder = renderOrder;
+  punten.frustumCulled = false;      // wij bepalen zichtbaarheid zelf, per punt
+  punten.name = "gloed";
+  groep.add(punten);
 
   // --- de per-frame maatregel ------------------------------------------------
-  const wereldPos = new THREE.Vector3();
   const camRicht = new THREE.Vector3();
-
-  function update() {
+  function update(camLocaal, perEenheid) {
     if (!groep.visible) return;
-    const d = camera.position.length();
+    const d = camLocaal.length();
     if (d <= radius) return;
     // Zichtbaarheidsgrens op een bol: een punt p̂ is zichtbaar vanaf een camera op
     // afstand d als dot(p̂, ĉ) ≥ R/d. Exact, op elke hoogte, zonder drempel.
     const horizon = radius / d;
-    camRicht.copy(camera.position).normalize();
-
-    // pixels per globe-eenheid op afstand 1, uit de projectie
-    const h = renderer.domElement.height / (renderer.getPixelRatio() || 1);
-    const perEenheid = h / (2 * Math.tan((camera.fov * Math.PI) / 360));
-
-    for (const sch of schillen) {
-      for (let i = 0; i < n; i++) {
-        wereldPos.set(sch.pos[i * 3], sch.pos[i * 3 + 1], sch.pos[i * 3 + 2]);
-        groep.localToWorld(wereldPos);
-
-        if (wereldPos.dot(camRicht) / radius < horizon) {
-          sch.grootte[i] = 0;   // achterkant van de bol
-          continue;
-        }
-        const afstand = wereldPos.distanceTo(camera.position);
-        const wereldPx = (2 * straal[i] * perEenheid) / Math.max(1e-6, afstand);
+    camRicht.copy(camLocaal).normalize();
+    const cx = camLocaal.x, cy = camLocaal.y, cz = camLocaal.z;
+    const rx = camRicht.x, ry = camRicht.y, rz = camRicht.z;
+    for (let i = 0; i < n; i++) {
+      // horizon- en afstandstoets op de basisschil; de koepel erboven volgt
+      const px = pos[i * 3], py = pos[i * 3 + 1], pz = pos[i * 3 + 2];
+      const zichtbaar = aan[i] && (px * rx + py * ry + pz * rz) / radius >= horizon;
+      if (!zichtbaar) {
+        for (let si = 0; si < S; si++) grootte[si * n + i] = 0;
+        continue;
+      }
+      const afstand = Math.max(1e-6, Math.hypot(px - cx, py - cy, pz - cz));
+      const wereldPx = (2 * straal[i] * perEenheid) / afstand;
+      for (let si = 0; si < S; si++) {
+        const v = si * n + i;
         // ⚠️ De breedtefactor hoort ÓÓK op het pixel-minimum te werken, niet
         // alleen op de wereldmaat. Anders wordt de koepel op wereldhoogte een
-        // stapel even brede schijven — dus een pilaar in plaats van een koepel,
-        // en precies daar zit de meeste kijktijd.
-        sch.grootte[i] = Math.max(AFSTEMMING.minPx * sch.breedte,
-                                  wereldPx * sch.breedte);
+        // stapel even brede schijven — een pilaar in plaats van een koepel.
+        grootte[v] = Math.max(AFSTEMMING.minPx * breedte[v], wereldPx * breedte[v]);
       }
-      sch.attrGrootte.needsUpdate = true;
     }
+    attrGrootte.needsUpdate = true;
   }
 
-  /** Alle knopen in één keer omkleuren (voor de kleurmodus-schakelaar). */
-  function zetKleur(hex) {
+  function zetAan(i, waarde) { aan[i] = waarde ? 1 : 0; }
+
+  /** Eén knoop omkleuren (alle vijf schillen). Roep daarna `commitKleur()` aan. */
+  function zetKleur(i, hex) {
     c.setHex(hex);
-    for (const sch of schillen) {
-      const a = sch.attrKleur.array;
-      for (let i = 0; i < n; i++) {
-        a[i * 3] = c.r; a[i * 3 + 1] = c.g; a[i * 3 + 2] = c.b;
-      }
-      sch.attrKleur.needsUpdate = true;
+    for (let si = 0; si < S; si++) {
+      const v = si * n + i;
+      kleur[v * 3] = c.r; kleur[v * 3 + 1] = c.g; kleur[v * 3 + 2] = c.b;
     }
   }
+  function commitKleur() { attrKleur.needsUpdate = true; }
 
-  return { groep, update, zetKleur, aantal: n };
+  return { groep, punten, update, zetAan, zetKleur, commitKleur, aantal: n };
 }

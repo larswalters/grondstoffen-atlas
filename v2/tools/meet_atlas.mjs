@@ -40,13 +40,16 @@ const arg = (naam, standaard) => {
   const i = process.argv.indexOf(`--${naam}`);
   return i >= 0 && process.argv[i + 1] !== undefined ? process.argv[i + 1] : standaard;
 };
-const URL_ = arg("url", "http://localhost:8732/v2/");
+const URL_BASIS = arg("url", "http://localhost:8732/v2/");
 const OUT = arg("out", "./meting");
 const PROFIEL = arg("profiel", "beide");           // desktop | telefoon | beide
 const KLEUR = arg("kleur", null);                  // null = de default van de pagina
+const MODUS = arg("modus", null);                  // atlas | bouw → ?modus= op de url (golf 1)
 const POORT = +arg("poort", "9333");
 const WACHT_S = +arg("wacht", "150");              // max wachten op alle stromen
 const LABEL = arg("label", "meting");
+// ?modus= aan de url hangen zonder een bestaande querystring te slopen
+const URL_ = MODUS ? URL_BASIS + (URL_BASIS.includes("?") ? "&" : "?") + `modus=${MODUS}` : URL_BASIS;
 
 mkdirSync(OUT, { recursive: true });
 const slaap = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -109,6 +112,7 @@ async function verbind(url) {
 }
 
 // --- de meting per profiel --------------------------------------------------
+let laatsteRapport = null;     // voor de foutafhandeling: toon wat de pagina zei
 async function meetProfiel(profiel) {
   const telefoon = profiel === "telefoon";
   const nieuw = await fetch(`http://127.0.0.1:${POORT}/json/new?about:blank`, { method: "PUT" });
@@ -120,6 +124,7 @@ async function meetProfiel(profiel) {
     console: [], excepties: [], netwerk: { verzoeken: 0, bytes: 0, data: [] },
     laden: {}, kijkstanden: [], scene: null,
   };
+  laatsteRapport = rapport;
   const verzoeken = new Map();
   cdp.on((m) => {
     if (m.method === "Runtime.consoleAPICalled") {
@@ -178,17 +183,23 @@ async function meetProfiel(profiel) {
   await geladen;
   rapport.laden.msPaginaLoad = Date.now() - t0;
 
+  // Wachten tot alle stromen er zijn: sinds golf 1 via window.ATLAS (de bundel,
+  // één laag); de oude per-stroom-lagen (?laag=los of ?v≤131) via de drie Maps.
   const klaar = await evalueer(`new Promise((res) => {
     const t0 = performance.now();
-    const n = document.querySelectorAll('.srBtn').length;
     const p = setInterval(() => {
+      const n = document.querySelectorAll('.srBtn').length;
+      const A = window.ATLAS;
+      const bundel = !!(A && A.stats && A.stats.geladen === A.stats.stromen && A.stats.stromen > 0);
       const ok = window.STROOMROUTES ? window.STROOMROUTES.size : 0;
       const lv = window.STROOMLEVEN ? window.STROOMLEVEN.size : 0;
       const gl = window.GLOEDNODES ? window.GLOEDNODES.size : 0;
-      const stromenKlaar = (ok >= n && lv >= n);
+      const los = n > 0 && ok >= n && lv >= n;
+      const stromenKlaar = bundel || los;
       if (stromenKlaar || performance.now() - t0 > ${WACHT_S * 1000}) {
         clearInterval(p);
-        res({ stromenInHud: n, stroomroutes: ok, stroomleven: lv, gloedlagen: gl,
+        res({ stromenInHud: n, stroomroutes: bundel ? A.stats.stromen : ok, stroomleven: lv, gloedlagen: gl,
+              bundel, atlasStats: bundel ? A.stats : null,
               msTotAlleStromen: Math.round(performance.now()), compleet: stromenKlaar });
       }
     }, 250);
@@ -295,7 +306,12 @@ async function main() {
   for (const [p, r] of Object.entries(uit.profielen)) {
     console.log(`\n== ${LABEL} · ${p} · ${r.scene?.webgl ?? "?"} · ${r.scene?.kleurModus}/${r.scene?.ondergrond} ==`);
     console.log(`laden: pagina ${r.laden.msPaginaLoad} ms · alle stromen ${r.laden.msTotAlleStromen} ms · ` +
-      `${r.laden.stroomroutes}/${r.laden.stromenInHud} stromen · ${r.laden.gloedlagen} gloedlagen · compleet=${r.laden.compleet}`);
+      `${r.laden.stroomroutes}/${r.laden.stromenInHud} stromen · ${r.laden.bundel ? "bundel" : r.laden.gloedlagen + " gloedlagen"} · compleet=${r.laden.compleet}`);
+    if (r.laden.atlasStats) {
+      const a = r.laden.atlasStats;
+      console.log(`bundel ${a.bundelVersie}: ${a.benen} benen · L0 ${a.segmentenL0} / L1 ${a.segmentenL1} / lucht ${a.segmentenLucht} seg · ` +
+        `${a.kometen.kometen} kometen · ${a.gloedKnopen} gloedknopen · laden ${a.msLaden} ms, decoderen ${a.msDecoderen} ms · ${a.kleurModus}/${a.lijnModus}`);
+    }
     console.log(`netwerk data/: ${r.netwerk.verzoeken} verzoeken · ${(r.netwerk.bytes / 1048576).toFixed(1)} MB` +
       ` (alles incl. tegels: ${r.netwerk.alleVerzoeken} · ${(r.netwerk.alleBytes / 1048576).toFixed(1)} MB)`);
     const o = r.scene?.objecten || {};
@@ -313,4 +329,12 @@ async function main() {
   console.log(`\nrapport: ${pad}`);
 }
 
-main().catch((e) => { console.error("FOUT:", e.message); process.exitCode = 1; }).finally(() => process.exit(process.exitCode || 0));
+main().catch((e) => {
+  console.error("FOUT:", e.message);
+  // Een meting die strandt is meestal een pagina die strandt: toon wat die zei.
+  if (laatsteRapport) {
+    for (const x of laatsteRapport.excepties.slice(0, 10)) console.error("  EXC:", x.tekst, "@", x.url, x.regel);
+    for (const c of laatsteRapport.console.slice(0, 10)) console.error(`  ${c.type}:`, c.tekst);
+  }
+  process.exitCode = 1;
+}).finally(() => process.exit(process.exitCode || 0));

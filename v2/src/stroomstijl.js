@@ -104,6 +104,54 @@ export const MODALITEIT_KLEUR = {
 const ONBEKEND = 0xffffff;
 const gemeld = new Set();
 
+// ── Lijnstijl per modaliteit (golf 1 van de visuele fase, 2026-10-08) ──────
+//
+// De ontwerpbrief zegt *kleur = grondstof · lijnstijl = modaliteit*. Zodra de
+// kleur naar de grondstof gaat moet de modaliteit dus in de VORM, en wel in
+// SCHERMpixels (wat op elke hoogte zichtbaar moet zijn schaalt in schermruimte).
+// Eén tabel voedt de shader van stroomlijn.js én de legenda in de HUD, zodat
+// legenda en beeld niet uit elkaar kunnen lopen ("de legenda loog"-klasse).
+//
+// Vorm van een patroon: binnen een periode van `periode` px zijn de eerste
+// `aan` px op alfa `alfaAan`, de rest op `alfaUit`. Patronen moduleren ALLEEN
+// alfa, nooit de tint (×1,35 maakt zilver/pgm/diamant wit, en wit is
+// "onbekend"), en de breedte nooit langs de lengte (de ronde eindkappen van
+// LineMaterial zouden op elke vertex een knobbel zetten). Een dwarsprofiel
+// (`kernFractie` < 1) dempt de randen van de lijn tot `randAlfa` ("berm").
+//
+// ⚠️ ALLEEN STIPPEL HEEFT ECHTE GATEN (alfaUit 0). Elk modaliteitspatroon houdt
+// alfa ≥ 0,45, zodat gestippeld op geen enkele hoogte iets anders kan betekenen
+// dan "hier reikt het net niet" (werkwijze §7). Stijl 6 (onbekend) is de luide
+// klasse: magenta en gestreept, zodat een vergeten modaliteit nooit stil
+// meeloopt. Index 0–5 = MODALITEITEN, 6 = onbekend, 7 = stippel.
+//
+// ⚠️ De stippel van vóór golf 1 (LineDashedMaterial, dash 0,00008 scene-
+// eenheden ≈ 0,21 km) was op wereldhoogte aantoonbaar een vlakke lijn: op
+// 9.000 km is 1 css-px ≈ 8 km. Met 3 px aan / 5 px uit is hij op élke hoogte
+// gestippeld.
+export const MODALITEITEN = ["zee", "binnenvaart", "truck", "spoor", "leiding", "lucht"];
+export const STIJL_ONBEKEND = 6;
+export const STIJL_STIPPEL = 7;
+export const LIJNSTIJL = [
+  { naam: "zee",         breedte: 1.8, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "binnenvaart", breedte: 1.3, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "truck",       breedte: 2.0, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 0.6, randAlfa: 0.45 },
+  { naam: "spoor",       breedte: 1.6, periode: 8,  aan: 6, alfaAan: 1.0,  alfaUit: 0.45, kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "leiding",     breedte: 1.6, periode: 12, aan: 9, alfaAan: 0.6,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "lucht",       breedte: 1.0, periode: 0,  aan: 0, alfaAan: 1.0,  alfaUit: 1.0,  kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "onbekend",    breedte: 1.6, periode: 6,  aan: 3, alfaAan: 1.0,  alfaUit: 0.0,  kernFractie: 1.0, randAlfa: 1.0 },
+  { naam: "stippel",     breedte: 1.1, periode: 8,  aan: 3, alfaAan: 0.85, alfaUit: 0.0,  kernFractie: 1.0, randAlfa: 1.0 },
+];
+
+/** Stijlindex van een been: 7 voor stippel, anders de modaliteit; onbekend = 6
+ *  mét de luide waarschuwing (één keer per sleutel). */
+export function stijlIndex(modaliteit, stippel) {
+  if (stippel) return STIJL_STIPPEL;
+  const i = MODALITEITEN.indexOf(modaliteit);
+  if (i < 0) { meld(`modaliteit "${modaliteit}" (lijnstijl)`); return STIJL_ONBEKEND; }
+  return i;
+}
+
 /** Welke grondstof hoort bij een stroom-id?
  *
  * De id's zijn `<grondstof>-<bron>-<bestemming>` (`koper-collahuasi-tongling`,
