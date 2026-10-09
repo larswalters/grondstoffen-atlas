@@ -93,8 +93,9 @@
 // losse knoop haalt hooguit 1,0 (kernPiek + haloPiek bij q = 1). Additief in een
 // 8-bit sRGB-buffer klemt per KANAAL; boven 1 verschuift de TINT in plaats van
 // dat het wit wordt — koper ×1,42 = #ffc444 ligt op 0,06 van goud, kobalt ×2 is
-// grafiet. Dat is de legenda-klasse. Witheet wordt het pas waar knopen
-// OPTELLEN, en dat "uitgebrand wit" heeft Lars geaccepteerd.
+// grafiet. Dat is de legenda-klasse. ⚠️ En twee knopen op dezelfde pixels ZIJN
+// één knoop ×2: daarom tellen gelijk-gekleurde knopen die op het scherm
+// samenvallen niet in licht maar in gewicht op — (a), (b) en (c) hieronder.
 //
 // ⚠️ EEN STROOMKNOOP TELT NIET DUBBEL MET ZIJN EIGEN SITE — in twee lagen.
 // Een stroomknoop (marker) is het routeeranker van een site: hij ligt exact op
@@ -116,10 +117,25 @@
 //       van de twee). Zoom je in tot ze uit elkaar liggen, dan krijgt de marker
 //       zijn eigen lichtje terug — de lijn eindigt op de concentrator en daar
 //       brandt het dan ook. Een functie van de pixelscheiding, dus geen drempel.
-// Dit zijn GEEN aggregaat-objecten: het is één faciliteit die anders twee keer
-// telde. Twee registersites voegen nooit samen of over (Orano Tricastin,
-// QCLNG/GLNG delen een coördinaat en zijn wél twee installaties) — die tellen
-// gewoon op, en dáár ontstaat de hotspot.
+//   (c) Site ↔ site, op het scherm (per frame, continu) — sinds de review van
+//       golf 2. Twee registersites van dezelfde kleur op een paar km (Mutanda–
+//       Deziwa 1,5 km, Chuquicamata mijn + smelter 1,1 km, Morowali, Tricastin
+//       en QCLNG/GLNG op dezelfde coördinaat) telden hun LICHT op, en dat
+//       klemde al bij twee sites: kobalt ×1,8 leest als grafiet, koper ×1,4 als
+//       goud — gemeten in de lokale ?v=133, 55 siteparen binnen 2 km. Daarom
+//       draagt een site aan de dichtstbijzijnde GROTERE site van dezelfde kleur
+//       binnen `siteKm` over, met dezelfde pixelscheiding als (b), maar nu tellen
+//       de CAPACITEITEN op: q = √(q₁² + q₂²) = √(Σg/gmax), tot 1. Liggen ze op het
+//       scherm uiteen, dan heeft elk weer een eigen lichtje.
+// Dit zijn GEEN aggregaat-objecten en de hotspot ONTSTAAT nog steeds uit de
+// optelling: (a) en (b) halen één faciliteit die twee keer telde terug naar
+// één, en (c) telt naburige installaties op in het gewicht in plaats van in het
+// geklemde licht. Sites die verder uiteen liggen (Tongling, Guixi, de Bushveld)
+// tellen op het scherm gewoon additief op tot een witheet midden met een
+// gekleurde krans — dat "uitgebrand wit" heeft Lars geaccepteerd. ⚠️ Waar zo'n
+// cluster op wereld- of middenhoogte toch door een andere legendakleur loopt,
+// helpt alleen een HDR-doel met een tintbehoudende resolve (rgb/max(1,max)) —
+// een extra pass en fill-rate op de telefoon, dus een apart besluit.
 //
 // ⚠️ VERBERGEN GEBEURT BUITEN HET CLIPVOLUME, NIET MET PUNTGROOTTE 0. GLES noemt
 // gl_PointSize ≤ 0 ongedefinieerd; gemeten in Chrome (ANGLE/D3D11) tekenen 0,
@@ -141,7 +157,7 @@ export const AARDSTRAAL_KM = 6371;
 // a + b·q, met q ∈ [0, 1] het per grondstof genormaliseerde gewicht.
 // Live bijstellen kan in de console: `ATLAS.gloed.afstemming.<knop> = …` werkt
 // vanaf het volgende frame (de update leest AFSTEMMING per frame); alleen
-// SCHILLEN, samenvalKm en partnerKm gelden bij het bouwen.
+// SCHILLEN, samenvalKm, partnerKm en siteKm gelden bij het bouwen.
 export const AFSTEMMING = {
   // ── de faciliteit in de wereld
   wereldKm: [0.30, 0.60],    // straal 0,30–0,90 km: de maat van een fabriek, geen district
@@ -168,6 +184,7 @@ export const AFSTEMMING = {
   samenvalKm: 0.25,          // (a) stroomknoop gaat op in een gelijk-gekleurd punt binnen dit
   partnerKm: 10,             // (b) stroomknoop draagt over aan een gelijk-gekleurde site binnen dit …
   scheidPx: [6, 24],         // … zolang ze op het scherm minder dan [6 → 24] css-px uiteen liggen
+  siteKm: 2,                 // (c) site draagt over aan een gelijk-gekleurde, grotere site binnen dit
 };
 
 // ✅ BESLUIT LARS (2026-08-06): de gloed is een KOEPEL met hoogte, geen platte
@@ -279,7 +296,7 @@ const glad = (x) => (x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x));
  * @param radius  de schil waarop de laag ligt (CONFIG.vectorLift-schil)
  * @param renderOrder
  * @returns {groep, punten, update(camLocaal, perEenheid, scherm), zetAan(i, aan),
- *           zetKleur(i, hex), commitKleur(), afstemming, aantal, fysiek, paren}
+ *           zetKleur(i, hex), commitKleur(), afstemming, aantal, fysiek, paren, siteparen}
  *
  * `update` wil de camera in de LOKALE ruimte van de groep waarin deze laag
  * hangt (globeGroup): één inverse matrix per frame bij de aanroeper, geen
@@ -361,6 +378,32 @@ export function bouwGloed(knopen, radius, renderOrder = 7.45) {
   });
   if (qOntbreekt) console.warn(`[atlas v2] gloed: ${qOntbreekt} knopen zonder q — als q = 1 getekend`);
   const aanIn = new Uint8Array(n).fill(1);
+
+  // --- (c) overdragen tussen sites van dezelfde kleur ---------------------------
+  // Elk site-lichtpunt krijgt als partner het dichtstbijzijnde site-lichtpunt van
+  // dezelfde kleur binnen siteKm met een GROTERE rang (q van de site zelf, dan
+  // het nummer). Strikt stijgende rang = een boom, nooit een kring; per frame
+  // lopen we in oplopende rang, zodat een site eerst ontvangt en dan pas zelf
+  // (met wat hij ontving) doorgeeft.
+  const rang = new Float32Array(nSitePunten);
+  for (let p = 0; p < nSitePunten; p++) rang[p] = qIn[fysLeden[p][0]];
+  const groter = (a, b) => rang[a] > rang[b] || (rang[a] === rang[b] && a > b);
+  const sitePartner = new Int32Array(nSitePunten).fill(-1);
+  const sitePartnerAfst = new Float32Array(nSitePunten);   // koorde in scene-eenheden
+  for (let p = 0; p < nSitePunten; p++) {
+    const k = knopen[fysLeden[p][0]], e = fysEenheid[p];
+    let beste = -1, besteD = AFSTEMMING.siteKm / AARDSTRAAL_KM;
+    for (const s of perKleur.get(k.kleur) || []) {
+      if (s >= nSitePunten || !groter(s, p)) continue;
+      const f = fysEenheid[s];
+      const dd = Math.hypot(f[0] - e[0], f[1] - e[1], f[2] - e[2]);
+      if (dd <= besteD) { besteD = dd; beste = s; }
+    }
+    if (beste >= 0) { sitePartner[p] = beste; sitePartnerAfst[p] = besteD * radius; }
+  }
+  const siteVolgorde = [];
+  for (let p = 0; p < nSitePunten; p++) if (sitePartner[p] >= 0) siteVolgorde.push(p);
+  siteVolgorde.sort((a, b) => (groter(a, b) ? 1 : groter(b, a) ? -1 : 0));
 
   // per lichtpunt: aan en q van de leden die aan staan (herbepaald bij zetAan)
   const aanF = new Uint8Array(m);
@@ -486,6 +529,17 @@ export function bouwGloed(knopen, radius, renderOrder = 7.45) {
       const q = qF[s] + Math.max(0, qF[p] - qF[s]) * (1 - w);
       if (q > qE[s]) qE[s] = q;
     }
+    // (c) site → grotere site van dezelfde kleur: hier tellen de capaciteiten op
+    // (√ van de som van de kwadraten = √(Σg/gmax)), want het zijn twee installaties.
+    for (const p of siteVolgorde) {
+      const s = sitePartner[p];
+      if (!aanF[p] || !aanF[s]) continue;
+      const o = p * 3;
+      const afst = Math.max(1e-6, Math.hypot(pos0[o] - cx, pos0[o + 1] - cy, pos0[o + 2] - cz));
+      const w = glad(((sitePartnerAfst[p] * perEenheid) / afst - s0) / ds);
+      mW[p] = w;
+      qE[s] = Math.min(1, Math.sqrt(qE[s] * qE[s] + (1 - w) * qE[p] * qE[p]));
+    }
 
     // pass 1 — maten, en de totale halo-oppervlakte in beeld (device-px²)
     let opp = 0;
@@ -581,5 +635,5 @@ export function bouwGloed(knopen, radius, renderOrder = 7.45) {
   }
   function commitKleur() { attrKleur.needsUpdate = true; }
 
-  return { groep, punten, update, zetAan, zetKleur, commitKleur, afstemming: AFSTEMMING, aantal: n, fysiek: m, paren: paren.length };
+  return { groep, punten, update, zetAan, zetKleur, commitKleur, afstemming: AFSTEMMING, aantal: n, fysiek: m, paren: paren.length, siteparen: siteVolgorde.length };
 }

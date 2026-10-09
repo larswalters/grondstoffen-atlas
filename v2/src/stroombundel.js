@@ -43,13 +43,13 @@
 import * as THREE from "three";
 import {
   kleurVan, beenPunten, GRONDSTOF_KLEUR, stijlIndex, LIJNMODI,
-} from "./stroomstijl.js?v=133";
+} from "./stroomstijl.js?v=134";
 import {
   BeenInfo, maakLijnMateriaal, zetLijnSchaal, zetKmPerPx, zetPatronenAan, maakSegmentGeometrie, bouwLijn,
   ROL_BASIS, ROL_FIJN, ROL_ALTIJD,
-} from "./stroomlijn.js?v=133";
-import { bouwGloed } from "./gloed.js?v=133";
-import { bouwKometen } from "./stroomkometen.js?v=133";
+} from "./stroomlijn.js?v=134";
+import { bouwGloed } from "./gloed.js?v=134";
+import { bouwKometen } from "./stroomkometen.js?v=134";
 
 const AARDSTRAAL_KM = 6371;
 const D2R = Math.PI / 180;
