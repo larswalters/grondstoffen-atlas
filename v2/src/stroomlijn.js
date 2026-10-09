@@ -24,9 +24,9 @@
 // Hier is er maar één materiaal-klasse, maar de sleutel staat expliciet.
 //
 // De horizon blijft een CLIPPING PLANE (GLOBE.klemOpHorizon, depthTest uit):
-// LineMaterial draagt de clipping-chunks en stroomleven.js bewees sinds
-// ?v=116 dat dat op Line2 werkt. Een eigen horizontoets in de shader is een
-// vastgelegde mislukking (globe.js, 2026-07-22).
+// LineMaterial draagt de clipping-chunks en de oude draad-en-kometenlaag
+// bewees sinds ?v=116 dat dat op Line2 werkt. Een eigen horizontoets in de
+// shader is een vastgelegde mislukking (globe.js, 2026-07-22).
 //
 // Breedtes staan in CSS-PIXELS: `resolution` krijgt de css-maat van het
 // canvas, zodat `linewidth` css-px is. Vóór golf 1 stond de draad op 1,7

@@ -40,11 +40,11 @@ const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 // was de bewezen stand van het ROUTEWERK met vijf stromen; met 182 stromen is
 // de atlas het product en het routewerk de bouwmodus. `?modus=bouw` opent het
 // routewerk (modaliteit · vol · spoornet geladen · witte precisiestippen).
-// `?laag=los` laadt de oude per-stroom-lagen (stroomroute/stroomleven/
-// gloednodes) als pariteitsreferentie — weg in stap 4 van golf 1.
+// De oude per-stroom-lagen (exacte lijn, draad + kometen en gloedknopen per
+// stroom, tot ?v=131) en hun pariteitspad `?laag=los` zijn in stap 4 van
+// golf 1 verwijderd: de bundel is het enige pad.
 const PARAMS = new URLSearchParams(location.search);
 const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
-const LAAG_LOS = PARAMS.get("laag") === "los";
 const CODE_VERSIE = "132";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
@@ -278,14 +278,6 @@ function haalAisTracks() {
 // bestand is de enige bron voor deze HUD, de bundel én de baker. Registreren
 // blijft een besluit (2026-09-28: een keten die volledig stippel is wordt niet
 // geregistreerd) — de baker faalt luid op een bestand dat nergens staat.
-//
-// De oude per-stroom-lagen (stroomroute.js, stroomleven.js, gloednodes.js)
-// leven nog achter `?laag=los` als pariteitsreferentie voor de meting; de drie
-// Maps hieronder zijn alleen in dat pad gevuld.
-const STROOMROUTES = new Map();
-const STROOMLEVEN = new Map();
-const GLOEDNODES = new Map();
-window.STROOMROUTES = STROOMROUTES; window.STROOMLEVEN = STROOMLEVEN; window.GLOEDNODES = GLOEDNODES;
 let ATLAS = null;                    // de bundel-laag
 let REGISTER = null;
 
@@ -313,23 +305,17 @@ function stroomRegel(benen) {
   return [...per].map(([k, km]) => `${k} ${Math.round(km).toLocaleString("nl")} km`).join(" · ");
 }
 
-// Is een stroom aan, en welke benen heeft hij — uit de bundel, of uit de oude
-// lagen achter ?laag=los. Eén plek, zodat de HUD niet twee waarheden kent.
+// Is een stroom aan, en welke benen heeft hij — uit de bundel (vóór die
+// geladen is: nog niet geladen). Eén plek, zodat de HUD niet twee waarheden kent.
 function stroomStand(sleutel) {
   if (ATLAS) {
     const info = ATLAS.stroomInfo(sleutel);
     return info ? { geladen: true, aan: ATLAS.isAan(sleutel), benen: info.benen } : { geladen: false };
   }
-  const s = STROOMROUTES.get(sleutel);
-  return s ? { geladen: true, aan: s.groep.visible, benen: s.benen } : { geladen: false };
+  return { geladen: false };
 }
 function zetStroomAan(sleutel, aan) {
-  if (ATLAS) { ATLAS.zetStroom(sleutel, aan); return; }
-  const s = STROOMROUTES.get(sleutel);
-  if (!s) return;
-  s.groep.visible = aan;
-  const l = STROOMLEVEN.get(sleutel);
-  if (l) l.groep.visible = aan;
+  if (ATLAS) ATLAS.zetStroom(sleutel, aan);
 }
 
 // --- de HUD-groepen per grondstof (2026-09-26, sinds golf 1 gegenereerd) ---
@@ -522,7 +508,6 @@ function koppelStroomKnoppen() {
       if (!standen.length) return;
       const nieuw = !standen.every(([, s]) => s.aan);
       if (ATLAS) ATLAS.zetGrondstof(gs, nieuw);
-      else for (const [sleutel] of standen) zetStroomAan(sleutel, nieuw);
       toonStroomNoot();
     });
   }
@@ -535,7 +520,6 @@ function koppelStroomKnoppen() {
       if (!standen.length) return;
       const nieuw = !standen.some(([, s]) => s.aan);
       if (ATLAS) ATLAS.zetGrondstof(gs, nieuw);
-      else for (const [sleutel] of standen) zetStroomAan(sleutel, nieuw);
       toonStroomNoot();
     });
   }
@@ -553,8 +537,6 @@ async function startStromen() {
   const sub = document.getElementById("hudSub");
   const nGs = new Set(REGISTER.stromen.map((s) => s.grondstof)).size;
   if (sub) sub.textContent = `${REGISTER.stromen.length} stromen · ${nGs} grondstoffen · kleur = grondstof, lijn = transport`;
-
-  if (LAAG_LOS) return laadLosseLagen(REGISTER);
 
   ATLAS = await laadStroombundel({
     radius: VECTOR_R, codeVersie: CODE_VERSIE, bundelVersie: BUNDEL_VERSIE,
@@ -579,52 +561,6 @@ async function startStromen() {
     `laden ${st.msLaden} ms, decoderen ${st.msDecoderen} ms`
   );
   toonStroomNoot();
-}
-
-// De oude per-stroom-lagen (?laag=los): exact de lus van ?v=131, met de oude
-// modules via dynamische import zodat ze de atlas niet belasten.
-async function laadLosseLagen(register) {
-  const [{ laadStroomroute }, { laadStroomleven }, { laadGloednodes }] = await Promise.all([
-    import("./stroomroute.js?v=127"), import("./stroomleven.js?v=127"), import("./gloednodes.js?v=127"),
-  ]);
-  for (const def of register.stromen) {
-    laadStroomroute(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand, GLOBE.camera, GLOBE.renderer)
-      .then((s) => {
-        s.groep.visible = def.aan !== false;
-        STROOMROUTES.set(def.sleutel, s);
-        GLOBE.globeGroup.add(s.groep);
-        GLOBE.onTick(() => s.update());
-        s.zetKleurModus(kleurModus);
-        s.zetLijnModus(lijnModus);
-        toonStroomNoot();
-      })
-      .catch((e) => console.warn(`[atlas v2] stroom ${def.sleutel} niet geladen:`, e.message));
-    laadStroomleven(VECTOR_R, "131", GLOBE.klemOpHorizon, def.bestand, GLOBE.renderer, GLOBE.camera)
-      .then((l) => {
-        l.groep.visible = def.aan !== false;
-        STROOMLEVEN.set(def.sleutel, l);
-        GLOBE.globeGroup.add(l.groep);
-        GLOBE.onTick((dt) => l.update(dt));
-        l.zetKleurModus(kleurModus);
-        l.zetLijnModus(lijnModus);
-      })
-      .catch((e) => console.warn(`[atlas v2] stroomleven ${def.sleutel} niet geladen:`, e.message));
-  }
-  GLOBE.onTick(() => {
-    const c = GLOBE.renderer.domElement;
-    for (const l of STROOMLEVEN.values()) l.zetResolutie(c.width, c.height);
-  });
-  for (const gs of new Set(register.stromen.map((s) => s.grondstof))) {
-    const bestand = `gloednodes-${gs}.json`;
-    laadGloednodes(VECTOR_R, "131", GLOBE.camera, GLOBE.renderer, bestand)
-      .then((g) => {
-        g.groep.visible = gloedAan;
-        GLOEDNODES.set(bestand, g);
-        GLOBE.globeGroup.add(g.groep);
-        GLOBE.onTick(() => g.update());
-      })
-      .catch((e) => console.warn(`[atlas v2] gloednodes ${bestand} niet geladen:`, e.message));
-  }
 }
 
 startStromen().catch((e) => {
@@ -787,13 +723,11 @@ wireButtons(".atBtn", "at", (mode) => {
   }
 });
 // Kleur van de stromen: per transport (routewerk) ↔ per grondstof (atlas).
-// Beide lagen schakelen mee — de draad/komeet van stroomleven.js hoort per
-// constructie dezelfde kleur te hebben als de exacte lijn eronder.
+// De bundel kleurt lijn en komeet van een been in één pas (pasKleurToe in
+// stroombundel.js), dus die hebben per constructie dezelfde kleur.
 wireButtons(".skBtn", "sk", (modus) => {
   kleurModus = modus;
   if (ATLAS) ATLAS.zetKleurModus(modus);
-  for (const s of STROOMROUTES.values()) s.zetKleurModus(modus);
-  for (const l of STROOMLEVEN.values()) l.zetKleurModus(modus);
   toonStroomNoot();
   const modLeg = document.getElementById("stroomLegenda");
   const grLeg = document.getElementById("stroomLegendaGrondstof");
@@ -847,8 +781,6 @@ document.body.dataset.modus = MODUS;
 wireButtons(".slBtn", "sl", (modus) => {
   lijnModus = modus;
   if (ATLAS) ATLAS.zetLijnModus(modus);
-  for (const s of STROOMROUTES.values()) s.zetLijnModus(modus);
-  for (const l of STROOMLEVEN.values()) l.zetLijnModus(modus);
 });
 
 wireButtons(".akBtn", "ak", (mode) => {
@@ -862,13 +794,11 @@ wireButtons(".glBtn", "gl", (mode) => {
 wireButtons(".gnBtn", "gn", (mode) => {
   gloedAan = (mode === "aan");
   if (ATLAS) ATLAS.zetGloed(gloedAan);
-  for (const g of GLOEDNODES.values()) g.groep.visible = gloedAan;
 });
 // Beweging (de kometen) aan/uit — nieuw in golf 1; de lijnen blijven staan.
 wireButtons(".bwBtn", "bw", (mode) => {
   bewegingAan = (mode === "aan");
   if (ATLAS) ATLAS.zetBeweging(bewegingAan);
-  for (const l of STROOMLEVEN.values()) l.groep.visible = (mode === "aan");
 });
 document.querySelectorAll(".gnGa").forEach((knop) => {
   knop.addEventListener("click", () => {
@@ -950,4 +880,4 @@ GLOBE.onTick(() => {
 window.GLOBE = GLOBE;
 window.TEGELS = TEGELS;
 
-console.log(`[atlas v2] three r185 · ACES · tegels tot z19 · modus ${MODUS}${LAAG_LOS ? " (losse lagen)" : " (stromenbundel " + BUNDEL_VERSIE + ")"}`);
+console.log(`[atlas v2] three r185 · ACES · tegels tot z19 · modus ${MODUS} (stromenbundel ${BUNDEL_VERSIE})`);

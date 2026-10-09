@@ -1,9 +1,10 @@
 // gloed.js — het GLOED-MECHANISME, sinds golf 1 van de visuele fase als ÉÉN
 // object voor alle knopen samen (2026-10-08, LAR-617).
 //
-// Waarom dit bestaat: `gloednodes.js` bouwde de koepel-gloed voor de 36
-// uitgezochte kopersites, en op 2026-08-07 vroeg Lars om ook de belangrijke
-// punten van een stroom (mijn · overslag · fabriek) zo te laten oplichten —
+// Waarom dit bestaat: de oude gloedknopenlaag (tot ?v=131) bouwde de koepel-
+// gloed voor de 36 uitgezochte kopersites, en op 2026-08-07 vroeg Lars om ook
+// de belangrijke punten van een stroom (mijn · overslag · fabriek) zo te laten
+// oplichten —
 // *"die witte ballen met cirkel erom moeten eigenlijk de gloedbron worden … zowel
 // stroom, gloed als die belangrijke punten moeten die gloeihotspots worden."*
 // Dat is één mechanisme met twee bronnen, dus het mechanisme hoort hier.
@@ -13,7 +14,7 @@
 // stroomknopen erbij lichten Balama, Nacala, Vidalia, Greenbushes, Lobito en
 // Duisburg óók op, en telt de gloed op waar een stroom door een complex loopt.
 //
-// HET MECHANISME (ongewijzigd sinds gloednodes.js, waar het is bewezen): de
+// HET MECHANISME (ongewijzigd en bewezen in de oude gloedknopenlaag): de
 // glow-radius schaalt mee met de kijkafstand via een hybride regel — een echte
 // wereldmaat (meters, uit het gewicht) MET een pixel-minimum. Dichtbij wint de
 // wereldmaat → elke faciliteit een eigen scherpe bol. Veraf zakt die onder het
@@ -31,7 +32,8 @@
 // letterlijk hetzelfde; de per-frame maat blijft in JS (gemeten < 0,3 ms voor
 // alle knopen — de winst zat nooit in die lus maar in de objecten). De camera
 // komt binnen in GROEP-LOKALE ruimte (de bol draait, de camera staat vast), dus
-// er is geen localToWorld per punt meer.
+// er is geen localToWorld per punt meer. Sinds stap 4 van golf 1 is dit de
+// enige aanroepvorm: de oude per-stroom-lagen en hun compatibiliteitstak zijn weg.
 //
 // ⚠️ HORIZON VIA GROOTTE 0, NIET VIA EEN CLIPPINGPLANE — een eigen ShaderMaterial
 // zou anders de clipping-chunks nodig hebben, en de CPU-toets is gratis.
@@ -118,32 +120,10 @@ void main() {
  * `update` wil de camera in de LOKALE ruimte van de groep waarin deze laag
  * hangt (globeGroup): één inverse matrix per frame bij de aanroeper, geen
  * localToWorld per punt. `perEenheid` = pixels per scene-eenheid op afstand 1
- * (h / (2·tan(fov/2)), met h = css-hoogte — zoals gloednodes.js hem altijd gaf).
+ * (h / (2·tan(fov/2)), met h = css-hoogte — zoals de oude gloedknopenlaag hem
+ * altijd gaf).
  */
-export function bouwGloed(knopen, radius, renderOrder = 7.6, ...rest) {
-  // ⚠️ COMPATIBILITEIT met de oude aanroep bouwGloed(knopen, radius, camera,
-  // renderer, renderOrder) van stroomroute.js en gloednodes.js — die modules
-  // leven nog achter `?laag=los` als pariteitsreferentie (stap 1–3 van golf 1)
-  // en importeren dit bestand onder een oud ?v=. Hun update() krijgt geen
-  // camera mee; die halen we dan zelf uit de wereldmatrix van de groep.
-  if (renderOrder && renderOrder.isCamera) {
-    const camera = renderOrder, renderer = rest[0], ro = rest[1] ?? 7.6;
-    const laag = bouwGloed(knopen, radius, ro);
-    const inv = new THREE.Matrix4();
-    const cam = new THREE.Vector3();
-    const update = laag.update;
-    laag.update = () => {
-      if (!laag.groep.visible) return;
-      laag.groep.updateWorldMatrix(true, false);
-      inv.copy(laag.groep.matrixWorld).invert();
-      cam.copy(camera.position).applyMatrix4(inv);
-      const h = renderer.domElement.height / (renderer.getPixelRatio() || 1);
-      update(cam, h / (2 * Math.tan((camera.fov * Math.PI) / 360)));
-    };
-    const zetKleur = laag.zetKleur;
-    laag.zetKleur = (hex) => { for (let i = 0; i < laag.aantal; i++) zetKleur(i, hex); laag.commitKleur(); };
-    return laag;
-  }
+export function bouwGloed(knopen, radius, renderOrder = 7.6) {
   const n = knopen.length;
   const groep = new THREE.Group();
   groep.name = "gloed";

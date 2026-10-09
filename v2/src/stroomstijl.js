@@ -1,9 +1,9 @@
 // stroomstijl.js — ÉÉN bron van waarheid voor hoe een stroom eruitziet:
 // welke kleur hij krijgt en welke vorm zijn lijn heeft.
 //
-// WAAROM DIT BESTAAT. `stroomroute.js` (de exacte lijn) en `stroomleven.js`
-// (draad + kometen) hadden allebei hun eigen kopie van de kleurtabel, met in de
-// tweede letterlijk de opmerking "zelfde kleuren als stroomroute.js". Twee
+// WAAROM DIT BESTAAT. De oude exacte-lijnlaag en de oude draad-en-kometenlaag
+// (beide tot ?v=131) hadden elk een eigen kopie van de kleurtabel, en in de
+// tweede stond letterlijk dat hij dezelfde kleuren had als de eerste. Twee
 // kopieën van een legenda lopen vroeg of laat uit elkaar, en dit project heeft
 // die klasse al twee keer betaald ("de legenda loog" bij ACES-tone-mapping, en
 // de generator↔uitvoer-drift bij `cu-guixi-spoor`). Nu leest één tabel.
@@ -59,9 +59,10 @@
 // (#4FD1C5) valt samen met het binnenvaart-turkoois dat er in modaliteitsmodus
 // naast ligt. De families blijven herkenbaar: koper warm, lithium violet.
 //
-// ⚠️ `gloednodes.js` leest deze tabel óók — gloed en lijn van dezelfde grondstof
-// horen per definitie dezelfde kleur te hebben. Verander hier, en de gloed gaat
-// mee. Dat is de bedoeling.
+// ⚠️ De gloed (in stroombundel.js; tot ?v=131 de oude gloedknopenlaag) leest
+// deze tabel óók — gloed en lijn van dezelfde grondstof horen per definitie
+// dezelfde kleur te hebben. Verander hier, en de gloed gaat mee. Dat is de
+// bedoeling.
 //
 // In gebruik vandaag: koper · lithium · grafiet. De rest staat er vooruit, in
 // dezelfde families als `data/<grondstof>.js` in de v1-atlas.
@@ -88,8 +89,8 @@ export const GRONDSTOF_KLEUR = {
 };
 
 // ── Modaliteitskleuren ─────────────────────────────────────────────────────
-// Ongewijzigd overgenomen uit stroomroute.js — dit is de bewezen legenda van de
-// routebouw-weergave en er is geen reden hem aan te raken.
+// Ongewijzigd overgenomen uit de oude exacte-lijnlaag (tot ?v=131) — dit is de
+// bewezen legenda van de routebouw-weergave en er is geen reden hem aan te raken.
 export const MODALITEIT_KLEUR = {
   zee: 0x5aa7ff,          // MARNET-zeebeen + gestippelde haven-aanloop
   binnenvaart: 0x35e0c0,  // AIS-tracks (barge) of riviergeometrie uit de bulklaag
@@ -231,7 +232,7 @@ function tiltOp(modaliteit, lijnModus) {
 
 /** Ligt dit been in deze lijnmodus op het oppervlak (straalfactor 1 overal)?
  *  Alleen dan mag een aanroeper het been verdichten zonder de hoogte te
- *  verliezen — `verdicht()` in stroomroute.js zet de straalfactor op 1. */
+ *  verliezen — `verdicht()` in de oude exacte-lijnlaag zette de straalfactor op 1. */
 export function ligtOpGrond(been, lijnModus) {
   return lijnModus === "route" && been.modaliteit !== "lucht";
 }

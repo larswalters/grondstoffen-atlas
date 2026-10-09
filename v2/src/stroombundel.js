@@ -3,9 +3,10 @@
 // fijn-niveau, getekend als een handvol objecten. (Golf 1 van de visuele fase,
 // 2026-10-08, LAR-617; ontwerp in v2/design/atlas-product-golf1.md.)
 //
-// Vervangt het trio stroomroute.js (exacte lijn per been) + stroomleven.js
-// (draad + kometen per been) + de gloednodes-lus in main.js — die drie blijven
-// bereikbaar via `?laag=los` als pariteitsreferentie tot stap 4 van golf 1.
+// Vervangt het trio van tot ?v=131: de oude exacte-lijnlaag (lijn per been),
+// de oude draad-en-kometenlaag (draad + kometen per been) en de gloedknopen-lus
+// in main.js. Die drie leefden nog achter `?laag=los` als pariteitsreferentie
+// en zijn in stap 4 van golf 1 verwijderd.
 //
 // WAAROM (gemeten, ?v=131): 382 verzoeken / 51,7 MB (elk stroombestand twee
 // keer gefetcht), ~2.300 objecten en 12,7 M driehoeken, telefoon 9–14 fps. De
@@ -75,18 +76,18 @@ export const LOD = {
 // Gewicht van een stroomknoop — EEN HEURISTIEK, GEEN METING (een marker draagt
 // alleen naam/lon/lat): uiteinden (de mijn, de eindfabriek) zwaarder dan een
 // overslagpunt. Zodra het metadatabestand volume per been draagt hoort dit
-// dáár uit te komen. Letterlijk de waarden van stroomroute.js (?v=119).
+// dáár uit te komen. Letterlijk de waarden van de oude exacte-lijnlaag (?v=119).
 const KNOOPGLOED = { uiteindeKm: 3.4, uiteindeHelder: 0.90, overslagKm: 2.2, overslagHelder: 0.62 };
 // Sites: straal en helderheid uit het gewicht, genormaliseerd PER GRONDSTOF
-// (gloednodes.js, 2026-09-26): koper verandert niet als er een grondstof met
-// grotere getallen bijkomt (kolen in Mt/j).
+// (de oude gloedknopenlaag, 2026-09-26): koper verandert niet als er een
+// grondstof met grotere getallen bijkomt (kolen in Mt/j).
 const SITEGLOED = { kmPerWortelGewicht: 0.30 };
 const KLEUR_ONBEKEND = 0xbfbfbf;
 
 // De witte precisiestip van het routewerk (bouwmodus): kern + ring, exact de
-// shader van stroomroute.js — een additieve gloed is aan de rand per definitie
-// onnauwkeurig, en tijdens het routewerk is de vraag "ligt dit punt op de goede
-// kade?".
+// shader van de oude exacte-lijnlaag — een additieve gloed is aan de rand per
+// definitie onnauwkeurig, en tijdens het routewerk is de vraag "ligt dit punt
+// op de goede kade?".
 const VERT_STIP = `
 attribute float grootte;
 void main() {

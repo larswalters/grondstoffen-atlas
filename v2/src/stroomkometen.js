@@ -1,6 +1,6 @@
 // stroomkometen.js — de KOMETEN over alle stromen als één Points (golf 1 van
-// de visuele fase, 2026-10-08, LAR-617). Gelicht uit stroomleven.js, waar de
-// komeet op 2026-08-07 ontstond.
+// de visuele fase, 2026-10-08, LAR-617). Gelicht uit de oude draad-en-
+// kometenlaag (tot ?v=131), waar de komeet op 2026-08-07 ontstond.
 //
 // DE LES VAN 2026-08-07, DIE HIER ONGEWIJZIGD GELDT: de lijn geeft geen licht —
 // hij is dun, scherp en rustig — en al het licht zit in KOMETEN die eroverheen

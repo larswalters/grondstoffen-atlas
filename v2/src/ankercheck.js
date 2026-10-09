@@ -19,11 +19,11 @@
 // ⚠️ DEZE LAAG WIJZIGT NIETS. Hij leest `ankercheck.json` en tekent; het
 //   oordeel en het doorvoeren gebeuren buiten de browser.
 //
-// Tekendiscipline exact als stroomroute.js: punten als THREE.Points in
-// SCHERMpixels (sizeAttenuation uit — de LAR-480-les: wat je op elke hoogte
-// moet zien schaalt in schermruimte, niet in wereldruimte), klemOpHorizon op
-// elk materiaal, frustumCulled uit, toneMapped uit zodat de legenda-kleur de
-// getekende kleur is, en renderOrder boven het landnet.
+// Tekendiscipline exact als de oude exacte-lijnlaag (tot ?v=131): punten als
+// THREE.Points in SCHERMpixels (sizeAttenuation uit — de LAR-480-les: wat je
+// op elke hoogte moet zien schaalt in schermruimte, niet in wereldruimte),
+// klemOpHorizon op elk materiaal, frustumCulled uit, toneMapped uit zodat de
+// legenda-kleur de getekende kleur is, en renderOrder boven het landnet.
 
 import * as THREE from "three";
 
@@ -39,7 +39,7 @@ const KLEUR = {
 };
 
 function opBol(lonDeg, latDeg, r, uit, o) {
-  // Exact dezelfde afspraak als world.js/stroomroute.js (z = −sin lon).
+  // Exact dezelfde afspraak als world.js en de oude exacte-lijnlaag (z = −sin lon).
   const lon = lonDeg * (Math.PI / 180);
   const lat = latDeg * (Math.PI / 180);
   const c = Math.cos(lat);
