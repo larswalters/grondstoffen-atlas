@@ -1,6 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-09 (golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live `?v=134`)*
+*Last updated: 2026-10-09 (M31 golf 7: 39 nieuwe stromen, 221 totaal, live `?v=136`)*
 
+
+
+## Stand 2026-10-09 (middag) — M31 golf 7 live: 221 stromen (`?v=136`)
+
+- **Op de bol (`?v=136`, commits `2ec7d6d` + `8d83374`):** 39 nieuwe gemeten ketens, 182 → 221 over 14 grondstoffen: koper 17 · goud 17 · lithium 17 · uranium 17 · zilver 17 · gas 17 · kobalt 16 · olie 16 · REE 16 · kolen 15 · diamant 15 · nikkel 14 · PGM 14 · grafiet 13. Bundel 221 stromen · 879 benen · 780 markers; telefoon en desktop 221/221, 0 fouten, 4 verzoeken, 1,4 MB.
+- **Opzet van de golf:** 11 reserve-assen uit golf 6 (direct brief → bake → keuring) plus per grondstof een ontwerp en skeptische toets (2 nieuwe ketens, 3 voor grafiet), in drie workflow-runs: hoofdrun 111 agenten, herstel 7b 41, herstel 7c 12 (164 agenten, 40,6 M tokens). Het script is het golf 6-script met nieuwe invoer; de invoer wordt gegenereerd uit het register, de eerdere afwijzingen en de hints (`v2/tools/golf/`: `golf7-script.mjs` is het draaiklare script, `golf7c-script.mjs` het herstelpatroon, `maak_golf7.py` bouwt de invoer).
+- **Herstel na uitval:** een DNS-storing van drie minuten liet 12 agenten falen (ontwerp gas/REE/uranium, drie toetsen, zes reserve-brieven). Aanpak: een kleine verse workflow met de opgeslagen invoer, plus een achteraf-toets op de ketens die zonder toets liepen. **Geen `resumeFromRunId` als er midden in de run een agent faalde**: de cache werkt op volgorde van aanroepen, dus alles erna start opnieuw.
+- **Het wegtool-gat:** `pyosmium` is door het Windows-beleid geblokkeerd, Overpass viel uit. Wegketens lukten alleen via een pure-Python PBF-lezer in `build-cache` (gitignored). Dit blijft een zwakke plek voor elke volgende golf met wegbenen.
+- **Centraal na de golf (vast patroon, nu met scripts in `v2/tools/golf/`):** `centraal_check.py` (contract, naden, stippel, markers) · `sitelaag_check.py` (marker ↔ site binnen 40 km) · `registreer_golf.py` (register + sleutelbotsing + noten uit `noten.json`) · `bash v2/tools/bak_stromen.sh bundel` + `bundel-check` · `?v=` en `BUNDEL_VERSIE` omhoog · `meet_atlas.mjs`.
 
 
 ## Stand 2026-10-09 — golf 2 deel 1 live: de gloed als lichtpunt (`?v=134`)

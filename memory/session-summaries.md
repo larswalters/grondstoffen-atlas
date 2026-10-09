@@ -1,6 +1,21 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-09 (middag) - M31 golf 7 live op `?v=136` (LAR-625 Done, commits `2ec7d6d` + `8d83374`)
+
+Lars: *"oke ziet er goed uit, kan je nog een grote ontwerpronde doen voor meer stromen"* (sessie- en weeklimiet ruim over, model weer op Sonnet).
+
+**Drie runs, 164 agenten, 40,6 M tokens:**
+- hoofdrun `wf_4da761c3-0d1` (111 agenten, 139 min): 11 reserve-assen uit golf 6 + ontwerp en toets per grondstof → 26 gebakken en gekeurd;
+- herstel 7b `wf_986da980-141` (41 agenten, 72 min): ontwerp REE/uranium, 6 gemiste reserve-brieven, achteraf-toets op 6 ketens → 9 gebakken, zes keer "goed met noot";
+- herstel 7c `wf_8ec8c9a6-ed3` (12 agenten, 69 min): gas opnieuw + twee wegketens → 4 gebakken.
+
+**Uitval:** een DNS-storing van drie minuten (11:52 NL-tijd) liet 12 agenten falen; een hervatting herstartte 14 geslaagde agenten en is direct gestopt. **Geen enkele keuring "niet-registreren".**
+
+**39 nieuwe ketens** (182 → 221): zie de vault-sessie voor de lijst. Telefoon en desktop: 221/221, 0 fouten, 4 verzoeken, 1,4 MB, 60–165 fps in de emulatie. Vault: [[2026-10-09-grondstoffen-atlas-m31-golf7-meer-stromen]].
+
+
+
 ## 2026-10-09 - golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live op `?v=134` (LAR-617 Done, LAR-618 In Progress)
 
 Lars: *"hij werkt goed op de telefoon alleen de gloedspots ziet er nog niet helemaal nice uit."* Eigen screenshots van `?v=132` op telefoonformaat (zeven kijkstanden); Lars koos: vage vlekken · waas bij inzoomen · weg op middenhoogte.

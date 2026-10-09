@@ -1,6 +1,17 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (golf 2 deel 1: de gloed als lichtpunt; golf 1 nagetrokken)*
+*Last updated: 2026-10-09 (M31 golf 7: 39 nieuwe stromen, 221 totaal)*
 
+
+
+## 2026-10-09 (middag) — M31 golf 7
+
+- **2026-10-09 · ✅ LARS — nog een grote ontwerpronde voor meer stromen**, met sessie- en weeklimiet ruim over (week 27% bij de start, reset die nacht). Golf 7 = 11 reserve-assen uit golf 6 + een ontwerp per grondstof (2 nieuwe ketens, 3 voor grafiet) = 39 gebakken ketens, 182 → 221. Het script is het golf 6-script met nieuwe invoer; geen nieuwe werkwijze.
+- **2026-10-09 · Een uitgevallen toets wordt achteraf gedaan, niet weggelaten.** Drie toetsen vielen uit door een netwerkstoring; de ketens liepen zonder toets door (het script laat dat toe, met een waarschuwing) en kregen daarna een inhoudelijke achteraf-toets. Alle zes: "goed met noot"; de noten staan in het register-`noot`.
+- **2026-10-09 · Herstel na uitval = een kleine verse workflow met opgeslagen invoer, geen `resumeFromRunId`.** Een hervatting liet 14 geslaagde agenten opnieuw starten (de cache is een prefix van de aanroepvolgorde); direct gestopt met TaskStop.
+- **2026-10-09 · Een wegketen die de wegtool niet haalt, wordt niet getekend als stippel maar later herbakt.** Grasberg → Jakarta en Steenkampskraal → Kaapstad bleven dus een uur ongebakken en zijn met een pure-Python PBF-lezer alsnog gebakken (golf-4-regel: geen 100%-stippelketens).
+- **2026-10-09 · `.gitattributes` met `*.sh text eol=lf`.** `bak_stromen.sh` stond twee keer in CRLF in de werkmap (een CRLF-kopie breekt elke regel met een backslash-vervolg); de index was LF. Het bestand is genormaliseerd en het attribuut staat nu vast.
+- **2026-10-09 · Workflow-scripts worden als bestand (`scriptPath`) gestart en in LF geschreven** zonder U+FE0F; anders weigert de goedkeuring ("control characters that would be hidden"). De gegenereerde invoer staat ingebed in het script, niet in `args`.
+- **2026-10-09 · Registersleutel `<kort>-<xy>` met een bezettenlijst in de bake-prompt.** De agenten kregen de bezette sleutels per grondstof; er was geen botsing meer. De centrale registratie controleert nog steeds.
 
 
 ## 2026-10-09 — golf 2 deel 1: de gloed

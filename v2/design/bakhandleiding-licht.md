@@ -264,7 +264,7 @@ elk bestand twee keer) maar één afgeleid bundelartefact — zie `v2/design/atl
 `uitgesloten`, anders faalt de baker luid) en (2) de bundel opnieuw gebakken is:
 
 ```bash
-bash v2/tools/bak_stromen.sh bundel          # bakt + toetst (182 stromen · 718 benen · 225 stippel · 650 markers · 451 sites)
+bash v2/tools/bak_stromen.sh bundel          # bakt + toetst (221 stromen · 879 benen · 262 stippel · 780 markers · 451 sites)
 bash v2/tools/bak_stromen.sh bundel-check    # exit 1 zodra een bron gewijzigd is sinds de bundel
 ```
 
@@ -278,3 +278,13 @@ van golf 1).
 browser uit `stroomstijl.js` (de enige bron); de baker asserteert alleen dat het register-`grondstof` gelijk is aan de
 id-prefix van `stroom`. En niet herbakken om een visueel veld toe te voegen: extra velden horen in een los
 metadatabestand (besluit 2026-08-06).
+
+## 8 · Lessen van golf 7 (2026-10-09) — voor de volgende golf
+
+- **Slots met LITERALE paden.** De veiligheidscheck van Claude Code weigert `rm -rf` en `rmdir` met een variabel pad. Neem een slot met `mkdir <scratch>/slots/weg/slot1` (faalt = bezet → slot2…), geef het vrij met `rmdir` op hetzelfde literale pad. Het oude `neem_slot()`-snippet uit de golf 2–6-prompts werkt niet meer.
+- **De wegtool werkt alleen als `pyosmium` en Overpass werken.** Op 2026-10-09 was `pyosmium` door het Windows-beleid geblokkeerd en gaven de Overpass-spiegels HTTP 500. Voorbeelden van een pure-Python PBF-lezer die dezelfde `weg_houden`/`corridor_keten`-logica aanroept: `v2/build-cache/ais/graaf/ree-larochelle-sanmarcos-wegscan-wrapper.py` en `lithium-mtholland-kwinana-wegscan-wrapper.py` (gitignored; Texas 268 s). Wijzig `maak_stroombeen_weg.py` er niet voor.
+- **`bak_stromen.sh` moet LF zijn.** Een CRLF-kopie breekt elke regel met een backslash-vervolg. Controleer na elke golf: `python -c "b=open('v2/tools/bak_stromen.sh','rb').read(); print(b.count(b'\r\n'))"` en `sed -i 's/\r$//'` als het niet 0 is. `.gitattributes` houdt `*.sh` LF bij een checkout.
+- **Een leidingbeen heeft een `FeatureCollection` nodig** als `--been-geojson`; een kale `Feature` geeft `KeyError: 'features'` in `hecht_marnet.py`.
+- **Firecrawl-credits kunnen op zijn** (golf 7: -15/1000); gebruik de Wikipedia-API, OSM en WebFetch.
+- **Houd de toets-uitvoer kort**: een lange tekst in een StructuredOutput kan als ongeldige JSON eindigen (5 pogingen, agent faalt).
+- **Na de golf centraal:** `git status` op onverwachte bestanden (golf 7: een los bestand `Houston`), `centraal_check.py` voor contract/naden/stippel/markers, `sitelaag_check.py` voor sitepunten > 10 km van hun marker, `registreer_golf.py` voor register + sleutelbotsingen + noten, dan `bundel`, `bundel-check`, `?v=` en `BUNDEL_VERSIE`. Alle golf-scripts staan in `v2/tools/golf/` (de invoer van een script bouw je met `maak_golf7.py`; scripts als bestand starten, in LF, zie de lessen hierboven).

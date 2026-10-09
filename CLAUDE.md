@@ -1,3 +1,12 @@
+> **🌍 M31 GOLF 7 — 39 NIEUWE STROMEN, 221 OVER 14 GRONDSTOFFEN, LIVE `?v=136` (2026-10-09, LAATSTE).** Commits `2ec7d6d` ·
+> `8d83374`. LAR-625 Done, LAR-618 In Progress. Lars vroeg na de gloed een grote ontwerpronde voor meer stromen: 11 reserve-assen uit
+> golf 6 plus een ontwerp per grondstof (2 nieuwe ketens, 3 voor grafiet), in drie workflow-runs (164 agenten, 40,6 M tokens). Een
+> netwerkstoring van drie minuten liet 12 agenten uitvallen; herstelrondes 7b en 7c en een achteraf-toets op de zes ketens zonder
+> toets vingen dat op (alle zes "goed met noot"). **Gereedschap-gaten voor de volgende golf:** `pyosmium` is geblokkeerd en Overpass
+> viel uit (wegketens alleen via een pure-Python PBF-lezer) · Firecrawl is op · het slot-snippet gebruikt nu literale paden
+> (bakhandleiding §8) · `bak_stromen.sh` hoort LF te zijn (`.gitattributes`). **→ VOLGENDE:** Lars' telefoontest `?v=136` · besluit HDR-doel ·
+> 18 reserve-assen klaar · stadslichten, labels, LAR-480. Details: `memory/session-summaries.md`.
+
 > **💡 GOLF 1 AF EN DE GLOED ALS LICHTPUNT — LIVE `?v=134` (2026-10-09, LAATSTE).** Commits `1ec3585` (stap 4) ·
 > `9859564` (de gloed) · `816b7a4` (reviewfix). LAR-617 Done, LAR-618 In Progress.
 >
@@ -919,7 +928,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-09 (laatst: golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-09 (laatst: M31 golf 7, 39 nieuwe stromen, 221 totaal, live ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3193,6 +3202,8 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-09 · M31 GOLF 7 LIVE `?v=136` (LAR-625, `2ec7d6d` + `8d83374`).** 39 nieuwe ketens, 221 totaal. Een uitgevallen toets wordt achteraf gedaan; herstel na uitval is een kleine verse workflow, geen `resumeFromRunId` (de cache werkt op de aanroepvolgorde). Wegketens die de wegtool niet haalt worden niet als stippel getekend maar later herbakt.
+- **2026-10-09 · WORKFLOW-SCRIPTS ALS BESTAND, LF, ZONDER U+FE0F, MET DE INVOER INGEBED** — anders weigert de goedkeuring ("control characters"). `.gitattributes`: `*.sh text eol=lf`.
 - **2026-10-09 · DE GLOED IS EEN LICHTPUNT (kern + halo) IN CSS-PX × PIXELRATIO, MET FACILITEITSMAAT PER GRONDSTOF.** De zichtbaarheid
   zit in de kern van de knoop zelf, niet in de optelling; de koepel tilt in schermmaat; `<colorspace_fragment>` in elke eigen
   ShaderMaterial; gelijk-gekleurde knopen die op het scherm samenvallen tellen op in gewicht (q = √Σq²), niet in geklemd licht.

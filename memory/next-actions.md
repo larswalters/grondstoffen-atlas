@@ -1,6 +1,16 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live `?v=134`)*
+*Last updated: 2026-10-09 (M31 golf 7 live `?v=136`, 221 stromen)*
 
+
+
+## 🔴 NIEUW 2026-10-09 (middag) — na M31 golf 7 live
+
+1. **Lars test op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=136 — 221 stromen: te druk bij zoom (Europa, Noord-Amerika, Rusland)? En nog steeds: zijn de lichtjes op 14 km te zwak (`haloPiek`, `uitwaaier`)?
+2. **Besluit Lars: HDR-doel voor de gloed?** (zie hieronder, ongewijzigd.)
+3. **18 reserve-assen klaar voor een volgende golf** (getoetst, niet gebakken): nikkel-riotuba-niihama · pgm-booysendal-zondereinde · pgm-eastboulder-columbus · lithium-mtmarion-esperance · kolen-powderriver-scherer · kolen-elga-portelga · kobalt-voiseysbay-longharbour · olie-atasu-dushanzi · olie-johansverdrup-mongstad · diamant-orapa-gaborone · diamant-mumbai-antwerpen · goud-pamp-newyork · koper-salobo-pontadamadeira · koper-mountisa-townsville · uranium-stpetersburg-pierrelatte · uranium-navoi-stpetersburg · gas-raslaffan-dahej · gas-prigorodnoye-sodegaura. Afgewezen in golf 7 (niet opnieuw voorstellen): grafiet-qingdao-kendal, -mahenge-sejong, -seadrift-calais · nikkel-eagle-sudbury · lithium-albemarlesalar-antofagasta · zilver-glogow-londen, -londen-mumbai · kobalt-ramu-basamuk · goud-muruntau-navoi · ree-kuantan-sanmarcos, -larochelle-ellesmereport.
+4. **Gereedschap voor de volgende golf:** `pyosmium` vrijgeven in het Windows-beleid (Lars) of de pure-Python PBF-lezer als vast gereedschap in `v2/tools/` zetten · Firecrawl-credits (-15/1000) · het slot-snippet in de bakhandleiding (literale `mkdir`/`rmdir`-paden, zie §8) is bijgewerkt.
+5. **Open punten in de ketens:** sitelagen missen enkele nieuwe eindpunten (Kipoi, Melendugno, LNG Canada, Tongyeong, LGOK, Raglan, Cherry Point, Kibali-vrachtplatform) · ids die niet bij het eindpunt passen: `goud-grasberg-jakarta` (begint in Manyar/Gresik), `gas-groundbirch-incheon` (eindigt in Tongyeong), `ree-larochelle-sanmarcos` (haven aangenomen) · `uranium-mccleanlake-porthope` is 474 KB · `pgm-marikana-brakpan` rust op één bron (helikopter, Lonmin 2012).
+6. **Rest van golf 2 (LAR-618):** stadslichten (download pas na akkoord), labels per zoomband, LAR-480.
 
 
 ## 🔴 NIEUW 2026-10-09 — na golf 2 deel 1 (de gloed) live

@@ -1,5 +1,19 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-09 (review van golf 2 deel 1, `?v=134`)*
+*Last updated: 2026-10-09 (M31 golf 7)*
+
+
+
+## 🟡 NIEUW 2026-10-09 (middag) — uit golf 7
+
+33. **Netwerkuitval kostte 12 agenten** (DNS, 3 minuten): ontwerp gas/REE/uranium, toets diamant/kolen/PGM, zes reserve-brieven. Het script heeft geen retry per agent; herstel gebeurde met twee extra workflows. Idee: een korte wachtlus en één automatische tweede poging in `agent()`-aanroepen voor alles wat met `null` terugkomt.
+34. **`pyosmium` is door het Windows-beleid geblokkeerd en de Overpass-spiegels vielen uit** → elke wegketen faalt tot een agent een pure-Python PBF-lezer schrijft (Texas 268 s). De wrappers staan alleen in `build-cache` (gitignored). Een vaste lezer in `v2/tools/` of het vrijgeven van `pyosmium` scheelt de volgende golf uren.
+35. **Firecrawl-credits zijn op** (-15 van 1000): elke scrape faalt met "Insufficient credits". Agenten gebruiken nu Wikipedia-API, OSM en WebFetch.
+36. **Het slot-snippet in de prompt (`rm -rf "$d"`) wordt door de veiligheidscheck geweigerd**; agenten werkten eromheen met literale `mkdir`/`rmdir`-paden en lieten soms een slot staan. Bijgewerkt in de herstelronde en in de bakhandleiding (§8).
+37. **`bak_stromen.sh` raakte twee keer in CRLF** (een agent schreef zijn functie met CRLF; ook de werkmap wordt door `autocrlf=true` omgezet). Genormaliseerd en `.gitattributes` toegevoegd; controleer na elke golf met `python -c` op `b'\r\n'`.
+38. **Een StructuredOutput-toets kan op een lange tekst falen** (5 pogingen, ongeldige JSON): gas-toets in 7b. Houd de toets-uitvoer kort.
+39. **Een agent liet het bestandje `Houston` achter** in de repo-root (een stray redirect uit een shell-commando). Verwijderd; controleer `git status` op onverwachte bestanden na een golf.
+40. **Sitelagen missen nieuwe eindpunten** (Kipoi, Melendugno, LNG Canada, Tongyeong, LGOK, Raglan, Kibali-vrachtplatform); de gloed gebruikt daar alleen de marker. Alleen Framatome Romans stond 10 km mis en is gelijkgetrokken.
+- **Opgelost:** #19 (via-punten in steden) en #23 (stippelketen die door de keuring kwam): in golf 7 geen enkele keuring "niet-registreren" en geen stippelketen; de omwegcheck in de keuring bleef zonder verdenking.
 
 
 
