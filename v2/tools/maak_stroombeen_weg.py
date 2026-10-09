@@ -94,6 +94,134 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # ── Routebrief uranium-elektrostal-paks, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck VVER-440-splijtstof TVEL Elemash (Elektrostal) -> Moskou-Domodedovo (DME) vrachtplatform: de A-107
+    # (Moskouse kleine ring, oostzijde, NIET door Moskou zelf) -> zuidpunt bij de M-4 -> A-105 (luchthavenweg). GEEN
+    # gepubliceerde wegkm: hemelsbreed ~55 km; eigen OSM-scan 88,8 km door Moskou (M-7) tegen ~90 km via de A-107.
+    # gepubliceerdKm None: de +-15%-toets is een indicatie. Via-punten alleen op de A-107 (corridorkeuze ring i.p.v.
+    # stad), allemaal op de doorgaande weg. Laatste punt = A-105 bij het terminalcomplex (openbaar net); het airside
+    # vrachtplatform volgt als stippel in de bak-functie (ZRH-patroon). NB refs zijn Cyrillisch (А-107, А-105).
+    "uranium-elektrostal-paks-elemash-dme": {
+        "via": [
+            ("TVEL Elemash, Elektrostal - anker u-elemash", (38.4875, 55.7875)),
+            ("А-107 ten zuiden van Elektrostal/Noginsk", (38.4562, 55.7410)),
+            ("А-107 oost van Ramenskoje", (38.3659, 55.6246)),
+            ("А-107 bij Bronnitsy-oost", (38.3068, 55.4300)),
+            ("А-107 zuidpunt (Kolomna-zijde, ten zuiden van Domodedovo)", (38.0915, 55.3696)),
+            ("А-105 luchthavenweg bij het DME-terminalcomplex - routeerpunt", (37.8966, 55.4173)),
+        ],
+        "id": "uranium-elektrostal-paks-b1",
+        "naam": "TVEL Elemash Elektrostal -> А-107 (kleine ring oost/zuid) -> А-105 -> Domodedovo (DME) vrachtplatform",
+        "extracts": ["rusland-centraal"],
+        "refs": ["А-107", "А-105"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed ~55 km; eigen OSM-scan 88,8 km (M-7 door Moskou) / ~90 km (А-107)",
+        "vensterKm": 40,
+        "uit": "uranium-elektrostal-paks-weg-elemash-dme.geojson",
+    },
+    # ── Routebrief pgm-tworivers-springs, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck UG2-flotatieconcentraat Two Rivers (Steelpoort) -> Impala Rustenburg: R555 Steelpoort-Stoffberg-
+    # Middelburg -> N4 Witbank-Pretoria -> N4 Platinum Highway. GEEN gepubliceerde wegkm: hemelsbreed 298 km;
+    # OSRM 439 (R555) / 456 (R540) is OSM-afgeleid -> gepubliceerdKm 439 is een indicatie, geen norm.
+    # Via-punten uit brief §4, alle op de doorgaande weg (geen stadscentrum); Marikana-punt op de N4 zelf.
+    # ⚠️ Het anker ligt in een los OSM-component van 13 service-ways (25 m gat naar terreinweg 231027166); de eerste via is
+    # daarom het dichtstbijzijnde net-knooppunt (eind van way 231027166, 0,22 km van het anker), geen verzonnen punt.
+    # Het stuk anker -> dat punt is een korte stippel in de functie (last mile, geen net op deze korrel).
+    "pgm-tworivers-springs-tworivers-rustenburg": {
+        "via": [
+            ("Two Rivers terreinweg-uiteinde op het net (OSM-gat 25 m, 0,22 km van anker pgm-tworivers-mijn)", (30.1032591, -24.9361009)),
+            ("R555 ten ZW van Steelpoort", (29.8920, -25.1782)),
+            ("R555/R33 bij Stoffberg", (29.7658, -25.3549)),
+            ("N4 zuid van Middelburg", (29.4529, -25.8327)),
+            ("N4 Witbank", (29.2596, -25.8948)),
+            ("N4 Pretoria-oost", (28.3856, -25.7646)),
+            ("N4 Platinum Highway W van Pretoria", (28.1238, -25.6540)),
+            ("N4 zuid van Marikana", (27.4504, -25.7506)),
+            ("Rustenburg N4 (verplaatst 0,15 km W van brief-via -25.7031,27.2572: dat punt snapte op een stomp van 0,1 km = keerpunt)", (27.2559, -25.7014)),
+            ("Impala Rustenburg-mijnencluster - anker pgm-rustenburg-mijn", (27.2176, -25.5535)),
+        ],
+        "id": "pgm-tworivers-springs-b1",
+        "naam": "Two Rivers -> Steelpoort -> Stoffberg -> Middelburg -> Witbank -> Pretoria -> Impala Rustenburg (R555 -> N4)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R555", "N4"],
+        "gepubliceerdKm": 439,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 298 km; OSRM 439 via R555 / 456 via R540 (OSM-afgeleid, indicatie)",
+        "vensterKm": 75,
+        "uit": "pgm-tworivers-springs-weg-tworivers-rustenburg.geojson",
+    },
+    # ── Routebrief ree-yunsheng-longbeach, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck NdFeB-magneten Ningbo Yunsheng (hoofdvestiging, Yinzhou) -> Beilun Container Terminal
+    # Phase 2: Jiangnan East Road -> G1504 Ningbo Ring Expressway -> S20 Chuanshan-havenweg ->
+    # S1 (Beilun/Dacheng-havenweg) -> Yingbin Road -> kade. Geen gepubliceerde wegkm: hemelsbreed
+    # 24,8 km; OSRM 31,2 km is OSM-afgeleid (geen onafhankelijke bron) -> gepubliceerdKm is een
+    # indicatie, geen norm. Via-punten alleen op de corridorkeuze (ringweg/havenweg i.p.v. stad).
+    "ree-yunsheng-longbeach-yunsheng-beilun": {
+        "via": [
+            ("Ningbo Yunsheng, hoofdvestiging - anker", (121.6193, 29.8825)),
+            ("G1504 Ningbo Ring Expressway (Jiangnan-oprit)", (121.6891, 29.9153)),
+            ("S20 Chuanshan-havenweg (oost)", (121.7616, 29.8851)),
+            ("S1 Beilun-havenweg (Dacheng)", (121.8052, 29.8931)),
+            ("Beilun Container Terminal Phase 2 - anker", (121.8695, 29.9353)),
+        ],
+        "id": "ree-yunsheng-beilun",
+        "naam": "Ningbo Yunsheng -> Beilun Container Terminal Phase 2 (G1504 -> S20 -> S1)",
+        "extracts": ["china"],
+        "refs": ["G1504", "S20", "S1"],
+        "gepubliceerdKm": 31,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 24,8 km; OSRM 31,2 km (OSM-afgeleid, indicatie)",
+        "vensterKm": 40,
+        "uit": "ree-yunsheng-longbeach-weg-yunsheng-beilun.geojson",
+    },
+    # ── Routebrief goud-metalor-hongkong, been b4 (LICHTE werkwijze M31 golf 8) ──
+    # Truck HKG Cathay Pacific Cargo Terminal -> Metalor Precious Metals Hong Kong, 61 Fuk Hi Street,
+    # Yuen Long Industrial Estate: Chek Lap Kok Road -> Tuen Mun-Chek Lap Kok Link (tunnelweg) ->
+    # Tuen Mun Road (Route 9) -> Yuen Long Highway (Route 9) -> Tong Yan San Tsuen-knoop -> Long Ping Road
+    # -> Fuk Hi Street. Eindanker AANNEMELIJK: vestiging bewezen (metalor.com), zending niet.
+    # GEEN gepubliceerde wegkm: hemelsbreed 20,5 km (berekend); OSRM-indicatie 27,2 km (dezelfde OSM-bron,
+    # geen publicatie) -> gepubliceerdKm None, de +-15%-toets is alleen een indicatie (brief §2/§7).
+    # Via-punten alleen op de doorgaande weg (Tuen Mun-CLK-tunnelweg, Tuen Mun Road, Yuen Long Highway);
+    # NOOIT in het centrum van Tuen Mun of Yuen Long. Kleine eindklassen binnen 12 km van de ankers
+    # (HKG-terminalwegen, Fuk Hi Street); eindToegangPrivaat voor het luchthaventerrein.
+    "goud-metalor-hongkong-hkg-yuenlong": {
+        "via": [
+            ("Cathay Pacific Cargo Terminal, Chek Lap Kok (anker, dia-hkg-cargo)",       (113.9247, 22.2975)),
+            ("Tuen Mun-Chek Lap Kok Link, tunnelweg (noordoever Lantau)",               (113.9593, 22.3140)),
+            ("Tuen Mun Road (Route 9), ten noorden van de Wong Chu Road-aansluiting",   (113.9787, 22.3872)),
+            ("Yuen Long Highway (Route 9)",                                             (113.9803, 22.4138)),
+            ("Metalor Precious Metals Hong Kong, 61 Fuk Hi Street (anker au-metalor-hk-yuenlong, aannemelijk)", (114.0230, 22.4580)),
+        ],
+        "id": "au-hkg-yuenlong-weg",
+        "naam": "HKG-vrachtterminal -> Metalor Hong Kong, Yuen Long (Tuen Mun-CLK Link -> Tuen Mun Road -> Yuen Long Highway, Route 9)",
+        "extracts": ["china"],
+        "refs": ["9"],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm: hemelsbreed 20,5 km (berekend); OSRM-indicatie 27,2 km (dezelfde OSM-bron, "
+                    "geen publicatie); de +-15%-toets is alleen een indicatie, geen norm (brief §2/§7).",
+        "vensterKm": 25,
+        "eindToegangPrivaat": True,
+        "uit": "goud-metalor-hongkong-weg-hkg-yuenlong.geojson",
+    },
+    # Routebrief nikkel-riotuba-niihama, been b1 (LICHTE werkwijze M31 golf 8).
+    # Truck (mixed-sulfide-voeding, aannemelijk: geen bron voor de route) Coral Bay-HPAL-plant
+    # (Rio Tuba, Bataraza) -> RTN-pier. Geen gepubliceerde wegkm: hemelsbreed ~6,5 km;
+    # gepubliceerdKm 9 is een indicatie (hemelsbreed x ~1,4), geen harde toets.
+    "nikkel-riotuba-niihama-plant-pier": {
+        "via": [
+            ("Coral Bay Nickel HPAL-plant (anker, ni-coralbay-plant)", (117.4225, 8.5585)),
+            ("RTN-pier Rio Tuba (anker, ni-riotuba-pier)",             (117.4515, 8.5030)),
+        ],
+        "id": "ni-riotuba-plant-pier",
+        "naam": "Coral Bay HPAL-plant -> Rio Tuba (dorp) -> RTN-pier (eigen/lokale weg)",
+        "extracts": ["filipijnen"],
+        "refs": [],
+        "eindKlassen": ("tertiary", "unclassified", "residential", "service"),
+        "eindToegangPrivaat": True,
+        "gepubliceerdKm": 9,
+        "bronnoot": "geen publicatie; hemelsbreed ~6,5 km (eigen meting), indicatie ~9 km via wegen",
+        "vensterKm": 15,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "uit": "nikkel-riotuba-niihama-weg-plant-pier.geojson",
+    },
     # Routebrief ree-lovozero-solikamsk, been b1 (LICHTE werkwijze M31 golf 7).
     # Truck (loparietconcentraat, modaliteit aannemelijk: geen bron) Lovozerski GOK
     # (Karnasurt/Ilma-meer) → Revda → weg 47K-047/47K-043 → Olenegorsk station
@@ -135,7 +263,833 @@ PROFIELEN = {
         "eindToegangPrivaat": True,   # havenwegen Ajos / mijnweg Kevitsa kunnen access=private dragen
         "uit": "pgm-kevitsa-harjavalta-weg-kevitsa-ajos.geojson",
     },
+    # ── Routebrief lithium-nal-quebec, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # NAL-procescomplex La Corne -> Solurail-transload Val-d'Or: Route du Lithium (12,8 km west) -> Route 111 zuidwaarts
+    # -> Route 117 (Bd Tetrault, westrand) -> Rue Roland-Masse. Geen wegkm gepubliceerd (hemelsbreed 33 km; TRS "60 km";
+    # OSRM 61,0 km = indicatie). corridorKlassen: Route du Lithium kan tertiary/unclassified zijn.
+    "lithium-nal-quebec-plant-valdor": {
+        "via": [
+            ("NAL-procescomplex La Corne (anker, li-nal-plant)",         (-77.8305, 48.4059)),
+            ("Route du Lithium x Route 111",                              (-78.0035, 48.4154)),
+            ("Route 111 bij La Corne zuid",                               (-77.9958, 48.3427)),
+            ("Route 111 tussen Saint-Mathieu en Val-d'Or",                (-77.9950, 48.2882)),
+            ("Route 111 noord van Chemin Sullivan",                       (-77.8606, 48.1871)),
+            ("Solurail-transload Val-d'Or (anker, li-nal-valdor)",        (-77.7734, 48.1101)),
+        ],
+        "id": "li-nal-plant-valdor", "naam": "NAL La Corne -> Val-d'Or transload (Route du Lithium, Route 111, R117)",
+        "extracts": ["canada"], "refs": ["111", "117"],
+        "gepubliceerdKm": None, "bronnoot": "hemelsbreed 33 km, geen wegkm (TRS 60 km, OSRM 61,0 = indicatie)",
+        "vensterKm": 25, "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-nal-quebec-weg-plant-valdor.geojson",
+    },
+    # ── Routebrief grafiet-harjavalta-heroya, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Fortum Battery Recycling Harjavalta -> Pori Mantyluoto-kade over vt 2 (Harjavalta - Nakkila - Pori). Geen wegkm gepubliceerd.
+    "grafiet-harjavalta-heroya-fortum-pori": {
+        "via": [
+            ("Fortum Sepankatu Harjavalta (anker, gr-fortum-harjavalta)", (22.1006, 61.3243)),
+            ("vt 2 west van Harjavalta",                                  (22.0253, 61.3446)),
+            ("vt 2 bij Nakkila",                                          (21.9161, 61.4068)),
+            ("vt 2 / vt 8 west van Pori",                                 (21.7600, 61.4792)),
+            ("vt 2 noordoost van Pori",                                   (21.5906, 61.5494)),
+            ("Pori Mantyluoto-kade (anker, gr-pori-kade)",                 (21.4966, 61.5959)),
+        ],
+        "id": "gr-fortum-pori", "naam": "Fortum Harjavalta -> Pori Mantyluoto (vt 2)",
+        "extracts": ["finland"], "refs": ["2"],
+        "gepubliceerdKm": None, "bronnoot": "hemelsbreed 44 km, geen wegkm gepubliceerd",
+        "vensterKm": 25,
+        "uit": "grafiet-harjavalta-heroya-weg-fortum-pori.geojson",
+    },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief lithium-manono-ningbo, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck spodumeenconcentraat Manono Northeast-plant -> Kiambi (RN33, vóór het OSM-gat van 0,36 km), via Bitawana.
+    # Geen gepubliceerde km voor dit deel; b1+b3 samen tegen 440 km (SMM, Skillings) is de toets.
+    "lithium-manono-ningbo-plant-kiambi": {
+        "via": [
+            ("Manono Northeast-plant (anker li-manono-plant)",   (27.4703, -7.2770)),
+            ("Bitawana (uitrit zuidoost naar Kiambi)",           (27.8670, -7.5030)),
+            ("Kiambi, RN33 vóór het OSM-gat",                    (28.0088, -7.3380)),
+        ],
+        "id": "li-manono-kiambi", "naam": "Manono Northeast-plant -> Bitawana -> Kiambi (mijnweg, RN33)",
+        "extracts": ["congo-drc"], "refs": ["RN33"],
+        "gepubliceerdKm": None, "bronnoot": "geen aparte km; b1+b3 samen 440 km gepubliceerd (SMM, Skillings)",
+        "vensterKm": 40, "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,   # mijn-/plantwegen kunnen access=private dragen
+        "uit": "lithium-manono-ningbo-weg-plant-kiambi.geojson",
+    },
+    # Routebrief lithium-manono-ningbo, been b3: Kiambi (na het gat) -> Kalemie-haven via de RN33
+    # (Kikumba, Mukanza/Nyunzu, Kitatilo, Nkankulubiongo, Lukengo). 440 km voor b1+b3 gepubliceerd.
+    "lithium-manono-ningbo-kiambi-kalemie": {
+        "via": [
+            ("Kiambi, RN33 na het OSM-gat",                      (28.0104, -7.3352)),
+            ("Kikumba (RN33 noordwaarts naar Nyunzu)",           (28.0490, -6.4260)),
+            ("Mukanza bij Nyunzu (knooppunt, weg draait oost)",  (28.0620, -5.9870)),
+            ("Kitatilo (oostelijke doorgaande weg)",             (28.3810, -5.9660)),
+            ("Nkankulubiongo (noordelijke boog naar het meer)",  (28.5830, -5.8050)),
+            ("Lukengo (aanloop naar Kalemie)",                   (29.1080, -5.7750)),
+            ("Kalemie-haven (anker li-kalemie-haven)",           (29.2017, -5.9462)),
+        ],
+        "id": "li-kiambi-kalemie", "naam": "Kiambi -> Kikumba -> Nyunzu -> Kitatilo -> Lukengo -> Kalemie-haven (RN33)",
+        "extracts": ["congo-drc"], "refs": ["RN33"],
+        "gepubliceerdKm": None, "bronnoot": "b1+b3 samen 440 km gepubliceerd (SMM, Skillings); dit deel verwacht ca 360 km",
+        "vensterKm": 50, "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,   # havenwegen Kalemie kunnen access=private dragen
+        "uit": "lithium-manono-ningbo-weg-kiambi-kalemie.geojson",
+    },
+    # Routebrief lithium-manono-ningbo, been b6: einde Centraal-lijn Dar es Salaam (Nyerere Road) -> havenpoort Kurasini.
+    # Hemelsbreed 5,8 km, geen wegkm gepubliceerd: de +-15%-toets is een indicatie. Geen via (vensterKm 12).
+    "lithium-manono-ningbo-darspoor-darpoort": {
+        "via": [
+            ("Dar es Salaam Centraal-lijn-einde, Nyerere Road (anker li-dar-spoor)", (39.2412, -6.8431)),
+            ("Dar es Salaam-havenpoort (anker li-dar-poort)",                          (39.29378, -6.8405)),
+        ],
+        "id": "li-darspoor-darpoort", "naam": "Dar es Salaam Centraal-lijn-einde -> havenpoort Kurasini (stadswegen)",
+        "extracts": ["tanzania"], "refs": [],
+        "gepubliceerdKm": None, "bronnoot": "geen wegkm gepubliceerd: hemelsbreed 5,8 km; de +-15%-toets is een indicatie",
+        "vensterKm": 12,
+        "eindKlassen": ("tertiary", "unclassified", "residential", "service"),
+        "eindToegangPrivaat": True,   # havenpoort/terreinwegen kunnen access=private dragen
+        "uit": "lithium-manono-ningbo-weg-darspoor-darpoort.geojson",
+    },
+    # ── Routebrief grafiet-epanko-duisburg, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Epanko-dorp -> Dar es Salaam-kade, truck via Mahenge-weg, Ifakara, Kidatu, Mikumi en T1. Geen wegkm gepubliceerd
+    # (hemelsbreed 355 km; Epanko-Ifakara 75 km bron): de +-15%-toets is een indicatie. Morogoro en Chalinze NIET als via.
+    "grafiet-epanko-duisburg-epanko-daressalaam": {
+        "via": [
+            ("Epanko-dorp (anker gr-epanko-dorp, onzeker)",               (36.6796, -8.7114)),
+            ("Ifakara (Mahenge-weg naar Kilombero-dal)",                  (36.6848, -8.1321)),
+            ("Kidatu (schakel Ifakara-Mikumi)",                           (36.9523, -7.7042)),
+            ("Mikumi op T1 (aansluiting doorgaande weg)",                 (37.0000, -7.4000)),
+            ("Dar es Salaam-kade (anker gr-daressalaam-kade)",            (39.2870, -6.8280)),
+        ],
+        "id": "gr-epanko-daressalaam", "naam": "Epanko -> Ifakara -> Kidatu -> Mikumi -> T1 -> Dar es Salaam-kade",
+        "extracts": ["tanzania"], "refs": ["T1"],
+        "gepubliceerdKm": None, "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 355 km, Epanko-Ifakara 75 km (EcoGraf); de +-15%-toets is een indicatie.",
+        "vensterKm": 60, "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "grafiet-epanko-duisburg-weg-epanko-daressalaam.geojson",
+    },
+    # ── Routebrief goud-guyana-ottawa, benen b1 en b5 (LICHTE werkwijze M31 golf 9) ──
+    # b1: Guyana Gold Board (Georgetown) -> rotonde Airport Road bij CJIA, East Bank Road (primary) -> Airport Road. 41 wegkm (Wikipedia; OSRM 40,4).
+    "goud-guyana-ottawa-ggb-geo": {
+        "via": [
+            ("Guyana Gold Board, GGMC Compound, Georgetown (anker au-ggb-georgetown)", (-58.1527, 6.8052)),
+            ("East Bank Road (way 1271753110)",                                       (-58.1758, 6.7705)),
+            ("East Bank Road (way 436770595)",                                        (-58.1922, 6.7209)),
+            ("East Bank Road (way 4680228)",                                          (-58.2019, 6.6302)),
+            ("East Bank Road (way 295668125)",                                        (-58.2342, 6.5473)),
+            ("splitsing East Bank Road / Airport Road",                               (-58.2679, 6.5120)),
+            ("rotonde Airport Road, CJIA (einde wegbeen)",                            (-58.2569, 6.5036)),
+        ],
+        "id": "goud-guyana-ottawa-ggb-geo-weg",
+        "naam": "Guyana Gold Board -> East Bank Road -> Airport Road -> rotonde CJIA",
+        "extracts": ["guyana"],
+        "refs": [],
+        "gepubliceerdKm": 41,
+        "bronnoot": "41 km Georgetown-CJIA (Wikipedia); OSRM 40,4 wegkm (brief b1).",
+        "vensterKm": 20,
+        "uit": "goud-guyana-ottawa-weg-ggb-geo.geojson",
+    },
+    # b5: Toronto Pearson (openbare weg W van de cargo-loodsen) -> Royal Canadian Mint Ottawa, Hwy 401 -> 416 -> 417 -> Sussex Drive. 468 wegkm (OSRM).
+    "goud-guyana-ottawa-yyz-rcm": {
+        "via": [
+            ("YYZ landside, openbare weg W van de cargo-loodsen (Britannia Road East)", (-79.6345, 43.6786)),
+            ("Hwy 401, Scarborough",                                                   (-79.2946, 43.7723)),
+            ("Hwy 401, Oshawa",                                                        (-78.8971, 43.8710)),
+            ("Hwy 401, Belleville-Trenton",                                            (-77.3984, 44.1921)),
+            ("Hwy 401, Kingston",                                                      (-76.4989, 44.2692)),
+            ("Hwy 416, zuideinde bij Johnstown",                                       (-75.4899, 44.7499)),
+            ("Hwy 416, midden",                                                        (-75.5185, 44.8216)),
+            ("knooppunt 416/417, Nepean",                                              (-75.8164, 45.3428)),
+            ("Royal Canadian Mint, 320 Sussex Drive, Ottawa (anker au-rcm-ottawa)",    (-75.6993, 45.4315)),
+        ],
+        "id": "goud-guyana-ottawa-yyz-rcm-weg",
+        "naam": "Toronto Pearson -> Hwy 401 -> Hwy 416 -> Hwy 417 -> Royal Canadian Mint Ottawa",
+        "extracts": ["canada"],
+        "refs": ["401", "416", "417"],
+        "gepubliceerdKm": 468,
+        "bronnoot": "468,0 wegkm OSRM (brief b5); hemelsbreed 367,6; via-som 440,6.",
+        "vensterKm": 30,
+        "corridorKlassen": ["unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-guyana-ottawa-weg-yyz-rcm.geojson",
+    },
+    # ── Routebrief pgm-modikwa-rustenburg, benen b1 en b2a (LICHTE werkwijze M31 golf 9) ──
+    # b1: Modikwa-concentrator (Maandagshoek) -> Valterra Polokwane-smelter, truck over de R37 (Maandagshoek, Mecklenburg,
+    # Olifants/Ga-Makgoba, ten noorden van Lebowakgomo). Wegkm NIET gepubliceerd: hemelsbreed 99 km, indicatie ca. 113 km
+    # (Wikipedia R37 + Engineering News) -> de +-15%-toets is een INDICATIE. b2b = letterlijke kopie pgm-zimplats-rustenburg b2.
+    "pgm-modikwa-rustenburg-modikwa-polokwane": {
+        "via": [
+            ("Modikwa-concentrator (anker pgm-modikwa-mijn, aannemelijk)",       (30.1675, -24.6565)),
+            ("R37 bij Maandagshoek",                                             (30.1591, -24.5878)),
+            ("R37 bij Mecklenburg",                                              (30.0659, -24.3803)),
+            ("R37 bij Olifants en Ga-Makgoba",                                   (29.8207, -24.2600)),
+            ("R37 ten noorden van Lebowakgomo",                                  (29.4842, -24.1829)),
+            ("Valterra Polokwane-smelter (anker pgm-polokwane-smelter)",         (29.4694, -24.0281)),
+        ],
+        "id": "pgm-modikwa-polokwane-weg",
+        "naam": "Modikwa-concentrator -> Polokwane-smelter (R37)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R37"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 99 km, indicatie ca. 113 km tot Polokwane plus toegang; de +-15%-toets is een indicatie.",
+        "vensterKm": 40,
+        "uit": "pgm-modikwa-rustenburg-weg-modikwa-polokwane.geojson",
+    },
+    # b2a: Polokwane-smelter -> R37/N1-aansluiting (-23.9431, 29.4439), truck, aannemelijk (matte-modaliteit niet in de bron).
+    "pgm-modikwa-rustenburg-smelter-r37n1": {
+        "via": [
+            ("Valterra Polokwane-smelter (anker pgm-polokwane-smelter)",         (29.4694, -24.0281)),
+            ("R37 zuidrand Polokwane",                                           (29.4591, -24.0357)),
+            ("R37/N1-aansluiting (begin gedeelde N1/N4-kopie)",                  (29.443898, -23.943132)),
+        ],
+        "id": "pgm-smelter-r37n1-weg",
+        "naam": "Polokwane-smelter -> R37/N1-aansluiting (R37, aannemelijk)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R37"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed ca. 10 km; de +-15%-toets is een indicatie.",
+        "vensterKm": 15,
+        "uit": "pgm-modikwa-rustenburg-weg-smelter-r37n1.geojson",
+    },
+    # ── Routebrief uranium-langerheinrich-metropolis, benen b1 en b3 (LICHTE werkwijze M31 golf 9) ──
+    # b1: Langer Heinrich-fabriek (Paladin/CNNC, Erongo) -> NamPort Walvis Bay (containerterminal), truck (vaten in 20'-containers).
+    # Mijnweg (OSM unclassified) -> C28 (junctie ca. 15,034 E) -> C28 bij Swakopmund -> MR44/B2 -> C14 -> kade. Wegkm Namibie NIET
+    # gepubliceerd: hemelsbreed 87 km, OSRM-indicatie 128 km (zelfde OSM-bron, geen onafhankelijke toets) -> de +-15%-toets is een
+    # INDICATIE. Aannemelijk (analogie Rossing/Husab). Mijnweg = unclassified -> corridorKlassen; eindToegangPrivaat voor de terminal.
+    "uranium-langerheinrich-metropolis-fabriek-walvisbay": {
+        "via": [
+            ("Langer Heinrich verwerkingsfabriek (anker u-lh-fabriek, bron-gelegd)",    (15.3255, -22.8142)),
+            ("mijnweg-junctie met de C28",                                              (15.0340, -22.8559)),
+            ("C28 bij Swakopmund",                                                      (14.5921, -22.7001)),
+            ("NamPort containerterminal Walvis Bay (anker u-walvisbay-haven)",          (14.4840, -22.9465)),
+        ],
+        "id": "u-lh-walvisbay",
+        "naam": "Langer Heinrich-fabriek -> Walvis Bay-kade (mijnweg, C28, MR44/B2, C14; aannemelijk: weg niet gepubliceerd)",
+        "extracts": ["namibie"],
+        "refs": ["C28", "MR44", "B2", "C14"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 87 km (berekend), OSRM-indicatie 128 km (OSM-gebaseerd, geen onafhankelijke toets); "
+                    "de +-15%-toets (109-147 km) is een indicatie, geen norm (brief §2/§7).",
+        "vensterKm": 40,
+        "corridorKlassen": ["unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "uranium-langerheinrich-metropolis-weg-fabriek-walvisbay.geojson",
+    },
+    # b3: Port of Montreal (Viau-zijde) -> grens Lacolle-Champlain (bron NRC) -> Pulaski NY (I-81) -> I-90 -> Medina OH (I-71) ->
+    # Wilmington OH -> Shepherdsville KY (I-65) -> Western Kentucky Parkway -> ConverDyn Metropolis Works. Wegkm NIET gepubliceerd:
+    # hemelsbreed 1.575 km, OSRM-indicatie ~1.900 km -> de +-15%-toets is een INDICATIE. Na de grens is de VS-route aannemelijk.
+    "uranium-langerheinrich-metropolis-montreal-metropolis": {
+        "via": [
+            ("Port of Montreal, Viau-zijde (anker u-montreal-kade)",                    (-73.5065, 45.5900)),
+            ("grens Lacolle-Champlain (A-15 / I-87)",                                   (-73.4524, 45.0088)),
+            ("I-81 Pulaski NY",                                                         (-76.0829, 43.6274)),
+            ("I-71 Medina OH",                                                          (-81.7996, 41.1307)),
+            ("I-71 Wilmington OH",                                                      (-84.0007, 39.4562)),
+            ("I-65 Shepherdsville KY, zuid van Louisville",                             (-85.6972, 38.0112)),
+            ("Western Kentucky Parkway",                                                (-86.7562, 37.3937)),
+            ("Honeywell/ConverDyn Metropolis Works (anker u-metropolis-conversie)",     (-88.7570, 37.1718)),
+        ],
+        "id": "u-montreal-metropolis",
+        "naam": "Port of Montreal -> Metropolis Works (A-15, grens Lacolle-Champlain, I-81, I-90, I-71, I-65, WK Parkway, I-69/I-24; "
+                "VS-deel aannemelijk)",
+        "extracts": ["canada", "us-new-york", "us-pennsylvania", "us-ohio", "us-kentucky", "us-indiana", "us-illinois"],
+        "refs": ["A-15", "15", "I-87", "I-81", "I-90", "I-271", "I-71", "I-65", "I-69", "I-24", "US-45"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 1.575 km (berekend), OSRM-indicatie ~1.900 km (OSM-gebaseerd, geen onafhankelijke "
+                    "toets); de +-15%-toets (1.615-2.185 km) is een indicatie, geen norm (brief §2/§7).",
+        "vensterKm": 70,
+        "uit": "uranium-langerheinrich-metropolis-weg-montreal-metropolis.geojson",
+    },
+    # ── Routebrief ree-oscom-yokohama, benen b1b en b2 (LICHTE werkwijze M31 golf 9) ──
+    # b1a (OSCOM -> Anakapalle, 303,1 km) is een LETTERLIJKE KOPIE van ree-oscom-aluva (geen profiel hier).
+    # b1b: Anakapalle (einde kopie, Anakapalli Main Road) -> Toyotsu Rare Earths India (APSEZ Atchutapuram), Anakapalle-
+    # Pudimadaka Road. GEEN gepubliceerde wegkm: hemelsbreed 19 km -> de +-15%-toets is een indicatie. Aannemelijk (een bron
+    # voor de plant). Via-punt 1 = het eindpunt van de kopie, zodat de naad 0 is.
+    "ree-oscom-yokohama-anakapalle-trei": {
+        "via": [
+            ("Anakapalle, begin Anakapalle-Pudimadaka Road (einde kopie b1a)",                (83.003463, 17.689409)),
+            ("Toyotsu Rare Earths India, APSEZ Atchutapuram (anker ree-oscom-yokohama-trei)", (82.9833, 17.5195)),
+        ],
+        "id": "ree-oscom-yokohama-weg-trei",
+        "naam": "Anakapalle -> Toyotsu Rare Earths India, APSEZ Atchutapuram (Anakapalle-Pudimadaka Road)",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 19,
+        "bronnoot": "hemelsbreed 19 km, geen wegkm gepubliceerd (routebrief par. 2); de +-15%-toets is een indicatie",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,   # APSEZ-terreinwegen kunnen access=private dragen
+        "trimStaart": True,
+        "uit": "ree-oscom-yokohama-weg-anakapalle-trei.geojson",
+    },
+    # b2: Toyotsu Rare Earths India (APSEZ) -> Visakha Container Terminal, Visakhapatnam. Route: Pudimadaka Road terug naar
+    # Anakapalle, NH-16, Gajuwaka, havenweg (loopt ~20 km over b1b terug, reeel). GEEN gepubliceerde wegkm: hemelsbreed 39 km.
+    # Uitvoerhaven VCT is aannemelijk (geen bron noemt de haven). Geen extra via-punten tenzij de Dijkstra een omweg kiest.
+    "ree-oscom-yokohama-trei-vct": {
+        "via": [
+            ("Toyotsu Rare Earths India, APSEZ Atchutapuram (anker ree-oscom-yokohama-trei)", (82.9833, 17.5195)),
+            ("Visakha Container Terminal, Visakhapatnam (anker ree-oscom-yokohama-vct-kade)",  (83.3031, 17.6934)),
+        ],
+        "id": "ree-oscom-yokohama-weg-vct",
+        "naam": "Toyotsu Rare Earths India -> Visakha Container Terminal (Anakapalle - NH-16 - Gajuwaka - havenweg)",
+        "extracts": ["india"],
+        "refs": ["NH-16"],
+        "gepubliceerdKm": 39,
+        "bronnoot": "hemelsbreed 39 km, geen wegkm gepubliceerd (routebrief par. 2); de +-15%-toets is een indicatie",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,   # VCT-havenpoort en APSEZ-terreinwegen kunnen access=private dragen
+        "trimStaart": True,
+        "uit": "ree-oscom-yokohama-weg-trei-vct.geojson",
+    },
+    # ── Routebrief zilver-buenavista-lacaridad, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck Cu-concentraat (met Ag) Buenavista (Cananea) -> La Caridad-smelter/edelmetaalraffinaderij (Nacozari): SON 89 ->
+    # Bacoachi-oost -> secundaire weg naar MEX 17 -> MEX 17 zuidwaarts. AANNEMELIJK: een bron (SCC 10-K "rail and truck").
+    # GEEN gepubliceerde wegkm: hemelsbreed 84 km, OSM-pad 125,5 km, alternatief via Agua Prieta ca. 190 km -> de
+    # +-15%-toets is een indicatie. Kop LETTERLIJK hergebruikt uit koper-buenavista-guaymas. Via-punten op de doorgaande weg.
+    "zilver-buenavista-lacaridad-buenavista-lacaridad": {
+        "via": [
+            ("Buenavista-concentrators, Cananea (anker ag-buenavista-kop)",   (-110.3140, 30.9722)),
+            ("SON 89 ten ZO van Cananea (34 km)",                             (-110.0749, 30.8645)),
+            ("Bacoachi-MEX 17-weg, 17 km O van Bacoachi",                     (-109.8070, 30.6455)),
+            ("MEX 17 bij de aansluiting",                                     (-109.6151, 30.6363)),
+            ("La Caridad-smelter, Nacozari (anker ag-lacaridad-smelter)",     (-109.6355, 30.4941)),
+        ],
+        "id": "ag-buenavista-lacaridad-b1",
+        "naam": "Buenavista-concentrators -> SON 89 -> Bacoachi -> MEX 17 -> La Caridad-smelter (aannemelijk: een bron)",
+        "extracts": ["mexico"],
+        "refs": ["MEX 17", "SON 89"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 84 km; OSM-pad 125,5 km; alternatief via Agua Prieta ca. 190 km",
+        "vensterKm": 40,
+        "uit": "zilver-buenavista-lacaridad-weg-buenavista-lacaridad.geojson",
+    },
+    # ── Routebrief lithium-greenbushes-kwinana, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck spodumeenconcentraat Greenbushes-concentraatloods -> Tianqi TLK (61 Donaldson Rd, Kwinana): South Western Hwy N
+    # (Balingup, Donnybrook, Boyanup) -> Wilman Wadandi Hwy (Bunbury-omleiding) -> Forrest Hwy -> Kwinana Fwy -> Anketell Rd
+    # -> Rockingham Rd -> Leath Rd -> Donaldson Rd. AANNEMELIJK: een bron voor modus en herkomst (DWER L2981), route eigen routering.
+    # GEEN gepubliceerde wegkm (brief §2): indicatie 208 (afgeleid uit twee Wikipedia-afstanden), eigen OSRM 223,2, hemelsbreed
+    # 185,3 km -> de +-15%-toets is een indicatie. Anker mijn LETTERLIJK hergebruikt uit lithium-greenbushes-kemerton.
+    # Anketell Rd-keuze is +4 km tegenover de Kulija/Mandurah Rd-variant (219,4 km); bij uitbuiging het Anketell-via vervangen.
+    "lithium-greenbushes-kwinana-greenbushes-kwinana": {
+        "via": [
+            ("Greenbushes-concentraatloods (anker, li-gb-laadplek)",          (116.05505, -33.86495)),
+            ("Balingup (South Western Hwy)",                                  (115.98442, -33.78616)),
+            ("Donnybrook (South Western Hwy)",                                (115.82594, -33.57660)),
+            ("Boyanup (South Western Hwy)",                                   (115.72791, -33.48365)),
+            ("SWH naar Wilman Wadandi Hwy bij Gelorup (Bunbury-omleiding)",   (115.69810, -33.39970)),
+            ("Forrest Hwy naar Kwinana Fwy (Ravenswood)",                     (115.81430, -32.57090)),
+            ("Anketell Rd oost (afrit Kwinana Fwy)",                          (115.84250, -32.20880)),
+            ("Anketell Rd x Rockingham Rd",                                   (115.78560, -32.20960)),
+            ("Leath Rd x Donaldson Rd (NW-hoek, noordelijke leveringsweg)",   (115.77650, -32.21280)),
+            ("Tianqi TLK-fabriek, 61 Donaldson Rd (anker, li-tlk-fabriek)",   (115.77900, -32.21500)),
+        ],
+        "id": "li-greenbushes-kwinana-b1",
+        "naam": "Greenbushes-concentraatloods -> Tianqi TLK Kwinana (South Western Hwy -> Wilman Wadandi Hwy -> Forrest Hwy -> Kwinana Fwy -> Anketell Rd -> Rockingham Rd -> Donaldson Rd; aannemelijk: een bron)",
+        "extracts": ["australie"],
+        "refs": ["1", "2"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen wegkm gepubliceerd: indicatie 208 (afgeleid uit twee Wikipedia-afstanden), eigen OSRM 223,2, hemelsbreed 185,3 km - de +-15%-toets is een indicatie",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "lithium-greenbushes-kwinana-weg-greenbushes-kwinana.geojson",
+    },
+    # ── Routebrief zilver-kenohill-tacoma, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck Ag-Pb-concentraat Keno Hill-molen (Hecla, Yukon) -> Skagway Ore Terminal: Silver Trail YK 11 -> Klondike Hwy YK 2
+    # (Stewart Crossing, Carmacks) -> Alaska Hwy YK 1/2 (Whitehorse-bypass) -> South Klondike Hwy YK 2 (Carcross, grens
+    # Fraser/Skagway) -> AK 98 -> Terminal Way. Gepubliceerd ~630 km = eigen optelling (TRS 452 Elsa-Whitehorse + ~7 + Wikipedia 172),
+    # dus de km-toets is een indicatie. Silver Trail is deels unpaved tertiary: corridorKlassen tertiary.
+    "zilver-kenohill-tacoma-molen-skagway": {
+        "via": [
+            ("Keno Hill-molen (Hecla) - anker ag-kenohill-molen",         (-135.3274, 63.9080)),
+            ("Silver Trail bij Mayo (YK 11)",                             (-135.8881, 63.6020)),
+            ("Stewart Crossing (YK 2)",                                   (-136.6792, 63.3754)),
+            ("Carmacks Klondike Hwy (YK 2)",                              (-136.2902, 62.0879)),
+            ("Alaska Hwy NW van Whitehorse (YK 1/2)",                     (-135.1432, 60.7488)),
+            ("Alaska Hwy O van Whitehorse (YK 1/2)",                      (-135.0325, 60.6529)),
+            ("Aansluiting South Klondike Hwy (YK 2)",                     (-134.8712, 60.5897)),
+            ("Carcross Klondike Hwy (YK 2)",                              (-134.7033, 60.1682)),
+            ("Grens Fraser/Skagway (YK 2/AK 98)",                         (-135.1643, 59.6297)),
+            ("Skagway Ore Terminal - anker ag-skagway-kade",              (-135.3268, 59.4508)),
+        ],
+        "id": "ag-kenohill-skagway-b1",
+        "naam": "Keno Hill-molen -> Skagway Ore Terminal (Silver Trail YK 11 -> Klondike Hwy YK 2 -> Alaska Hwy -> South Klondike Hwy -> AK 98)",
+        "extracts": ["canada", "us-alaska"],
+        "refs": ["YK 11", "YK 2", "YK 1", "AK 98"],
+        "gepubliceerdKm": 630,
+        "bronnoot": "eigen optelling: TRS Elsa-Whitehorse 452 km + ~7 km molen-Elsa (hemelsbreed) + Wikipedia South Klondike Hwy "
+                    "Whitehorse-aansluiting-Skagway 172 km = ~630; geen bedrijfsopgave voor het geheel, km-toets is indicatie",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary"],
+        "trimStaart": True,
+        "uit": "zilver-kenohill-tacoma-weg-molen-skagway.geojson",
+    },
+    # ── Routebrief nikkel-matsusaka-clydach, been b4 (LICHTE werkwijze M31 golf 9) ──
+    # Truck nikkeloxide Cardiff-kade (Roath Dock) -> Vale Clydach Nickel Refinery: A4232 (Butetown/Grangetown Link)
+    # -> M4 J33-J45 -> A4067 -> B4291. Gepubliceerd: Vale noemt 148 km retour Cardiff-Clydach (=74 km enkele rit);
+    # OSRM-controle 74,3 km (OSM-afgeleid). Via-punten uit brief §4, alle op de doorgaande weg/M4-mainline, niet in
+    # een stadscentrum.
+    "nikkel-matsusaka-clydach-cardiff-clydach": {
+        "via": [
+            # ⚠️ Het anker (-3.1551, 51.4595) snapt op een los dock-component van 2 service-ways (0,24 km);
+            # de eerste via is daarom het dichtstbijzijnde vertex van het doorgaande net (0,26 km van het anker,
+            # een echte OSM-vertex). De 0,26 km tot het anker is een korte stippel in de bak-functie.
+            ("Eerste net-vertex bij Roath Dock (0,26 km van anker ni-cardiff-kade)", (-3.158666, 51.460161)),
+            ("A4232 Butetown/Grangetown Link", (-3.2285, 51.4740)),
+            ("A4232 vlak voor M4 J33", (-3.3022, 51.5014)),
+            ("M4 tussen J34 en J35", (-3.4258, 51.5109)),
+            ("M4 bij J36 Sarn (mainline)", (-3.5567, 51.5337)),
+            ("M4 Port Talbot ten zuiden van J40", (-3.7682, 51.5882)),
+            ("A4067 Ffordd Cwm Tawe noord van J45", (-3.9056, 51.6856)),
+            ("Vale Clydach Nickel Refinery, Ynys-Penllwch Road - anker ni-clydach-refinery", (-3.8892, 51.6956)),
+        ],
+        "id": "nikkel-matsusaka-clydach-b4",
+        "naam": "Cardiff-kade (Roath Dock) -> A4232 -> M4 J33-J45 -> A4067 -> B4291 -> Vale Clydach Nickel Refinery",
+        "extracts": ["groot-brittannie"],
+        "refs": ["A4232", "M4", "A4067", "B4291"],
+        "gepubliceerdKm": 74,
+        "bronnoot": "Vale: elektrische feedtruck Cardiff-Clydach 148 km retour (=74 km); OSRM-controle 74,3 km.",
+        "vensterKm": 30,
+        "uit": "nikkel-matsusaka-clydach-weg-cardiff-clydach.geojson",
+    },
+    # ── Routebrief lithium-cauchari-antofagasta, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck carbonaat Cauchari-Olaroz-plant (Minera Exar) -> Puerto Antofagasta ATI: plantweg -> RN52 -> Paso de Jama
+    # -> Ruta 27 -> Ruta 23 (OSM-naam B-195) -> Ruta 25 (rondweg Calama) -> Ruta 5 Norte -> Ruta 26.
+    # Gepubliceerd 530 km (bedrijfsopgave Antofagasta, NI 43-101 2018); OSRM 544,1 km = OSM-afgeleide indicatie.
+    # RN52 loopt bij de plant over gravel/mijnwegen: corridorKlassen breed (tertiary/unclassified/residential/service),
+    # eindKlassen mét track (zelfde les als lithium-olaroz-naraha b1).
+    "lithium-cauchari-antofagasta-plant-ati": {
+        "via": [
+            ("Cauchari-Olaroz-plant (Minera Exar) - anker",           (-66.7680, -23.6720)),
+            ("RN52, aansluiting plantweg (west naar Jama)",           (-66.7429, -23.6086)),
+            ("Paso de Jama, grenspost",                               (-67.0629, -23.2266)),
+            ("Ruta 23 tussen San Pedro de Atacama en Calama",         (-68.6729, -22.6068)),
+            ("Ruta 25, zuidrand Calama (rondweg)",                    (-68.9261, -22.4948)),
+            ("Ruta 25 / Ruta 5 Norte",                                (-69.6378, -23.1859)),
+            ("Ruta 5 Norte ZW van Baquedano",                         (-70.0523, -23.4488)),
+            ("kruising Ruta 5 / Ruta 26",                             (-70.2685, -23.6047)),
+            ("Puerto Antofagasta, ATI-kade - anker",                  (-70.4088, -23.6500)),
+        ],
+        "id": "li-cauchari-ati",
+        "naam": "Cauchari-Olaroz-plant -> Puerto Antofagasta ATI (RN52 -> Paso de Jama -> Ruta 27/23/25/5/26)",
+        "extracts": ["argentina", "chili"],
+        "refs": ["RN52", "52", "Ruta 27", "27", "Ruta 23", "23", "B-195", "Ruta 25", "25", "Ruta 5", "5", "Ruta 26", "26"],
+        "gepubliceerdKm": 530,
+        "bronnoot": "bedrijfsopgave 'nearest port Antofagasta 530 km' (NI 43-101 Cauchari-Olaroz 2018); "
+                    "OSRM 544,1 km = OSM-afgeleide indicatie, hemelsbreed 371 km",
+        "vensterKm": 50,
+        "corridorKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "lithium-cauchari-antofagasta-weg-plant-ati.geojson",
+    },
+    # ── Routebrief pgm-eastboulder-columbus, been b1 (LICHTE werkwijze M31 golf 9) ──
+    # Truck PGM-concentraat (2E) East Boulder Mine -> Columbus Metallurgical Complex: East Boulder Road -> Main Boulder
+    # Road/MT-298 -> Big Timber (oostoprit) -> I-90 oost -> afrit Columbus (MT-78). Geen wegkm gepubliceerd voor het hele
+    # traject (OSRM-indicatie 119 km, hemelsbreed 67 km; mijn->McLeod 16 mi = 26 km gepubliceerd) -> de km-toets is een indicatie.
+    "pgm-eastboulder-columbus": {
+        "via": [
+            ("East Boulder Mine (anker, pgm-eastboulder-laad)",             (-110.0860, 45.5040)),
+            ("East Boulder Road x Main Boulder Road",                       (-110.1353, 45.6234)),
+            ("MT-298 bij Eightmile Bridge",                                 (-109.9968, 45.7236)),
+            ("Big Timber, I-90-oprit oost",                                 (-109.9080, 45.8313)),
+            ("I-90 bij Reed Point",                                         (-109.5917, 45.7094)),
+            ("I-90-afrit Columbus (MT-78)",                                 (-109.2529, 45.6491)),
+            ("Columbus Metallurgical Complex (anker, pgm-columbus-smelter)", (-109.2400, 45.6330)),
+        ],
+        "id": "pgm-eastboulder-columbus",
+        "naam": "East Boulder Mine -> Columbus Metallurgical Complex (East Boulder Road -> MT-298 -> Big Timber -> I-90)",
+        "extracts": ["us-montana"],
+        "refs": ["I-90", "MT-298", "MT-78", "298", "90", "78"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen wegkm gepubliceerd; OSRM-indicatie 119 km, hemelsbreed 67 km; mijn->McLeod 16 mi (26 km) Forest Service",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],  # Boulder River Road = S-298 (tertiary), East Boulder Road unclassified
+        "uit": "pgm-eastboulder-columbus-weg-eastboulder-columbus.geojson",
+    },
+    # ── Routebrief grafiet-balama-kendal, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck vlokgrafiet (fines, breakbulk) Balama-plant -> Porto de Pemba: N14 (Balama-Metoro) -> N1/EN106 via Mieze -> Pemba.
+    # Brief 250-265 km (balama-vidalia), gemeten haalbaarheidstoets 257. Enige corridorkeuze = Metoro (Pemba oost i.p.v. Nacala zuid).
+    "grafiet-balama-kendal-balama-pemba": {
+        "via": [
+            ("Balama-plant (anker gr-balama-plant)",              (38.6600, -13.3100)),
+            ("Metoro, T-kruising N14 x N1 (keuze Pemba)",         (39.8730, -13.1040)),
+            ("Porto de Pemba, breakbulk-kade (anker gr-pemba-kade)", (40.4853, -12.9672)),
+        ],
+        "id": "gr-balama-pemba",
+        "naam": "Balama-plant -> Porto de Pemba (N14 -> Metoro -> N1/EN106)",
+        "extracts": ["mozambique"],
+        "refs": ["N14", "N1", "EN106"],
+        "gepubliceerdKm": 257,
+        "bronnoot": "brief grafiet-balama-vidalia 250-265 km; haalbaarheidstoets 257 km",
+        "vensterKm": 40,
+        "uit": "grafiet-balama-kendal-weg-balama-pemba.geojson",
+    },
+    # ── Routebrief grafiet-balama-kendal, been b6 (LICHTE werkwijze M31 golf 8) ──
+    # Truck Tanjung Emas (Dermaga Samudera 2) -> PT Indonesia BTR New Energy Material, Kendal Industrial Park over de Pantura
+    # (Jl Arteri, ref 1). Geen corridorkeuze -> geen via-punten. Kendal Industrial Park noemt 25 km (Tanjung Emas -> KIP) =
+    # opgave van het park, geen weg-meting; de haalbaarheidstoets gaf 29,3 km OSM (+17%, indicatie).
+    "grafiet-balama-kendal-semarang-kendal": {
+        "via": [
+            ("Tanjung Emas, Dermaga Samudera 2 (anker gr-semarang-kade)",   (110.4240, -6.9442)),
+            ("PT Indonesia BTR New Energy Material, Kendal SEZ (anker gr-btr-kendal)", (110.2685, -6.9237)),
+        ],
+        "id": "gr-semarang-kendal",
+        "naam": "Tanjung Emas Semarang -> BTR Kendal (Pantura Jl Arteri, ref 1)",
+        "extracts": ["indonesie"],
+        "refs": ["1"],
+        "gepubliceerdKm": 25,
+        "bronnoot": "Kendal Industrial Park: Tanjung Emas 25 km; OSM-haalbaarheidstoets 29,3 km (+17%, indicatie)",
+        "vensterKm": 15,
+        "uit": "grafiet-balama-kendal-weg-semarang-kendal.geojson",
+    },
+    # ── Routebrief zilver-cerrolosgatos-akita, been b1a (LICHTE werkwijze M31 golf 8) ──
+    # CLG-molen -> Fed 24-aansluiting (toegangsweg, TRS: 40 km verhard + ~7 km); geen via-punten (een toegangsweg).
+    # OSM-klasse unclassified/tertiary, dus corridorKlassen + klein venster.
+    "zilver-cerrolosgatos-akita-molen-fed24": {
+        "via": [
+            ("Cerro Los Gatos-molen (anker, ag-clg-molen)", (-106.3340, 27.5392)),
+            ("Fed 24-aansluiting (kop b1b)",                (-106.0605, 27.7099)),
+        ],
+        "id": "ag-clg-fed24",
+        "naam": "CLG-molen -> Fed 24-aansluiting (toegangsweg, ca. 47 km)",
+        "extracts": ["mexico"],
+        "refs": [],
+        "gepubliceerdKm": 47,
+        "bronnoot": "TRS CLG (2022): Fed 24 km 81 + 40 km verharde weg; ~7 km erbij is eigen schatting",
+        "vensterKm": 15,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "zilver-cerrolosgatos-akita-weg-molen-fed24.geojson",
+    },
+    # Routebrief zilver-cerrolosgatos-akita, been b1b: Fed 24 -> Parral -> Jimenez -> Gomez Palacio -> Rio Grande ->
+    # Aguascalientes -> Guadalajara -> Colima -> Hazesa Terminal Manzanillo. Geen gepubliceerd tracé; ±15% is indicatie.
+    "zilver-cerrolosgatos-akita-fed24-hazesa": {
+        "via": [
+            ("Fed 24-aansluiting (kop b1b)",              (-106.0605, 27.7099)),
+            ("Parral, MEX 45",                            (-105.6364, 26.9334)),
+            ("Jimenez, MEX 49D",                          (-104.8651, 27.0986)),
+            ("Gomez Palacio, MEX 40D/49D",                (-103.5220, 25.6206)),
+            ("Rio Grande, MEX 49",                        (-103.0172, 23.8448)),
+            ("Aguascalientes-noord, MEX 45",              (-102.2812, 22.0367)),
+            ("Guadalajara-zuidwest, MEX 54D",             (-103.5536, 20.4273)),
+            ("Colima-zuid, MEX 110",                      (-103.7222, 19.2129)),
+            ("Hazesa Terminal Manzanillo (anker, ag-manzanillo-hazesa)", (-104.2952, 19.0826)),
+        ],
+        "id": "ag-clg-hazesa",
+        "naam": "Fed 24 -> Parral -> Jimenez -> Torreon -> Rio Grande -> Aguascalientes -> Guadalajara -> Colima -> Hazesa Manzanillo",
+        "extracts": ["mexico"],
+        "refs": ["24", "45", "49D", "40D", "49", "45D", "80D", "54D", "110", "200D"],
+        "gepubliceerdKm": 1450,
+        "bronnoot": "geen gepubliceerde wegkm; indicatie OSRM 1.450 km (OSM-gebaseerd); hemelsbreed 963 km, via-punten 1.258 km",
+        "vensterKm": 65,
+        "uit": "zilver-cerrolosgatos-akita-weg-fed24-hazesa.geojson",
+    },
+    # ── Routebrief zilver-greenscreek-onsan, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Greens Creek-haulroad (privé, OSM tertiary way 1096871176 + 1096871177) molen -> Hawk Inlet-terminal.
+    # Gepubliceerd 14,5 km (10-K: terminal about nine miles van de molen); geen via-punten (enige weg op het eiland).
+    "zilver-greenscreek-onsan-molen-hawkinlet": {
+        "via": [
+            ("Greens Creek-molen (anker, ag-greenscreek-molen)", (-134.6391, 58.0826)),
+            ("Hawk Inlet-terminal (anker, ag-hawkinlet-kade)",   (-134.7550, 58.1261)),
+        ],
+        "id": "ag-greenscreek-hawkinlet",
+        "naam": "Greens Creek-molen -> Hawk Inlet-terminal (privé-haulroad, OSM tertiary)",
+        "extracts": ["us-alaska"],
+        "refs": [],
+        "gepubliceerdKm": 14.5,
+        "bronnoot": "Hecla 10-K FY2025: Hawk Inlet marine terminal about nine miles (14,5 km) from the mill; OSM-ways 10,3 + 4,1 = 14,4 km",
+        "vensterKm": 15,
+        "corridorKlassen": ["tertiary"],
+        "trimStaart": True,
+        "uit": "zilver-greenscreek-onsan-weg-molen-hawkinlet.geojson",
+    },
+    # ── Routebrief kobalt-ningbo-quzhou, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Ningbo Beilun-kade -> Huayou Quzhou: G1512 (Yongjin) -> G60 Jinhua-Quzhou. Geen wegkm gepubliceerd (hemelsbreed 314 km).
+    "kobalt-ningbo-quzhou-ningbo-quzhou": {
+        "via": [
+            ("Beilun Container Terminal Phase 2 (anker, hergebruikt)", (121.8695, 29.9353)),
+            ("G1512 beginpunt west Ningbo",                           (121.4199, 29.8043)),
+            ("G1512 Shengzhou",                                       (120.8699, 29.5813)),
+            ("G1512 Dongyang",                                        (120.2652, 29.3167)),
+            ("G1512/G60 aansluiting Jinhua-oost",                     (119.8563, 29.2335)),
+            ("G60 Longyou",                                           (119.1202, 29.0506)),
+            ("Huayou Quzhou (anker)",                                 (118.8618, 28.8731)),
+        ],
+        "id": "co-ningbo-quzhou", "naam": "Ningbo-kade -> Huayou Quzhou (G1512 + G60)",
+        "extracts": ["china"], "refs": ["G1512", "G60"],
+        "gepubliceerdKm": None, "bronnoot": "hemelsbreed 314 km, geen wegkm",
+        "vensterKm": 40, "uit": "kobalt-ningbo-quzhou-weg-ningbo-quzhou.geojson",
+    },
+    # ── Routebrief lithium-syvajarvi-kokkola, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Spodumeenconcentraat Paivaneva-concentrator (Kaustinen) -> Keliber-raffinaderij Kokkola:
+    # Malmitie/Rikastetie -> weg 63 -> weg 13 (Kokkolantie) -> weg 8 -> Satamatie (756).
+    # Gepubliceerd 66 km (Keliber via SMM/Mining Weekly); OSRM-referentie 72,5 km. Modus truck: Yle.
+    # eindToegangPrivaat: mijn- en terreinwegen bij de concentrator en in het industriepark.
+    "lithium-syvajarvi-kokkola-paivaneva-kokkola": {
+        "via": [
+            ("Paivaneva-concentrator / Syvajarvi (anker, li-paivaneva-plant)", (23.8019, 63.6627)),
+            ("Rikastetie x weg 63 (km ~10,5)",                                 (23.8712, 63.5831)),
+            ("weg 63 Toholammintie (km ~15)",                                  (23.8000, 63.5646)),
+            ("weg 13 Kokkolantie, 4 km NW van Kaustinen-centrum (km ~25)",     (23.6299, 63.5722)),
+            ("weg 13 Emetstrand (km ~40)",                                     (23.4017, 63.6479)),
+            ("weg 13 Nedervetilvagen (km ~50)",                                (23.3133, 63.7241)),
+            ("Satamatie (756) rotonde (km ~71)",                               (23.0735, 63.8381)),
+            ("Keliber-raffinaderij, Kokkola Industrial Park (anker, li-kokkola-raffinaderij)", (23.0529, 63.8521)),
+        ],
+        "id": "li-syvajarvi-kokkola",
+        "naam": "Paivaneva -> weg 63 -> weg 13 -> weg 8 -> Satamatie -> Keliber-raffinaderij Kokkola (aannemelijk: modus alleen door Yle genoemd)",
+        "extracts": ["finland"],
+        "refs": ["63", "13", "8", "756"],
+        "gepubliceerdKm": 66,
+        "bronnoot": "Keliber via SMM/Mining Weekly: 66 km naar Kokkola Industrial Park; OSRM-referentie 72,5 km",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "lithium-syvajarvi-kokkola-weg-paivaneva-kokkola.geojson",
+    },
+    # ── Routebrief ree-kangankunde-eneabba, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Monazietconcentraat (gebagd) Kangankunde -> Nacala-containerterminal: M1 -> M8 -> Ntaja
+    # Road (S131) -> T393 -> grens Nayuchi/Entre Lagos -> N13 (Cuamba, Nampula) -> N1/N8 via
+    # Namialo en Monapo. Modus niet gepubliceerd (truck = werkaanname, spoor 9 km oostelijk).
+    # gepubliceerdKm 766 = OSRM-INDICATIE (hemelsbreed 622 km, geen gepubliceerde wegkm): de
+    # +-15%-toets is een indicatie. Namialo/Monapo letterlijk uit profiel grafiet-balama-nacala.
+    # eindToegangPrivaat: de toegangsweg bij de mijn is 5 km onverhard (brief par. 7).
+    # ⚠️ Namialo-viapunt verschoven van het briefpunt (39.9882, -14.9231) naar de N8-vertex 0,22 km oostelijker:
+    # met corridorKlassen unclassified snapt het briefpunt op way 327752328, een losse unclassified-zijweg
+    # (eigen component) -> "geen wegpad". Zelfde plek, nu op de doorgaande weg.
+    "ree-kangankunde-eneabba-mijn-nacala": {
+        "via": [
+            ("Kangankunde-project, deposit-heuvel (anker, ree-kangankunde-mijn)", (34.9106, -15.1261)),
+            ("M1 x M8, NW van Balaka (buiten het centrum)",                       (34.8942, -14.9581)),
+            ("Ntaja, begin Ntaja Road (S131)",                                    (35.2270, -15.0703)),
+            ("Nayuchi, grens Malawi/Mozambique (= Entre Lagos)",                  (35.8731, -14.9793)),
+            ("N13, 18 km oostelijk van Cuamba (buiten de stad)",                  (36.7036, -14.7844)),
+            ("N13, westelijke aanloop Nampula",                                   (39.1227, -15.0132)),
+            ("Namialo, N8 (0,22 km van het briefpunt; briefpunt snapt op een zijweg-component)", (39.98712, -14.921401)),
+            ("Monapo",                                                            (40.2972, -14.9155)),
+            ("Porto de Nacala, containerterminal oostoever (anker, ree-nacala-kade)", (40.6673, -14.5383)),
+        ],
+        "id": "ree-kangankunde-nacala",
+        "naam": "Kangankunde -> M1 -> M8 -> Ntaja -> T393 -> Nayuchi -> N13 (Cuamba, Nampula) -> N1/N8 -> Nacala (aannemelijk: modus niet gepubliceerd)",
+        "extracts": ["malawi", "mozambique"],
+        "refs": ["M1", "M8", "M3", "S131", "T393", "N13", "N1", "N8", "N12"],
+        "gepubliceerdKm": 766,
+        "bronnoot": "OSRM-indicatie 765,4 km (140,7 Malawi + 624,7 Mozambique); hemelsbreed 622 km; geen gepubliceerde wegkm",
+        "vensterKm": 50,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "ree-kangankunde-eneabba-weg-mijn-nacala.geojson",
+    },
+    # ── Routebrief ree-kangankunde-eneabba, been b3 (LICHTE werkwijze M31 golf 8) ──
+    # Concentraat Port of Geraldton -> Iluka Eneabba-raffinaderij: John Willcock Link -> Brand
+    # Highway (Highway 1) via Dongara -> Iluka Operations Rd. gepubliceerdKm 156 = OSRM-INDICATIE
+    # (hemelsbreed 138 km, geen gepubliceerde wegkm). Aannemelijk: een bron voor de bestemming.
+    # eindToegangPrivaat: toegang tot de Iluka-mijnsite kan privaat zijn.
+    "ree-kangankunde-eneabba-geraldton-eneabba": {
+        "via": [
+            ("Port of Geraldton, pier met bulkschuren (anker, ree-geraldton-kade)", (114.5930, -28.7740)),
+            ("Brand Hwy, 4,6 km ZO van de pier (uitgang John Willcock Link)",        (114.6153, -28.7869)),
+            ("Brand Hwy, 7 km O van Dongara",                                        (115.0059, -29.2594)),
+            ("Brand Hwy x Iluka Operations Rd",                                      (115.2522, -29.8635)),
+            ("Iluka Eneabba Mine Site, Operations Rd (anker, ree-eneabba-raffinaderij)", (115.2695, -29.8702)),
+        ],
+        "id": "ree-geraldton-eneabba",
+        "naam": "Port of Geraldton -> John Willcock Link -> Brand Highway -> Iluka Operations Rd -> Eneabba (aannemelijk: een bron)",
+        "extracts": ["australie"],
+        "refs": ["Brand Highway", "John Willcock Link", "Highway 1", "1", "Iluka Operations Road"],
+        "gepubliceerdKm": 156,
+        "bronnoot": "OSRM-indicatie 155,7 km; hemelsbreed 138 km; geen gepubliceerde wegkm",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "ree-kangankunde-eneabba-weg-geraldton-eneabba.geojson",
+    },
+    # ── Routebrief pgm-booysendal-zondereinde, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck PGM-concentraat Northam Booysendal (Steelpoort/Mashishing) -> eigen Zondereinde-smelter (Northam, Limpopo):
+    # R540 (Dullstroom-Belfast) -> N4 (Belfast, Middelburg, Pretoria-oost/noordwest, Brits) -> R556 -> R510 (Northam).
+    # GEEN gepubliceerde wegkm: hemelsbreed 278 km; OSRM-indicatie 489,1 km (eigen meting, geen publicatie)
+    # -> gepubliceerdKm 489 is een indicatie, geen norm (verwacht 470-510 km). Via-punten uit brief §4, alle op de
+    # doorgaande weg (geen stadscentrum). corridorKlassen: de eerste ~33 km vanaf het anker liggen op lokale wegen
+    # (Boschfontein Road e.a., klasse niet gecontroleerd); eindToegangPrivaat voor de mijn- en smelterpoort.
+    "pgm-booysendal-zondereinde-booysendal-zondereinde": {
+        "via": [
+            ("Booysendal mijn en concentrator (anker pgm-booysendal-mijn)", (30.1124, -25.0956)),
+            ("R540 ten noorden van Dullstroom", (30.1494, -25.3599)),
+            ("N4 ten zuiden van Middelburg", (29.4640, -25.8323)),
+            ("N4 Pretoria-oost, begin N1/N4-ring", (28.2939, -25.7478)),
+            ("N4 Platinum Highway, noordwest van Pretoria", (28.1238, -25.6540)),
+            ("N4/R556-afslag ten westen van Brits", (27.6682, -25.7286)),
+            ("R556", (27.4288, -25.5354)),
+            ("R510 bij Northam", (27.2615, -24.9560)),
+            ("Northam Zondereinde-complex (anker pgm-zondereinde-mijnsmelter)", (27.3669, -24.8333)),
+        ],
+        "id": "pgm-booysendal-zondereinde-b1",
+        "naam": "Booysendal mijn en concentrator -> Zondereinde smelter (R540, N4, R556, R510)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R540", "N4", "R556", "R510"],
+        "gepubliceerdKm": 489,
+        "bronnoot": "OSRM, geen publicatie; hemelsbreed 278 km (indicatie, geen norm)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "pgm-booysendal-zondereinde-weg-booysendal-zondereinde.geojson",
+    },
+    # ── Routebrief goud-fidelity-dubai, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck goudbaren Fidelity Gold Refinery (1 George Drive, Msasa) -> HRE-vrachtloods landzijde:
+    # George Drive -> R5 -> Robert Mugabe Rd / Glenara Ave S -> Vitalis Zvinavashe Rd -> Joshua Nkomo Rd.
+    # GEEN gepubliceerde wegkm: hemelsbreed 9,1 km, OSRM-indicatie ~16 km (OSM-afgeleid) -> gepubliceerdKm 9 is
+    # hemelsbreeds, de +-15%-toets is een indicatie. Via-punten uit brief §4, op de doorgaande weg (geen centrum).
+    "goud-fidelity-dubai-fidelity-hre": {
+        "via": [
+            ("Fidelity Gold Refinery, 1 George Drive, Msasa (anker au-fidelity-refinery)", (31.1078, -17.8408)),
+            ("R5 Harare-Mutare Highway", (31.1078, -17.8365)),
+            ("Robert Mugabe Rd / Glenara Ave S", (31.0874, -17.8340)),
+            ("Vitalis Zvinavashe Rd", (31.0746, -17.8448)),
+            ("Joshua Nkomo Rd rotonde", (31.0733, -17.8687)),
+            ("Joshua Nkomo Rd afslag luchthaven", (31.0953, -17.9116)),
+            ("HRE vrachtloods landzijde (anker au-hre-cargo)", (31.0946, -17.9218)),
+        ],
+        "id": "goud-fidelity-dubai-b1",
+        "naam": "Fidelity (Msasa) -> HRE-vrachtterminal (George Drive -> R5 -> Robert Mugabe Rd -> Vitalis Zvinavashe Rd -> Joshua Nkomo Rd)",
+        "extracts": ["zimbabwe"],
+        "refs": [],
+        "gepubliceerdKm": 9,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 9,1 km; OSRM ~16 km (OSM-afgeleid, indicatie)",
+        "vensterKm": 20,
+        "eindToegangPrivaat": True,
+        "uit": "goud-fidelity-dubai-weg-fidelity-hre.geojson",
+    },
+    # ── Routebrief pgm-lacdesiles-kristiansand, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck Pd-rijk Ni-Cu-PGE-concentraat Lac des Iles-mill -> Glencore Sudbury Smelter (Falconbridge), aannemelijk: een bron (2010-contract).
+    # Mine Road (17 km, OSM-klasse onbevestigd) -> Hwy 527 -> Hwy 11/17 -> Hwy 17 (Nipigon, Wawa, Sault Ste. Marie, Blind River) -> Sudbury.
+    # gepubliceerdKm 1150 is GEEN wegkm maar een OSRM-indicatie (brief: hemelsbreed 718 km); de +-15%-toets is een indicatie.
+    # Via-punten uit brief §4, op de doorgaande weg, nooit in een stadscentrum (Thunder Bay, Wawa, Sault krijgen geen centrumpunt).
+    "pgm-lacdesiles-kristiansand-mijn-smelter": {
+        "via": [
+            ("Lac des Iles-mill, Impala Canada (anker pgm-lacdesiles-mijn)",     (-89.6192, 49.1625)),
+            ("Hwy 11/17, 0,5 km ONO van de Hwy 527-knoop NO van Thunder Bay",      (-89.1310, 48.5002)),   # brief-punt 48.4973,-89.1361 lag 45 m naast de weg (180-graden-spike van 90 m); verplaatst naar de doorgaande weg
+            ("Hwy 11/17-splitsing bij Nipigon, kant Hwy 17",                     (-88.2437, 49.0204)),
+            ("Hwy 17 / Hwy 101-knoop bij Wawa (buiten dorpscentrum)",            (-84.7845, 47.9708)),
+            ("Hwy 17 bij Blind River",                                           (-82.9268, 46.1857)),
+            ("Glencore Sudbury Smelter, Falconbridge (anker pgm-sudbury-smelter)", (-80.7993, 46.5786)),
+        ],
+        "id": "pgm-lacdesiles-smelter",
+        "naam": "Lac des Iles-mill -> Sudbury Smelter (Mine Road -> Hwy 527 -> Hwy 11/17 -> Hwy 17; aannemelijk: een bron)",
+        "extracts": ["canada"],
+        "refs": ["527", "11", "17", "Trans-Canada Highway"],
+        "gepubliceerdKm": 1150,
+        "bronnoot": "indicatie OSRM 1.120-1.165 km (OSM-routing, geen wegkm); hemelsbreed 718 km",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,   # Mine Road / mijnterrein kan access=private dragen
+        "uit": "pgm-lacdesiles-kristiansand-weg-mijn-smelter.geojson",
+    },
+    # ── Routebrief diamant-orapa-gaborone, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck ruwe diamant Orapa-mijn (Debswana) -> DTCB/DBGSS-campus Gaborone (aannemelijk: één bron, vervoerswijze niet gebrond):
+    # A30 (~6 km) -> A14 (Orapa-Palapye, ~248 km) -> A1 (Palapye-Mahalapye-Gaborone). gepubliceerdKm 529 = rome2rio (aggregator).
+    # Via-punten uit brief §4, alle op de doorgaande weg, buiten Serowe/Palapye/Mahalapye-centrum.
+    "diamant-orapa-gaborone-orapa-dtc": {
+        "via": [
+            ("Orapa-mijn, Debswana (anker dia-orapa-mine)",              (25.3694, -21.3083)),
+            ("A30/A14-knooppunt, 6,5 km oost van de mijn",               (25.4285, -21.3285)),
+            ("A14 bij Serowe (5 km ZO van het centrum)",                 (26.7439, -22.4209)),
+            ("A14/A1-knooppunt Palapye (westrand)",                      (27.0879, -22.5410)),
+            ("A1 bij Mahalapye (oostrand)",                              (26.8352, -23.1064)),
+            ("DTCB/DBGSS-campus Gaborone (anker dia-gaborone-dtc)",      (25.9144, -24.5859)),
+        ],
+        "id": "dia-orapa-dtc",
+        "naam": "Orapa-mijn -> A30 -> A14 (Serowe) -> Palapye -> A1 (Mahalapye) -> DTCB/DBGSS-campus Gaborone (aannemelijk: één bron)",
+        "extracts": ["botswana"],
+        "refs": ["A14", "A1", "A30"],
+        "gepubliceerdKm": 529,
+        "bronnoot": "rome2rio Orapa-Gaborone 529,1 km (aggregator); Wikipedia A14 ~248 km",
+        "vensterKm": 40,
+        "uit": "diamant-orapa-gaborone-weg-orapa-dtc.geojson",
+    },
+    # ── Routebrief uranium-stpetersburg-pierrelatte, been b2 (LICHTE werkwijze M31 golf 8) ──
+    # Truck verrijkt UF6 (Rosatom/Tenex-zending, aannemelijk: Pierrelatte 2022/2023) Duinkerken-kade -> Orano Tricastin:
+    # A25 (Lille) -> A1/A26 (Arras-Reims) -> A5 (Troyes) -> A31 (Langres-Dijon) -> A6 (Beaune) -> A46 (Lyon-oost) -> A7.
+    # GEEN gepubliceerde wegkm: gepubliceerdKm 767.6 = hemelsbreed tussen de ankers (indicatie, geen wegkm);
+    # OSRM-voorspelling 943-965 km, dus de lengtewaarschuwing (+25%) is verwacht. Via-punten uit brief §4 (OSRM-controle,
+    # op de doorgaande autoroute, nooit in een stadscentrum). eindToegangPrivaat: havenweg Duinkerken/Tricastin-terrein.
+    "uranium-stpetersburg-pierrelatte-duinkerken-tricastin": {
+        "via": [
+            ("Duinkerken-kade, Port Est (anker, u-duinkerken-kade)",     (2.3569, 51.0440)),
+            ("A25 ten westen van Lille",                                 (2.9602, 50.6277)),
+            ("A1/A26-knoop bij Arras",                                   (2.8972, 50.3136)),
+            ("A26/A4-knoop bij Reims",                                   (3.9683, 49.2397)),
+            ("A5-begin bij Troyes",                                      (4.1912, 48.2276)),
+            ("A5/A31 bij Langres",                                       (5.2237, 47.8994)),
+            ("A31/A6 bij Beaune",                                        (4.8697, 47.0195)),
+            ("A46 Lyon-oost (Genay-Neuville)",                           (4.9049, 45.8683)),
+            ("A7 bij Tain-l'Hermitage",                                  (4.8709, 45.0679)),
+            ("Orano Tricastin, Pierrelatte (anker, u-tricastin)",        (4.7167, 44.3250)),
+        ],
+        "id": "u-stpetersburg-pierrelatte-weg",
+        "naam": "Duinkerken-kade -> A25 -> A1/A26 -> A5 -> A31 -> A6 -> A46 (Lyon-oost) -> A7 -> Orano Tricastin "
+                "(aannemelijk: Pierrelatte 2022/2023, geen wegkm gepubliceerd)",
+        "extracts": ["fr-nord-pas-de-calais", "fr-picardie", "fr-champagne-ardenne", "fr-bourgogne", "fr-rhone-alpes"],
+        "refs": ["A 25", "A 1", "A 26", "A 4", "A 5", "A 31", "A 6", "A 46", "A 7"],
+        "gepubliceerdKm": 767.6,
+        "bronnoot": "hemelsbreed 767,6 km tussen de ankers, GEEN wegkm gepubliceerd (brief §2/§7); "
+                    "OSRM-voorspelling 943,4 km direct (via Lyon-centrum) en 965,4 km via A46-oost.",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,   # havenweg Duinkerken en terreinweg Tricastin kunnen access=private dragen
+        "uit": "uranium-stpetersburg-pierrelatte-weg-duinkerken-tricastin.geojson",
+    },
+    # ── Routebrief lithium-mtmarion-esperance, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck spodumeenconcentraat Mt Marion-mijn (MinRes/Ganfeng) -> Port of Esperance Berth 3 (road train): mijnweg
+    # (tertiary/unclassified) -> NH94 (Coolgardie-Esperance Hwy) -> Norseman -> NH1 -> Harbour Road (bypass naar de haven).
+    # gepubliceerdKm 370 = hele highway Coolgardie-Esperance (Wikipedia), GEEN Mt Marion->kade-km; OSRM 347,2; hemelsbreed
+    # 313,8 geen wegkm: de +-15%-toets is een indicatie, geen norm. Via-punten uit brief §4, alle op de doorgaande weg, buiten Norseman.
+    # corridorKlassen [tertiary, unclassified] nodig voor de mijnweg; eindToegangPrivaat voor de havenweg bij de kade.
+    "lithium-mtmarion-esperance-mtmarion-esperance": {
+        "via": [
+            ("Mt Marion-mijn (MinRes/Ganfeng, anker li-mtmarion-mijn)",  (121.4480, -31.0750)),
+            ("NH94 ten zuiden van de mijnafslag (Londonderry)",           (121.4230, -31.1524)),
+            ("NH94 bij Higginsville",                                     (121.6916, -31.7146)),
+            ("NH94 bij Iragul",                                           (121.6797, -32.0445)),
+            ("NH1 ten zuiden van Norseman (Dundas)",                      (121.7706, -32.2626)),
+            ("NH1 bij Salmon Gums",                                       (121.6815, -33.0703)),
+            ("NH1 bij Scaddan",                                           (121.7164, -33.4948)),
+            ("Harbour Road bypass (Chadwick)",                            (121.8866, -33.8462)),
+            ("Port of Esperance Berth 3 (anker li-esperance-kade)",       (121.9024, -33.8711)),
+        ],
+        "id": "li-mtmarion-esperance",
+        "naam": "Mt Marion -> Port of Esperance Berth 3 (mijnweg -> NH94 -> Norseman -> NH1 -> Harbour Road)",
+        "extracts": ["australie"],
+        "refs": ["94", "1", "Coolgardie-Esperance Highway", "Coolgardie Esperance Highway", "Harbour Road"],
+        "gepubliceerdKm": 370,
+        "bronnoot": "370 km = hele Coolgardie-Esperance Highway (Wikipedia), geen Mt Marion-kade-km; OSRM 347,2 km; hemelsbreed 313,8 km geen wegkm - de +-15%-toets is een indicatie",
+        "vensterKm": 50,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "trimStaart": True,
+        "eindToegangPrivaat": True,
+        "uit": "lithium-mtmarion-esperance-weg-mtmarion-esperance.geojson",
+    },
+    # ── Routebrief koper-salobo-pontadamadeira, been b1 (LICHTE werkwijze M31 golf 8) ──
+    # Truck koperconcentraat Salobo-concentrator (Vale Base Metals, Marabá) over de OSM-weg VS-12
+    # naar Vale-spoorterminal Parauapebas (Wheaton: "by road ... to Vale's existing rail terminal in Parauapebas").
+    # ⚠️ GEEN GEPUBLICEERDE WEGKM (brief §2/§7): hemelsbreed 74 km (berekend), OSM-pad 100 km (haalbaarheidstoets
+    #    99,8; OSRM 102,4), geen wegkm gebrond -> de ±15%-toets geldt als indicatie. Wegnaam in bronnen niet genoemd,
+    #    VS-12 is de OSM-ref; deels Vale-privéweg niet uit te sluiten.
+    # Via-punten = OSRM-vertices op VS-12 (voorspelling, geen bron); de scan kiest zelf. Laatste via vóór de stad.
+    "koper-salobo-pontadamadeira-salobo-parauapebas": {
+        "via": [
+            ("Salobo (Vale Base Metals) — mijn + concentrator, Marabá (anker cu-salobo-laad)", (-50.5263, -5.7852)),
+            ("VS-12 km ~20", (-50.4399, -5.9119)),
+            ("VS-12 km ~40", (-50.3125, -5.9329)),
+            ("VS-12 km ~60", (-50.1480, -5.9412)),
+            ("VS-12 km ~80", (-50.0013, -5.9713)),
+            ("VS-12 km ~90 — aanloop Parauapebas vóór de stad", (-49.9441, -5.9974)),
+            ("Parauapebas-station / Vale-spoorterminal (EFC) (anker cu-parauapebas-efc)", (-49.8949, -5.9942)),
+        ],
+        "id": "cu-salobo-pontadamadeira-b1",
+        "naam": "Salobo → VS-12 → Parauapebas-station (geen gepubliceerd wegnummer, OSM-ref VS-12)",
+        "extracts": ["brazilie"],
+        "refs": ["VS-12"],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm (brief §2/§7) — hemelsbreed 74 km (berekend), OSM-pad 100 km, "
+                    "OSRM 102,4 km. De ±15%-toets geldt hier als indicatie, niet als norm (werkwijze §1).",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "koper-salobo-pontadamadeira-weg-salobo-parauapebas.geojson",
+    },
     # ── Routebrief ree-larochelle-sanmarcos, been b3 (LICHTE werkwijze M31 golf 7) ──
     # Truck gescheiden REE-oxiden (NdPr/Dy/Tb) Barbours Cut Terminal, Houston -> Noveon Magnetics, San Marcos TX:
     # SH-146 -> SH-225 (La Porte/Pasadena) -> I-10 W (Katy Fwy, Sealy/Columbus, Flatonia/Waelder) -> afrit Luling ->

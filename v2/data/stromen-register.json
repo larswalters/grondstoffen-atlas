@@ -2184,6 +2184,230 @@
    "label": "Prigorodnoye → Sodegaura",
    "aan": true,
    "noot": "M31 · golf 8 (2026-10-09): Sachalin-2 LNG-plant Prigorodnoje, 805 m-jetty, LNG-tanker via MARNET (Okhotskzee, Kurilen-passage, Pacifische kust) naar Sodegaura in Tokiobaai; Sodegaura aannemelijk op een bron."
+  },
+  {
+   "sleutel": "gr-ed",
+   "bestand": "stroomroute-grafiet-epanko-duisburg.json",
+   "grondstof": "grafiet",
+   "label": "Epanko → Duisburg",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): vlokgrafiet van Epanko (Tanzania) per truck via Ifakara, Kidatu en T1 naar Dar es Salaam, per zeeschip naar Rotterdam en per Rijn-binnenvaart naar Duisburg Becken A (aannemelijk)"
+  },
+  {
+   "sleutel": "ni-ts",
+   "bestand": "stroomroute-nikkel-thompson-sudbury.json",
+   "grondstof": "nikkel",
+   "label": "Thompson → Sudbury",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): nikkelconcentraat van Vale Thompson (Manitoba) per spoor via The Pas, Winnipeg, Hornepayne en Capreol naar het Copper Cliff-complex in Sudbury, 2.696 km."
+  },
+  {
+   "sleutel": "ree-oy",
+   "bestand": "stroomroute-ree-oscom-yokohama.json",
+   "grondstof": "ree",
+   "label": "OSCOM → Yokohama",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): IREL-materiaal van OSCOM Chatrapur gaat per truck naar Toyotsu Rare Earths India (Atchutapuram), per truck naar Visakha Container Terminal en per zeeschip naar Honmoku Futo Yokohama; aannemelijk, levering opgeschort 14-06-2025"
+  },
+  {
+   "sleutel": "pgm-mr",
+   "bestand": "stroomroute-pgm-modikwa-rustenburg.json",
+   "grondstof": "pgm",
+   "label": "Modikwa → Rustenburg",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Modikwa-concentraat per truck over de R37 naar de Polokwane-smelter, matte (aannemelijk) via N1 en N4 naar het ACP in het Waterval-complex bij Rustenburg"
+  },
+  {
+   "sleutel": "li-mn",
+   "bestand": "stroomroute-lithium-manono-ningbo.json",
+   "grondstof": "lithium",
+   "label": "Manono → Ningbo",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): spodumeenconcentraat van de Manono Northeast-plant per truck (RN33) naar Kalemie, per meerveer naar Kigoma, per spoor naar Dar es Salaam en per zeeschip naar Ningbo-Beilun (aannemelijk: één bron)."
+  },
+  {
+   "sleutel": "ag-es",
+   "bestand": "stroomroute-zilver-escondida-guixi.json",
+   "grondstof": "zilver",
+   "label": "Escondida → Guixi",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): zilver in Escondida-koperconcentraat per slurryleiding naar Coloso, bulkschip naar Beilun, spoor naar de Jiangxi Copper-smelter Guixi (aannemelijk: één bron)."
+  },
+  {
+   "sleutel": "kolen-bm",
+   "bestand": "stroomroute-kolen-brookwood-mobile.json",
+   "grondstof": "kolen",
+   "label": "Mine 7 Brookwood → McDuffie Mobile",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): cokeskool uit Warrior Met Mine 7 bij Brookwood per CSX-spoor via Birmingham en Montgomery naar de McDuffie Coal Terminal in Mobile, een spoorbeen zonder zeebeen."
+  },
+  {
+   "sleutel": "co-mh",
+   "bestand": "stroomroute-kobalt-monchegorsk-harjavalta.json",
+   "grondstof": "kobalt",
+   "label": "Monchegorsk → Harjavalta",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Ni-Co-matte van Severonickel (Kola MMC) per spoor via Petrozavodsk, Volkhov en Vainikkala naar Norilsk Nickel Harjavalta, letterlijke kopie van de nikkelstroom (aannemelijk: één bron, kobaltaandeel niet gemeten). Zelfde fysieke route als nikkel-monchegorsk-harjavalta (Severonickel-matte met kobalt als bijproduct); de keten staat in beide grondstoffen."
+  },
+  {
+   "sleutel": "u-lm",
+   "bestand": "stroomroute-uranium-langerheinrich-metropolis.json",
+   "grondstof": "uranium",
+   "label": "Langer Heinrich → Metropolis",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): U3O8 van Langer Heinrich per truck naar Walvis Bay, per zeeschip naar Montreal en per truck via Champlain naar ConverDyn Metropolis Works. Let op: bestand van 571 KB (lange spoor- en zeebenen), de zwaarste keten van de atlas; de LOD-bundel laadt hem alleen in grof formaat tot er ingezoomd wordt."
+  },
+  {
+   "sleutel": "gas-at",
+   "bestand": "stroomroute-gas-aguadulce-tuxpan.json",
+   "grondstof": "gas",
+   "label": "Agua Dulce → Tuxpan",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Valley Crossing (Enbridge, stippel) van Agua Dulce naar de Texaanse kust en de 42-inch Sur de Texas-Tuxpan onder de Golf van Mexico naar het meetstation bij Tuxpan."
+  },
+  {
+   "sleutel": "olie-apr",
+   "bestand": "stroomroute-olie-allen-puertorosales.json",
+   "grondstof": "olie",
+   "label": "Allen → Puerto Rosales",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Vaca Muerta-ruwe olie per Oldelval-leiding L1 (512,8 km, OSM) van pompstation Allen naar het Oiltanking Ebytem-tankenpark bij Puerto Rosales."
+  },
+  {
+   "sleutel": "dia-an",
+   "bestand": "stroomroute-diamant-antwerpen-newyork.json",
+   "grondstof": "diamant",
+   "label": "Antwerpen → New York",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): gepolijste diamant van het AWDC in Antwerpen per truck naar Brucargo, per vrachtvlucht (grootcirkel, aannemelijk) naar JFK en per truck naar de 47th Street Diamond Exchange."
+  },
+  {
+   "sleutel": "au-go",
+   "bestand": "stroomroute-goud-guyana-ottawa.json",
+   "grondstof": "goud",
+   "label": "Guyana → Ottawa",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Gold Board-goud per truck naar GEO, per vrachtvlucht (aannemelijk) naar YYZ en per truck over Hwy 401, 416 en 417 naar de RCM in Ottawa"
+  },
+  {
+   "sleutel": "cu-me",
+   "bestand": "stroomroute-koper-morenci-elpaso.json",
+   "grondstof": "koper",
+   "label": "Morenci → El Paso",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Morenci-concentraat per spoor via Lordsburg naar de Miami-smelter, anodes per spoor via Bowie, Lordsburg en Deming naar de El Paso-raffinaderij; volledig spoor, geen zee"
+  },
+  {
+   "sleutel": "gr-ba",
+   "bestand": "stroomroute-grafiet-balama-abudhabi.json",
+   "grondstof": "grafiet",
+   "label": "Balama → Abu Dhabi",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Syrah-vlokfines van Balama per truck naar Pemba en per zeeschip door Hormuz naar Khalifa Port voor de nog niet gebouwde NextSource-anodefabriek; reservestreng, volume nul."
+  },
+  {
+   "sleutel": "ni-mc",
+   "bestand": "stroomroute-nikkel-matsusaka-clydach.json",
+   "grondstof": "nikkel",
+   "label": "Matsusaka → Clydach",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Vale-nikkeloxide van Matsusaka per zee via Suez naar Cardiff en per truck over de M4 naar de Vale Clydach-raffinaderij (aannemelijk: één bron voor Cardiff)."
+  },
+  {
+   "sleutel": "pgm-ec",
+   "bestand": "stroomroute-pgm-eastboulder-columbus.json",
+   "grondstof": "pgm",
+   "label": "East Boulder → Columbus",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): PGM-concentraat (2E) per truck van de East Boulder Mine via MT-298 en I-90 naar het Columbus Metallurgical Complex; stoppunt smelter."
+  },
+  {
+   "sleutel": "li-ca",
+   "bestand": "stroomroute-lithium-cauchari-antofagasta.json",
+   "grondstof": "lithium",
+   "label": "Cauchari-Olaroz → Antofagasta",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Cauchari-Olaroz-carbonaat per truck over Paso de Jama naar de ATI-kade van Antofagasta en per containerschip naar de Yangtze-monding (aannemelijk: één bron)"
+  },
+  {
+   "sleutel": "li-gkw",
+   "bestand": "stroomroute-lithium-greenbushes-kwinana.json",
+   "grondstof": "lithium",
+   "label": "Greenbushes → Kwinana (Tianqi TLK)",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): spodumeenconcentraat per truck (aannemelijk: één bron) van de Greenbushes-loods via de South Western Hwy, Bunbury-omleiding en Kwinana Fwy naar Tianqi's hydroxidefabriek TLK in Kwinana"
+  },
+  {
+   "sleutel": "ag-kt",
+   "bestand": "stroomroute-zilver-kenohill-tacoma.json",
+   "grondstof": "zilver",
+   "label": "Keno Hill → Puget Sound",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Ag-Pb-concentraat van de Hecla Keno Hill-molen (Yukon) per truck over de Silver Trail en Klondike Highway naar Skagway en per barge door de Inside Passage naar Puget Sound; haven onbepaald (aannemelijk: Seattle)."
+  },
+  {
+   "sleutel": "ag-bl",
+   "bestand": "stroomroute-zilver-buenavista-lacaridad.json",
+   "grondstof": "zilver",
+   "label": "Buenavista → La Caridad",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): zilverhoudend koperconcentraat van Buenavista (Cananea) per truck via SON 89, Bacoachi en MEX 17 naar de La Caridad-smelter en edelmetaalraffinaderij bij Nacozari (aannemelijk: één bron)."
+  },
+  {
+   "sleutel": "kolen-epd",
+   "bestand": "stroomroute-kolen-eldescanso-puertodrummond.json",
+   "grondstof": "kolen",
+   "label": "El Descanso → Puerto Drummond",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): thermische kolen uit dagbouw El Descanso per Drummond-/Fenoco-spoor ca. 210 km naar Puerto Drummond, stoppunt kade"
+  },
+  {
+   "sleutel": "kolen-pz",
+   "bestand": "stroomroute-kolen-pniowek-zdzieszowice.json",
+   "grondstof": "kolen",
+   "label": "Pniówek → ArcelorMittal Poland Zdzieszowice",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): cokeskool uit KWK Pniówek (JSW) per spoor via Żory, Rybnik, Nędza en Kędzierzyn-Koźle naar de AMP-cokerij Zdzieszowice, aannemelijk (JSW → AMP gebrond, Pniówek specifiek niet)"
+  },
+  {
+   "sleutel": "gas-cp",
+   "bestand": "stroomroute-gas-camisea-pampamelchorita.json",
+   "grondstof": "gas",
+   "label": "Camisea → Pampa Melchorita",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Camisea-gas uit het Malvinas-plant gaat per ondergrondse OSM-leiding (TGP-trunk en Peru LNG-leiding, 601 km) naar de Peru LNG-fabriek bij Pampa Melchorita; stoppunt is de fabriek."
+  },
+  {
+   "sleutel": "gas-sq",
+   "bestand": "stroomroute-gas-saihrawl-qalhat.json",
+   "grondstof": "gas",
+   "label": "Saih Rawl → Qalhat",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): PDO-gasleiding van 352 km (OSM-way 589407065) van Saih Rawl naar Oman LNG in Qalhat, LNG buiten Hormuz."
+  },
+  {
+   "sleutel": "olie-dk",
+   "bestand": "stroomroute-olie-doba-kribi.json",
+   "grondstof": "olie",
+   "label": "Doba → Kribi",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Doba-olie van het Kome-CPF per één doorgetrokken OSM-leiding van 1.077 km (TOTCO/COTCO) naar de kust bij Kribi en door de onderzeese buis tot het OSM-einde aan de FSO-zijde."
+  },
+  {
+   "sleutel": "olie-ti",
+   "bestand": "stroomroute-olie-trieste-ingolstadt.json",
+   "grondstof": "olie",
+   "label": "Triëst → Ingolstadt",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): ruwe olie per Transalpine Pipeline (40 inch, 460,5 km OSM tegen 465 gepubliceerd) van het SIOT-tankenpark Triëst naar het TAL-tankenpark Lenting bij Ingolstadt, één leidingbeen zonder zee"
+  },
+  {
+   "sleutel": "dia-rn",
+   "bestand": "stroomroute-diamant-ramatgan-newyork.json",
+   "grondstof": "diamant",
+   "label": "Ramat Gan → New York",
+   "aan": true,
+   "noot": "M31 · golf 9 (2026-10-09): Gepolijste diamant van de Israel Diamond Exchange per stippel-last-mile naar Maman TLV, per vrachtvlucht (grootcirkel, aannemelijk) naar JFK en per truck (kopie) naar de 47th Street Diamond Exchange"
   }
  ],
  "uitgesloten": [
