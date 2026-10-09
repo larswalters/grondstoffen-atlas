@@ -43,13 +43,13 @@
 import * as THREE from "three";
 import {
   kleurVan, beenPunten, GRONDSTOF_KLEUR, stijlIndex, LIJNMODI,
-} from "./stroomstijl.js?v=132";
+} from "./stroomstijl.js?v=133";
 import {
   BeenInfo, maakLijnMateriaal, zetLijnSchaal, zetKmPerPx, zetPatronenAan, maakSegmentGeometrie, bouwLijn,
   ROL_BASIS, ROL_FIJN, ROL_ALTIJD,
-} from "./stroomlijn.js?v=132";
-import { bouwGloed } from "./gloed.js?v=132";
-import { bouwKometen } from "./stroomkometen.js?v=132";
+} from "./stroomlijn.js?v=133";
+import { bouwGloed } from "./gloed.js?v=133";
+import { bouwKometen } from "./stroomkometen.js?v=133";
 
 const AARDSTRAAL_KM = 6371;
 const D2R = Math.PI / 180;
@@ -76,12 +76,22 @@ export const LOD = {
 // Gewicht van een stroomknoop — EEN HEURISTIEK, GEEN METING (een marker draagt
 // alleen naam/lon/lat): uiteinden (de mijn, de eindfabriek) zwaarder dan een
 // overslagpunt. Zodra het metadatabestand volume per been draagt hoort dit
-// dáár uit te komen. Letterlijk de waarden van de oude exacte-lijnlaag (?v=119).
-const KNOOPGLOED = { uiteindeKm: 3.4, uiteindeHelder: 0.90, overslagKm: 2.2, overslagHelder: 0.62 };
-// Sites: straal en helderheid uit het gewicht, genormaliseerd PER GRONDSTOF
-// (de oude gloedknopenlaag, 2026-09-26): koper verandert niet als er een
-// grondstof met grotere getallen bijkomt (kolen in Mt/j).
-const SITEGLOED = { kmPerWortelGewicht: 0.30 };
+// dáár uit te komen. Sinds golf 2 (2026-10-09) uitgedrukt als q op dezelfde
+// schaal als een site: de oude helderheden 0,90 en 0,62 (?v=119) waren
+// 0,28 + 0,72·q, dus q = 0,86 en 0,47 — de rangorde uiteinde > overslag blijft.
+// ⚠️ De oude straal (3,4 / 2,2 km) vervalt: de maat volgt nu uit q, net als bij
+// een site, zodat een stroomknoop en een site met dezelfde q even groot zijn.
+const KNOOPGLOED = { uiteindeQ: 0.86, overslagQ: 0.47 };
+// Sites: q = √(gewicht / max gewicht van die grondstof) — genormaliseerd PER
+// GRONDSTOF (de oude gloedknopenlaag, 2026-09-26): koper verandert niet als er
+// een grondstof met grotere getallen bijkomt (kolen in Mt/j). q stuurt in
+// gloed.js zowel de wereldmaat als de helderheid.
+// ⚠️ GOLF 2: tot ?v=132 was de STRAAL 0,30·√gewicht km, ongenormaliseerd —
+// en het gewicht staat per grondstof in een andere eenheid (uranium t U tot
+// 15.000 → 36,7 km, koper kt tot 1.305 → 10,8 km, diamant Mct tot 11,9 → 1 km).
+// Dat gaf de "waas bij inzoomen". Alleen de helderheid was genormaliseerd.
+// ⚠️ Een gewicht van 0 of ontbrekend geeft q = 0 (de kleinste knoop), niet meer
+// een kunstmatige vloer van gewicht 1 (die gaf diamant, max 11,86, q ≥ 0,29).
 const KLEUR_ONBEKEND = 0xbfbfbf;
 
 // De witte precisiestip van het routewerk (bouwmodus): kern + ring, exact de
@@ -380,15 +390,16 @@ export async function laadStroombundel(opts) {
   const gloedKnopen = [];
   const siteIdx = new Map(grondstoffen.map((g) => [g, []]));
   const maxGewicht = new Map();
-  for (const s of index.sites) maxGewicht.set(s.grondstof, Math.max(maxGewicht.get(s.grondstof) || 1, s.gewicht || 1));
+  const gewichtVan = (s) => Math.max(0, Number(s.gewicht) || 0);
+  for (const s of index.sites) maxGewicht.set(s.grondstof, Math.max(maxGewicht.get(s.grondstof) || 0, gewichtVan(s)));
   for (const s of index.sites) {
-    const g = Math.max(1, s.gewicht || 1);
+    const gMax = maxGewicht.get(s.grondstof);
     (siteIdx.get(s.grondstof) || siteIdx.set(s.grondstof, []).get(s.grondstof)).push(gloedKnopen.length);
     gloedKnopen.push({
-      lon: s.lon, lat: s.lat, straalKm: SITEGLOED.kmPerWortelGewicht * Math.sqrt(g),
+      lon: s.lon, lat: s.lat,
       kleur: GRONDSTOF_KLEUR[s.grondstof] ?? KLEUR_ONBEKEND,
-      // capaciteit is het gewicht in de optelling: stuurt wereldmaat én helderheid
-      helder: 0.28 + 0.72 * Math.sqrt(g / maxGewicht.get(s.grondstof)),
+      // capaciteit is het gewicht in de optelling: q stuurt wereldmaat én helderheid
+      q: gMax > 0 ? Math.sqrt(gewichtVan(s) / gMax) : 1,
     });
   }
   const knoopIdx = new Map();     // sleutel → [gloedindex]
@@ -401,16 +412,36 @@ export async function laadStroombundel(opts) {
       lijst.push(gloedKnopen.length);
       gloedKnopen.push({
         lon: m.lon, lat: m.lat, kleur: GRONDSTOF_KLEUR[s.grondstof] ?? KLEUR_ONBEKEND,
-        straalKm: uiteinde ? KNOOPGLOED.uiteindeKm : KNOOPGLOED.overslagKm,
-        helder: uiteinde ? KNOOPGLOED.uiteindeHelder : KNOOPGLOED.overslagHelder,
+        q: uiteinde ? KNOOPGLOED.uiteindeQ : KNOOPGLOED.overslagQ,
+        // ⚠️ Een marker is het routeeranker van een site: hij ligt vaak exact op
+        // een site of op de marker van een andere stroom (Ningbo ×6, Valcambi ×5),
+        // of een paar km verderop op de laadplek ervan. Dan telt hij in gloed.js
+        // niet dubbel — samenvallen binnen 250 m, en overdragen aan zijn site
+        // zolang ze op het scherm over elkaar liggen (anders werd koper ×2 goud).
+        // Het aan/uit per stroom blijft per marker werken (zie de kop van gloed.js).
+        samenvallen: true,
       });
       stipPos.push(m.lon, m.lat);
       stipStroom.push(s.sleutel);
     });
     knoopIdx.set(s.sleutel, lijst);
   }
-  const gloed = bouwGloed(gloedKnopen, radius, 7.6);
+  // ⚠️ GOLF 2: DE GLOED LIGT ONDER LIJNEN EN KOMETEN (7,45 < lijnen 7,5 < kometen
+  // 7,55); tot ?v=132 lag hij erboven (7,6). Een gekleurde laag die informatie
+  // draagt hoort niet ONDER additief licht (de regel van 2026-08-07): met de nu
+  // felle kern liep er anders een gele streep door elke kopermarker (lijn 1,0 +
+  // kern ≈ 1,0 per kanaal geklemd) en wasten kometen weg in een hotspot. Nu ligt
+  // de lijn scherp óver het lichtpunt en blijft de komeet zichtbaar.
+  const gloed = bouwGloed(gloedKnopen, radius, 7.45);
   groep.add(gloed.groep);
+  // Het puntgrootte-plafond van deze GPU (vaak 1024, op sommige lager): één keer
+  // lezen. De gloed blijft daar in css-px ruim onder (haloMaxPx 160 × pixelRatio).
+  const glCtx = renderer.getContext();
+  const puntBereik = glCtx.getParameter(glCtx.ALIASED_POINT_SIZE_RANGE);
+  const gloedScherm = {
+    dpr: 1, breedte: 1, hoogte: 1, bufferB: 1, bufferH: 1,
+    maxPunt: puntBereik && puntBereik[1] > 0 ? puntBereik[1] : 1024,
+  };
 
   // ── precisiestippen (bouwmodus) ──────────────────────────────────────────
   const nStip = stipPos.length / 2;
@@ -608,7 +639,13 @@ export async function laadStroombundel(opts) {
     }
 
     if (bewegingAan) kometen.update(dt, camLocaal, perEenheid);
-    gloed.update(camLocaal, perEenheid);
+    // ⚠️ De gloed rekent in CSS-px (perEenheid) maar gl_PointSize is device-px:
+    // de pixelRatio moet mee. Zonder die factor kreeg een telefoon op ?v=132 een
+    // pixel-minimum van 17 css-px en de halve wereldmaat (symptoom 3 van Lars).
+    gloedScherm.dpr = renderer.getPixelRatio();
+    gloedScherm.breedte = cssW; gloedScherm.hoogte = cssH;
+    gloedScherm.bufferB = canvas.width; gloedScherm.bufferH = canvas.height;
+    gloed.update(camLocaal, perEenheid, gloedScherm);
     if (stippen.visible) {
       const d = camLocaal.length();
       const horizon = d > radius ? radius / d : 1;
@@ -654,6 +691,9 @@ export async function laadStroombundel(opts) {
       zetAlleBanen();
     },
     zetGloed(aan) { gloedAan = !!aan; pasAanToe(); },
+    /** De gloedlaag zelf, voor bijstellen in de console (werkt vanaf het
+     *  volgende frame): `ATLAS.gloed.afstemming.haloPiek = [0.25, 0.10]`. */
+    gloed,
     zetBeweging(aan) { bewegingAan = !!aan; kometen.groep.visible = bewegingAan; },
     get kleurModus() { return kleurModus; },
     get lijnModus() { return lijnModus; },
@@ -672,7 +712,7 @@ export async function laadStroombundel(opts) {
         niveau, kmPerCssPx: +kmPerCssPx.toFixed(3), fijnSegmenten,
         segmentenL0: L0.segmenten, segmentenL1: L1.segmenten, segmentenLucht: luchtSg.geo.instanceCount,
         fijnResident: [...fijnResident.entries()].filter(([, v]) => v === "klaar").map(([k]) => k),
-        kometen: kometen.stats, gloedKnopen: gloed.aantal,
+        kometen: kometen.stats, gloedKnopen: gloed.aantal, gloedLichtpunten: gloed.fysiek,
         msLaden: Math.round(tLaden - t0), msDecoderen: Math.round(tDecode - tLaden),
         bundelVersie, kleurModus, lijnModus,
       };

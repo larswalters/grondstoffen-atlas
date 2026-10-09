@@ -66,6 +66,12 @@ void main() {
 `;
 // Een HARDE kern (bijna verzadigde schijf tot 45% van de straal) met een korte
 // halo eromheen, zodat een deeltje een objectje is en geen wolkje.
+// ⚠️ KLEURRUIMTE (golf 2, 2026-10-09): `kleur` is LINEAIR (THREE.Color, met
+// ColorManagement aan in r185) en moet terug naar het uitvoerformaat — exact
+// zoals de lijn (LineMaterial) en de gloed (gloed.js) dat doen. Tot ?v=132
+// ontbrak <colorspace_fragment> en ging lineair het scherm op: het staarteind
+// van een koperkomeet was (255, 65, 8) in plaats van ff8a30, dus de komeet had
+// niet de kleur van zijn eigen lijn.
 const FRAG = `
 precision highp float;
 varying vec3 vKleur;
@@ -77,6 +83,7 @@ void main() {
   float kern = 1.0 - smoothstep(0.42, 0.62, d);
   float halo = exp(-4.5 * d * d) * 0.45;
   gl_FragColor = vec4(vKleur, clamp(kern + halo, 0.0, 1.0) * vAlfa);
+  #include <colorspace_fragment>
 }
 `;
 
@@ -135,6 +142,7 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
   groep.add(punten);
 
   const c = new THREE.Color();
+  const srgb = { r: 0, g: 0, b: 0 };
   function kleurDrager(bi) {
     const r = lijnKleur[bi * 3], g = lijnKleur[bi * 3 + 1], b = lijnKleur[bi * 3 + 2];
     for (let k = 0; k < K; k++) {
@@ -143,20 +151,27 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
         const u = j / T;                       // 0 = kop, 1 = staarteind
         // De KOP is bijna wit; de staart zakt terug naar de lijnkleur, zodat je
         // aan de kleur ziet wát er beweegt.
+        // ⚠️ De menging gebeurt in sRGB (wat je ziet) en gaat daarna lineair de
+        // buffer in, want de shader zet terug. Mengen in lineaire ruimte maakt de
+        // staart bleek: halverwege een koperstaart (255, 193, 168) in plaats van
+        // (255, 182, 126) — de staart verloor zijn grondstofkleur.
         const w = (1 - u) * 0.75;
-        dKleur[i * 3] = r + (1 - r) * w;
-        dKleur[i * 3 + 1] = g + (1 - g) * w;
-        dKleur[i * 3 + 2] = b + (1 - b) * w;
+        c.setRGB(r + (1 - r) * w, g + (1 - g) * w, b + (1 - b) * w, THREE.SRGBColorSpace);
+        dKleur[i * 3] = c.r;
+        dKleur[i * 3 + 1] = c.g;
+        dKleur[i * 3 + 2] = c.b;
       }
     }
   }
 
-  /** De lijnkleur van een been zetten (de bundel roept dit bij elke kleurwissel). */
+  /** De lijnkleur van een been zetten (de bundel roept dit bij elke kleurwissel).
+   *  `lijnKleur` bewaart hem in sRGB, de kleurruimte waarin kop en staart mengen. */
   function zetKleur(been, hex) {
     const bi = slotVanBeen.get(been);
     if (bi === undefined) return;
     c.setHex(hex);
-    lijnKleur[bi * 3] = c.r; lijnKleur[bi * 3 + 1] = c.g; lijnKleur[bi * 3 + 2] = c.b;
+    c.getRGB(srgb, THREE.SRGBColorSpace);
+    lijnKleur[bi * 3] = srgb.r; lijnKleur[bi * 3 + 1] = srgb.g; lijnKleur[bi * 3 + 2] = srgb.b;
     kleurDrager(bi);
   }
   function commitKleur() { attrKleur.needsUpdate = true; }

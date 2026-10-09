@@ -36,7 +36,7 @@ import * as THREE from "three";
 import { LineMaterial } from "three/addons/lines/LineMaterial.js";
 import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
-import { LIJNSTIJL } from "./stroomstijl.js?v=132";
+import { LIJNSTIJL } from "./stroomstijl.js?v=133";
 
 export const TEX_BREEDTE = 1024;    // benen per textuur; de baker faalt luid boven dit getal
 export const VLAG_AAN = 1;          // bit 0: de HUD heeft dit been aan
