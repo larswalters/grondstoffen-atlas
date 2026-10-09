@@ -1,7 +1,15 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 7 live `?v=136`, 221 stromen)*
+*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
 
 
+
+## 🔴 NIEUW 2026-10-09 (avond) — na M31 golf 8+9 live
+
+1. **Lars test op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=138 (300 stromen): te druk bij zoom? lichtjes op 14 km te zwak (`haloPiek`, `uitwaaier`)?
+2. **Besluit Lars: HDR-doel voor de gloed?** (ongewijzigd.)
+3. **15 reserve-assen klaar voor een volgende golf** (getoetst): grafiet-vittangi-lulea · pgm-mototolo-rustenburg · lithium-goulamina-yangtze · lithium-finniss-ningbo · zilver-antofagasta-hamburg · kolen-hambach-niederaussem · kolen-gevra-korba · kobalt-cdm-tongxiang · uranium-stpetersburg-columbia · uranium-walvisbay-malvesi · gas-portofmorgan-manhattan · gas-asaluyeh-ankara · olie-haoudelhamra-skikda · olie-gdansk-schwedt · goud-arezzo-valcambi. Het script bouw je met `v2/tools/golf/maak_golf9.py` (leest de resultaten van de vorige golf).
+4. **Gereedschap:** `pyosmium` vrijgeven (Lars) of `wegscan_puur.py` als vast pad houden · Firecrawl-credits zijn op · `uranium-langerheinrich-metropolis` is 571 KB.
+5. **Rest van golf 2 (LAR-618):** stadslichten (download pas na akkoord), labels per zoomband, LAR-480.
 
 ## 🔴 NIEUW 2026-10-09 (middag) — na M31 golf 7 live
 

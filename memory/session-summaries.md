@@ -1,6 +1,12 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-09 (avond) - M31 golf 8+9 live op `?v=138` (commits `3bee7fb` + `41baae8`)
+
+Lars: *"Kan je nog een grote golf doen want ik heb nog veel limiet en hierna heb ik weer een lager abonnement."*
+
+Golf 8 `wf_cfa15bb3-16c` (181 agenten, 42,2 M tokens, 82 min): 12 reserve-assen + 39 nieuwe → 51 ketens. Golf 9 `wf_72cddf3d-a92` (112 agenten, 27,1 M tokens, 82 min): 14 reserve-assen + 14 nieuwe → 28 ketens. Geen uitval. 300 stromen, 300/300 op telefoon en desktop, 0 fouten. Nieuw: `wegscan_puur.py`, `agentR()`, texturen 2.048. Vault: [[2026-10-09-grondstoffen-atlas-m31-golf8-9-tot-300-stromen]].
+
 ## 2026-10-09 (middag) - M31 golf 7 live op `?v=136` (LAR-625 Done, commits `2ec7d6d` + `8d83374`)
 
 Lars: *"oke ziet er goed uit, kan je nog een grote ontwerpronde doen voor meer stromen"* (sessie- en weeklimiet ruim over, model weer op Sonnet).

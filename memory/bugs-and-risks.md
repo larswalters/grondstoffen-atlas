@@ -1,7 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 7)*
+*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
 
 
+
+## 🟡 NIEUW 2026-10-09 (avond) — uit golf 8+9
+
+41. **De bundelbaker brak bij >1.024 benen** (`MAX_BENEN`); opgelost met 2.048. Bij >2.048 benen opnieuw verdubbelen (de texturen zijn 2.048 × 1).
+42. **Een mijn-id kan van de mijn in de brief afwijken:** `kolen-blackthunder-scherer` is Buckskin → Plant Scherer (brief `kolen-buckskin-scherer.md`). Hernoemen = herbakken.
+43. **`uranium-langerheinrich-metropolis` is 571 KB;** de LOD-bundel vangt het op, maar het is de zwaarste keten.
+44. **Het 5-uursvenster is de knelpunt, niet de week:** 293 agenten brachten het op 99%. Plan max ~180 agenten per venster.
+45. **Zes ketens zijn dubbel met een andere grondstof** (nikkel/kobalt/PGM): bewust, in het register-`noot`.
 
 ## 🟡 NIEUW 2026-10-09 (middag) — uit golf 7
 

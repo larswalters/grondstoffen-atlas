@@ -288,3 +288,10 @@ metadatabestand (besluit 2026-08-06).
 - **Firecrawl-credits kunnen op zijn** (golf 7: -15/1000); gebruik de Wikipedia-API, OSM en WebFetch.
 - **Houd de toets-uitvoer kort**: een lange tekst in een StructuredOutput kan als ongeldige JSON eindigen (5 pogingen, agent faalt).
 - **Na de golf centraal:** `git status` op onverwachte bestanden (golf 7: een los bestand `Houston`), `centraal_check.py` voor contract/naden/stippel/markers, `sitelaag_check.py` voor sitepunten > 10 km van hun marker, `registreer_golf.py` voor register + sleutelbotsingen + noten, dan `bundel`, `bundel-check`, `?v=` en `BUNDEL_VERSIE`. Alle golf-scripts staan in `v2/tools/golf/` (de invoer van een script bouw je met `maak_golf7.py`; scripts als bestand starten, in LF, zie de lessen hierboven).
+
+## 9 · Lessen van golf 8 en 9 (2026-10-09, avond)
+
+- **Wegbenen via `python v2/tools/wegscan_puur.py --profiel <sleutel>`** (pure-Python pbf-lezer; `pyosmium` is geblokkeerd en Overpass valt uit). Tweede run met hetzelfde profiel is meteen klaar (cache `<profiel>-pbfways-*.json` in `build-cache/ais/graaf/`). Gebruik `maak_stroombeen_weg.py` niet rechtstreeks.
+- **Informatietextuur = 2.048 benen** (`stroomlijn.js` `TEX_BREEDTE`, `bak_stroombundel.py` `MAX_BENEN`); de bundel heeft nu 1.160 benen. Verdubbel opnieuw vóór 2.048.
+- **Retries zitten in het golf-script** (`agentR`: 3 pogingen, 60 s pauze, kortere-uitvoer-opdracht). Capaciteit: ~0,3 punt van het 5-uursvenster per agent; 293 agenten brachten het van 1% naar 99%.
+- **Mijn-id ≠ mijn in de brief kan voorkomen** (Black Thunder → Buckskin); het register-label volgt de brief. Zes ketens zijn bewust dubbel met een andere grondstof.

@@ -1,7 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 7: 39 nieuwe stromen, 221 totaal)*
+*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
 
 
+
+## 2026-10-09 (avond) — M31 golf 8+9
+
+- **2026-10-09 · ✅ LARS — nog een grote golf, want zijn limiet verliep en hij neemt daarna een lager abonnement.** Golf 8 (181 agenten) en golf 9 (112 agenten) op het resterende 5-uursvenster en de week. Geen aparte ontwerpwerkwijze; hetzelfde script met nieuwe invoer.
+- **2026-10-09 · Herstel in het script i.p.v. erna:** `agentR()` probeert elke agent tot drie keer met een pauze en korte-uitvoer-opdracht; een uitvallende agent kost dan niet meer een hele keten.
+- **2026-10-09 · Een eigen pure-Python wegscan als vast pad** (`wegscan_puur.py`) in plaats van `pyosmium`/Overpass; bewezen met byte-identieke geometrie.
+- **2026-10-09 · Informatietextuur 2.048 benen** (was 1.024) toen de bundel 1.066 benen kreeg; `MAX_BENEN` in de baker en `TEX_BREEDTE` in `stroomlijn.js` moeten gelijk blijven.
+- **2026-10-09 · Cross-grondstof-dubbelen mogen** als ze fysiek dezelfde lading volgen; het register-`noot` zegt het.
+- **2026-10-09 · Capaciteit plannen op het 5-uursvenster:** ~0,3 punt per agent; golf 8 + 9 samen (293 agenten) brachten het venster op 99%.
 
 ## 2026-10-09 (middag) — M31 golf 7
 

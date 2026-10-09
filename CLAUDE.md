@@ -1,3 +1,8 @@
+> **🌍 M31 GOLF 8+9 — 300 STROMEN OVER 14 GRONDSTOFFEN, LIVE `?v=138` (2026-10-09, LAATSTE).** Commits `3bee7fb` · `41baae8`. Op Lars' resterende
+> limiet twee grote golven: golf 8 (181 agenten, 51 ketens) en golf 9 (112 agenten, 28 ketens), zonder uitval. **Nieuw:** `v2/tools/wegscan_puur.py`
+> (pure-Python wegbron; `pyosmium` blijft geblokkeerd) · `agentR()` retries in de golf-scripts (`v2/tools/golf/`) · informatietextuur **2.048 benen**
+> (`TEX_BREEDTE` + `MAX_BENEN`). **→ VOLGENDE:** Lars' telefoontest `?v=138` · besluit HDR-doel · 15 reserve-assen klaar · stadslichten, labels, LAR-480.
+
 > **🌍 M31 GOLF 7 — 39 NIEUWE STROMEN, 221 OVER 14 GRONDSTOFFEN, LIVE `?v=136` (2026-10-09, LAATSTE).** Commits `2ec7d6d` ·
 > `8d83374`. LAR-625 Done, LAR-618 In Progress. Lars vroeg na de gloed een grote ontwerpronde voor meer stromen: 11 reserve-assen uit
 > golf 6 plus een ontwerp per grondstof (2 nieuwe ketens, 3 voor grafiet), in drie workflow-runs (164 agenten, 40,6 M tokens). Een
@@ -928,7 +933,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-09 (laatst: M31 golf 7, 39 nieuwe stromen, 221 totaal, live ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-09 (laatst: M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3202,6 +3207,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-09 · M31 GOLF 8+9 LIVE `?v=138` (300 stromen).** Twee grote golven op Lars' resterende limiet; retries per agent (`agentR`), een pure-Python wegscan (`wegscan_puur.py`) en informatietextuur 2.048 benen. Capaciteit plannen op het 5-uursvenster (~0,3 punt per agent).
 - **2026-10-09 · M31 GOLF 7 LIVE `?v=136` (LAR-625, `2ec7d6d` + `8d83374`).** 39 nieuwe ketens, 221 totaal. Een uitgevallen toets wordt achteraf gedaan; herstel na uitval is een kleine verse workflow, geen `resumeFromRunId` (de cache werkt op de aanroepvolgorde). Wegketens die de wegtool niet haalt worden niet als stippel getekend maar later herbakt.
 - **2026-10-09 · WORKFLOW-SCRIPTS ALS BESTAND, LF, ZONDER U+FE0F, MET DE INVOER INGEBED** — anders weigert de goedkeuring ("control characters"). `.gitattributes`: `*.sh text eol=lf`.
 - **2026-10-09 · DE GLOED IS EEN LICHTPUNT (kern + halo) IN CSS-PX × PIXELRATIO, MET FACILITEITSMAAT PER GRONDSTOF.** De zichtbaarheid

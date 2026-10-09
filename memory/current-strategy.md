@@ -1,7 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 7: 39 nieuwe stromen, 221 totaal, live `?v=136`)*
+*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
 
 
+
+## Stand 2026-10-09 (avond) — M31 golf 8+9 live: 300 stromen (`?v=138`)
+
+- **Op de bol (`?v=138`, commits `3bee7fb` + `41baae8`):** 79 nieuwe ketens, 221 → 300: gas 25 · lithium 24 · olie 24 · uranium 23 · zilver 23 · koper 22 · kobalt 21 · kolen 21 · goud 21 · nikkel 20 · diamant 20 · ree 19 · pgm 19 · grafiet 18. Bundel 300 stromen · 1.160 benen · 1.033 markers; telefoon en desktop 300/300, 0 fouten, 4 verzoeken, 1,8 MB.
+- **Golf 8:** 181 agenten (12 reserve-assen + ontwerp met 3 per grondstof) → 51 ketens; **golf 9:** 112 agenten (14 reserve-assen + 1 per grondstof) → 28 ketens; geen enkele uitval. Scripts: `v2/tools/golf/` (`golf8-script.mjs`, `golf9-script.mjs`, `maak_golf8.py`, `maak_golf9.py`).
+- **Nieuw gereedschap:** `v2/tools/wegscan_puur.py` (pure-Python PBF-lezer als wegbron; `pyosmium` is geblokkeerd), `agentR()` (3 pogingen met pauze), slots met literale paden. **De informatietextuur is 2.048 benen** (`TEX_BREEDTE` + `MAX_BENEN`); bij >2.048 benen weer verdubbelen.
+- **Verbruik:** golf 8 liet het 5-uursvenster van 1% naar 56% gaan, golf 9 bracht het op 99%; week 42% → 59%. Rekenregel: ~0,3 punt van het 5-uursvenster per agent; max ~180 agenten per venster.
 
 ## Stand 2026-10-09 (middag) — M31 golf 7 live: 221 stromen (`?v=136`)
 
