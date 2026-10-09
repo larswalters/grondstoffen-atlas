@@ -148,7 +148,7 @@ uit volume, een gedimde landnet-variant, de gloedmaat in de vertex-shader, een a
 9. **De halo-schil vervalt.** De 3,6 px additieve schil op 0,13 had maar één taak ("de kern lucht geven"); op de
    donkere atlas is het verschil niet te zien en hij kostte de helft van de 12,7 M driehoeken. De lijn geeft geen
    licht; het licht zit in kometen en gloed (de les van 2026-08-07). Screenshot-vergelijk in beide standen.
-10. **Het gloed-ontwerp verandert niet, alleen de implementatie**: minPx 34, sterkte 0,30, koepelhoogte 2,6, de
+10. *(Ingehaald door golf 2 op 2026-10-09: de gloed is herontworpen als lichtpunt — zie de kop van `v2/src/gloed.js`.)* **Het gloed-ontwerp verandert niet, alleen de implementatie**: minPx 34, sterkte 0,30, koepelhoogte 2,6, de
     vijf `SCHILLEN`, de knoopgewicht-heuristiek en de normalisatie per grondstof blijven letterlijk (H5). De vijf
     schillen worden vertex-reeksen in één `Points` (additief is commutatief, dus de tekenvolgorde binnen de
     koepel draagt niets). De per-frame maat blijft in **JS**: gemeten kost de lus over alle knopen < 0,3 ms

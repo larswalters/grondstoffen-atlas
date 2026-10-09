@@ -1,6 +1,24 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-09 - golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live op `?v=134` (LAR-617 Done, LAR-618 In Progress)
+
+Lars: *"hij werkt goed op de telefoon alleen de gloedspots ziet er nog niet helemaal nice uit."* Eigen screenshots van `?v=132` op telefoonformaat (zeven kijkstanden); Lars koos: vage vlekken · waas bij inzoomen · weg op middenhoogte.
+
+**Stap 4** (`1ec3585`): oude modules + `?laag=los` weg → LAR-617 Done.
+
+**Diagnose:** wereldstraal ongenormaliseerd (0,4–37 km), koepel 2,6× (tot 95 km), gl_PointSize in device-px tegen css-wereldmaat, geen `<colorspace_fragment>`, profiel zonder kern, isolated site per ontwerp nooit fel.
+
+**Ontwerp-workflow `wf_498d0d3c-85a`** (8 agenten, ~54 min): stap 4 ∥ drie ontwerpers (lichtpunt · faciliteitsmaat · lichtbudget) × skepticus → synthese schreef de code → `9859564` `?v=133`.
+
+**Review-workflow `wf_763025f4-607`** (6 agenten): 1 bevestigd (sites van dezelfde kleur klemden naar een andere legendakleur) → `816b7a4` `?v=134`; 2 weerlegd; 6 laag → bugs-and-risks #27–31.
+
+Gemeten: 0 console-fouten op telefoon, desktop en bouwmodus; 893 lichtpunten uit 1.101 knopen. Vault: [[2026-10-09-grondstoffen-atlas-golf2-gloed-herontwerp]].
+
+## 2026-10-08 - visuele fase golf 1 live op `?v=132` (LAR-616 Done; nagetrokken op 2026-10-09)
+
+Bundel + LOD (`stromen-register.json`, `bak_stroombundel.py`), een handvol tekenobjecten, atlas als default, lijnstijl per modaliteit, HUD met chipstrip; 382 → 4 verzoeken, 2.300 → 45–190 draw calls, telefoon-emulatie 9–14 → 165 fps. Volledig verslag in de vault: [[2026-10-08-grondstoffen-atlas-visuele-fase-golf1-atlas-als-product]].
+
 ## 2026-09-28 (nacht) - M31 golf 6 live op `?v=131` (LAR-615, commit `04a97b1`)
 
 Lars: *"Doe maar nog een grote ontwerpronde, de sessielimiet wordt over 1,5 uur weer gereset. Daarna doen we visuals."*

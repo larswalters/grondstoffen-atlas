@@ -1,6 +1,15 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 6 LIVE `?v=131` — grote ontwerpronde, 182 stromen)*
+*Last updated: 2026-10-09 (golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live `?v=134`)*
 
+
+
+## 🔴 NIEUW 2026-10-09 — na golf 2 deel 1 (de gloed) live
+
+1. **Lars test op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=134 — zijn de lichtjes op 14 km niet te zwak? Knoppen: `haloPiek`, `uitwaaier` (`ATLAS.gloed.afstemming` in de console).
+2. **Besluit Lars: HDR-doel voor de gloed?** Clusters op wereld- en middenhoogte (Tongling, Guixi, Bushveld) kunnen nog door een andere legendakleur lopen (koper → geel/goud). Alleen een half-float-doel met een tintbehoudende resolve (rgb/max(1,max)) lost dat op; kost een extra pass en fill-rate op de telefoon.
+3. **Kleine open punten uit de review (laag):** kometen + precisiestippen nog in device-px (op de telefoon half zo groot als op desktop) · verborgen precisiestippen tekenen in de bouwmodus één pixel (ook achter de bol) · halo's rijzen bij de horizon boven de bolrand uit · een lijn over een witheet hotspotcentrum leest als een donkere kras.
+4. **Rest van golf 2 (LAR-618):** stadslichten (Black Marble; download pas na akkoord), labels per zoomband, LAR-480 marker-contrast.
+5. **Docs:** `v2/design/atlas-product-golf1.md` besluit 10 is gemarkeerd als ingehaald; een eigen ontwerpdoc voor golf 2 is er niet (de kop van `gloed.js` is de spec).
 
 
 ## 🔴 NIEUW 2026-09-28 (nacht) — na golf 6 live

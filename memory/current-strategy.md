@@ -1,6 +1,21 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 6 LIVE `?v=131` — grote ontwerpronde, 182 stromen)*
+*Last updated: 2026-10-09 (golf 1 afgesloten + golf 2 deel 1: de gloed als lichtpunt, live `?v=134`)*
 
+
+
+## Stand 2026-10-09 — golf 2 deel 1 live: de gloed als lichtpunt (`?v=134`)
+
+- **Op de bol (`?v=134`, commits `1ec3585` · `9859564` · `816b7a4`):** dezelfde 182 stromen en dezelfde bundel (`BUNDEL_VERSIE` 132); alleen de gloed (en de kleurruimte van de kometen) is nieuw.
+- **De gloed is een LICHTPUNT met koepel** (`v2/src/gloed.js`): per knoop een kern-sprite (de lamp) + een halo van 3 schillen (het optelwerk), maten in css-px × pixelRatio, faciliteitsmaat 0,30–0,90 km uit q = √(g/gmax) per grondstof, de halo waaiert uit en heeft een plafond (160 css-px), de koepel tilt in schermmaat, `<colorspace_fragment>`, de gloed onder lijnen en kometen (7,45). Afstemmen kan live: `ATLAS.gloed.afstemming`.
+- **Niet dubbel tellen** (twee kernen op dezelfde pixels = één kern ×2 → de 8-bit-buffer klemt de tint naar een andere legendakleur): (a) marker in gelijk-gekleurd punt binnen 250 m, (b) marker → site binnen 10 km, (c) site → grotere site van dezelfde kleur binnen 2 km met q = √Σq². Alle drie continu in de pixelscheiding.
+- **Werkwijze die werkte:** eigen screenshots op telefoonformaat (`meet_atlas.mjs --kijk`) → Lars kiest de symptomen → ontwerp-workflow (3 invalshoeken × skepticus + synthese die de code schrijft) → screenshots → push → review-workflow (vinders × skepticus per bevinding) → reviewfix.
+- **Telefoonpoort:** Lars test `?v=134` op de Honor.
+
+## Stand 2026-10-08 — visuele fase golf 1 live: de atlas als product (`?v=132`)
+
+- **De bol leest één afgeleide bundel** (`stromen.json` + `stromen-basis.bin` L0 3 km / L1 200 m + `stromen-fijn-<grondstof>.bin` lui) uit `v2/data/stromen-register.json` + de `stroomroute-*.json` (`v2/tools/bak_stroombundel.py`, deterministisch, `--check`). Tekenen: één LineSegments2 per LOD-niveau, kometen en gloed elk één Points; aan/uit/stijl/kleur via 1024×1-texturen.
+- **Atlas = default** (kleur per grondstof · donker · gloed + kometen); `?modus=bouw` = routewerk. Lijnstijl per modaliteit in schermpixels, alleen stippel heeft gaten. HUD met chipstrip op 375 px.
+- **Gemeten (`?v=131` → `?v=132`):** 382 → 4 verzoeken, 51,7 → 1,1 MB, 2.300–3.050 → 45–190 draw calls, telefoon-emulatie 9–14 → 165 fps. Telefoontest van Lars op 2026-10-09: werkt goed. Stap 4 (`1ec3585`) heeft de oude modules en `?laag=los` verwijderd.
 
 
 ## Stand 2026-09-28 (nacht) — M31 golf 6 live: de grote ontwerpronde

@@ -1,6 +1,17 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-09-28 (M31 golf 6 live `?v=131`)*
+*Last updated: 2026-10-09 (review van golf 2 deel 1, `?v=134`)*
 
+
+
+## 🟡 NIEUW 2026-10-09 — uit de review van golf 2 (de gloed)
+
+27. **Clusters op wereld- en middenhoogte kunnen nog door een andere legendakleur lopen** (koper → geel/goud aan de rand van Tongling/Guixi; een losse koperkern op een verlichte ondergrond klemt R). Site ↔ site binnen 2 km is opgelost (`816b7a4`; in de simulatie 300/60/14 km → 0 gevallen, 2.500 km 41 → 24). De rest vraagt een HDR-doel met tintbehoudende resolve = besluit Lars.
+28. **Kometen en precisiestippen staan nog in device-px** (`stroomkometen.js` ~r. 260, precisiestippen in `stroombundel.js`): op de telefoon half zo groot als op desktop, terwijl de gloed nu in css-px × pixelRatio staat.
+29. **Verborgen precisiestippen (grootte 0) tekenen in de bouwmodus toch één pixel**, ook achter de bol en bij een grondstofchip uit. Zelfde fix als de gloed: buiten het clipvolume zetten.
+30. **Halo's rijzen bij de horizon boven de bolrand uit** (koepel in schermmaat + halostraal): op 20.000 km ~15 css-px lichtwolkjes in de atmosfeerband.
+31. **Een lijn over een witheet hotspotcentrum leest als een donkere kras** (gevolg van gloed onder de lijnen, 7,45 < 7,5).
+32. **Procesgat:** na golf 1 (2026-10-08) zijn de project-`memory/` en `CLAUDE.md` niet bijgewerkt (alleen de vault). Op 2026-10-09 nagetrokken.
+- **Opgelost:** #11 (182 stromen standaard aan, telefoonprestaties nooit gemeten) — golf 1 meet 4 verzoeken / 165 fps in de emulatie en Lars' Honor-test is geslaagd.
 
 
 ## 🟡 NIEUW 2026-09-28 (nacht) — uit golf 6

@@ -1,6 +1,29 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-09-28 (golf 6: grote ontwerpronde)*
+*Last updated: 2026-10-09 (golf 2 deel 1: de gloed als lichtpunt; golf 1 nagetrokken)*
 
+
+
+## 2026-10-09 — golf 2 deel 1: de gloed
+
+- **2026-10-09 · ✅ LARS — telefoontest `?v=132` geslaagd, op de gloedspots na.** Hij koos uit screenshots: vage vlekken · waas bij inzoomen · weg op middenhoogte. *Uitgebrand wit* koos hij niet → wit waar veel samenkomt is oké, de kleurtabel blijft.
+- **De gloed is een LICHTPUNT (kern-sprite) met een HALO in koepelvorm**, niet vijf gaussen op elkaar. De zichtbaarheid zit in de kern van de knoop zelf; de halo doet het optelwerk. Omgedraaid: "sterkte 0,30 per schil, bewust zwak — de optelling maakt hem fel".
+- **Alle gloedmaten in css-px × pixelRatio** (was device-px tegen een css-wereldmaat) — beantwoordt de §13-vraag van golf 1.
+- **Wereldstraal = faciliteitsmaat, per grondstof genormaliseerd** (0,30–0,90 km uit q = √(g/gmax)), was 0,30·√gewicht in grondstof-eigen eenheden (0,4–37 km).
+- **De koepel blijft, maar tilt in schermmaat** (hoogte = de halostraal zoals je hem ziet, 3 schillen) — was 2,6 × de wereldstraal, tot ~95 km, boven de camera. Hoogte draagt nog steeds geen betekenis (besluit 2 ontwerpbrief).
+- **Kleurruimte in elke eigen ShaderMaterial** (`<colorspace_fragment>`), ook in de kometen; mengen van kop en staart in sRGB. Gloed, komeet en lijn hebben zo per constructie dezelfde tint.
+- **De gloed ligt onder lijnen en kometen** (renderOrder 7,45, was 7,6).
+- **Verbergen buiten het clipvolume, niet met puntgrootte 0** — 0 tekent in Chrome/ANGLE toch één pixel, ook achter de bol.
+- **Gelijk-gekleurde knopen die op het scherm samenvallen tellen op in GEWICHT, niet in licht** (marker 250 m · marker→site 10 km · site→grotere site 2 km, q = √Σq²). Twee kernen op dezelfde pixels zijn één kern ×2 en de 8-bit-buffer klemt per kanaal: kobalt ×1,8 = grafiet, koper ×1,4 = goud. De hotspot ontstaat nog steeds uit de optelling; verder uiteen liggende clusters tellen additief op tot wit.
+- **Werkwijze:** bij een visuele klacht eerst zelf screenshots op telefoonformaat maken en Lars de symptomen laten kiezen (vraag welk element welke taak draagt vóór je aan getallen draait).
+
+## 2026-10-08 — visuele fase golf 1: de atlas als product (nagetrokken op 2026-10-09)
+
+- **2026-10-08 · ✅ LARS — "Allebei, in golven"**: eerst de atlas als product (golf 1), dan de gloed (golf 2).
+- **De atlas is de default** (kleur per grondstof · donker · gloed + kometen); `?modus=bouw` opent het routewerk. Vervangt de default van 2026-08-07 (modaliteit), die gold het routewerk met vijf stromen.
+- **Het register woont in `v2/data/stromen-register.json`**; bundel + register + `BUNDEL_VERSIE` in dezelfde commit (bakhandleiding §7). De bundel is een afgeleid artefact; de `stroomroute-*.json` blijven de bron van waarheid en worden niet herbakken.
+- **Lijnstijl = modaliteit in schermpixels; alleen stippel heeft gaten.** Patronen moduleren alfa, nooit tint of breedte. De legenda komt uit dezelfde `LIJNSTIJL`-tabel.
+- **Het landnet wordt in de atlas niet geladen** (10 MB routeergereedschap); lui in de bouwmodus.
+- **Stap 4 (2026-10-09, `1ec3585`):** `stroomroute.js`, `stroomleven.js`, `gloednodes.js` en `?laag=los` zijn weg — de bundel is het enige pad.
 
 
 ## 2026-09-28 (nacht) — golf 6

@@ -1,3 +1,19 @@
+> **💡 GOLF 1 AF EN DE GLOED ALS LICHTPUNT — LIVE `?v=134` (2026-10-09, LAATSTE).** Commits `1ec3585` (stap 4) ·
+> `9859564` (de gloed) · `816b7a4` (reviewfix). LAR-617 Done, LAR-618 In Progress.
+>
+> **Golf 1** (2026-10-08, `?v=132`): de bol leest één afgeleide bundel uit `v2/data/stromen-register.json`
+> (`bak_stroombundel.py`), tekent een handvol objecten, opent als atlas (kleur = grondstof, donker); 382 → 4 verzoeken,
+> telefoon-emulatie 9–14 → 165 fps. **Lars' telefoontest geslaagd**, op de gloedspots na. Stap 4: de oude modules
+> (`stroomroute.js`/`stroomleven.js`/`gloednodes.js`) en `?laag=los` zijn weg.
+>
+> **Golf 2, deel 1 — de gloed.** Lars koos drie symptomen: vage vlekken · waas bij inzoomen · weg op middenhoogte.
+> Nu een kern-sprite + halo in css-px × pixelRatio, faciliteitsmaat 0,30–0,90 km per grondstof (was 0,4–37 km), een
+> uitwaaiende halo met plafond, de koepel in schermmaat (was tot 95 km hoog), `<colorspace_fragment>` in gloed en
+> kometen, de gloed onder de lijnen. **⚠️ Twee kernen op dezelfde pixels zijn één kern ×2** en de 8-bit-buffer klemt
+> per kanaal (kobalt → grafiet, koper → goud): gelijk-gekleurde knopen die op het scherm samenvallen tellen daarom op
+> in GEWICHT, niet in licht. De kop van `v2/src/gloed.js` is de spec. **→ VOLGENDE:** Lars' telefoontest `?v=134` ·
+> besluit HDR-doel · stadslichten, labels, LAR-480. Details: `memory/session-summaries.md`.
+
 > **🧭 M29 · KOPER VERHAAL-COMPLEET — ZEVEN GEMETEN KETENS EN EEN WERELDWIJDE SITELAAG IN ÉÉN SESSIE,
 > LIVE `?v=121` (2026-09-25, LAATSTE).** Commits `12f199a` → `73c5c48` (+ `1154a8d` Lobito fase D, `?v=120`).
 >
@@ -903,7 +919,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-09-28 (laatst: M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-09 (laatst: golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3177,6 +3193,11 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-09 · DE GLOED IS EEN LICHTPUNT (kern + halo) IN CSS-PX × PIXELRATIO, MET FACILITEITSMAAT PER GRONDSTOF.** De zichtbaarheid
+  zit in de kern van de knoop zelf, niet in de optelling; de koepel tilt in schermmaat; `<colorspace_fragment>` in elke eigen
+  ShaderMaterial; gelijk-gekleurde knopen die op het scherm samenvallen tellen op in gewicht (q = √Σq²), niet in geklemd licht.
+- **2026-10-08 · DE ATLAS IS DE DEFAULT; DE BOL LEEST ÉÉN AFGELEIDE BUNDEL** uit `stromen-register.json`; lijnstijl = modaliteit in
+  schermpixels; landnet niet in de atlas. Stap 4 (2026-10-09): de oude per-stroom-modules en `?laag=los` zijn weg.
 - **2026-09-28 · M31 GOLF 6 LIVE `?v=131` (LAR-615, `04a97b1`).** Een grote ontwerpronde: 99 agenten, 24 ketens over elf grondstoffen,
   waaronder de eerste olieleidingen (BTC, SUMED, Keystone) en TurkStream. Een keten die volledig uit stippel bestaat wordt ook na een
   positieve keuring niet geregistreerd. Registersleutels worden centraal op botsingen gecontroleerd. Volgende stap: de visuele fase LAR-490.
