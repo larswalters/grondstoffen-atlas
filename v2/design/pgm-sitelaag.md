@@ -83,9 +83,9 @@ aangenomen leegte (zelfde onderscheid als de opdracht al voorschreef).
 | `w-mogalakwena` | Mogalakwena mijn | Zuid-Afrika | mijn | -23.9000, 29.0000 | 33,9 | t 4E/j | Anglo/Valterra 2023, ~1.090 koz 4E [B1][B2] | geografische aanduiding Mokopane-omgeving; niet satelliet-bevestigd | **aannemelijk** |
 | `w-amandelbult` | Amandelbult mijn | Zuid-Afrika | mijn | -24.8080, 27.2650 | 14,5 | t 4E/j | Anglo/Valterra 2023, ~465 koz 4E [B1][B2] | Wikipedia-geohack + satelliet z14: kruis op mijnterrein | **bron-gelegd** |
 | `w-impala-rustenburg` | Impala Rustenburg mijnencluster | Zuid-Afrika | mijn | -25.6300, 27.1300 | 21,8 | t 4E/j | Implats FY2023, ~700 koz eigen gemijnd 4E [B3] | kandidaat op Implats-lease; satelliet inconclusief op schaalniveau | **aannemelijk** |
-| `w-sibanye-rustenburg` | Sibanye-Stillwater Rustenburg Operations | Zuid-Afrika | mijn | -25.7800, 27.1000 | 17,7 | t 4E/j | Sibanye-Stillwater FY2023, ~570 koz 4E [B4] | v1-register-kandidaat | **aannemelijk** |
+| `w-sibanye-rustenburg` | Sibanye-Stillwater Rustenburg Operations | Zuid-Afrika | mijn | -25.7800, 27.1000 | 17,7 | t 4E/j | Sibanye-Stillwater FY2023, ~570 koz 4E [B4] | gelijkgetrokken 2026-10-09 met het anker uit de brief pgm-lacdesiles-kristiansand (was 49.2800, -89.6000) | **bron-gelegd** |
 | `w-marikana` | Marikana operations | Zuid-Afrika | mijn | -25.6715, 27.4635 | 20,2 | t 6E/j | Sibanye-Stillwater FY2023, ~650 koz 6E [B4] | Wikipedia-geohack + satelliet z14: kruis op verwerkingscomplex | **bron-gelegd** |
-| `w-booysendal` | Booysendal mijn | Zuid-Afrika | mijn | -24.8300, 30.1300 | 9,0 | t 4E/j | Northam FY2023, ~290 koz 4E [B5] | geografische aanduiding Steelpoort | **aannemelijk** |
+| `w-booysendal` | Booysendal mijn | Zuid-Afrika | mijn | -25.0956, 30.1124 | 9,0 | t 4E/j | Northam FY2023, ~290 koz 4E [B5] | gelijkgetrokken 2026-10-09 met het satelliet-gelegde anker uit de brief pgm-booysendal-zondereinde (was -24.8300, 30.1300) | **bron-gelegd** |
 | `w-two-rivers` | Two Rivers mijn | Zuid-Afrika | mijn | -24.7700, 30.2200 | 8,7 | t 4E/j | Implats FY2023, ~280 koz 4E (100%) [B3] | geografische aanduiding Steelpoort | **aannemelijk** |
 | `w-bafokeng-styldrift` | Styldrift mijn | Zuid-Afrika | mijn | -25.4500, 27.1000 | 10,0 | t 4E/j | RBPlat/Implats 2023, ~320 koz 4E [B3][B6] | geografische aanduiding NO Rustenburg | **aannemelijk** |
 | `w-tharisa` | Tharisa mijn | Zuid-Afrika | mijn | -25.6300, 27.6300 | 4,8 | t 6E/j | Tharisa plc FY2023, ~155 koz 6E [B7] | geografische aanduiding Vlakfontein | **aannemelijk** |
@@ -99,7 +99,7 @@ aangenomen leegte (zelfde onderscheid als de opdracht al voorschreef).
 | `w-impala-springs` | Impala Refineries (Springs) | Zuid-Afrika | raffinaderij | -26.2800, 28.7000 | 93,3 | t 4E/j | Implats FY2023, groepsbreed ~3,0 Moz geraffineerd [B3] | v1-register-kandidaat | **aannemelijk** |
 | `w-krastsvetmet` | Krastsvetmet-raffinaderij | Rusland | raffinaderij | 56.0250, 92.7900 | 105,8 | t 2E/j | Nornickel 2023, groepsbreed Pt+Pd ~3.401 koz [B10][B11] | v1-register-kandidaat; satelliet z14 inconclusief | **aannemelijk** |
 | `w-stillwater` | Stillwater Mine | Verenigde Staten | mijn | -45.4020, -109.9350 | 14,0 | t 2E/j | Sibanye-Stillwater 20-F 2023, Stillwater+East Boulder ~450 koz 2E [B12] | geografische aanduiding Nye MT; satelliet inconclusief | **aannemelijk** |
-| `w-lac-des-iles` | Lac des Îles mijn | Canada | mijn | 49.2800, -89.6000 | 4,0 | t Pd/j | Implats/Impala Canada 2023, ~130 koz Pd [B3] | v1-register-kandidaat | **aannemelijk** |
+| `w-lac-des-iles` | Lac des Îles mijn | Canada | mijn | 49.1625, -89.6192 | 4,0 | t Pd/j | Implats/Impala Canada 2023, ~130 koz Pd [B3] | v1-register-kandidaat | **aannemelijk** |
 
 *(alle 20 sites met gewicht staan in de tabel hierboven. Sites zonder gewicht — 17 stuks: Talnakh/
 Oktjabrski-mijn, Nadezhda, Kola MMC, East Boulder, Columbus Metallurgical Complex, Vale Sudbury/

@@ -8,9 +8,9 @@
 // gestippelde Line + 986 Line2 = ~1.700 lijnobjecten, 12,7 M driehoeken, en
 // een telefoon haalde 9–14 fps. Alle benen van alle stromen gaan nu in één
 // LineSegments2 per LOD-niveau. Wat per been verschilt (aan/uit, stijl, kleur)
-// staat in twee INFORMATIETEXTUREN van 1024 × 1 die de vertex-shader uitleest
+// staat in twee INFORMATIETEXTUREN van 2048 × 1 die de vertex-shader uitleest
 // op de beenindex: een klik op een stroom herschrijft een paar texels (één
-// upload van 4 KB), er wordt niets herbouwd en het aantal draw calls beweegt
+// upload van 8 KB), er wordt niets herbouwd en het aantal draw calls beweegt
 // niet.
 //
 // ⚠️ DE PATCHES HANGEN AAN DE GLSL VAN r185 (gepind in de importmap). Elke
@@ -38,7 +38,7 @@ import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LIJNSTIJL } from "./stroomstijl.js?v=134";
 
-export const TEX_BREEDTE = 1024;    // benen per textuur; de baker faalt luid boven dit getal
+export const TEX_BREEDTE = 2048;    // benen per textuur (golf 8: 1.024 → 2.048, want 272 stromen = ~1.100 benen); de baker faalt luid boven dit getal
 export const VLAG_AAN = 1;          // bit 0: de HUD heeft dit been aan
 export const VLAG_FIJN = 2;         // bit 1: het fijn-object tekent dit been nu
 

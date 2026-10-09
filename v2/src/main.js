@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadStroombundel } from "./stroombundel.js?v=134";
+import { laadStroombundel } from "./stroombundel.js?v=137";
 import { GRONDSTOF_KLEUR, LIJNSTIJL } from "./stroomstijl.js?v=134";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
@@ -45,11 +45,11 @@ const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 // golf 1 verwijderd: de bundel is het enige pad.
 const PARAMS = new URLSearchParams(location.search);
 const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
-const CODE_VERSIE = "136";
+const CODE_VERSIE = "137";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
 // bezoeker bit-identieke bins opnieuw.
-const BUNDEL_VERSIE = "136";
+const BUNDEL_VERSIE = "137";
 const TELEFOON = window.innerWidth <= 640;
 
 // --- welke lagen meedoen ---------------------------------------------------

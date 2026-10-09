@@ -47,7 +47,7 @@ import {
 import {
   BeenInfo, maakLijnMateriaal, zetLijnSchaal, zetKmPerPx, zetPatronenAan, maakSegmentGeometrie, bouwLijn,
   ROL_BASIS, ROL_FIJN, ROL_ALTIJD,
-} from "./stroomlijn.js?v=134";
+} from "./stroomlijn.js?v=137";
 import { bouwGloed } from "./gloed.js?v=134";
 import { bouwKometen } from "./stroomkometen.js?v=134";
 

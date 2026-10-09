@@ -96,8 +96,8 @@
   {
    "id": "w-booysendal",
    "naam": "Booysendal mijn (Northam Platinum)",
-   "lon": 30.13,
-   "lat": -24.83,
+   "lon": 30.1124,
+   "lat": -25.0956,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -107,8 +107,8 @@
    "land": "Zuid-Afrika (Mpumalanga/Limpopo-grens, Steelpoort, Oostelijke rand Bushveld)",
    "gewicht": 9.0,
    "gewicht_bron": "capaciteit t PGM/j — Northam Platinum jaarverslag FY2023: Booysendal ~290 koz 4E; koz ÷ 32,15 ≈ 9,0 t/j [B5]",
-   "bron": "kandidaat o.b.v. de bekende ligging bij Steelpoort/Lydenburg op de Oostrand; DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "gelijkgetrokken met het satelliet-gelegde anker pgm-booysendal-mijn (routebrief pgm-booysendal-zondereinde, 2026-10-09); was -24.83/30.13 (29,6 km te ver)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Noord- en Zuid-complex van Northam op de Oostelijke rand; ondergronds + oppervlaktemijnbouw. 4E."
   },
   {
@@ -348,8 +348,8 @@
   {
    "id": "w-lac-des-iles",
    "naam": "Lac des Îles mijn (Impala Canada)",
-   "lon": -89.6,
-   "lat": 49.28,
+   "lon": -89.6192,
+   "lat": 49.1625,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -359,8 +359,8 @@
    "land": "Canada (Ontario, N van Thunder Bay)",
    "gewicht": 4.0,
    "gewicht_bron": "capaciteit t PGM/j — Implats/Impala Canada jaarcijfers 2023: ~130 koz Pd; koz ÷ 32,15 ≈ 4,0 t/j [B3]",
-   "bron": "v1-register-kandidaat (data/pgm.js, pgm-lac-des-iles, 49,18/−89,60); DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "gelijkgetrokken met het satelliet-gelegde anker Lac des Iles-mill (routebrief pgm-lacdesiles-kristiansand, 2026-10-09); was 49.28/-89.60 (13 km te ver)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Vrijwel zuivere PALLADIUM-mijn (geen Bushveld-achtige Pt/Pd/Rh-mix) — enige grote Noord-Amerikaanse Pd-primaire mijn naast Stillwater's Pt/Pd. Eenheid is Pd-only, niet vergelijkbaar met 3E/4E/6E-sites."
   }
  ]

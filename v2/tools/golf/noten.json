@@ -4,5 +4,12 @@
  "kolen-tanjungenim-suralaya": "Let op: aannemelijk, één bron voor het havenpaar Tarahan → Suralaya (contract 2013–2022, daarna niet teruggevonden).",
  "pgm-kevitsa-harjavalta": "Let op: transportketen aannemelijk (bronnen 2018–2021); een deel van het concentraat gaat naar Rönnskär en is niet getekend, het aandeel Harjavalta is dus overschat.",
  "diamant-williamson-antwerpen": "Let op: schematische route (weg Mwadui → Dar es Salaam en vlucht DAR → Brussel niet gebrond); volume 0,4 Mct/j is een bovengrens; sinds mei 2025 eigendom van Pink Diamonds.",
- "pgm-marikana-brakpan": "Let op: modaliteit onzeker — helikoptervervoer rust op één bron (Lonmin-flowsheet, 2012); wegtransport is niet uitgesloten."
+ "pgm-marikana-brakpan": "Let op: modaliteit onzeker — helikoptervervoer rust op één bron (Lonmin-flowsheet, 2012); wegtransport is niet uitgesloten.",
+ "kobalt-coralbay-niihama": "Zelfde fysieke route als nikkel-riotuba-niihama (Coral Bay en Rio Tuba delen de Palawan-kade); de keten staat in beide grondstoffen.",
+ "nikkel-riotuba-niihama": "Zelfde fysieke route als kobalt-coralbay-niihama (Rio Tuba en Coral Bay delen de Palawan-kade); de keten staat in beide grondstoffen.",
+ "nikkel-moa-fortsaskatchewan": "Zelfde fysieke route als kobalt-moa-fortsaskatchewan (mixed sulphide Ni+Co); de keten staat in beide grondstoffen.",
+ "kobalt-raglan-sudbury": "Zelfde fysieke route als nikkel-raglan-sudbury (Ni-Cu-concentraat met kobalt als bijproduct); de keten staat in beide grondstoffen.",
+ "kobalt-voiseysbay-longharbour": "Zelfde fysieke route als nikkel-voiseysbay-longharbour; de keten staat in beide grondstoffen.",
+ "nikkel-kevitsa-harjavalta": "Zelfde fysieke route als pgm-kevitsa-harjavalta (Ni-Cu-concentraat met PGM als bijproduct); de keten staat in beide grondstoffen.",
+ "grafiet-molo-abudhabi": "Let op: het wegbeen Molo → Toliara is een kopie van grafiet-molo-duisburg (2,3 keer hemelsbreed); de Abu Dhabi-fabriek is nog niet gebouwd."
 }

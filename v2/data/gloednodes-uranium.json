@@ -366,8 +366,8 @@
   {
    "id": "w-urenco-gronau",
    "naam": "Urenco Deutschland (Gronau)",
-   "lon": 7.0167,
-   "lat": 52.0833,
+   "lon": 7.0739,
+   "lat": 52.2154,
    "level": "site",
    "parent": null,
    "rol": "verrijking",
@@ -377,8 +377,8 @@
    "land": "Duitsland (Noordrijn-Westfalen)",
    "gewicht": 4550.0,
    "gewicht_bron": "capaciteit t U/j — OMGEREKEND, SCHATTING: ~7% van de wereld-SWU-capaciteit × ~65.000 t U/j wereldvoeding (WNA-reactorbehoefte 2023/24) ≈ 4550 t U/j voeding-equivalent (UF6 dat de fabriek in gaat; geen gemeten doorzet, geen per-fabriek-SWU-cijfer publiek). Oorspronkelijk aandeel: Zelfde bron als Urenco Almelo; aandeel geschat op ~7% wereld-SWU [B22][B23]",
-   "bron": "Wikipedia-geohack Gronau nucleaire site; geen satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "bron": "gelijkgetrokken met het bron-gelegde anker u-gronau (routebrief uranium-gronau-novouralsk, 2026-10-09); was 52.0833/7.0167 (15 km te ver)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "-"
   },
   {

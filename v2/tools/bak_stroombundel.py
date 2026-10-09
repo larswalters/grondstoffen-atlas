@@ -61,7 +61,7 @@ FORMAAT = 1
 SCHAAL = 100000          # 1e-5° ≈ 1,1 m
 KM_SCHAAL = 100          # 10 m
 R_KM = 6371.0
-MAX_BENEN = 1024         # de informatietextuur in de browser is 1024 breed
+MAX_BENEN = 2048         # de informatietextuur in de browser is 2048 breed (stroomlijn.js TEX_BREEDTE; was 1024 tot golf 8)
 
 # De niveaus: [naam, DP-tolerantie km, grootcirkel-verdichting km]. De
 # verdichting hoort bij de hoogte waarop het niveau getekend wordt: de koorde

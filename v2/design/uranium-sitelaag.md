@@ -94,7 +94,7 @@ door elkaar lopen — vandaar "indicatief" bij elke losse site).
 | w-zelenogorsk | Zelenogorsk (Rosatom/TVEL) | Rusland | verrijking | 56.1167, 94.5833 | ~7% wereld-SWU (schatting) [B19][B20] | onzeker |
 | w-seversk-verrijking | Seversk (Rosatom/SKhK) | Rusland | verrijking | 56.6000, 84.9000 | ~6% wereld-SWU (schatting) [B19][B20] | onzeker |
 | w-urenco-almelo | Urenco Nederland | Nederland | verrijking | 52.3383, 6.6939 | ~8% wereld-SWU (schatting) [B22][B23] | aannemelijk |
-| w-urenco-gronau | Urenco Deutschland | Duitsland | verrijking | 52.0833, 7.0167 | ~7% wereld-SWU (schatting) [B22][B23] | onzeker |
+| w-urenco-gronau | Urenco Deutschland | Duitsland | verrijking | 52.2154, 7.0739 | ~7% wereld-SWU (schatting) [B22][B23] | onzeker |
 | w-urenco-capenhurst | Urenco UK | Verenigd Koninkrijk | verrijking | 53.2667, -2.8833 | ~6% wereld-SWU (schatting) [B22][B23] | onzeker |
 | w-urenco-eunice | Urenco USA (Eunice, NM) | VS | verrijking | 32.4667, -103.1833 | ~9% wereld-SWU (schatting, groeiend) [B22][B24] | aannemelijk |
 | w-tricastin-verrijking | Orano Georges Besse II | Frankrijk | verrijking | 44.3250, 4.7167 | ~12% wereld-SWU (schatting) [B17][B19] | **bron-gelegd** |
