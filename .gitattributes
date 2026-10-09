@@ -1,0 +1,2 @@
+# bash-scripts altijd met LF uitchecken: een CRLF-kopie van bak_stromen.sh breekt elke regel met een backslash-vervolg (golf 7, 2026-10-09)
+*.sh text eol=lf

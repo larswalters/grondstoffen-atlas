@@ -492,8 +492,8 @@
   {
    "id": "w-framatome-romans",
    "naam": "Framatome Romans-sur-Isère",
-   "lon": 4.9667,
-   "lat": 45.05,
+   "lon": 5.0982,
+   "lat": 45.0512,
    "level": "site",
    "parent": null,
    "rol": "splijtstoffabricage",
@@ -503,8 +503,8 @@
    "land": "Frankrijk (Drôme)",
    "gewicht": 1600.0,
    "gewicht_bron": "capaciteit t U/j — Framatome/Orano: nameplate indicatief ~1.600 t HM/j, grootste Franse splijtstoffabriek (voedt het EDF-park) [B29]",
-   "bron": "Wikipedia-geohack Romans-sur-Isère industriezone; geen satellietblik deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "bron": "gelijkgetrokken met het satelliet-gelegde anker u-framatome-romans (routebrief uranium-tricastin-romans, 2026-10-09): OSM way 183695477 + Wikipedia fr; was 4,9667 O (10 km te ver west)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "-"
   },
   {

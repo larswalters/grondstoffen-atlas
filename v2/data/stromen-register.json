@@ -1464,6 +1464,286 @@
    "label": "Arcadia → Beira → Zhangjiagang",
    "aan": true,
    "noot": "M31 · golf 6 (2026-09-28): grote ontwerpronde over elf grondstoffen"
+  },
+  {
+   "sleutel": "gr-sm",
+   "bestand": "stroomroute-grafiet-seadrift-monterrey.json",
+   "grondstof": "grafiet",
+   "label": "Seadrift → Monterrey",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): GrafTechs gecalcineerde naaldcokes uit Seadrift (Texas) per spoor (werkaanname, aannemelijk: één bron) naar de elektrode- en pinnenfabriek in Monterrey, die begin Q2 2027 sluit (uitdovend)"
+  },
+  {
+   "sleutel": "gr-mb",
+   "bestand": "stroomroute-grafiet-matawinie-becancour.json",
+   "grondstof": "grafiet",
+   "label": "Matawinie → Bécancour",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): vlokgrafietconcentraat per truck van de Matawinie-mijn (Saint-Michel-des-Saints) over QC-131 en A-40/A-55 naar de geplande NMG-anodefabriek in Bécancour, project-as met volume nul tot 2028"
+  },
+  {
+   "sleutel": "ni-mh",
+   "bestand": "stroomroute-nikkel-monchegorsk-harjavalta.json",
+   "grondstof": "nikkel",
+   "label": "Monchegorsk → Harjavalta",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Nikkelmatte/containers per spoor van Severonickel (Monchegorsk) over de Oktoberspoorweg en Vainikkala naar de Nornickel-raffinaderij Harjavalta, 1.948 km, aannemelijk: gedocumenteerd patroon, EU-sanctierisico"
+  },
+  {
+   "sleutel": "ni-ra",
+   "bestand": "stroomroute-nikkel-raglan-sudbury.json",
+   "grondstof": "nikkel",
+   "label": "Raglan → Sudbury",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Ni-Cu-concentraat van de Raglan-mijn per truck naar Deception Bay, per zeeschip door de Hudsonstraat naar Québec en per spoor naar de Sudbury Smelter."
+  },
+  {
+   "sleutel": "pgm-mb",
+   "bestand": "stroomroute-pgm-marikana-brakpan.json",
+   "grondstof": "pgm",
+   "label": "Marikana → Brakpan",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Sibanye-Stillwater PGM-concentraat per helikopter (grootcirkel 108,7 km, één bron) van het Marikana smelter/BMR-complex naar de PMR in Brakpan. Let op: modaliteit onzeker — helikoptervervoer rust op één bron (Lonmin-flowsheet, 2012); wegtransport is niet uitgesloten."
+  },
+  {
+   "sleutel": "pgm-kh",
+   "bestand": "stroomroute-pgm-kevitsa-harjavalta.json",
+   "grondstof": "pgm",
+   "label": "Kevitsa → Harjavalta",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Ni-Cu-concentraat met Pt/Pd-bijproduct van Boliden Kevitsa per truck (Vt4/E75) naar Ajos (Kemi) en per spoor naar de Boliden-smelter in Harjavalta. Let op: transportketen aannemelijk (bronnen 2018–2021); een deel van het concentraat gaat naar Rönnskär en is niet getekend, het aandeel Harjavalta is dus overschat."
+  },
+  {
+   "sleutel": "li-kr",
+   "bestand": "stroomroute-lithium-kathleenvalley-robstown.json",
+   "grondstof": "lithium",
+   "label": "Kathleen Valley → Robstown (Tesla)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Spodumeenconcentraat van Kathleen Valley per road train naar Geraldton, per bulkschip via Panama (aannemelijk: één bron) naar Corpus Christi en per truck naar Tesla's raffinaderij in Robstown."
+  },
+  {
+   "sleutel": "li-wq",
+   "bestand": "stroomroute-lithium-wodgina-qinzhou.json",
+   "grondstof": "lithium",
+   "label": "Wodgina → Zhenjiang (Xinminzhou)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Wodgina-concentraat per road train naar Utah Point (Port Hedland), per bulkcarrier naar de Yangtze en stroomopwaarts naar de Xinminzhou-kade bij Zhenjiang (afhaalpunt Albemarle-veilingen; Qinzhou niet bewezen en niet getekend)"
+  },
+  {
+   "sleutel": "ag-rd",
+   "bestand": "stroomroute-zilver-reddog-trail.json",
+   "grondstof": "zilver",
+   "label": "Red Dog → Teck Trail",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Zn-Pb-Ag-concentraat van Red Dog (Alaska) per truck over de DMTS-haulroad naar de DeLong-terminal, per barge+zeeschip naar Vancouver Wharves en per spoor (aannemelijk: één bron) naar Teck Trail"
+  },
+  {
+   "sleutel": "ag-ln",
+   "bestand": "stroomroute-zilver-londen-newyork.json",
+   "grondstof": "zilver",
+   "label": "Londen (LBMA-kluis) → New York (JFK)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): LBMA-zilverbaren per truck naar Heathrow en als belly-vracht (grootcirkel LHR → JFK) naar de JFK-vrachtterminal; COMEX-arbitrage nov 2024–feb 2025, depot onbekend"
+  },
+  {
+   "sleutel": "kolen-br",
+   "bestand": "stroomroute-kolen-bogatyr-reftinskaya.json",
+   "grondstof": "kolen",
+   "label": "Bogatyr → Reftinskaya",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Ekibastuz-thermisch kolen van de Bogatyr-dagbouw per spoor (1.455 km) via het overdrachtsstation Presnogorkovskaya naar Reftinskaya GRES, mijn naar afnemer over de Kazachs-Russische grens zonder zee. Let op: corridor aannemelijk, niet bevestigd (grensstation Presnogorkovskaya door KTZ slechts deels genoemd; alternatief via Petropavlovsk/Petoechovo). Contract 10,4 Mt/j loopt tot eind 2027."
+  },
+  {
+   "sleutel": "kolen-ts",
+   "bestand": "stroomroute-kolen-tanjungenim-suralaya.json",
+   "grondstof": "kolen",
+   "label": "Tanjung Enim → Suralaya",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): PTBA-kolen per spoor (405 km) naar Tarahan, per zeeschip over de Straat Soenda naar de kolensteiger van PLTU Suralaya, stoppunt de centrale. Let op: aannemelijk, één bron voor het havenpaar Tarahan → Suralaya (contract 2013–2022, daarna niet teruggevonden)."
+  },
+  {
+   "sleutel": "co-tn",
+   "bestand": "stroomroute-kobalt-taganito-niihama.json",
+   "grondstof": "kobalt",
+   "label": "Taganito → Niihama",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Taganito-limoniet per eigen mijnweg naar de THPAL-HPAL-fabriek en als Ni-Co mixed sulfide per zeeschip van de Claver-steiger naar de Niihama Nickel Refinery (SMM), Japans enige Co-raffinaderij; benen byte-identiek aan nikkel-taganito-niihama b1-b4"
+  },
+  {
+   "sleutel": "co-nm",
+   "bestand": "stroomroute-kobalt-norilsk-monchegorsk.json",
+   "grondstof": "kobalt",
+   "label": "Norilsk → Monchegorsk (Kola-kobalt)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): matte van Nadezhda per spoor, Jenisej, Arc7-zee en spoor naar de Kola-kobaltwerkplaats (aannemelijk: één bron)"
+  },
+  {
+   "sleutel": "olie-us",
+   "bestand": "stroomroute-olie-unecha-szazhalombatta.json",
+   "grondstof": "olie",
+   "label": "Unecha → Százhalombatta",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Russische transitolie per leiding (Druzhba-1 via Wit-Rusland, Oekraïne en Slowakije) naar de MOL Duna-raffinaderij, 4 OSM-leidingbenen zonder stippel"
+  },
+  {
+   "sleutel": "ol-pc",
+   "bestand": "stroomroute-olie-prudhoebay-cherrypoint.json",
+   "grondstof": "olie",
+   "label": "Prudhoe Bay → Cherry Point",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Alaska North Slope-crude per TAPS-leiding (1.281 km OSM) naar Valdez, per tanker buitenom Vancouver Island naar de BP Cherry Point-steiger en raffinaderij (bestemming aannemelijk: één bron)."
+  },
+  {
+   "sleutel": "dia-wa",
+   "bestand": "stroomroute-diamant-williamson-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Williamson → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): ruwe diamant per truck (T8/T3/T1, 1.019 km) van Mwadui naar DAR, per vrachtvlucht naar Brucargo en per truck (E19) naar het AWDC in Antwerpen. Let op: schematische route (weg Mwadui → Dar es Salaam en vlucht DAR → Brussel niet gebrond); volume 0,4 Mct/j is een bovengrens; sinds mei 2025 eigendom van Pink Diamonds."
+  },
+  {
+   "sleutel": "dia-du-su",
+   "bestand": "stroomroute-diamant-dubai-surat.json",
+   "grondstof": "diamant",
+   "label": "Dubai → Surat",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): ruwe diamant van de Dubai Diamond Exchange (DMCC) per truck naar DXB, per vrachtvlucht (aannemelijk, één bron) naar CSMIA Mumbai en over de NH48 naar de Surat Diamond Bourse. Let op: vrachtvluchten op Mumbai (CSMIA) gepauzeerd sinds aug 2026, lading gaat nu als belly- of koerierlading; volume 24 Mct/j is een natte vinger."
+  },
+  {
+   "sleutel": "au-kr",
+   "bestand": "stroomroute-goud-kibali-randrefinery.json",
+   "grondstof": "goud",
+   "label": "Kibali → Rand Refinery",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): doré van Kibali per truck naar Doko, per vlucht via Nairobi naar OR Tambo en per truck naar Rand Refinery (aannemelijk: één krantenbericht aug-2025)."
+  },
+  {
+   "sleutel": "cu-cto",
+   "bestand": "stroomroute-koper-cerroverde-toyo.json",
+   "grondstof": "koper",
+   "label": "Cerro Verde → Toyo",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Cerro Verde-concentraat per truck naar La Joya, per spoor naar Muelle F in Matarani, per zee naar de Toyo-smelter van SMM (bestemming aannemelijk: één bron)"
+  },
+  {
+   "sleutel": "cu-bv",
+   "bestand": "stroomroute-koper-buenavista-guaymas.json",
+   "grondstof": "koper",
+   "label": "Buenavista → Guaymas",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): koperconcentraat per trein (aannemelijk: één bron) van de Buenavista-concentrators in Cananea via Nogales en de Sonora-hoofdlijn naar het mineralenemplacement van Puerto de Guaymas, één landbeen, geen zee."
+  },
+  {
+   "sleutel": "olie-ay",
+   "bestand": "stroomroute-olie-abqaiq-yanbu.json",
+   "grondstof": "olie",
+   "label": "Abqaiq → Yanbu",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Arabische ruwe olie van de Abqaiq-stabilisatiefabriek per Petroline (OSM-leiding, 1.217 km) naar de Yanbu-exportterminal aan de Rode Zee; één been, geen zeebeen"
+  },
+  {
+   "sleutel": "ag-sb",
+   "bestand": "stroomroute-zilver-sanbartolome-arica.json",
+   "grondstof": "zilver",
+   "label": "San Bartolomé → Tambo Quemado → Arica",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): reserve-uitgang Bolivia, truck (spoor Arica–La Paz bindend vervangen), aannemelijk: één bron"
+  },
+  {
+   "sleutel": "co-sk",
+   "bestand": "stroomroute-kobalt-sudbury-kristiansand.json",
+   "grondstof": "kobalt",
+   "label": "Sudbury → Kristiansand",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Sudbury-matte per CN-spoor naar Québec en per schip naar Nikkelverk Kristiansand, waar het kobalt wordt gewonnen (letterlijke kopie van de nikkelketen plus nieuwe haven-aanloop)."
+  },
+  {
+   "sleutel": "u-tr",
+   "bestand": "stroomroute-uranium-tricastin-romans.json",
+   "grondstof": "uranium",
+   "label": "Tricastin → Romans",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): verrijkt UF6 per truck over A7/N532/A49 van Orano Tricastin naar Framatome Romans-sur-Isère (aannemelijk, geen tonnage)"
+  },
+  {
+   "sleutel": "gas-ne",
+   "bestand": "stroomroute-gas-nyhamna-easington.json",
+   "grondstof": "gas",
+   "label": "Nyhamna → Easington",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Ormen Lange-gas uit de Nyhamna-gasplant gaat via Langeled (1.168,6 km OSM-leiding, hub Sleipner Riser) naar de Gassco-terminal bij Easington."
+  },
+  {
+   "sleutel": "ree-ls",
+   "bestand": "stroomroute-ree-larochelle-sanmarcos.json",
+   "grondstof": "ree",
+   "label": "Solvay La Rochelle → Noveon San Marcos",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): gescheiden NdPr/Dy/Tb-oxiden per truck-last-mile, zeeschip La Pallice → Houston en truck naar Noveon (haven en route aangenomen, geen bron)"
+  },
+  {
+   "sleutel": "ree-lo",
+   "bestand": "stroomroute-ree-lovozero-solikamsk.json",
+   "grondstof": "ree",
+   "label": "Lovozero → Solikamsk",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): loparietconcentraat van het Lovozerski GOK per truck naar Olenegorsk en per spoor (2.790 km) naar Solikamsk Magnesium Works, aannemelijk (geen bron voor modaliteit en spoorkop)"
+  },
+  {
+   "sleutel": "u-ts",
+   "bestand": "stroomroute-uranium-tricastin-seversk.json",
+   "grondstof": "uranium",
+   "label": "Tricastin → Seversk",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Frans opgewerkt uranium (RepU) per spoor van Orano Tricastin naar Le Havre, per schip naar Sint-Petersburg en per spoor naar het Siberische Chemische Combinaat in Seversk"
+  },
+  {
+   "sleutel": "u-pb",
+   "bestand": "stroomroute-uranium-poti-blindriver.json",
+   "grondstof": "uranium",
+   "label": "Poti → Blind River",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Cameco's 40%-aandeel van Inkai per gecharterd zeeschip van Poti naar Montreal en per truck (aannemelijk) naar de Blind River-raffinaderij."
+  },
+  {
+   "sleutel": "ag-dm",
+   "bestand": "stroomroute-zilver-dubai-mumbai.json",
+   "grondstof": "zilver",
+   "label": "Dubai → Mumbai",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): zilverbaren per vrachtvlucht (grootcirkel, aannemelijk: één bron) van de DXB-vrachtterminal naar het Mumbai Air Cargo Complex, daarna per truck naar Zaveri Bazaar; reserve-as, zwak gebrond."
+  },
+  {
+   "sleutel": "u-mc",
+   "bestand": "stroomroute-uranium-mccleanlake-porthope.json",
+   "grondstof": "uranium",
+   "label": "Cigar Lake/McClean Lake → Port Hope",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): ertsslurry Cigar Lake per truck naar de McClean Lake-mill, yellowcake per truck via Hwy 905/102/2 en Yellowhead/Trans-Canada naar Blind River en UO3 naar Port Hope (b3 en b4 letterlijke kopieën van McArthur River)"
+  },
+  {
+   "sleutel": "gas-gk",
+   "bestand": "stroomroute-gas-galkynysh-khorgos.json",
+   "grondstof": "gas",
+   "label": "Galkynyş → Khorgos",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Turkmeens pijpgas via een schematische binnenlandse stippel naar Bagtyyarlyk en daarna 1.842,6 km doorgetrokken OSM-leiding (lijn X door Oezbekistan en Zuid-Kazachstan) naar het Khorgos-station in China."
+  },
+  {
+   "sleutel": "ree-bh",
+   "bestand": "stroomroute-ree-baotou-hanau.json",
+   "grondstof": "ree",
+   "label": "Baotou → Hanau",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): gescheiden NdPr-oxide van de Northern RE-scheiding in Baotou per truck naar Tianjin, per zeeschip naar Rotterdam en per truck naar Vacuumschmelze in Hanau (aannemelijk: één bron, reserve-as 4)"
+  },
+  {
+   "sleutel": "li-mk",
+   "bestand": "stroomroute-lithium-mtholland-kwinana.json",
+   "grondstof": "lithium",
+   "label": "Mt Holland → Kwinana (Covalent)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): spodumeenconcentraat per truck (aannemelijk, modus niet gebrond) van Mt Holland via Moorine Rock en de Great Eastern Hwy naar Covalents hydroxideraffinaderij in Kwinana"
   }
  ],
  "uitgesloten": [
