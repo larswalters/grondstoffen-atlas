@@ -1744,6 +1744,38 @@
    "label": "Mt Holland → Kwinana (Covalent)",
    "aan": true,
    "noot": "M31 · golf 7 (2026-10-09): spodumeenconcentraat per truck (aannemelijk, modus niet gebrond) van Mt Holland via Moorine Rock en de Great Eastern Hwy naar Covalents hydroxideraffinaderij in Kwinana"
+  },
+  {
+   "sleutel": "gas-ki",
+   "bestand": "stroomroute-gas-kipoi-melendugno.json",
+   "grondstof": "gas",
+   "label": "Kipoi → Melendugno",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Shah Deniz-gas via TANAP bij Kipoi de TAP in, één doorlopende OSM-leiding van 868 km door Griekenland, Albanië, de Adriatische Zee en Italië naar de PRT Melendugno"
+  },
+  {
+   "sleutel": "gas-gt",
+   "bestand": "stroomroute-gas-groundbirch-incheon.json",
+   "grondstof": "gas",
+   "label": "Groundbirch → Tongyeong (Canada → Korea)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): Montney-gas via Coastal GasLink naar LNG Canada Kitimat, LNG-tanker over de Noord-Pacific naar de KOGAS-terminal Tongyeong (aannemelijk: één bron)"
+  },
+  {
+   "sleutel": "au-gj",
+   "bestand": "stroomroute-goud-grasberg-jakarta.json",
+   "grondstof": "goud",
+   "label": "PTFI Manyar-PMR (Gresik) → Antam (Pulogadung, Jakarta)",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): goudbaren uit PTFI's Precious Metal Refinery in JIIPE Gresik per truck (aannemelijk, vervoerswijze niet gebrond) over de Trans-Java-tolweg naar Antam Logam Mulia in Pulogadung; Grasberg zelf zit in koper-grasberg-manyar"
+  },
+  {
+   "sleutel": "ree-sk",
+   "bestand": "stroomroute-ree-steenkampskraal-kaapstad.json",
+   "grondstof": "ree",
+   "label": "Steenkampskraal → Kaapstad",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09): monazietconcentraat van de Steenkampskraal-mijn per truck (DR2230, N7, N1, ~380 km, aannemelijk: één bron) naar de containerterminal van Kaapstad; stoppunt, geen gedocumenteerde afnemer."
   }
  ],
  "uitgesloten": [
