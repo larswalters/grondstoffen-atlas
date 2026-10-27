@@ -1,6 +1,14 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-27 (2e) - Golf 2 deel 3: stadslichten live op `?v=140` (commit `ce311c1`)
+
+Lars: *"ziet er goed uit"* (de labels, `?v=139`) en *"ja, haal de stadslichten maar op."* Nieuw `v2/src/stadslichten.js`: de Black Marble als additieve laag op de gedimde bol (besluit 6 van de ontwerpbrief). Tweede bol met dezelfde SphereGeometry-afbeelding als de dagkaart, op `CONFIG.vectorLift`, `MeshBasicMaterial` + `AdditiveBlending`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4 (boven tegels, onder vectorlagen). Dooft glad uit tussen 350 en 60 km (`AFSTEMMING.uitTussenKm`), sterkte 0,85. Aan in de atlasmodus, uit in het routewerk: `zetStadslichten()` in main.js, gekoppeld aan de kleurknop met de knoprij `.nlBtn` die zichtbaar meespringt; `let STADSLICHTEN = null` bovenaan main.js omdat `zetAttrib()` al tijdens het tegel-opzetten draait (TDZ). Attributiebalk noemt de laag zolang hij zichtbaar is.
+
+⚠️ Bron: `eoimages.gsfc.nasa.gov` reset de verbinding (ook via PowerShell buiten de sandbox); Commons heeft de Black Marble alleen op 1920×1080. Gebruikt: `8k_earth_nightmap.jpg` van Solar System Scope (CC BY 4.0, naar NASA Black Marble) → `v2/data/stadslichten-8k.jpg` (1,14 MB, desktop) en `-4k.jpg` (0,34 MB, telefoon), Pillow q78; 98,9 % van de pixels < 32/255, dus geen masker. Ruwe download in `v2/build-cache/stadslichten/`.
+
+Gemeten (Browser-pane): wereld · Europa 3.500 km (het referentiebeeld) · Nijl-delta 1.800 km (uitlijning: de lichten volgen de rivier) · 120 km sterkte 0,09 · routewerk uit + knop uit · telefoon 375 px laadt 4k · 0 console-fouten. Linear: comment op LAR-618. Vault: [[2026-10-27-grondstoffen-atlas-golf2-stadslichten]].
+
 ## 2026-10-27 - Golf 2 deel 2: labels per zoomband live op `?v=139` (commit `ff29d09`)
 
 Lars: *"ga verder met de grondstoffen atlas"* (na "waar waren we", achttien dagen na golf 8+9). Van golf 2 (LAR-618) stonden open: stadslichten (download pas na akkoord), labels per zoomband, LAR-480, HDR, telefoontest. Een volgende golf stromen vraagt tientallen agenten op een inmiddels lager abonnement; de labels kostten alleen eigen code.

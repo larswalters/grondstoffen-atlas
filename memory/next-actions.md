@@ -1,13 +1,21 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
+*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
 
 
 
-## 🔴 NIEUW 2026-10-27 — na golf 2 deel 2 (labels) live
+## 🔴 NIEUW 2026-10-27 (2e) — na golf 2 deel 3 (stadslichten) live
+
+1. **Lars kijkt naar `?v=140`:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=140 — lichten te fel/te zwak (`AFSTEMMING.sterkte` 0,85)? Te vroeg of te laat uitdoven bij inzoomen (`uitTussenKm` [60, 350])? Knoppen in `v2/src/stadslichten.js`.
+2. **LAR-480 (marker-contrast) afhandelen:** in v2 zijn de v1-markers vervangen door gloed + labels; voorstel = sluiten als achterhaald, tenzij Lars in v2 iets slecht zichtbaar vindt.
+3. **Het HDR-besluit** (clusters die door een andere legendakleur lopen) — apart besluit, kost een extra pass op de telefoon.
+4. **Het `level`/`parent`-niveau als labelband** (koper-complexen via `bak_stroombundel.py` + bundelbump).
+5. **NASA-origineel** als de host ooit bereikbaar is: `BlackMarble_2016_3km.jpg` → zelfde pijplijn (Pillow q78, 8k + 4k), attributie naar "NASA, publiek domein".
+
+## 🔴 2026-10-27 — na golf 2 deel 2 (labels) live
 
 1. ~~Lars test `?v=139`~~ ✅ **Visuele go (2026-10-27): "ziet er goed uit"** — afstemming blijft; knoppen voor later: `BANDEN` en `AFSTEMMING` in `v2/src/labels.js`.
 2. **Het `level`/`parent`-niveau als eigen labelband:** "Jinguan" i.p.v. 金冠铜业 op regionale hoogte. Vraagt dat `bak_stroombundel.py` de `level: complex`-knopen (alleen koper, 12) doorgeeft en `stroombundel.js` ze buiten de gloed houdt; bundelbump. Klein, maar pas als Lars de huidige regel (zwaarste lid) heeft gezien.
-3. **Rest van golf 2 (LAR-618):** stadslichten (Black Marble — download pas na akkoord: bestandsnaam, bron, grootte), LAR-480 (marker-contrast), het HDR-besluit.
+3. ~~Rest van golf 2 (LAR-618): stadslichten~~ ✅ live `?v=140` (zie boven) · LAR-480 en het HDR-besluit staan hierboven.
 4. **Volgende golf stromen** pas bij voldoende limiet: 15 reserve-assen klaar (`v2/tools/golf/maak_golf9.py`), zie hieronder.
 
 ## 🔴 2026-10-09 (avond) — na M31 golf 8+9 live

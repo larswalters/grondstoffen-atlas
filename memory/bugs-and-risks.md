@@ -1,9 +1,16 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
+*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
 
 
 
-## 🟡 NIEUW 2026-10-27 — uit golf 2 deel 2 (labels)
+## 🟡 NIEUW 2026-10-27 (2e) — uit golf 2 deel 3 (stadslichten)
+
+50. **NASA's beeldserver (`eoimages.gsfc.nasa.gov`) is vanaf deze machine onbereikbaar** (verbinding gereset, ook via PowerShell) — dezelfde klasse als de geblokkeerde Google-API-egress. Daarom Solar System Scope (CC BY 4.0) als bron; de attributie is een licentie-eis en hangt aan de zichtbaarheid van de laag (`zetAttrib`).
+51. **De stadslichtentextuur is 3–5 km per pixel:** onder ~150 km wazige vlekken; daarom het uitdoven 350 → 60 km. Wie de bovengrens verhoogt ziet vlekken over scherpe tegels.
+52. **Additief licht op een niet-gedimde ondergrond is ruis:** de laag staat uit in het routewerk (belichting vol). Wie in de atlas de belichting op "vol" zet houdt de lichten aan — bewust (de knoprijen zijn los), maar het beeld wast dan uit.
+53. **`zetAttrib()` leest `STADSLICHTEN` vóór die bestaat** (het draait tijdens het tegel-opzetten): `let STADSLICHTEN = null` bovenaan main.js is de guard; een `const` verderop had met `typeof` nog steeds een ReferenceError (TDZ) gegeven.
+
+## 🟡 2026-10-27 — uit golf 2 deel 2 (labels)
 
 46. **De Browser-pane draait geen `requestAnimationFrame` zolang het paneel verborgen is:** een `await rAF` hing 45 s, en een JS-meting direct na een knopklik gaf nul labels terwijl de screenshot ze toonde. Meet ná een screenshot (die forceert een frame) of met `meet_atlas.mjs` via CDP.
 47. **De labellaag kent alleen `level: site`:** de bundelbaker geeft complexen niet door, dus Tongling heet op regionale hoogte 金冠铜业 (het zwaarste lid) en niet "Jinguan". Bewust, tot het `level`/`parent`-niveau als eigen band gebouwd is.

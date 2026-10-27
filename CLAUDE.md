@@ -1,4 +1,13 @@
-> **🏷️ GOLF 2 DEEL 2 — LABELS PER ZOOMBAND, LIVE `?v=139` (2026-10-27, LAATSTE).** Commit `ff29d09`. Nieuw `v2/src/labels.js`: namen bij
+> **🌃 GOLF 2 DEEL 3 — STADSLICHTEN, LIVE `?v=140` (2026-10-27, LAATSTE).** Commit `ce311c1`. Na Lars' go op de labels en zijn akkoord
+> voor de download: `v2/src/stadslichten.js` zet de Black Marble als additieve laag op de gedimde bol (besluit 6 van de ontwerpbrief,
+> night-side). Tweede bol op `vectorLift`, `AdditiveBlending`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; dooft glad uit tussen
+> 350 en 60 km (`AFSTEMMING.uitTussenKm`), sterkte 0,85; aan in de atlas, uit in het routewerk — de kleurknop zet hem mee en de rij
+> "Stadslichten (nacht)" (`.nlBtn`) springt zichtbaar mee. ⚠️ Bron: NASA's beeldserver is vanaf deze machine onbereikbaar → 8k-nachtkaart
+> van Solar System Scope (CC BY 4.0, naar NASA Black Marble): `v2/data/stadslichten-8k.jpg` 1,14 MB (desktop) · `-4k.jpg` 0,34 MB
+> (telefoon); attributie in de balk zolang de laag zichtbaar is. Uitlijning gecontroleerd op de Nijl. **→ VOLGENDE:** Lars' blik op
+> `?v=140` · LAR-480 sluiten als achterhaald? · HDR-besluit · `level`/`parent`-labelband. Golf 2 (LAR-618) is daarmee op de besluiten na af.
+
+> **🏷️ GOLF 2 DEEL 2 — LABELS PER ZOOMBAND, LIVE `?v=139` (2026-10-27, EERDER; visuele go van Lars).** Commit `ff29d09`. Nieuw `v2/src/labels.js`: namen bij
 > de 451 sites en de stroomknopen als HTML boven het canvas (`#labelLaag`), in de grondstofkleur. Eén regel voor elke hoogte: kandidaten op q
 > gulzig plaatsen met een minimumafstand die met de kijkhoogte meeloopt (`BANDEN`, 120 px wereld → 16 px lokaal) → wereld één naam per cluster
 > (het zwaarste lid, zoals de hotspot uit de optelling ontstaat), continent de grote sites, regionaal elke fabriek + uiteinden van stromen,
@@ -941,7 +950,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-27 (laatst: golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-27 (laatst: golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3215,6 +3224,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-27 · GOLF 2 DEEL 3 LIVE `?v=140` — STADSLICHTEN.** Black Marble additief op de gedimde bol (`stadslichten.js`): tweede bol op `vectorLift`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; glad uitdoven 350 → 60 km; aan in de atlas, uit in het routewerk, zichtbaar gekoppeld aan de kleurknop. Bron Solar System Scope (CC BY 4.0, naar NASA) omdat NASA's server onbereikbaar is — attributie verplicht zolang de laag zichtbaar is. Lagen die `zetAttrib()` leest staan als `let … = null` bovenaan main.js (TDZ).
 - **2026-10-27 · GOLF 2 DEEL 2 LIVE `?v=139` — LABELS PER ZOOMBAND.** Labels zijn HTML boven het canvas (`labels.js`), één regel voor alle hoogtes (minimumafstand tussen ankers loopt met de kijkhoogte mee); het label van een cluster is dat van zijn zwaarste lid, geen regio-objecten; korte namen op de bol, volledige in de data; HUD/zoomknoppen/bronvermelding zijn bezet gebied. Meet in de Browser-pane ná een screenshot (geen rAF zolang het paneel verborgen is).
 - **2026-10-09 · M31 GOLF 8+9 LIVE `?v=138` (300 stromen).** Twee grote golven op Lars' resterende limiet; retries per agent (`agentR`), een pure-Python wegscan (`wegscan_puur.py`) en informatietextuur 2.048 benen. Capaciteit plannen op het 5-uursvenster (~0,3 punt per agent).
 - **2026-10-09 · M31 GOLF 7 LIVE `?v=136` (LAR-625, `2ec7d6d` + `8d83374`).** 39 nieuwe ketens, 221 totaal. Een uitgevallen toets wordt achteraf gedaan; herstel na uitval is een kleine verse workflow, geen `resumeFromRunId` (de cache werkt op de aanroepvolgorde). Wegketens die de wegtool niet haalt worden niet als stippel getekend maar later herbakt.

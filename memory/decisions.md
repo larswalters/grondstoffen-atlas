@@ -1,7 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
+*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
 
 
+
+## 2026-10-27 (2e) — golf 2 deel 3: stadslichten
+
+- **2026-10-27 · ✅ LARS — akkoord voor de download van de stadslichten** (*"ja, haal de stadslichten maar op"*), en visuele go op de labels (*"ziet er goed uit"*).
+- **2026-10-27 · Solar System Scope (CC BY 4.0, naar NASA Black Marble) als bron, mét naamsvermelding** — NASA's beeldserver reset de verbinding vanaf deze machine (ook buiten de sandbox) en Commons heeft alleen 1920×1080. Het NASA-origineel blijft het doel zodra de host bereikbaar is.
+- **2026-10-27 · Stadslichten zijn additief, `toneMapped` uit, boven de tegels** — dezelfde regel als gloed en kometen: de belichting is een kijkstand voor de ondergrond en raakt de lichtlagen niet. Tweede bol op `vectorLift` met `klemOpHorizon`, renderOrder 4.
+- **2026-10-27 · Uitdoven bij inzoomen is een glad verloop (350 → 60 km), geen drempel** — de textuur is 3–5 km/pixel; onder ~150 km zijn de Esri-tegels zelf de stadslichten.
+- **2026-10-27 · Aan in de atlas, uit in het routewerk, zichtbaar gekoppeld aan de kleurknop** (de knoprij springt mee, zoals de belichting) en los bij te stellen — de regel "geen verborgen gedrag" van 2026-08-07.
+- **2026-10-27 · Lagen die `zetAttrib()` leest staan als `let … = null` bovenaan main.js** — `zetAttrib` draait al tijdens het tegel-opzetten; `typeof` beschermt niet tegen de TDZ van een `const`.
 
 ## 2026-10-27 — golf 2 deel 2: labels per zoomband
 

@@ -1,7 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
+*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
 
 
+
+## Stand 2026-10-27 (2e) — golf 2 deel 3: stadslichten (`?v=140`)
+
+- **Op de bol (`?v=140`, commit `ce311c1`):** `v2/src/stadslichten.js` — de Black Marble als additieve laag op de gedimde bol (night-side, besluit 6 van de ontwerpbrief). Tweede bol op `vectorLift`, `AdditiveBlending`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; dooft glad uit tussen 350 en 60 km; aan in de atlas, uit in het routewerk (kleurknop zet hem mee, rij "Stadslichten (nacht)" springt mee). Desktop 8k (1,14 MB), telefoon 4k (0,34 MB).
+- **Bron:** Solar System Scope 8k-nachtkaart (CC BY 4.0, naar NASA Black Marble) — NASA's beeldserver is vanaf deze machine onbereikbaar. Attributie in de balk zolang de laag zichtbaar is. Wordt de NASA-host ooit bereikbaar: `BlackMarble_2016_3km.jpg` (13.500 × 6.750) erin en de attributie op "NASA, publiek domein".
+- **Afstemmen:** `AFSTEMMING.sterkte` (0,85) en `uitTussenKm` ([60, 350]) in `stadslichten.js`; `window.STADSLICHTEN` als handvat.
+- **Golf 2 (LAR-618) is daarmee op de besluiten na af:** Lars' blik op `?v=140`, LAR-480 (voorstel: sluiten als achterhaald), het HDR-besluit, het `level`/`parent`-niveau als labelband.
 
 ## Stand 2026-10-27 — golf 2 deel 2: labels per zoomband (`?v=139`)
 
