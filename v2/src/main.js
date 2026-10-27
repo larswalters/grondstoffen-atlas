@@ -22,6 +22,7 @@ import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
 import { laadStroombundel } from "./stroombundel.js?v=139";
+import { laadStadslichten } from "./stadslichten.js?v=140";
 import { GRONDSTOF_KLEUR, LIJNSTIJL } from "./stroomstijl.js?v=134";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
@@ -45,12 +46,13 @@ const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 // golf 1 verwijderd: de bundel is het enige pad.
 const PARAMS = new URLSearchParams(location.search);
 const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
-const CODE_VERSIE = "139";
+const CODE_VERSIE = "140";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
 // bezoeker bit-identieke bins opnieuw.
 const BUNDEL_VERSIE = "138";
 const TELEFOON = window.innerWidth <= 640;
+let STADSLICHTEN = null;              // de Black Marble-laag (golf 2); gevuld verderop, zetAttrib leest hem
 
 // --- welke lagen meedoen ---------------------------------------------------
 // Op verzoek van Lars (2026-08-07) staan vier lagen uit en zijn hun HUD-knoppen
@@ -288,6 +290,29 @@ let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | 
 let gloedAan = true;                 // stand van de gn-knop
 let bewegingAan = true;              // stand van de bw-knop
 let labelsAan = true;                // stand van de lb-knop (labels per zoomband, golf 2)
+
+// --- stadslichten (golf 2, LAR-618) ----------------------------------------
+// Black Marble als additieve laag op de gedimde bol: aan in de atlasmodus, uit
+// in het routewerk (daar staat de ondergrond op vol en is additief licht ruis).
+// De kleurknop zet hem mee en de knoprij springt zichtbaar mee, net als de
+// belichting — geen verborgen gedrag. Zie de kop van stadslichten.js.
+let stadslichtenAan = (MODUS !== "bouw");
+STADSLICHTEN = laadStadslichten({
+  radius: VECTOR_R, lift: CONFIG.vectorLift, versie: CODE_VERSIE, telefoon: TELEFOON,
+  klemOpHorizon: GLOBE.klemOpHorizon, renderer: GLOBE.renderer,
+});
+STADSLICHTEN.zetAan(stadslichtenAan);
+GLOBE.globeGroup.add(STADSLICHTEN.mesh);
+window.STADSLICHTEN = STADSLICHTEN;    // diagnose-handvat
+STADSLICHTEN.klaar
+  .then((s) => { console.log(`[atlas v2] stadslichten: ${s.bestand} ${s.breedte}×${s.hoogte} in ${s.ms} ms`); zetAttrib(); })
+  .catch((e) => console.warn("[atlas v2] stadslichten niet geladen:", e.message));
+function zetStadslichten(aan) {
+  stadslichtenAan = !!aan;
+  STADSLICHTEN.zetAan(stadslichtenAan);
+  for (const b of document.querySelectorAll(".nlBtn")) b.classList.toggle("is-on", b.dataset.nl === (stadslichtenAan ? "aan" : "uit"));
+  zetAttrib();
+}
 
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
@@ -660,6 +685,7 @@ if (TOON.aisgloed) laadAisgloed(VECTOR_R, "086", GLOBE.klemOpHorizon)
 // de havens bovenop.
 GLOBE.onTick(() => {
   const alt = GLOBE.getAltitude();
+  STADSLICHTEN.update(GLOBE.getAltitudeKm());   // dooft glad uit bij inzoomen
   if (kustlijn) {
     const op = Math.max(CONFIG.radius * 2e-6, alt * 0.004);
     kustlijn.scale.setScalar(1 + op / CONFIG.radius);
@@ -744,7 +770,10 @@ wireButtons(".skBtn", "sk", (modus) => {
   // daglichtfoto niets om tegen af te steken, en dat is de reden dat de
   // ontwerpbrief night-side een VOORWAARDE noemt en geen schoonheidsvraag.
   zetOndergrondDim(modus === "grondstof" ? "donker" : "vol");
+  zetStadslichten(modus === "grondstof");
 });
+// Stadslichten los bijstellen (de kleurknop zet ze mee, zie hierboven).
+wireButtons(".nlBtn", "nl", (mode) => zetStadslichten(mode === "aan"));
 
 // Ondergrond dimmen. Raakt per constructie alleen de tegels en de bol: de
 // lijnen staan op `toneMapped: false` en de gloed/kometen zijn eigen
@@ -775,6 +804,7 @@ zetKnopStand(".lbBtn", "lb", "aan");
   if (grLeg) grLeg.hidden = (kleurModus !== "grondstof");
 }
 zetOndergrondDim(kleurModus === "grondstof" ? "donker" : "vol");
+zetKnopStand(".nlBtn", "nl", stadslichtenAan ? "aan" : "uit");
 document.body.dataset.modus = MODUS;
 {
   // De bouwsectie staat dicht; ?modus=bouw opent hem (het routewerk wil zijn knoppen zien).
@@ -841,6 +871,8 @@ document.getElementById("zoomOut").addEventListener("click", () => GLOBE.zoomBy(
 function zetAttrib() {
   const delen = [];
   if (TEGELS.isAan()) delen.push(TEGELS.attributie());
+  // Stadslichten: CC BY 4.0 = naamsvermelding verplicht zolang de laag te zien is.
+  if (STADSLICHTEN && STADSLICHTEN.mesh.visible) delen.push(STADSLICHTEN.attributie);
   // WPI-verrijking op de havens (LAR-518): publiek domein, bron wel noemen.
   if (HAVENS && HAVENS.some((h) => h.wpiAfstandKm >= 0)) {
     delen.push("Havens: NGA World Port Index (publiek domein)");
