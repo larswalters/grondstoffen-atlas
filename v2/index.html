@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Grondstoffen Atlas — de wereldbol</title>
-<link rel="stylesheet" href="style.css?v=134" />
+<link rel="stylesheet" href="style.css?v=139" />
 
 <!-- ==========================================================================
      v2 draait op Three.js r185 met ES-modules (geen bundler, geen build-stap).
@@ -27,6 +27,10 @@
 
 <div id="app">
   <div id="canvasWrap"></div>
+  <!-- Labels per zoomband (golf 2, LAR-618): HTML boven het canvas, gevuld
+       door src/labels.js — één naam per cluster op wereldhoogte, elke fabriek
+       lokaal. Geen pointer-events: slepen gaat er dwars doorheen. -->
+  <div id="labelLaag" aria-hidden="true"></div>
 
   <!-- ==========================================================================
        DE HUD ALS PRODUCT (golf 1 van de visuele fase, 2026-10-08; ontwerp in
@@ -212,6 +216,13 @@
         <button class="gnBtn is-on" data-gn="aan">aan</button>
         <button class="gnBtn" data-gn="uit">uit</button>
       </div>
+      <!-- Labels per zoomband (golf 2): op wereldhoogte één naam per cluster
+           (het zwaarste lid), ingezoomd elke site en elk overslagpunt. -->
+      <div class="hudLabel">Labels (namen per zoomband)</div>
+      <div class="btnRow">
+        <button class="lbBtn is-on" data-lb="aan">aan</button>
+        <button class="lbBtn" data-lb="uit">uit</button>
+      </div>
       <!-- De kometen (golf 1): de lijn zegt waar, de komeet dat er iets beweegt. -->
       <div class="hudLabel">Beweging (kometen)</div>
       <div class="btnRow">
@@ -270,6 +281,6 @@
   </div>
 </div>
 
-<script type="module" src="src/main.js?v=138"></script>
+<script type="module" src="src/main.js?v=139"></script>
 </body>
 </html>

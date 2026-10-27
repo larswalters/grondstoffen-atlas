@@ -50,6 +50,7 @@ import {
 } from "./stroomlijn.js?v=137";
 import { bouwGloed } from "./gloed.js?v=134";
 import { bouwKometen } from "./stroomkometen.js?v=134";
+import { bouwLabels } from "./labels.js?v=139";
 
 const AARDSTRAAL_KM = 6371;
 const D2R = Math.PI / 180;
@@ -400,6 +401,8 @@ export async function laadStroombundel(opts) {
       kleur: GRONDSTOF_KLEUR[s.grondstof] ?? KLEUR_ONBEKEND,
       // capaciteit is het gewicht in de optelling: q stuurt wereldmaat én helderheid
       q: gMax > 0 ? Math.sqrt(gewichtVan(s) / gMax) : 1,
+      // de labellaag (golf 2) leest naam en soort; gloed.js negeert ze
+      naam: s.naam, soort: "site",
     });
   }
   const knoopIdx = new Map();     // sleutel → [gloedindex]
@@ -420,6 +423,7 @@ export async function laadStroombundel(opts) {
         // zolang ze op het scherm over elkaar liggen (anders werd koper ×2 goud).
         // Het aan/uit per stroom blijft per marker werken (zie de kop van gloed.js).
         samenvallen: true,
+        naam: m.naam, soort: "knoop",
       });
       stipPos.push(m.lon, m.lat);
       stipStroom.push(s.sleutel);
@@ -434,6 +438,16 @@ export async function laadStroombundel(opts) {
   // de lijn scherp óver het lichtpunt en blijft de komeet zichtbaar.
   const gloed = bouwGloed(gloedKnopen, radius, 7.45);
   groep.add(gloed.groep);
+  // ── labels per zoomband (golf 2, LAR-618): dezelfde knopen, als HTML boven
+  // het canvas. Eén label per cluster op wereldhoogte, elke fabriek lokaal —
+  // de regel staat in de kop van labels.js. Zonder #labelLaag in de pagina
+  // (de meetharness, een oude index) bestaat de laag gewoon niet.
+  const labelMount = opts.labelMount || document.getElementById("labelLaag");
+  const labels = labelMount
+    ? bouwLabels({ mount: labelMount, knopen: gloedKnopen, radius, camera, globeGroup, telefoon, vermijd: opts.labelVermijd })
+    : null;
+  let labelsAan = opts.labelsAan !== false;
+  if (labels) labels.zetZichtbaar(labelsAan);
   // Het puntgrootte-plafond van deze GPU (vaak 1024, op sommige lager): één keer
   // lezen. De gloed blijft daar in css-px ruim onder (haloMaxPx 160 × pixelRatio).
   const glCtx = renderer.getContext();
@@ -472,11 +486,15 @@ export async function laadStroombundel(opts) {
     for (const g of grondstoffen) {
       const aan = gloedAan && gsAan(g);
       for (const i of siteIdx.get(g) || []) gloed.zetAan(i, aan);
+      // een label volgt de grondstof, niet de gloedknop: namen zijn ook zonder licht nuttig
+      if (labels) for (const i of siteIdx.get(g) || []) labels.zetAan(i, gsAan(g));
     }
     for (const s of stromen) {
       const aan = gloedAan && atlas && !!stroomAan.get(s.sleutel);
       for (const i of knoopIdx.get(s.sleutel)) gloed.zetAan(i, aan);
+      if (labels) for (const i of knoopIdx.get(s.sleutel)) labels.zetAan(i, !!stroomAan.get(s.sleutel));
     }
+    if (labels) labels.zetKleurModus(atlas);
     stippen.visible = !atlas;
     info.commit();
   }
@@ -646,6 +664,7 @@ export async function laadStroombundel(opts) {
     gloedScherm.breedte = cssW; gloedScherm.hoogte = cssH;
     gloedScherm.bufferB = canvas.width; gloedScherm.bufferH = canvas.height;
     gloed.update(camLocaal, perEenheid, gloedScherm);
+    if (labels) labels.update(camLocaal, { breedte: cssW, hoogte: cssH }, hoogte);
     if (stippen.visible) {
       const d = camLocaal.length();
       const horizon = d > radius ? radius / d : 1;
@@ -694,6 +713,10 @@ export async function laadStroombundel(opts) {
     /** De gloedlaag zelf, voor bijstellen in de console (werkt vanaf het
      *  volgende frame): `ATLAS.gloed.afstemming.haloPiek = [0.25, 0.10]`. */
     gloed,
+    /** Labels per zoomband aan/uit (de lb-knop). */
+    zetLabels(aan) { labelsAan = !!aan; if (labels) labels.zetZichtbaar(labelsAan); },
+    /** De labellaag zelf (null zonder #labelLaag): `ATLAS.labels.getoondLijst()`. */
+    labels,
     zetBeweging(aan) { bewegingAan = !!aan; kometen.groep.visible = bewegingAan; },
     get kleurModus() { return kleurModus; },
     get lijnModus() { return lijnModus; },
@@ -713,6 +736,7 @@ export async function laadStroombundel(opts) {
         segmentenL0: L0.segmenten, segmentenL1: L1.segmenten, segmentenLucht: luchtSg.geo.instanceCount,
         fijnResident: [...fijnResident.entries()].filter(([, v]) => v === "klaar").map(([k]) => k),
         kometen: kometen.stats, gloedKnopen: gloed.aantal, gloedLichtpunten: gloed.fysiek,
+        labels: labels ? labels.stats : null,
         msLaden: Math.round(tLaden - t0), msDecoderen: Math.round(tDecode - tLaden),
         bundelVersie, kleurModus, lijnModus,
       };

@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadStroombundel } from "./stroombundel.js?v=137";
+import { laadStroombundel } from "./stroombundel.js?v=139";
 import { GRONDSTOF_KLEUR, LIJNSTIJL } from "./stroomstijl.js?v=134";
 
 const GLOBE = createGlobe(document.getElementById("canvasWrap"));
@@ -45,7 +45,7 @@ const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 // golf 1 verwijderd: de bundel is het enige pad.
 const PARAMS = new URLSearchParams(location.search);
 const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
-const CODE_VERSIE = "138";
+const CODE_VERSIE = "139";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
 // bezoeker bit-identieke bins opnieuw.
@@ -287,6 +287,7 @@ let kleurModus = MODUS === "bouw" ? "modaliteit" : "grondstof";
 let lijnModus = "route";             // "route" | "recht-plat" | "recht-boog" | "recht-zeeboog"
 let gloedAan = true;                 // stand van de gn-knop
 let bewegingAan = true;              // stand van de bw-knop
+let labelsAan = true;                // stand van de lb-knop (labels per zoomband, golf 2)
 
 const STROOM_LABEL = {
   zee: "zeeschip", binnenvaart: "binnenschip", truck: "truck",
@@ -542,7 +543,9 @@ async function startStromen() {
     radius: VECTOR_R, codeVersie: CODE_VERSIE, bundelVersie: BUNDEL_VERSIE,
     klemOpHorizon: GLOBE.klemOpHorizon, camera: GLOBE.camera, renderer: GLOBE.renderer,
     globeGroup: GLOBE.globeGroup, getAltitudeKm: GLOBE.getAltitudeKm, telefoon: TELEFOON,
-    kleurModus, lijnModus, gloedAan,
+    kleurModus, lijnModus, gloedAan, labelsAan,
+    // geen label onder de HUD, de zoomknoppen of de bronvermelding
+    labelVermijd: ["hud", "zoomControls", "attrib"].map((id) => document.getElementById(id)),
   });
   GLOBE.globeGroup.add(ATLAS.groep);
   // Een klik tijdens het laden (≈ 0,5 s) mag niet verloren gaan: de stand van
@@ -551,12 +554,13 @@ async function startStromen() {
   ATLAS.zetLijnModus(lijnModus);
   ATLAS.zetGloed(gloedAan);
   ATLAS.zetBeweging(bewegingAan);
+  ATLAS.zetLabels(labelsAan);
   GLOBE.onTick((dt) => ATLAS.update(dt));
   window.ATLAS = ATLAS;                 // diagnose- en meethandvat (meet_atlas.mjs)
   const st = ATLAS.stats;
   console.log(
     `[atlas v2] stromenbundel ${BUNDEL_VERSIE}: ${st.stromen} stromen · ${st.benen} benen (${st.stippel} stippel) · ` +
-    `${st.markers} knopen · ${st.sites} sites · L0 ${st.segmentenL0.toLocaleString("nl")} / L1 ${st.segmentenL1.toLocaleString("nl")} / ` +
+    `${st.markers} knopen · ${st.sites} sites · ${st.labels ? `${st.labels.labels} labels · ` : ""}L0 ${st.segmentenL0.toLocaleString("nl")} / L1 ${st.segmentenL1.toLocaleString("nl")} / ` +
     `lucht ${st.segmentenLucht.toLocaleString("nl")} segmenten · ${st.kometen.kometen} kometen (K ${st.kometen.K}) · ` +
     `laden ${st.msLaden} ms, decoderen ${st.msDecoderen} ms`
   );
@@ -763,6 +767,7 @@ zetKnopStand(".lnBtn", "ln", landnetAan ? "aan" : "uit");
 zetKnopStand(".akBtn", "ak", "uit");
 zetKnopStand(".gnBtn", "gn", "aan");
 zetKnopStand(".bwBtn", "bw", "aan");
+zetKnopStand(".lbBtn", "lb", "aan");
 {
   const modLeg = document.getElementById("stroomLegenda");
   const grLeg = document.getElementById("stroomLegendaGrondstof");
@@ -794,6 +799,12 @@ wireButtons(".glBtn", "gl", (mode) => {
 wireButtons(".gnBtn", "gn", (mode) => {
   gloedAan = (mode === "aan");
   if (ATLAS) ATLAS.zetGloed(gloedAan);
+});
+// Labels per zoomband (golf 2): namen bij de gloedknopen, één per cluster op
+// wereldhoogte, elke fabriek lokaal. De regel staat in de kop van labels.js.
+wireButtons(".lbBtn", "lb", (mode) => {
+  labelsAan = (mode === "aan");
+  if (ATLAS) ATLAS.zetLabels(labelsAan);
 });
 // Beweging (de kometen) aan/uit — nieuw in golf 1; de lijnen blijven staan.
 wireButtons(".bwBtn", "bw", (mode) => {

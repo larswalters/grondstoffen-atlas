@@ -519,6 +519,40 @@ html, body {
 
 #havenLabel span { color: var(--ink-dim); }
 
+/* --- labels per zoomband (golf 2, LAR-618) --------------------------------
+   HTML boven het canvas, gevuld door src/labels.js. De laag zelf vangt geen
+   muis (slepen gaat erdoorheen); de tekstmaat wordt in labels.js met
+   measureText gemeten tegen hetzelfde lettertype als hier, dus `font` op
+   #labelLaag is de enige plek waar die maat vandaan komt. */
+#labelLaag {
+  position: absolute;
+  inset: 0;
+  z-index: 0;                 /* eigen stapel op niveau 0: boven het canvas, onder de HUD (later in de DOM) */
+  overflow: hidden;
+  pointer-events: none;
+  font: 11px/1 ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  contain: strict;
+}
+#labelLaag[hidden] { display: none; }
+
+#labelLaag .lbl {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 3px 6px;
+  color: var(--ink);          /* in de atlas overschreven met de grondstofkleur */
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+  /* leesbaar op satelliet én op de gloed: een donkere rand om de letters */
+  text-shadow: 0 0 2px #000, 0 0 4px #000, 0 1px 3px rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transition: opacity 0.22s ease-out;
+  will-change: transform, opacity;
+}
+#labelLaag .lbl.is-zichtbaar { opacity: 0.92; }
+#labelLaag .lbl[data-soort="knoop"] { font-size: 10px; opacity: 0; }
+#labelLaag .lbl[data-soort="knoop"].is-zichtbaar { opacity: 0.8; }
+
 /* --- bronvermelding (verplicht bij Esri/OSM) ----------------------------- */
 
 #attrib {
@@ -579,6 +613,9 @@ html, body {
   #hud { top: 10px; left: 10px; padding: 11px 13px; min-width: 0; width: calc(100vw - 20px); max-width: calc(100vw - 20px); max-height: 60vh; }
   #hud.is-collapsed { max-height: none; }
   #stats { display: none; }
+  /* Labels: op 375 px css-breedte is 11 px te groot naast de gloed; labels.js
+     meet de tekst tegen deze maat (getComputedStyle), dus de vakken kloppen. */
+  #labelLaag { font-size: 10px; }
   /* Op een telefoon is dít de plek waar de licenties gelezen worden (de HUD
      start ingeklapt). Gemeten op 390 px: gecentreerd liep de balk met de vijf
      AIS-archieven erbij onder de zoomknoppen door — precies over
