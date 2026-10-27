@@ -1,7 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
+*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
 
 
+
+## 2026-10-27 — golf 2 deel 2: labels per zoomband
+
+- **2026-10-27 · Labels zijn HTML boven het canvas, geen 3D-tekst** — scherp op elke pixelRatio, geen draw call, dezelfde tokens als de HUD; tekstmaat uit `measureText`.
+- **2026-10-27 · Eén regel voor alle hoogtes, geen lijst per band:** kandidaten op q gulzig plaatsen met een minimumafstand tussen ankers die continu met de kijkhoogte meeloopt (lineair in log₁₀ km). Geen zoomdrempel, dus geen moment waarop alles omklapt.
+- **2026-10-27 · Het label van een cluster is het label van zijn zwaarste lid** — geen regio-objecten, geen handgeschreven regiolijst ("Copperbelt"); een regionaam is content die in de data hoort. Het `level`/`parent`-niveau (alleen koper) kan later als eigen band via de bundelbaker.
+- **2026-10-27 · Een label volgt de grondstof-chip, niet de gloedknop** — namen zijn ook zonder licht nuttig; "Labels" is een eigen as in de HUD.
+- **2026-10-27 · Korte namen op de bol, volledige in de data:** id, adres en rol eraf; Chinese registernamen zonder rechtsvorm en zonder de concernprefix die de buren ook dragen. De volledige naam blijft in `title` en in `stromen.json`.
+- **2026-10-27 · De HUD, zoomknoppen en bronvermelding zijn bezet gebied** voor labels (hun vakken tellen als geplaatst) — gevonden op de telefoon, waar de ingeklapte HUD bovenaan het beeld dekt.
 
 ## 2026-10-09 (avond) — M31 golf 8+9
 

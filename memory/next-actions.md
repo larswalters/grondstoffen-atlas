@@ -1,9 +1,16 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
+*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
 
 
 
-## 🔴 NIEUW 2026-10-09 (avond) — na M31 golf 8+9 live
+## 🔴 NIEUW 2026-10-27 — na golf 2 deel 2 (labels) live
+
+1. **Lars test op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=139 — te veel of te weinig namen per hoogte? Leesbaar op de gloed? Knoppen: `BANDEN` (max · minQ · sepPx · knoopMinQ per hoogte) en `AFSTEMMING` (`knoopFactor`, `hysterese`, `telefoonFactor`) in `v2/src/labels.js`.
+2. **Het `level`/`parent`-niveau als eigen labelband:** "Jinguan" i.p.v. 金冠铜业 op regionale hoogte. Vraagt dat `bak_stroombundel.py` de `level: complex`-knopen (alleen koper, 12) doorgeeft en `stroombundel.js` ze buiten de gloed houdt; bundelbump. Klein, maar pas als Lars de huidige regel (zwaarste lid) heeft gezien.
+3. **Rest van golf 2 (LAR-618):** stadslichten (Black Marble — download pas na akkoord: bestandsnaam, bron, grootte), LAR-480 (marker-contrast), het HDR-besluit.
+4. **Volgende golf stromen** pas bij voldoende limiet: 15 reserve-assen klaar (`v2/tools/golf/maak_golf9.py`), zie hieronder.
+
+## 🔴 2026-10-09 (avond) — na M31 golf 8+9 live
 
 1. **Lars test op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=138 (300 stromen): te druk bij zoom? lichtjes op 14 km te zwak (`haloPiek`, `uitwaaier`)?
 2. **Besluit Lars: HDR-doel voor de gloed?** (ongewijzigd.)

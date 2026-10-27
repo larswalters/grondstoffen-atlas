@@ -1,9 +1,16 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
+*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
 
 
 
-## 🟡 NIEUW 2026-10-09 (avond) — uit golf 8+9
+## 🟡 NIEUW 2026-10-27 — uit golf 2 deel 2 (labels)
+
+46. **De Browser-pane draait geen `requestAnimationFrame` zolang het paneel verborgen is:** een `await rAF` hing 45 s, en een JS-meting direct na een knopklik gaf nul labels terwijl de screenshot ze toonde. Meet ná een screenshot (die forceert een frame) of met `meet_atlas.mjs` via CDP.
+47. **De labellaag kent alleen `level: site`:** de bundelbaker geeft complexen niet door, dus Tongling heet op regionale hoogte 金冠铜业 (het zwaarste lid) en niet "Jinguan". Bewust, tot het `level`/`parent`-niveau als eigen band gebouwd is.
+48. **Korte namen zijn heuristiek:** de concernprefix-regel strijkt elke gedeelde prefix van ≥ 4 CJK-tekens weg zolang er ≥ 2 overblijven; een naam die zelf een prefix van een ander is blijft heel ("铜陵有色"). Controleer bij nieuwe Chinese sitelagen of er geen betekenisvolle prefix verdwijnt.
+49. **Een label kan op de gloedkern liggen** (offset 10 px rechts van het anker): leesbaar dankzij de tekstschaduw, maar bij een halo van 160 px staat de tekst in het licht. Alternatief (label buiten de halo plaatsen) kost de koppeling tussen naam en punt.
+
+## 🟡 2026-10-09 (avond) — uit golf 8+9
 
 41. **De bundelbaker brak bij >1.024 benen** (`MAX_BENEN`); opgelost met 2.048. Bij >2.048 benen opnieuw verdubbelen (de texturen zijn 2.048 × 1).
 42. **Een mijn-id kan van de mijn in de brief afwijken:** `kolen-blackthunder-scherer` is Buckskin → Plant Scherer (brief `kolen-buckskin-scherer.md`). Hernoemen = herbakken.

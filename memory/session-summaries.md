@@ -1,6 +1,14 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-27 - Golf 2 deel 2: labels per zoomband live op `?v=139` (commit `ff29d09`)
+
+Lars: *"ga verder met de grondstoffen atlas"* (na "waar waren we", achttien dagen na golf 8+9). Van golf 2 (LAR-618) stonden open: stadslichten (download pas na akkoord), labels per zoomband, LAR-480, HDR, telefoontest. Een volgende golf stromen vraagt tientallen agenten op een inmiddels lager abonnement; de labels kostten alleen eigen code.
+
+Nieuw `v2/src/labels.js` (+ `#labelLaag` in `index.html`, `.lbl` in `style.css`, aansluiting in `stroombundel.js`, knop `.lbBtn` in `main.js`): namen bij de 451 sites en de 1.033 stroomknopen als HTML boven het canvas, in de grondstofkleur (HUD-inkt in het routewerk). Kandidaten op prioriteit (q, stroomknoop ×0,6) gulzig plaatsen zolang het tekstvak vrij is en het anker niet binnen `sepPx` van een geplaatst anker ligt; `sepPx`, maximum en q-ondergrens lopen continu met de kijkhoogte (`BANDEN`, lineair in log₁₀ km) → wereld één naam per cluster (zwaarste lid), continent grote sites, regionaal elke fabriek + uiteinden, lokaal ook kades. Samenvallen zoals `gloed.js` (1 km; 977 labels uit 1.484 knopen), via-punten uitgesloten, zelfde naam niet twee keer binnen 220 px, korte naam (id/adres/rol eraf; Chinese registernamen zonder rechtsvorm en gedeelde concernprefix), hysterese +0,15 en CSS-fade, HUD/zoomknoppen/bronvermelding als bezet gebied, telefoon 10 px en ×0,7 labels.
+
+Gemeten in de Browser-pane (desktop 1024×768, telefoon 375×812): wereld 5 labels · Europa 3.500 km 9 · Rijnmond 300 km Rotterdam/Pernis/JLMAG/AWDC · Tongling 14 km 9 fabrieken met korte namen; knop aan/uit werkt; 0 console-fouten. ⚠️ Les: de Browser-pane draait geen `requestAnimationFrame` zolang het paneel verborgen is (een `await rAF` hing 45 s) — meet ná een screenshot. Linear: comment op LAR-618 (blijft In Progress). Vault: [[2026-10-27-grondstoffen-atlas-golf2-labels-per-zoomband]].
+
 ## 2026-10-09 (avond) - M31 golf 8+9 live op `?v=138` (commits `3bee7fb` + `41baae8`)
 
 Lars: *"Kan je nog een grote golf doen want ik heb nog veel limiet en hierna heb ik weer een lager abonnement."*

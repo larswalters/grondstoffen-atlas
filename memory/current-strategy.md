@@ -1,7 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-09 (M31 golf 8+9: 300 stromen, live `?v=138`)*
+*Last updated: 2026-10-27 (golf 2 deel 2: labels per zoomband, live `?v=139`)*
 
 
+
+## Stand 2026-10-27 — golf 2 deel 2: labels per zoomband (`?v=139`)
+
+- **Op de bol (`?v=139`, commit `ff29d09`):** `v2/src/labels.js` zet namen bij de 451 sites en de stroomknopen als HTML boven het canvas (`#labelLaag`), in de grondstofkleur; in het routewerk in HUD-inkt. Eén regel voor alle hoogtes: kandidaten op q gulzig plaatsen met een minimumafstand die met de kijkhoogte meeloopt (`BANDEN`: 120 px op 22.000 km → 16 px op 1 km) — wereld één naam per cluster (het zwaarste lid), continent de grote sites, regionaal elke fabriek + de uiteinden van stromen, lokaal ook de kades. Samenvallen zoals de gloed (977 labels uit 1.484 knopen), korte namen, hysterese + fade, nooit onder de HUD. HUD-knop "Labels (namen per zoomband)".
+- **Afstemmen:** `BANDEN` en `AFSTEMMING` in `labels.js`; diagnose via `ATLAS.labels.getoondLijst()` en `ATLAS.stats.labels`.
+- **Nog in golf 2 (LAR-618):** stadslichten (Black Marble, download pas na akkoord), LAR-480, het HDR-besluit, en het `level`/`parent`-niveau als eigen band (vraagt dat `bak_stroombundel.py` de 12 koper-complexen doorgeeft + bundelbump).
+- **Meetles:** de Browser-pane draait geen `requestAnimationFrame` zolang het paneel verborgen is — JS-metingen ná een screenshot doen, of de CDP-harness (`meet_atlas.mjs`) gebruiken.
 
 ## Stand 2026-10-09 (avond) — M31 golf 8+9 live: 300 stromen (`?v=138`)
 
