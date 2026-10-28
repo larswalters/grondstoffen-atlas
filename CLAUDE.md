@@ -1,4 +1,11 @@
-> **✅ GOLF 2 AFGESLOTEN — TELEFOONTEST `?v=140` GOED, LAR-618 DONE (2026-10-28, LAATSTE).** Lars: *"ziet er goed uit op de
+> **🗺️ M31 GOLF 10 LIVE `?v=141` — 315 STROMEN, DE 15 RESERVE-ASSEN (2026-10-28, LAATSTE).** Commit `5260363`. Lars koos de
+> stromen-golf boven golf 3: de 15 getoetste reserve-assen uit golf 9 (uit het journal, `v2/tools/golf/golf10-reserves.json`) in
+> één workflow zonder ontwerpronde (`maak_golf10.py` → `golf10-script.mjs`: toets voor ongetoetste assen in de eerste pijplijnstap
+> → brief → bake → keuring): 47 agenten op Sonnet, 8,2 M tokens, 23 min, 0 uitval, 15/15. Bundel 315 stromen · 1.213 benen ·
+> 1.075 markers, `BUNDEL_VERSIE` 141; desktop + 375 px 315/315, 0 fouten. 14 noten in `noten.json`, label lithium-finniss →
+> Zhangjiagang, 7 sitelaag-kandidaten niet gelijkgetrokken. Lessen in `bakhandleiding-licht.md` §10. **Geen reserves meer over.**
+
+> **✅ GOLF 2 AFGESLOTEN — TELEFOONTEST `?v=140` GOED, LAR-618 DONE (2026-10-28, EERDER).** Lars: *"ziet er goed uit op de
 > telefoon"* → gloed als lichtpunt (`?v=134`), labels per zoomband (`?v=139`) en stadslichten (`?v=140`) blijven zoals ze staan.
 > LAR-480 Canceled als achterhaald. **Golf 3 is nog niet gedefinieerd** — kandidaten en een voorstel (dikte = volume + kometen
 > uit volume + `level`/`parent`-band als kern; HDR en de bleke kleuren als beslisvragen; atmosfeer apart) in `memory/next-actions.md`;
@@ -956,7 +963,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-28 (laatst: golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-28 (laatst: M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3230,6 +3237,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-28 · M31 GOLF 10 LIVE `?v=141` (315 stromen).** Een reserve-golf draait zonder ontwerpronde; ongetoetste reserves worden in de EERSTE pijplijnstap getoetst (niet in een lus vooraf); reserve-assen voortaan direct als `golf<N+1>-reserves.json` bewaren; sitelagen alleen gelijktrekken boven ~2 km bij dezelfde faciliteit.
 - **2026-10-28 · GOLF 2 AFGESLOTEN (LAR-618 DONE) NA LARS' TELEFOONTEST VAN `?v=140`.** LAR-480 Canceled als achterhaald (v2: gloed + labels i.p.v. v1-markers). Golf 3 wordt pas gedefinieerd na een keuze van Lars; de bleke grondstofkleuren blijven een beslisvraag met screenshot.
 - **2026-10-27 · GOLF 2 DEEL 3 LIVE `?v=140` — STADSLICHTEN.** Black Marble additief op de gedimde bol (`stadslichten.js`): tweede bol op `vectorLift`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; glad uitdoven 350 → 60 km; aan in de atlas, uit in het routewerk, zichtbaar gekoppeld aan de kleurknop. Bron Solar System Scope (CC BY 4.0, naar NASA) omdat NASA's server onbereikbaar is — attributie verplicht zolang de laag zichtbaar is. Lagen die `zetAttrib()` leest staan als `let … = null` bovenaan main.js (TDZ).
 - **2026-10-27 · GOLF 2 DEEL 2 LIVE `?v=139` — LABELS PER ZOOMBAND.** Labels zijn HTML boven het canvas (`labels.js`), één regel voor alle hoogtes (minimumafstand tussen ankers loopt met de kijkhoogte mee); het label van een cluster is dat van zijn zwaarste lid, geen regio-objecten; korte namen op de bol, volledige in de data; HUD/zoomknoppen/bronvermelding zijn bezet gebied. Meet in de Browser-pane ná een screenshot (geen rAF zolang het paneel verborgen is).

@@ -1,7 +1,15 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
+*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
 
 
+
+## 2026-10-28 (2e) — M31 golf 10: de reserve-assen
+
+- **2026-10-28 · ✅ LARS — "Stromen-golf"** boven golf 3 van de visuele fase: eerst de 15 getoetste reserve-assen uit golf 9 bakken (weeklimiet 5%, 5-uursvenster 8%).
+- **2026-10-28 · Een reserve-golf draait zonder ontwerpronde** (brief → bake → keuring per keten; ongetoetste assen eerst een toets in de EERSTE pijplijnstap, nooit in een lus vooraf — anders wachten alle ketens op één agent). 47 agenten, 23 min, 0 uitval: 3–4× goedkoper dan een golf met ontwerp.
+- **2026-10-28 · De reserve-assen van een golf leven in het workflow-journal**, niet op schijf; `maak_golf10.py` haalt ze uit de `result`-regels. Voortaan bij elke golf de reserves direct als `golf<N+1>-reserves.json` in `v2/tools/golf/` bewaren.
+- **2026-10-28 · Sitelaag-centroïdes alleen gelijktrekken boven ~2 km** (de samenvoegafstand van gloed en labels) en alleen bij dezelfde faciliteit; de 7 kandidaten van golf 10 bleven staan.
+- **2026-10-28 · Id ≠ eindpunt → label in het register aanpassen, id laten staan** (lithium-finniss-ningbo eindigt in Zhangjiagang; precedent golf 4).
 
 ## 2026-10-28 — golf 2 afgesloten
 

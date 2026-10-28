@@ -1,6 +1,18 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-28 (2e) - M31 golf 10 live op `?v=141`: 315 stromen, de 15 reserve-assen uit golf 9 (commit `5260363`)
+
+Lars koos "Stromen-golf" boven golf 3. De 15 getoetste reserve-assen uit golf 9 zijn uit het journal van
+`wf_72cddf3d-a92` gehaald (`golf10-reserves.json`); `maak_golf10.py` bouwde `golf10-script.mjs` met alleen de
+reserve-route. Eerste start afgebroken na "ik zie maar een agent": de twee ongetoetste lithium-assen werden sequentieel
+vóór de pijplijn getoetst; toets in stap 1 gezet en vers herstart. Run `wf_569f9818-284`: 47 agenten op Sonnet, 8,2 M
+tokens, 23 min, 0 uitval, 15/15 gebakken en gekeurd (2 goed, 13 goed-met-bevindingen). Centraal: `centraal_check.py`
+15/15 (naden max 4,2 km, kobalt 589 KB, 4 markers 1,6–4,9 km naast de lijn), `sitelaag_check.py` 7 kandidaten niet
+gelijkgetrokken, 14 noten, label lithium-finniss → Zhangjiagang, register 315, bundel 1.213 benen · 1.075 markers,
+`BUNDEL_VERSIE` 141. Desktop + 375 px 315/315, 0 fouten, 4 verzoeken, 2,0 MB. Lessen in bakhandleiding §10. Linear: nieuw
+issue golf 10 Done. Vault: [[2026-10-28-grondstoffen-atlas-m31-golf10-reserves]].
+
 ## 2026-10-28 - Golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done, LAR-480 Canceled
 
 Korte sessie zonder code. Lars: *"ziet er goed uit op de telefoon"* op `?v=140` (gloed als lichtpunt + labels per

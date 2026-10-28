@@ -1,7 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
+*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
 
 
+
+## Stand 2026-10-28 (2e) — M31 golf 10 live: 315 stromen (`?v=141`)
+
+- **Op de bol (`?v=141`, commit `5260363`):** 15 nieuwe ketens, 300 → 315: grafiet, pgm, lithium ×2, zilver, kolen ×2, kobalt, uranium ×2, gas ×2, olie ×2, goud. Bundel 315 stromen · 1.213 benen · 355 stippel · 1.075 markers · 451 sites; `BUNDEL_VERSIE` 141. Desktop en 375 px: 315/315, 0 fouten, 4 verzoeken, 2,0 MB.
+- **Hoe:** de 15 getoetste reserve-assen uit golf 9 — ze stonden nergens op schijf, alleen in het journal van `wf_72cddf3d-a92` (de `result`-regels van ontwerp en toets) → `v2/tools/golf/golf10-reserves.json`. `maak_golf10.py` bouwt `golf10-script.mjs` uit het golf 9-script met alleen de reserve-route (toets voor ongetoetste assen in de eerste pijplijnstap → brief → bake → keuring). Run `wf_569f9818-284`: 47 agenten op Sonnet, 8,2 M tokens, 23 min, 0 uitval. Kosten: 5-uursvenster 8 → 23%, week 5 → 8% (inclusief de eigen sessie).
+- **Eerste start afgebroken:** de twee ongetoetste lithium-assen werden sequentieel vóór de pijplijn getoetst → alle ketens wachtten op één agent. TaskStop, toets per keten in stap 1, vers herstart (bakhandleiding §10).
+- **Centraal:** `centraal_check.py` 15/15 (naden max 4,2 km, kobalt 589 KB, 4 markers 1,6–4,9 km naast de lijn als noten), `sitelaag_check.py` 7 kandidaten niet gelijkgetrokken (< 2 km of andere faciliteit), `registreer_golf.py` zonder sleutelbotsing, 14 noten in `noten.json`, label lithium-finniss → "Finniss → Zhangjiagang via Darwin".
+- **Geen reserve-assen meer over:** een volgende stromen-golf = ontwerpronde. Golf 3 van de visuele fase blijft open (kandidaten in de stand hieronder).
 
 ## Stand 2026-10-28 — golf 2 van de visuele fase afgesloten
 

@@ -1,9 +1,17 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
+*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
 
 
 
-## 🔴 NIEUW 2026-10-28 — golf 2 afgesloten, golf 3 kiezen
+## 🔴 NIEUW 2026-10-28 (2e) — na M31 golf 10 (de 15 reserve-assen) live
+
+1. **Lars test `?v=141` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=141 — de 15 nieuwe ketens (o.a. Northern Border, Asaluyeh → Ankara, OK1, Pomorski, Goulamina → Yangtze, Hambach → Niederaussem).
+2. **Geen reserve-assen meer over.** Een volgende stromen-golf vraagt weer een ontwerpronde (per grondstof ontwerp + toets, ~100+ agenten, 3–4× de kosten van golf 10); invoer bouwen zoals `maak_golf9.py` (ontwerp per grondstof) met de `bestaand`/`afgewezen`-lijsten uit het register en `golf10-resultaat.json`.
+3. **Of golf 3 van de visuele fase** (zie hieronder, 1e sectie van vandaag).
+4. **Informatietextuur:** 2.048 benen, de bundel heeft er 1.213 — pas verdubbelen rond 1.900.
+5. **Open bevindingen uit golf 10 (geen actie, wel weten):** kobalt-cdm-tongxiang 589 KB; vier markers 1,6–4,9 km naast de lijn (Gevra-laadpunt, Yangtze-conventie-anker ×2, SPb-kade); lithium-finniss-ningbo eindigt in Zhangjiagang (label aangepast, id niet).
+
+## 🟢 2026-10-28 — golf 2 afgesloten, golf 3 kiezen — KEUZE GEMAAKT: stromen-golf (golf 10, zie boven); golf 3 blijft open
 
 1. **Lars kiest golf 3** (nog niet gedefinieerd; kandidaten uit §13 van `v2/design/atlas-product-golf1.md` en de open punten van `v2/design/lod-ontwerpbrief.md`):
    - **dikte = volume + aantal kometen uit volume** (besluit 4 van de brief) — volume per been in een los metadatabestand (geen bak-recepten), de haak `beenInfo.B` staat klaar zonder shaderwijziging;
