@@ -13,5 +13,19 @@
  "nikkel-kevitsa-harjavalta": "Zelfde fysieke route als pgm-kevitsa-harjavalta (Ni-Cu-concentraat met PGM als bijproduct); de keten staat in beide grondstoffen.",
  "grafiet-molo-abudhabi": "Let op: het wegbeen Molo → Toliara is een kopie van grafiet-molo-duisburg (2,3 keer hemelsbreed); de Abu Dhabi-fabriek is nog niet gebouwd.",
  "kobalt-monchegorsk-harjavalta": "Zelfde fysieke route als nikkel-monchegorsk-harjavalta (Severonickel-matte met kobalt als bijproduct); de keten staat in beide grondstoffen.",
- "uranium-langerheinrich-metropolis": "Let op: bestand van 571 KB (lange spoor- en zeebenen), de zwaarste keten van de atlas; de LOD-bundel laadt hem alleen in grof formaat tot er ingezoomd wordt."
+ "uranium-langerheinrich-metropolis": "Let op: bestand van 571 KB (lange spoor- en zeebenen), de zwaarste keten van de atlas; de LOD-bundel laadt hem alleen in grof formaat tot er ingezoomd wordt.",
+ "grafiet-vittangi-lulea": "Let op: Talnode-anker (Hertsöfältet) onzeker, de 306,7 km is OSM-weg zonder gepubliceerde wegkm; project pre-FID.",
+ "pgm-mototolo-rustenburg": "Let op: bronconflict over de smelter (Polokwane), matte per truck is een aanname; het Polokwane → Rustenburg-been is een letterlijke kopie van pgm-modikwa-rustenburg.",
+ "lithium-finniss-ningbo": "Let op: het id zegt Ningbo, de lijn eindigt in Zhangjiagang (Yangtze); Yangtze-mondingsmarker is het bestaande conventie-anker (2,7 km naast de lijn).",
+ "lithium-goulamina-yangtze": "Let op: Chinese loshaven niet gebrond, zeebeen eindigt op het conventie-anker Yangtze-monding; wegkm is een afgeronde opgave.",
+ "kolen-hambach-niederaussem": "Let op: bruinkool onder de grondstof kolen; spoorkm niet gepubliceerd (30,2 km gemeten, omwegfactor 1,85 door de verlegging van 2014).",
+ "kolen-gevra-korba": "Let op: gemeten spoor 23,5 km via de wye Kusmunda tegen 14,8 km MGR-opgave (de MGR-lijn ontbreekt in OSM); Gevra-laadmarker 1,6 km naast de lijn.",
+ "uranium-stpetersburg-columbia": "Let op: Baltimore-kade (Rukert) onzeker, SPb-kademarker 4,9 km van het zeebeen (MARNET-snap, net onder de aanloopgrens); wegkm niet gepubliceerd.",
+ "uranium-walvisbay-malvesi": "Let op: alleen activistenbronnen voor deze keten (Rössing/Husab-U3O8 via Hamburg naar Malvési); Narbonne-terugloop gedeeld met uranium-malvesi-tricastin.",
+ "gas-portofmorgan-manhattan": "Let op: kop (Port of Morgan) en eind (Manhattan IL) aannemelijk, niet bevestigd; twee OSM-gaten van samen 175 km (9,4%) als stippel.",
+ "olie-haoudelhamra-skikda": "Let op: OSM-way kan OK1 of NK1 zijn; 84,2 km (13%) stippel zonder leidingkm; Skikda-anker aannemelijk.",
+ "olie-gdansk-schwedt": "Let op: Pomorski- en Przyjaźń-benen zonder gepubliceerde leidinglengte (km-toets is indicatie); Naftoport → Pomorski-kop 6,6 km stippel.",
+ "goud-arezzo-valcambi": "Let op: aannemelijk, één bron voor de bestemming Valcambi; 428 wegkm is een OSRM-indicatie.",
+ "zilver-antofagasta-hamburg": "Let op: alle benen zijn letterlijke kopieën van koper-aurubis-hamburg; de herkomst Antofagasta berust op één bron.",
+ "kobalt-cdm-tongxiang": "Let op: CDM (Huayou) is geschorst, de keten is één bron; geen wegkm voor het DRC → Durban-been; bestand 589 KB."
 }

@@ -7,3 +7,5 @@ Gebruikt in golf 7 (2026-10-09), zie `v2/design/bakhandleiding-licht.md` §8.
 - `centraal_check.py` · `sitelaag_check.py` · `registreer_golf.py` (+ `noten.json`) — de centrale nameting en registratie.
 
 - `golf8-script.mjs` · `golf9-script.mjs` — de scripts van golf 8 en 9 (met `agentR`-retries, literale slots en `wegscan_puur.py`); `maak_golf8.py` en `maak_golf9.py` bouwen ze uit het vorige script en de resultaten van de vorige golf.
+
+- `golf10-script.mjs` — golf 10 (2026-10-28): alleen de reserve-route (brief, bake, keuring) voor de 15 getoetste reserve-assen uit golf 9, geen ontwerpronde; `maak_golf10.py` bouwt hem uit `golf9-script.mjs` + `golf10-reserves.json` (de assen en toetsen uit het golf 9-journal). Les: een reserve zonder per-keten-toets wordt in de EERSTE pijplijnstap getoetst, niet vooraf in een lus — anders wachten alle ketens op die ene agent. `golf10-resultaat.json` is de invoer voor `registreer_golf.py`.

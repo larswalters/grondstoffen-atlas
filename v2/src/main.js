@@ -50,7 +50,7 @@ const CODE_VERSIE = "140";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
 // bezoeker bit-identieke bins opnieuw.
-const BUNDEL_VERSIE = "138";
+const BUNDEL_VERSIE = "141";
 const TELEFOON = window.innerWidth <= 640;
 let STADSLICHTEN = null;              // de Black Marble-laag (golf 2); gevuld verderop, zetAttrib leest hem
 

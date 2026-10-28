@@ -94,6 +94,50 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # Routebrief lithium-goulamina-yangtze, been b1 (LICHTE werkwijze M31 golf 10).
+    # Truck Goulamina-plant (Ganfeng, Mali) -> Abidjan, SEA-invest mineraalterminal
+    # (Quai Q14 / Berth 14, Port Autonome d'Abidjan). RN7 via Bougouni -> Sikasso -> grens
+    # Zegoua/Pogo -> Ferkessedougou -> Bouake/Yamoussoukro -> A3 Abidjan. Gepubliceerd
+    # ~1.000 km (Leo Lithium ASX 15-11-2022: "approximately 1,000km"; SMM ~1.000 km).
+    # Overlap met lithium-bougouni-yangpu-plant-sanpedro is gewenst/bekend (zelfde corridor).
+    "lithium-goulamina-yangtze-plant-abidjan": {
+        "via": [
+            ("Goulamina-plant (Ganfeng) (laadplek, w-li-goulamina)",  (-7.9723, 11.3495)),  # anker
+            ("Sikasso (RN7-knoop)",                                  (-5.6778, 11.3166)),
+            ("Grens Zegoua (ML) / Pogo (CI)",                        (-5.6531, 10.4828)),
+            ("Ferkessedougou (A3/N1-knoop)",                         (-5.1976, 9.5940)),
+            ("Yamoussoukro (N1/A3-knoop)",                           (-5.2776, 6.8200)),
+            ("SEA-invest mineraalterminal Abidjan, Quai Q14",        (-4.0125, 5.2946)),   # anker
+        ],
+        "id": "li-goulamina-abidjan",
+        "naam": "Goulamina-plant -> Sikasso -> grens Zegoua/Pogo -> Ferkessedougou -> Yamoussoukro -> Abidjan, SEA-invest Q14 (RN7 -> N1 -> A3)",
+        "extracts": ["mali", "ivoorkust"],
+        "refs": ["RN7", "N1", "A3"],
+        "gepubliceerdKm": 1000,
+        "bronnoot": "Leo Lithium ASX 15-11-2022: Abidjan 'approximately 1,000km' van Goulamina; "
+                    "SMM ~1.000 km (bedrijfsopgave, geen routelengte)",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-goulamina-yangtze-weg-plant-abidjan.geojson",
+    },
+    # ── Routebrief grafiet-vittangi-lulea, been b1 (LICHTE werkwijze M31 golf 10) ──
+    # Truck grafietconcentraat Nunasvaara Sodra (Vittangi) -> Talnode-kavel Hertson (Lulea). GEEN gepubliceerde wegkm:
+    # hemelsbreed 241 km; eigen OSM-scan 306,7 km (gebakken, 4795 punten). Bewust GEEN via-punten: de kortste weg loopt via
+    # Vittangi, Tarendo, Overkalix en Rane (niet via Kiruna/Gallivare/Boden, dat is een omweg). gepubliceerdKm None: de
+    # +-15%-toets is een indicatie. Eerste en laatste punt zijn de ankers (lon, lat).
+    "grafiet-vittangi-lulea-nunasvaara-hertson": {
+        "via": [
+            ("Nunasvaara Sodra - mijnanker gr-vittangi-mijn", (21.4094, 67.7047)),
+            ("Talnode-kavel Hertson, Lulea - anker gr-lulea-talnode", (22.2840, 65.5670)),
+        ],
+        "id": "gr-vittangi-lulea",
+        "naam": "Nunasvaara Sodra (Vittangi) -> Talnode Lulea (Hertson), kortste weg via Junosuando-Tarendo-Overkalix-Rane",
+        "extracts": ["zweden"],
+        "refs": [],
+        "gepubliceerdKm": None, "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 241 km",
+        "vensterKm": 75,
+        "uit": "grafiet-vittangi-lulea-weg-nunasvaara-hertson.geojson",
+    },
     # ── Routebrief uranium-elektrostal-paks, been b1 (LICHTE werkwijze M31 golf 8) ──
     # Truck VVER-440-splijtstof TVEL Elemash (Elektrostal) -> Moskou-Domodedovo (DME) vrachtplatform: de A-107
     # (Moskouse kleine ring, oostzijde, NIET door Moskou zelf) -> zuidpunt bij de M-4 -> A-105 (luchthavenweg). GEEN
@@ -300,6 +344,133 @@ PROFIELEN = {
         "uit": "grafiet-harjavalta-heroya-weg-fortum-pori.geojson",
     },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief lithium-finniss-ningbo, been b1 (LICHTE werkwijze M31 golf 10) ──
+    # Truck spodumeenconcentraat Finniss-mijn (Core Lithium, Cox Peninsula) -> East Arm Wharf Darwin:
+    # Cox Peninsula Rd, Finn Rd, Jenkins Rd, Channel Island Rd, Berrimah Rd. 88 km = Core-opgave (sealed road),
+    # OSRM 80,5 km. Via-punten uit OSRM, op de doorgaande weg te projecteren. Stuart-Highway-variant niet getekend.
+    "lithium-finniss-ningbo-mijn-eastarm": {
+        "via": [
+            ("Finniss Lithium Operation (Core Lithium), mijn/plant (anker li-finniss-mijn)", (130.7747, -12.6712)),
+            ("mijnweg x Cox Peninsula Road",                                              (130.7811, -12.6611)),
+            ("Cox Peninsula Rd x Finn Road",                                              (131.0093, -12.7039)),
+            ("Finn Rd x Jenkins Road",                                                    (131.0092, -12.6123)),
+            ("Jenkins Rd x Channel Island Road",                                          (130.9650, -12.5774)),
+            ("Berrimah Road (havenroute naar East Arm)",                                  (130.9253, -12.4612)),
+            ("East Arm Wharf, Darwin Port (anker li-eastarm-kade)",                       (130.8812, -12.4904)),
+        ],
+        "id": "li-finniss-eastarm",
+        "naam": "Finniss-mijn -> East Arm Wharf Darwin (Cox Peninsula Rd -> Finn Rd -> Channel Island Rd -> Berrimah Rd)",
+        "extracts": ["australie"],
+        "refs": ["Cox Peninsula Road", "Finn Road", "Channel Island Road", "Berrimah Road"],
+        "gepubliceerdKm": 88,
+        "bronnoot": "Core Lithium: project 88 km van Darwin Port over verharde weg (ASX 22-06-2026, Yahoo 26-02-2026); OSRM 80,5 km",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "lithium-finniss-ningbo-weg-mijn-eastarm.geojson",
+    },
+    # ── Routebrief pgm-mototolo-rustenburg, been b1 (LICHTE werkwijze M31 golf 10) ──
+    # Truck PGM-concentraat Mototolo-concentrator -> Valterra Polokwane-smelter: D1335, D212, D2219, D4268, R579, R37.
+    # GEEN gepubliceerde wegkm: hemelsbreed 127 km, OSRM 159,1 km, eigen scan 162,9 km (indicatie, geen norm).
+    "pgm-mototolo-rustenburg-mototolo-polokwane": {
+        "via": [
+            ("Mototolo-concentrator (anker pgm-mototolo-conc)",                  (30.1137, -25.0104)),
+            ("D212 Steelpoort-vallei",                                           (30.0828, -24.8949)),
+            ("D2219 Kgano Royal Road",                                           (29.9700, -24.7897)),
+            ("R579 noord van Jane Furse",                                        (29.7246, -24.6155)),
+            ("R579 voor R37-aansluiting",                                        (29.4705, -24.2613)),
+            ("R37 richting Polokwane",                                           (29.4660, -24.1066)),
+            ("Valterra Polokwane-smelter (anker pgm-polokwane-smelter)",         (29.4694, -24.0281)),
+        ],
+        "id": "pgm-mototolo-polokwane-weg",
+        "naam": "Mototolo-concentrator -> Polokwane-smelter (D-wegen, R579, R37)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R579", "R37"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 127 km, OSRM 159,1 km; de +-15%-toets is een indicatie.",
+        "vensterKm": 45,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "pgm-mototolo-rustenburg-weg-mototolo-polokwane.geojson",
+    },
+    # ── Routebrief uranium-stpetersburg-columbia, been b2 (LICHTE werkwijze M31 golf 10) ──
+    # Truck verrijkt UF6 (30B) Baltimore-kade (Rukert, Canton) -> Westinghouse Columbia FFF (Hopkins SC): I-95 -> Capital Beltway
+    # (I-495) -> I-95 -> I-295 (Richmond-oost) -> I-95 -> I-20 -> I-77 -> SC 48. Acht via-punten uit brief §4 (op de OSRM-geometrie).
+    # GEEN gepubliceerde wegkm: hemelsbreed 713 km, OSRM 856-881 km (indicatie, geen norm).
+    "uranium-stpetersburg-columbia-baltimore-columbia": {
+        "via": [
+            ("Rukert Terminals, Canton, Baltimore (anker, u-baltimore-kade)",        (-76.5705, 39.2669)),
+            ("I-95 Columbia/Laurel MD",                                              (-76.8228, 39.1603)),
+            ("Capital Beltway (I-495) Virginia-zijde",                               (-77.0646, 38.7967)),
+            ("I-95 Fredericksburg VA",                                               (-77.5038, 38.3013)),
+            ("I-295 oost van Richmond VA",                                           (-77.2964, 37.4884)),
+            ("I-95 Rocky Mount NC",                                                  (-77.8884, 35.9560)),
+            ("I-95 oost van Fayetteville NC",                                        (-78.8183, 35.0121)),
+            ("I-95/I-20 Florence SC",                                                (-79.8461, 34.1930)),
+            ("I-20/I-77 oost van Columbia SC",                                       (-80.9150, 34.0700)),
+            ("Westinghouse Columbia FFF, Hopkins SC (anker, u-columbia-fabricage)",  (-80.9194, 33.8831)),
+        ],
+        "id": "u-stpetersburg-columbia-b2",
+        "naam": "Baltimore (Rukert) -> I-95 -> Capital Beltway -> I-295 Richmond -> I-95 -> I-20 -> I-77 -> Westinghouse Columbia FFF (SC)",
+        "extracts": ["us-maryland", "us-virginia", "us-north-carolina", "us-south-carolina"],
+        "refs": ["I 95", "I 495", "I 295", "I 20", "I 77", "SC 48"],
+        "gepubliceerdKm": 713, "bronnoot": "hemelsbreed 713 km, geen wegkm gepubliceerd (OSRM 856-881 km); lengtetoets is indicatie",
+        "vensterKm": 40,
+        "uit": "uranium-stpetersburg-columbia-weg-baltimore-columbia.geojson",
+    },
+    # ── Routebrief goud-arezzo-valcambi, been b1 (LICHTE werkwijze M31 golf 10) ──
+    # Truck goudstaven Italpreziosi (San Zeno, Arezzo) -> Valcambi (Balerna), A1/Variante di Valico -> A50 -> A9 -> Chiasso.
+    # Zeven via-punten uit brief §4 (gekozen op de OSRM-geometrie, dus op de doorgaande weg). Gepubliceerd 428 km is
+    # OSRM over OSM (indicatie, geen bedrijfs-/overheidsopgave); hemelsbreed 349 km, geen wegkm.
+    "goud-arezzo-valcambi-arezzo-valcambi": {
+        "via": [
+            ("Italpreziosi, Zona Industriale San Zeno, Arezzo (anker, au-arezzo-italpreziosi)", (11.8333, 43.4290)),
+            ("A1-oprit Arezzo (einde raccordo SS679)", (11.7738, 43.4414)),
+            ("A1 Variante di Valico, Apennijnen", (11.2255, 44.0294)),
+            ("A1 bij Parma", (10.3099, 44.8469)),
+            ("A1 bij Piacenza", (9.7753, 45.0242)),
+            ("A50 Tangenziale Ovest, Milaan-West", (9.1023, 45.4120)),
+            ("A8/A9-knooppunt Lainate (kiest de A9)", (9.0148, 45.5725)),
+            ("A9 vóór Chiasso", (9.0496, 45.7968)),
+            ("Valcambi SA, Balerna (anker, au-ref-valcambi)", (9.0051, 45.8385)),
+        ],
+        "id": "au-arezzo-valcambi-weg",
+        "naam": "Italpreziosi, Arezzo -> Valcambi, Balerna (A1 Variante di Valico -> A50 Milaan-West -> A8/A9 -> Chiasso)",
+        "extracts": ["italie", "zwitserland"],
+        "refs": ["A1", "A50", "A8", "A9"],
+        "gepubliceerdKm": 428,
+        "bronnoot": "428 wegkm = OSRM over OSM (brief §2/§8[7], indicatie, geen onafhankelijke bron); hemelsbreed 349 km.",
+        "vensterKm": 40,
+        "uit": "goud-arezzo-valcambi-weg-arezzo-valcambi.geojson",
+    },
+    # ── Routebrief kobalt-cdm-tongxiang, been b1 (LICHTE werkwijze M31 golf 10) ──
+    # Truck kobalthydroxide CDM (Huayou), Lubumbashi -> Durban DCT Pier 2, Copperbelt-zuidroute.
+    # Elf via-punten letterlijk uit profiel kobalt-kcc-durban; geen gepubliceerde wegkm (hemelsbreed 2.075).
+    "kobalt-cdm-tongxiang-cdm-durban": {
+        "via": [
+            ("CDM (Huayou), Likasi Road, Lubumbashi (anker co-cdm-lubumbashi)", (27.4291, -11.5165)),
+            ("Lubumbashi RN1",                                  (27.4827, -11.6642)),
+            ("Kasumbalesa (grens DRC/Zambia)",                  (27.7959, -12.2658)),
+            ("Ndola T3",                                        (28.6367, -12.9688)),
+            ("Kabwe T2",                                        (28.4400, -14.4426)),
+            ("Lusaka T2",                                       (28.2817, -15.4163)),
+            ("Chirundu (grens Zambia/Zimbabwe)",                (28.8471, -16.0338)),
+            ("Harare A1->A4",                                   (31.0467, -17.8362)),
+            ("Masvingo A4",                                     (30.8332, -20.0745)),
+            ("Beitbridge (grens Zimbabwe/RSA)",                 (29.9865, -22.2244)),
+            ("Polokwane N1-bypass",                             (29.4803, -23.9218)),
+            ("Buccleuch N1/N3-splitsing",                       (28.1004, -26.0493)),
+            ("Durban DCT Pier 2 (anker, cu-durban-kade)",       (31.0160, -29.8790)),
+        ],
+        "id": "co-cdm-durban",
+        "naam": "CDM (Huayou), Lubumbashi -> Durban DCT Pier 2 (RN1 -> T3/T2 -> A1/A4 -> N1/N3)",
+        "extracts": ["congo-drc", "zambia", "zimbabwe", "zuid-afrika"],
+        "refs": ["RN1", "N1", "T3", "T2", "A1", "A4", "N3"],
+        "gepubliceerdKm": 2780,
+        "bronnoot": "hemelsbreed 2.075 km, geen wegkm; eigen afleiding ~2.780 (KCC-bake RN1-deel 2.727 + ~20 CDM->RN1)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary"],
+        "uit": "kobalt-cdm-tongxiang-weg-cdm-durban.geojson",
+    },
     # ── Routebrief lithium-manono-ningbo, been b1 (LICHTE werkwijze M31 golf 9) ──
     # Truck spodumeenconcentraat Manono Northeast-plant -> Kiambi (RN33, vóór het OSM-gat van 0,36 km), via Bitawana.
     # Geen gepubliceerde km voor dit deel; b1+b3 samen tegen 440 km (SMM, Skillings) is de toets.

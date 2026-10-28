@@ -2408,6 +2408,126 @@
    "label": "Ramat Gan → New York",
    "aan": true,
    "noot": "M31 · golf 9 (2026-10-09): Gepolijste diamant van de Israel Diamond Exchange per stippel-last-mile naar Maman TLV, per vrachtvlucht (grootcirkel, aannemelijk) naar JFK en per truck (kopie) naar de 47th Street Diamond Exchange"
+  },
+  {
+   "sleutel": "gr-vl",
+   "bestand": "stroomroute-grafiet-vittangi-lulea.json",
+   "grondstof": "grafiet",
+   "label": "Vittangi → Luleå",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Talga Nunasvaara South (Vittangi) per truck over de kortste OSM-weg naar het Talnode-terrein op Hertsöfältet (Luleå); pre-FID, transportwijze aanname. Let op: Talnode-anker (Hertsöfältet) onzeker, de 306,7 km is OSM-weg zonder gepubliceerde wegkm; project pre-FID."
+  },
+  {
+   "sleutel": "pgm-mt",
+   "bestand": "stroomroute-pgm-mototolo-rustenburg.json",
+   "grondstof": "pgm",
+   "label": "Mototolo → Rustenburg",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Mototolo-concentraat per truck via R579 en R37 naar de Polokwane-smelter, matte per truck (aannemelijk) naar ACP Rustenburg. Let op: bronconflict over de smelter (Polokwane), matte per truck is een aanname; het Polokwane → Rustenburg-been is een letterlijke kopie van pgm-modikwa-rustenburg."
+  },
+  {
+   "sleutel": "li-gy",
+   "bestand": "stroomroute-lithium-goulamina-yangtze.json",
+   "grondstof": "lithium",
+   "label": "Goulamina → Yangtze-monding via Abidjan",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): spodumeenconcentraat van Goulamina (Ganfeng, Mali) per truck over RN7/N1/A3 naar SEA-invest Quai Q14 in Abidjan en per bulkschip via Kaap Agulhas naar China (Yangtze-monding, haven niet gebronnd). Let op: Chinese loshaven niet gebrond, zeebeen eindigt op het conventie-anker Yangtze-monding; wegkm is een afgeronde opgave."
+  },
+  {
+   "sleutel": "li-fd",
+   "bestand": "stroomroute-lithium-finniss-ningbo.json",
+   "grondstof": "lithium",
+   "label": "Finniss → Zhangjiagang via Darwin",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Finniss-concentraat per truck 80,7 km naar East Arm Wharf Darwin, per bulkcarrier 5.426 km naar de Yangtze-monding en over de Yangtze naar Zhangjiagang (aannemelijk: één bron). Let op: het id zegt Ningbo, de lijn eindigt in Zhangjiagang (Yangtze); Yangtze-mondingsmarker is het bestaande conventie-anker (2,7 km naast de lijn)."
+  },
+  {
+   "sleutel": "ag-anh",
+   "bestand": "stroomroute-zilver-antofagasta-hamburg.json",
+   "grondstof": "zilver",
+   "label": "Antofagasta → Hamburg",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Chileens koperconcentraat (herkomst aannemelijk) per bulkcarrier via Panama naar Brunsbüttel en per Schramm-binnenschip naar Aurubis Hamburg Werk Ost, zilver in het anodeslijk. Let op: alle benen zijn letterlijke kopieën van koper-aurubis-hamburg; de herkomst Antofagasta berust op één bron."
+  },
+  {
+   "sleutel": "kolen-hn",
+   "bestand": "stroomroute-kolen-hambach-niederaussem.json",
+   "grondstof": "kolen",
+   "label": "Hambach → Niederaussem",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): bruinkool uit Tagebau Hambach per RWE-werkspoor (Hambachbahn, Nord-Süd-Bahn) naar de kolenopslag van Niederaussem. Let op: bruinkool onder de grondstof kolen; spoorkm niet gepubliceerd (30,2 km gemeten, omwegfactor 1,85 door de verlegging van 2014)."
+  },
+  {
+   "sleutel": "kolen-gko",
+   "bestand": "stroomroute-kolen-gevra-korba.json",
+   "grondstof": "kolen",
+   "label": "Gevra OCP → NTPC Korba STPS",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): thermische kolen uit dagbouw Gevra OCP per spoor/MGR via de wye bij Kusmunda naar NTPC Korba STPS (2.600 MW), stoppunt de centrale. Let op: gemeten spoor 23,5 km via de wye Kusmunda tegen 14,8 km MGR-opgave (de MGR-lijn ontbreekt in OSM); Gevra-laadmarker 1,6 km naast de lijn."
+  },
+  {
+   "sleutel": "co-ct",
+   "bestand": "stroomroute-kobalt-cdm-tongxiang.json",
+   "grondstof": "kobalt",
+   "label": "CDM (Lubumbashi) → Tongxiang",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Huayou-eigen DRC-hydroxide van CDM Lubumbashi per truck naar Durban, zee naar Ningbo, truck naar Huayou Tongxiang (aannemelijk: een bron, CDM geschorst). Let op: CDM (Huayou) is geschorst, de keten is één bron; geen wegkm voor het DRC → Durban-been; bestand 589 KB."
+  },
+  {
+   "sleutel": "u-sc",
+   "bestand": "stroomroute-uranium-stpetersburg-columbia.json",
+   "grondstof": "uranium",
+   "label": "Sint-Petersburg → Columbia",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Russisch verrijkt UF6 per zeeschip van Sint-Petersburg naar Baltimore (Rukert, onzeker) en per truck via I-95/I-20/I-77 naar Westinghouse Columbia (stoppunt). Let op: Baltimore-kade (Rukert) onzeker, SPb-kademarker 4,9 km van het zeebeen (MARNET-snap, net onder de aanloopgrens); wegkm niet gepubliceerd."
+  },
+  {
+   "sleutel": "u-wm",
+   "bestand": "stroomroute-uranium-walvisbay-malvesi.json",
+   "grondstof": "uranium",
+   "label": "Walvis Bay → Malvési",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Namibisch yellowcake per schip naar Hamburg Steinweg en per trein naar Orano Malvési, aannemelijk (activistenbronnen 2014-2018). Let op: alleen activistenbronnen voor deze keten (Rössing/Husab-U3O8 via Hamburg naar Malvési); Narbonne-terugloop gedeeld met uranium-malvesi-tricastin."
+  },
+  {
+   "sleutel": "gas-pm",
+   "bestand": "stroomroute-gas-portofmorgan-manhattan.json",
+   "grondstof": "gas",
+   "label": "Port of Morgan → Manhattan",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Pijpgas gaat bij Port of Morgan de Northern Border Pipeline op en loopt ca. 1.870 km door MT, ND, SD, MN, IA en IL naar de aansluitingen bij Manhattan (Chicago-regio); alleen leiding, twee OSM-gaten als stippel. Let op: kop (Port of Morgan) en eind (Manhattan IL) aannemelijk, niet bevestigd; twee OSM-gaten van samen 175 km (9,4%) als stippel."
+  },
+  {
+   "sleutel": "gas-aa",
+   "bestand": "stroomroute-gas-asaluyeh-ankara.json",
+   "grondstof": "gas",
+   "label": "Asaluyeh → Ankara",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Iraans pijpgas van South Pars over de Iraanse trunk en de BOTAŞ-trunk naar een leidingknoop ZZO van Ankara, drie OSM-leidingbenen, 2.915 km, geen stippel."
+  },
+  {
+   "sleutel": "olie-hs",
+   "bestand": "stroomroute-olie-haoudelhamra-skikda.json",
+   "grondstof": "olie",
+   "label": "Haoud el Hamra → Skikda",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Saharan Blend per OK1-leiding (OSM-way 555,8 km plus 84,2 km stippel) van Haoud el Hamra naar de Sonatrach-terminal Skikda, zonder zeebeen. Let op: OSM-way kan OK1 of NK1 zijn; 84,2 km (13%) stippel zonder leidingkm; Skikda-anker aannemelijk."
+  },
+  {
+   "sleutel": "olie-gp",
+   "bestand": "stroomroute-olie-gdansk-schwedt.json",
+   "grondstof": "olie",
+   "label": "Naftoport Gdańsk → PCK Schwedt",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): Zuid-Amerikaanse ruwe olie gelost bij Naftoport Gdańsk gaat per leiding (Pomorski, Przyjaźń-noordtak via Płock) naar PCK Schwedt, 686,9 km, geen zee en geen weg. Let op: Pomorski- en Przyjaźń-benen zonder gepubliceerde leidinglengte (km-toets is indicatie); Naftoport → Pomorski-kop 6,6 km stippel."
+  },
+  {
+   "sleutel": "au-av",
+   "bestand": "stroomroute-goud-arezzo-valcambi.json",
+   "grondstof": "goud",
+   "label": "Arezzo → Valcambi",
+   "aan": true,
+   "noot": "M31 · golf 10 (2026-10-28): goudstaven van Italpreziosi (Arezzo) per truck over A1, A50 en A9 naar Valcambi in Balerna (aannemelijk: één bron voor Zwitserland). Let op: aannemelijk, één bron voor de bestemming Valcambi; 428 wegkm is een OSRM-indicatie."
   }
  ],
  "uitgesloten": [

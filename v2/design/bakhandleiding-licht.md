@@ -295,3 +295,10 @@ metadatabestand (besluit 2026-08-06).
 - **Informatietextuur = 2.048 benen** (`stroomlijn.js` `TEX_BREEDTE`, `bak_stroombundel.py` `MAX_BENEN`); de bundel heeft nu 1.160 benen. Verdubbel opnieuw vóór 2.048.
 - **Retries zitten in het golf-script** (`agentR`: 3 pogingen, 60 s pauze, kortere-uitvoer-opdracht). Capaciteit: ~0,3 punt van het 5-uursvenster per agent; 293 agenten brachten het van 1% naar 99%.
 - **Mijn-id ≠ mijn in de brief kan voorkomen** (Black Thunder → Buckskin); het register-label volgt de brief. Zes ketens zijn bewust dubbel met een andere grondstof.
+
+## 10 · Lessen van golf 10 (2026-10-28) — alleen reserve-assen
+
+- **Een golf zonder ontwerpronde is klein en snel:** 15 getoetste reserve-assen uit golf 9 → 47 agenten (2 toets, 15 brief, 15 bake, 15 keuring), 8,2 M tokens, 23 minuten, 0 uitval, 15/15 gebakken en gekeurd. `v2/tools/golf/maak_golf10.py` bouwt het script uit het vorige script plus `golf10-reserves.json`; de reserve-assen en hun toets komen uit het journal van de vorige run (`subagents/workflows/<run>/journal.jsonl`, de `result`-regels van de ontwerp- en toetsagenten).
+- **Toets ongetoetste reserves in de EERSTE pijplijnstap, niet in een lus vooraf.** De eerste poging toetste twee lithium-assen sequentieel vóór `ketenPipeline`; daardoor wachtten alle 15 ketens op één agent ("ik zie maar één agent"). Gestopt, de toets per keten in stap 1 gezet, vers herstart.
+- **De keuring laat opnieuw door wat de centrale nameting moet vangen:** markers 1,6–4,9 km naast de lijn (Gevra-laadpunt, Yangtze-conventie-anker, SPb-kade net onder de aanloopgrens), een bestand van 589 KB (kobalt-cdm-tongxiang), een id dat niet bij het eindpunt past (lithium-finniss-ningbo eindigt in Zhangjiagang → label in het register aangepast), en een registerregel zonder noot. Alles als noot in `noten.json` geregistreerd; niets herbakken.
+- **Sitelaag-kandidaten (7) deze keer niet gelijkgetrokken:** de drie met dezelfde faciliteit lagen 0,4–1,3 km van het nieuwe anker (binnen de 2 km-samenvoeging van gloed en labels), de andere vier zijn andere faciliteiten.
