@@ -1,7 +1,13 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
+*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
 
 
+
+## 2026-10-28 — golf 2 afgesloten
+
+- **2026-10-28 · ✅ LARS — visuele go op `?v=140` op de telefoon** (*"ziet er goed uit op de telefoon"*) → golf 2 van de visuele fase (LAR-618) is af; de afstemming van gloed, labels en stadslichten blijft zoals ze staat.
+- **2026-10-28 · LAR-480 (marker-contrast v1) gesloten als achterhaald** — de v1-markers op de Esri-tegels bestaan in v2 niet meer; de gloed als lichtpunt en de labels per zoomband nemen die rol. Een slecht zichtbare site op lokale hoogte is voortaan een afstemming van `gloed.js`/`labels.js` en een nieuw issue, niet een heropening.
+- **2026-10-28 · Golf 3 wordt pas gedefinieerd na een keuze van Lars** — geen stil doorbouwen op de restlijst; kandidaten en een voorstel (volume + `level`/`parent` als kern) staan in `next-actions.md`. De bleke grondstofkleuren (keuze Lars 2026-08-07) blijven een beslisvraag met screenshot.
 
 ## 2026-10-27 (2e) — golf 2 deel 3: stadslichten
 

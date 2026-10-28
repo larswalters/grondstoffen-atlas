@@ -1,12 +1,25 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
+*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
 
 
 
-## 🔴 NIEUW 2026-10-27 (2e) — na golf 2 deel 3 (stadslichten) live
+## 🔴 NIEUW 2026-10-28 — golf 2 afgesloten, golf 3 kiezen
 
-1. **Lars kijkt naar `?v=140`:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=140 — lichten te fel/te zwak (`AFSTEMMING.sterkte` 0,85)? Te vroeg of te laat uitdoven bij inzoomen (`uitTussenKm` [60, 350])? Knoppen in `v2/src/stadslichten.js`.
-2. **LAR-480 (marker-contrast) afhandelen:** in v2 zijn de v1-markers vervangen door gloed + labels; voorstel = sluiten als achterhaald, tenzij Lars in v2 iets slecht zichtbaar vindt.
+1. **Lars kiest golf 3** (nog niet gedefinieerd; kandidaten uit §13 van `v2/design/atlas-product-golf1.md` en de open punten van `v2/design/lod-ontwerpbrief.md`):
+   - **dikte = volume + aantal kometen uit volume** (besluit 4 van de brief) — volume per been in een los metadatabestand (geen bak-recepten), de haak `beenInfo.B` staat klaar zonder shaderwijziging;
+   - **`level`/`parent`-niveau als eigen labelband** (besluit 2) — koper-complexen via `bak_stroombundel.py` + bundelbump;
+   - **HDR / selective bloom** voor clusters op wereldhoogte (besluit 3) — beslisvraag met screenshot;
+   - **de bleke grondstofkleuren** (zilver/PGM/diamant/grafiet vallen samen op wereldhoogte) — Lars' keuze van 2026-08-07, dus beslisvraag met screenshot, niet stil aanpassen;
+   - **tegels** als grootste kostenpost (eigen meting en budgetvraag); pixelRatio-klep alleen als de telefoonmeting erom vraagt;
+   - uit de brief: night-side als default bevestigen, crossfade hotspot ↔ kinderen, M22-schoonheidsslag (atmosfeer, oceaan-specular, terminator) apart.
+   **Voorstel:** volume + `level`/`parent` als kern (zelfde baker en metadatabestand), HDR en kleuren als beslisvragen, atmosfeer apart.
+2. **Bouwplan golf 3** zoals `atlas-product-golf1.md` (ontwerp-workflow: invalshoeken × skepticus + synthese) + nieuw Linear-issue onder LAR-490 / M32.
+3. **Alternatief:** een volgende stromen-golf (15 reserve-assen klaar, `v2/tools/golf/maak_golf9.py`) — weeklimiet eerst checken.
+
+## 🟢 2026-10-27 (2e) — na golf 2 deel 3 (stadslichten) live — AFGEROND 2026-10-28
+
+1. ~~Lars kijkt naar `?v=140`~~ ✅ **Telefoontest 2026-10-28: "ziet er goed uit op de telefoon"** — `AFSTEMMING.sterkte` 0,85 en `uitTussenKm` [60, 350] blijven. LAR-618 Done.
+2. ~~LAR-480 (marker-contrast) afhandelen~~ ✅ **Canceled als achterhaald (2026-10-28)** — v2 heeft gloed + labels i.p.v. de v1-markers; een slecht zichtbare site is voortaan een afstemming van `gloed.js`/`labels.js` + nieuw issue.
 3. **Het HDR-besluit** (clusters die door een andere legendakleur lopen) — apart besluit, kost een extra pass op de telefoon.
 4. **Het `level`/`parent`-niveau als labelband** (koper-complexen via `bak_stroombundel.py` + bundelbump).
 5. **NASA-origineel** als de host ooit bereikbaar is: `BlackMarble_2016_3km.jpg` → zelfde pijplijn (Pillow q78, 8k + 4k), attributie naar "NASA, publiek domein".

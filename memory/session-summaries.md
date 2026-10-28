@@ -1,6 +1,16 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-28 - Golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done, LAR-480 Canceled
+
+Korte sessie zonder code. Lars: *"ziet er goed uit op de telefoon"* op `?v=140` (gloed als lichtpunt + labels per
+zoomband + stadslichten) → golf 2 van de visuele fase is af. LAR-618 → Done (comment met de drie delen), LAR-480 →
+Canceled als achterhaald (v2 heeft gloed + labels i.p.v. de v1-markers). Op de vraag "wat is golf 3": die bestaat nog
+niet als plan; kandidaten uit §13 van `v2/design/atlas-product-golf1.md` en de open punten van `lod-ontwerpbrief.md`
+benoemd (dikte = volume + kometen uit volume, `level`/`parent`-band, HDR/selective bloom, bleke kleuren als beslisvraag,
+tegels) met als voorstel volume + `level`/`parent` als kern. Volgende stap: Lars kiest, dan een bouwplan zoals bij golf 1.
+Vault: [[2026-10-28-grondstoffen-atlas-golf2-afgesloten]].
+
 ## 2026-10-27 (2e) - Golf 2 deel 3: stadslichten live op `?v=140` (commit `ce311c1`)
 
 Lars: *"ziet er goed uit"* (de labels, `?v=139`) en *"ja, haal de stadslichten maar op."* Nieuw `v2/src/stadslichten.js`: de Black Marble als additieve laag op de gedimde bol (besluit 6 van de ontwerpbrief). Tweede bol met dezelfde SphereGeometry-afbeelding als de dagkaart, op `CONFIG.vectorLift`, `MeshBasicMaterial` + `AdditiveBlending`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4 (boven tegels, onder vectorlagen). Dooft glad uit tussen 350 en 60 km (`AFSTEMMING.uitTussenKm`), sterkte 0,85. Aan in de atlasmodus, uit in het routewerk: `zetStadslichten()` in main.js, gekoppeld aan de kleurknop met de knoprij `.nlBtn` die zichtbaar meespringt; `let STADSLICHTEN = null` bovenaan main.js omdat `zetAttrib()` al tijdens het tegel-opzetten draait (TDZ). Attributiebalk noemt de laag zolang hij zichtbaar is.

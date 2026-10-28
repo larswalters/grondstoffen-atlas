@@ -1,7 +1,12 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
+*Last updated: 2026-10-28 (golf 2 afgesloten: telefoontest `?v=140` goed, LAR-618 Done)*
 
 
+
+## Stand 2026-10-28 — golf 2 van de visuele fase afgesloten
+
+- **Lars' telefoontest van `?v=140`:** *"ziet er goed uit op de telefoon"* — gloed als lichtpunt (`?v=134`), labels per zoomband (`?v=139`) en stadslichten (`?v=140`) staan; alle afstemming blijft zoals ze staat. **LAR-618 Done**, LAR-480 Canceled als achterhaald. Code ongewijzigd sinds `ce311c1`.
+- **Golf 3 bestaat nog niet als plan.** De visuele fase kent tot nu toe golf 1 (`v2/design/atlas-product-golf1.md`) en golf 2 (gloed/labels/stadslichten). Wat overblijft staat in §13 van het golf-1-plan en de open punten van de ontwerpbrief: dikte = volume + kometen uit volume (los metadatabestand, haak `beenInfo.B`), `level`/`parent`-labelband via de bundelbaker, HDR/selective bloom op wereldhoogte, de bleke grondstofkleuren als beslisvraag, tegels als kostenpost. Voorstel: volume + `level`/`parent` als kern, HDR en kleuren als beslisvragen, atmosfeer (M22-schoonheidsslag) apart. Lars kiest; daarna een bouwplan zoals bij golf 1.
 
 ## Stand 2026-10-27 (2e) — golf 2 deel 3: stadslichten (`?v=140`)
 

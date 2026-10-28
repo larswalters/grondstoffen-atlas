@@ -1,4 +1,10 @@
-> **🌃 GOLF 2 DEEL 3 — STADSLICHTEN, LIVE `?v=140` (2026-10-27, LAATSTE).** Commit `ce311c1`. Na Lars' go op de labels en zijn akkoord
+> **✅ GOLF 2 AFGESLOTEN — TELEFOONTEST `?v=140` GOED, LAR-618 DONE (2026-10-28, LAATSTE).** Lars: *"ziet er goed uit op de
+> telefoon"* → gloed als lichtpunt (`?v=134`), labels per zoomband (`?v=139`) en stadslichten (`?v=140`) blijven zoals ze staan.
+> LAR-480 Canceled als achterhaald. **Golf 3 is nog niet gedefinieerd** — kandidaten en een voorstel (dikte = volume + kometen
+> uit volume + `level`/`parent`-band als kern; HDR en de bleke kleuren als beslisvragen; atmosfeer apart) in `memory/next-actions.md`;
+> Lars kiest, daarna een bouwplan zoals `v2/design/atlas-product-golf1.md`.
+
+> **🌃 GOLF 2 DEEL 3 — STADSLICHTEN, LIVE `?v=140` (2026-10-27, EERDER).** Commit `ce311c1`. Na Lars' go op de labels en zijn akkoord
 > voor de download: `v2/src/stadslichten.js` zet de Black Marble als additieve laag op de gedimde bol (besluit 6 van de ontwerpbrief,
 > night-side). Tweede bol op `vectorLift`, `AdditiveBlending`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; dooft glad uit tussen
 > 350 en 60 km (`AFSTEMMING.uitTussenKm`), sterkte 0,85; aan in de atlas, uit in het routewerk — de kleurknop zet hem mee en de rij
@@ -950,7 +956,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-27 (laatst: golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-28 (laatst: golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3224,6 +3230,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-28 · GOLF 2 AFGESLOTEN (LAR-618 DONE) NA LARS' TELEFOONTEST VAN `?v=140`.** LAR-480 Canceled als achterhaald (v2: gloed + labels i.p.v. v1-markers). Golf 3 wordt pas gedefinieerd na een keuze van Lars; de bleke grondstofkleuren blijven een beslisvraag met screenshot.
 - **2026-10-27 · GOLF 2 DEEL 3 LIVE `?v=140` — STADSLICHTEN.** Black Marble additief op de gedimde bol (`stadslichten.js`): tweede bol op `vectorLift`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; glad uitdoven 350 → 60 km; aan in de atlas, uit in het routewerk, zichtbaar gekoppeld aan de kleurknop. Bron Solar System Scope (CC BY 4.0, naar NASA) omdat NASA's server onbereikbaar is — attributie verplicht zolang de laag zichtbaar is. Lagen die `zetAttrib()` leest staan als `let … = null` bovenaan main.js (TDZ).
 - **2026-10-27 · GOLF 2 DEEL 2 LIVE `?v=139` — LABELS PER ZOOMBAND.** Labels zijn HTML boven het canvas (`labels.js`), één regel voor alle hoogtes (minimumafstand tussen ankers loopt met de kijkhoogte mee); het label van een cluster is dat van zijn zwaarste lid, geen regio-objecten; korte namen op de bol, volledige in de data; HUD/zoomknoppen/bronvermelding zijn bezet gebied. Meet in de Browser-pane ná een screenshot (geen rAF zolang het paneel verborgen is).
 - **2026-10-09 · M31 GOLF 8+9 LIVE `?v=138` (300 stromen).** Twee grote golven op Lars' resterende limiet; retries per agent (`agentR`), een pure-Python wegscan (`wegscan_puur.py`) en informatietextuur 2.048 benen. Capaciteit plannen op het 5-uursvenster (~0,3 punt per agent).
