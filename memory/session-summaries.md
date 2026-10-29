@@ -11,7 +11,7 @@ leesagenten per grondstof → `v2/design/volumes/*.json` (67 bron, 260 indicatie
 `stroombundel.js` breedtefactor 0,65–2,1 via kanaal B, `stroomkometen.js` 1–3 kometen per been met slots,
 `main.js` HUD-regel "≈ 411 kt Cu/j" / "volume onbekend" + tooltip, legenda "dikte = hoeveelheid"; bouwplan
 `v2/design/atlas-volumes-golf3.md`. 352 stromen, 315 met dikte; desktop + 375 px 0 fouten; `BUNDEL_VERSIE` + `CODE_VERSIE` 143.
-Poort: Lars' telefoontest. Kosten: 5-uursvenster 37 → 56%, week 14 → 17%. Vault: [[2026-10-29-grondstoffen-atlas-golf12-en-hoeveelheden-lar642]].
+Telefoontest Lars (later die dag): "Ziet er goed uit" → LAR-642 Done. Kosten: 5-uursvenster 37 → 56%, week 14 → 17%. Vault: [[2026-10-29-grondstoffen-atlas-golf12-en-hoeveelheden-lar642]].
 
 ## 2026-10-29 - M31 golf 11 live op `?v=142`: 341 stromen, nieuwe ontwerpronde (commit `34aee8c`)
 

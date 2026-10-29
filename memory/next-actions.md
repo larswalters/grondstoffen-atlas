@@ -5,7 +5,7 @@
 
 ## 🔴 NIEUW 2026-10-29 (2e) — na golf 12 + LAR-642 live
 
-1. **Lars test `?v=143` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=143 — dikte per grondstof (dunste = onbekend), kometen 1–2 op de telefoon, de volumeregels onder de stroomknoppen (lijst uitklappen), de 11 golf 12-ketens (o.a. Baltic/APLNG-leiding, Colonial Pasadena → Linden, Boddington → Hongkong). Goed → LAR-642 Done.
+1. ~~Lars test `?v=143` op de telefoon~~ ✅ 2026-10-29 "Ziet er goed uit" → LAR-642 Done. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=143 — dikte per grondstof (dunste = onbekend), kometen 1–2 op de telefoon, de volumeregels onder de stroomknoppen (lijst uitklappen), de 11 golf 12-ketens (o.a. Baltic/APLNG-leiding, Colonial Pasadena → Linden, Boddington → Hongkong). Goed → LAR-642 Done.)
 2. **De 25 onbekende volumes** (koper-escondida-guixi, -collahuasi-tongling, -lobito-duisburg; ree ×5; zilver ×5; uranium ×3; pgm ×4; kobalt ×2; diamant/goud/grafiet ×1): alleen met nieuw bronwerk, via `stroomvolumes-handmatig.json` (zelfde velden) + script + bundel. Nooit schatten.
 3. **Afstemming na de telefoontest:** `AFSTEMMING_VOLUME.breedteMax` (2,1) en `kometenMaxDesktop` (3) in één regel; log-schaal p15–p90 in `maak_stroomvolumes.py`.
 4. **Optioneel:** het volume in de labels per zoomband of bij een klik (v1 had een tooltip op de lijn; de bundel heeft geen picking).

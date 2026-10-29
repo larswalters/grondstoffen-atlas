@@ -5,7 +5,7 @@
 > hoeveelheid". Cijfers: 15 leesagenten over de routebrieven → `v2/design/volumes/<gs>.json` (67 bron, 260 indicatie, 25 onbekend;
 > ⚠️ een regex pakte fabriekscapaciteiten) → `v2/tools/maak_stroomvolumes.py` → `v2/data/stroomvolumes.json` (los metadatabestand,
 > geen herbak, log-schaal p15–p90 per grondstof) → `bak_stroombundel.py` → `volume` per stroom in `stromen.json`. 315/352 met dikte;
-> desktop + 375 px 0 fouten. Bouwplan `v2/design/atlas-volumes-golf3.md`. **→ VOLGENDE:** Lars' telefoontest `?v=143` (poort voor
+> desktop + 375 px 0 fouten. Bouwplan `v2/design/atlas-volumes-golf3.md`. **✅ Telefoontest Lars goed → LAR-642 Done.** **→ VOLGENDE:** (poort was Lars' telefoontest `?v=143` voor
 > LAR-642) · de 25 onbekenden alleen met bronwerk (`stroomvolumes-handmatig.json`) · evt. volume in labels/klik.
 
 > **🌍 M31 GOLF 11 LIVE `?v=142` — 341 STROMEN, NIEUWE ONTWERPRONDE (2026-10-29, EERDER).** Commit `34aee8c`. Lars' telefoontest
