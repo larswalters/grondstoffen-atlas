@@ -1,6 +1,18 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-29 - M31 golf 11 live op `?v=142`: 341 stromen, nieuwe ontwerpronde (commit `34aee8c`)
+
+Lars: telefoontest `?v=141` goed, *"doe nog maar een ontwerp ronde"*, daarna hoeveelheden bij de stromen zoals v1 (→ LAR-642).
+`maak_golf11.py` bouwde `golf11-script.mjs` uit `golf9-script.mjs` zonder reserve-stroom (2 ketens per grondstof, de 13 afgewezen
+golf 9-assen uit het journal in de prompts). Run `wf_1a1d5501-62a`: 106 agenten op Sonnet, 20,8 M tokens, 81 min, 0 uitval, 26/26
+gebakken en gekeurd (2 goed, 24 goed-met-bevindingen); kobalt 0 (alle vier assen afgewezen); 11 reserves → `golf12-reserves.json`.
+Centraal: `centraal_check.py` 26/26 (1 vlag: Kilbourne → Anniston 577 KB; Kevitsa naad 1,37 km + kademarker 1,51 km; Semirara 21%
+stippel), `sitelaag_check.py` 12 kandidaten → w-paracatu en w-tvel-novosibirsk gelijkgetrokken, 26 noten, `dia-ms2` → `dia-msm`,
+`maak_stroombeen_weg.py` CRLF → LF, register 341, bundel 1.296 benen · 1.156 markers, `BUNDEL_VERSIE` + `CODE_VERSIE` 142.
+Desktop + 375 px 341/341, 0 fouten, 4 verzoeken. Lessen in bakhandleiding §11. Linear: LAR-641 Done, LAR-642 Todo.
+Vault: [[2026-10-29-grondstoffen-atlas-m31-golf11-ontwerpronde]].
+
 ## 2026-10-28 (2e) - M31 golf 10 live op `?v=141`: 315 stromen, de 15 reserve-assen uit golf 9 (commit `5260363`)
 
 Lars koos "Stromen-golf" boven golf 3. De 15 getoetste reserve-assen uit golf 9 zijn uit het journal van

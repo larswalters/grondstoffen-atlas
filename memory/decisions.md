@@ -1,7 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
+*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
 
 
+
+## 2026-10-29 — M31 golf 11: nieuwe ontwerpronde
+
+- **2026-10-29 · ✅ LARS — telefoontest `?v=141` goed; "doe nog maar een ontwerp ronde", daarna hoeveelheden bij de stromen zoals v1.** → golf 11 nu, LAR-642 (dikte/kometen/label uit volume) als volgende fase.
+- **2026-10-29 · Een ontwerpronde zonder reserves = 2 ketens per grondstof, ~106 agenten, 20,8 M tokens, 81 min** (`maak_golf11.py` uit het golf 9-script: `RESERVES_DATA = []`, alleen `ontwerpStroom()`). De afgewezen assen van de vorige ontwerpronde komen uit het journal (`golf9-assen.json`) in de prompts; de reserves gaan direct in `golf12-reserves.json`.
+- **2026-10-29 · `CODE_VERSIE` bumpt mee zodra het register verandert** — `stromen-register.json` wordt met die sleutel gehaald, niet met `BUNDEL_VERSIE` (golf 10 liet hem op 140 staan; nu beide 142).
+- **2026-10-29 · Sitelaag gelijktrekken alleen bij dezelfde faciliteit, > 2 km én een centroïde/onzekere coördinaat** (Paracatu 4,3 km, TVEL Novosibirsk 15,2 km wel; IWIP-HPAL 2,8 km niet: het keten-anker is daar zelf onzeker).
+- **2026-10-29 · Gemengde regeleinden in `maak_stroombeen_weg.py` worden centraal na de golf genormaliseerd** (`sed -i 's/\r$//'`), net als `bak_stromen.sh`; agent-edits met CRLF kostten één verloren edit.
+- **2026-10-29 · Kobalt doet pas weer mee aan een ontwerpronde met een herschreven hint** (vier van vier afgewezen).
 
 ## 2026-10-28 (2e) — M31 golf 10: de reserve-assen
 

@@ -1,7 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-27 (golf 2 deel 3: stadslichten, live `?v=140`)*
+*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
 
 
+
+## 🟡 NIEUW 2026-10-29 — uit M31 golf 11
+
+53. **Agenten voegen profielen met CRLF in `maak_stroombeen_weg.py` in** (het bestand is LF): gemengde regeleinden, één agent verloor zijn eerste edit, een andere zag `bash -n` kortstondig falen door andermans edit. Centraal genormaliseerd; overweeg `*.py text eol=lf` in `.gitattributes`.
+54. **De keuring laat opnieuw door wat centraal moet vangen:** een enkel truckbeen van 577 KB (Kilbourne → Anniston), een kademarker 1,51 km van de lijn (Rönnskär), 21% stippel (Semirara-eilandaanloop: MARNET en Natural Earth kennen het eiland niet), een volledig duplicaat van een andere grondstof (nikkel-iwip-tongxiang = kobalt-wedabay-tongxiang). Alles als noot geregistreerd, niets herbakken.
+55. **Aankomstpunten als aanname:** ree-mountainpass-yokohama (10-K noemt alleen Japan), goud-dubai-valcambi (MXP), ree-ganzhou-fremont (Long Beach uit handelsdata), lithium-mtcattlin-lianyungang eindigt op zeeknoop 5820 (kade niet gevonden). Staat in de noten en de brieven.
+56. **Kobalt is uitontworpen op de huidige hint:** vier assen afgewezen (geen site-anker/geen bilaterale bron). Zonder nieuwe invalshoek levert een volgende ontwerpronde voor kobalt weer niets.
 
 ## 🟡 NIEUW 2026-10-27 (2e) — uit golf 2 deel 3 (stadslichten)
 

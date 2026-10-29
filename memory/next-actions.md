@@ -1,9 +1,17 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
+*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
 
 
 
-## 🔴 NIEUW 2026-10-28 (2e) — na M31 golf 10 (de 15 reserve-assen) live
+## 🔴 NIEUW 2026-10-29 — na M31 golf 11 (ontwerpronde, 26 nieuwe ketens) live
+
+1. **Lars test `?v=142` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=142 — 26 nieuwe ketens (o.a. Baltic Pipe Nybro → Goleniów, Kyaukphyu → Namhkam, Mirny → Smolensk, Paracatu → Zürich, Jose → Jamnagar, Semirara → Calaca).
+2. **LAR-642 — hoeveelheden bij de stromen zoals v1** (Lars: *"daarna zou ik iets met hoeveelheden ± bij de stromen willen kunnen zien zoals bij v1 was"*): v1 = dikte relatief volume per grondstof, deeltjes ∝ volume, tooltip "volume ≈ X eenheid" (`src/flows.js`, `src/ui.js`). v2: `jaarvolume` uit §1 van alle brieven → script → los metadatabestand (geen herbak) → `beenInfo.B` voor dikte, kometen-aantal, label/HUD-regel; eenheden per grondstof normaliseren. Eerst een bouwplan + ontwerp-workflow zoals `atlas-product-golf1.md`, telefoontest als poort.
+3. **Golf 12 (klein):** 11 reserves in `v2/tools/golf/golf12-reserves.json` → `maak_golf10.py`-patroon (toets voor de 2 ongetoetste in stap 1). Een nieuwe ontwerpronde pas na een nieuwe **kobalt-hint** (alle vier assen afgewezen: geen site-anker/geen bilaterale bron — zoek andere rollen: recycling, sulfaat → precursor, Marokko/Cuba/Australië).
+4. **Gereedschap:** `.gitattributes` `*.py text eol=lf` overwegen (agenten voegden CRLF-profielen in `maak_stroombeen_weg.py` in; nu centraal genormaliseerd) · informatietextuur 2.048 benen, bundel 1.296 — verdubbelen rond 1.900.
+5. **Open bevindingen golf 11 (geen actie, wel weten):** grafiet-kilbourne-anniston 577 KB (één truckbeen van 1.837 km); pgm-kevitsa-ronnskar naad 1,37 km + kademarker 1,51 km; kolen-semirara-calaca 21% stippel (eilandaanloop); nikkel-iwip-tongxiang bewust dubbel met kobalt-wedabay-tongxiang; ree-mountainpass-yokohama en goud-dubai-valcambi met aangenomen aankomsthaven/-luchthaven; IWIP-HPAL sitelaag niet gelijkgetrokken (anker zelf onzeker).
+
+## 🟢 2026-10-28 (2e) — AFGEHANDELD (telefoontest goed, golf 11 gedraaid) — na M31 golf 10 (de 15 reserve-assen) live
 
 1. **Lars test `?v=141` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=141 — de 15 nieuwe ketens (o.a. Northern Border, Asaluyeh → Ankara, OK1, Pomorski, Goulamina → Yangtze, Hambach → Niederaussem).
 2. **Geen reserve-assen meer over.** Een volgende stromen-golf vraagt weer een ontwerpronde (per grondstof ontwerp + toets, ~100+ agenten, 3–4× de kosten van golf 10); invoer bouwen zoals `maak_golf9.py` (ontwerp per grondstof) met de `bestaand`/`afgewezen`-lijsten uit het register en `golf10-resultaat.json`.

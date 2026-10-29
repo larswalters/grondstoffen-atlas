@@ -1,7 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-28 (2e) (M31 golf 10 live `?v=141`: 315 stromen)*
+*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
 
 
+
+## Stand 2026-10-29 — M31 golf 11 live: 341 stromen (`?v=142`)
+
+- **Op de bol (`?v=142`, commit `34aee8c`):** 26 nieuwe ketens, 315 → 341, over 13 grondstoffen (kobalt 0). Bundel 341 stromen · 1.296 benen · 386 stippel · 1.156 markers · 451 sites; desktop + 375 px 341/341, 0 fouten, 4 verzoeken.
+- **Hoe:** een ontwerpronde ZONDER reserve-assen: `v2/tools/golf/maak_golf11.py` bouwt `golf11-script.mjs` uit `golf9-script.mjs` (`RESERVES_DATA = []`, alleen `ontwerpStroom()`, `max` 2 per grondstof, `bestaand`/sleutels uit het register, de 13 afgewezen golf 9-assen uit `golf9-assen.json` in de prompts). Run `wf_1a1d5501-62a`: 106 agenten op Sonnet (14 ontwerp, 14 toets, 26 brief, 26 bake, 26 keuring), 20,8 M tokens, 81 min, 0 uitval.
+- **Reserves voor golf 12:** 11 assen in `golf12-reserves.json` (2 zonder per-keten-toets: zilver-caylloma-callao, zilver-dexing-guixi) — een reserve-golf zoals golf 10 kan direct.
+- **Centraal (bakhandleiding §11):** `centraal_check.py` 26/26 (1 vlag 577 KB), `sitelaag_check.py` 12 kandidaten → 2 gelijkgetrokken, 26 noten, sleutel `dia-ms2` → `dia-msm`, `maak_stroombeen_weg.py` CRLF → LF, `CODE_VERSIE` + `BUNDEL_VERSIE` 142.
+- **Volgende fase (wens Lars):** hoeveelheden bij de stromen zoals v1 → LAR-642 (golf 3 van de visuele fase).
 
 ## Stand 2026-10-28 (2e) — M31 golf 10 live: 315 stromen (`?v=141`)
 

@@ -1,4 +1,13 @@
-> **🗺️ M31 GOLF 10 LIVE `?v=141` — 315 STROMEN, DE 15 RESERVE-ASSEN (2026-10-28, LAATSTE).** Commit `5260363`. Lars koos de
+> **🌍 M31 GOLF 11 LIVE `?v=142` — 341 STROMEN, NIEUWE ONTWERPRONDE (2026-10-29, LAATSTE).** Commit `34aee8c`. Lars' telefoontest
+> `?v=141` goed → *"doe nog maar een ontwerp ronde"*. `v2/tools/golf/maak_golf11.py` → `golf11-script.mjs` (uit het golf 9-script:
+> `RESERVES_DATA = []`, alleen `ontwerpStroom()`, 2 ketens per grondstof, de 13 afgewezen golf 9-assen uit `golf9-assen.json`). Run
+> `wf_1a1d5501-62a`: 106 agenten op Sonnet, 20,8 M tokens, 81 min, 0 uitval, 26/26 gebakken en gekeurd; **kobalt 0** (vier afgewezen).
+> Bundel 341 stromen · 1.296 benen · 1.156 markers, `BUNDEL_VERSIE` én `CODE_VERSIE` 142 (het register wordt met CODE_VERSIE gehaald);
+> desktop + 375 px 341/341, 0 fouten. Centraal: 26 noten, w-paracatu + w-tvel-novosibirsk gelijkgetrokken, `maak_stroombeen_weg.py`
+> CRLF → LF, 11 reserves in `golf12-reserves.json`. Lessen in `bakhandleiding-licht.md` §11. **→ VOLGENDE:** Lars' telefoontest `?v=142` ·
+> **LAR-642 hoeveelheden bij de stromen zoals v1** (dikte/kometen/label uit volume, los metadatabestand) · golf 12 uit de reserves.
+
+> **🗺️ M31 GOLF 10 LIVE `?v=141` — 315 STROMEN, DE 15 RESERVE-ASSEN (2026-10-28, EERDER).** Commit `5260363`. Lars koos de
 > stromen-golf boven golf 3: de 15 getoetste reserve-assen uit golf 9 (uit het journal, `v2/tools/golf/golf10-reserves.json`) in
 > één workflow zonder ontwerpronde (`maak_golf10.py` → `golf10-script.mjs`: toets voor ongetoetste assen in de eerste pijplijnstap
 > → brief → bake → keuring): 47 agenten op Sonnet, 8,2 M tokens, 23 min, 0 uitval, 15/15. Bundel 315 stromen · 1.213 benen ·
@@ -963,7 +972,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-28 (laatst: M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-29 (laatst: M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3237,6 +3246,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-29 · M31 GOLF 11 LIVE `?v=142` (341 stromen).** Een ontwerpronde zonder reserves = 2 ketens per grondstof, ~106 agenten, 81 min; afgewezen assen uit het vorige journal in de prompts, reserves direct in `golf<N+1>-reserves.json`; `CODE_VERSIE` bumpt mee met het register; sitelaag gelijktrekken alleen bij dezelfde faciliteit > 2 km met centroïde; kobalt pas weer met een nieuwe hint. Volgende fase: hoeveelheden bij de stromen zoals v1 (LAR-642).
 - **2026-10-28 · M31 GOLF 10 LIVE `?v=141` (315 stromen).** Een reserve-golf draait zonder ontwerpronde; ongetoetste reserves worden in de EERSTE pijplijnstap getoetst (niet in een lus vooraf); reserve-assen voortaan direct als `golf<N+1>-reserves.json` bewaren; sitelagen alleen gelijktrekken boven ~2 km bij dezelfde faciliteit.
 - **2026-10-28 · GOLF 2 AFGESLOTEN (LAR-618 DONE) NA LARS' TELEFOONTEST VAN `?v=140`.** LAR-480 Canceled als achterhaald (v2: gloed + labels i.p.v. v1-markers). Golf 3 wordt pas gedefinieerd na een keuze van Lars; de bleke grondstofkleuren blijven een beslisvraag met screenshot.
 - **2026-10-27 · GOLF 2 DEEL 3 LIVE `?v=140` — STADSLICHTEN.** Black Marble additief op de gedimde bol (`stadslichten.js`): tweede bol op `vectorLift`, `toneMapped` uit, `klemOpHorizon`, renderOrder 4; glad uitdoven 350 → 60 km; aan in de atlas, uit in het routewerk, zichtbaar gekoppeld aan de kleurknop. Bron Solar System Scope (CC BY 4.0, naar NASA) omdat NASA's server onbereikbaar is — attributie verplicht zolang de laag zichtbaar is. Lagen die `zetAttrib()` leest staan als `let … = null` bovenaan main.js (TDZ).
