@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+*Last updated: 2026-10-30 (telefoontest `?v=144` goed; golf 13 af)*
 
 
 ## 🔴 NIEUW 2026-10-29 (3e) — na M31 golf 13 live
 
-1. **Lars test `?v=144` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=144 — 24 nieuwe ketens (o.a. Balkan Stream Kıyıköy → Kiskundorozsma, Arctic LNG 2 Utrenneye → Beihai, Caserones → Saganoseki, Udachny → Dubai, Metropolis → Almelo, Lynas Kuantan → Pasadena, Agadem → Sèmè-Kpodji).
+1. ~~Lars test `?v=144` op de telefoon~~ ✅ 2026-10-30 "Ziet er goed uit" → golf 13 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=144 — 24 nieuwe ketens (o.a. Balkan Stream Kıyıköy → Kiskundorozsma, Arctic LNG 2 Utrenneye → Beihai, Caserones → Saganoseki, Udachny → Dubai, Metropolis → Almelo, Lynas Kuantan → Pasadena, Agadem → Sèmè-Kpodji).
 2. **Golf 14 (klein):** 8 getoetste reserves in `v2/tools/golf/golf14-reserves.json` → `maak_golf12.py`-patroon (alle 8 hebben een per-keten-toets).
 3. **Een volgende ontwerpronde zónder kobalt** (of kobalt pas na bronwerk vooraf: een producent-haven-bron voor Beira/TAZARA/Durban, of een Chinese raffinaderij met een genoemde DRC-leverancier). De 19 + 19 afgewezen assen van golf 11 en 13 staan in `golf11-resultaat.json`/`golf13-resultaat.json` (toets, `haalbaar: false`) → in de prompts.
 4. **De 27 onbekende volumes** (nu ook grafiet-seadrift-pamplona, nikkel-zapolyarny-monchegorsk) alleen met bronwerk via `stroomvolumes-handmatig.json`; pgm-platreef-zondereinde krijgt pas een dikte met een PGM-inhoud (nu tonnes concentraat).

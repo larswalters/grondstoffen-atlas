@@ -5,7 +5,7 @@
 > bronwerk vooraf). Centraal: 1 vlag (uranium-metropolis-almelo 484 KB), w-udachny gelijkgetrokken, 24 noten, `ree-sn2` → `ree-sne`;
 > volumes-leesagent `v2/design/volumes/golf13.json` (22 indicatie, 2 onbekend) → 335/376 met dikte; bundel 1.416 benen, `bundel-check` ok,
 > `CODE_VERSIE` + `BUNDEL_VERSIE` 144; desktop + 375 px 0 fouten. 8 reserves in `golf14-reserves.json`. Lessen: bakhandleiding §13. LAR-651
-> Done. **→ VOLGENDE:** Lars' telefoontest `?v=144` · golf 14 klein uit de reserves (`maak_golf12.py`-patroon) of een ontwerpronde zónder kobalt.
+> Done. **✅ Telefoontest Lars `?v=144` goed (2026-10-30).** **→ VOLGENDE:** golf 14 klein uit de reserves (`maak_golf12.py`-patroon) of een ontwerpronde zónder kobalt.
 
 > **📏 GOLF 12 + HOEVEELHEDEN BIJ DE STROMEN (LAR-642) LIVE `?v=143` — 352 STROMEN (2026-10-29, EERDER).** Commit `851e3c1`.
 > Lars: *"Doe nog maar die kleine golf 12, daarna LAR-642."* Golf 12 = de 11 reserve-assen uit golf 11 (`maak_golf12.py`, 35 agenten,
