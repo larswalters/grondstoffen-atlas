@@ -1,0 +1,67 @@
+diamant: 2/2 ketens door — diamant-mirny-smolensk, diamant-dubai-ramatgan · niet: diamant-karowe-antwerpen (afgewezen), diamant-cullinan-antwerpen (afgewezen)
+pgm: 2/2 ketens door — pgm-mogalakwena-rustenburg, pgm-kevitsa-ronnskar · niet: pgm-sedibelo-springs (afgewezen), pgm-columbus-iselin (afgewezen)
+diamant-dubai-ramatgan: gebakken 2171.4 km
+diamant-dubai-ramatgan: keuring goed-met-bevindingen
+kobalt: 0/2 ketens door —  · niet: kobalt-niihama-osaka (afgewezen), kobalt-kokkola-olen (afgewezen), kobalt-kokkola-nysa (afgewezen), kobalt-pomalaa-ningbo (afgewezen)
+pgm-kevitsa-ronnskar: gebakken 530.2 km
+pgm-kevitsa-ronnskar: keuring goed-met-bevindingen
+goud: 2/2 ketens door — goud-paracatu-zurich, goud-dubai-valcambi · niet: goud-obuasi-randrefinery (afgewezen), goud-boddington-hongkong (reserve)
+pgm-mogalakwena-rustenburg: gebakken 471.7 km
+lithium: 2/2 ketens door — lithium-saldeoro-guemes, lithium-mtcattlin-lianyungang · niet: lithium-yelonggou-shehong (afgewezen), lithium-wuxi-wroclaw (afgewezen)
+pgm-mogalakwena-rustenburg: keuring goed-met-bevindingen
+goud-dubai-valcambi: gebakken 4798.2 km
+goud-dubai-valcambi: keuring goed-met-bevindingen
+koper: 2/2 ketens door — koper-centinela-onsan, koper-motheo-walvisbay · niet: koper-oktedi-pasar (afgewezen), koper-quellaveco-ilo (reserve)
+uranium: 2/2 ketens door — uranium-novosibirsk-rooppur, uranium-pinyonplain-whitemesa · niet: uranium-vasteras-temelin (afgewezen), uranium-daejeon-barakah (afgewezen)
+ree: 2/2 ketens door — ree-mountainpass-yokohama, ree-ganzhou-fremont · niet: ree-diantan-longnan (afgewezen), ree-longonjo-lobito (afgewezen)
+gas: 2/2 ketens door — gas-kyaukphyu-namhkam, gas-nybro-goleniow · niet: gas-condabri-curtisisland (reserve), gas-pointfortin-quintero (reserve)
+kolen: 2/2 ketens door — kolen-bailey-baltimore, kolen-semirara-calaca · niet: kolen-carmichael-abbotpoint (reserve), kolen-cerrejon-iskenderun (reserve)
+koper-motheo-walvisbay: gebakken 1014.3 km
+olie: 2/2 ketens door — olie-stanley-nederland, olie-jose-jamnagar · niet: olie-omisalj-szazhalombatta (reserve), olie-pasadena-linden (reserve)
+zilver: 2/2 ketens door — zilver-kidd-montrealest, zilver-matsa-huelva · niet: zilver-caylloma-callao (reserve), zilver-dexing-guixi (reserve)
+diamant-mirny-smolensk: gebakken 4566 km
+koper-centinela-onsan: gebakken 18292.6 km
+lithium-mtcattlin-lianyungang: gebakken 9108.3 km
+koper-motheo-walvisbay: keuring goed-met-bevindingen
+lithium-saldeoro-guemes: gebakken 422.5 km
+nikkel: 2/2 ketens door — nikkel-ramu-caofeidian, nikkel-iwip-tongxiang · niet: nikkel-thompson-longharbour (reserve), nikkel-pomalaa-pohang (afgewezen)
+diamant-mirny-smolensk: keuring goed-met-bevindingen
+koper-centinela-onsan: keuring goed-met-bevindingen
+lithium-mtcattlin-lianyungang: keuring goed-met-bevindingen
+lithium-saldeoro-guemes: keuring goed-met-bevindingen
+grafiet: 2/2 ketens door — grafiet-siviour-portadelaide, grafiet-kilbourne-anniston · niet: grafiet-heroya-vestal (afgewezen), grafiet-heroya-eumseong (afgewezen)
+uranium-pinyonplain-whitemesa: gebakken 530 km
+gas-kyaukphyu-namhkam: gebakken 748.8 km
+ree-mountainpass-yokohama: gebakken 9501.3 km
+kolen-bailey-baltimore: gebakken 567.9 km
+uranium-novosibirsk-rooppur: gebakken 3765.9 km
+gas-kyaukphyu-namhkam: keuring goed-met-bevindingen
+uranium-pinyonplain-whitemesa: keuring goed
+gas-nybro-goleniow: gebakken 635.7 km
+ree-mountainpass-yokohama: keuring goed-met-bevindingen
+kolen-bailey-baltimore: keuring goed-met-bevindingen
+gas-nybro-goleniow: keuring goed-met-bevindingen
+uranium-novosibirsk-rooppur: keuring goed-met-bevindingen
+goud-paracatu-zurich: gebakken 10494.6 km
+goud-paracatu-zurich: keuring goed-met-bevindingen
+olie-jose-jamnagar: gebakken 19284.6 km
+olie-jose-jamnagar: keuring goed-met-bevindingen
+nikkel-iwip-tongxiang: gebakken 4116 km
+nikkel-iwip-tongxiang: keuring goed-met-bevindingen
+zilver-kidd-montrealest: gebakken 1100.6 km
+zilver-kidd-montrealest: keuring goed-met-bevindingen
+nikkel-ramu-caofeidian: gebakken 6308.8 km
+nikkel-ramu-caofeidian: keuring goed-met-bevindingen
+kolen-semirara-calaca: gebakken 328.1 km
+kolen-semirara-calaca: keuring goed-met-bevindingen
+grafiet-siviour-portadelaide: gebakken 552.9 km
+grafiet-siviour-portadelaide: keuring goed-met-bevindingen
+olie-stanley-nederland: gebakken 3079.2 km
+olie-stanley-nederland: keuring goed
+ree-ganzhou-fremont: gebakken 12992 km
+ree-ganzhou-fremont: keuring goed-met-bevindingen
+zilver-matsa-huelva: gebakken 107.3 km
+zilver-matsa-huelva: keuring goed-met-bevindingen
+grafiet-kilbourne-anniston: gebakken 1836.6 km
+grafiet-kilbourne-anniston: keuring goed-met-bevindingen
+klaar: 26/26 gebakken, 26 registreerbaar (waarvan 0 reserve-assen), over 14/14 grondstoffen

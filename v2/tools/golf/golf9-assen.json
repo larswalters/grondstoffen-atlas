@@ -1,0 +1,516 @@
+{
+ "ree-oscom-yokohama": {
+  "g": "ree",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Product-aanname: TREI-site en Wikipedia noemen oxiden en carbonaat; alleen het Industryweek-bericht van 2010 koppelt de plant aan IREL-chloride uit Odisha. OSCOM als herkomst is aannemelijk, niet door een bron op de stroom bevestigd.",
+   "Modaliteit truck, VCT als uitvoerhaven en Honmoku als Japanse haven zijn alle drie niet door een bron genoemd: staan als aannemelijk in de beennaam.",
+   "Opschorting: Wikipedia zegt IREL schortte de overeenkomst op 14-06-2025 op; Reuters-samenvattingen spreken van een verzoek van New Delhi dat niet direct haalbaar was. Volume 2024 is peiljaar.",
+   "VCT-anker ligt 12,1 km van de MARNET-zeeknoop (17.6221,83.3898): haven-aanloop verplicht; maak_havenaanloop slaagde in één poging (13,2 km, 0,43 km land aan het uiteinde).",
+   "Overlap b1/b2: b2 keert vanaf TREI terug over Anakapalle en NH-16 richting Sabbavaram (circa 20 km over b1). Reëel, geen fout.",
+   "Havenpoort/terminal kan privéweg zijn: eindToegangPrivaat true op b2 of korte stippel last mile (privéterrein)."
+  ],
+  "aanpassing": "Titel: IREL-chloride (OSCOM) via TREI Atchutapuram en Vizag naar Yokohama, aannemelijk, levering opgeschort 14-06-2025 (peiljaar 2024). b1 = letterlijke kopie van ree-oscom-aluva-weg-oscom-aluva.geojson punt 0-3053 (303,1 km, tot Anakapalle 17.6894,83.0035) plus korte weg Anakapalle naar TREI 17.5195,82.9833 (profiel, extract india). b2 TREI naar VCT 17.6934,83.3031. Zee: van zeeknoop 17.6221,83.3898 naar 35.3661,139.6857, dan stippel Vizag-aanloop en Honmoku-aanloop (kopie)."
+ },
+ "ree-lacq-yokohama": {
+  "g": "ree",
+  "prio": 2,
+  "haalbaar": false,
+  "problemen": [
+   "Geen coördinaat voor Caremag: Nominatim vindt niets, de Carester-site noemt alleen Induslacq RD817 Lacq; een platformcentroïde is geen site-anker en verzinnen mag niet.",
+   "Fabriek is in aanbouw (financiering 17-03-2025), geen productiedatum of capaciteit gevonden; nog geen stroom om te tekenen.",
+   "Geen bron voor Japanse offtake: de Carester-site noemt een Stellantis-contract (Europa, 30-09-2024) en een Solvay-MoU, niets over Japan; Iwatani/JOGMEC niet bevestigd.",
+   "Geen bron voor uitvoerhaven; Bordeaux is een gok (Bayonne ligt dichter bij Lacq), fr-centre ontbreekt, haven onbevestigd.",
+   "Zelfde bewijsgebrek als ree-lacq-sillamae (golf 8 afgewezen)."
+  ],
+  "aanpassing": "Afwijzen. Heroverwegen pas als één bron levering van Caremag-product naar Japan met volume en haven noemt en de plantlocatie met coördinaat vindt; dan opnieuw ontwerpen."
+ },
+ "ree-hanau-sumter": {
+  "g": "ree",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Geen bron voor een materiaalstroom Hanau naar Sumter: evacmagnetics.com noemt geen leveranciers en geen klant; het ontwerp erkent dit zelf.",
+   "Hanau is zelf een magneetfabriek en Sumter een eigen productielocatie: magneten van Hanau naar Sumter is inhoudelijk onwaarschijnlijk; de grondstof voor Sumter komt vermoedelijk uit de VS.",
+   "Geen coördinaat voor eVAC Sumter (Nominatim leeg, site zonder adres); haven Charleston is een gok.",
+   "Twee van drie benen herhalen bestaande ketens: Hanau-Rotterdam is de omgekeerde kopie van ree-baotou-hanau."
+  ],
+  "aanpassing": "Afwijzen. Alleen herontwerpen als een bron de eVAC-grondstofleverancier noemt (mogelijk MP Materials Fort Worth, niet bevestigd) en Sumter satelliet-gelegd kan worden."
+ },
+ "uranium-langerheinrich-metropolis": {
+  "g": "uranium",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Been A: het ontwerp zegt geen via-punten en B2, maar de mijnweg takt af van de C28. Zonder via-punten en zonder corridorKlassen unclassified geen wegpad. Gemeten route: 128,4 km (OSRM 129, -0,5%), niet hemelsbreed 88.",
+   "Langer Heinrich-anker (-22.8147,15.3338) ligt op satelliet 0,8 km oost van de verwerkingsfabriek, bij erts en tailings; fabriek ongeveer -22.8142,15.3255. Anker verleggen.",
+   "Walvis Bay-kade ligt 12,5 km van zeeknoop 8084: haven-aanloop nodig. maak_havenaanloop liep 300 s zonder resultaat, dus rechte stippel (terugval volgens handleiding).",
+   "Truck Montreal-Metropolis gemeten 1.894,5 km (OSRM-indicatie 1.900) maar het wegjson wordt ca 475 KB (19.540 punten): boven de 300 KB-richtlijn, vergelijkbaar met smithranch-metropolis (347 KB).",
+   "Montreal-terminal niet gepubliceerd (NRC noemt alleen Montreal): anker onzeker. Peiljaar 2010, zelfde patroon in 2011 (Atlantic Nyala)."
+  ],
+  "aanpassing": "Been A: profiel met via-punten C28/mijnweg-junctie (-22.8559,15.0340) en C28 bij Swakopmund (-22.7001,14.5921), extract namibie, corridorKlassen unclassified, eindToegangPrivaat true; schrijf 128 km in de brief. Anker naar de fabriek verleggen. Zee: stippel van 12,5 km voor Walvis Bay. Been C: via-punten Champlain, Medina I-71/I-76, Louisville I-71/I-265 werken (snaps max 1,7 km); extracts canada, ny, pa, oh, ky, il. Zee gemeten 12.366 km."
+ },
+ "uranium-stpetersburg-columbia": {
+  "g": "uranium",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "CBC-bron is niet gelezen en geeft 403; de Baltimore-vondst moet op andere bronnen steunen (hieronder).",
+   "Baltimore-terminal: Baltimore Brew 2013 noemt Ruckert Terminals, tegenover Fort McHenry; geen coordinaat gevonden (Photon/Nominatim geven niets). Anker blijft onzeker tot de bouwer het terminal op OSM of satelliet legt.",
+   "Petrolesport snapt op 4,90 km van zeeknoop 6849: net onder de 5 km-grens. Gebruik dezelfde startconventie als stpetersburg-pierrelatte.",
+   "Wegbeen Baltimore-Columbia gemeten 894,6 km (OSRM 853, +4,9%); via-punten I-95 snapten binnen 0,6 km, maar Richmond-via gaf 10,7 km keerlus (gesnoeid): via-punt op doorgaande I-95 of I-295 leggen.",
+   "Peiljaar wisselt: NRC 2005 en 2025; sinds aug 2024 Amerikaans importverbod met uitzonderingen."
+  ],
+  "aanpassing": "Zee: St Petersburg-Baltimore via MARNET, gemeten 8.415 km. Baltimore-kade op Ruckert Terminals proberen te leggen; lukt dat niet, dan een Locust Point-terminal als onzeker anker (alle kandidaten 1,3-5 km van zeeknoop 4839, geen aanloop nodig). Truck via I-95 (via-punten Fredericksburg, Richmond, Rocky Mount, Fayetteville, Florence) naar Columbia; extracts maryland, virginia, north-carolina, south-carolina. Bronnen vervangen door NRC 2005, Baltimore Brew en The Insider."
+ },
+ "uranium-walvisbay-malvesi": {
+  "g": "uranium",
+  "prio": 3,
+  "haalbaar": true,
+  "problemen": [
+   "Alleen activistenbronnen (BBU 2014, Freedom News 2018, sortirdunucleaire 2015); geen mijn aan de start (Namibie en Kazachstan wisselen), dus de lijn begint op de kade.",
+   "Spoor: Hamburg-Narbonne gemeten in negen stukken ca 1.617 km plus 6 km Malvesi-spoor (hemelsbreed 1.255; geen spoorkm gepubliceerd). Via-punten in stadscentra (Osnabruck, Koln, Woippy/Metz, Avignon) gaven omkeringen: via-punten op doorgaande lijn buiten stations leggen.",
+   "Koblenz-Trier gaf twee omkeringen bij Cochem (50.15,7.17): nakijken of dit echt is of een netartefact; via-punt na Cochem proberen.",
+   "Malvesi-spoor 6,0 km heeft een omkering bij Narbonne (ook in malvesi-tricastin b1, 7,0 km): zelfde behandeling of omgekeerde kopie.",
+   "Walvis Bay-aanloop 12,5 km: rechte stippel. Hamburg-kade snapt op 4,14 km van zeeknoop 3944 (net onder 5 km); verschuift het anker meer dan 0,9 km, dan aanloop nodig (hing eerder op Hamburg)."
+  ],
+  "aanpassing": "Zee Walvis Bay-Hamburg via MARNET gemeten 10.966 km. Anker Steinweg Sud-West-Terminal 53.5335,9.9868 (Photon-coordinaat; satelliet: kadeschiereiland met loodsen en spoor, aannemelijk). Spoor over Hamburg, Bremen, Osnabruck, Munster/Hamm, Hagen/Koln, Koblenz, Trier, Metz, Dijon, Lyon, Miramas, Montpellier, Narbonne; zeven tot negen runs met via-punten buiten steden. Brief: aannemelijk, activistenbronnen, 2014-2018."
+ },
+ "koper-morenci-elpaso": {
+  "g": "koper-",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Het spoortracé gaat niet via Safford maar Clifton, Duncan, Lordsburg, Bowie, Globe, Miami; de ontwerpcorridor Clifton-Safford klopt niet. Wikipedia Arizona Eastern Railway: Clifton Subdivision sluit bij Lordsburg aan op UP, AZER heeft trackage rights Bowie-Lordsburg.",
+   "Been 3 herhaalt 299 van 559 km van been 2 (Lordsburg-Bowie-Miami, anode rijdt terug): echt, maar de lijn ligt dubbel op de bol. Geen duplicaat van een andere stroom.",
+   "Bij Bowie geeft de router in beide benen een omkering van 176 graden: een uitstulping van circa 3,3 km naar 32.3355,-109.5167 (de wye ontbreekt in OSM). Via-punt op de aftakking helpt niet; het blijft staan, melden in brief par 9.",
+   "Aan het El Paso-uiteinde twee korte omkeringen (31.7304,-106.3618 en 31.7622,-106.3855, raffinaderijspoor).",
+   "Morenci-ankerpunt van de sitelaag (33.0906,-109.3667) ligt in de put, 3,3 km van het spoor. Sitelaag is centraal werk.",
+   "Spoorkm zijn eigen Dijkstra, geen gepubliceerde route-km; brief moet schrijven: hemelsbreed 143 km resp. 456 km, geen wegkm. Enige maatstaf: AZER Miami-Bowie 133,8 mijl is 215,3 km, route geeft 215,2 km.",
+   "Morenci is grotendeels SX-EW: het concentraataandeel naar Miami is niet gepubliceerd (10-K: een deel)."
+  ],
+  "aanpassing": "BINDEND: 1) been 1 truck last mile vervalt; begin direct met spoor op het concentratorterrein, anker 33.0680,-109.3430 (z15 satelliet: spoorkop bij verdikkertanks, rail-snap 0,09 km), status bron-gelegd. 2) Spoorbeen A in twee runs met via-punt Lordsburg 32.3401,-108.7922: Clifton-net naar Lordsburg 125,5 km, Lordsburg naar Miami; totaal circa 415 km. 3) Been C: Miami 33.4128,-110.8562 (snap 0,14 km, anker op smelterterrein gezien) naar El Paso 31.7645,-106.3922 (555 km, snap 0,06 km). 4) Titel en brief: corridor Clifton-Lordsburg-Bowie-Globe, niet Safford. 5) El Paso-anker: lange tankhuis-hal met bezinkbekkens, bron-gelegd; Rod Mill Road ligt 0,35 km ernaast. 6) Anodemodus nu bronbewezen: rail in boxcars, dus geen aannemelijk meer."
+ },
+ "koper-norilsk-murmansk": {
+  "g": "koper-",
+  "prio": 2,
+  "haalbaar": false,
+  "problemen": [
+   "Alle vier de benen (spoor Norilsk-Dudinka, Jenisej, haven-aanloop, Karazee-Moermansk) zijn letterlijke kopieen van nikkel-norilsk-monchegorsk; kobalt-norilsk-monchegorsk kopieert ze al. Het enige nieuwe is een spoorbeen van 84,5 km Medny Zavod naar Dudinka (snap 0,24 en 1,92 km), waarvan het grootste deel op been 1 van nikkel ligt. Een keten die grotendeels een bestaande stroom herhaalt, dus niet haalbaar.",
+   "Het Tanger-vervolg is niet te redden: Interfax noemt Tanger als hub, maar geen enkele bron noemt een terminal of kade in Tanger Med, dus geen anker; stoppunt blijft Moermansk.",
+   "Bron voor Medny-anker (69.3632,88.1279) is alleen sitelaag, status aannemelijk; geen satellietblik.",
+   "Kallanish-link (45 kt koper naar China) kon niet worden opgehaald; NSR-oostroute zou een ander been zijn dan Dudinka-Moermansk."
+  ],
+  "aanpassing": "Afwijzen. Als Lars het toch wil: alleen met een nieuw eindbeen (Moermansk naar een bronbewezen terminal in Tanger Med), anders niet bakken. Meldpunt: sitelaag-anker Medny bij Norilsk is niet satelliet-gelegd."
+ },
+ "koper-malanjkhand-dahej": {
+  "g": "koper-",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Geen bron noemt Malanjkhand: Hindalco-persbericht 17-9-2020 vermeldt 60% van alle HCL-concentraat, geen mijn, geen Dahej als leverpunt, geen vervoerswijze. Mijn en modaliteit zijn dus beide aanname.",
+   "Mijn ligt 53-55 km hemelsbreed van het dichtstbijzijnde OSM-spoor (rail bij Balaghat); toets_spoorroute snapt op 55,5 km. De spoorkop is onbekend: een wegbeen van 55 tot 90 km zonder bewezen railhead, of een stippel van 55 km.",
+   "Rail Balaghat-Dahej zelf werkt: 1030,7 km, verhouding 1,22, Dahej-snap 1,95 km, maar ook dat is eigen Dijkstra zonder gepubliceerde km.",
+   "Reele alternatieven zijn niet uitgesloten: HCL heeft eigen smelter (Ghatsila) en Khetri-concentraat ligt dichter bij Gujarat.",
+   "Prio-3-risico uit het ontwerp blijft overeind: volume klein en niet gepubliceerd."
+  ],
+  "aanpassing": "Afwijzen. Niet bakken zolang geen bron mijn en vervoer aan Dahej koppelt. Eerst een HCL- of Hindalco-document zoeken dat Malanjkhand en spoorverzending noemt; pas dan wegbeen mijn naar Balaghat plus spoor 1031 km plus Dahej 1,95 km."
+ },
+ "zilver-escondida-guixi": {
+  "g": "zilver",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Enige bron Escondida naar Jiangxi: Miningmx 2012, 20-30 kt concentraat, klein naast ca. 100 kt van Freeport; geen actuele bron, dus aannemelijk: één bron.",
+   "Zilvervolume voor Guixi niet gepubliceerd; 1.286 t (plan 2024) niet teruggevonden, alleen H1 2026 749,78 t Ag (10jqka).",
+   "Koper-brief heeft open conflict: laadspoor Beilun is containeremplacement, niet bulk."
+  ],
+  "aanpassing": "Bak benen 1-10 van koper-escondida-guixi letterlijk (zonder been 11, kathode). Zet 'aannemelijk: één bron' in de beennamen en titel, vermeld de 2012-bron en het container/bulk-conflict in de brief. Volume: BHP 4.952 koz in 9 mnd (100%-basis, ca. 154 t), niet 1.050 t. Totaal 19.835 km."
+ },
+ "zilver-antofagasta-hamburg": {
+  "g": "zilver",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Herkomst onbekend: Antofagasta/Codelco is aannemelijk, geen bron koppelt Chileens concentraat aan Aurubis.",
+   "Zilvervolume voor Hamburg of Chili ontbreekt; alleen groepscijfer Aurubis 921 t Ag (FY22/23, inclusief recycling).",
+   "Totaal in ontwerp (13.680 km) klopt niet: benen 1-6 van koper-aurubis-hamburg tellen 13.773 km."
+  ],
+  "aanpassing": "Bak benen 1-6 van koper-aurubis-hamburg letterlijk, geen kathode-benen. Titel 'Chileens koperconcentraat (herkomstmijn onbekend)', 'aannemelijk: één bron' in beennamen. Brief: zilver is groepsbreed 921 t Ag, aandeel Chili/Hamburg niet gepubliceerd; de 800 t uit de sitelaag niet als keten-volume noemen."
+ },
+ "zilver-grasberg-gresik": {
+  "g": "zilver",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "4 van 5 benen zijn stippel (leiding 89,6 km, twee haven-aanlopen, terreinbeen); alleen de zeetak is gemeten. Dat is de vorm die de kaart niet wil.",
+   "Geen OSM-leiding; loskade Manyar onzeker.",
+   "Zilver niet gekwantificeerd: FCX 10-K FY2025 noemt alleen 'significant quantities of gold and silver'.",
+   "Grasberg Block Cave staat sinds de modderstroom van 8-9-2025 stil; Manyar kreeg te weinig concentraat, kathodestart pas gericht op sept 2026."
+  ],
+  "aanpassing": "Niet bakken. Goud van Manyar-PMR zit al in goud-grasberg-jakarta, koperlijn in koper-grasberg-manyar. Pas heroverwegen als een gekarteerde Grasberg-leiding of een bron voor de Manyar-kade en een zilvercijfer opduikt."
+ },
+ "diamant-antwerpen-newyork": {
+  "g": "diamant-",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Mode en route per zending niet gebrond: de vlucht BRU naar JFK is aannemelijk (Brussels Airlines vliegt dagelijks BRU-JFK, Wikipedia Brussels Airport), geen vrachtbron voor diamant. Kopie-benen en de nieuwe vlucht zijn dus aannemelijk: een bron.",
+   "VS is Belgies grootste poliermarkt: 2,1 mld USD in 2024 (prismnews.com, onbevestigd jaar) en 438,8 mln USD in mei, jaar niet op de pagina (rapaport.com/?p=32180, 2018 volgens ontwerp). Verouderd/dun, maar de richting klopt.",
+   "De overval-bron (Wikipedia Brussels Airport diamond heist) toont een Brink's-wagen Antwerpen-BRU en een vlucht naar Zurich, niet naar New York: gebruik hem alleen voor het Antwerpen-Brucargo-been, niet voor de vlucht.",
+   "Naad 0,13 km: antwerpen-surat b1 eindigt op 4.4576,50.9056, het ontwerp-anker dia-brucargo is 50.90628,4.45584."
+  ],
+  "aanpassing": "Haalbaar zoals ontworpen: b1 en b3 letterlijke kopie (geojson bestaan in build-cache), b2 nieuw met maak_luchtbeen.py, 5.883,2 km grootcirkel. Start het luchtbeen op het eindpunt van b1 (50.9056,4.4576) zodat de naad 0 is; eindig op 40.6587,-73.7952. Noem aannemelijk: een bron in de beennaam; stroom-id blijft; brief: US-cijfer 2024 vermelden naast 2018."
+ },
+ "diamant-karowe-antwerpen": {
+  "g": "diamant-",
+  "prio": 2,
+  "haalbaar": false,
+  "problemen": [
+   "Wegbeen herhaalt orapa-gaborone: Karowe (OSM -21.4853,25.4800) ligt 10,5 km van de bestaande lijn (dichtst bij km 26 van 530, nabij Letlhakane); de overige ca. 500 km (A14, A1) zou een tweede versie van diamant-orapa-gaborone worden. Eigen kilometers hooguit 15-25 van ca. 480.",
+   "B2 en b3 zijn letterlijke kopieen van jwaneng-antwerpen: de keten is dus voor meer dan 95% een bestaande stroom met een andere kop. Dat valt onder grotendeels herhalen.",
+   "Karowe-Gaborone als station is dun gebrond: alleen dat Lucara-verkoop sinds 2015 in Gaborone zit (viewings; biedingen naar Antwerpen) en HB-deal tot december 2032 voor stenen vanaf 10,8 ct (Rapaport). Geen bron voor vervoer Karowe-Gaborone of vlucht GBE-BRU; Karowe heeft een eigen airstrip (OSM -21.4877,25.4662).",
+   "Staat van de mijn: dagbouw loopt tot Q4 2026, daarna stockpile en ondergronds vanaf 2028 (Lucara Q2 2026). HB Antwerp verkleint zijn Botswana-operatie (Reuters via Mining Weekly, 25 sept 2026), maar de Lucara-HB-deal staat los.",
+   "Sitelaag w-karowe staat 118 km te ver oost; w-letlhakane (-21.8572,27.2015) wijkt af van OSM-dorp (-21.4219,25.5872): melden, niet aanraken."
+  ],
+  "aanpassing": "Niet als aparte keten bakken. Als Karowe op de bol moet: central een korte aftakking (voeg_been_toe.py --vertakt-van 1 op diamant-orapa-gaborone, circa 11-15 km, Karowe naar de A14 bij Letlhakane, anker -21.4853,25.4800 satelliet te leggen) zonder nieuwe keten. Anders vervalt de keten."
+ },
+ "diamant-antwerpen-parijs": {
+  "g": "diamant-",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Bestemming is geen afnemer: Place Vendome is een plein (Wikipedia noemt Boucheron, Charvet, een bank, Hotel Ritz), niet een diamantafnemer; het anker 48.8675,2.3294 is een pleincentroide. Geen bron dat Antwerpse poliers daar leveren.",
+   "Geen bron voor wegvervoer Antwerpen-Parijs of voor Parijs als bestemming; v1-flow dia-mkt-eu is een natte vinger. Alleen de modaliteit uit de heist-bron (Brink's-wagen Antwerpen-BRU) bewijst wegvervoer over korte afstand, niet naar Parijs.",
+   "Eenbeensketen met twee aannames (bestemming en wijze): dun en niet te redden zonder bron. Geen Parijse diamantbeurs gevonden (Nominatim: niets; Wikipedia: niets).",
+   "Praktisch wel te bouwen: extracts belgie, fr-nord-pas-de-calais, fr-picardie, fr-ile-de-france aanwezig; OSRM-wegkm Antwerpen-Place Vendome 345,3 km, hemelsbreed 300,7 km (factor 1,15)."
+  ],
+  "aanpassing": "Afwijzen. Pas haalbaar als een bron een benoemd Parijs huis noemt dat in Antwerpen koopt (adres als anker); dan wegbeen 345 km (wegkm via OSRM, geen overheidsopgave) met aannemelijk in de beennaam. Zonder bron geen keten."
+ },
+ "kolen-brookwood-mobile": {
+  "g": "kolen",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Spoorbedrijf is CSX, niet Norfolk Southern: Warrior 10-K FY2024 zegt Mines 4 en 7 bij Brookwood worden door CSX bediend, de enige rail-carrier, plus een bargeload-out op de Black Warrior River. Het ontwerp noemde NS.",
+   "Volume klopt niet: 13 Mst nameplate (11,8 Mt) is niet gestaafd. 10-K FY2025 geeft 9,3 Mt in 2025 (2024: 7,5 Mt); Blue Creek longwall startte okt 2025.",
+   "Het Nominatim-punt 33.2929,-87.2941 is niet de mijn. 10-K geeft Mine 7 33.3264,-87.2461 en Mine 4 33.3303,-87.3256. Z15 Mine 7: prep plant, stapels en een spoorlus met meerdere sporen naar het zuiden rond 33.3215,-87.2428.",
+   "Router (BAKE_SUFFIX=-raw): Mine 7-laadlus naar McDuffie 496,1 km, snap 0,45 en 0,22 km, tegen ca 300 miles (483 km) mijn-haven bij Warrior: +2,7%. Eén 180-gradenomkering bij Birmingham 33.5096,-86.8124, ook bij keerstraf 300: OSM-topologie, via-punten lossen dat niet op."
+  ],
+  "aanpassing": "Bindend: één spoorbeen (CSX) van Mine 7-laadlus 33.3215,-87.2428 naar McDuffie-terminal 30.6579,-88.0374 (z15: kolenstapels en scheepsladers op de kade, bron-gelegd). Geen zeebeen (geen loshaven genoemd; zeeknoop 3,9 km). Via-punten niet nodig, optioneel Montgomery 32.3845,-86.3113 en Flomaton 31.0236,-87.3248 (op de route). Brief: omkering Birmingham noemen, volume 9,3 Mt 2025."
+ },
+ "kolen-hambach-niederaussem": {
+  "g": "kolen",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Bruinkool, geen steenkool, en één kort been (~30 km): de brief moet bruinkool in de titel noemen; de bol heeft nog geen bruinkool.",
+   "Ontwerpankers falen: mijncentrum 50.9108,6.5028 snapt 3,56 km weg; Niederaussem 50.9957,6.6690 geeft route 36,6 km met 8 km overschiet naar Neurath en een omkering bij 51.0309,6.6480.",
+   "Fix gemeten: begin Kohlebunker en Wendeschleife Hambach 50.8705,6.5110 (z15 zwarte bunker met laadsporen), eind Niederaussem-kolenopslag 50.9890,6.6490 (z15: kolenlager, band naar centrale 1,7 km oost). Route 30,2 km, 0 omkeringen, 100% binnen 60 m van OSM-ways met operator RWE Power (Hambachbahn en Nord-Sued-Bahn, 6,6 kV).",
+   "Km niet toetsbaar: Wikipedia geeft Hambachbahn 21,0 km alleen tot Stellwerk Fn 21, een andere bron 21,5 km; geen totaal tot de centrale. Schrijf router-km als indicatie.",
+   "Volume 40 Mt per jaar is stand 2011; RWE gaf 2019 ca 30 Mt. Niederaussem: sinds 1-4-2024 drie blokken, uit 2029 en 2030. Hambach-kolenwinning eindigt 2029. Aandeel Hambach in Niederaussem niet gekwantificeerd (2018: ca 10 Mt, bron niet geverifieerd)."
+  ],
+  "aanpassing": "Bindend: één spoorbeen (RWE-werkspoor) van Kohlebunker Hambach 50.8705,6.5110 naar Niederaussem-kolenopslag 50.9890,6.6490, router-km ca 30, zonder via-punten. Titel noemt bruinkool en het echte eindpunt (kolenopslag, band naar centrale). Volume ca 30 Mt (2019) met jaartal, niet 40 Mt."
+ },
+ "kolen-gevra-korba": {
+  "g": "kolen",
+  "prio": 3,
+  "haalbaar": true,
+  "problemen": [
+   "Eén kort been (20-23 km), geen gepubliceerde spoorlengte: km alleen indicatief. De verlenging naar NSPCL Bhilai heeft geen route of bewijs en blijft weg.",
+   "Bron voor de leverantie: en.wikipedia Korba STPS zegt dat de kolen van Kusmunda en Gevra komen en dat de centrale aan de Champa-Gevra Road-lijn ligt. Het aandeel van 14,5 Mt (CERC) is niet geverifieerd.",
+   "Router vanaf w-gevra 22.3363,82.5457 naar Korba STPS 22.3858,82.6816: 23,1 km (hemelsbreed 15,0), snap 1,89 en 0,69 km (beide onder 2 km, geen stippel). Eén omkering 22.3514,82.6364 = wye bij Kusmunda van ca 5 km; zonder omkering vraagt de router 147-153 km, dus OSM-topologie dwingt het, via-punten helpen niet.",
+   "Z15 Korba STPS: ketelhuis, kolenopslag noord, MGR-lus oost en rond: anker bron-gelegd. Gevra-laadspoor ligt aan de noordrand van de put, bandcorridor zichtbaar op z14."
+  ],
+  "aanpassing": "Bindend: één spoorbeen, anker w-gevra letterlijk uit kolen-sitelaag.json, eind Korba STPS 22.3858,82.6816, router-km ca 23 als indicatie, omkering bij Kusmunda in brief 7. Geen verlenging naar Bhilai. Volume Gevra 55,8 Mt (GEM 2025), deel naar Korba als aannemelijk: één bron."
+ },
+ "grafiet-epanko-duisburg": {
+  "g": "grafiet",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Via-punten Morogoro (-7.0843,37.4233) en Chalinze (-6.3099,38.3262) liggen 16 en 36 km naast de weg en zouden een omweg forceren; Mikumi ontbrak",
+   "Gemeten wegkm is 494 km, niet de 356 hemelsbreed en niet de 370 uit de bron",
+   "Mijnterrein niet gevonden: alleen OSM-dorp Epanko; satelliet z14 toont akkers en heuvels, geen mijn (pre-FID)",
+   "Duisburg staat in geen bron; afnemers tk accelis Trading en een anonieme Duitse trader, FOB Dar es Salaam",
+   "87% van de zee-punten en alle Rijn-benen vallen samen met grafiet-molo-duisburg"
+  ],
+  "aanpassing": "Wegbeen via-lijst: Epanko-dorp (-8.7114,36.6796, status onzeker, dorp niet terrein), Ifakara (-8.1321,36.6848), Kidatu (-7.7042,36.9523), Mikumi op T1 (-7.4000,37.0000), Dar-kade (-6.8280,39.2870); extract tanzania, corridorKlassen tertiary en unclassified, refs T1, venster 60. Gemeten 494,1 km (getekend 495,8), snaps 1,73 en 0,01 km. Schrijf: hemelsbreed 355 km, geen gepubliceerde wegkm; Epanko naar Ifakara 75 km (EcoGraf) gemeten 77,2. Aanloop Dar letterlijk kopie uit lindijumbo-qingdao (19,84 km). Rijn: kopie van molo-duisburg b4-b6. Duisburg aannemelijk, dezelfde aanname als molo-duisburg; titel en id blijven. Registersleutel gr-ed is vrij."
+ },
+ "grafiet-vittangi-lulea": {
+  "g": "grafiet",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Design-via Kiruna en Gällivare (67.3,20.25) forceren een omweg en Gällivare ligt 30 km mis; de kortste weg loopt via Junosuando, Tärendö, Överkalix en Råneå",
+   "Luleå-anker 65.58,22.15 is het stadscentrum (satelliet z15); Talnode komt op Hertsön, bedrijfsterrein, kavel niet gevonden",
+   "Volume: sv.wikipedia noemt ca. 25 kt/j grafiet uit 100-120 kt erts/j, geen 100 kt/j concentraat",
+   "Pre-FID: mijn niet besloten; raffinaderij vergunning loopt; EVA-pilot 50 t/j",
+   "Modaliteit truck niet gebronde aanname; één wegbeen"
+  ],
+  "aanpassing": "Mijnanker Nunasvaara Södra 67.7047,21.4094 (sv.wikipedia, aannemelijk; ontwerppunt 67.7250 lag 2,4 km noordelijker in bos). Luleå-anker: Hertsön bedrijfsterrein, kandidaat 65.5670,22.2840 (gegrade kavels op satelliet, onzeker, bakker doet één z16-blik); nooit 65.58,22.15. Geen via-punten, laat het wegtool de kortste kiezen: extract zweden, 321,2 km, snaps 0,06 en 0,16 km. Schrijf: hemelsbreed 241 km, geen wegkm; E10-route via Gällivare en Boden is langer en niet bronbepaald. Stoppunt Talnode, geen fase D."
+ },
+ "grafiet-graphitecreek-nome": {
+  "g": "grafiet",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Wegtool geeft 'geen wegpad' mijn naar Nome; het OSM-net eindigt bij Kougarok, ontsluitingsweg bestaat niet, dus het been wordt stippel",
+   "Sitelaag-punt 65.6300,-164.8300 staat 129 km van Nome terwijl de bron 37 mijl (60 km) zegt; satelliet toont leeg toendra, geen werken; mijnterrein niet te leggen",
+   "BFS noemt bargetransport Nome naar Ohio zonder route, haven of Ohio-plaats; geen zeebeen te tekenen",
+   "Vergunningen niet verleend, financiering open, mijnstart 2030, volume 0"
+  ],
+  "aanpassing": "Afwijzen en niet registreren. Alleen heropenen als een bron een mijncoördinaat en een zeeroute vanaf Nome geeft; een keten van één stippelbeen is niet toegestaan. Geen vervanging nodig, de ontwerp-reserve vervalt."
+ },
+ "goud-guyana-ottawa": {
+  "g": "goud",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Vlucht GEO naar YOW (Ottawa) is niet te verdedigen: GEO heeft geen Ottawa-verbinding; de enige Canada-lijn vanaf GEO is Toronto (Fly Jamaica GEO-YYZ, Wikipedia). Geen bron dat deze lading vliegt: alleen aannemelijk (industriestandaard).",
+   "Afnemer RCM rust op Wikipedia (2012-cijfers) en een RCM-citaat uit 2017 (relatie met GGB meer dan 30 jaar, dpi.gov.gy). Canada nam in 2023 slechts ca 12 procent van de Guyanese goudexport, UAE ca 81 procent (OEC/mirror-data): minderheidsstroom.",
+   "Persbericht (Stripes 2025) meldt RCM-inkoopstop in 2021 bij een grote Guyanese exporteur; afnemer-as kan dun zijn.",
+   "Hemelsbreed 36 km voor b1 is geen wegkm: echte wegkm is 41 (Wikipedia: GEO 41 km van Georgetown; eigen OSM-scan Guyana 40,4 km, 30 km primary)."
+  ],
+  "aanpassing": "BINDEND: (1) b2 wordt vlucht GEO naar YYZ (Toronto Pearson cargo, grootcirkel 4.630 km, aannemelijk), geen YOW; YYZ-anker nieuw satelliet-leggen. (2) b3 wordt truck YYZ naar RCM via Hwy 401, 416, 417 en Sussex Drive; OSRM 468 wegkm (hemelsbreed 367, schrijf dat letterlijk); via-punten op 401 en op knooppunt 401/416 bij Prescott, niet in Toronto of Ottawa-centrum. (3) b1 km 41; GEO-platform airside: korte stippel last mile. (4) Brief noemt Canada als ca 12 procent van de export; afnemer aannemelijk."
+ },
+ "goud-arezzo-valcambi": {
+  "g": "goud",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Premisse sieradenschroot naar Valcambi klopt niet: de gebronde Arezzo-stroom naar Zwitserland is goudstaven van Good Delivery-raffinaderijen (Italpreziosi, Chimet) die het schroot zelf raffineren. Schroot en Valcambi worden in geen bron genoemd.",
+   "Il Sole 24 Ore (juni 2026) noemt alleen Zwitserland als bestemming, geen raffinaderij of stad; Valcambi is dus aannemelijk (Ticino-cluster), niet gebrond.",
+   "Ontwerp-wegkm 480 is te hoog: OSRM geeft 428 km (A1, A50 ring Milaan, A9, Chiasso); hemelsbreed 349 km.",
+   "Eén lang been, dun verhaal; ontwerp zet via-punten bij Milaan, die moeten op de A50-ring en A9 liggen, niet in het centrum."
+  ],
+  "aanpassing": "BINDEND: herformuleer als Arezzo-goudstaven (recycling-raffinaderij Italpreziosi) naar de Ticino-raffinagecluster; geen sieradenschroot-claim. Start anker Italpreziosi San Zeno, sat_check eerst. Km 428 (OSRM, indicatie); via-punten op A1, A50-ring, A9, grens Chiasso. Beennaam 'aannemelijk: één bron voor Zwitserland, Valcambi niet gebrond'. Fase D/E vervallen."
+ },
+ "goud-geita-randrefinery": {
+  "g": "goud",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Afnemer Rand Refinery rust alleen op een opmerking uit ca 2015; sinds 2021 raffineren Mwanza Precious Minerals en Geita Gold Refinery (440 kg per dag) lokaal. De Citizen-artikelen (2021) noemen Rand niet en zeggen dat voorheen buitenlands werd geraffineerd.",
+   "Geen enkele bron voor een vrachtvlucht MWZ naar JNB; twee ongebronde dragende aannames (afnemer en luchtmodaliteit) maken de keten speculatief.",
+   "Corridor klopt niet: Geita naar Mwanza gaat over de T4 via Usagara (OSRM 140,5 km, hemelsbreed 84,7), niet via Busisi/Kigongo; de oversteek is de Sengerema-route.",
+   "Mijnanker: OSM -2.8216,32.2674 en Wikipedia -2.8333,32.3000 liggen 4,5 km uiteen; niet satelliet-gelegd."
+  ],
+  "aanpassing": "Afwijzen. Enige redding zou een bron voor Geita-doré naar Rand Refinery plus een vrachtvlucht vanaf MWZ zijn; zonder dat blijft er een truckbeen naar een luchthaven zonder verhaal. Wil men Tanzania alsnog, kies dan een herontwerp rond Geita Gold Refinery met een gebronde afnemer."
+ },
+ "kobalt-monchegorsk-harjavalta": {
+  "g": "kobalt",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Alle 4 benen zijn letterlijk nikkel-monchegorsk-harjavalta: zelfde geojson, zelfde 1.948 km; de kobaltlijn ligt exact op de nikkellijn (visuele doublet).",
+   "Kobaltaandeel niet gemeten: AR2018 noemt kobaltsulfaat als Harjavalta-product (via zoekresultaat, PDF niet te openen), Global Witness 2025 zegt alleen dat Umicore beperkte volumes nikkel- en kobaltproducten koopt en noemt geen kobaltsulfaat.",
+   "Actualiteit onbewezen: Yle aug 2024 zegt dagelijkse Russische treinen naar Vainikkala, daarna geen 2026-bron; VR trok zich in 2022 terug, Russische wagons rijden door.",
+   "Kola MMC heeft eigen kobaltwerkplaats (3 kt Co/j capaciteit, hervat dec 2025): of de geexporteerde matte kobalt draagt is niet aangetoond."
+  ],
+  "aanpassing": "Behouden als twin. Bindend: 4 benen letterlijk kopieren (spoorroute-nikkel-monchegorsk-harjavalta-b1..b4), kopie noemen in beennamen. Beennaam en titel: (aannemelijk: een bron, Ni-Co-matte, kobaltaandeel niet gemeten). Niet claimen dat kobaltsulfaat per spoor reist. Markers hergebruiken (co-monchegorsk-kola, Vainikkala, Harjavalta). Stoppunt Harjavalta, geen fase D."
+ },
+ "kobalt-cdm-tongxiang": {
+  "g": "kobalt",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Geometrisch 99 procent gelijk aan kobalt-tfm-quzhou: de TFM-lijn (index 1443) passeert CDM op 2,1 km, 92,6 procent van die 2.982 km is dezelfde weg; b2/b3 zijn letterlijke kopieen. Nieuw is alleen herkomst en afnemer.",
+   "Huayou-rapport (pagina 13) zegt: Zhejiang Huayou krijgt ruw kobalthydroxide uit DRC, over land naar Durban, dan zee naar Zhapu/Ningbo. CDM staat in het rapport alleen als contactadres (Likasi Road, Lubumbashi), niet als leverancier: herkomst CDM is eigendomsinferentie.",
+   "CDM door DRC geschorst per 6-11-2025 (dambreuk); geen bericht over herstart gevonden (marketscreener, BHRRC); herstart vraagt milieu-voorwaarden. Een lijn dus als gedocumenteerd patroon, niet als actuele lading.",
+   "Zhapu niet gelegd; Ningbo gekozen. Nieuwste zeeknoop 5849 ligt 2,0 km van de kade, bestaande kopie gebruikt 5850 met 11,6 km aanloop: letterlijk kopieren, niet herberekenen.",
+   "Anker co-tongxiang-raffinaderij heeft open conflict in kobalt-sitelaag (campus versus raffinaderij); het Huayou-adres is Wuzhen East Road 18, Tongxiang."
+  ],
+  "aanpassing": "Behouden. Bindend: beennaam en titel (aannemelijk: een bron, Huayou-eigen DRC-hydroxide, CDM geschorst sinds 2025-11-06, herstart onbevestigd); in afwijkingen zetten dat Huayou CDM niet als leverancier noemt. b1: nieuw profiel op basis van kobalt-kcc-durban vias vanaf Lubumbashi RN1 (27.4827,-11.6642) tot Durban, start CDM (lat -11.5165, lon 27.4291), vensterKm 75, corridorKlassen tertiary, refs RN1 N1 T3 T2 A1 A4 N3, gepubliceerdKm 2780 met bronnoot hemelsbreed 2.075 km, eigen afleiding, geen wegkm. Overige benen: letterlijke kopie Durban-aanloop 17,8 km, MARNET Durban-Ningbo, kopie Ningbo-aanloop en Ningbo-Tongxiang 192,2 km."
+ },
+ "kobalt-sotkamo-kokkola": {
+  "g": "kobalt",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Alle benen zijn letterlijk nikkel-sotkamo-kokkola: de kobaltlijn ligt 100 procent op de nikkellijn, zelfde 414 km.",
+   "Geen bron dat kobaltsulfaat van Terrafame per spoor naar Kokkola gaat; nikkelbrief heeft alleen Rauanheimo-havenlogistiek in het algemeen, spoorcorridor zelf aannemelijk.",
+   "Kokkola is al kobaltknoop (kobalt-kcc-kokkola), dus enige nieuwe informatie is een spoorlijn van mijn naar dezelfde kade, zonder afnemer erna.",
+   "7,4 kt kobaltsulfaat nameplate is productgewicht, werkelijke output onbekend; Eagle Mine-regel (sporen Co is geen twin) geldt hier bijna: kobalt is hier bijproduct en niet gemeten.",
+   "Ontwerp zelf noemt het een reserve die het nikkelbeeld dubbelt."
+  ],
+  "aanpassing": "Schrappen. Prioriteit 1 vervult de Finse as al. Alleen heroverwegen als een bron aantoont dat Terrafame-kobaltsulfaat naar Kokkola of een afnemer gaat; dan als twin met letterlijke kopie van de vier spoorbenen."
+ },
+ "lithium-manono-ningbo": {
+  "g": "lithium",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "OSM-wegnet RN33 heeft een gat van 0,36 km tussen -7.3380,28.0088 en -7.3352,28.0104 (alleen track/path): de wegtool geeft daar geen wegpad. Oplossing: twee profielen met een korte stippel ertussen.",
+   "Mutowa-coordinaat niet te vinden (Nominatim, Photon, Wikipedia, OSM-extract). Skillings, Model Diplomat en Mining Focus Africa noemen Kalemie; alleen SMM noemt Mutowa bij Kalemie. Stand-in: Kalemie-haven OSM -5.9462,29.2017 (z15: ligt op haveninfra).",
+   "Eigendom in het ontwerp (Zijin 61, Cominiere 39) klopt niet: twee bronnen geven Zijin 54,9 / Cominiere 35,1 / DRC-staat 10. Corrigeer in de brief.",
+   "Spoor of weg Kigoma-Dar is niet bevestigd: SMM zegt rail en/of road, Mining Focus Africa road and rail, Skillings laat het open. Gemeten spoor (1246,1 km via Tabora, Itigi, Dodoma, Kilosa, Morogoro) is het meterspoor; de SGR Tabora-Kigoma is nog in aanbouw.",
+   "maak_havenaanloop.py voor Kalemie-Kigoma gaf na 300 s time-out geen pad. Een rechte lijn ligt 34 procent buiten ne_10m_lakes Tanganyika, dus niet bruikbaar als stippel.",
+   "Chinese losplek is ongebronnd (SMM: not disclosed). Bron noemt Malindi Terminal in Dar (Zijin heeft sinds 2025 de concessie), niet in OSM. CT2 en Beilun container-kopie zijn stand-ins en moeten aannemelijk heten.",
+   "BINDEND weg, profielen in lon,lat: (1) plant (27.4703,-7.2770) via (27.867,-7.503) naar (28.0088,-7.3380) = 80,3 km; stippel truck 0,36 km OSM-gat naar (28.0104,-7.3352); (2) via (28.049,-6.426), (28.062,-5.987), (28.381,-5.966), (28.583,-5.805), (29.108,-5.775) naar (29.2017,-5.9462) = 352,9 km. Totaal 433,6 km tegen 440 gepubliceerd = -1,5 procent. Extract congo-drc, corridorKlassen tertiary, vensterKm 40-50.",
+   "BINDEND meerbeen: stippel binnenvaart als FeatureCollection door lat,lon (-5.9462,29.2017) (-5.8159,29.3206) (-5.7465,29.3568) (-4.9043,29.5932) (-4.8763,29.6236) = 129,9 km (kortste pad binnen ne_10m_lakes met 700 m marge), reden: meerveer, eigen verbinding zonder net.",
+   "BINDEND Dar: spoor-eindpunt (-6.8431,39.2412) = OSM-stationsnode Dar es Salaam (-6.8464,39.2450); truck via maak_stroombeen_weg extract tanzania, vensterKm 12, eindKlassen incl service = 7,5 km (niet ca 6) naar havenpoort (39.29378,-6.8405). Naden: meer-spoor 0,2 km, rail-truck 0,01 km, ok."
+  ],
+  "aanpassing": null
+ },
+ "lithium-goulamina-yangtze": {
+  "g": "lithium",
+  "prio": 2,
+  "haalbaar": null,
+  "problemen": null,
+  "aanpassing": null
+ },
+ "lithium-finniss-ningbo": {
+  "g": "lithium",
+  "prio": 3,
+  "haalbaar": null,
+  "problemen": null,
+  "aanpassing": null
+ },
+ "olie-allen-puertorosales": {
+  "g": "olie",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Fase B (monoboeien Punta Ancla/Ciguena): geen coordinaat in OSM of bron, geen offshore-pijp in OSM; niet tekenen.",
+   "Terminal Puerto Rosales is van Oiltanking Ebytem, niet Oldelval; benoem de marker zo.",
+   "Puesto Hernandez naar Allen niet in OSM (Duplicar Norte nog in aanbouw): keten begint bij Allen.",
+   "Bestemming na de terminal niet gebronnen: stop bij het tankenpark."
+  ],
+  "aanpassing": "Alleen fase A: OSM-way 1011117980 (L1, 512,8 km, 211 punten, FeatureCollection), geen via-punten. Anker begin -38.9349,-67.6717 (satelliet: Allen-station met tankgroep). Anker eind -38.9223,-62.0520 (satelliet: tankenpark Puerto Rosales). Fase B vervalt. L2 (way 1011117979) is 20 m ernaast en wordt niet getekend. km 512,8 tegen 525 gepubliceerd (-2%)."
+ },
+ "olie-haoudelhamra-skikda": {
+  "g": "olie",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Kopstippel van 30 km is onnodig: OSM-begin ligt op het Haoud el Hamra-tankenpark (satelliet).",
+   "OSM-way 379118067 heeft geen naam/ref; naast OK1 (34 inch, 1972) ligt NK1 (30 inch condensaat, 2009), beide 646 km; welke de way is, is niet te bewijzen. Corridor klopt in beide gevallen.",
+   "Staartgat: OSM eindigt op 36.2508,6.4205 (open akker, geen station), circa 84 km hemelsbreed van Skikda; 13 procent stippel.",
+   "Skikda-terminalcoordinaat niet in bron; aandeel Skikda in Saharan Blend en OK1-stroom onbewezen (ook Arzew, Bejaia)."
+  ],
+  "aanpassing": "Been 1: OSM-way 379118067 doorgetrokken, 555,8 km, begin 31.8836,5.9903 (bron-gelegd, tankenpark Haoud el Hamra), geen kopstippel. Been 2: stippel leiding OSM-gat (OK1 niet in OSM) van 36.2508,6.4205 naar 36.8625,6.9760 (Skikda-raffinaderij/tankenpark, aannemelijk: OSM-tanks in Sonatrach-zone, satelliet), circa 84 km. Totaal circa 640 km tegen 645-646. Noem OK1 in de naam met de noot dat de way ongetagd is. Eerste keten laten zakken als een reserve moet vervallen."
+ },
+ "olie-gdansk-schwedt": {
+  "g": "olie",
+  "prio": 3,
+  "haalbaar": true,
+  "problemen": [
+   "Naftoport-anker niet gelegd; Pomorski eindigt in PERN-basis Gdansk (54.3401,18.7464), circa 8 km van de terminal; geen OSM-way ertussen.",
+   "Eindpunt 53.0580,14.2271 ligt voor de raffinaderij; de Drushba1-way loopt nog 3,9 km door tot het PCK-tankenpark.",
+   "Ontwerp bevat een oostspur (way 1122657839, 13 km) die niet bij de route hoort; way-lijst mist verbindingsways 1122655733, 1433874905, 1433874904.",
+   "Jaarvolume niet gevonden; Gdansk is maar circa 15 procent van de Schwedt-aanvoer (Rostock circa 70)."
+  ],
+  "aanpassing": "Ways in volgorde: 1122681226 (omgekeerd), 1123298008, 1378110022, dan 578626377, 1122655730, 1122655732, 1122655733, 1433874907, 1433874903, 1433874905, 1433874904, 578626376, 279727288, 273290090, 1050745426. Km: Gdansk-Plock 238,6 plus Plock-PCK 441,1. Naden 0,19 km Plock, 0,36 km, 9 m, 46 m. Eind 53.0875,14.2544 (bron-gelegd, PCK-tankenpark). Voorstippel Naftoport-tankenpark (54.3925,18.6995, aannemelijk, satelliet) naar 54.3401,18.7464, circa 8 km. Geen via-punten."
+ },
+ "nikkel-thompson-sudbury": {
+  "g": "nikkel",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Vale noemt in de 20-F 2023 dat Thompson-concentraat per rail rechtstreeks naar Sudbury kan, en/of via Winnipeg of Trois-Rivieres naar Long Harbour (sinds 2021 vooral Long Harbour). Sudbury is dus gedocumenteerd maar niet de enige bestemming.",
+   "Het eerste been Thompson-plantpunt naar station is overbodig: de load-out ligt waarschijnlijk bij het emplacement (satelliet z14: emplacement 55.742,-97.825 en industrie 55.7285,-97.8185, binnen 2 km). Er is geen bron voor de exacte load-out.",
+   "Een vrije route Thompson naar Copper Cliff nam de omweg via Chapleau (CP-kant, 538 km vanaf Hornepayne) en kent een omkering van 173 graden in Winnipeg (49.861,-97.0323): een 1,5 km uitstulping op een dood spoor.",
+   "Geen gepubliceerde spoorkm: de 15-procenttoets is alleen een indicatie. Spoorlijn en vervoerder per stuk niet gebrond, behalve dat Via Rail Winnipeg-Churchill dezelfde corridor via Hudson Bay SK rijdt."
+  ],
+  "aanpassing": "Bak als 6 spoorruns, in deze volgorde: (1) Thompson-emplacement 55.7407,-97.8300 naar The Pas 53.8245,-101.2506 (370 km, 0 bochten); (2) The Pas naar Winnipeg-wye 49.8688,-97.0480 (792 km, via-punt Hudson Bay SK 52.85,-102.38 hoeft niet, route loopt er al); (3) wye naar Hornepayne 49.2167,-84.7833 (1.015 km); (4) Hornepayne naar Foleyet 48.2439,-82.4397 (237 km); (5) Foleyet naar Capreol 46.7058,-80.9214 (239 km); (6) Capreol naar Copper Cliff 46.4786,-81.0547 (37,5 km). Totaal circa 2.690 km, geen omkeringen. Anker Copper Cliff hergebruiken uit pgm-sudbury-actonuk. Geen eerste last-mile-been; startmarker naam: Thompson-emplacement (Vale-concentraat, load-out aannemelijk, niet gezien). Beennamen met CN-spoor aannemelijk, concentraat per rail volgens Vale 20-F."
+ },
+ "nikkel-iwip-yangjiang": {
+  "g": "nikkel",
+  "prio": 2,
+  "haalbaar": false,
+  "problemen": [
+   "Geen enkele bron legt de lading IWIP-NPI naar Guangqing of Yangjiang; drie zoekslagen vonden alleen eigenaarschap (Tsingshan 13,4 procent van Guangqing) en een betaalmuur-teaser. De eigen wedabay-brief stopt bewust op het RKEF-terrein omdat export naar een benoemde Chinese mill niet bronbaar is.",
+   "Guangqing heeft zelf 300 kt/j ferronikkel via twee RKEF-lijnen (GEM wiki) en haalt feedstock dus mogelijk uit erts of Morowali; het eindpunt kan evengoed Qingtuo zijn. Het doel is gok, geen aannemelijke bron.",
+   "Kade van Guangqing niet gelegd (GEM geeft alleen het plantpunt 21.6971,111.8488); die ligt 26,4 km van de dichtstbijzijnde MARNET-zeeknoop 5858 (21.693,112.1045). IWIP-jetty 0.4745,128.0055 ligt 132 km van zeeknoop 9033 (0.096,129.131): twee haven-aanlopen, waarvan een lange van 132 km.",
+   "In 2026 meldt Reuters via Mining.com en Mysteel dat Tsingshan NPI-productie bij IWIP inperkt en dat Eramet in mei de Weda Bay-mijn mogelijk stilzet (kwota); lading niet gedocumenteerd, status onzeker."
+  ],
+  "aanpassing": "Afwijzen. Geen aanpassing die het bewijs respecteert: een zeebeen van IWIP-jetty naar een niet-gebronde Chinese kade kan niet getekend worden zonder verzonnen eindpunt. Alleen als een bron IWIP-NPI of Tsingshan-RKEF-cargo aan een benoemde Chinese haven koppelt (bijvoorbeeld Fuqing of Ningde) is een zeebeen met twee haven-aanlopen te hernieuwen."
+ },
+ "nikkel-barroalto-vitoria": {
+  "g": "nikkel",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Haven Vitoria is nergens gebrond: ANM 2008 noemt alleen bestemming Duitsland 85 procent en Nederland 15 procent van Anglo-FeNi, geen haven; Anglo-persbericht 2011, Investnews 2025 en Wikipedia Barro Alto noemen geen haven, rail of modus. Vitoria komt uit het v1-ontwerp en is een gok; Santos of Sepetiba evengoed mogelijk.",
+   "Anapolis-spoorterminal (-16.33,-48.95) is een benaderd punt zonder bron voor truck of rail; de route van 1.762 km (verhouding 1,74 op 1.010 km hemelsbreed) is een OSM-uitkomst, geen bekend logistiek traject.",
+   "Het plantanker -15.11,-48.80 is een regiocentroide en ligt op satelliet (z13) op landbouwakkers met pivots; het smelter- en mijncomplex ligt circa 15 km westelijker rond -15.08,-48.96 (niet op z15 bevestigd). Een marker op dit punt is fout.",
+   "Eigendom wijzigt: verkoop aan MMG aangekondigd 18 februari 2025, afronding in dit onderzoek niet bevestigd; productie 39,4 kt Ni in 2024 voor Barro Alto en Codemin samen.",
+   "Truckbeen van circa 136 km hemelsbreed zonder echte wegkm; stuk Vitoria-kade is last mile."
+  ],
+  "aanpassing": "Afwijzen. Geen bron voor haven of modus, dus de keten kan niet op het net getekend worden zonder verzinsel. Hernieuwbaar alleen na een bron die de exporthaven van Barro Alto noemt (bijv. MMG- of Anglo-jaarverslag, havenstatistiek) en na satelliet-legging van de plant op circa -15.08,-48.96 op z15. Dan truck of rail naar die haven en hergebruik van het bestaande kade-anker."
+ },
+ "gas-aguadulce-tuxpan": {
+  "g": "gas",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Valley Crossing (Sempra, Agua Dulce naar offshore-start) staat niet in OSM: ca. 243 km hemelsbreed stippel, ca. 25% van de lijn; acceptabel, geen meerderheid",
+   "Startanker is een hub-label; sat z15 (27.7522,-97.8428) toont alleen akker met kleine pads, stationspunt 26.0565,-97.5143 toont akker zonder faciliteit: status onzeker",
+   "Tuxpan-eind (20.9868,-97.3808) op sat bos en akker, niets zichtbaar; alleen bron-gelegd via OSM-way",
+   "Afname door CFE niet aan een centrale gekoppeld; lengte 770 km (GEM) tegenover OSM 739,9 km is -3,9%, ruim binnen 15%"
+  ],
+  "aanpassing": "Leiding via --been-geojson als FeatureCollection van OSM-ways 921735480, 1279403582 en 1279403585 in die volgorde (naden 0 m, 739,9 km, begin 25.9683,-97.0115, eind 20.9868,-97.3808); Naranjos-arm 1279403584 weglaten. Ervoor stippel hub, station 26.0565,-97.5143, CS2 25.9902,-97.3584, offshore-start met reden: Valley Crossing niet in OSM. Hub en stations noemen aannemelijk of onzeker. Stoppunt Tuxpan."
+ },
+ "gas-portofmorgan-manhattan": {
+  "g": "gas",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Aanvoer Canada (Port of Morgan) is klein en krimpt: EIA importen 2022 261,5 bcf, 2025 161,1 bcf = 4,6 bcm (0,44 bcf/d), -38%; Northern Border neemt ook Bakken- en Williston-gas op, dus Canadees pijpgas is geen eerlijke titel",
+   "Twee OSM-gaten van 127,6 km (41.8525,-92.4312 naar 41.6163,-90.9266) en 47,4 km (41.4672,-89.1659 naar 41.4738,-88.5966): 175 km stippel ofwel 9% van 1.868 km",
+   "Start is een grenspunt (OSM-wayeinde), geen site; Foothills/Empress-aanvoer niet getekend; eind Manhattan IL aannemelijk, sat toont akkerrand zonder zichtbaar station",
+   "Lengte: OSM-keten 1.693 km plus 175 km gat = 1.868 km; gepubliceerd 1.249 mijl = 2.010 km (oudere trade-press, -7%); SEC geeft 1.412 mijl voor het hele systeem inclusief zijtakken, dus niet vergelijkbaar"
+  ],
+  "aanpassing": "Ketting van 25 OSM-ways (start 468644651, naden 0 tot 2,8 km, Iowa-naad 2,8 km blijft doorgetrokken) tot 41.8525,-92.4312; stippel Iowa-gat; way 1025655071 (152,5 km); stippel Illinois-gat; ways 1432429480 en 1432558933 tot Manhattan 41.4446,-87.9916. Beennaam en titel: Northern Border (Canadees en Bakken-gas), Canadese aanvoer beperkt tot 4,6 bcm in 2025 (EIA). Brief noemt 1.249 mijl als lengte en markeert de gaten als OSM-gat."
+ },
+ "gas-asaluyeh-ankara": {
+  "g": "gas",
+  "prio": 3,
+  "haalbaar": true,
+  "problemen": [
+   "Ontwerpclaim 3 naden tot 4 km klopt niet: zelf gemeten (Dijkstra over alle gas-ways, substance gas of leeg) zijn er zes gaten boven 5 km: 19,6, 19,6, 17,0, 9,5, 5,5 en 17,0 km, plus kleinere (0,3 tot 4,5 km); totaal ca. 120 km, ruim 4% van de lijn; Iraanse trunk bij Qom-Tehran-Karaj en vlak na Asaluyeh niet doorlopend gekarteerd",
+   "Turkse kant is wél naadloos: 53 BOTAS-ways, 1.104,5 km, naden 0 m (ontwerp zei naden tot 6 km, te pessimistisch)",
+   "Actualiteit: contract verliep 2026-07-29 zonder bekende verlenging; flows onder force majeure; Israëlische aanval op South Pars maart 2026 onderbrak export, hersteld eind maart; H1 2026 invoer 4,5 bcm (+34%); VS-secundaire sanctiedruk sinds 24 augustus 2026",
+   "Lengte: OSM ca. 1.848 km (Asaluyeh tot Bazargan) plus 1.104 km = ca. 2.950 km tegen Wikipedia 2.577 km voor Tabriz-Ankara (+14%, bron dubbelzinnig over beginpunt): alleen indicatie; Ankara-eind 39.6009,32.8141 ligt 37 km zuidelijk van het centrum",
+   "Start 27.5067,52.6283 geen satelliet-gelegd; OSM-eindnode 6 km van het dichtstbijzijnde way-uiteinde"
+  ],
+  "aanpassing": "Bakken als doorgetrokken ways met stippel waar gat boven 5 km: Asaluyeh naar way 1136285279 (ca. 20 km voor en na), Qom (34.4269,50.5785) naar Tehran-way (ca. 17 plus 9,5 km), Karaj naar Qazvin (ca. 5,5 plus 17 km), ways 541577765, 1135475305, 1227180752, 666545858, 750630175 en 393821112 (Qazvin tot Bazargan 39.3924,44.4211), daarna 53 BOTAS-ways. Kleine naden (kleiner dan 5 km) doorgetrokken laten. Beennaam: aannemelijk, contract verlopen 2026-07-29, leveringen gaan door. Brief noemt 2.577 km als indicatie, geen toets."
+ },
+ "pgm-modikwa-rustenburg": {
+  "g": "pgm",
+  "prio": 1,
+  "haalbaar": true,
+  "problemen": [
+   "Modikwa-concentrator heeft geen bron-coordinaat en geen OSM-landuse. Ontwerp-kandidaat -24.6526,30.1744 is een onverharde weg 0,9 km van de plant. Plant gezien op z15 bij -24.6565,30.1675 (aannemelijk: bron zegt 15 km N van Steelpoort, dit is ~9 km).",
+   "b2 (361 km) is voor 100% dezelfde N1/N4-lijn als pgm-zimplats-rustenburg b2 vanaf Polokwane (359,9 km) en voor ~64% als pgm-mogalakwena-londen b1. Een eigen profiel zou een tweede versie van dezelfde corridor zijn (unki-brief verbiedt dat).",
+   "Modaliteit van de matte Polokwane naar Rustenburg staat niet in de bron (SAIMM 2024: transported to ACP). Truck is aanname: zet aannemelijk in de beennaam.",
+   "Geen gepubliceerde wegkm: hemelsbreed 99 km (anker tot anker), OSRM 128,8 km waarvan R37 119,8 km. Toets is indicatie. Laatste ~5 km (D1296) is klein wegtype: eindKlassen of corridorKlassen kan nodig zijn.",
+   "Ontwerp-smelteranker -24.0338,29.4652 ligt ~0,8 km van het OSM-landuse-midden; gebruik -24.0281,29.4694 (OSM way 804571574, z15: oven, schoorstenen, slakdam, bron-gelegd)."
+  ],
+  "aanpassing": "BINDEND: b1 Modikwa-plant (-24.6565,30.1675) naar smelter (-24.0281,29.4694), 3-4 via-punten alleen op de R37, niet in Lebowakgomo of Polokwane-centrum. b2a smelter naar R37/N1-aansluiting (-23.9434,29.4443), ~12 km. b2b = letterlijke kopie van de zimplats-b2-geojson vanaf vertex 2050 tot het einde (359,9 km), kopie in de beennaam. Titel: Modikwa via Polokwane-smelter naar ACP Rustenburg."
+ },
+ "pgm-mototolo-rustenburg": {
+  "g": "pgm",
+  "prio": 2,
+  "haalbaar": true,
+  "problemen": [
+   "Reserve: b2 en de laatste ~23 km R37 zijn identiek aan P1, ~75% van de lijn is gedeeld. Alleen zinvol als P1 gebakken is.",
+   "b1 loopt via kleine D-wegen (D1335, D212, D2219, D4268, ~60 km) en R579 (70,6 km) naar de R37: kans op snap- of klassenproblemen. Geen wegkm-bron: hemelsbreed 127 km, OSRM 159,1 km, toets is indicatie.",
+   "Der Brochen is nog een decline in ontwikkeling, maar de Mototolo-concentrator draait (271 koz PGM in 2025). Reden van de eerdere afwijzing pgm-derbrochen-rustenburg is in de repo niet terug te vinden; deze variant eindigt wel via Polokwane."
+  ],
+  "aanpassing": "BINDEND: alleen bakken nadat P1 gebakken is. Anker Mototolo-concentrator -25.0104,30.1137 (OSM landuse Mototolo Mine Concentration Plant, z15 gezien: plant en slikdam, bron-gelegd). b1 naar de smelter (-24.0281,29.4694) via R579 en R37; 3-4 via-punten op R579/R37 uit de OSRM-geometrie halen, geen coordinaten verzinnen. b2a en b2b letterlijke kopie van P1, nul eigen bake."
+ },
+ "pgm-springs-hoboken": {
+  "g": "pgm",
+  "prio": 3,
+  "haalbaar": false,
+  "problemen": [
+   "Geen bron voor een levering Implats naar Umicore: WebSearch vond geen contract, Implats IAR 2026 noemt geen klanten, Umicore-sites geven 403. Het register-getal (26 t) is een natte vinger.",
+   "Umicore Precious Metals Refining Hoboken is een recycling- en raffinagesite (voeding: secundaire materialen en concentraat) en geen afnemer van geraffineerd Pt/Pd van de Impala-raffinaderij: raffinaderij naar raffinaderij is inhoudelijk onwaarschijnlijk.",
+   "Vlucht JNB naar BRU, Brucargo en eventuele tussenstop zijn aannames en Hoboken is niet satelliet-gelegd; bak ik dit, dan is de enige eigen inhoud een grootcirkel en een 39 km wegbeen op aannames."
+  ],
+  "aanpassing": "Afwijzen, geen reparatie binnen de beschikbare bronnen. Alleen herstelbaar als een bron een Implats- of Valterra-levering aan een Umicore-katalysatorfabriek noemt (niet Hoboken); dan als nieuwe keten ontwerpen."
+ }
+}

@@ -2528,6 +2528,214 @@
    "label": "Arezzo → Valcambi",
    "aan": true,
    "noot": "M31 · golf 10 (2026-10-28): goudstaven van Italpreziosi (Arezzo) per truck over A1, A50 en A9 naar Valcambi in Balerna (aannemelijk: één bron voor Zwitserland). Let op: aannemelijk, één bron voor de bestemming Valcambi; 428 wegkm is een OSRM-indicatie."
+  },
+  {
+   "sleutel": "gr-sb",
+   "bestand": "stroomroute-grafiet-siviour-portadelaide.json",
+   "grondstof": "grafiet",
+   "label": "Siviour → Port Adelaide",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Grafietconcentraat van de geplande Siviour-mijn per truck via Whyalla naar de PSG-site Bolivar en Outer Harbor (Port Adelaide), stoppunt zonder zeebeen. Let op: Siviour is een geplande mijn (Renascor, PSG-site Bolivar); stoppunt Outer Harbor zonder zeebeen; wegroute om de Spencer Gulf (ratio 2,4) volgt de bedrijfsopgave van ca 500 km."
+  },
+  {
+   "sleutel": "gr-ka",
+   "bestand": "stroomroute-grafiet-kilbourne-anniston.json",
+   "grondstof": "grafiet",
+   "label": "Kilbourne → Anniston",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): grafietconcentraat van het Titan-Kilbourne-project (ESM-complex, Balmat NY) per truck over I-81, I-40/I-75, I-59 en US-431 naar het Anniston Army Depot, aannemelijk (term sheet niet definitief), geen zee. Let op: aannemelijk — term sheet Anniston Army Depot niet definitief, Kilbourne nog in ontwikkeling; één truckbeen van 1.837 km (577 KB, geen gepubliceerde wegkm)."
+  },
+  {
+   "sleutel": "ni-rc",
+   "bestand": "stroomroute-nikkel-ramu-caofeidian.json",
+   "grondstof": "nikkel",
+   "label": "Ramu → Caofeidian",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Ramu-slurryleiding naar Basamuk, MHP per zeeschip naar de MCC Ruimu-fabriek in Caofeidian (aannemelijk: één bron). Let op: aandeel MHP naar Caofeidian alleen uit WoodMac; de Ramu-slurryleiding is een rechte stippel (OSM heeft hem niet); zeeknoop 47 km voorbij de kade (bewuste hoek)."
+  },
+  {
+   "sleutel": "ni-it",
+   "bestand": "stroomroute-nikkel-iwip-tongxiang.json",
+   "grondstof": "nikkel",
+   "label": "Halmahera (IWIP) → Tongxiang",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): MHP van de Huafei-HPAL op IWIP per schip naar Ningbo en per truck naar Huayou Tongxiang; aannemelijk, alleen eigendom, volledige kopie van kobalt-wedabay-tongxiang. Let op: bewust dubbel met kobalt-wedabay-tongxiang (zelfde MHP-route, andere grondstof); Tongxiang alleen via eigendom gebrond, startanker niet aantoonbaar op de HPAL."
+  },
+  {
+   "sleutel": "ree-mp",
+   "bestand": "stroomroute-ree-mountainpass-yokohama.json",
+   "grondstof": "ree",
+   "label": "Mountain Pass → Yokohama",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): NdPr-oxide van Mountain Pass per truck naar Long Beach en per containerschip naar Japan, Yokohama is een aanname (10-K noemt Japan, geen haven). Let op: Yokohama is een aanname (de 10-K noemt Japan zonder haven); wegkm niet gepubliceerd; terugloop van 0,6 km op het wegbeen."
+  },
+  {
+   "sleutel": "ree-gf",
+   "bestand": "stroomroute-ree-ganzhou-fremont.json",
+   "grondstof": "ree",
+   "label": "Ganzhou → Fremont",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): NdFeB-magneten van JL MAG Ganzhou per truck naar Yantian, per containerschip naar Long Beach en per truck via I-5 en I-580 naar Tesla Fremont (aannemelijk: haven uit handelsdata). Let op: haven Long Beach uit handelsdata (aannemelijk); eindpunt Tesla Fremont; wegkm niet gepubliceerd; terugloop in het gedeelde Ganzhou-been (kopie)."
+  },
+  {
+   "sleutel": "pgm-mru",
+   "bestand": "stroomroute-pgm-mogalakwena-rustenburg.json",
+   "grondstof": "pgm",
+   "label": "Mogalakwena → Rustenburg",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Mogalakwena-concentraat per truck over N11/N1 naar de Polokwane-smelter, matte per truck (aannemelijk) naar ACP Rustenburg. Let op: matte Polokwane → ACP Rustenburg aannemelijk; wegbeen 1 ratio 1,75 (N11/N1 via Mokopane, door het centrum), geen gepubliceerde wegkm."
+  },
+  {
+   "sleutel": "pgm-kr",
+   "bestand": "stroomroute-pgm-kevitsa-ronnskar.json",
+   "grondstof": "pgm",
+   "label": "Kevitsa → Rönnskär",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Cu-/Ni-concentraat met Pt/Pd-bijproduct van Boliden Kevitsa per truck naar Ajos (Kemi) en per zeeschip naar de Rönnskär-smelter (aannemelijk). Let op: zeebeen Ajos → Rönnskär aannemelijk; naad 1,37 km en de Rönnskär-kademarker 1,51 km van de lijn (zee-snap, onder de 5 km-grens); 8 knikken geërfd uit het gekopieerde wegbeen."
+  },
+  {
+   "sleutel": "li-sg",
+   "bestand": "stroomroute-lithium-saldeoro-guemes.json",
+   "grondstof": "lithium",
+   "label": "Sal de Oro → Güemes",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): POSCO Sal de Oro (Hombre Muerto) naar de POSCO-hydroxidefabriek in Güemes, één truckbeen via RN51 en Salta, 422 km OSM. Let op: plantanker POSCO Sal de Oro onzeker, transport per truck is een aanname; wegbeen ratio 2,1 door de Puna/Quebrada del Toro; geen gepubliceerde wegkm."
+  },
+  {
+   "sleutel": "li-ml",
+   "bestand": "stroomroute-lithium-mtcattlin-lianyungang.json",
+   "grondstof": "lithium",
+   "label": "Mt Cattlin → Lianyungang",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): spodumeenconcentraat van Mt Cattlin per road train over de South Coast Highway naar Esperance Berth 3, dan per bulkschip naar Lianyungang (eerste lading jan 2017, aannemelijk: één bron). Let op: Lianyungang-kade niet gevonden, lijn eindigt op zeeknoop 5820; Berth 3 Esperance niet voor Cattlin gebrond; stippel Esperance-aanloop 70,6 km kan de Recherche-eilanden snijden."
+  },
+  {
+   "sleutel": "ag-km",
+   "bestand": "stroomroute-zilver-kidd-montrealest.json",
+   "grondstof": "zilver",
+   "label": "Kidd Creek → Montréal-Est",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): zilverhoudend kopererts per spoor van Kidd Creek via Kidd Met en de Horne-smelter naar CCR Montréal-Est, stoppunt zilveringot. Let op: spoorkm van benen 2 en 3 zijn routerlengtes; één terugloop van 179° vlak voor de CCR-raffinaderij (OSM-net)."
+  },
+  {
+   "sleutel": "ag-mh",
+   "bestand": "stroomroute-zilver-matsa-huelva.json",
+   "grondstof": "zilver",
+   "label": "MATSA → Huelva",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): MATSA-concentraat (bijproduct-zilver) per truck naar de Impala-terminal in Huelva, aannemelijk door naar de Atlantic Copper-smelter. Let op: been 2 (concentraatterminal Huelva) aannemelijk op één bron; terminal niet 1-op-1 bevestigd."
+  },
+  {
+   "sleutel": "kolen-bb",
+   "bestand": "stroomroute-kolen-bailey-baltimore.json",
+   "grondstof": "kolen",
+   "label": "Bailey → Baltimore",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): thermische kolen van de PAMC-wasserij per CSX/B&O-spoor via Connellsville en Cumberland naar de CONSOL Marine Terminal in Baltimore. Let op: één terugloop bij Charleroi in het spoorbeen (OSM-routeruitkomst), niet hersteld."
+  },
+  {
+   "sleutel": "kolen-sc",
+   "bestand": "stroomroute-kolen-semirara-calaca.json",
+   "grondstof": "kolen",
+   "label": "Semirara → Calaca",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Semirara-steenkool per OSM-kolenband naar Semirara Port en per zeeschip naar de kolenpier van Sem-Calaca (aannemelijk: één bron). Let op: 21% stippel — de eilandaanloop Semirara (60,6 km) is schematisch omdat MARNET en Natural Earth het eiland niet kennen; bandkm niet gepubliceerd; levering aan Sem-Calaca via eigendom + persbericht 2024."
+  },
+  {
+   "sleutel": "u-nr",
+   "bestand": "stroomroute-uranium-novosibirsk-rooppur.json",
+   "grondstof": "uranium",
+   "label": "Novosibirsk → Rooppur",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): VVER-1200-splijtstof van TVEL NZHK per truck naar Tolmachevo, per vrachtvlucht naar Dhaka en per legerconvooi naar de kerncentrale Rooppur. Let op: vertrek via Tolmachevo (OVB) en de Delhi-tussenstop onbevestigd (stop niet getekend); volume eigen schatting."
+  },
+  {
+   "sleutel": "u-pw",
+   "bestand": "stroomroute-uranium-pinyonplain-whitemesa.json",
+   "grondstof": "uranium",
+   "label": "Pinyon Plain → White Mesa Mill",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): uraniumerts per truck van Pinyon Plain Mine (Arizona) via SR-64, I-40, US-89, US-160 en US-191 naar White Mesa Mill, Blanding (Utah); stoppunt. Omweg rond de Grand Canyon via Flagstaff/US-89 (ratio 1,8) bevestigd door de 10-K-wegkm (515 km, +2,7%)."
+  },
+  {
+   "sleutel": "gas-kn",
+   "bestand": "stroomroute-gas-kyaukphyu-namhkam.json",
+   "grondstof": "gas",
+   "label": "Kyaukphyu → Namhkam",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Shwe-gas van Maday/Kyaukphyu per Myanmar-China-gasleiding (OSM, 741 km) naar Namhkam, de Malakka-omzeiling. Let op: alleen het Myanmar-deel getekend (offshore Shwe-aanvoer en de 25 km in China niet); 228 km van de leiding zonder substance-tag; doorzet vaag."
+  },
+  {
+   "sleutel": "gas-ng",
+   "bestand": "stroomroute-gas-nybro-goleniow.json",
+   "grondstof": "gas",
+   "label": "Nybro → Goleniów",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Noors Noordzeegas via het Deense net en de Baltic Pipe onder de Oostzee naar compressorstation Goleniów (Gaz-System), drie doorgetrokken OSM-leidingbenen, 635,7 km. Let op: been 1 bevat bestaand Deens net, lijnkeuze been 3 (Baltic Pipe landdeel PL) onzeker; Noordzee-aanvoer en doorzet niet getekend."
+  },
+  {
+   "sleutel": "olie-sn",
+   "bestand": "stroomroute-olie-stanley-nederland.json",
+   "grondstof": "olie",
+   "label": "Stanley → Nederland",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Bakken-olie per leiding, Dakota Access Pipeline tot Patoka en Energy Transfer Crude Oil Pipeline tot de terminal Nederland bij Port Arthur (3.079 km, 0 stippel). Let op: Nederland = Nederland, Texas (Energy Transfer-terminal); het Bakken-aandeel dat deze terminal haalt is niet gepubliceerd."
+  },
+  {
+   "sleutel": "olie-jj",
+   "bestand": "stroomroute-olie-jose-jamnagar.json",
+   "grondstof": "olie",
+   "label": "Jose → Jamnagar",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Venezolaanse Orinoco-crude laadt bij de Jose-SPM op een VLCC, vaart om de Kaap naar Sikka en gaat via de eigen pijp (stippel) naar Jamnagar. Let op: Kaap-route is een aanname; twee scherpe MARNET-bochten; Sikka-terminal als losplek, Jamnagar-complex 17 km verder."
+  },
+  {
+   "sleutel": "dia-msm",
+   "bestand": "stroomroute-diamant-mirny-smolensk.json",
+   "grondstof": "diamant",
+   "label": "Mirny → Smolensk",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Alrosa-ruw per truck naar MJZ, vrachtvlucht naar SVO-Cargo en per truck via MKAD en M-1 naar Kristall in Smolensk; SVO-overslag en truck aannemelijk (een bron). Let op: SVO-overslag en truck Mirny-luchthaven aannemelijk (één bron); Kristall Smolensk ontbreekt in de sitelaag; wegkm indicatie +13,8%."
+  },
+  {
+   "sleutel": "dia-dr",
+   "bestand": "stroomroute-diamant-dubai-ramatgan.json",
+   "grondstof": "diamant",
+   "label": "Dubai (DMCC) → Ramat Gan",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Dubai-rough per truck naar DXB, aannemelijke vrachtvlucht naar Ben Gurion en stippel naar de Israel Diamond Exchange. Let op: vlucht DXB → TLV aannemelijk; wegbenen alleen hemelsbreed geschat; 6 knikken in de gedeelde DMCC-kopie."
+  },
+  {
+   "sleutel": "au-pz",
+   "bestand": "stroomroute-goud-paracatu-zurich.json",
+   "grondstof": "goud",
+   "label": "Paracatu → Zürich",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): doré van de Paracatu-mijn per truck naar de GRU-vrachtterminal en per vrachtvlucht (aannemelijk) naar het ZRH-vrachtplatform. Let op: ZRH als aankomst en de Zwitserse afnemer niet gebrond; keerlus Uberaba in het wegbeen; sitelaag w-paracatu gelijkgetrokken (4,3 km)."
+  },
+  {
+   "sleutel": "au-dv",
+   "bestand": "stroomroute-goud-dubai-valcambi.json",
+   "grondstof": "goud",
+   "label": "Dubai (DMCC) → Valcambi",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): herexport-goud uit de DMCC-zone per truck naar DXB-vracht, per vrachtvlucht (grootcirkel, aannemelijk) naar Malpensa en per truck over A8/A9 en Chiasso naar Valcambi in Balerna. Let op: MXP als aankomst is een aanname; been 3 MXP → Valcambi is de omgekeerde kopie via Como/Chiasso (ratio 2,1, geen wegkm)."
+  },
+  {
+   "sleutel": "cu-co",
+   "bestand": "stroomroute-koper-centinela-onsan.json",
+   "grondstof": "koper",
+   "label": "Centinela → Onsan",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): Cu-concentraat uit Centinela per slurryleiding (stippel) naar de Michilla-pier en per bulkschip over de Stille Oceaan naar de Onsan-haven, afnemer LS MnM aannemelijk: één bron. Let op: concentraatleiding Centinela → Michilla en de Michilla-aanloop (158 km) zijn stippel; afnemer LS MnM op één bron; sitelaag w-onsan ligt bij Korea Zinc."
+  },
+  {
+   "sleutel": "cu-mw",
+   "bestand": "stroomroute-koper-motheo-walvisbay.json",
+   "grondstof": "koper",
+   "label": "Motheo → Walvis Bay",
+   "aan": true,
+   "noot": "M31 · golf 11 (2026-10-29): koperconcentraat van de Sandfire Motheo-mijn (Botswana) per truck over de Trans-Kalahari (A3/A2, Mamuno/Buitepos, B6, B1, B2) naar de Walvis Bay-kade. Let op: wegkm niet gebrond (1.014 km gemeten, factor 1,23 op hemelsbreed); Walvis Bay-kade hergebruikt."
   }
  ],
  "uitgesloten": [

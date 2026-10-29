@@ -1,0 +1,715 @@
+{
+ "bron": "golf 11 ontwerpronde wf_1a1d5501-62a (2026-10-29)",
+ "reserves": [
+  {
+   "id": "nikkel-thompson-longharbour",
+   "g": "nikkel",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: Manitoba naar Newfoundland via Trois-Rivieres, Vale-concentraat naar Long Harbour",
+    "keten_id": "nikkel-thompson-longharbour",
+    "van_site": "Thompson-concentrator (Vale, Manitoba), anker 55.7407,-97.8300",
+    "naar_site": "Long Harbour-raffinaderij (Vale, Newfoundland)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Thompson-emplacement",
+      "naar": "Winnipeg",
+      "corridor": "Hudson Bay Railway The Pas, kopie eerste stuk nikkel-thompson-sudbury",
+      "km_indicatie": "niet gepubliceerd, uit kopie",
+      "geometrie_tool": "toets_spoorroute (kopie)"
+     },
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Winnipeg",
+      "naar": "Trois-Rivieres haven",
+      "corridor": "CN-hoofdlijn via Capreol en Montreal, 20-F noemt Trois-Rivieres als directe bestemming",
+      "km_indicatie": "onbekend, te meten",
+      "geometrie_tool": "toets_spoorroute, meerdere runs"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Trois-Rivieres kade",
+      "naar": "Long Harbour-kade",
+      "corridor": "Saint-Laurent, Cabotstraat, Placentia Bay, deels kopie nikkel-voiseysbay-longharbour",
+      "km_indicatie": "indicatief 2.000",
+      "geometrie_tool": "MARNET"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ni-thompson-emplacement 55.7407,-97.8300",
+     "Long Harbour-kade uit nikkel-voiseysbay-longharbour"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "canada",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "7,9 kt Ni per jaar Thompson-erts (2023), aandeel Long Harbour niet gepubliceerd (Vale 20-F FY2023)",
+    "risico": "Vale noemt Long Harbour alleen als alternatief, zonder verdeling; Trois-Rivieres-kade niet gelegd; zwakste nieuwswaarde (Canada al 5 ketens).",
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/917851/000129281424001463/valeform20f_2023.htm",
+     "https://www.sec.gov/Archives/edgar/data/917851/000129281423001516/valeform20f_2022.htm"
+    ]
+   },
+   "toets": {
+    "keten_id": "nikkel-thompson-longharbour",
+    "haalbaar": true,
+    "problemen": [
+     "Route naar zeeknoop 762 geeft een ruim 460 km lange dubbele lus: zeelijn (1.806 km) passeert Long Harbour op 112 km, rondt Kaap Race en de gekopieerde aanloop van 305 km loopt dezelfde kust terug",
+     "Trois-Rivieres-kade niet gelegd: Wikipedia-coordinaat 46.3405,-72.5394 ligt aan de stadskade (cruiseschip), de bulkkades liggen zuidwestelijk; kade 22,7 km van zeeknoop 6352 (aanloopstippel)",
+     "Land is ongeveer 85% kopie van nikkel-thompson-sudbury; Capreol naar MacMillan (481 km) geeft een omkering bij 43.667,-79.465; Taschereau naar Trois-Rivieres (208,8 km) een omkering bij 46.5595,-72.7307"
+    ],
+    "aanpassing": "Zee eindigt op zeeknoop 703 (46.1,-54.0): 1.578,5 km gemeten, niet 762. Aanloop 703 naar kade 47.423,-53.823 als stippel via twee waterpunten (46.9,-54.7) en (47.3,-54.2), ca. 194 km, landtoets schoon. Land: kopie thompson-sudbury b1-b5; Capreol-MacMillan eigen run, omkering verklaren of via kopie Sudbury-MacMillan; MacMillan-Taschereau kopie; eigen run naar Trois-Rivieres.",
+    "overlap": "Id nieuw; eindpunt Long Harbour klopt. Land grotendeels kopie van thompson-sudbury en sudbury-kristiansand, maar bestemming en zeebeen zijn nieuw: toegestaan als letterlijke kopie.",
+    "webcheck": "Vale 20-F FY2023 (sec.gov): Thompson-concentraat per spoor naar Winnipeg, Sudbury of Trois-Rivieres, daar opgeslagen en per schip naar Long Harbour; sinds H2 2021 verwerkt Long Harbour Thompson-feed, afhankelijk van vraag, aandeel niet gepubliceerd. Kade Long Harbour -53.823,47.423 uit voiseysbay hergebruiken."
+   }
+  },
+  {
+   "id": "zilver-caylloma-callao",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 3,
+    "as": "Zuid-Peru: Caylloma, loodzilverconcentraat over de Panamericana naar Callao (reserve)",
+    "keten_id": "zilver-caylloma-callao",
+    "van_site": "Caylloma-mijn (Fortuna Mining, Arequipa, 14 km NW van het dorp Caylloma)",
+    "naar_site": "Callao, concentraatopslag van de afnemer (Glencore/AYSSA), Transportadora Callao",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Caylloma-mijn",
+      "naar": "Callao-mineraalterminal",
+      "corridor": "Caylloma, Arequipa (225 weg-km), Panamericana Sur via Camana, Nazca, Ica naar Lima en Callao",
+      "geometrie_tool": "maak_stroombeen_weg (peru, nieuw profiel, 5 tot 8 via-punten op de Panamericana)",
+      "km_indicatie": "225 km mijn-Arequipa gepubliceerd, totaal ca. 1.000 km, niet gepubliceerd"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ag-callao-tcsa Transportadora Callao -12.0499, -77.1446 (uit zilver-uchucchacua-callao)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "peru",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "niet van toepassing",
+    "jaarvolume_en_bron": "Caylloma 911 koz Ag in 2018 = ca. 28 t Ag/j (Fortuna technical report 2019, sec.gov); recenter cijfer niet gecontroleerd",
+    "risico": "Klein volume, bron uit 2019 (zink naar Matarani, loodzilver naar Callao); huidige logistiek niet bevestigd en Callao is al het stoppunt van zilver-uchucchacua-callao.",
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/1341335/000127956919000739/tv517002_ex99-1.htm"
+    ]
+   },
+   "toets": null
+  },
+  {
+   "id": "zilver-dexing-guixi",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 4,
+    "as": "China: Dexing-koper met zilver naar de Guixi-smelter (reserve)",
+    "keten_id": "zilver-dexing-guixi",
+    "van_site": "Dexing-kopermijn (Jiangxi Copper), Jiangxi",
+    "naar_site": "Jiangxi Copper Guixi-smelter",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Dexing-mijn en concentrator",
+      "naar": "Guixi-smelter",
+      "corridor": "niet gepubliceerd; aannemelijk lokaal spoor of weg Dexing naar Guixi",
+      "geometrie_tool": "toets_spoorroute (china); terugval maak_stroombeen_weg (china)",
+      "km_indicatie": "hemelsbreed 91 km, geen gepubliceerde km"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ag-guixi-smelter 28.3271, 117.226 (uit zilver-escondida-guixi)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "china",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "niet van toepassing",
+    "jaarvolume_en_bron": "Jiangxi Copper groep 1.383 t Ag in 2025 (uit brief zilver-escondida-guixi); aandeel Dexing en mijn-zilver niet gepubliceerd",
+    "risico": "Vervoer van concentraat Dexing naar Guixi is in geen bron gevonden (Wikipedia zh/en zwijgen). Alleen ontwerpen als een Jiangxi Copper-document de modaliteit noemt; kort been en zilveraandeel onbekend.",
+    "bronnen_start": [
+     "https://zh.wikipedia.org/wiki/德兴铜矿",
+     "https://zh.wikipedia.org/wiki/江西铜业"
+    ]
+   },
+   "toets": null
+  },
+  {
+   "id": "kolen-carmichael-abbotpoint",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 3,
+    "as": "Galilee-bekken: eerste nieuwe grootmijn van Adani naar Abbot Point (reserve)",
+    "keten_id": "kolen-carmichael-abbotpoint",
+    "van_site": "Carmichael-mijn (Bravus/Adani), Galilee-bekken, Queensland",
+    "naar_site": "Abbot Point Coal Terminal (NQXT), bij Bowen, Queensland",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Carmichael-laadlus",
+      "naar": "Abbot Point kolenterminal",
+      "corridor": "Carmichael Rail Network (~200 km, 2021) en daarna het Aurizon-net via de GAP-lijn naar Abbot Point; aansluitpunt nog te verifieren",
+      "km_indicatie": "hemelsbreed ~300 km, geen spoorkm; Carmichael Rail Network ~200 km (Wikipedia)",
+      "geometrie_tool": "toets_spoorroute (BAKE_SUFFIX=-raw), 2-3 via-punten"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "jaarvolume_en_bron": "gepland 10 Mt/j (Wikipedia, gedownsized); eerste lading 29-12-2021; werkelijke productie niet geverifieerd. Eenheid Mt kolen per jaar.",
+    "ankers_hergebruik": [
+     "geen; mijn Wikipedia -22.0500,146.3833; terminal OSM -19.8999,148.0774"
+    ],
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Carmichael_coal_mine",
+     "https://en.wikipedia.org/wiki/Goonyella_railway_line"
+    ],
+    "risico": "Geen bron noemt afnemer of bestemming (India alleen als vermoeden), dus de keten stopt bij de kade. Het exacte Carmichael-aansluitpunt op het Aurizon-net en de mijnlaadlus zijn niet gevonden."
+   },
+   "toets": {
+    "keten_id": "kolen-carmichael-abbotpoint",
+    "haalbaar": true,
+    "problemen": [
+     "Het mijnbeen zit niet in het geroute net: de router valt zonder aanpassing 142 km terug (de 200 km lange Carmichael Rail is een los component). Met --hoofd-km=100 routeert het wel: laadlus tot aansluiting 172,1 km, aansluiting tot Abbot Point 181,4 km.",
+     "Er is geen zeebeen: de zeeknoop bij Abbot Point ligt 146 km weg en geen bron noemt een bestemming; de keten eindigt bij de kade.",
+     "Anker Wikipedia -22.0500,146.3833 ligt in de dagbouw; het laadplek-anker is de CHPP-lus."
+    ],
+    "aanpassing": "Twee spoorruns met BAKE_SUFFIX=-raw en --hoofd-km=100: van -22.0120,146.4060 (begin Carmichael Rail in OSM, z14: wasserij en kolenopslag 0,7 km zuidwest) naar -21.2660,147.8090 (einde OSM-lijn) en van daar naar Abbot Point -19.8999,148.0774 (z15: kolenopslag NQXT, pier loopt noordwaarts; snap 1,44 km). Naad 2,2 km tussen de runs is toegestaan. Last mile Abbot Point kort stippelen (1,4 km). Geen afnemer tekenen.",
+    "overlap": "geen: Goonyella-brief sluit juist de GAP-lijn uit",
+    "webcheck": "Zoekresultaten: Carmichael Rail 200 km naar Newlands-systeem en North Queensland Export Terminal bij Abbot Point, Bowen Rail Company; productie circa 10 tot 12 Mtpa; eerste 10 Mt per spoor geexporteerd (Bravus/Wikipedia)."
+   }
+  },
+  {
+   "id": "kolen-cerrejon-iskenderun",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 4,
+    "as": "Colombiaanse kolen naar Turkije: Cerrejon naar de drijvende overslag bij Iskenderun (reserve)",
+    "keten_id": "kolen-cerrejon-iskenderun",
+    "van_site": "Cerrejon-laadlus (Glencore), La Guajira, Colombia",
+    "naar_site": "Isken Sugozu-centrale met drijvend overslagstation, Golf van Iskenderun, Turkije",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Cerrejon-laadlus",
+      "naar": "Puerto Bolivar",
+      "corridor": "Via Ferroviaria Albania - Puerto Bolivar (letterlijke kopie van kolen-cerrejon-ruhr b1)",
+      "km_indicatie": "150,6 km (bestaande bake)",
+      "geometrie_tool": "kopie spoorroute-kolen-cerrejon-ruhr-b1.geojson"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Puerto Bolivar (aanloop 42,1 km kopie)",
+      "naar": "Golf van Iskenderun, overslagstation",
+      "corridor": "Atlantische Oceaan, Straat van Gibraltar, Middellandse Zee (andere zeestraat dan de Rotterdam-keten)",
+      "km_indicatie": "~10.500 km (schatting, niet gepubliceerd)",
+      "geometrie_tool": "MARNET; aanloop-geojson kolen-cerrejon-ruhr-aanloop-bolivar hergebruiken"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "drijvend overslagstation",
+      "naar": "stockpile Isken Sugozu",
+      "corridor": "band naar 800.000 t stockpile (GEM)",
+      "km_indicatie": "< 5 km",
+      "geometrie_tool": "stippel (last mile, geen net op deze korrel)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "colombia",
+      "aanwezig": true
+     },
+     {
+      "regio": "turkije",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "jaarvolume_en_bron": "overslagstation ~3 Mt/j gelost (GEM, bron Oldendorff 2015), herkomst Colombia en Zuid-Afrika; Cerrejon 19,2 Mt (2024, kolen-sitelaag). Aandeel Cerrejon niet gepubliceerd. Eenheid Mt kolen per jaar.",
+    "ankers_hergebruik": [
+     "Cerrejon-laadlus 11.126,-72.635",
+     "Puerto Bolivar 12.23912,-71.97693",
+     "spoorroute-kolen-cerrejon-ruhr-b1.geojson en aanloop-bolivar-geojson"
+    ],
+    "bronnen_start": [
+     "https://www.gem.wiki/Isken_Sugozu_power_station",
+     "http://www.oldendorff.com/reloaders/turkey.html"
+    ],
+    "risico": "Enige bron voor Colombia naar Iskenderun is een GEM-zin op een 2015-pagina, zonder mijnnaam: Cerrejon is een aanname (alternatief Zuid-Afrika). Zelfde begin als kolen-cerrejon-ruhr, andere zeestraat. Anker Sugozu GEM 36.8350,35.8791 en terminal nog niet gelegd."
+   },
+   "toets": {
+    "keten_id": "kolen-cerrejon-iskenderun",
+    "haalbaar": true,
+    "problemen": [
+     "Slechts een bron voor Colombia naar de centrale: GEM zegt schepen uit Colombia en Zuid-Afrika, zonder mijnnaam; Cerrejon is een aanname (Cerrejon is de grootste leverancier aan Turkse bedrijven volgens een artikel, niet plantspecifiek).",
+     "Pagina Oldendorff geeft 404; het drijvend overslagstation is op satelliet niet te zien. De centrale heeft een eigen steiger (z15: transportbandsteiger oost, kolenopslag).",
+     "Kade ligt circa 13 km van zeeknoop 3786 (36.8913,36.0022): aanloop nodig, tool brak af op 300 s.",
+     "Eerste drie benen zijn kopie van cerrejon-ruhr; alleen het zeebeen is nieuw."
+    ],
+    "aanpassing": "Letterlijke kopie van spoorroute b1, de stippel laatste km Puerto Bolivar en de aanloop-geojson (noem dat in de beennamen). Zeebeen van 12.4470,-72.2363 naar 36.8913,36.0022: gemeten 10.932 km via Gibraltar. Daarna stippel haven-aanloop naar Sugozu-steiger, aannemelijk eindpunt 36.8337,35.8925 (end van de bandsteiger, bakker moet nakijken dat de rechte lijn over water loopt). Beennaam en brief: aannemelijk, een bron, herkomst Colombia niet mijn-specifiek. Geen last mile en geen overslagstation tekenen.",
+    "overlap": "deelt 151 km spoor en de aanloop met cerrejon-ruhr (letterlijke kopie, 2% van de km); zee en eindpunt zijn nieuw",
+    "webcheck": "gem.wiki Isken Sugozu: 36.8350,35.8791, twee eenheden van 605 MW, kolen uit Colombia en Zuid-Afrika via drijvend station, circa 3 Mt per jaar. Zoekresultaat: Cerrejon grootste leverancier aan Turkije; Turkije nam in 2024 6,57 Mt Colombiaanse kolen."
+   }
+  },
+  {
+   "id": "gas-condabri-curtisisland",
+   "g": "gas",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: Coal-seam-gas uit Queensland via APLNG-leiding naar Curtis Island",
+    "keten_id": "gas-condabri-curtisisland",
+    "van_site": "APLNG-gashub Surat Basin (OSM-eind ca. -26.3086,150.2023; naam Condabri/Talinga nog te verifieren)",
+    "naar_site": "Australia Pacific LNG, Curtis Island (sitelaag w-aplng -23.7554,151.1896)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "APLNG-gashub Surat Basin",
+      "naar": "APLNG Curtis Island",
+      "corridor": "APLNG gas transmission pipeline, 42 inch, onder de Narrows door",
+      "km_indicatie": "367 km OSM-pad, gepubliceerd ca. 530 km totaal netwerk",
+      "geometrie_tool": "OSM-pipeline, vooraf gestikt pad"
+     }
+    ],
+    "km_indicatie": "367 km",
+    "ankers_hergebruik": [
+     "w-aplng uit de gas-sitelaag"
+    ],
+    "bronnen_start": [
+     "https://www.aplng.com.au",
+     "https://en.wikipedia.org/wiki/Origin_Energy",
+     "https://en.wikipedia.org/wiki/List_of_LNG_terminals"
+    ],
+    "jaarvolume_en_bron": "sitelaag w-aplng 12,2 bcm/j (9,0 Mtpa, bron B9); peiljaar nog te vullen",
+    "osm_leiding": "ja: way-keten met operator APLNG, diameter 1066 mm, in australie-extract",
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "risico": "Afnemerterminal per lading niet gedocumenteerd (Sinopec, Kansai); zonder zeebeen is dit een een-been-leiding. Naam van de hub is niet bevestigd.",
+    "prioriteit_notitie": "reserve, Oost-Australie"
+   },
+   "toets": {
+    "keten_id": "gas-condabri-curtisisland",
+    "haalbaar": true,
+    "problemen": [
+     "Condabri is niet aan de trunk gekarteerd in OSM (Condabri North 26.6742 S en South 26.9338 S: alleen interne leidinkjes); trunk begint onbenoemd bij -26.3199,150.1948 (station bij Woleebee Lateral)",
+     "Een been, geen overslag, geen afnemer: zwakste keten van de vier",
+     "Naam hub en gepubliceerde lengte (530 km netwerk) niet vergelijkbaar met 365 km OSM"
+    ],
+    "aanpassing": "Titel en markers: APLNG-hoofdleiding (Surat Basin, beginstation naam niet bevestigd) naar Curtis Island; niet Condabri noemen. Een doorgetrokken been 365.1 km (8 ways, naden 0) van -26.3199,150.1948 naar -23.7514,151.1937 (binnen plant-hek). Geen zeebeen toevoegen (afnemer per lading ongedocumenteerd).",
+    "overlap": "Geen overlap met bestaande stromen; sitelaag w-aplng ligt 0.6 km van het eindanker (hergebruik).",
+    "webcheck": "Nominatim: Condabri North en South GPF-coordinaten. Satelliet: LNG-plant Curtis Island met treinen en tanks, trunk-begin is klein kleppen-/compressorstation. Eerste APLNG-lading jan 2016, Kansai juni 2016 (offshore-technology, offshore-energy.biz)."
+   }
+  },
+  {
+   "id": "gas-pointfortin-quintero",
+   "g": "gas",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Atlantic LNG (Trinidad) naar Chili via Panama of Kaap Hoorn",
+    "keten_id": "gas-pointfortin-quintero",
+    "van_site": "Atlantic LNG, Point Fortin, Trinidad (sitelaag w-atlanticlng 10.1839,-61.6936)",
+    "naar_site": "GNL Quintero regasterminal, Chili (coordinaat nog te vinden)",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Point Fortin kade",
+      "naar": "Quintero kade",
+      "corridor": "Caribische Zee, Panamakanaal of Straat van Magellan, Pacifische kust",
+      "km_indicatie": "ca. 6.000-8.000 km, schatting",
+      "geometrie_tool": "MARNET"
+     }
+    ],
+    "km_indicatie": "zee, een been",
+    "ankers_hergebruik": [
+     "w-atlanticlng"
+    ],
+    "bronnen_start": [
+     "https://lngprime.com/americas/trinidads-atlantic-lng-ships-4500th-cargo/48197",
+     "https://www.spglobal.com/commodity-insights/en/news-research/latest-news/lng/121024-lng-exports-from-trinidad-and-tobago-rise-23-in-november"
+    ],
+    "jaarvolume_en_bron": "Atlantic LNG nameplate 15 Mtpa (sitelaag w-atlanticlng 20,4 bcm/j); Chili enige consistente bestemming jan-okt 2024 (S&P); volume per bestemming niet gevonden",
+    "osm_leiding": "nee, geen leiding",
+    "regios_extracts": [
+     {
+      "regio": "chili",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "risico": "Bestemmingen wisselen per maand; eigen bron voor Quintero-ontvangst nodig. Trinidad en Quintero hebben geen eigen kade-anker; havenaanloop kan nodig zijn.",
+    "prioriteit_notitie": "reserve, Caribisch gebied"
+   },
+   "toets": {
+    "keten_id": "gas-pointfortin-quintero",
+    "haalbaar": true,
+    "problemen": [
+     "Beide kades liggen ver van MARNET: Point Fortin 21.8 km (zeeknoop 8416 op 10.2933,-61.5289), Quintero 54.6 km (zeeknoop 486 op -33.0,-72.0); hecht_marnet weigert (max-snap 25), dus twee haven-aanlopen nodig",
+     "maak_havenaanloop Point Fortin hing langer dan 300 s (timeout): rechte stippels met watervia-punt",
+     "Bestemming wisselt: Shell vult Chili ook met QCLNG-ladingen aan en leidde Trinidad-ladingen in jan 2026 naar de VS",
+     "Quintero-coordinaat uit het ontwerp ontbrak; eerste gok -32.7476,-71.4960 lag in zee"
+    ],
+    "aanpassing": "Marker Point Fortin LNG-jetty 10.1910,-61.6986 (satelliet) en Quintero pier-kop -32.7665,-71.5094 (OSM way 216250920). Stippels via 10.2800,-61.7000 en -32.7500,-71.6000 (getoetst tegen ne_10m_land: geen landkruising). Zee 7186.3 km via Panama + 84 km stippel, totaal 7270 km. Beennaam: aannemelijk, een bron.",
+    "overlap": "Geen Trinidad- of Quintero-stroom bestaat; id nieuw.",
+    "webcheck": "Zoekresultaten (2e hands): BG/Shell-contract 3 Mtpa met GNL Quintero 2009-2030, Chili haalt typisch meer dan helft uit Trinidad; Quintero 80 procent EIG/Fluxys, 20 procent Enap (pgjonline feb 2026, lngprime). Pagina's zelf 403/500."
+   }
+  },
+  {
+   "id": "olie-omisalj-szazhalombatta",
+   "g": "olie",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: JANAF-Adria als Druzhba-alternatief voor Hongarije en Slowakije (2026-crisis)",
+    "keten_id": "olie-omisalj-szazhalombatta",
+    "van_site": "Omisalj-terminal (JANAF), eiland Krk, Kroatie",
+    "naar_site": "MOL Duna-raffinaderij, Szazhalombatta, Hongarije",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Omisalj (OSM-groep rond 45.22,14.53)",
+      "naar": "Sisak en Virje, grens Gola",
+      "corridor": "Adria-pijpleiding: Omisalj-Sisak 176 km, Sisak-Virje-Gola 108 km (OSM, Jadranski naftovod)",
+      "geometrie_tool": "OSM-pipeline, stikken op gedeelde nodes",
+      "km_indicatie": "~290 OSM-som"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "leiding",
+      "van": "Gola (HR/HU-grens)",
+      "naar": "Szazhalombatta",
+      "corridor": "Adria-kooljvezetek MOL: Csurgo, Osijek-Budapest en Sziszek-Budapest naar Szazhalombatta",
+      "geometrie_tool": "OSM-pipeline (naam Adria-kooljvezetek, Budapest-Csurgo, Osijek-Budapest, Sziszek-Budapest); naden meten",
+      "km_indicatie": "~230 (OSM-bbox-som; totaal keten ~520, hemelsbreed 408)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ol-mol-duna 47.2879,18.9072 (olie-unecha-szazhalombatta)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "kroatie",
+      "aanwezig": true
+     },
+     {
+      "regio": "hongarije",
+      "aanwezig": true
+     },
+     {
+      "regio": "slovenie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja, zelf gecontroleerd: kroatie 667 pijpways, Omisalj-Sisak en Sisak-Virje-Gola naam Jadranski naftovod; hongarije Adria, Budapest-Csurgo, Osijek-Budapest, Sziszek-Budapest door MOL",
+    "jaarvolume_en_bron": "Ontwerpcapaciteit JANAF 34 Mt/j, ca. 680 kb/d (Wikipedia, x7,33/365); Omisalj-doorzet 8,1 Mt in 2020, ca. 160 kb/d. Actuele stroom naar MOL niet gevonden: Hongarije en Slowakije vroegen 16-02-2026 om transit via JANAF na de Druzhba-stop van 27-01-2026 (Wikipedia). Peiljaar 2020-2026.",
+    "risico": "Geen actueel volume naar MOL gevonden, Kroatie weerde Russische crude en hoge tarieven worden betwist; deel van Omisalj-Sisak ligt in groepen met onderwater- en bovengrondse stukken. Eind-anker gedeeld met unecha-szazhalombatta.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/2026_Druzhba_pipeline_dispute",
+     "https://en.wikipedia.org/wiki/Adria_oil_pipeline",
+     "https://en.wikipedia.org/wiki/Jadranski_naftovod"
+    ]
+   },
+   "toets": {
+    "keten_id": "olie-omisalj-szazhalombatta",
+    "haalbaar": true,
+    "problemen": [
+     "Volledig OSM: Omisalj-Sisak 174.7 km (Jadranski naftovod 36 inch), Sisak-Virje-Gola 108.0, dan Hongarije ca 191.5 km (Adria-kooljvezetek 6.1, Budapest-Csurgo 21.6, ways genaamd Osijek-Budapest 115.8 en Sziszek-Budapest 48.0); kortste pad Omisalj naar Szazhalombatta = 479.5 km, 0 stippel",
+     "Stik vraagt tolerantie 2 km (bij 0.5 km geen pad): naden 1.9 en 1.9 km binnen het Omisalj-terrein, 1.3 km vlak voor Szazhalombatta, verder 0",
+     "De Hongaarse ways heten deels Osijek-Budapest: parallelle corridor, kies per way-id en sluit Barataag I en II (Druzhba) uit",
+     "Geen gepubliceerde lengte voor het Hongaarse deel; 479.5 tegen ontwerp ca 520 is -8%, indicatief",
+     "Geen actueel volume naar MOL gevonden"
+    ],
+    "aanpassing": "Bak als een leidingbeen of twee (HR tot Gola, HU Gola tot Szazhalombatta), stik op way-id. Anker Omisalj 45.2208,14.5331 (tankpark met tanker aan de steiger, z15, bron-gelegd). Eindanker ol-mol-duna 47.2879,18.9072 letterlijk hergebruiken (OSM-eind 47.2896,18.9059, 0.2 km). Beschrijf als tweede route naar MOL met niet-Russische crude, niet als volledige Druzhba-vervanger; volume onbekend, peiljaar 2026.",
+    "overlap": "Nieuw id. Deelt alleen het eindanker ol-mol-duna met olie-unecha-szazhalombatta (Druzhba komt uit het noorden via Slowakije op Barataag I); geen gedeeld been, dus geen herhaling.",
+    "webcheck": "Wikipedia 2026 Druzhba dispute: 25-02 JANAF verplaatst al niet-Russische crude naar MOL, acht tankers voor MOL tot begin april in Omisalj; 04-03 MOL en Slovnaft klagen bij EC over JANAF; Druzhba zuidtak weer open 23-04-2026. Reserve werkt dus, maar Druzhba loopt ook weer."
+   }
+  },
+  {
+   "id": "olie-pasadena-linden",
+   "g": "olie",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Colonial Pipeline, de grootste raffinaatader, Houston naar New York Harbor",
+    "keten_id": "olie-pasadena-linden",
+    "van_site": "Pasadena (Houston), Texas: Colonial-kop bij de Houston Ship Channel-raffinaderijen",
+    "naar_site": "Linden, New Jersey: Colonial-knoop naar New York Harbor",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "leiding",
+      "van": "Pasadena TX (OSM 29.72,-95.18)",
+      "naar": "Linden NJ (OSM-knoop ca. 40.577,-74.249)",
+      "corridor": "Colonial Line 1 (benzine) door Louisiana, Mississippi, Alabama, Georgia, Carolina's, Virginia, Maryland, Delaware, Pennsylvania, New Jersey",
+      "geometrie_tool": "OSM-pipeline: naam Colonial Pipeline, substance fuel (niet oil); kies Line 1, geen parallelle Line 2",
+      "km_indicatie": "~2.800 geschat; totaal systeem 8.850 km met zijtakken (Wikipedia), bake meet"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Eventueel sitelaag-raffinaderijen Baytown 29.7390,-95.0106 en Galveston Bay als bronkop"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-texas",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-louisiana",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-mississippi",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-alabama",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-georgia",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-south-carolina",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-north-carolina",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-virginia",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-maryland",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-delaware",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-pennsylvania",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-new-jersey",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja, zelf gecontroleerd: Colonial Pipeline in OSM per staat (TX, LA, MS, AL, GA, SC, NC, VA, MD, PA, NJ); Delaware niet gescand",
+    "jaarvolume_en_bron": "Wikipedia: ca. 100 miljoen US-gallon per dag (ca. 2,4 Mb/d), capaciteit tot 3 Mb/d. Geen peiljaar gegeven; verse bron nodig.",
+    "risico": "Twee parallelle hoofdlijnen met lussen en tientallen zijtakken: kortste-pad-stikken kan een verkeerde lijn pakken. Raffinaat, niet ruwe olie: nieuwe rol, brief moet dat benoemen. Geen actueel volume.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Colonial_Pipeline",
+     "https://www.colpipe.com"
+    ]
+   },
+   "toets": {
+    "keten_id": "olie-pasadena-linden",
+    "haalbaar": true,
+    "problemen": [
+     "Colonial staat in OSM in 12 staten maar met Line 1, Line 2, Main Line, onbenoemde ways en twee operatornamen door elkaar, plus zijtakken (Augusta, Atlanta-Bainbridge, Roanoke, Albany, Marathon Zachary)",
+     "Kortste pad over alle lijnen wisselt tussen Line 1 en Line 2 (2455.0 km); alleen Line 1 plus onbenoemde ways geeft een zuivere strang: 2455.4 km, 17 naden, grootste 0.07 km, tolerantie 2 km volstaat",
+     "Ontwerp schatte 2800 km: OSM-pad is 2455 km, hemelsbreed 2245 km (verhouding 1.09); Wikipedia geeft alleen systeem 8850 km, dus geen trunk-bronlengte en de plus of min 15%-toets is indicatief",
+     "Delaware wel aanwezig (125 km Colonial); Texas filtered scan nodig (traag)",
+     "Raffinaat (benzine, diesel, kerosine), geen ruwe olie: rol benoemen in brief en beennaam"
+    ],
+    "aanpassing": "Stik per way-id: Line 1 plus onbenoemde Colonial Pipeline-ways, sluit Line 2, Line 2PA, Loop, Augusta, Roanoke, Atlanta-Bainbridge, Marathon-takken uit. Anker Pasadena 29.7203,-95.1799 (OSM-begin, tankparken, z15) en Linden 40.5768,-74.2492 (OSM-eind, tankpark naast NJ Turnpike, z15). Een leidingbeen, 0 stippel, beennaam met raffinaat Line 1. Volume ca 2.5 Mb/d (100 miljoen gallon per dag), capaciteit 3 Mb/d, peiljaar 2025.",
+    "overlap": "Nieuw id, eindpunt Linden klopt. Geen overlap met bestaande olie-stromen (corpuschristi-rotterdam is zee) of andere keten in dit ontwerp; Houston-begin raakt ETCOP niet.",
+    "webcheck": "Wikipedia Colonial Pipeline: Houston naar New York Harbor, Linden Junction, capaciteit 3 Mb/d, ca 2.38 Mb/d, systeem 5500 mi. WebSearch (Bloomberg Law, apr 2025, pgjonline aug 2025): Brookfield nam alle aandelen over, ca 100 miljoen gallon per dag, ca 2.5 Mb/d."
+   }
+  },
+  {
+   "id": "goud-boddington-hongkong",
+   "g": "goud",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Australie naar Hongkong, Boddington via Perth Mint",
+    "keten_id": "goud-boddington-hongkong",
+    "van_site": "Boddington-mijn (Newmont), Westelijk Australie",
+    "naar_site": "Cathay Pacific Cargo Terminal, Chek Lap Kok, Hongkong (HKG)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Boddington-mijn",
+      "naar": "Perth Mint, East Perth",
+      "corridor": "Albany Highway (30), Tonkin Highway (4)",
+      "km_indicatie": "hemelsbreed 99 km, geen wegkm; OSRM-indicatie 141 km",
+      "geometrie_tool": "maak_stroombeen_weg (extract australie)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "truck",
+      "van": "Perth Mint",
+      "naar": "Perth Airport vrachtterminal",
+      "corridor": "Great Eastern Hwy, Tonkin Hwy (kopie goud-kalgoorlie-singapore b2)",
+      "km_indicatie": "14,9 km gebakken",
+      "geometrie_tool": "kopie van bestaand geojson"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "lucht",
+      "van": "PER-vrachtterminal",
+      "naar": "HKG-vrachtterminal",
+      "corridor": "vrachtvlucht PER naar HKG, grootcirkel, aannemelijk: landniveau",
+      "km_indicatie": "6.036 km grootcirkel (berekend)",
+      "geometrie_tool": "maak_luchtbeen"
+     }
+    ],
+    "ankers_hergebruik": [
+     "au-ref-perth -31.955, 115.87 (onzeker)",
+     "au-per-cargo -31.946, 115.9764",
+     "au-hkg-vrachtterminal 22.2975, 113.9247",
+     "Boddington -32.75, 116.355 (sitelaag, bron-gelegd)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     },
+     {
+      "regio": "china",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "Australie naar Hongkong 80,3 t Au (USD 5,8 mrd), 2024 (Comtrade); Boddington 745.000 oz = 23,2 t in 2023 (Wikipedia)",
+    "risico": "Boddington naar Perth Mint niet op mijnniveau gebrond (alleen Perth Mint 79 procent van de Australaziatische productie, Wikipedia 2019). Hongkongse afnemer onbekend, lijn eindigt op de terminal. Perth Mint-anker staat op onzeker. Deels dubbel met kalgoorlie-singapore (Perth Mint naar PER).",
+    "bronnen_start": [
+     "https://comtradeapi.un.org/public/v1/preview/C/A/HS?reporterCode=36&period=2024&cmdCode=7108&flowCode=X",
+     "https://www.perthmint.com/refinery-treasury/refinery/",
+     "https://en.wikipedia.org/wiki/Boddington_Gold_Mine"
+    ]
+   },
+   "toets": {
+    "keten_id": "goud-boddington-hongkong",
+    "haalbaar": true,
+    "problemen": [
+     "Ontwerp stopt in East Perth, maar de Perth Mint Refinery ligt bij Perth Airport (OSM -31.9617,115.9684), dus een omweg van 15 km terug",
+     "Kopie van goud-kalgoorlie-singapore b2 (East Perth naar PER) is daarom onjuist",
+     "Boddington-anker -32.75,116.355 ligt in de pit; installatie ca -32.7385,116.3565",
+     "Boddington levert doré plus Cu-Au-concentraat (Newmont 10-K); Boddington naar Perth Mint en Perth Mint naar HK zijn niet mijn- of vluchtniveau gebrond"
+    ],
+    "aanpassing": "B1 Boddington-installatie naar Perth Mint Refinery (-31.9617,115.9684), Albany Hwy 30 en Tonkin Hwy 4: OSRM 133 km, hemelsbreed 95 km, geen wegkm. Geen b2: refinery staat 1,9 km van au-per-cargo (naad onder 5 km). Daarna lucht PER naar HKG, 6.035,6 km. Beennaam: aannemelijk, landniveau.",
+    "overlap": "Alleen de PER-terminal en de vlucht-naar-Azie-vorm delen met goud-kalgoorlie-singapore; geen gedeeld wegbeen meer, vlucht en b1 zijn nieuw.",
+    "webcheck": "Comtrade Australie 2024: Hongkong rang 1 met 80.290 kg netto, 5,82 mrd USD. Wikipedia Perth Mint: 79 procent van de Australasische productie en een aparte raffinaderij buiten het centrum. Gold Fields 20-F: alle Australische productie bij Perth Mint. Nominatim: Perth Mint Refinery bij Perth Airport."
+   }
+  },
+  {
+   "id": "koper-quellaveco-ilo",
+   "g": "koper",
+   "as": {
+    "prioriteit": 4,
+    "as": "Peru Moquegua: Quellaveco naar de Anglo American-kade bij Ilo",
+    "keten_id": "koper-quellaveco-ilo",
+    "van_site": "Quellaveco-mijn (Anglo American 60%, Mitsubishi 40%; OSM -17.1022, -70.6163)",
+    "naar_site": "Puerto Anglo American Quellaveco, Ilo (OSM landuse -17.7706, -71.1908)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Quellaveco-concentrator",
+      "naar": "Puerto Anglo American Quellaveco (Engie/Enersur-terminal, Ilo)",
+      "corridor": "Moquegua naar Ilo (wegnummers te bepalen)",
+      "km_indicatie": "hemelsbreed 96 km, geen wegkm; een 2019-rapport noemt 165 km (ongecontroleerd)",
+      "geometrie_tool": "maak_stroombeen_weg (extract peru)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Ilo-kade",
+      "naar": "bestemming open (eerste partij ging naar China en Japan, geen smelter genoemd)",
+      "corridor": "Stille Oceaan",
+      "km_indicatie": "niet gevonden",
+      "geometrie_tool": "MARNET (alleen bij gevonden afnemer)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "peru",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nee",
+    "ankers_hergebruik": [],
+    "jaarvolume_en_bron": "306,3 kt Cu in 2024 (Anglo American Q4 2024 production report, via koper-sitelaag w-quellaveco).",
+    "risico": "Zonder afnemer is dit een enkel truckbeen van ca. 100 tot 165 km: dun. Peru heeft al vier koperketens, dus weinig nieuw verhaal.",
+    "bronnen_start": [
+     "https://www.gob.pe/institucion/apn/noticias/654689-proyecto-anglo-american-quellaveco-realiza-primera-prueba-de-embarque-de-concentrado-de-cobre-en-el-terminal-portuario-engie",
+     "https://mundomaritimo.cl/noticias/terminal-portuario-engie-peru-embarca-concentrado-de-cobre-del-proyecto-minero-quellaveco",
+     "https://www.angloamerican.com/~/media/Files/A/Anglo-American-Group-v9/PLC/media/press-release/releases/2025pr/q4-2024-production-report.pdf"
+    ],
+    "regios_extracts_nb": "ls geofabrik gecontroleerd"
+   },
+   "toets": {
+    "keten_id": "koper-quellaveco-ilo",
+    "haalbaar": true,
+    "problemen": [
+     "Dun: één truckbeen zonder afnemer (eerste lading ging naar China en Japan, geen smelter), zelfde vorm als koper-sentinel-walvisbay",
+     "Modaliteit truck niet in een bron bevestigd (aannemelijk), wegkm niet gebronnen: gemeten 170 km, hemelsbreed 96 km, 2019-rapport noemt 165 km (ongecontroleerd)",
+     "Ilo-kade ligt 127 km van de MARNET-zeeknoop, dus geen zeebeen mogelijk zonder afnemer",
+     "Peru heeft al vier koperketens, weinig nieuw verhaal"
+    ],
+    "overlap": "Geen overlap: Toquepala-Ilo en Cuajone-Ilo eindigen als spoor bij de smelter (-17.505,-71.359), niet bij deze kade",
+    "aanpassing": "BINDEND: één truckbeen Quellaveco naar Terminal Portuario Engie Ilo (niet Puerto Anglo American), geen zeebeen. Profiel extract peru, via-punten niet nodig (snap 0,01 en 0,31 km, 170,3 km, eerste mijl 18,6 km tertiary en unclassified). Marker kade -17.7706,-71.1908; schrijf hemelsbreed 96 km, geen wegkm",
+    "webcheck": "Terminal Portuario Engie Ilo verscheepte in september 2022 de eerste 35.400 t Quellaveco-concentraat naar China en Japan (mundomaritimo.cl). Esri z15: pier, bandsysteem en tankpark bij het kadepunt. Productie 2024: 306,3 kt Cu (Anglo American)."
+   }
+  }
+ ],
+ "afgewezen": [
+  "grafiet-heroya-vestal",
+  "grafiet-heroya-eumseong",
+  "nikkel-pomalaa-pohang",
+  "ree-diantan-longnan",
+  "ree-longonjo-lobito",
+  "pgm-sedibelo-springs",
+  "pgm-columbus-iselin",
+  "lithium-yelonggou-shehong",
+  "lithium-wuxi-wroclaw",
+  "kobalt-niihama-osaka",
+  "kobalt-kokkola-olen",
+  "kobalt-kokkola-nysa",
+  "kobalt-pomalaa-ningbo",
+  "uranium-vasteras-temelin",
+  "uranium-daejeon-barakah",
+  "diamant-karowe-antwerpen",
+  "diamant-cullinan-antwerpen",
+  "goud-obuasi-randrefinery",
+  "koper-oktedi-pasar"
+ ]
+}

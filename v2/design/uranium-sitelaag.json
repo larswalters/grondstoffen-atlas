@@ -408,12 +408,12 @@
    "naam": "TVEL Novosibirsk (NZHK)",
    "land": "Rusland (Novosibirsk-oblast)",
    "rol": "splijtstoffabricage",
-   "lat": 54.9667,
-   "lon": 82.8833,
+   "lat": 55.0909,
+   "lon": 82.9847,
    "capaciteit_kt": 1200,
    "capaciteit_bron": "TVEL/Rosatom: nameplate indicatief ~1.200 t HM/j (VVER- en RBMK-brandstof); geen recent los cijfer publiek gevonden deze ronde [B30]",
-   "coord_bron": "Wikipedia-geohack Novosibirsk Chemical Concentrates Plant; geen satellietblik deze ronde",
-   "status": "onzeker",
+   "coord_bron": "Wikipedia-geohack Novosibirsk Chemical Concentrates Plant; geen satellietblik deze ronde — M31 golf 11 (2026-10-29): gelijkgetrokken met het keten-anker van uranium-novosibirsk-rooppur (u-nzhk, satelliet-gelegd in de brief)",
+   "status": "aannemelijk",
    "notitie": "-"
   },
   {
