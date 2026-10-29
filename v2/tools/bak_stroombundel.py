@@ -56,6 +56,11 @@ DATA = os.path.normpath(os.path.join(HIER, "..", "data"))
 REGISTER = os.path.join(DATA, "stromen-register.json")
 INDEX = os.path.join(DATA, "stromen.json")
 BASIS = os.path.join(DATA, "stromen-basis.bin")
+# LAR-642 (2026-10-29): het jaarvolume per stroom als LOS metadatabestand (uit de
+# routebrieven via maak_stroomvolumes.py). Optioneel: ontbreekt het, dan krijgt
+# geen stroom een `volume` en tekent de bol alles even dik. Zit het in `bron`,
+# zodat --check drift ziet.
+VOLUMES = os.path.join(DATA, "stroomvolumes.json")
 
 FORMAAT = 1
 SCHAAL = 100000          # 1e-5° ≈ 1,1 m
@@ -237,6 +242,12 @@ def bak(reg, toets=False):
     km_per_mod_bron = {}
     km_afwijking = []     # (stroom, been, bron km, gemeten km)
     been_index = 0
+    volumes = {}
+    if os.path.exists(VOLUMES):
+        bronnen["stroomvolumes.json"] = sha1(VOLUMES)
+        with open(VOLUMES, encoding="utf-8") as f:
+            volumes = json.load(f).get("stromen", {})
+    totalen["metVolume"] = 0
 
     for s in reg["stromen"]:
         pad = os.path.join(DATA, s["bestand"])
@@ -304,12 +315,20 @@ def bak(reg, toets=False):
         markers = [{"naam": m.get("naam", ""), "lon": m["lon"], "lat": m["lat"]} for m in doc.get("markers", [])]
         totalen["markers"] += len(markers)
         totalen["stromen"] += 1
-        stromen_uit.append({
+        uit = {
             "sleutel": s["sleutel"], "stroom": doc.get("stroom"), "grondstof": gs,
             "titel": doc.get("titel"), "routebrief": doc.get("routebrief"),
             "kmPerModaliteit": {k: round(v, 1) for k, v in km_mod.items()},
             "benen": benen_uit, "markers": markers,
-        })
+        }
+        v = volumes.get(doc.get("stroom"))
+        if v and v.get("status") in ("bron", "indicatie") and v.get("tekst"):
+            # compact: wat de bol en de HUD nodig hebben; de rest (bron, peiljaar, basis) blijft in stroomvolumes.json
+            uit["volume"] = {"kort": v.get("kort"), "tekst": v.get("tekst"), "status": v.get("status"),
+                             "productvorm": v.get("productvorm"), "rel": v.get("rel")}
+            if v.get("rel") is not None:
+                totalen["metVolume"] += 1
+        stromen_uit.append(uit)
 
     # sites uit de gloedbestanden (alleen level = site; normalisatie blijft runtime)
     sites = []

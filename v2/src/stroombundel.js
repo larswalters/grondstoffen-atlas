@@ -49,7 +49,7 @@ import {
   ROL_BASIS, ROL_FIJN, ROL_ALTIJD,
 } from "./stroomlijn.js?v=137";
 import { bouwGloed } from "./gloed.js?v=134";
-import { bouwKometen } from "./stroomkometen.js?v=134";
+import { bouwKometen } from "./stroomkometen.js?v=143";
 import { bouwLabels } from "./labels.js?v=139";
 
 const AARDSTRAAL_KM = 6371;
@@ -60,6 +60,15 @@ const D2R = Math.PI / 180;
  *  segmenten; past het niet, dan blijven de overige benen op L1 en zegt de
  *  console dat luid. 200.000 × 6 floats = 4,8 MB posities. */
 export const FIJN_MAX = 200000;
+
+/** Dikte = jaarvolume (LAR-642): breedtefactor t.o.v. de stijlbreedte per
+ *  modaliteit. √rel zoals v1; bijstellen in de console vóór het laden niet
+ *  mogelijk — pas hier aan. */
+export const AFSTEMMING_VOLUME = {
+  breedteMin: 0.65,       // het kleinste bekende volume van een grondstof
+  breedteMax: 2.1,        // het grootste
+  breedteOnbekend: 0.65,  // geen volume in de brief → de dunste lijn (v1: value || 1)
+};
 
 /** De LOD-regel: een niveau is toelaatbaar zolang zijn tolerantie ≤ 1 css-px.
  *  kmPerCssPx = 2·h·tan(fov/2) / H — dus uit kijkhoogte én schermhoogte, nooit
@@ -300,6 +309,20 @@ export async function laadStroombundel(opts) {
   const grondstoffen = [...new Set(stromen.map((s) => s.grondstof))];
   const stromenVanGrondstof = new Map(grondstoffen.map((g) => [g, stromen.filter((s) => s.grondstof === g)]));
   for (const b of benen) info.zetStijl(b.i, stijlIndex(b.modaliteit, b.stippel));
+  // ── dikte = jaarvolume (LAR-642, 2026-10-29) ──────────────────────────────
+  // De bundel draagt per stroom `volume` uit v2/data/stroomvolumes.json (los
+  // metadatabestand, uit de routebrieven): `rel` = 0..1 binnen de grondstof.
+  // Breedtefactor = min + (max − min)·√rel, zoals v1 (flows.js) de dikte uit het
+  // relatieve volume haalde; onbekend volume = de dunste lijn (v1: value || 1),
+  // en de HUD zegt dan "volume onbekend". Alle benen van één stroom delen de
+  // factor; de stijl per modaliteit (patroon.x) blijft de basis.
+  for (const s of stromen) {
+    const rel = s.volume && typeof s.volume.rel === "number" ? Math.max(0, Math.min(1, s.volume.rel)) : null;
+    const f = rel === null ? AFSTEMMING_VOLUME.breedteOnbekend
+      : AFSTEMMING_VOLUME.breedteMin + (AFSTEMMING_VOLUME.breedteMax - AFSTEMMING_VOLUME.breedteMin) * Math.sqrt(rel);
+    for (const b of benenVanStroom.get(s.sleutel) || []) info.zetBreedteF(b.i, f);
+  }
+  const nMetVolume = stromen.filter((s) => s.volume && typeof s.volume.rel === "number").length;
 
   // ── de lijnobjecten ──────────────────────────────────────────────────────
   const groep = new THREE.Group();
@@ -367,7 +390,11 @@ export async function laadStroombundel(opts) {
   }
 
   // ── kometen ──────────────────────────────────────────────────────────────
-  const dragers = benen.filter((b) => !b.stippel).map((b) => ({ been: b.i, modaliteit: b.modaliteit }));
+  // `rel` = het relatieve jaarvolume van de stroom → aantal kometen per been
+  const dragers = benen.filter((b) => !b.stippel).map((b) => {
+    const v = stroomVan.get(b.sleutel)?.volume;
+    return { been: b.i, modaliteit: b.modaliteit, rel: v && typeof v.rel === "number" ? v.rel : null };
+  });
   const kometen = bouwKometen(dragers, radius, (i) => info.isAan(i), telefoon, 7.55);
   groep.add(kometen.groep);
   function zetBaanRoute(b) {
@@ -724,11 +751,12 @@ export async function laadStroombundel(opts) {
     stroomInfo(sleutel) {
       const s = stroomVan.get(sleutel);
       return s ? { titel: s.titel, label: s.label, grondstof: s.grondstof, kmPerModaliteit: s.kmPerModaliteit,
-                   benen: benenVanStroom.get(sleutel), markers: s.markers.map((m) => m.naam) } : null;
+                   benen: benenVanStroom.get(sleutel), markers: s.markers.map((m) => m.naam),
+                   volume: s.volume || null } : null;
     },
     get stats() {
       return {
-        stromen: stromen.length, geladen: stromen.length, benen: benen.length,
+        stromen: stromen.length, geladen: stromen.length, benen: benen.length, metVolume: nMetVolume,
         stippel: benen.filter((b) => b.stippel).length, markers: nStip, sites: index.sites.length,
         objecten: [L0.lijn, L1.lijn, fijnLijn, luchtLijn, ...[...hemelsbreed.values()].map((h) => h.lijn)].filter((o) => o.visible).length
                   + (kometen.groep.visible ? 1 : 0) + (gloed.groep.visible ? 1 : 0) + (stippen.visible ? 1 : 0),

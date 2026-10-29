@@ -561,7 +561,83 @@ PROFIELEN = {
         "vensterKm": 25,
         "uit": "grafiet-harjavalta-heroya-weg-fortum-pori.geojson",
     },
+    # ── Routebrief koper-quellaveco-ilo, been b1 (LICHTE werkwijze M31 golf 12) ──
+    # Truck concentraat Quellaveco-mijn -> Terminal Portuario Engie Ilo: mijnwegen, TA-105, MO-107, TA-100, PE-1S, PE-36D, kustweg.
+    # Geen via-punten (het net kiest; Moquegua/Torata-route is in OSM niet aan de mijn gekoppeld, brief par.4).
+    # GEEN echte wegkm: hemelsbreed 96 km, router 160,8 km (indicatie), 2019-rapport 165 (ongecontroleerd) -> km-toets = indicatie.
+    "koper-quellaveco-ilo-quellaveco-engieilo": {
+        "via": [
+            ("Quellaveco-mijn (anker cu-quellaveco-mijn)",   (-70.6163, -17.1022)),
+            ("Terminal Portuario Engie Ilo (anker cu-engieilo-kade)", (-71.1908, -17.7706)),
+        ],
+        "id": "cu-quellaveco-engieilo",
+        "naam": "Quellaveco -> Terminal Portuario Engie Ilo (TA-105 -> MO-107 -> TA-100 -> PE-1S -> PE-36D)",
+        "extracts": ["peru"],
+        "refs": [],
+        "gepubliceerdKm": 165,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 96 km; router 160,8 km (indicatie); 2019-rapport 165 (ongecontroleerd)",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "koper-quellaveco-ilo-weg-quellaveco-engieilo.geojson",
+    },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief zilver-caylloma-callao, been b1 (LICHTE werkwijze M31 golf 12) ──
+    # Truck lood-zilverconcentraat Bateas-plant (Caylloma, Fortuna) -> Chivay -> Yura (bovenlangs
+    # Arequipa) -> Camana -> Chala -> Nazca -> Ica -> Canete (PE-1S) -> Transportadora Callao-
+    # mineraalterminal (muelle centro). Geen enkele bron voor de wegkm: 1235 = som van 225 (mijn-
+    # Arequipa, TR 2019) + 1009 (Arequipa-Lima, routesite); indicatie, geen harde norm.
+    # Lima is geen via-punt (router kiest de stadsdoorgang Canete -> Callao). Eindzone Callao is
+    # afgesloten havenzone -> eindToegangPrivaat (zoals het uchucchacua-profiel).
+    "zilver-caylloma-callao-mijn-tcsa": {
+        "via": [
+            ("Bateas-plant, Caylloma-mijn (Fortuna) - anker, ag-caylloma-mijn", (-71.8645, -15.2035)),
+            ("Chivay - Colca-vallei, weg Caylloma-Arequipa", (-71.6009, -15.6381)),
+            ("Yura - doorgaande weg bovenlangs Arequipa", (-71.6786, -16.2506)),
+            ("Camana - pint de PE-1S-kustcorridor", (-72.7104, -16.6236)),
+            ("Chala - kustweg, sluit de Puquio-route uit", (-74.2496, -15.8553)),
+            ("Nazca - PE-1S naar Ica", (-74.9395, -14.8284)),
+            ("Ica - knoop Ica-vallei", (-75.7283, -14.0678)),
+            ("Canete - laatste punt op PE-1S voor Lima", (-76.3906, -13.0783)),
+            ("Transportadora Callao-mineraalterminal (muelle centro) - anker, ag-callao-tcsa", (-77.1446, -12.0499)),
+        ],
+        "id": "ag-caylloma-callao-weg",
+        "naam": "Bateas-plant Caylloma -> Chivay -> Yura -> Camana -> Chala -> Nazca -> Ica -> Canete -> Transportadora Callao-mineraalterminal (Panamericana Sur)",
+        "extracts": ["peru"],
+        "refs": ["PE-1S", "PE-1N"],
+        "corridorKlassen": ["tertiary"],
+        "gepubliceerdKm": 1235,
+        "bronnoot": "1235 = som van 225 (mijn-Arequipa, TR 2019) + 1009 (Arequipa-Lima, routesite); "
+                    "geen enkele bron, de +-15%-toets geldt als indicatie. Wood Mackenzie noemt 1460.",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "zilver-caylloma-callao-weg-mijn-tcsa.geojson",
+    },
+    # ── Routebrief goud-boddington-hongkong, been b1 (LICHTE werkwijze M31 golf 12) ──
+    # Truck doré Boddington-installatie (Newmont) -> Perth Mint Refinery (Perth Airport estate):
+    # Gold Mine Rd, Bannister-Marradong Rd, Albany Hwy 30, Tonkin Hwy 4, Horrie Miller Dr.
+    # Geen gepubliceerde wegkm: hemelsbreed 93,8 km, OSRM-indicatie 129,6 km (brief b1).
+    # Via-punten uit OSRM-stappen (op wegvertices), nooit in een stadscentrum.
+    "goud-boddington-hongkong-boddington-perthmint": {
+        "via": [
+            ("Boddington-installatie (anker au-boddington-plant)", (116.3565, -32.7385)),
+            ("Gold Mine Rd / Bannister-Marradong Rd", (116.4809, -32.7838)),
+            ("Albany Hwy 30, begin (North Bannister)", (116.5245, -32.6929)),
+            ("Tonkin Hwy 4, oprit (Kelmscott/Gosnells-rand)", (116.0170, -32.0859)),
+            ("Tonkin Hwy afrit Horrie Miller Dr", (115.9706, -31.9765)),
+            ("Perth Mint Refinery, Perth Airport estate (anker au-ref-perthmint-airport)", (115.9684, -31.9617)),
+        ],
+        "id": "au-boddington-perthmint-weg",
+        "naam": "Boddington-installatie → Bannister-Marradong Rd → Albany Hwy 30 → Tonkin Hwy 4 → Perth Mint Refinery",
+        "extracts": ["australie"],
+        "refs": ["30", "4"],
+        "gepubliceerdKm": 130,
+        "bronnoot": "hemelsbreed 93,8 km, geen wegkm gepubliceerd; OSRM-indicatie 129,6 km (brief b1, [7])",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-boddington-hongkong-weg-boddington-perthmint.geojson",
+    },
     # ── Routebrief grafiet-kilbourne-anniston, been b1 (LICHTE werkwijze M31 golf 11) ──
     # ── Routebrief zilver-matsa-huelva, been b1 (LICHTE werkwijze M31 golf 11) ──
     # Truck Cu/Zn/Pb-concentraat (bijproduct-zilver) MATSA-concentrator (Almonaster la Real) -> Impala-terminal Puerto Exterior Huelva:

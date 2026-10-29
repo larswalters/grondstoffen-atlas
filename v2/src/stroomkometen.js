@@ -14,8 +14,10 @@
 // De snelheid komt per modaliteit uit een realistische reissnelheid, de
 // staartlengte is een FRACTIE van de beenlengte (een zeebeen van 19.000 km en
 // een truckbeen van 8 km horen dezelfde vorm te krijgen). Een deeltje is GEEN
-// schip en het aantal zegt niets over vrachtvolume; zodra het metadatabestand
-// volume per been draagt hoort het aantal daaruit te komen.
+// schip. Sinds LAR-642 (2026-10-29) komt het AANTAL kometen per been wél uit
+// het jaarvolume van de stroom (v2/data/stroomvolumes.json → stromen.json →
+// `rel` 0..1 per grondstof, zie bouwKometen): meer lading = meer kometen, zoals
+// v1 "deeltjes ∝ volume" deed. Onbekend volume = het minimum.
 //
 // WAT GOLF 1 VERANDERDE: één Points voor alle 493 dragers i.p.v. 182 objecten
 // en 182 onTick-callbacks; de baan loopt over de GETEKENDE geometrie (fijn
@@ -24,8 +26,8 @@
 // hoogte óp zijn lijn ligt; en drie skip-regels die het beeld niet raken: een
 // been dat uit staat, waarvan de kop achter de horizon ligt of dat kleiner dan
 // SKIP_PX projecteert, krijgt grootte 0 en slaat de baanberekening over.
-// K = 2 kometen per been op desktop, 1 op een telefoon (AFSTEMMING, zodat
-// Lars het in één regel terugdraait).
+// Kometen per been: 1–3 op desktop, 1–2 op een telefoon, uit het relatieve
+// jaarvolume (AFSTEMMING kometenMin/Max, zodat Lars het in één regel terugdraait).
 
 import * as THREE from "three";
 
@@ -41,8 +43,10 @@ export const KM_PER_DAG = {
 };
 
 export const AFSTEMMING = {
-  kometenPerBeenDesktop: 2,
-  kometenPerBeenTelefoon: 1,
+  kometenMinDesktop: 1,    // onbekend of klein volume
+  kometenMaxDesktop: 3,    // het grootste volume van de grondstof
+  kometenMinTelefoon: 1,
+  kometenMaxTelefoon: 2,
   staartPunten: 14,        // lengte van de staart in punten
   staartDeelVanBeen: 0.055, // staartlengte als fractie van de beenlengte
   kopMinPx: 6.0,
@@ -96,17 +100,29 @@ void main() {
  * @param telefoon kiest K
  */
 export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55) {
-  const K = telefoon ? AFSTEMMING.kometenPerBeenTelefoon : AFSTEMMING.kometenPerBeenDesktop;
   const T = AFSTEMMING.staartPunten;
   const perKomeet = T + 1;
   const nD = dragers.length;
-  const n = Math.max(1, nD * K * perKomeet);
+  // Kometen per drager uit het relatieve jaarvolume van de stroom (`rel` 0..1
+  // per grondstof, uit stromen.json); wortel zoals de lijndikte, onbekend = min.
+  const kMin = telefoon ? AFSTEMMING.kometenMinTelefoon : AFSTEMMING.kometenMinDesktop;
+  const kMax = telefoon ? AFSTEMMING.kometenMaxTelefoon : AFSTEMMING.kometenMaxDesktop;
+  const kPer = new Int32Array(nD);
+  const slotStart = new Int32Array(nD);
+  let nK = 0;
+  dragers.forEach((d, i) => {
+    const rel = typeof d.rel === "number" && Number.isFinite(d.rel) ? Math.max(0, Math.min(1, d.rel)) : null;
+    kPer[i] = rel === null ? kMin : Math.min(kMax, kMin + Math.round(Math.sqrt(rel) * (kMax - kMin)));
+    slotStart[i] = nK;
+    nK += kPer[i];
+  });
+  const n = Math.max(1, nK * perKomeet);
 
   const dPos = new Float32Array(n * 3);
   const dKleur = new Float32Array(n * 3);
   const dGrootte = new Float32Array(n);
   const dAlfa = new Float32Array(n);
-  const fase = new Float32Array(Math.max(1, nD * K));
+  const fase = new Float32Array(Math.max(1, nK));
   const lijnKleur = new Float32Array(nD * 3);      // de lijnkleur per drager (voor kop/staart-menging)
   // baan per drager: plat (xyz), cum (originele km per vertex), totaal (km)
   const banen = dragers.map((d) => ({
@@ -115,7 +131,7 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
   }));
   const slotVanBeen = new Map();
   dragers.forEach((d, i) => slotVanBeen.set(d.been, i));
-  for (let bi = 0; bi < nD; bi++) for (let c = 0; c < K; c++) fase[bi * K + c] = c / K;
+  for (let bi = 0; bi < nD; bi++) for (let c = 0; c < kPer[bi]; c++) fase[slotStart[bi] + c] = c / kPer[bi];
 
   const geo = new THREE.BufferGeometry();
   const attrPos = new THREE.BufferAttribute(dPos, 3); attrPos.setUsage(THREE.DynamicDrawUsage);
@@ -145,9 +161,9 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
   const srgb = { r: 0, g: 0, b: 0 };
   function kleurDrager(bi) {
     const r = lijnKleur[bi * 3], g = lijnKleur[bi * 3 + 1], b = lijnKleur[bi * 3 + 2];
-    for (let k = 0; k < K; k++) {
+    for (let k = 0; k < kPer[bi]; k++) {
       for (let j = 0; j <= T; j++) {
-        const i = (bi * K + k) * perKomeet + j;
+        const i = (slotStart[bi] + k) * perKomeet + j;
         const u = j / T;                       // 0 = kop, 1 = staarteind
         // De KOP is bijna wit; de staart zakt terug naar de lijnkleur, zodat je
         // aan de kleur ziet wát er beweegt.
@@ -235,21 +251,21 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
         skip = beenPx < AFSTEMMING.skipPx;
       }
       if (skip) {
-        for (let k = 0; k < K; k++) for (let j = 0; j <= T; j++) {
-          const i = (bi * K + k) * perKomeet + j;
+        for (let k = 0; k < kPer[bi]; k++) for (let j = 0; j <= T; j++) {
+          const i = (slotStart[bi] + k) * perKomeet + j;
           dGrootte[i] = 0; dAlfa[i] = 0;
         }
         continue;
       }
       // reisduur in dagen = lengte / snelheid; tempo 1 = één dag per seconde
       const duur = b.totaal / b.kmPerDag;
-      for (let k = 0; k < K; k++) {
-        const f0 = (fase[bi * K + k] + tijd / duur) % 1;
+      for (let k = 0; k < kPer[bi]; k++) {
+        const f0 = (fase[slotStart[bi] + k] + tijd / duur) % 1;
         // horizon-toets op de kop: achter de bol → de hele komeet uit
         opBaan(b, f0 * b.totaal, kop, 0);
         if ((kop[0] * rx + kop[1] * ry + kop[2] * rz) / radius < horizon) {
           for (let j = 0; j <= T; j++) {
-            const i = (bi * K + k) * perKomeet + j;
+            const i = (slotStart[bi] + k) * perKomeet + j;
             dGrootte[i] = 0; dAlfa[i] = 0;
           }
           continue;
@@ -260,7 +276,7 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
         const px = (0.0035 * perEenheid) / afst;
         const kopPx = Math.min(AFSTEMMING.kopMaxPx, Math.max(AFSTEMMING.kopMinPx, px));
         for (let j = 0; j <= T; j++) {
-          const i = (bi * K + k) * perKomeet + j;
+          const i = (slotStart[bi] + k) * perKomeet + j;
           const u = j / T;
           const f = f0 - j * stap;
           // Een komeet die net vertrokken is heeft nog geen staart achter zich.
@@ -285,6 +301,7 @@ export function bouwKometen(dragers, radius, isAan, telefoon, renderOrder = 7.55
 
   return {
     groep, punten, update, zetBaan, zetKleur, commitKleur,
-    stats: { dragers: nD, kometen: nD * K, punten: n, K },
+    stats: { dragers: nD, kometen: nK, punten: n, K: kMin === kMax ? kMin : `${kMin}–${kMax}`,
+             metVolume: dragers.filter((d) => typeof d.rel === "number").length },
   };
 }

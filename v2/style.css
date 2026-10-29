@@ -258,6 +258,10 @@ html, body {
    afbreekpunt; op 375 px liep hij de groep uit. min-width 0 laat het flex-item
    krimpen, overflow-wrap breekt dan binnen de knop af. */
 .srGroep .btnRow button { min-width: 0; overflow-wrap: anywhere; }
+/* Het jaarvolume onder de stroomnaam (LAR-642): een dimme tweede regel; onbekend
+   nog dimmer en cursief, zodat "geen cijfer" niet als "klein" leest. */
+.srVol { display: block; font-size: 9px; line-height: 1.2; color: inherit; opacity: 0.8; font-weight: normal; margin-top: 1px; }
+.srVol.is-onbekend { opacity: 0.5; font-style: italic; }
 
 #stats {
   margin-top: 14px;

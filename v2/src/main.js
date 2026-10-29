@@ -21,7 +21,7 @@ import { laadAisnet } from "./aisnet.js?v=084";
 import { laadAisgloed } from "./aisgloed.js?v=086";
 import { laadAisTracks } from "./aistracks.js?v=090";
 import { laadAnkercheck } from "./ankercheck.js?v=098";
-import { laadStroombundel } from "./stroombundel.js?v=139";
+import { laadStroombundel } from "./stroombundel.js?v=143";
 import { laadStadslichten } from "./stadslichten.js?v=140";
 import { GRONDSTOF_KLEUR, LIJNSTIJL } from "./stroomstijl.js?v=134";
 
@@ -46,11 +46,11 @@ const VECTOR_R = CONFIG.radius * CONFIG.vectorLift;
 // golf 1 verwijderd: de bundel is het enige pad.
 const PARAMS = new URLSearchParams(location.search);
 const MODUS = PARAMS.get("modus") === "bouw" ? "bouw" : "atlas";
-const CODE_VERSIE = "142";
+const CODE_VERSIE = "143";
 // ⚠️ De BUNDEL-versie staat los van de code-versie (zoals landnet "102"): bump
 // alleen na `bash v2/tools/bak_stromen.sh bundel`, anders downloadt elke
 // bezoeker bit-identieke bins opnieuw.
-const BUNDEL_VERSIE = "142";
+const BUNDEL_VERSIE = "143";
 const TELEFOON = window.innerWidth <= 640;
 let STADSLICHTEN = null;              // de Black Marble-laag (golf 2); gevuld verderop, zetAttrib leest hem
 
@@ -436,6 +436,27 @@ function werkGroepenBij() {
   }
 }
 
+// Hoeveelheden bij de stromen (LAR-642, 2026-10-29, zoals v1's "volume ≈ X"):
+// per .srBtn een tweede regel met het jaarvolume uit de bundel (stromen.json →
+// volume.kort, uit v2/data/stroomvolumes.json), of "volume onbekend". De dikte
+// op de bol en het aantal kometen komen uit hetzelfde veld (stroombundel.js).
+function toonVolumes() {
+  if (!ATLAS) return;
+  for (const knop of document.querySelectorAll(".srBtn")) {
+    const info = ATLAS.stroomInfo(knop.dataset.sr);
+    if (!info || knop.querySelector(".srVol")) continue;
+    const v = info.volume;
+    const el = document.createElement("small");
+    el.className = "srVol" + (v && v.kort ? "" : " is-onbekend");
+    el.textContent = v && v.kort ? v.kort : "volume onbekend";
+    if (v && v.tekst) {
+      const basis = knop.title ? knop.title + "\n" : "";
+      knop.title = `${basis}Jaarvolume: ${v.tekst}${v.status === "indicatie" ? " (indicatie)" : ""}${v.productvorm ? " · " + v.productvorm : ""}`;
+    }
+    knop.append(el);
+  }
+}
+
 function toonStroomNoot() {
   const noot = document.getElementById("stroomNoot");
   if (noot && REGISTER) {
@@ -562,7 +583,7 @@ async function startStromen() {
   koppelStroomKnoppen();
   const sub = document.getElementById("hudSub");
   const nGs = new Set(REGISTER.stromen.map((s) => s.grondstof)).size;
-  if (sub) sub.textContent = `${REGISTER.stromen.length} stromen · ${nGs} grondstoffen · kleur = grondstof, lijn = transport`;
+  if (sub) sub.textContent = `${REGISTER.stromen.length} stromen · ${nGs} grondstoffen · kleur = grondstof, lijn = transport, dikte = hoeveelheid`;
 
   ATLAS = await laadStroombundel({
     radius: VECTOR_R, codeVersie: CODE_VERSIE, bundelVersie: BUNDEL_VERSIE,
@@ -582,10 +603,11 @@ async function startStromen() {
   ATLAS.zetLabels(labelsAan);
   GLOBE.onTick((dt) => ATLAS.update(dt));
   window.ATLAS = ATLAS;                 // diagnose- en meethandvat (meet_atlas.mjs)
+  toonVolumes();
   const st = ATLAS.stats;
   console.log(
     `[atlas v2] stromenbundel ${BUNDEL_VERSIE}: ${st.stromen} stromen · ${st.benen} benen (${st.stippel} stippel) · ` +
-    `${st.markers} knopen · ${st.sites} sites · ${st.labels ? `${st.labels.labels} labels · ` : ""}L0 ${st.segmentenL0.toLocaleString("nl")} / L1 ${st.segmentenL1.toLocaleString("nl")} / ` +
+    `${st.markers} knopen · ${st.sites} sites · ${st.metVolume} met volume · ${st.labels ? `${st.labels.labels} labels · ` : ""}L0 ${st.segmentenL0.toLocaleString("nl")} / L1 ${st.segmentenL1.toLocaleString("nl")} / ` +
     `lucht ${st.segmentenLucht.toLocaleString("nl")} segmenten · ${st.kometen.kometen} kometen (K ${st.kometen.K}) · ` +
     `laden ${st.msLaden} ms, decoderen ${st.msDecoderen} ms`
   );

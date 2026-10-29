@@ -1,0 +1,23 @@
+gas-condabri-curtisisland: gebakken 365.1 km
+gas-condabri-curtisisland: keuring goed
+kolen-carmichael-abbotpoint: gebakken 368.4 km
+goud-boddington-hongkong: gebakken 6165 km
+kolen-carmichael-abbotpoint: keuring goed-met-bevindingen
+goud-boddington-hongkong: keuring goed-met-bevindingen
+kolen-cerrejon-iskenderun: gebakken 11138.4 km
+koper-quellaveco-ilo: gebakken 160.8 km
+olie-pasadena-linden: gebakken 2455.4 km
+kolen-cerrejon-iskenderun: keuring goed-met-bevindingen
+gas-pointfortin-quintero: gebakken 7272 km
+koper-quellaveco-ilo: keuring goed-met-bevindingen
+olie-pasadena-linden: keuring goed-met-bevindingen
+gas-pointfortin-quintero: keuring goed-met-bevindingen
+zilver-dexing-guixi: gebakken 153.3 km
+olie-omisalj-szazhalombatta: gebakken 479.7 km
+zilver-dexing-guixi: keuring goed-met-bevindingen
+olie-omisalj-szazhalombatta: keuring goed-met-bevindingen
+nikkel-thompson-longharbour: gebakken 5720.9 km
+nikkel-thompson-longharbour: keuring goed-met-bevindingen
+zilver-caylloma-callao: gebakken 1286.7 km
+zilver-caylloma-callao: keuring goed-met-bevindingen
+klaar: 11/11 gebakken, 11 registreerbaar van 11 reserve-assen (0 in de toets afgewezen)

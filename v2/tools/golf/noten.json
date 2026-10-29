@@ -53,5 +53,16 @@
  "goud-paracatu-zurich": "Let op: ZRH als aankomst en de Zwitserse afnemer niet gebrond; keerlus Uberaba in het wegbeen; sitelaag w-paracatu gelijkgetrokken (4,3 km).",
  "goud-dubai-valcambi": "Let op: MXP als aankomst is een aanname; been 3 MXP → Valcambi is de omgekeerde kopie via Como/Chiasso (ratio 2,1, geen wegkm).",
  "koper-centinela-onsan": "Let op: concentraatleiding Centinela → Michilla en de Michilla-aanloop (158 km) zijn stippel; afnemer LS MnM op één bron; sitelaag w-onsan ligt bij Korea Zinc.",
- "koper-motheo-walvisbay": "Let op: wegkm niet gebrond (1.014 km gemeten, factor 1,23 op hemelsbreed); Walvis Bay-kade hergebruikt."
+ "koper-motheo-walvisbay": "Let op: wegkm niet gebrond (1.014 km gemeten, factor 1,23 op hemelsbreed); Walvis Bay-kade hergebruikt.",
+ "nikkel-thompson-longharbour": "Let op: bestemming Long Harbour aannemelijk (één bron); spoorcorridor via Sudbury/Toronto/Montréal is eigen afleiding (vrije run via Cochrane/La Tuque 410 km korter); 4 verklaarde terugloop-knikken en 1 spike.",
+ "zilver-caylloma-callao": "Let op: TCSA-terminal Callao aannemelijk (één bron); wegkm 1.235 is som van twee bronnen (+4,2%), ratio 1,9 door de Andes-route via Chivay/Arequipa; bestand 391 KB.",
+ "zilver-dexing-guixi": "Let op: mijnanker Dexing onzeker (registerpunt, put 2–3 km ZO); modaliteit en bestemming op één bron; zilveraandeel in het koperconcentraat onbekend.",
+ "kolen-carmichael-abbotpoint": "Let op: stoppunt op de NQXT-kolenopslag Abbot Point, zonder zeebeen (bestemming niet in bronnen).",
+ "kolen-cerrejon-iskenderun": "Let op: herkomst Cerrejón is een aanname (GEM-bron zonder mijnnaam); zeelengte 10.932 km ongepubliceerd; aanlopen schematisch.",
+ "gas-condabri-curtisisland": "APLNG-hoofdleiding 365,1 km (AEMC 364,97); Curtis Island-marker 0,61 km van de lijn (fabriek naast het leidingeinde).",
+ "gas-pointfortin-quintero": "Let op: Panamakanaal-route via MARNET zonder gepubliceerde km; V-omweg ~17 km in de Point Fortin-aanloop (watervia-punt).",
+ "olie-omisalj-szazhalombatta": "Let op: herkomst van de tankers en de actieve MOL-strang niet bevestigd; been 3 zonder bronlengte; 8 spikes in de OSM-leiding niet gerepareerd.",
+ "olie-pasadena-linden": "Let op: Colonial-trunk zonder gepubliceerde lengte (km-toets indicatief); noordelijk deel aannemelijk.",
+ "goud-boddington-hongkong": "Let op: de vlucht PER → HKG en de PER-vrachtterminal zijn niet voor deze lading gebrond; naad 1,9 km (airside); 5 knikken op het truckbeen.",
+ "koper-quellaveco-ilo": "Let op: werkelijke corridor Quellaveco → Engie Ilo niet gebrond; het net kiest zuidelijke mijnwegen (ratio 1,67)."
 }

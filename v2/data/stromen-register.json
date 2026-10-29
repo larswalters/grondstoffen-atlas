@@ -2736,6 +2736,94 @@
    "label": "Motheo → Walvis Bay",
    "aan": true,
    "noot": "M31 · golf 11 (2026-10-29): koperconcentraat van de Sandfire Motheo-mijn (Botswana) per truck over de Trans-Kalahari (A3/A2, Mamuno/Buitepos, B6, B1, B2) naar de Walvis Bay-kade. Let op: wegkm niet gebrond (1.014 km gemeten, factor 1,23 op hemelsbreed); Walvis Bay-kade hergebruikt."
+  },
+  {
+   "sleutel": "ni-tl",
+   "bestand": "stroomroute-nikkel-thompson-longharbour.json",
+   "grondstof": "nikkel",
+   "label": "Thompson → Long Harbour",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Thompson-concentraat per spoor via Winnipeg, Sudbury, Toronto en Montréal naar Trois-Rivières en per schip naar Long Harbour (bestemming aannemelijk: één bron). Let op: bestemming Long Harbour aannemelijk (één bron); spoorcorridor via Sudbury/Toronto/Montréal is eigen afleiding (vrije run via Cochrane/La Tuque 410 km korter); 4 verklaarde terugloop-knikken en 1 spike."
+  },
+  {
+   "sleutel": "ag-cc",
+   "bestand": "stroomroute-zilver-caylloma-callao.json",
+   "grondstof": "zilver",
+   "label": "Caylloma → Callao",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): lood-zilverconcentraat van Caylloma (Bateas, Fortuna) per truck over de Panamericana Sur naar de TCSA-terminal in Callao, aannemelijk (een bron). Let op: TCSA-terminal Callao aannemelijk (één bron); wegkm 1.235 is som van twee bronnen (+4,2%), ratio 1,9 door de Andes-route via Chivay/Arequipa; bestand 391 KB."
+  },
+  {
+   "sleutel": "ag-dg",
+   "bestand": "stroomroute-zilver-dexing-guixi.json",
+   "grondstof": "zilver",
+   "label": "Dexing → Guixi",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): zilver in Dexing-koperconcentraat gaat per spoor (Ledexian- en Wangan-lijn, 153 km) naar de Jiangxi Copper-smelter in Guixi; aannemelijk: één bron. Let op: mijnanker Dexing onzeker (registerpunt, put 2–3 km ZO); modaliteit en bestemming op één bron; zilveraandeel in het koperconcentraat onbekend."
+  },
+  {
+   "sleutel": "kolen-ca",
+   "bestand": "stroomroute-kolen-carmichael-abbotpoint.json",
+   "grondstof": "kolen",
+   "label": "Carmichael → Abbot Point",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Carmichael-kolen per spoor (Carmichael Rail + Newlands/GAP, 368 km) naar de NQXT-kolenopslag bij Abbot Point; stoppunt de kade, geen bestemming in bronnen. Let op: stoppunt op de NQXT-kolenopslag Abbot Point, zonder zeebeen (bestemming niet in bronnen)."
+  },
+  {
+   "sleutel": "kolen-ci",
+   "bestand": "stroomroute-kolen-cerrejon-iskenderun.json",
+   "grondstof": "kolen",
+   "label": "Cerrejón → Iskenderun",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Cerrejón-kolen per spoor naar Puerto Bolívar en per capesize via Gibraltar naar de kolensteiger van Isken Sugözü (aannemelijk: één bron). Let op: herkomst Cerrejón is een aanname (GEM-bron zonder mijnnaam); zeelengte 10.932 km ongepubliceerd; aanlopen schematisch."
+  },
+  {
+   "sleutel": "gas-cc",
+   "bestand": "stroomroute-gas-condabri-curtisisland.json",
+   "grondstof": "gas",
+   "label": "Condabri → Curtis Island",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Steenkoolgas uit het Surat-bekken gaat door de 42-inch APLNG-hoofdleiding (365 km) naar de LNG-fabriek op Curtis Island. APLNG-hoofdleiding 365,1 km (AEMC 364,97); Curtis Island-marker 0,61 km van de lijn (fabriek naast het leidingeinde)."
+  },
+  {
+   "sleutel": "gas-pq",
+   "bestand": "stroomroute-gas-pointfortin-quintero.json",
+   "grondstof": "gas",
+   "label": "Point Fortin → Quintero",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Trinidadiaans LNG per tanker door het Panamakanaal naar GNL Quintero (Chili), één zeebeen met twee haven-aanlopen. Let op: Panamakanaal-route via MARNET zonder gepubliceerde km; V-omweg ~17 km in de Point Fortin-aanloop (watervia-punt)."
+  },
+  {
+   "sleutel": "olie-os",
+   "bestand": "stroomroute-olie-omisalj-szazhalombatta.json",
+   "grondstof": "olie",
+   "label": "Omišalj → Százhalombatta",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): Niet-Russische crude per tanker bij JANAF Omišalj, daarna 477 km Adria-pijpleiding (OSM doorgetrokken) naar MOL Duna; twee korte stippels (3,1 km), geen zeebeen. Let op: herkomst van de tankers en de actieve MOL-strang niet bevestigd; been 3 zonder bronlengte; 8 spikes in de OSM-leiding niet gerepareerd."
+  },
+  {
+   "sleutel": "olie-pl",
+   "bestand": "stroomroute-olie-pasadena-linden.json",
+   "grondstof": "olie",
+   "label": "Pasadena → Linden",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): raffinaat (benzine en distillaat) per Colonial Pipeline, OSM-gestikt over 12 staten, van de Pasadena-kop bij Houston naar Linden Junction in New Jersey (NY Harbor). Let op: Colonial-trunk zonder gepubliceerde lengte (km-toets indicatief); noordelijk deel aannemelijk."
+  },
+  {
+   "sleutel": "au-bh",
+   "bestand": "stroomroute-goud-boddington-hongkong.json",
+   "grondstof": "goud",
+   "label": "Boddington → Hongkong",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): doré van Boddington per truck naar de Perth Mint Refinery bij Perth Airport, per vrachtvlucht PER → HKG naar de Cathay-vrachtterminal. Let op: de vlucht PER → HKG en de PER-vrachtterminal zijn niet voor deze lading gebrond; naad 1,9 km (airside); 5 knikken op het truckbeen."
+  },
+  {
+   "sleutel": "cu-qe",
+   "bestand": "stroomroute-koper-quellaveco-ilo.json",
+   "grondstof": "koper",
+   "label": "Quellaveco → Engie Ilo",
+   "aan": true,
+   "noot": "M31 · golf 12 (2026-10-29): koperconcentraat van de Quellaveco-mijn per truck (aannemelijk: één bron) naar de Engie-kade in Ilo, zonder zeebeen. Let op: werkelijke corridor Quellaveco → Engie Ilo niet gebrond; het net kiest zuidelijke mijnwegen (ratio 1,67)."
   }
  ],
  "uitgesloten": [
