@@ -1,0 +1,63 @@
+zilver: 2/2 ketens door — zilver-nevescorvo-setubal, zilver-volcan-callao · niet: zilver-dubai-ahmedabad (afgewezen), zilver-zgounder-agadir (afgewezen)
+pgm: 1/2 ketens door — pgm-platreef-zondereinde · niet: pgm-columbus-westdeptford (afgewezen), pgm-talnakh-nadezhda (afgewezen), pgm-portcolborne-acton (afgewezen)
+diamant: 2/2 ketens door — diamant-udachny-dubai, diamant-mumbai-tokyo · niet: diamant-nyurba-mirny (afgewezen), diamant-antwerpen-parijs (afgewezen)
+uranium: 2/2 ketens door — uranium-caetite-malvesi, uranium-metropolis-almelo · niet: uranium-metropolis-eunice (reserve), uranium-porthope-eunice (afgewezen)
+zilver-nevescorvo-setubal: gebakken 164.5 km
+koper: 2/2 ketens door — koper-caserones-saganoseki, koper-toromocho-callao · niet: koper-norilsk-murmansk (afgewezen), koper-erdenet-erenhot (afgewezen)
+zilver-nevescorvo-setubal: keuring goed-met-bevindingen
+zilver-volcan-callao: gebakken 206.5 km
+diamant-udachny-dubai: gebakken 7657 km
+nikkel: 1/2 ketens door — nikkel-zapolyarny-monchegorsk · niet: nikkel-thio-doniambo (afgewezen), nikkel-oncapuma-barcarena (afgewezen), nikkel-coppercliff-clydach (afgewezen)
+zilver-volcan-callao: keuring goed-met-bevindingen
+kolen: 2/2 ketens door — kolen-tabang-balikpapan, kolen-mormugao-vijayanagar · niet: kolen-curragh-gladstone (reserve), kolen-kideco-tanahmerah (afgewezen)
+diamant-udachny-dubai: keuring goed-met-bevindingen
+pgm-platreef-zondereinde: gebakken 253.6 km
+kobalt: 0/2 ketens door —  · niet: kobalt-ruashi-beira (afgewezen), kobalt-metalkol-daressalaam (afgewezen), kobalt-kasulo-tongxiang (afgewezen), kobalt-boss-beira (afgewezen)
+goud: 2/2 ketens door — goud-hishikari-toyo, goud-herradura-torreon · niet: goud-ticino-bangkok (afgewezen), goud-argor-hanau (afgewezen)
+pgm-platreef-zondereinde: keuring goed-met-bevindingen
+nikkel-zapolyarny-monchegorsk: gebakken 285.1 km
+koper-toromocho-callao: gebakken 179.6 km
+nikkel-zapolyarny-monchegorsk: keuring goed-met-bevindingen
+koper-toromocho-callao: keuring goed-met-bevindingen
+kolen-mormugao-vijayanagar: gebakken 379 km
+kolen-mormugao-vijayanagar: keuring goed
+koper-caserones-saganoseki: gebakken 18864.6 km
+koper-caserones-saganoseki: keuring goed-met-bevindingen
+grafiet: 2/2 ketens door — grafiet-seadrift-pamplona, grafiet-balama-kellyton · niet: grafiet-liumao-laixi (afgewezen), grafiet-pedraazul-vitoria (reserve)
+ree: 2/2 ketens door — ree-kuantan-pasadena, ree-sillamae-newark · niet: ree-kuantan-narva (reserve), ree-yunsheng-erie (afgewezen)
+uranium-metropolis-almelo: gebakken 8074.6 km
+uranium-metropolis-almelo: keuring goed-met-bevindingen
+olie: 2/2 ketens door — olie-agadem-seme, olie-lagoagrio-chiriquigrande · niet: olie-boatasyn-prigorodnoye (reserve), olie-nuevoteapa-salinacruz (reserve)
+goud-herradura-torreon: gebakken 1434.7 km
+uranium-caetite-malvesi: gebakken 11535.6 km
+goud-herradura-torreon: keuring goed-met-bevindingen
+uranium-caetite-malvesi: keuring goed-met-bevindingen
+diamant-mumbai-tokyo: gebakken 6871.2 km
+ree-sillamae-newark: gebakken 8411 km
+ree-sillamae-newark: keuring goed-met-bevindingen
+diamant-mumbai-tokyo: keuring goed-met-bevindingen
+grafiet-seadrift-pamplona: gebakken 9615.4 km
+grafiet-seadrift-pamplona: keuring goed-met-bevindingen
+grafiet-balama-kellyton: gebakken 18273.9 km
+grafiet-balama-kellyton: keuring goed-met-bevindingen
+olie-agadem-seme: gebakken 1869.9 km
+ree-kuantan-pasadena: gebakken 21783.6 km
+olie-agadem-seme: keuring goed-met-bevindingen
+gas: 2/2 ketens door — gas-kiyikoy-kiskundorozsma, gas-utrenneye-beihai · niet: gas-tratayen-salliquelo (reserve), gas-waha-aguadulce (reserve)
+ree-kuantan-pasadena: keuring goed-met-bevindingen
+goud-hishikari-toyo: gebakken 672.2 km
+goud-hishikari-toyo: keuring goed-met-bevindingen
+kolen-tabang-balikpapan: gebakken 513.4 km
+kolen-tabang-balikpapan: keuring goed-met-bevindingen
+olie-lagoagrio-chiriquigrande: gebakken 1775.9 km
+olie-lagoagrio-chiriquigrande: keuring goed-met-bevindingen
+gas-kiyikoy-kiskundorozsma: gebakken 1202.7 km
+gas-kiyikoy-kiskundorozsma: keuring goed
+gas-utrenneye-beihai: gebakken 22704.2 km
+gas-utrenneye-beihai: keuring goed-met-bevindingen
+lithium: 2/2 ketens door — lithium-centenario-yangtze, lithium-greenbushes-qinzhou · niet: lithium-rubicon-yangtze (afgewezen), lithium-centenario-angamos (afgewezen)
+lithium-centenario-yangtze: gebakken 22685.3 km
+lithium-centenario-yangtze: keuring goed-met-bevindingen
+lithium-greenbushes-qinzhou: gebakken 6735.7 km
+lithium-greenbushes-qinzhou: keuring goed-met-bevindingen
+klaar: 24/24 gebakken, 24 registreerbaar (waarvan 0 reserve-assen), over 14/14 grondstoffen

@@ -94,6 +94,162 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # ── Routebrief lithium-centenario-yangtze, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck Eramine Centenario-Ratones-plant (Salta, ~3.900 m) -> Terminal Puerto Rosario (TPR). Gepubliceerd 1.580 km
+    # (Eramine/Panorama Minero 2025-02-20, 40 t Li2CO3, wegvorm niet vermeld; truck aannemelijk). Via-punten hergebruikt uit
+    # lithium-saldeoro-guemes (SAC, Quebrada del Toro, Salta oostrand) en lithium-olaroz-naraha (Tucuman, Rosario).
+    # Plantanker onzeker (Ministerie van Economie portfolio-coordinaat 24 52 58 S 66 43 58 W). Hooggebergte-secundaire wegen:
+    # corridorKlassen breed, eindKlassen mét track (patroon olaroz-naraha b1).
+    "lithium-centenario-yangtze-centenario-tpr": {
+        "via": [
+            ("Eramine Centenario-Ratones-plant (onzeker) - anker",       (-66.7328, -24.8828)),
+            ("RN51 bij San Antonio de los Cobres (zuidrand)",            (-66.3187, -24.2278)),
+            ("RN51 Quebrada del Toro (bij Campo Quijano)",               (-65.6047, -24.8956)),
+            ("Salta oostrand (circunvalacion/RN9)",                      (-65.3670, -24.7952)),
+            ("Tucuman (RN34/RN9-splitsing)",                             (-65.2226, -26.8241)),
+            ("Rosario",                                                  (-60.6505, -32.9442)),
+            ("Terminal Puerto Rosario (TPR) - anker",                    (-60.6208, -32.9645)),
+        ],
+        "id": "li-centenario-tpr",
+        "naam": "Centenario-Ratones-plant -> Terminal Puerto Rosario (RN51 -> Salta -> RN9/RN34 -> Rosario)",
+        "extracts": ["argentina"],
+        "refs": ["RN51", "51", "RN9", "9", "RN34", "34", "RN A008", "RP129", "129"],
+        "gepubliceerdKm": 1580,
+        "bronnoot": "Eramine/Panorama Minero 2025-02-20: 1.580 km Centenario-Ratones -> Puerto Rosario (wegvorm niet vermeld)",
+        "vensterKm": 90,
+        "corridorKlassen": ["tertiary", "unclassified", "residential", "service"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "lithium-centenario-yangtze-weg-centenario-tpr.geojson",
+    },
+    # ── Routebrief ree-kuantan-pasadena, been b3 (LICHTE werkwijze M31 golf 13, ontwerpronde) ──
+    # Truck lanthaanoxide Barbours Cut Terminal (La Porte/Houston) -> Ketjen Bayport Plant, 13000 Bay Park Rd, Pasadena TX.
+    # Corridor (OSRM-indicatie 10,5 km, OSM-gebaseerd): George Altvater Blvd -> E Barbours Cut Blvd -> E Main St ->
+    # TX-146 Business (Broadway) -> W Fairmont Pkwy -> Bay Park Rd. Via-punten uit de OSRM-geometrie (dus op de weg), bewust
+    # NIET in het centrum van La Porte (Main St x Broadway, 29.6655,-95.0194). Geen gepubliceerde wegkm: de +-15%-toets is een indicatie.
+    "ree-kuantan-pasadena-barbours-ketjen": {
+        "via": [
+            ("Barbours Cut Container Terminal, Houston (anker ree-houston-kade)",          (-94.9983, 29.6819)),
+            ("E Main St ten oosten van het centrum van La Porte",                           (-95.0066, 29.6715)),
+            ("TX-146 Business (Broadway) x W Fairmont Pkwy - corridorkeuze westwaarts",     (-95.0190, 29.6529)),
+            ("W Fairmont Pkwy, halverwege",                                                 (-95.0438, 29.6520)),
+            ("W Fairmont Pkwy x Bay Park Rd - afslag zuidwaarts",                           (-95.0654, 29.6520)),
+            ("Ketjen Bayport Plant, 13000 Bay Park Rd, Pasadena (anker ree-ketjen-bayport)", (-95.0654, 29.6417)),
+        ],
+        "id": "ree-houston-ketjen",
+        "naam": "Barbours Cut Houston -> Ketjen Bayport Plant (E Main St -> TX-146 Business -> W Fairmont Pkwy -> Bay Park Rd, aannemelijk: haven en modaliteit)",
+        "extracts": ["us-texas"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "Geen gepubliceerde wegkm: hemelsbreed kade-site ~7,9 km (berekend), OSRM-indicatie 10,5 km (zelfde OSM-bron, geen publicatie); de +-15%-toets (9-12 km) is alleen een indicatie.",
+        "vensterKm": 8,
+        "eindToegangPrivaat": True,   # terminalwegen Barbours Cut kunnen access=private dragen
+        "uit": "ree-kuantan-pasadena-weg-barbours-ketjen.geojson",
+    },
+    # ── Routebrief grafiet-seadrift-pamplona, been b3 (LICHTE werkwijze M31 golf 13) ──
+    # Truck gecalcineerde naaldcokes Bilbao (Puerto, Santurtzi-kade) -> AP-68 -> Vitoria-Gasteiz -> A-1 -> Altsasu ->
+    # A-10 -> Pamplona-ring -> Graftech Iberica, Ororbia. Via-punten op de doorgaande weg, niet in een stadscentrum.
+    # Geen gepubliceerde wegkm: schatting ~190 km (haalbaarheidstoets 190,5 km): indicatie, geen harde norm.
+    "grafiet-seadrift-pamplona-bilbao-ororbia": {
+        "via": [
+            ("Bilbao - Santurtzi-kade (anker)", (-3.0396, 43.3363)),
+            ("AP-68 zuid van Bilbao", (-2.9503, 43.2378)),
+            ("A-1/AP-1 oost van Vitoria-Gasteiz", (-2.4872, 42.8725)),
+            ("A-10 bij Altsasu-Etxarri (Sakana-corridor)", (-2.0849, 42.8951)),
+            ("Graftech Iberica, Ororbia (anker)", (-1.7435, 42.8134)),
+        ],
+        "id": "gr-bilbao-ororbia-weg",
+        "naam": "Bilbao -> AP-68 -> A-1 -> A-10 -> PA-30 -> Graftech Iberica, Ororbia",
+        "extracts": ["spanje"],
+        "refs": ["AP-68", "A-1", "A-10", "PA-30"],
+        "gepubliceerdKm": 190,
+        "bronnoot": "Geen gepubliceerde wegkm; haalbaarheidstoets (eigen OSM-meting) 190,5 km, schatting ~190 km: indicatie.",
+        "vensterKm": 40,
+        "uit": "grafiet-seadrift-pamplona-weg-bilbao-ororbia.geojson",
+    },
+    # ── Routebrief grafiet-balama-kellyton, been b3 (LICHTE werkwijze M31 golf 13) ──
+    # Truck Napoleon Avenue (New Orleans, hergebruikt anker) -> Westwater Kellyton Graphite Plant: I-10 oost, I-65 via Mobile en Montgomery, US-231 Wetumpka, AL-9.
+    # GEEN gepubliceerde wegkm: hemelsbreed ca. 520 km, OSRM 586,8 km (indicatie). Haalbaarheidstoets-scan via Sylacauga was 636,6 km (omweg);
+    # corridor aangepast naar AL-9 (OSRM-stappen) langs Jackson's Gap, via-punt op de AL-9/AL-115-splitsing.
+    "grafiet-balama-kellyton-nola-kellyton": {
+        "via": [
+            ("Napoleon Ave container terminal New Orleans (anker, hergebruikt)", (-90.1120, 29.9123)),
+            ("I-10 Louisiana oost",                                (-89.7679, 30.2375)),
+            ("I-10 Mississippi kust",                              (-88.7294, 30.4455)),
+            ("I-65 noord van Mobile",                              (-87.9845, 30.9071)),
+            ("I-65 bij Evergreen",                                 (-86.9578, 31.4665)),
+            ("I-65 Montgomery",                                    (-86.3649, 32.2536)),
+            ("US-231 bij Wetumpka",                                (-86.1907, 32.5458)),
+            ("AL-9 bij Jacksons Gap",                              (-86.1004, 32.7547)),
+            ("AL-9 / AL-115-splitsing",                            (-86.0613, 32.9344)),
+            ("Westwater Kellyton Graphite Plant (anker gr-kellyton-plant)", (-86.0390, 32.9625)),
+        ],
+        "id": "gr-kellyton-weg",
+        "naam": "New Orleans -> I-10 -> I-65 -> US-231 -> AL-9 -> Kellyton Graphite Plant",
+        "extracts": ["us-louisiana", "us-mississippi", "us-alabama"],
+        "refs": ["I-10", "I-65", "US-231", "AL-9", "AL-115", "10", "65", "231", "9", "115"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed ca. 520 km, indicatie OSRM 586,8 (OSM)",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "grafiet-balama-kellyton-weg-nola-kellyton.geojson",
+    },
+    # ── Routebrief koper-caserones-saganoseki, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck Cu-concentraat Caserones (concentrator, Tierra Amarilla) -> C-535/C-345 -> Ruta 5 Norte -> afslag
+    # Puerto Punta Totoralillo (CAP). Mijnstuk (OSM-track, eerste ~9 km hemelsbreed) = stippel in de bake-functie;
+    # het profiel begint op het eerste openbare wegpunt. NIET via Copiapo-centrum. Geen gepubliceerde wegkm:
+    # JX: mijn - Copiapo 162 km (+ Copiapo - Totoralillo ~100 km), eigen OSM-meting 261,6 km: indicatie.
+    "koper-caserones-saganoseki-caserones-totoralillo": {
+        "via": [
+            ("C-535 einde mijnweg-stippel - eerste openbare weg", (-69.6226, -28.1468)),
+            ("C-535/C-345", (-69.7879, -28.1538)),
+            ("C-345", (-70.0220, -27.9123)),
+            ("Ruta 30 west van Tierra Amarilla (naar Ruta 5, niet Copiapo-centrum)", (-70.4088, -27.5015)),
+            ("Ruta 5 Norte - bypass Copiapo, zuidkop", (-70.4491, -27.5060)),
+            ("Ruta 5 Norte - bypass Copiapo, west van de stad", (-70.4393, -27.3524)),
+            ("Ruta 5 Norte (richting Caldera)", (-70.6531, -27.3526)),
+            ("Ruta 5 Norte - afslag Totoralillo", (-70.7947, -26.8647)),
+            ("Puerto Punta Totoralillo - ertsveld havenhoofd (anker)", (-70.8161, -26.8543)),
+        ],
+        "id": "cu-caserones-totoralillo-weg",
+        "naam": "Caserones -> C-535/C-345 -> Ruta 5 Norte -> Puerto Punta Totoralillo",
+        "extracts": ["chili"],
+        "refs": ["C-535", "C-345", "5"],
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "gepubliceerdKm": 262,
+        "bronnoot": "Eigen OSM-meting haalbaarheidstoets 261,6 km; JX-persbericht 2014: mijn 162 km ten zuidoosten van "
+                    "Copiapo. Geen gepubliceerde wegkm tot de haven: indicatie, geen harde norm.",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "koper-caserones-saganoseki-weg-caserones-totoralillo.geojson",
+    },
+    # ── Routebrief zilver-volcan-callao, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck Pb-Zn-Ag-concentraat Chungar (Volcan, Huayllay, Pasco) -> PE-20A (Carretera Vencedores de
+    # Sangrar: Huayllay - Abra La Viuda - Canta - Yangas - Punchauca - Av. Tupac Amaru) -> Callao,
+    # Transportadora Callao-mineraalterminal. Geen gepubliceerde wegkm: hemelsbreed ~137 km.
+    # Via-punten liggen op PE-20A-vertices (Overpass/OSM), niet in een stadscentrum.
+    "zilver-volcan-callao-chungar-tcsa": {
+        "via": [
+            ("Chungar-complex (Volcan) - anker, ag-chungar-mijn", (-76.4237, -11.0307)),
+            ("PE-20A bij Chungar/Huayllay - corridor Canta, niet Cerro de Pasco", (-76.4004, -11.0423)),
+            ("PE-20A bij Canta (buiten het centrum)", (-76.6370, -11.4779)),
+            ("PE-20A bij Yangas (Chillon-vallei)", (-76.7864, -11.6558)),
+            ("PE-20A bij Punchauca", (-76.9493, -11.7172)),
+            ("Av. Tupac Amaru (PE-20A oud tracé) - pint Naranjal/Canta-Callao", (-76.9992, -11.8399)),
+            ("Transportadora Callao-mineraalterminal (muelle centro) - anker, ag-callao-tcsa", (-77.1446, -12.0499)),
+        ],
+        "id": "ag-volcan-callao-weg",
+        "naam": "Chungar (Volcan) -> Huayllay -> Canta -> Yangas -> Av. Tupac Amaru -> Transportadora Callao-mineraalterminal (PE-20A)",
+        "extracts": ["peru"],
+        "refs": ["PE-20A", "PE-20", "PE-1N"],
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "gepubliceerdKm": 219,
+        "bronnoot": "Volcan jaarverslag 2024: unidad Chungar ligt op 219 km ten oosten van Lima (Lima-Chungar, "
+                    "geen Callao-wegkm); PE-20A Lima-Villa de Pasco 257 km (es.wikipedia). Indicatie, geen harde norm.",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "zilver-volcan-callao-weg-chungar-tcsa.geojson",
+    },
     # Routebrief grafiet-siviour-portadelaide, been b1 (LICHTE werkwijze, M31 golf 11).
     # Concentraat Siviour-mijn (Renascor, Eyre Peninsula) -> Bolivar PSG-site (SA Water, Adelaide-noord):
     # Siviour Rd -> Lincoln Hwy (B100: Cowell, Whyalla, Port Augusta) -> Augusta Hwy / Princes Hwy A1 (Port Wakefield) -> Port Wakefield Rd.
@@ -581,6 +737,219 @@ PROFIELEN = {
         "uit": "koper-quellaveco-ilo-weg-quellaveco-engieilo.geojson",
     },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief kolen-tabang-balikpapan, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck steenkool Bayan Tabang/Pakar-dagbouw -> Bayan-haulroad (asfalt) + openbare weg (service/unclassified) -> Senyiur-bargeterminal.
+    # Gepubliceerd 69 km (Petromindo 2015, bedrijfsopgave over de volledig operationele weg); OSM-meting brief 71,1 km (+3,0%).
+    # Niet de 101 km-weg naar Muara Pahu. Via-punten op doorgaande OSM-ways (brief par.4), geen dorpscentra.
+    "kolen-tabang-balikpapan-tabang-senyiur": {
+        "via": [
+            ("Tabang/Pakar-dagbouw (anker kolen-tabang-laad)",           (116.1263, 0.5509)),
+            ("haulroad-oost bij ICF",                                    (116.1621, 0.5341)),
+            ("bocht oost naar zuid",                                     (116.2261, 0.5190)),
+            ("begin lange unclassified (way 613748205)",                 (116.2376, 0.4914)),
+            ("overgang unclassified naar service",                       (116.3670, 0.3657)),
+            ("knoop service midden",                                     (116.4951, 0.3277)),
+            ("laatste aanloop Senyiur",                                  (116.6257, 0.2967)),
+            ("Senyiur-bargeterminal (anker kolen-senyiur-kade)",         (116.6280, 0.2930)),
+        ],
+        "id": "kolen-tabang-senyiur",
+        "naam": "Tabang/Pakar -> Bayan-haulroad -> Senyiur-bargeterminal",
+        "extracts": ["indonesie"],
+        "refs": [],
+        "corridorKlassen": ["service", "unclassified"],
+        "gepubliceerdKm": 69,
+        "bronnoot": "Petromindo 2015-11-02: Bayan's 69 km haulroad Tabang-Senyiur Port fully operational; brief-meting OSM 71,1 km",
+        "vensterKm": 40,
+        "uit": "kolen-tabang-balikpapan-weg-tabang-senyiur.geojson",
+    },
+    # ── Routebrief ree-sillamae-newark, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck REE-oxide/katalysatorpoeder NPM Silmet (Sillamae) -> weg 1/E20 (Tallinn-Narva mnt) -> Peterburi tee -> Muuga sadama tee
+    # (weg 94) -> Muuga-containerterminal (HHLA TK Estonia). 6 via-punten uit brief par.4, alle op weg 1 (OSRM-nearest <= 5 m).
+    # GEEN wegkm uit een bedrijfs-/overheidsopgave: hemelsbreed 157 km, OSRM 178,4 km (indicatie); de +-15%-toets is een indicatie.
+    # Silmet hangt via service+access=private-terreinwegen aan de E20 (zie ree-sillamae-narva) -> eindToegangPrivaat.
+    "ree-sillamae-newark-silmet-muuga": {
+        "via": [
+            ("NPM Silmet OU, Sillamae (anker, ree-silmet-scheiding)",       (27.7421, 59.4031)),
+            ("oprit Sillamae naar weg 1",                                   (27.7432, 59.3908)),
+            ("weg 1 westelijk van Kohtla-Jarve/Johvi",                      (27.0591, 59.4064)),
+            ("weg 1 NW van Rakvere",                                        (26.2455, 59.4267)),
+            ("weg 1 Lahemaa-streek",                                        (25.7924, 59.4606)),
+            ("weg 1 Kuusalu-streek (aanloop Tallinn-ring)",                 (25.3533, 59.4440)),
+            ("begin Muuga sadama tee (weg 94)",                             (24.9828, 59.4526)),
+            ("Muuga-containerterminal (anker, ree-muuga-ct)",               (24.9675, 59.4915)),
+        ],
+        "id": "ree-silmet-muuga",
+        "naam": "NPM Silmet Sillamae -> Muuga-containerterminal (weg 1/E20 -> Peterburi tee -> weg 94)",
+        "extracts": ["estland"],
+        "refs": ["1", "E20", "94"],
+        "gepubliceerdKm": 178,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 157 km, OSRM 178,4 km (indicatie, brief par.2/8[10])",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "ree-sillamae-newark-weg-silmet-muuga.geojson",
+    },
+    # ── Routebrief goud-herradura-torreon, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck goud-dore Herradura-plant (Minera Penmont, Caborca) -> SON-weg -> MEX 2 (Sonoyta-Santa Ana, Magdalena-bypass, Cananea,
+    # Agua Prieta, Ascension) -> MEX 10 / CHIH 56D / CHIH 7D -> MEX 45D (Chihuahua-oost) -> MEX 49D (Jimenez-Torreon) -> Met-Mex Penoles.
+    # GEEN wegkm uit een bedrijfs-/overheidsopgave: OSRM 1.413 (indicatie), hemelsbreed 1.112; de +-15%-toets is een indicatie.
+    # Via-punten op de doorgaande weg (OSRM-nearest <= 6 m), niet in een stadscentrum.
+    "goud-herradura-torreon-herradura-torreon": {
+        "via": [
+            ("Herradura-plant, Minera Penmont (anker, au-herradura-plant)", (-112.8482, 31.1458)),
+            ("MEX 2 Sonoyta-Santa Ana (MEX 2 oost, niet zuid naar Hermosillo)", (-112.5795, 31.3310)),
+            ("Libramiento Magdalena de Kino (bypass, MEX 2 naar Cananea)", (-110.9948, 30.6189)),
+            ("MEX 2 Cananea-Agua Prieta (noordroute)", (-109.9368, 31.1865)),
+            ("MEX 2 Agua Prieta-Ascension (doorgaande MEX 2 voor MEX 10)", (-108.3864, 31.0307)),
+            ("CHIH 56D Flores Magon-Galeana (tolweg naast libre MEX 10)", (-107.5116, 30.1167)),
+            ("CHIH 7D El Alamo-Flores Magon (tolweg naar Chihuahua)", (-106.8162, 29.8125)),
+            ("Libramiento Oriente Chihuahua (MEX 45D)", (-105.9488, 28.5919)),
+            ("MEX 49D Jimenez-Torreon (noordaanvoer La Laguna)", (-103.9927, 26.4850)),
+            ("Met-Mex Penoles-complex Torreon (anker, au-penoles-torreon)", (-103.4417, 25.5278)),
+        ],
+        "id": "au-herradura-torreon-weg",
+        "naam": "Herradura-plant -> MEX 2 -> MEX 10/CHIH 56D-7D -> MEX 45D -> MEX 49D -> Met-Mex Penoles Torreon",
+        "extracts": ["mexico"],
+        "refs": ["MEX 2", "MEX 10", "CHIH 56D", "CHIH 7D", "MEX 45", "MEX 45D", "MEX 49D", "MEX 49"],
+        "gepubliceerdKm": 1413.0,
+        "bronnoot": "geen bedrijfs-/overheidsopgave van de wegkilometer (routebrief 2/7): 1.413 km is OSRM, hemelsbreed 1.112 km - "
+                    "de +-15%-toets geldt als INDICATIE, geen harde norm.",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "goud-herradura-torreon-weg-herradura-torreon.geojson",
+    },
+    # ── Routebrief goud-hishikari-toyo, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck goudhoudend erts Hishikari-mijn (SMM, Isa) -> Kajiki-kade: lokale weg -> Rt 268 -> E3 Kyushu-expressway -> Hayato Road
+    # -> Rt 55/467. GEEN gepubliceerde wegkm: hemelsbreed 31 km, OSRM-indicatie 43,7 km (OSM-afgeleid) -> gepubliceerdKm None,
+    # de +-15%-toets is een indicatie. Via-punten op de weg (OSRM-snap 0-5 m), niet in Kajiki of Kokubu.
+    "goud-hishikari-toyo-hishikari-kajiki": {
+        "via": [
+            ("Hishikari-mijn (anker au-hishikari-mijn)", (130.6939, 32.0125)),
+            ("Rt 268, begin vanaf de mijnweg", (130.6667, 32.0026)),
+            ("E3 Kyushu-expressway, oprit", (130.7210, 31.9445)),
+            ("E3 / Hayato Road, einde expressway", (130.6702, 31.7469)),
+            ("Kajiki-haven, ertskade (anker au-kajiki-kade)", (130.6645, 31.7297)),
+        ],
+        "id": "goud-hishikari-toyo",
+        "naam": "Hishikari-mijn -> Kajiki-kade (Rt 268 -> E3 Kyushu-expressway -> Hayato -> Rt 55/467)",
+        "extracts": ["japan"],
+        "refs": ["268", "E3", "55", "467"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 31 km, OSRM-indicatie 43,7 km (OSM-afgeleid); lengtetoets alleen indicatie.",
+        "vensterKm": 40,
+        "uit": "goud-hishikari-toyo-weg-hishikari-kajiki.geojson",
+    },
+    # ── Routebrief uranium-metropolis-almelo, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck UF6 Metropolis Works (Illinois) -> Portsmouth Marine Terminal (VA): US-45/I-24/I-69 WK Pkwy -> I-65 -> Bluegrass Pkwy
+    # -> I-64 (Lexington, Charleston WV, Sandstone WV) -> I-295 -> I-664. Geen wegkm gepubliceerd; OSRM-indicatie 1.377-1.409.
+    "uranium-metropolis-almelo-metropolis-portsmouth": {
+        "via": [
+            ("Metropolis Works (anker u-metropolis-conversie)", (-88.7570, 37.1718)),
+            ("Western Kentucky Parkway", (-87.4541, 37.2125)),
+            ("Bluegrass Parkway", (-85.8266, 37.7034)),
+            ("I-64/I-75 Lexington", (-84.4375, 38.0610)),
+            ("I-64 Sandstone WV exit 139", (-80.8907, 37.7828)),
+            ("I-295 bij Richmond", (-77.5975, 37.6627)),
+            ("Portsmouth Marine Terminal (anker u-portsmouth-kade)", (-76.3270, 36.8575)),
+        ],
+        "id": "uranium-metropolis-almelo-portsmouth",
+        "naam": "Metropolis Works -> Portsmouth Marine Terminal (I-24/I-69 -> WK Pkwy -> I-65 -> Bluegrass Pkwy -> I-64 -> I-295/I-664)",
+        "extracts": ["us-illinois", "us-kentucky", "us-west-virginia", "us-virginia"],
+        "refs": ["I-24", "I-69", "WK", "BG", "I-65", "I-64", "I-295", "I-664"],
+        "gepubliceerdKm": 1393,
+        "bronnoot": "geen wegkm gepubliceerd; OSRM-indicatie 1.377 (eigen run) tot 1.409 (haalbaarheidstoets); hemelsbreed 1.106 km",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "trimStaart": True,
+        "uit": "uranium-metropolis-almelo-weg-metropolis-portsmouth.geojson",
+    },
+    # ── Routebrief uranium-caetite-malvesi, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck yellowcake INB-fabriek Caetité (Bahia) -> Salvador TECON-containerkade: BA-569/BA-152 -> BA-262 (Brumado) ->
+    # BR-116 (Vitória da Conquista, Jequié) -> Feira de Santana -> BR-324 -> Salvador. Gepubliceerd 757 km (Bahia-overheid 2007,
+    # vanaf Caetité-stad); OSRM 775. Zonder via-punten kiest de router BA-148/BR-242 (667 km): 4 via-punten uit brief §4.
+    # Venster 75 km: BR-116 via Milagres ligt ~52 km west van de rechte lijn Jequié-Feira; bij 40 km omzeilde de router Milagres (+100 km omweg).
+    "uranium-caetite-malvesi-ura-salvador": {
+        "via": [
+            ("INB-fabriek Caetité (anker u-caetite-ura)", (-42.2813, -13.8357)),
+            ("BA-262 westrand Brumado", (-41.6522, -14.2089)),
+            ("BR-116/BA-262 zuid van Vitória da Conquista", (-40.8305, -14.8296)),
+            ("BR-116 bij Jequié-zone", (-40.1141, -13.8517)),
+            ("BR-116/BR-324 Feira de Santana", (-38.9343, -12.2733)),
+            ("Porto de Salvador TECON-containerkade (anker u-salvador-tecon)", (-38.5083, -12.9580)),
+        ],
+        "id": "uranium-caetite-malvesi-ura-salvador",
+        "naam": "INB Caetité -> Salvador TECON (BA-262 -> BR-116 -> BR-324)",
+        "extracts": ["brazilie"],
+        "refs": ["BA-262", "BR-116", "BR-324"],
+        "gepubliceerdKm": 757,
+        "bronnoot": "Bahia-overheid 2007: 757 km Caetité-stad -> Salvador; OSRM 775 (indicatie)",
+        "vensterKm": 75,
+        "uit": "uranium-caetite-malvesi-weg-ura-salvador.geojson",
+    },
+    # ── Routebrief diamant-mumbai-tokyo, been b3 (LICHTE werkwijze M31 golf 13) ──
+    # Truck Narita Cargo Area (NRT) -> Jewelry Town Okachimachi (Taito, Tokio): Narita-IC (Higashi-Kanto) -> Keiyo-weg ->
+    # Shin-Ohashi-dori (R50) -> Shuto 1 Ueno-lijn -> Okachimachi. GEEN gepubliceerde wegkm: hemelsbreed 55 km, pgm-b3 haalde 74,5 km
+    # tot Nihonbashi (eigen meting) -> gepubliceerdKm 55 is een indicatie, geen norm. Via 1-3 = pgm-b3; via 4 = Shuto 1 Ueno-lijn.
+    "diamant-mumbai-tokyo-narita-okachimachi": {
+        "via": [
+            ("Narita Cargo Area (anker dia-nrt-cargo)", (140.3797, 35.7743)),
+            ("Narita-IC, Higashi-Kanto Jidoshado", (140.3183, 35.7767)),
+            ("Chiba, Keiyo-/Tokyo-Bay-Road-corridor", (140.1064, 35.6073)),
+            ("Shin-Ohashi-dori (R50), Koto-ku", (139.8869, 35.6825)),
+            ("Shuto Route 1 Ueno-lijn, S van Okachimachi", (139.7756, 35.7015)),
+            ("Jewelry Town Okachimachi (anker dia-tokyo-okachimachi)", (139.7748, 35.7073)),
+        ],
+        "id": "diamant-mumbai-tokyo-narita-okachimachi",
+        "naam": "Narita Cargo Area → Jewelry Town Okachimachi (Higashi-Kanto → Keiyo → Shuto 1)",
+        "extracts": ["japan"],
+        "refs": [],
+        "gepubliceerdKm": 55,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 55 km, pgm-b3 74,5 km tot Nihonbashi (eigen meting); lengtetoets alleen indicatie.",
+        "vensterKm": 40,
+        "uit": "diamant-mumbai-tokyo-weg-narita-okachimachi.geojson",
+    },
+    # ── Routebrief pgm-platreef-zondereinde, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck PGM-concentraat Platreef-mijn en concentrator (Ivanplats/Ivanhoe, Mokopane) -> Northam Zondereinde-smelter:
+    # N11 -> R518 -> N1 (Mookgophong, Modimolle) -> R516 (Bela-Bela, Rooiberg Road) -> R511 -> D-wegen naar de poort.
+    # GEEN gepubliceerde wegkm: hemelsbreed 181 km, OSRM-indicatie 256,7 km (eigen meting) -> gepubliceerdKm 257 is een
+    # indicatie, geen norm (verwacht 245-270 km). Via-punt 1 op Rooiberg Road ~6 km west van Bela-Bela (niet in de stad),
+    # via-punt 2 op de R516/R511-knoop. eindToegangPrivaat voor de laatste ~16 km D-wegen (model: pgm-booysendal-zondereinde).
+    "pgm-platreef-zondereinde-platreef-zondereinde": {
+        "via": [
+            ("Platreef-mijn en concentrator (anker pgm-platreef-mijn)", (28.9585, -24.0828)),
+            ("R516 Rooiberg Road, west van Bela-Bela", (28.1793, -24.8915)),
+            ("R516/R511-knoop", (27.5299, -24.8878)),
+            ("Northam Zondereinde-complex (anker pgm-zondereinde-mijnsmelter)", (27.3669, -24.8333)),
+        ],
+        "id": "pgm-platreef-zondereinde-b1",
+        "naam": "Platreef-mijn en concentrator -> Zondereinde smelter (N11, N1, R516, R511)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N11", "N1", "R516", "R511"],
+        "gepubliceerdKm": 257,
+        "bronnoot": "OSRM, geen publicatie; hemelsbreed 181 km (indicatie, geen norm)",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "pgm-platreef-zondereinde-weg-platreef-zondereinde.geojson",
+    },
+    # ── Routebrief diamant-udachny-dubai, been b1 (LICHTE werkwijze M31 golf 13) ──
+    # Truck ruwe diamant Udachnaya-put/GOK (Alrosa Udachny) -> Polyarny Airport (PYJ) vrachtplatform:
+    # mijn- en dorpsweg Udachny - Polyarny, geen corridorkeuze (alleen de ankers als via-punten).
+    # GEEN echte wegkm: hemelsbreed 13,0 km; OSRM-indicatie 21,9 km -> km-toets = indicatie.
+    "diamant-udachny-dubai-put-pyj": {
+        "via": [
+            ("Udachnaya-put en Udachny GOK (anker dia-udachny-put)", (112.3175, 66.4342)),
+            ("Polyarny Airport apron (anker dia-pyj-vracht)", (112.0378, 66.3995)),
+        ],
+        "id": "dia-udachny-pyj-weg",
+        "naam": "Udachnaya-put/GOK -> Polyarny Airport (PYJ) vrachtplatform (mijn- en dorpsweg Udachny - Polyarny)",
+        "extracts": ["rusland-verrehoosten"],
+        "refs": [],
+        "gepubliceerdKm": 22,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 13,0 km, geen wegkm; OSRM-indicatie 21,9 km",
+        "vensterKm": 30,
+        "eindKlassen": ["service", "unclassified", "tertiary"],
+        "uit": "diamant-udachny-dubai-weg-put-pyj.geojson",
+    },
     # ── Routebrief zilver-caylloma-callao, been b1 (LICHTE werkwijze M31 golf 12) ──
     # Truck lood-zilverconcentraat Bateas-plant (Caylloma, Fortuna) -> Chivay -> Yura (bovenlangs
     # Arequipa) -> Camana -> Chala -> Nazca -> Ica -> Canete (PE-1S) -> Transportadora Callao-

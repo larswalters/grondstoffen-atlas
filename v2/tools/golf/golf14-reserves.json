@@ -1,0 +1,494 @@
+{
+ "bron": "golf 13 (wf_0b945061-13b), 2026-10-29: reserve-assen uit de ontwerpronde, toets uit golf 13 waar aanwezig",
+ "reserves": [
+  {
+   "id": "grafiet-pedraazul-vitoria",
+   "g": "grafiet",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE, zwak: tweede Braziliaanse mijn van Nacional de Grafite. Paca-mijn (Pedra Azul) over de oostelijke corridor naar Praia Mole bij Vitoria; andere mijn en corridor dan grafiet-itapecerica-vitoria.",
+    "keten_id": "grafiet-pedraazul-vitoria",
+    "van_site": "Paca-mijn / Pedra Azul-vestiging Nacional de Grafite (sitelaag -15.8804, -41.0732, bron-gelegd)",
+    "naar_site": "Porto de Praia Mole, Vitoria (hergebruikt anker -20.28965, -40.235)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Paca-mijn, Pedra Azul",
+      "naar": "Porto de Praia Mole",
+      "corridor": "BR-116 zuid via Teofilo Otoni en Governador Valadares, BR-259 via Colatina, BR-101 naar Vitoria",
+      "km_indicatie": "hemelsbreed ca. 500 km, geen wegkm",
+      "geometrie_tool": "maak_stroombeen_weg (extracts brazilie), 5-7 via-punten op BR-116 en BR-259"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Praia Mole -20.28965, -40.235 (grafiet-itapecerica-vitoria)",
+     "Pedra Azul -15.8804, -41.0732 (sitelaag)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "brazilie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "Nacional de Grafite 70 kt/j capaciteit over drie mijnen, aandeel Pedra Azul onbekend (BrasilMineral 2026). Eenheid kt grafiet per jaar, peiljaar 2025/2026.",
+    "bronnen_start": [
+     "https://www.grafite.com/en/units-and-head-office",
+     "https://brasilmineral.com.br/maiores/nacionaldegrafite"
+    ],
+    "risico": "Geen bron koppelt Nacional de Grafite aan Praia Mole of aan een afnemer; Vitoria is een aanname en een haven in Bahia (Ilheus, Salvador) kan dichterbij liggen. Ook de functie van elke NdG-vestiging is niet gepubliceerd. Eén kort been, zelfde zwakte als grafiet-itapecerica-vitoria."
+   },
+   "toets": {
+    "keten_id": "grafiet-pedraazul-vitoria",
+    "haalbaar": true,
+    "problemen": [
+     "Geen bron koppelt Nacional de Grafite aan Praia Mole of Vitoria; zoekopdracht vond geen verscheping per haven. Zelfde zwakte als grafiet-itapecerica-vitoria. Pedra Azul heeft wel een productievestiging (grafite.com).",
+     "Corridor klopt niet: de route via Governador Valadares uit het ontwerp is niet de gekozen. OSRM en tool rijden Teofilo Otoni, dan oostelijk naar Colatina en BR-101. Hemelsbreed 500 km is geen wegkm: weg 734 km.",
+     "Eerste mijl 7,0 km en laatste mijl 8,4 km over kleine klassen."
+    ],
+    "aanpassing": "Een truckbeen 734,3 km (OSRM 717): via-punten (lat,lon) -16.3170,-41.4760; -17.3518,-41.5314; -17.9628,-41.1124; -18.4671,-41.0159; -19.1211,-40.6233; -19.8285,-40.3688. Corridorbeschrijving: BR-116 naar Teofilo Otoni, oostelijk naar Colatina, BR-259 en BR-101. Beennaam aannemelijk: haven niet gebrond; km: OSRM-indicatie 717, geen gepubliceerde wegkm.",
+    "overlap": "Id nieuw. Deelt alleen het eindanker Praia Mole met grafiet-itapecerica-vitoria; ander beginpunt en andere corridor, dus geen herhaling.",
+    "webcheck": "grafite.com units: Pedra Azul is een productievestiging; ANM-snippet geeft een verwerkingsinstallatie van 30.000 t/j. Geen bron voor Vitoria als exporthaven."
+   }
+  },
+  {
+   "id": "ree-kuantan-narva",
+   "g": "ree",
+   "as": {
+    "prioriteit": 3,
+    "as": "RESERVE golf 14: Maleisie naar Europa: Lynas-oxide naar Neo-magneetfabriek Narva",
+    "keten_id": "ree-kuantan-narva",
+    "van_site": "Lynas Advanced Materials Plant (LAMP), Gebeng, Maleisie",
+    "naar_site": "NPM Narva OU magneetfabriek, Kulgu-industriepark, Narva, Estland",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "LAMP Gebeng",
+      "naar": "Westports Port Klang",
+      "corridor": "E8, Karak Highway, KL-Klang-corridor",
+      "km_indicatie": "336,5 km gemeten",
+      "geometrie_tool": "letterlijke KOPIE ree-kuantan-japan b1"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "zee",
+      "van": "Westports Port Klang",
+      "naar": "zeeknoop 1970 Finse Golf",
+      "corridor": "Malakka, Suez of Kaap, Noordzee, Oostzee (route kiest MARNET)",
+      "km_indicatie": "17.175 km (eigen MARNET-test)",
+      "geometrie_tool": "MARNET"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "zee",
+      "van": "zeeknoop 1970",
+      "naar": "Muuga-kade",
+      "corridor": "haven-aanloop Muuga",
+      "km_indicatie": "38,1 km",
+      "geometrie_tool": "letterlijke KOPIE van b2 uit ree-sillamae-newark"
+     },
+     {
+      "fase": "D",
+      "modaliteit": "truck",
+      "van": "Muuga-containerterminal",
+      "naar": "Neo Narva, Kulgu-industriepark",
+      "corridor": "E20 Tallinn-Narva mnt",
+      "km_indicatie": "hemelsbreed 179 km, geen wegkm; OSRM 206 km",
+      "geometrie_tool": "maak_stroombeen_weg (extract estland)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "LAMP",
+     "Westports",
+     "Narva ree-narva-magneetfabriek 59.3618,28.1478 (ree-sillamae-narva)",
+     "Muuga-kade en aanloop uit ree-sillamae-newark"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "maleisie",
+      "aanwezig": true
+     },
+     {
+      "regio": "estland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "geen leiding",
+    "jaarvolume_en_bron": "Lynas NdPr-verkoop 7,3 kt in FY2026 (brief ree-kuantan-japan); Narva fase 1 2 kt NdFeB per jaar, fase 2 5 kt (Neo, 2025). Aandeel Lynas in Narva niet gepubliceerd; Narva produceert in 2026 nog op proefschaal.",
+    "risico": "Alleen Neo noemt Lynas als bron, via een persoverzicht in de brief ree-sillamae-narva; neomaterials.com/estonia en Fastmarkets noemen Lynas niet. Haven Muuga en feeder-route zijn aannames. Zelfde begin en zeestraat (Malakka) als kuantan-pasadena.",
+    "bronnen_start": [
+     "https://rareearthexchanges.com/news/neo-performance-materials-estonia-ndfeb-magnets/",
+     "https://www.neomaterials.com/estonia/",
+     "https://en.wikipedia.org/wiki/Muuga_Harbour"
+    ]
+   },
+   "toets": {
+    "keten_id": "ree-kuantan-narva",
+    "haalbaar": true,
+    "problemen": [
+     "Lynas als bron voor Neo is zwak: een WebSearch-samenvatting verwijst naar Benchmark Minerals dat Neo upstream-bronnen waaronder Lynas gebruikt; het aangehaalde Rare Earth Exchanges-artikel noemt Lynas niet als leverancier en het Mining.com-stuk gaf 403.",
+     "Onbekend of Lynas-oxide naar Silmet (scheiding) of direct naar Narva gaat; haven Muuga en feeder-route zijn aannames, en de vorige brief ree-sillamae-narva liet dit bewust ongetekend.",
+     "Overlap met ree-sillamae-newark: truck E20 Jõhvi-Muuga loopt vrijwel dubbel; Narva staat per bron in commerciële productie (Rare Earth Exchanges, sept 2026), de brief zegt sample."
+    ],
+    "aanpassing": "Alleen bouwen als reserve. Zeebeen Westports naar zeeknoop 1970 gemeten: 17175,0 km, snap Westports 2,3 km. Gebruik Muuga-anker 59.4915,24.9675 en de letterlijke kopie van de Muuga-stippel uit ree-sillamae-newark. Truck Muuga naar Narva 59.3618,28.1478: OSRM 206,3 km via weg 1 (E20), 0-2 via-punten. Beennaam en titel: aannemelijk, Lynas upstream-bron volgens trade-pers, bestemming Silmet of Narva niet gebronnen; eindig bij Narva.",
+    "overlap": "Truckbeen 1 is kopie van ree-kuantan-japan b1; Muuga-stippel kopie van ree-sillamae-newark. Id nieuw; geen keten wordt grotendeels herhaald, wel twee gedeelde benen en een deels dubbele E20-lijn.",
+    "webcheck": "WebSearch: Benchmark Minerals en Fastmarkets-samenvatting noemen Lynas als upstream-bron van Neo, Silmet levert oxide aan Narva (30 km). rareearthexchanges.com/news/neo-performance-materials-estonia-ndfeb-magnets/ noemt Lynas niet als leverancier."
+   }
+  },
+  {
+   "id": "kolen-curragh-gladstone",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 3,
+    "as": "Curragh via het Blackwater-systeem naar Gladstone (reserve)",
+    "keten_id": "kolen-curragh-gladstone",
+    "van_site": "Curragh-mijn (Coronado), bij Blackwater, Queensland",
+    "naar_site": "RG Tanna of Wiggins Island kolenterminal, Gladstone",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Curragh-laadlus",
+      "naar": "Gladstone kolenterminal",
+      "corridor": "Blackwater-systeem (Aurizon) naar Callemondah",
+      "km_indicatie": "nog te meten, ~300 km geschat",
+      "geometrie_tool": "toets_spoorroute; maak_spoorbeen_raw voor mijnsiding"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Gladstone",
+      "naar": "POSCO Gwangyang bulkkade (alleen met bron)",
+      "corridor": "Koraalzee en Oost-Chinese Zee",
+      "km_indicatie": "optioneel",
+      "geometrie_tool": "MARNET, kade bestaat in nikkel-ouaco-gwangyang"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Gwangyang POSCO bulkkade uit nikkel-ouaco-gwangyang alleen voor de optionele zeepoot"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Onbekend; Wikipedia noemt 7 tot 8,5 Mt (verouderd). Coronado-rapport nog zoeken. Mt kolen per jaar.",
+    "risico": "Welke terminal (RG Tanna, Wiggins Island of beide) en het volume van Curragh zijn niet bevestigd; zelfde land als bestaande ketens.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Curragh_coal_mine",
+     "https://en.wikipedia.org/wiki/Port_of_Gladstone",
+     "https://www.coronadoglobal.com/operations/curragh/"
+    ]
+   },
+   "toets": {
+    "keten_id": "kolen-curragh-gladstone",
+    "haalbaar": true,
+    "problemen": [
+     "Alleen Port of Gladstone en 300 km rail zijn bron (GEM, Wikipedia); RG Tanna of Wiggins Island is nergens bevestigd.",
+     "Kolenvolume naar de haven onbekend: GEM geeft 11,9 Mt ROM in 2025, deel thermisch naar Stanwell per spoor.",
+     "Ontwerp had Gwangyang-poot, geen bron."
+    ],
+    "aanpassing": "Bindend: stop bij RG Tanna-stockyard (-23.8225,151.2330) als aannemelijk, geen zeebeen. Kop: GEM-coordinaat (-23.4932,148.8427) = laadlus links op sat. Spoor met maak_spoorbeen_raw extract australie, 304,6 km, snaps 351 en 357 m, 0 omkeringen (publicatie ongeveer 300 km, +1,5%). toets_spoorroute faalt: kop snapt 11 km ernaast, dus raw verplicht. Kade-aanloop RG Tanna 2,5 km ok.",
+    "overlap": "Geen: Gladstone en Blackwater staan in geen v2-stroom; wel gelijk land en haventype als carmichael-abbotpoint, maar andere lijn en haven.",
+    "webcheck": "gem.wiki/Curragh_mine: gecoordineerd -23.493219,148.842723, 300 km rail naar Port of Gladstone, Stanwell-stroom; en.wikipedia Curragh coal mine: Blackwater-systeem en Port of Gladstone."
+   }
+  },
+  {
+   "id": "uranium-metropolis-eunice",
+   "g": "uranium",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve golf 14: VS binnenlands, conversie naar verrijking: Metropolis Works naar Urenco USA Eunice",
+    "keten_id": "uranium-metropolis-eunice",
+    "van_site": "Honeywell/ConverDyn Metropolis Works (Illinois)",
+    "naar_site": "Urenco USA, Eunice (New Mexico)",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "truck",
+      "van": "Metropolis Works",
+      "naar": "Urenco USA Eunice (32.4356, -103.0796)",
+      "corridor": "I-57/I-55 door de Missouri-bootheel naar Memphis, I-40 naar Little Rock, I-30 naar Texarkana en Dallas, I-20 naar Midland/Odessa, dan Hobbs en Eunice; niet gepubliceerd, aannemelijk",
+      "km_indicatie": "hemelsbreed 1.408 km, geen wegkm",
+      "geometrie_tool": "maak_stroombeen_weg (extracts us-illinois, us-missouri, us-tennessee, us-arkansas, us-texas, us-new-mexico), 6-8 via-punten"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-illinois",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-missouri",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-tennessee",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-arkansas",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-texas",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-new-mexico",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Urenco USA circa 5.850 t U feed-equivalent/j (sitelaag, schatting: 9 procent SWU x 65.000); aandeel Metropolis niet gepubliceerd; Transnuclear-contract 2010 zonder tonnage (WNN).",
+    "ankers_hergebruik": [
+     "u-metropolis-conversie 37.1718, -88.7570",
+     "u-eunice-verrijking 32.4356, -103.0796"
+    ],
+    "risico": "Alleen het bestaan van het transportcontract (Transnuclear voor Urenco USA, WNN 2010) staat vast; modaliteit en corridor zijn niet gepubliceerd en het NRC-document ML14059A405 gaf mij HTTP 403 (alleen zoekresultaat gezien). Zelfde begin als uranium-metropolis-almelo.",
+    "bronnen_start": [
+     "https://world-nuclear-news.org/articles/front-end-contract-for-transnuclear",
+     "https://www.nrc.gov/docs/ML1405/ML14059A405.pdf",
+     "https://world-nuclear.org/information-library/country-profiles/countries-t-z/usa-nuclear-fuel-cycle"
+    ]
+   },
+   "toets": {
+    "keten_id": "uranium-metropolis-eunice",
+    "haalbaar": true,
+    "problemen": [
+     "Alleen bron die beide uiteinden noemt: WNN 11 okt 2010 (Transnuclear-contract Urenco USA, UF6 van ConverDyn Metropolis naar Eunice). Modaliteit en corridor staan er niet in: truck en corridor zijn aanname (aannemelijk: een bron).",
+     "Circa 35% overlap in weggeometrie met uranium-eunice-columbia (Eunice tot Fort Worth, I-20 en TX-176, circa 590 km van 1.653 km): dat deel zit binnen een bestaand 2.316 km-been en kan niet als losse kopie, dus een tweede routering over dezelfde weg. Matig, niet grotendeels.",
+     "Een enkel truckbeen met alleen aanname-corridor: erg dun, laagste prioriteit; NRC-document ML14059A405 niet gelezen."
+    ],
+    "aanpassing": "Alleen bakken als de golf ruimte heeft; BINDEND: een been, truck, ankers u-metropolis-conversie -88.7570,37.1718 en u-eunice-verrijking 32.4356,-103.0796 hergebruiken. OSRM-corridor als via-punten: I-57/US-51 Cairo-kant, I-55 (36.8742,-89.5332), I-40 (35.1696,-90.1975), I-30/US-70 (34.5501,-92.6247), I-20 (32.7253,-97.5819), TX-176 (32.2609,-101.5043). Extracts us-illinois, us-missouri, us-tennessee, us-arkansas, us-texas, us-new-mexico; us-kentucky niet nodig. Km in brief: OSRM-wegkm 1.653, hemelsbreed 1.408 (x1,17).",
+    "overlap": "Circa 35% geometrisch gelijk aan uranium-eunice-columbia (Fort Worth tot Eunice); rest (Memphis, Little Rock, Texarkana, Dallas) nieuw. Id nieuw, eindpunt Eunice klopt, Metropolis eerder alleen als eindpunt.",
+    "webcheck": "Wel: world-nuclear-news.org/articles/front-end-contract-for-transnuclear (Metropolis naar Eunice, 2010, geen modaliteit). OSRM-routecontrole 1.653 km."
+   }
+  },
+  {
+   "id": "gas-tratayen-salliquelo",
+   "g": "gas",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: Argentijnse schalie, Vaca Muerta naar Buenos Aires-net",
+    "keten_id": "gas-tratayen-salliquelo",
+    "van_site": "Tratayen gasbehandeling (Vaca Muerta, Neuquen)",
+    "naar_site": "Salliquelo (Buenos Aires), aansluiting op NEUBA II en III",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "leiding",
+      "van": "Tratayen (OSM-leidingbegin -38.4277,-68.5583)",
+      "naar": "Salliquelo-knoop (-36.8546,-62.6638)",
+      "corridor": "Gasoducto Perito Francisco Pascasio Moreno (ex Presidente Nestor Kirchner), tramo 1",
+      "km_indicatie": "573 gepubliceerd (es.wikipedia); OSM 475,4 in 6 ways plus 5 gaten (26,0; 9,8; 15,1; 15,9; 24,7 km), samen 566,8",
+      "geometrie_tool": "OSM-pipeline way-stitch; 5 gaten als stippel met reden (OSM-way ontbreekt)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "argentina",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Gedeeltelijk: 475 van 573 km (83%) in 6 ways, 5 gaten samen 91 km (16% stippel). Ways 1370992520, 1437022951, 1370990857, 1373543401, 1435529409, 1435527433.",
+    "jaarvolume_en_bron": "Capaciteit 21 miljoen m3 per dag, circa 7,7 bcm/j (es.wikipedia); eerste tramo geopend 9 juli 2023; geschatte besparing op LNG-import US$ 2,1 mld in 2023 is een projectie. Werkelijke doorzet niet gevonden.",
+    "risico": "16% van het tracé is stippel door OSM-gaten, op de rand van wat de kaart eerlijk kan tonen. Bij Salliquelo lopen NEUBA II en III parallel mee. De tweede etappe (Salliquelo naar San Jeronimo Norte, 524 km) is niet gebouwd of gemapt.",
+    "bronnen_start": [
+     "https://es.wikipedia.org/wiki/Gasoducto_Presidente_N%C3%A9stor_Kirchner",
+     "https://www.gem.wiki/Special:Search?search=Tratayen",
+     "https://en.wikipedia.org/wiki/Vaca_Muerta"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-tratayen-salliquelo",
+    "haalbaar": true,
+    "problemen": [
+     "Eigen pbf-scan bevestigt de zes ways (1370992520, 1437022951, 1370990857, 1373543401, 1435529409, 1435527433) en vijf gaten van 26,0; 9,8; 15,1; 15,9 en 24,7 km (samen 91,5 km, 16%). Er ligt geen andere gaspijpleiding in de gaten (alleen een brug van 0,2 km).",
+     "Het Tratayen-anker ligt op een kleine installatie; de grote gasbehandeling ligt ca. 1,6 km zuidwestelijk. Status aannemelijk.",
+     "NEUBA II en III lopen vanaf Salliquelo parallel: laat de lijn exact op de einde van way 1435527433 stoppen (-36.8546,-62.6638)."
+    ],
+    "aanpassing": "Ways letterlijk stikken, de vijf gaten als stippel met reden 'OSM-way ontbreekt'. Eindpunt op de OSM-way. Brief: OSM 475,4 plus gaten 91,5 is 566,9 km tegen 573 gepubliceerd (-1%). Begin op de OSM-leidingbegin -38.4277,-68.5583, geen coordinaat van de grote plant verzinnen.",
+    "overlap": "Geen bestaande Argentijnse gasstroom en geen overlap in het ontwerp.",
+    "webcheck": "Argentinie-extract aanwezig. Satelliet z14 toont op het anker een installatie naast de pijpleidingcorridor."
+   }
+  },
+  {
+   "id": "gas-waha-aguadulce",
+   "g": "gas",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Permian-schaliegas naar het Agua Dulce-knooppunt (bronzijde VS)",
+    "keten_id": "gas-waha-aguadulce",
+    "van_site": "Waha-knooppunt (West-Texas), begin GCX",
+    "naar_site": "Agua Dulce-knooppunt (Nueces County), compressorstation Valley Crossing",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "leiding",
+      "van": "Waha-knooppunt (kandidaat 31.2606,-103.0981, OSM-leidingeinde)",
+      "naar": "anker gas-aguadulce-cs1 (27.7486,-97.8143)",
+      "corridor": "Gulf Coast Express (Kinder Morgan, 42 inch, ref GCX): Waha, Reagan, Crockett, Val Verde, Frio, Agua Dulce",
+      "km_indicatie": "720 gepubliceerd (447,5 mijl hoofdleiding, NS Energy); OSM 562,9 continu vanaf 31.079,-101.585; westelijk circa 157 km ontbreekt onder GCX-naam",
+      "geometrie_tool": "OSM-pipeline way-stitch (51 ways, ref=GCX); westelijk stuk stippel met reden of onbenoemde way 1479926878 (onbevestigd)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "gas-aguadulce-cs1 27.7486,-97.8143 uit gas-aguadulce-tuxpan (GCX eindigt in OSM 1,3 km oostelijker op 27.7461,-97.8000)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-texas",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja: 562,9 km aaneengesloten GCX-ways vanaf 31.079,-101.585 tot Agua Dulce zonder naad; het westelijke deel naar Waha (circa 157 km) is niet onder de GCX-naam gemapt.",
+    "jaarvolume_en_bron": "Capaciteit circa 2,0 bcf/d, circa 20,7 bcm/j (eigen omrekening), in bedrijf 25 sept 2019 (Kinder Morgan); uitbreiding naar 2,55 bcf/d (circa 26,4 bcm/j) gemeld voor medio 2026, niet bevestigd. Werkelijke doorzet niet gevonden.",
+    "risico": "Whistler Pipeline en Permian Highway lopen in OSM door hetzelfde corridor met dezelfde dikte: kiezen op ref=GCX, niet op diameter. Het westelijke stuk is open en de lengtetoets (720 km) haalt zonder dat stuk maar 78%. Doorzet is alleen capaciteit.",
+    "bronnen_start": [
+     "https://ir.kindermorgan.com/news/news-details/2019/Gulf-Coast-Express-Pipeline-Placed-in-Service-Ahead-of-Schedule/default.aspx",
+     "https://www.nsenergybusiness.com/projects/gulf-coast-express-pipeline-waha-texas/",
+     "https://energiesmedia.com/kinder-morgan-expansion-work-on-the-gulf-coast/"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-waha-aguadulce",
+    "haalbaar": true,
+    "problemen": [
+     "GCX heet in OSM pas vanaf 31.0794,-101.5847 (ref=GCX, 51 ways, 42 inch, Kinder Morgan): 570,7 km zonder naad tot 27.7461,-97.8000. De westelijke ca. 150 km naar Waha zit niet onder de GCX-naam. De onbenoemde way 1479926878 (99,8 km, geen substance-tag) is niet te koppelen aan GCX; richting wijkt af van het servituut op de satelliet.",
+     "Waha is een hub, geen faciliteit; de OSM-plaatsnode (31.2719,-103.0840) is een dorpscentroide en geen anker. Beginpunt 31.2606,-103.0981 in het ontwerp is niet gelegd.",
+     "Het eindpunt in OSM ligt 1,4 km oostelijker dan anker gas-aguadulce-cs1 (27.7486,-97.8143).",
+     "Lengtetoets: 571 van 720 km gepubliceerd (79%), onder de norm."
+    ],
+    "aanpassing": "Begin op het OSM-leidingbegin met ref=GCX (31.0794,-101.5847) en eindig waar het bewijs eindigt. Westelijke 150 km niet tekenen: open punt in de brief, geen stippel naar een niet gelegd Waha. Selecteer op ref=GCX en niet op diameter, vanwege Whistler en Permian Highway. Einde: korte stippel 1,4 km van 27.7461,-97.8000 naar CS1 (27.7486,-97.8143) of marker op OSM-einde. Schrijf in de brief: hemelsbreed 571 van 720 km, 79% getekend.",
+    "overlap": "Geen overlap met gas-aguadulce-tuxpan: die begint bij CS1, deze eindigt daar. Samen een Permian-naar-Tuxpan-lijn.",
+    "webcheck": "Nominatim: Waha is een dorpscentroide. Satelliet z14 bij 31.0794,-101.5847: het servituut loopt zichtbaar noordwest door, dus de leiding bestaat verder dan OSM kaart. Us-texas-extract aanwezig."
+   }
+  },
+  {
+   "id": "olie-boatasyn-prigorodnoye",
+   "g": "olie",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: Sakhalin-2 olieleiding (Trans-Sakhalin) naar Prigorodnoye, Russisch Verre Oosten",
+    "keten_id": "olie-boatasyn-prigorodnoye",
+    "van_site": "Sakhalin Energy OPF Nogliki (Piltun/Lunskoye, noord-Sakhalin)",
+    "naar_site": "Prigorodnoye-oliesterminal (Aniva-baai)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "OPF Nogliki (OSM-begin 51.4166,143.3660)",
+      "naar": "Prigorodnoye (OSM-einde 46.6422,142.8994)",
+      "corridor": "Transsakhalin-leiding, Sakhalin Energy",
+      "km_indicatie": "ca. 627 km OSM-som van 8 ways; gepubliceerde lengte nog niet gebrond (800 km in omloop: -22%)",
+      "geometrie_tool": "OSM-pipeline: ways 394946663, 394946660, 394946668 e.a., doorgetrokken; Prigorodnoye-anker (46.6275,142.9028) hergebruiken uit gas-prigorodnoye-sodegaura"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "rusland-verrehoosten",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja: man_made=pipeline substance=oil, operator Sakhalin Energy, naam Transsakhalinskaya truboprovodnaya sistema (gas-lijn loopt parallel). Het kuststuk 51.415,143.66 naar de OPF staat als onderwater-way.",
+    "jaarvolume_en_bron": "Geen betrouwbaar Vityaz-volume gevonden; Wikipedia Sakhalin-II noemt 395 kb/d (infobox) tegenover 180 kb/d in de tekst. Volumebron zoeken (Sakhalin Energy, Kpler).",
+    "ankers_hergebruik": [
+     "Prigorodnoye 46.6275,142.9028 (gas-prigorodnoye-sodegaura, sitelaag gas)"
+    ],
+    "bronnen_start": [
+     "https://www.openstreetmap.org/way/394946663",
+     "https://en.wikipedia.org/wiki/Sakhalin-II",
+     "https://www.qcintel.com/article/us-extends-japan-s-waiver-for-russian-oil-from-sakhalin-2-43213.html"
+    ],
+    "risico": "Lengtetoets kan falen (-22%); volume en afnemer (Japan, OFAC GL 55F tot 18-12-2026, niet los gefetcht) ongebrond. Oliesterminal-coordinaat in Aniva-baai niet gevonden: stoppunt bij het plant-anker. Sanctiestatus kan snel wisselen.",
+    "naar_site_opm": null
+   },
+   "toets": {
+    "keten_id": "olie-boatasyn-prigorodnoye",
+    "haalbaar": true,
+    "problemen": [
+     "Geen gepubliceerde leidinglengte voor Nogliki-Prigorodnoye gevonden; 800 km is de hele lijn incl. kustdelen, GEM noemt 637 km OPF naar LNG-plant",
+     "Volume onzeker: Wikipedia 180 kb/d in de tekst tegenover 395 kb/d in de infobox",
+     "Sanctiestatus kan wisselen; afnemer en zeebeen ongebrond"
+    ],
+    "aanpassing": "Stik 8 oil-ways van 51.4166,143.3660 (OPF, z15: compleet complex, kruis op zuidrand) tot OSM-einde 46.6304,142.9264 (laatste way 579594727, naast de LNG-plant): 622,9 km, geen gat, -2% t.o.v. GEM 637 km. Eén doorgetrokken been, stoppunt Prigorodnoye-olieterminal. Schrijf 'GEM 637 km, inferred' in de brief. Volume 180 kb/d (Wikipedia-tekst).",
+    "overlap": "Geen. gas-prigorodnoye-sodegaura begint bij het plant-anker 46.6275,142.9028 en heeft geen Trans-Sachalin-been; oliestroom eindigt 1,8 km oostelijker.",
+    "webcheck": "Sakhalin Energy: 1.591 km onshore (olie+gas), 283 km offshore; OFAC-vergunning voor Sakhalin-2 verlengd 19-6-2025 (qcintel, achter paywall, afnemers niet bevestigd). Olie wordt bij Prigorodnoye geladen; export niet apart gecheckt."
+   }
+  },
+  {
+   "id": "olie-nuevoteapa-salinacruz",
+   "g": "olie",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Mexico, trans-isthmus-leiding Nuevo Teapa naar Salina Cruz (Pacific-raffinage)",
+    "keten_id": "olie-nuevoteapa-salinacruz",
+    "van_site": "Nuevo Teapa-station (Pemex Logistica, Veracruz)",
+    "naar_site": "Salina Cruz-raffinaderij en haven (Pemex, Oaxaca)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Nuevo Teapa (OSM-begin 18.0745,-94.3275)",
+      "naar": "Salina Cruz noord (OSM-einde 16.2201,-95.1845)",
+      "corridor": "Oleoducto Nuevo Teapa-Salina Cruz (tweelingleiding, Isthmus van Tehuantepec)",
+      "km_indicatie": "265 km OSM-stitch (7 ways, 4 naden); gepubliceerde lengte nog niet gebrond",
+      "geometrie_tool": "OSM-pipeline: ways 1284967358/60/64/70 e.a. stikken, doorgetrokken"
+     },
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Salina Cruz noord (16.2201,-95.1845)",
+      "naar": "Salina Cruz-raffinaderij (OSM-terreinleidingen 16.167,-95.203)",
+      "corridor": "geen net op deze korrel",
+      "km_indicatie": "ca. 6 km hemelsbreed",
+      "geometrie_tool": "stippel: last mile (kartering-hiaat, geen net)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "mexico",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja: twee parallelle ways-reeksen, man_made=pipeline substance=oil, operator Pemex Logistica, naam Nuevo Teapa-Salina Cruz Oil Pipeline; alleen de laatste ca. 6 km naar de raffinaderij ontbreekt.",
+    "jaarvolume_en_bron": "Geen volumebron gevonden. Salina Cruz-raffinaderij ca. 330 kb/d nameplate (algemeen bekend, niet herverifieerd). Zoek Pemex-jaarverslag.",
+    "ankers_hergebruik": [],
+    "bronnen_start": [
+     "https://www.openstreetmap.org/way/1284967360",
+     "https://en.wikipedia.org/wiki/Salina_Cruz"
+    ],
+    "risico": "Geen volume of capaciteit van de leiding gebrond; Nuevo Teapa-anker is alleen het OSM-begin; twee parallelle lijnen (30 en 36 inch) kiezen één. Kort verhaal: weinig zeeverbinding zonder afnemersbron.",
+    "naar_site_opm": null
+   },
+   "toets": {
+    "keten_id": "olie-nuevoteapa-salinacruz",
+    "haalbaar": true,
+    "problemen": [
+     "Het ontwerp-eindpunt klopt niet: 16.167,-95.203 is de havenopslag (Terminal Maritima), 6 km ZW van de raffinaderij",
+     "Echte raffinaderij ligt direct bij het OSM-einde: z14-blik toont tankenpark en procesunits rond 16.2164,-95.1730, 1,2 km ZO van 16.2201,-95.1845",
+     "Geen gepubliceerde leidinglengte of leidingvolume gevonden; twee parallelle reeksen (30 en 36 inch)"
+    ],
+    "aanpassing": "Schrap de 6 km last-mile-stippel. Stik één reeks, 7 ways: 265,0 km, gaten max 0,03 km, van 18.0745,-94.3275 (z15: Pemex-station) tot 16.2201,-95.1845 (pomp/klepstation aan de NW-rand van de raffinaderij). Km-regel: hemelsbreed 225 km, geen leidingkm. Anker raffinaderij 16.2164,-95.1730 (eigen z14-blik). Volume: raffinaderij 360 kb/d capaciteit, ca. 260 kb/d werkelijk (es.wikipedia). Havenopslag = open punt.",
+    "overlap": "Geen. Nieuw id; geen bestaande stroom in Oaxaca of Veracruz.",
+    "webcheck": "es.wikipedia Refineria Antonio Dovali Jaime: 360 kb/d ontwerp, 260 kb/d werkelijk, marine terminal exporteert crude naar Japan/VS (cita requerida). Pemex-leidingdata niet gevonden; leiding in bedrijf niet onafhankelijk bevestigd."
+   }
+  }
+ ]
+}

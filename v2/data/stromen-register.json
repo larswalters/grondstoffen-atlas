@@ -2824,6 +2824,198 @@
    "label": "Quellaveco → Engie Ilo",
    "aan": true,
    "noot": "M31 · golf 12 (2026-10-29): koperconcentraat van de Quellaveco-mijn per truck (aannemelijk: één bron) naar de Engie-kade in Ilo, zonder zeebeen. Let op: werkelijke corridor Quellaveco → Engie Ilo niet gebrond; het net kiest zuidelijke mijnwegen (ratio 1,67)."
+  },
+  {
+   "sleutel": "gr-sp",
+   "bestand": "stroomroute-grafiet-seadrift-pamplona.json",
+   "grondstof": "grafiet",
+   "label": "Seadrift → Pamplona",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): gecalcineerde naaldcokes van Seadrift Coke LP per spoor naar Corpus Christi, per zeeschip naar Bilbao en per truck naar GrafTech Iberica in Ororbia (aannemelijk: één bron). Let op: schematische haven-aanloopstippels (Corpus Christi, Bilbao) kruisen deels land; 10 spikes in de Ororbia-eindzone; keten aannemelijk op één bron."
+  },
+  {
+   "sleutel": "gr-bke",
+   "bestand": "stroomroute-grafiet-balama-kellyton.json",
+   "grondstof": "grafiet",
+   "label": "Balama → Kellyton",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): grafietconcentraat van Balama via Nacala en zee naar New Orleans en per truck naar de Westwater-fabriek bij Kellyton (haven aanname, volume nul). Let op: Balama → Nacala-been is een kopie (ratio 1,94, 5 omkeringen geërfd); Kellyton aannemelijk, haven New Orleans een aanname; volume nul (fabriek in aanbouw)."
+  },
+  {
+   "sleutel": "ni-zm",
+   "bestand": "stroomroute-nikkel-zapolyarny-monchegorsk.json",
+   "grondstof": "nikkel",
+   "label": "Zapolyarny → Monchegorsk",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Cu-Ni-concentraat van de Zapolyarny-concentrator (Kola MMC) per spoor over de Pechenga-tak naar Kola en via de Murmansk-lijn naar Severonickel Monchegorsk; aannemelijk, een bron voor de bestemming. Let op: spoorkm niet gepubliceerd (alleen indicatie); vervoerswijze en bestemming zwak gebrond."
+  },
+  {
+   "sleutel": "ree-kp",
+   "bestand": "stroomroute-ree-kuantan-pasadena.json",
+   "grondstof": "ree",
+   "label": "Kuantan → Pasadena",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Lanthaanoxide van Lynas LAMP Gebeng per truck naar Westports, per zee via Suez naar Barbours Cut Houston en per truck naar de Ketjen Bayport Plant in Pasadena (Houston-haven is aanname). Let op: Houston-haven is een aanname; b1 niet voor deze lading gebrond; b1 en b3 zonder echte wegkm; naad 2,34 km."
+  },
+  {
+   "sleutel": "ree-sne",
+   "bestand": "stroomroute-ree-sillamae-newark.json",
+   "grondstof": "ree",
+   "label": "Sillamäe → Newark",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): REE-oxide en katalysatorpoeder van NPM Silmet per truck naar Muuga, per feeder naar de Maasvlakte en per containerschip naar Port Newark (aannemelijk: één bron). Let op: kade-markers Maasvlakte en Newark 3,7 en 3,6 km van de lijn (zee-snap onder 5 km, bewust geen aanloop); truckkm indicatie."
+  },
+  {
+   "sleutel": "pgm-pz",
+   "bestand": "stroomroute-pgm-platreef-zondereinde.json",
+   "grondstof": "pgm",
+   "label": "Platreef → Zondereinde",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): PGM-concentraat van de nieuwe Platreef-mijn per truck over N11, N1, R516 en R511 naar de Northam Zondereinde-smelter (aannemelijk: één bron). Let op: bestemming en truck aannemelijk (één bron); geen echte wegkm (OSRM-indicatie); Platreef ontbreekt in de sitelaag."
+  },
+  {
+   "sleutel": "li-cy",
+   "bestand": "stroomroute-lithium-centenario-yangtze.json",
+   "grondstof": "lithium",
+   "label": "Centenario-Ratones → China",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Eramine-carbonaat per truck 1.580 km via RN51/Salta/RN34 naar Terminal Puerto Rosario en per containerschip naar China (Yangtze-monding als conventie-anker). Let op: Yangtze-monding is een conventie-anker (marker 2,69 km), bestemmingshaven niet gebrond; plantanker onzeker; bestand 289 KB."
+  },
+  {
+   "sleutel": "li-gq",
+   "bestand": "stroomroute-lithium-greenbushes-qinzhou.json",
+   "grondstof": "lithium",
+   "label": "Greenbushes → Qinzhou-haven",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Spodumeenconcentraat per truck 83,1 km van Greenbushes naar Bunbury Berth 8 en per bulkcarrier 6.643 km over MARNET naar een droge-bulkkade bij Qinzhou (aannemelijk, plant niet gevonden). Let op: naad 4,93 km (zee-snap)."
+  },
+  {
+   "sleutel": "ag-ns",
+   "bestand": "stroomroute-zilver-nevescorvo-setubal.json",
+   "grondstof": "zilver",
+   "label": "Neves-Corvo → Setúbal",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Neves-Corvo-concentraat (Cu/Zn, zilver als bijproduct) per eigen spoortak en Linha do Sul naar het Terminal Somincor/Almina in Setúbal, stoppunt kade. Let op: mijnmarker 0,61 km van het spoorbeen; stoppunt op de kade (afnemer niet gepubliceerd)."
+  },
+  {
+   "sleutel": "ag-vc",
+   "bestand": "stroomroute-zilver-volcan-callao.json",
+   "grondstof": "zilver",
+   "label": "Chungar (Volcan) → Callao",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Pb-Zn-Ag-concentraat van Chungar per truck over de PE-20A via Canta naar de TCSA-terminal in Callao (aannemelijk: één bron). Let op: km is indicatie (219 km is Lima–Chungar); bestemming Callao op één oude bron; Volcan ontbreekt in de sitelaag."
+  },
+  {
+   "sleutel": "kolen-tab",
+   "bestand": "stroomroute-kolen-tabang-balikpapan.json",
+   "grondstof": "kolen",
+   "label": "Tabang → Balikpapan",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Bayan-kolen per truck over de haulroad naar Senyiur, per barge over de Mahakam en per kustvaart naar Balikpapan Coal Terminal. Let op: overslagmarker Balikpapan Coal Terminal 2,95 km van de lijn; naad 2,43 km op de Mahakam; 4,4% stippel (delta-aanloop)."
+  },
+  {
+   "sleutel": "kolen-mv",
+   "bestand": "stroomroute-kolen-mormugao-vijayanagar.json",
+   "grondstof": "kolen",
+   "label": "Mormugao → Vijayanagar",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): cokeskool per spoor (SWR over de Ghats, ~376 km) van de JSW-kolenterminal Mormugao naar JSW Steel Vijayanagar; geen zeepoot, last mile als stippel. Let op: kademarker 0,23 km van de lijn; verder zonder bevindingen (keuring goed)."
+  },
+  {
+   "sleutel": "u-cm",
+   "bestand": "stroomroute-uranium-caetite-malvesi.json",
+   "grondstof": "uranium",
+   "label": "INB Caetité → Orano Malvési",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Braziliaans yellowcake per truck naar Salvador, per schip naar Hamburg en per trein naar Malvési (aannemelijk, één bron: voorgenomen zending 2012). Let op: Narbonne-terugloop geërfd van de kopie; bron uit 2012 (één bron); Caetité ontbreekt in de sitelaag; naad 4,17 km; 12 benen, 296 KB."
+  },
+  {
+   "sleutel": "u-ma",
+   "bestand": "stroomroute-uranium-metropolis-almelo.json",
+   "grondstof": "uranium",
+   "label": "Metropolis → Almelo",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): UF6 per truck van Metropolis Works naar Portsmouth VA, per zee naar Rotterdam (aanname) en per truck naar Urenco Almelo; route-bewijs één zending uit 2009. Let op: bestand 484 KB (truckbeen van 21.115 punten) en één overschiet-omkering in b1; niet herbakken."
+  },
+  {
+   "sleutel": "gas-kk",
+   "bestand": "stroomroute-gas-kiyikoy-kiskundorozsma.json",
+   "grondstof": "gas",
+   "label": "Kıyıköy → Kiskundorozsma",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Russisch pijpgas via TurkStream-terminal Kıyıköy door Turkije, Bulgarije en Servië naar het FGSZ-station Kiskundorozsma (Balkan Stream), vier gemeten OSM-leidingbenen. Let op: 58 OSM-spikes op de leidingbenen zonder omkering; verder zonder bevindingen (keuring goed)."
+  },
+  {
+   "sleutel": "gas-ub",
+   "bestand": "stroomroute-gas-utrenneye-beihai.json",
+   "grondstof": "gas",
+   "label": "Utrenneye → Beihai",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): gesanctioneerd Arctisch LNG van Arctic LNG 2 per tanker via de westelijke route (Suez, Malakka) naar PipeChina Beihai; NSR-zomerroute niet getekend. Let op: Noordelijke Zeeroute niet getekend (zuidelijke route), schematische aanlopen; 4 krappe knikken (R 7–9 km)."
+  },
+  {
+   "sleutel": "olie-as",
+   "bestand": "stroomroute-olie-agadem-seme.json",
+   "grondstof": "olie",
+   "label": "Agadem → Seme-Kpodji",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Niger-crude uit het Agadem Rift Basin per NBEP-leiding (OSM, doorgetrokken, 1.869,9 km) via Zinder en Gaya naar de Beninse kust bij Seme-Kpodji. Let op: beide ankers onzeker; Niger-deel grof gekarteerd; twee OSM-knikken."
+  },
+  {
+   "sleutel": "olie-lc",
+   "bestand": "stroomroute-olie-lagoagrio-chiriquigrande.json",
+   "grondstof": "olie",
+   "label": "Lago Agrio → Charco Azul",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Ecuadoraanse ruwe olie per SOTE-leiding naar Balao en per tanker naar PTP Charco Azul (Panama), aannemelijk: één bron. Let op: b4-zigzag en b1-spikes; 74 km stitch zonder naam; eindpunt Charco Azul in plaats van Chiriquí Grande; 9,7% stippel."
+  },
+  {
+   "sleutel": "dia-ud",
+   "bestand": "stroomroute-diamant-udachny-dubai.json",
+   "grondstof": "diamant",
+   "label": "Udachny → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Alrosa Udachny-ruw per truck naar PYJ, vracht PYJ → SVO → DXB (grootcirkels), truck naar DMCC/Almas Tower. Let op: wegbeen b1 factor 1,68 zonder reden in de brief (OSRM bevestigt 21,9 km); vlucht PYJ → SVO zonder vrachtbron (conventie)."
+  },
+  {
+   "sleutel": "dia-mt",
+   "bestand": "stroomroute-diamant-mumbai-tokyo.json",
+   "grondstof": "diamant",
+   "label": "Mumbai → Tokyo",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): gepolijste diamant van de Bharat Diamond Bourse per truck naar BOM, per vrachtvlucht (aannemelijk) naar Narita en per truck naar Jewelry Town Okachimachi in Tokio. Let op: eindanker is een wijkpunt (onzeker); vlucht niet gebrond; geen wegkm voor b3."
+  },
+  {
+   "sleutel": "au-ht",
+   "bestand": "stroomroute-goud-hishikari-toyo.json",
+   "grondstof": "goud",
+   "label": "Hishikari → Toyo",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): erts van de Hishikari-mijn per truck naar Kajiki-haven, per ertsschip naar de Toyo-smelter (SMM) waar het goud als flux dient. Let op: wegkm niet gebrond, corridor aannemelijk; naad 3,61 km; 3,5% stippel."
+  },
+  {
+   "sleutel": "au-htt",
+   "bestand": "stroomroute-goud-herradura-torreon.json",
+   "grondstof": "goud",
+   "label": "Herradura → Met-Mex Peñoles Torreón",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): goud-doré van de Herradura-plant (Penmont) per truck over MEX 2, MEX 10/CHIH 56D-7D, MEX 45D en MEX 49D naar Met-Mex Peñoles Torreón; aannemelijk, route niet gebronnen. Let op: route en vervoerswijze niet gebrond; km is OSRM, geen echte wegkm; 54 scherpe bochten, geen omkeringen."
+  },
+  {
+   "sleutel": "cu-cs",
+   "bestand": "stroomroute-koper-caserones-saganoseki.json",
+   "grondstof": "koper",
+   "label": "Caserones → Saganoseki",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Cu-concentraat van Caserones per truck naar Totoralillo en per bulkschip naar de Saganoseki-kade (JX, Oita); afnemer aannemelijk, één bron. Let op: afnemer Saganoseki alleen uit 2014 gebrond; wegkm eigen indicatie; b6-stippel snijdt 2,4 km land; sitelaagnaam verouderd."
+  },
+  {
+   "sleutel": "cu-tc",
+   "bestand": "stroomroute-koper-toromocho-callao.json",
+   "grondstof": "koper",
+   "label": "Toromocho → Callao",
+   "aan": true,
+   "noot": "M31 · golf 13 (2026-10-29): Cu-concentraat van Toromocho per FCCA-spoor via Ticlio en de Galera-tunnel naar Callao, band naar de TCSA-mineraalterminal; stoppunt kade. Let op: zigzag-terugloop is echt (Ticlio); zijlijn plant–Ticlio onzeker; concentrator alleen op satelliet gelegd."
   }
  ],
  "uitgesloten": [

@@ -73,12 +73,12 @@
    "naam": "Udachny (ondergronds, Udachny MPD)",
    "land": "Rusland (Sacha-republiek/Jakoetië)",
    "rol": "mijn",
-   "lat": 66.4167,
-   "lon": 112.3,
+   "lat": 66.4342,
+   "lon": 112.3175,
    "capaciteit_kt": 4.5,
    "capaciteit_bron": "Orde-grootte binnen Alrosa's totale Russische productie (≈34-35 Mct/j, KPCS); geen vers per-divisie-jaarcijfer gevonden binnen het budget [B3]",
-   "coord_bron": "coördinaat uit trainingskennis (Udachny-stad, Sacha-republiek); dit sessie niet via de Wikipedia-API bevestigd (429 op alle pogingen) — open punt",
-   "status": "onzeker",
+   "coord_bron": "was 66.4167/112.3 uit trainingskennis (onzeker) — M31 golf 13 (2026-10-29): gelijkgetrokken met het keten-anker van diamant-udachny-dubai (dia-udachny-put, Udachnaya-put/GOK, bron-gelegd in de brief; 2,1 km verschoven)",
+   "status": "aannemelijk",
    "notitie": "Alrosa; de voormalige open put (Udachnaya) is uitgemijnd, de mijn is sinds ~2014 volledig ondergronds. Coördinaat en cijfer allebei ongeverifieerd deze ronde."
   },
   {
