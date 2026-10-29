@@ -1,6 +1,18 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-29 (3e) - M31 golf 13: derde ontwerpronde, 24 nieuwe ketens (376 stromen), live op `?v=144` (commit `794365b`)
+
+Lars: *"doe nog maar een ontwerpronde"* (5-uursvenster 15%, week 24%). `maak_golf13.py` bouwt `golf13-script.mjs` uit het
+golf 11-script + `golf11-resultaat.json` (19 afgewezen assen met reden in de prompts) met een herschreven kobalt-hint (geen
+batterijfabriek-verlengingen; producent → haven met bron, importkant China, draaiende HPAL). `wf_0b945061-13b`: 100 agenten op
+Sonnet, 20,1 M tokens, 100 min, 0 uitval, 24/24 gebakken en gekeurd (2 goed, 22 met bevindingen); nikkel en pgm 1, kobalt 0
+(geen bron koppelt een producent aan Beira/TAZARA, 92–99% kopie, EGC via Lobito). Centraal: 1 vlag (Metropolis → Almelo
+484 KB), w-udachny gelijkgetrokken (2,1 km), 24 noten, `ree-sn2` → `ree-sne`; volumes-leesagent `golf13.json` (22 indicatie,
+2 onbekend) → 335/376 met dikte; bundel 1.416 benen, `bundel-check` ok, versie 144; desktop + 375 px 0 fouten. 8 reserves in
+`golf14-reserves.json`; bakhandleiding §13; LAR-651 Done. Volgende: Lars' telefoontest `?v=144`; golf 14 uit de reserves of
+een ontwerpronde zonder kobalt.
+
 ## 2026-10-29 (2e) - Golf 12 (352 stromen) + LAR-642 hoeveelheden bij de stromen, live op `?v=143` (commit `851e3c1`)
 
 Lars: *"Doe nog maar die kleine golf 12, daarna LAR-642."* Golf 12 = de 11 reserve-assen uit golf 11 (`maak_golf12.py`,

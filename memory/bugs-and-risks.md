@@ -1,5 +1,16 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
+*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+
+
+## 🟡 NIEUW 2026-10-29 (3e) — uit M31 golf 13
+
+62. **Kobalt is uitontworpen op de beschikbare bronnen, niet alleen op de hint:** twee ontwerprondes (golf 11 en 13) leverden 0 van 8; de toets vindt geen producent-haven-bron en de rest is kopie. Een derde poging zonder bronwerk vooraf is verspilde agenten.
+63. **De bake-agent maakt zelf een sleutel met cijfer als de tweeletterige bezet is (`ree-sn2`)** — centraal corrigeren vóór `registreer_golf.py` (golf 11: `dia-ms2`).
+64. **Volumes van golf 13 zijn allemaal indicatie of onbekend (0 bron):** mijn-/import-/capaciteitstotalen als bovengrens (Caserones 30%-offtake, Greenbushes → Qinzhou converter 25 kt, Balkan Stream 18,1 bcm waarvan ~7 Hongarije, Metropolis 8.600 tU vergund). De toelichting zegt het; de dikte overschat die vier routes.
+65. **Zee-snaps onder 5 km zonder aanloop laten kade-markers 2,7–3,7 km van de lijn** (Sillamäe → Newark aan beide kanten, Tabang, Centenario → Yangtze): zichtbaar bij inzoomen op de kade. Noot, geen herbak; een aanloop-drempel van 2,5 km zou dit vangen maar meer stippel geven.
+66. **Eén truckbeen van 21.115 punten (Metropolis → Portsmouth, 1.370 km) maakt een bestand van 484 KB** — de fijn-bins dragen het, maar boven ~300 KB per stroom hoort de wegscan te vereenvoudigen (10 m-simplify op de tekenlaag).
+
+
 
 
 

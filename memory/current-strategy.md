@@ -1,5 +1,16 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`: 352 stromen)*
+*Last updated: 2026-10-29 (3e) (M31 golf 13, derde ontwerpronde, live `?v=144`: 376 stromen)*
+
+
+## Stand 2026-10-29 (3e) — M31 golf 13 live: 376 stromen (`?v=144`)
+
+- **Op de bol (`?v=144`, commit `794365b`):** 24 nieuwe ketens, 352 → 376, over 12 grondstoffen (nikkel en pgm 1, kobalt 0). Bundel 376 stromen · 1.416 benen · 419 stippel · 1.265 markers · 451 sites · **335 met volume**; desktop + 375 px 376/376, 0 fouten.
+- **Hoe:** `v2/tools/golf/maak_golf13.py` bouwt `golf13-script.mjs` uit `golf11-script.mjs` + `golf11-resultaat.json` (de 19 in de toets afgewezen assen van golf 11 met hun eerste reden in de prompts; `bestaand`/sleutels vers uit het register; hint-suffix "derde ontwerpronde op rij, ook de import-/verwerkingskant"), kobalt-hint volledig herschreven. Run `wf_0b945061-13b`: 100 agenten op Sonnet (14 ontwerp, 14 toets, 24 brief, 24 bake, 24 keuring), 20,1 M tokens, 100 min, 0 uitval. Kosten: 5-uursvenster 15 → ~50%, week 24 → ~27%.
+- **Kobalt opnieuw nul**, ook met de nieuwe invalshoek (producent → Beira/TAZARA, importkant China, draaiende HPAL): de toets vond geen bron die een Congolese producent aan Beira of TAZARA koppelt (Mysteel: alleen Durban en Dar; TAZARA drie jaar in aanbouw), 92–99% van de km was kopie van bestaande stromen, EGC-kobalt loopt sinds 2026 via Lobito (bestaat al). Besluit: kobalt alleen nog met bronwerk vooraf (bakhandleiding §13).
+- **Reserves voor golf 14:** 8 getoetste assen in `golf14-reserves.json` (grafiet Pedra Azul → Vitória, ree Kuantan → Narva, kolen Curragh → Gladstone, uranium Metropolis → Eunice, gas Tratayén → Salliqueló en Waha → Agua Dulce, olie Boatasyn → Prigorodnoye en Nuevo Teapa → Salina Cruz) — `maak_golf12.py`-patroon.
+- **Centraal (bakhandleiding §13):** `centraal_check.py` 24/24 (1 vlag: uranium-metropolis-almelo 484 KB), `sitelaag_check.py` 7 kandidaten → w-udachny gelijkgetrokken (2,1 km, trainingskennis → bron-gelegd anker), 24 noten, `ree-sn2` → `ree-sne`, `au-ht` → `au-htt`; volumes: leesagent → `v2/design/volumes/golf13.json` (22 indicatie, 2 onbekend; pgm-platreef in tonnes concentraat zonder dikte) → `maak_stroomvolumes.py --schrijf` → `bundel` → `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 144. `maak_stroombeen_weg.py`/`bak_stromen.sh` LF gebleven.
+
+
 
 
 

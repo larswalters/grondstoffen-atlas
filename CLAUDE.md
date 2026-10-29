@@ -1,4 +1,13 @@
-> **📏 GOLF 12 + HOEVEELHEDEN BIJ DE STROMEN (LAR-642) LIVE `?v=143` — 352 STROMEN (2026-10-29, LAATSTE).** Commit `851e3c1`.
+> **🌍 M31 GOLF 13 LIVE `?v=144` — 376 STROMEN, DERDE ONTWERPRONDE (2026-10-29, LAATSTE).** Commit `794365b`. Lars: *"doe nog maar een
+> ontwerpronde."* `v2/tools/golf/maak_golf13.py` → `golf13-script.mjs` (uit het golf 11-script + `golf11-resultaat.json`: 19 afgewezen
+> assen met reden; kobalt-hint herschreven). `wf_0b945061-13b`: 100 agenten op Sonnet, 20,1 M tokens, 100 min, 0 uitval, 24/24 gebakken
+> en gekeurd; nikkel en pgm 1, **kobalt opnieuw 0** (geen producent-haven-bron voor Beira/TAZARA, 92–99% kopie → kobalt alleen nog met
+> bronwerk vooraf). Centraal: 1 vlag (uranium-metropolis-almelo 484 KB), w-udachny gelijkgetrokken, 24 noten, `ree-sn2` → `ree-sne`;
+> volumes-leesagent `v2/design/volumes/golf13.json` (22 indicatie, 2 onbekend) → 335/376 met dikte; bundel 1.416 benen, `bundel-check` ok,
+> `CODE_VERSIE` + `BUNDEL_VERSIE` 144; desktop + 375 px 0 fouten. 8 reserves in `golf14-reserves.json`. Lessen: bakhandleiding §13. LAR-651
+> Done. **→ VOLGENDE:** Lars' telefoontest `?v=144` · golf 14 klein uit de reserves (`maak_golf12.py`-patroon) of een ontwerpronde zónder kobalt.
+
+> **📏 GOLF 12 + HOEVEELHEDEN BIJ DE STROMEN (LAR-642) LIVE `?v=143` — 352 STROMEN (2026-10-29, EERDER).** Commit `851e3c1`.
 > Lars: *"Doe nog maar die kleine golf 12, daarna LAR-642."* Golf 12 = de 11 reserve-assen uit golf 11 (`maak_golf12.py`, 35 agenten,
 > 17 min, 0 uitval, 11/11; LAR-643 Done; nieuw `maak_spoorbeen_raw.py`). LAR-642 = zoals v1: **lijndikte (0,65–2,1× via kanaal B)**
 > **en 1–3 kometen per been uit het jaarvolume**, onder elke stroomknop "≈ 411 kt Cu/j" of "volume onbekend", legenda "dikte =
@@ -982,7 +991,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-29 (laatst: golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-29 (laatst: M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3256,6 +3265,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-29 · M31 GOLF 13 LIVE `?v=144` (376 stromen).** Generator-keten `maak_golf<N>.py` uit het vorige ontwerpscript + `golf<N-2>-resultaat.json`; kobalt alleen nog met bronwerk vooraf (twee rondes 0 van 8); een bake-sleutel met cijfer wordt centraal een derde letter; concentraattonnage zonder metaalinhoud krijgt geen dikte.
 - **2026-10-29 · HOEVEELHEDEN BIJ DE STROMEN (LAR-642) LIVE `?v=143`.** Volumes uit leesagenten over de brieven (status bron/indicatie/onbekend), niet uit een regex; los metadatabestand `stroomvolumes.json`, geen herbak; onbekend = dunste lijn + "volume onbekend"; relatief per grondstof op een log-schaal (p15–p90); dikte, kometen en HUD lezen hetzelfde `volume`-veld in `stromen.json`. Golf 12 = de laatste 11 reserves (352 stromen).
 - **2026-10-29 · M31 GOLF 11 LIVE `?v=142` (341 stromen).** Een ontwerpronde zonder reserves = 2 ketens per grondstof, ~106 agenten, 81 min; afgewezen assen uit het vorige journal in de prompts, reserves direct in `golf<N+1>-reserves.json`; `CODE_VERSIE` bumpt mee met het register; sitelaag gelijktrekken alleen bij dezelfde faciliteit > 2 km met centroïde; kobalt pas weer met een nieuwe hint. Volgende fase: hoeveelheden bij de stromen zoals v1 (LAR-642).
 - **2026-10-28 · M31 GOLF 10 LIVE `?v=141` (315 stromen).** Een reserve-golf draait zonder ontwerpronde; ongetoetste reserves worden in de EERSTE pijplijnstap getoetst (niet in een lus vooraf); reserve-assen voortaan direct als `golf<N+1>-reserves.json` bewaren; sitelagen alleen gelijktrekken boven ~2 km bij dezelfde faciliteit.

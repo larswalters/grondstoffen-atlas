@@ -1,9 +1,21 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
+*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+
+
+## 🔴 NIEUW 2026-10-29 (3e) — na M31 golf 13 live
+
+1. **Lars test `?v=144` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=144 — 24 nieuwe ketens (o.a. Balkan Stream Kıyıköy → Kiskundorozsma, Arctic LNG 2 Utrenneye → Beihai, Caserones → Saganoseki, Udachny → Dubai, Metropolis → Almelo, Lynas Kuantan → Pasadena, Agadem → Sèmè-Kpodji).
+2. **Golf 14 (klein):** 8 getoetste reserves in `v2/tools/golf/golf14-reserves.json` → `maak_golf12.py`-patroon (alle 8 hebben een per-keten-toets).
+3. **Een volgende ontwerpronde zónder kobalt** (of kobalt pas na bronwerk vooraf: een producent-haven-bron voor Beira/TAZARA/Durban, of een Chinese raffinaderij met een genoemde DRC-leverancier). De 19 + 19 afgewezen assen van golf 11 en 13 staan in `golf11-resultaat.json`/`golf13-resultaat.json` (toets, `haalbaar: false`) → in de prompts.
+4. **De 27 onbekende volumes** (nu ook grafiet-seadrift-pamplona, nikkel-zapolyarny-monchegorsk) alleen met bronwerk via `stroomvolumes-handmatig.json`; pgm-platreef-zondereinde krijgt pas een dikte met een PGM-inhoud (nu tonnes concentraat).
+5. **Open bevindingen golf 13 (geen actie, wel weten):** uranium-metropolis-almelo 484 KB (truckbeen 21.115 punten); kade-markers 2,7–3,7 km bij zee-snaps (Tabang, Centenario → Yangtze conventie-anker, Sillamäe → Newark); naden 3,6–4,9 km (Hishikari, Caetité, Greenbushes → Qinzhou); olie-lagoagrio 9,7% stippel en eindpunt Charco Azul i.p.v. Chiriquí Grande; Houston/NOLA/SVO als aangenomen aankomstpunten.
+6. **Gereedschap:** informatietextuur 2.048 benen, bundel 1.416 — verdubbelen rond 1.900; `.gitattributes` `*.py text eol=lf` blijft een optie (deze golf geen CRLF).
+
+
+## 🟢 2026-10-29 (2e) — AFGEHANDELD (telefoontest goed, golf 13 gedraaid) — na golf 12 + LAR-642 live
 
 
 
-## 🔴 NIEUW 2026-10-29 (2e) — na golf 12 + LAR-642 live
 
 1. ~~Lars test `?v=143` op de telefoon~~ ✅ 2026-10-29 "Ziet er goed uit" → LAR-642 Done. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=143 — dikte per grondstof (dunste = onbekend), kometen 1–2 op de telefoon, de volumeregels onder de stroomknoppen (lijst uitklappen), de 11 golf 12-ketens (o.a. Baltic/APLNG-leiding, Colonial Pasadena → Linden, Boddington → Hongkong). Goed → LAR-642 Done.)
 2. **De 25 onbekende volumes** (koper-escondida-guixi, -collahuasi-tongling, -lobito-duisburg; ree ×5; zilver ×5; uranium ×3; pgm ×4; kobalt ×2; diamant/goud/grafiet ×1): alleen met nieuw bronwerk, via `stroomvolumes-handmatig.json` (zelfde velden) + script + bundel. Nooit schatten.

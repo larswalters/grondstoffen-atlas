@@ -1,5 +1,17 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
+*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+
+
+## 2026-10-29 (3e) — M31 golf 13: derde ontwerpronde
+
+- **2026-10-29 · ✅ LARS — "doe nog maar een ontwerpronde"** (telefoontest `?v=143` goed; 5-uur 15%, week 24%). → golf 13, 24 ketens, live `?v=144`.
+- **2026-10-29 · De generator-keten is `maak_golf<N>.py` uit het vorige ontwerpscript + `golf<N-2>-resultaat.json`:** de afgewezen assen komen uit het resultaat-bestand (toets `haalbaar: false`, eerste reden), niet meer uit het journal; reserves direct naar `golf<N+1>-reserves.json`.
+- **2026-10-29 · Kobalt alleen nog met bronwerk vooraf.** Ook de herschreven hint (producent → haven, importkant, draaiende HPAL) leverde 0 van 4: het bewijs voor producent ↔ haven ontbreekt structureel en de rest is kopie. Een ontwerpronde slaat kobalt over tenzij er vóór de ronde een producent-haven-bron ligt.
+- **2026-10-29 · Een bake-sleutel met cijfer (`ree-sn2`) wordt centraal een derde letter (`ree-sne`);** `registreer_golf.py` lost alleen botsingen op.
+- **2026-10-29 · Een concentraattonnage zonder metaalinhoud krijgt geen dikte** (pgm-platreef-zondereinde, "tonnes concentraat"): liever geen dikte dan een geschatte PGM-inhoud; de HUD toont de tekst.
+- **2026-10-29 · Bij een onbekend route-aandeel neemt de volumes-leesagent het mijn-/importtotaal als bovengrens** (status indicatie, aandeel in de toelichting) — consistent met golf 12 (Boddington, Caylloma).
+
+
 
 
 
