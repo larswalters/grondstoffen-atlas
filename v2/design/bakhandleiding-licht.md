@@ -312,3 +312,10 @@ metadatabestand (besluit 2026-08-06).
 - **`CODE_VERSIE` bumpt mee met het register.** `stromen-register.json` wordt met `?v=<CODE_VERSIE>` gehaald; alleen `BUNDEL_VERSIE` bumpen laat de Pages-cache tien minuten het oude register serveren.
 - **De keuring laat opnieuw door wat de centrale nameting moet vangen:** één truckbeen van 577 KB, een kademarker 1,51 km van de lijn, 21% stippel door een eilandaanloop (MARNET/Natural Earth kennen Semirara niet), een volledig duplicaat van een andere grondstof. Alles als noot, niets herbakken.
 - **Sitelaag gelijktrekken:** alleen dezelfde faciliteit, > 2 km, en een centroïde of onzekere coördinaat (Paracatu 4,3 km, TVEL Novosibirsk 15,2 km); niet als het keten-anker zelf onzeker is (IWIP-HPAL).
+
+## 12 · Lessen van golf 12 (2026-10-29) en het volume-metadatabestand (LAR-642)
+
+- **Reserve-golf uit `golf<N>-reserves.json`:** `maak_golf12.py` (patroon golf 10) — 11 assen, 35 agenten, 17 min, 0 uitval. Na elke golf: `git status` op de repo-root (een leeg bestand `300` bleef achter).
+- **Mijnspoorlijnen ver van bekende ankers ontbreken in `landnet-raw.bin`** (bladsnoei): `python v2/tools/maak_spoorbeen_raw.py --extract <slug> …` routeert over de ruwe OSM-ways zonder snoei (Carmichael Rail 185 km, Ledexian-lijn).
+- **Jaarvolume per stroom = een leesagent over de nieuwe brieven**, nooit een regex (die pakt fabriekscapaciteiten): schrijf per golf `v2/design/volumes/golf<N>.json` (velden: id, tekst, waarde, eenheid, per, productvorm, peiljaar, bron, status bron/indicatie/onbekend, toelichting), draai `python v2/tools/maak_stroomvolumes.py --schrijf` (verslag noemt stromen zonder bronlijst) en daarna `bundel` — `stroomvolumes.json` zit in `bron`, dus `bundel-check` ziet de drift. Correcties in `v2/data/stroomvolumes-handmatig.json`.
+- **De bol leest `volume.rel`** (0..1, log-schaal p15–p90 per grondstof) voor dikte (`AFSTEMMING_VOLUME` in `stroombundel.js`) en kometen (`AFSTEMMING.kometenMin/Max…` in `stroomkometen.js`); `volume.kort` is de HUD-regel. Onbekend = de dunste lijn.

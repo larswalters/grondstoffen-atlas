@@ -1,7 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
+*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`: 352 stromen)*
 
 
+
+## Stand 2026-10-29 (2e) — golf 12 + hoeveelheden bij de stromen (LAR-642), live `?v=143`: 352 stromen
+
+- **Op de bol (`?v=143`, commit `851e3c1`):** 352 stromen · 1.330 benen · 1.192 markers; **315 stromen met een dikte uit hun jaarvolume**, 1–3 kometen per been (telefoon 1–2), onder elke stroomknop "≈ 411 kt Cu/j" of "volume onbekend", legenda "dikte = hoeveelheid". Desktop + 375 px 0 fouten.
+- **De volume-pijplijn:** `v2/design/volumes/<grondstof>.json` (bronlijsten van 15 leesagenten over de routebrieven: tekst/citaat, waarde, eenheid, per, productvorm, peiljaar, bron, status bron/indicatie/onbekend, toelichting) → `v2/tools/maak_stroomvolumes.py` (normalisatie per grondstof, `rel` = log-positie p15–p90; `stroomvolumes-handmatig.json` wint) → `v2/data/stroomvolumes.json` → `bak_stroombundel.py` zet `volume {kort, tekst, status, productvorm, rel}` in `stromen.json` (en het bestand in `bron`). Nieuwe golf = één leesagent over de nieuwe brieven + script + bundel.
+- **Bol-kant:** `stroombundel.js` `AFSTEMMING_VOLUME` (0,65 / 2,1 / onbekend 0,65) → `BeenInfo.zetBreedteF`; `stroomkometen.js` `AFSTEMMING.kometenMin/Max…` met slots per drager; `main.js` `toonVolumes()`; `.srVol` in `style.css`. Bouwplan: `v2/design/atlas-volumes-golf3.md`.
+- **Golf 12:** de laatste 11 reserves (`maak_golf12.py`, `wf_dfb032db-242`, 35 agenten, 17 min, 0 uitval). Geen reserves meer. Nieuw: `maak_spoorbeen_raw.py` (ruwe OSM-ways zonder bladsnoei).
 
 ## Stand 2026-10-29 — M31 golf 11 live: 341 stromen (`?v=142`)
 

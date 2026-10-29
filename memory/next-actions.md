@@ -1,9 +1,17 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
+*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
 
 
 
-## 🔴 NIEUW 2026-10-29 — na M31 golf 11 (ontwerpronde, 26 nieuwe ketens) live
+## 🔴 NIEUW 2026-10-29 (2e) — na golf 12 + LAR-642 live
+
+1. **Lars test `?v=143` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=143 — dikte per grondstof (dunste = onbekend), kometen 1–2 op de telefoon, de volumeregels onder de stroomknoppen (lijst uitklappen), de 11 golf 12-ketens (o.a. Baltic/APLNG-leiding, Colonial Pasadena → Linden, Boddington → Hongkong). Goed → LAR-642 Done.
+2. **De 25 onbekende volumes** (koper-escondida-guixi, -collahuasi-tongling, -lobito-duisburg; ree ×5; zilver ×5; uranium ×3; pgm ×4; kobalt ×2; diamant/goud/grafiet ×1): alleen met nieuw bronwerk, via `stroomvolumes-handmatig.json` (zelfde velden) + script + bundel. Nooit schatten.
+3. **Afstemming na de telefoontest:** `AFSTEMMING_VOLUME.breedteMax` (2,1) en `kometenMaxDesktop` (3) in één regel; log-schaal p15–p90 in `maak_stroomvolumes.py`.
+4. **Optioneel:** het volume in de labels per zoomband of bij een klik (v1 had een tooltip op de lijn; de bundel heeft geen picking).
+5. **Geen reserve-assen meer.** Een nieuwe stromen-golf = ontwerpronde (~106 agenten) met eerst een nieuwe **kobalt-hint**; daarna een leesagent voor de volumes van de nieuwe brieven.
+
+## 🟢 2026-10-29 — AFGEHANDELD (golf 12 gedraaid, LAR-642 gebouwd) (ontwerpronde, 26 nieuwe ketens) live
 
 1. **Lars test `?v=142` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=142 — 26 nieuwe ketens (o.a. Baltic Pipe Nybro → Goleniów, Kyaukphyu → Namhkam, Mirny → Smolensk, Paracatu → Zürich, Jose → Jamnagar, Semirara → Calaca).
 2. **LAR-642 — hoeveelheden bij de stromen zoals v1** (Lars: *"daarna zou ik iets met hoeveelheden ± bij de stromen willen kunnen zien zoals bij v1 was"*): v1 = dikte relatief volume per grondstof, deeltjes ∝ volume, tooltip "volume ≈ X eenheid" (`src/flows.js`, `src/ui.js`). v2: `jaarvolume` uit §1 van alle brieven → script → los metadatabestand (geen herbak) → `beenInfo.B` voor dikte, kometen-aantal, label/HUD-regel; eenheden per grondstof normaliseren. Eerst een bouwplan + ontwerp-workflow zoals `atlas-product-golf1.md`, telefoontest als poort.

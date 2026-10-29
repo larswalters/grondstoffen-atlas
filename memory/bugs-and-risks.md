@@ -1,7 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
+*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
 
 
+
+## 🟡 NIEUW 2026-10-29 (2e) — uit golf 12 en LAR-642
+
+57. **De volumes zijn voor 260 van 352 stromen een indicatie** (mijn-/fabriekstotaal, capaciteit, contract, natte vinger) en voor 25 onbekend; de toelichting per stroom in `stroomvolumes.json` zegt wat het cijfer wél is. Wie de dikte als meting leest, leest te veel.
+58. **Mengeenheden binnen een grondstof** (kt LCE naast kt SC6, kt Ni naast Mt erts, t Ag naast kt concentraat): de log-schaal dempt het, maar de rangorde binnen een grondstof kan daardoor scheef zijn.
+59. **Een regex over de brieven is geen bron:** het eerste getal met eenheid is vaak een capaciteit van een fabriek, haven of luchthaven. Alleen leesagenten of de hand.
+60. **Golf 12 liet een leeg bestand `300` in de repo-root achter** (een agent-redirect); na elke golf `git status` op de root (golf 7: `Houston`).
+61. **`toets_spoorroute.mjs` snoeit doodlopende spoortakken weg** (bladsnoei in `landnet-raw.bin`): de Carmichael Rail (185 km) ontbrak → `maak_spoorbeen_raw.py` routeert over de ruwe OSM-ways. Geldt voor elke mijnspoorlijn ver van bekende ankers.
 
 ## 🟡 NIEUW 2026-10-29 — uit M31 golf 11
 

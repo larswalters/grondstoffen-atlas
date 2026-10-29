@@ -1,7 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (M31 golf 11 live `?v=142`: 341 stromen)*
+*Last updated: 2026-10-29 (2e) (golf 12 + LAR-642 hoeveelheden, live `?v=143`)*
 
 
+
+## 2026-10-29 (2e) — hoeveelheden bij de stromen (LAR-642) + golf 12
+
+- **2026-10-29 · ✅ LARS — "Doe nog maar die kleine golf 12, daarna LAR-642."** Beide gebouwd; de telefoontest is de poort voor LAR-642.
+- **2026-10-29 · Volumes komen uit leesagenten over de routebrieven, niet uit een regex.** De regex pakte fabriekscapaciteiten (Kibali 7,2 Mt/j = de ertsfabriek). Eén Sonnet-agent per grondstof leest ~25 brieven en noteert het stroomvolume met status bron/indicatie/onbekend, citaat en toelichting; de bronlijsten zijn gecommit (`v2/design/volumes/`).
+- **2026-10-29 · Onbekend = de dunste lijn + "volume onbekend"** (v1: `value || 1`); nooit een geschat cijfer. Indicatie (mijn-/fabriekstotaal, capaciteit, natte vinger) telt wél mee voor de dikte — dat is de "±".
+- **2026-10-29 · Relatief per grondstof op een log-schaal (p15–p90)**, niet lineair op het maximum: één Alrosa-totaal of één leidingcapaciteit mag de rest niet platdrukken. Product ≠ metaal wordt niet omgerekend; de tekst is de waarheid.
+- **2026-10-29 · Het volume reist mee in `stromen.json`** (geen extra verzoek, `stroomvolumes.json` in `bron` zodat `bundel-check` drift ziet); lijndikte, kometen en HUD lezen hetzelfde veld. Geen shaderwijziging, geen herbak.
+- **2026-10-29 · Kometen per been uit het volume met slots per drager** i.p.v. een vaste K (1–3 desktop, 1–2 telefoon).
 
 ## 2026-10-29 — M31 golf 11: nieuwe ontwerpronde
 

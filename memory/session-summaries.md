@@ -1,6 +1,18 @@
 # Session summaries — Grondstoffen Atlas
 *Newest first.*
 
+## 2026-10-29 (2e) - Golf 12 (352 stromen) + LAR-642 hoeveelheden bij de stromen, live op `?v=143` (commit `851e3c1`)
+
+Lars: *"Doe nog maar die kleine golf 12, daarna LAR-642."* Golf 12 = de 11 reserve-assen uit golf 11 (`maak_golf12.py`,
+`wf_dfb032db-242`: 35 agenten op Sonnet, 6,3 M tokens, 17 min, 0 uitval, 11/11; centraal 1 vlag, w-longharbour-vale
+gelijkgetrokken, 11 noten; LAR-643 Done). LAR-642: een regex over de brieven verworpen (fabriekscapaciteiten) → 15
+leesagenten per grondstof → `v2/design/volumes/*.json` (67 bron, 260 indicatie, 25 onbekend) → `maak_stroomvolumes.py`
+→ `stroomvolumes.json` (los, geen herbak, log-schaal p15–p90) → bundel (`volume` per stroom in `stromen.json`);
+`stroombundel.js` breedtefactor 0,65–2,1 via kanaal B, `stroomkometen.js` 1–3 kometen per been met slots,
+`main.js` HUD-regel "≈ 411 kt Cu/j" / "volume onbekend" + tooltip, legenda "dikte = hoeveelheid"; bouwplan
+`v2/design/atlas-volumes-golf3.md`. 352 stromen, 315 met dikte; desktop + 375 px 0 fouten; `BUNDEL_VERSIE` + `CODE_VERSIE` 143.
+Poort: Lars' telefoontest. Kosten: 5-uursvenster 37 → 56%, week 14 → 17%. Vault: [[2026-10-29-grondstoffen-atlas-golf12-en-hoeveelheden-lar642]].
+
 ## 2026-10-29 - M31 golf 11 live op `?v=142`: 341 stromen, nieuwe ontwerpronde (commit `34aee8c`)
 
 Lars: telefoontest `?v=141` goed, *"doe nog maar een ontwerp ronde"*, daarna hoeveelheden bij de stromen zoals v1 (→ LAR-642).
