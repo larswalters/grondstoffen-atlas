@@ -1,0 +1,531 @@
+{
+ "bron": "golf 14 (wf_528d40ea-79d), 2026-10-30: reserve-assen uit de ontwerpronde, toets uit golf 14 waar aanwezig",
+ "reserves": [
+  {
+   "id": "grafiet-teverola-heroya",
+   "g": "grafiet",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: fabrieksafval van een Italiaanse celfabriek terug in anodegrafiet (gesloten lus)",
+    "keten_id": "grafiet-teverola-heroya",
+    "van_site": "FAAM celfabriek, Teverola (Campania, Italië)",
+    "naar_site": "Vianode Via ONE, Herøya (Porsgrunn)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "FAAM Teverola (nog te leggen)",
+      "naar": "Hirtshals haven (Denemarken)",
+      "corridor": "A1, Brenner (A22), A9/A7 via München, Hamburg en Flensburg, E45 (werkaanname)",
+      "km_indicatie": "hemelsbreed ca. 1.900 km, geen wegkm gepubliceerd; via-punten 6-8",
+      "geometrie_tool": "maak_stroombeen_weg (italie, oostenrijk, de-bayern, de-hamburg, de-schleswig-holstein, denemarken)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Hirtshals",
+      "naar": "zeeknoop 4530",
+      "corridor": "Skagerrak, dan aanloop Herøya (kopie harjavalta-heroya b4)",
+      "km_indicatie": "orde 200 km, niet gemeten",
+      "geometrie_tool": "MARNET plus kopie aanloop"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "italie",
+      "aanwezig": true
+     },
+     {
+      "regio": "oostenrijk",
+      "aanwezig": true
+     },
+     {
+      "regio": "de-bayern",
+      "aanwezig": true
+     },
+     {
+      "regio": "de-hamburg",
+      "aanwezig": true
+     },
+     {
+      "regio": "de-schleswig-holstein",
+      "aanwezig": true
+     },
+     {
+      "regio": "denemarken",
+      "aanwezig": true
+     },
+     {
+      "regio": "noorwegen",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "0 kt/j: alleen een pilotproef, geen volume (Vianode-nieuwsbericht FAAM, 29 sep 2026).",
+    "ankers_hergebruik": [
+     "zeeknoop 4530 (59.0498, 9.7056)",
+     "Herøya zuidwestkade (59.1174, 9.6249)"
+    ],
+    "bronnen_start": [
+     "https://www.vianode.com/news/vianode-and-faam-advance-industrial-scale-closed-loop-recycling-of-battery-grade-graphite"
+    ],
+    "risico": "Zwak: Teverola staat alleen in een fotobijschrift, de recycler tussen FAAM en Vianode is niet genoemd en de verwerkingsplek niet. De keten zou een rechtstreekse haul suggereren. Alleen bakken als een bron de schakel of de plek noemt."
+   },
+   "toets": null
+  },
+  {
+   "id": "grafiet-kellyton-hillercarbon",
+   "g": "grafiet",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Amerikaans grafietbijproduct (fines) naar staal en gieterij, een niet-batterij-afnemer",
+    "keten_id": "grafiet-kellyton-hillercarbon",
+    "van_site": "Westwater Kellyton Graphite Plant (Lake Martin, Alabama)",
+    "naar_site": "Hiller Carbon LLC, fabriek nog te vinden (id kan wijzigen)",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "Kellyton (32.9625, -86.0390, bestaand anker)",
+      "naar": "Hiller Carbon fabriek (onbekend)",
+      "corridor": "nog niet te bepalen",
+      "km_indicatie": "onbekend",
+      "geometrie_tool": "maak_stroombeen_weg (us-alabama plus staat van de fabriek)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-alabama",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "0 kt/j: fabriek nog niet in productie. Fase 1 ontwerp 14 kt SG-fines/j (Westwater 10-K FY2024, peiljaar 2024).",
+    "ankers_hergebruik": [
+     "Westwater Kellyton (32.9625, -86.0390)"
+    ],
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/839470/000155837025003382/wwr-20241231x10k.htm",
+     "https://www.hillercarbon.com/"
+    ],
+    "risico": "Bindend offtake (17 sep 2024) noemt Hiller Carbon, 'plants within the U.S.' zonder plaats; hillercarbon.com toont geen vestigingen. Zonder bron voor de plaats niet te bakken."
+   },
+   "toets": null
+  },
+  {
+   "id": "pgm-zondereinde-portelizabeth",
+   "g": "pgm",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve: Northam-filterconcentraat naar Heraeus Port Elizabeth, nieuwe corridor naar de Oost-Kaap-kust",
+    "keten_id": "pgm-zondereinde-portelizabeth",
+    "van_site": "Northam Zondereinde mijn, smelter en BMR",
+    "naar_site": "Heraeus PGM SA, Port Elizabeth (Gqeberha)",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "Zondereinde (pgm-zondereinde-mijnsmelter -24.8333, 27.3669)",
+      "naar": "Heraeus Port Elizabeth (anker nog niet gevonden)",
+      "corridor": "R510/N4 naar Gauteng, N1 Bloemfontein, N10 Colesberg-Cradock-Port Elizabeth",
+      "km_indicatie": "hemelsbreed ~1.019 km, geen wegkm; indicatie ~1.350 km",
+      "geometrie_tool": "maak_stroombeen_weg (nieuw profiel); stippel als het anker open blijft"
+     }
+    ],
+    "ankers_hergebruik": [
+     "pgm-zondereinde-mijnsmelter -24.8333, 27.3669"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "zuid-afrika",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "Niet gevonden voor dit been; Zondereinde ca. 14-16 t 4E/j totaal (zie brief pgm-zondereinde-hanau), aandeel Port Elizabeth onbekend.",
+    "risico": "Straatadres en coordinaat van de Heraeus-vestiging in Port Elizabeth niet gevonden (Nominatim en Photon leeg); zonder anker niet te leggen. LPPM noemt Heraeus PGM SA wel als erkende raffinadeur. Verdeling Hanau, Port Elizabeth en Johnson Matthey niet gebrond.",
+    "bronnen_start": [
+     "https://www.northam.co.za/about-northam/metallurgical-operations",
+     "https://www.lppm.com/lists.aspx?type=pt (Heraeus PGM SA)",
+     "https://www.heraeus-precious-metals.com/en/lp/locations/south-africa/"
+    ]
+   },
+   "toets": {
+    "keten_id": "pgm-zondereinde-portelizabeth",
+    "haalbaar": true,
+    "problemen": [
+     "Ontwerp stelde ten onrechte dat er geen anker of bron was: beide gevonden",
+     "Geen volumeaandeel voor Port Elizabeth; vervoer per truck is aannemelijk, niet gebrond (bronnen zeggen alleen verzonden naar Heraeus)",
+     "Zondereinde-uitgang overlapt de eerste circa 280 km van pgm-zondereinde-hanau b1 (andere eindbestemming)",
+     "Corridor N1 tot Colesberg en N9/N10 nog niet gebakken; hemelsbreed 1.017 km, wegkm circa 1.340 is indicatie (Johannesburg-PE circa 1.060 plus 282 km)"
+    ],
+    "aanpassing": "Eén truckbeen Zondereinde-mijnsmelter (-24.8333, 27.3669) naar Heraeus Port Elizabeth -33.8421, 25.5589 (OSM, Kurland Road, Perseverance; z15: industrieperceel met zonnepanelen; status bron-gelegd). Nieuw profiel zuid-afrika met refs N1 N9 N10; via-punten alleen waar keuze bestaat: Johannesburg N1/N12 (28.0980,-26.0380 uit bestaand profiel), Colesberg, Cradock (OSM-coordinaten opzoeken, nooit raden). Beennaam: bestemming aannemelijk, één bron. Schrijf hemelsbreed 1.017 km, geen wegkm.",
+    "overlap": "Geen bestaande keten naar de Oost-Kaap; alleen beginstuk gedeeld met zondereinde-hanau. Id nieuw.",
+    "webcheck": "Mining-technology 25 okt 2015: Heraeus raffineert Northam-concentraat in Port Elizabeth en Hanau (20-jarig akkoord). Northam-pagina metallurgical-operations noemt beide. Nominatim vond Heraeus op Kurland Road; satelliet bekeken."
+   }
+  },
+  {
+   "id": "lithium-kamativi-zhangjiagang",
+   "g": "lithium",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: tweede Huayou-mijn in Zimbabwe, Kamativi, naar Beira en China",
+    "keten_id": "lithium-kamativi-zhangjiagang",
+    "van_site": "Kamativi Tin and Lithium Mine (Huayou), Matabeleland Noord",
+    "naar_site": "Zhangjiagang-kade (aannemelijk, zoals bikita-zhangjiagang)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Kamativi (-18.3241, 27.0526)",
+      "naar": "Forbes-grens (-19.0052, 32.7123)",
+      "corridor": "A8 en A5 via Bulawayo en Harare, dan A3 via Mutare",
+      "km_indicatie": "hemelsbreed 600 km, geen wegkm; indicatie circa 950",
+      "geometrie_tool": "maak_stroombeen_weg (zimbabwe)"
+     },
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Forbes-grens",
+      "naar": "Beira-kade (-19.815, 34.834)",
+      "corridor": "EN6",
+      "km_indicatie": "289 km, kopie van lithium-arcadia-beira",
+      "geometrie_tool": "been-geojson (kopie)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Beira",
+      "naar": "Yangtze-monding en Zhangjiagang",
+      "corridor": "Mozambiquekanaal, Malakka",
+      "km_indicatie": "12.946 km plus 135 km binnenvaart, kopie van lithium-bikita-zhangjiagang",
+      "geometrie_tool": "MARNET en Yangtze-bulklaag (kopie)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Forbes/Machipanda-grens (-19.0052, 32.7123)",
+     "Beira general-cargo (-19.815, 34.834)",
+     "Zhangjiagang-kade (31.968, 120.4205)",
+     "Kamativi (-18.3241, 27.0526) uit lithium-sitelaag"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "zimbabwe",
+      "aanwezig": true
+     },
+     {
+      "regio": "mozambique",
+      "aanwezig": true
+     },
+     {
+      "regio": "china",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "circa 30 kt LCE indicatie, 350 kt SC per jaar naamplaat (sitelaag B18, niet primair gedocumenteerd)",
+    "risico": "Geen enkele bron over de exportroute of het productiejaar van Kamativi; Beira is aangenomen uit het Zimbabwe-patroon. Grotendeels een kopie van bestaande benen, dus weinig nieuw verhaal.",
+    "bronnen_start": [
+     "https://www.sunsirs.com/uk/detail_news-34127.html",
+     "https://www.fastmarkets.com/insights/zimbabwe-imposes-immediate-ban-on-exports-of-raw-minerals-lithium-concentrates/"
+    ]
+   },
+   "toets": {
+    "keten_id": "lithium-kamativi-zhangjiagang",
+    "haalbaar": true,
+    "problemen": [
+     "Eigenaar fout in ontwerp en sitelaag: Kamativi is van Yahua (via Sichuan PD Technology, Kamativi Mining Company), niet van Zhejiang Huayou. Bron: Yahua-quota-nieuws apr 2026 en Yahua-bulletin 2024; een 2024-bericht noemt een truckconvooi van circa 300 t concentraat naar de haven van Beira, eerste partij 5.000 t naar China.",
+     "Kamativi-anker (-18.3241,27.0526) ligt op satelliet circa 1 km ten noorden van de put en het procesterrein (-18.330 tot -18.336, 27.040-27.060): verleggen naar circa -18.3315,27.0505 en opnieuw routeren.",
+     "Zhangjiagang als eindhaven is niet gebronnd (Yahua-fabrieken liggen in Sichuan); alleen de algemene Zimbabwe-bron SunSirs, zelfde zwakte als arcadia-beira en bikita-zhangjiagang.",
+     "93% van de kilometers is kopie (Forbes-Beira, zee, Yangtze); nieuw is alleen Kamativi-Forbes, 1.020 km."
+    ],
+    "aanpassing": "Bind: owner Yahua (niet Huayou) in brief en titel; b1 profiel via-punten Kamativi, Bulawayo (-20.15,28.58), Gweru, Kwekwe, Chegutu, Ruwa A3 (-17.8902,31.2427), Rusape, Forbes-grens: gemeten 1.019,7 km (+7,3% tegen 950), snaps max 0,68 km. Daarna kopie van arcadia-beira b2-b8 (Forbes-Beira 286,9 km, zee, Yangtze). Brief: stop op Zhangjiagang, aannemelijk; geen Sichuan-benen.",
+    "overlap": "Forbes-Beira, zee en Yangtze zijn letterlijke kopie van lithium-arcadia-beira en bikita-zhangjiagang (zelfde patroon als die twee). Nieuw: Kamativi-Bulawayo-Forbes door West- en Midden-Zimbabwe. Id nieuw; laagste toegevoegde waarde van de vier.",
+    "webcheck": "WebSearch: Kamativi gecontroleerd door Sichuan PD Technology (Yahua); exportstop feb 2026, Yahua kreeg in apr 2026 zes maanden quota, concentraatverbod jan 2027. Bron noemt Beira voor 2024-convooi, geen Durban of Beitbridge."
+   }
+  },
+  {
+   "id": "kolen-dendrobium-portkembla",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 3,
+    "as": "Australisch binnenlands staal: Illawarra-cokeskool naar BlueScope Port Kembla, nieuwe regio en rol (reserve voor golf 15)",
+    "keten_id": "kolen-dendrobium-portkembla",
+    "van_site": "Dendrobium-mijn (South32 Illawarra Metallurgical Coal, nu GEAR en M Resources), Mount Kembla; Appin als tweede bron van dezelfde blend",
+    "naar_site": "BlueScope Port Kembla Steelworks, Port Kembla NSW",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Dendrobium-laadstation (Kemira Valley, te bevestigen)",
+      "naar": "BlueScope Port Kembla Steelworks, hoogovenzijde",
+      "corridor": "Illawarra-lijn naar Port Kembla; Wikipedia: Pacific National rijdt dagelijkse kooltreinen naar de hoogovenzijde",
+      "geometrie_tool": "toets_spoorroute (BAKE_SUFFIX=-raw, extract australie)",
+      "km_indicatie": "hemelsbreed hooguit enkele tientallen km (Appin naar Port Kembla ~30 km); spoorkm onbekend"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "niet van toepassing",
+    "ankers_hergebruik": [
+     "geen; Port Kembla Coal Terminal ~ -34,4532 S, 150,8989 O (Nominatim) hoort niet bij deze keten"
+    ],
+    "jaarvolume_en_bron": "BlueScope-contract met Appin en Dendrobium loopt tot 2033 (ASX-bericht 28 mei 2024); South32 leverde ongeveer 60 procent van BlueScopes cokeskool (Illawarra Mercury). Absoluut Mt nog te bronnen.",
+    "bronnen_start": [
+     "https://bluescope.com/content/dam/bluescope/corporate/bluescope-com/investor/documents/2024_ASX_BlueScope_supports_sale_of_IMC_improved_terms.pdf",
+     "https://www.illawarramercury.com.au/story/6292834/steelworks-could-close-if-we-dont-expand-warns-south32",
+     "https://en.wikipedia.org/wiki/Port_Kembla,_New_South_Wales"
+    ],
+    "risico": "Dun: een kort spoorbeen, dus eigenlijk een tweede korte keten; mijnanker, laadstation en spoorverbinding nog niet gevonden (GEM-pagina's bleven 404 voor mij)."
+   },
+   "toets": {
+    "keten_id": "kolen-dendrobium-portkembla",
+    "haalbaar": true,
+    "problemen": [
+     "Heel kort been (10,1 km, hemelsbreed 8,0 km): op wereldschaal bijna een stip",
+     "Het lokale spoornet is slechts 36 km groot: toets_spoorroute vraagt --hoofd-km 30 en --max-snap 10 (default 1000 faalt)",
+     "Alleen Dendrobium in een Appin-Dendrobium-blend (ASX 2024); Appin-aandeel niet getekend"
+    ],
+    "aanpassing": "BINDEND: Dendrobium-laadstation Kemira Valley -34.4190,150.8255 (GEM mijn -34.419776,150.826135; z15 gezien: laadlus) naar BlueScope-hoogovenzijde -34.4647,150.8929 (z14 gezien: hoogovens en cokesovens); snap 0,26 en 0,02 km; geen stippel nodig. Eindpunt exact: BlueScope Port Kembla Steelworks.",
+    "overlap": "Geen overlap met bestaande stromen (0 punten).",
+    "webcheck": "GEM: Dendrobium operating, 3,5 Mt (2025), nu GEAR en M Resources; ASX 28 mei 2024: BlueScope-contract met Appin en Dendrobium tot 2033. Wikipedia Port Kembla: dagelijkse kooltreinen naar de hoogovenzijde. Spoor 10,1 km, geen gepubliceerde lengte."
+   }
+  },
+  {
+   "id": "kolen-grootegeluk-medupi",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 4,
+    "as": "Zuid-Afrikaanse Eskom-kool: Grootegeluk naar Medupi (mijn naar centrale, zware sitelaag-mijn, reserve voor golf 15)",
+    "keten_id": "kolen-grootegeluk-medupi",
+    "van_site": "Grootegeluk-mijn (Exxaro), Lephalale, Limpopo (-23,6717 S, 27,5289 O, sitelaag w-grootegeluk, 26 Mt)",
+    "naar_site": "Medupi Power Station (Eskom, 4.764 MW), Lephalale (-23,70 S, 27,55 O, Wikipedia)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Grootegeluk-mijn",
+      "naar": "Medupi-kolenopslag",
+      "corridor": "overlandband, 5,4 km (Wikipedia); Matimba ligt aan een band van 7 km",
+      "geometrie_tool": "OSM-pipeline/band alleen als gekarteerd, anders stippel (niet gecontroleerd)",
+      "km_indicatie": "hemelsbreed ~4 km, bandlengte 5,4 km (Wikipedia)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "zuid-afrika",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "onbekend, niet gecontroleerd",
+    "ankers_hergebruik": [
+     "Grootegeluk-site uit kolen-sitelaag (w-grootegeluk) letterlijk hergebruiken"
+    ],
+    "jaarvolume_en_bron": "Eskom-contract 14,6 Mt per jaar voor Medupi, 40 jaar (Wikipedia, contractwaarde niet gemeten verbruik); mijn 18,8 Mt eindproduct (Wikipedia, geen jaartal); sitelaag 26 Mt (GEM).",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Grootegeluk_Coal_Mine",
+     "https://en.wikipedia.org/wiki/Medupi_Power_Station",
+     "https://www.exxaro.com/operations/"
+    ],
+    "risico": "Waarschijnlijk 100 procent stippel als OSM de band niet heeft (golf-4-les); alleen haalbaar met een tweede been, bijvoorbeeld het spoor voor semi-zachte cokeskool naar Mittal SA (Wikipedia: 2,5 Mt per jaar), waarvan de afnemerslocatie niet is gevonden."
+   },
+   "toets": {
+    "keten_id": "kolen-grootegeluk-medupi",
+    "haalbaar": true,
+    "problemen": [
+     "OSM heeft de band als man_made=goods_conveyor (3 ways), niet als pipeline met naam of substance; stricte kaartregel noemt alleen pipeline",
+     "Gestikte band 7,5 km tegen Wikipedia 5,4 km (+39%); alleen de laatste way is 5,57 km (+3%)",
+     "Heel kort been; op wereldschaal bijna een stip"
+    ],
+    "aanpassing": "BINDEND: doortrekken als leiding met de OSM-ways 546218313, 546218315 en 546218312 gestikt: Grootegeluk-wasserij -23.6497,27.5584 naar Medupi-kolenopslag -23.7026,27.5493 (z14 en z15 gezien). Beennaam met band en OSM-bron; geen stippel. Km in brief: OSM 7,5 km, Wikipedia 5,4 km, indicatie. Een FeatureCollection.",
+    "overlap": "Geen overlap met bestaande stromen.",
+    "webcheck": "Wikipedia Medupi: Exxaro-contract 14,6 Mt per jaar 40 jaar, 6 x 794 MW, commerciele werking 31 juli 2021, 5,4 km overlandband. Grootegeluk sitelaag-punt -23.67167,27.52889 ligt op de put, 4 km van de wasserij; centraal gelijktrekken."
+   }
+  },
+  {
+   "id": "gas-wheatstone-kawagoe",
+   "g": "gas",
+   "as": {
+    "prioriteit": 3,
+    "as": "RESERVE golf 15: Chevron Wheatstone LNG (Onslow, West-Australie) naar een Japanse afnemer buiten Tokyobaai. Derde Australische speler en nieuwe Japanse regio.",
+    "keten_id": "gas-wheatstone-kawagoe",
+    "van_site": "Wheatstone LNG, Ashburton North (Onslow, West-Australie)",
+    "naar_site": "Chubu Electric LNG-terminal Kawagoe (Mie, Japan), afnemer te bevestigen",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Wheatstone LNG-kade (sitelaag w-wheatstone -21.6895, 115.0063, aannemelijk)",
+      "naar": "Kawagoe-kade (coordinaat nog niet gevonden; open punt)",
+      "corridor": "Straat van Lombok, Makassar, Celebes Zee, Filipijnse Zee",
+      "km_indicatie": "ca. 6.500-7.000 km (waypoint-schatting 6.960 km, MARNET meet)",
+      "geometrie_tool": "MARNET kade naar kade; maak_havenaanloop.py indien nodig"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Wheatstone: sitelaag w-wheatstone (Wikidata, aannemelijk). Japanse kade: nog niet gelegd."
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     },
+     {
+      "regio": "japan",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Niet van toepassing: een zeeketen",
+    "jaarvolume_en_bron": "Wheatstone 15 Mtpa plant (ca. 20 bcm/j); Chubu Electric 1 Mtpa in offtake-lijst (Wikipedia Wheatstone, planning; ca. 1,4 bcm/j)",
+    "risico": "Wikipedia noemt de Japanse afnemers maar geen ontvangstterminal. Kawagoe is eigen aanname, niet gevonden in een bron; alternatief Tohoku Electric, Shin-Sendai. Zonder bron blijft de keten bij de laadkade. Eerder uitgevallen na cycloon (2026).",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Wheatstone_LNG",
+     "https://www.chevronaustralia.com.au (Wheatstone Project, te openen)"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-wheatstone-kawagoe",
+    "haalbaar": true,
+    "problemen": [
+     "Kawagoe is een eigen aanname: geen bron noemt een Wheatstone-lading naar Kawagoe of een Chubu-terminal; Wikipedia noemt alleen de afnemers (Tokyo Electric 3,1 Mtpa, KOGAS, Tohoku, Chubu, Kyushu).",
+     "Wheatstone-kade ligt 95,7 km van de dichtstbijzijnde MARNET-zeeknoop (-21.62770,114.08300): een aanloop van circa 96 km, de tool zal hoogstwaarschijnlijk in de timeout lopen, dan rechte stippel (1,3% van de keten).",
+     "Keten is een enkel zeebeen; kade-anker site-laag -21.6895,115.0063 ligt op de fabriek, de LNG-steiger ligt 1,5 km noordelijker.",
+     "Claim cycloonuitval 2026 uit het ontwerp niet gevonden of nagecheckt."
+    ],
+    "aanpassing": "BINDEND: eindpunt wordt Futtsu (JERA/Tokyo Electric), niet Kawagoe: de eerste Wheatstone-lading (nov 2017) kwam aan op Futtsu en JERA heeft 5,2 Mtpa contract. Hergebruik letterlijk marker w-futtsu 35.3424,139.8322, zeeknoop 35.23890,139.79280 en het aanloop-geojson gas-cautionbay-futtsu-aanloop-futtsu.geojson. Zee: -21.62770,114.08300 naar 35.23890,139.79280 = 7.400 km. Kade = steigerkop circa -21.6745,115.0035, met sat_check z15 bevestigen. Id blijft staan, titel noemt Futtsu, afwijking noteren.",
+    "overlap": "Zeebeen 33% met gas-karratha-rudong en 42% met nikkel-taganito-niihama (binnen 8 km), minder dan 17% met gas-cautionbay-futtsu: geen herhaling. Alleen de Futtsu-aanloop en marker zijn letterlijke kopie. Id is nieuw.",
+    "webcheck": "Eerste Wheatstone-lading aangekomen op Futtsu, 12 nov 2017, kopers JERA: https://www.lngindustry.com/lng-shipping/13112017/jera-imports-first-lng-cargo-shipped-from-wheatstone ; afnemerslijst: https://en.wikipedia.org/wiki/Wheatstone_LNG . Plant z14 gezien op -21.6895,115.0063 met lange steiger en schip."
+   }
+  },
+  {
+   "id": "gas-komotini-starazagora",
+   "g": "gas",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE golf 15: Interconnector Griekenland-Bulgarije (IGB) van Komotini naar Stara Zagora. Azerbeidzjaans Shah Deniz-gas via TAP naar Bulgarije; aftakking van de Zuidelijke Gascorridor sinds Bulgarije Gazprom verloor in 2022.",
+    "keten_id": "gas-komotini-starazagora",
+    "van_site": "Komotini (IGB-begin, Grieks Thracie)",
+    "naar_site": "Stara Zagora (IGB-einde, Bulgarije)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Komotini (IGB-begin, coordinaat nog te vinden)",
+      "naar": "Bulgaarse grens (OSM-ICGB-way begin 41.629, 25.426)",
+      "corridor": "IGB Grieks deel (ca. 31 km, niet in OSM): stippel",
+      "km_indicatie": "ca. 31 km eigen kennis, bron te openen; hemelsbreed onbekend",
+      "geometrie_tool": "stippel, reden geen OSM-way"
+     },
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Bulgaarse grens (41.629, 25.426)",
+      "naar": "Stara Zagora (OSM-ICGB-einde 42.363, 25.703)",
+      "corridor": "ICGB-leiding (IGB, Bulgaars deel)",
+      "km_indicatie": "OSM 100,9 km; gepubliceerd 182 km totaal, 31 km Grieks, 151 km Bulgaars (eigen kennis, bron te openen): -33%, geen norm",
+      "geometrie_tool": "OSM-pipeline: ICGB-way in bulgarije-extract"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Geen; TAP-eind Kipoi staat al in gas-kipoi-melendugno maar IGB takt bij Komotini af en is niet getoetst."
+    ],
+    "regios_extracts": [
+     {
+      "regio": "bulgarije",
+      "aanwezig": true
+     },
+     {
+      "regio": "griekenland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Gedeeltelijk: ICGB-way 100,9 km in bulgarije-extract; Grieks deel ontbreekt in griekenland-extract",
+    "jaarvolume_en_bron": "3 bcm/j ontwerp, uitbreiding tot 5 bcm/j (eigen kennis, ICGB; bron nog niet geopend, peiljaar onbekend)",
+    "risico": "Veel eigen kennis, weinig geverifieerd; OSM dekt maar twee derde van de lengte; grote volumes afgekapt. Kleine keten met veel stippel. Zwakste van de vier.",
+    "bronnen_start": [
+     "https://www.icgb.eu",
+     "https://www.bulgartransgaz.bg"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-komotini-starazagora",
+    "haalbaar": true,
+    "problemen": [
+     "Ontwerp klopt niet: de hele leiding staat wel in OSM, niets hoeft stippel. Drie aaneensluitende ways: 919860052 (31,0 km), 1076969894 (50,1 km), 826478838 ICGB (100,9 km) = 182,0 km, gelijk aan de gepubliceerde 182 km; alle drie in zowel bulgarije- als griekenland-extract.",
+     "De twee zuidelijke ways zijn onbenoemd en dragen een verouderde tag construction=yes (sentinel 2021); de leiding draait sinds 1 okt 2022.",
+     "Anker Komotini is alleen het way-eind 41.0621,25.4864 (rand Komotini-centrale, TAP ligt 0,7 km ernaast); Stara Zagora 42.3626,25.7029 is een klein station 0,3 km van het way-eind: aannemelijk.",
+     "Wikipedia noemt 160 km (150 BG plus 30 GR), brief 182 km: OSM-som 182,0 km, toets 15% ruim gehaald."
+    ],
+    "aanpassing": "BINDEND: geen stippel, geen losse Griekse leg. Een doorgetrokken leidingbeen Komotini naar Stara Zagora: way 919860052 omgedraaid, dan 1076969894 omgedraaid, dan 826478838, gestikt tot een FeatureCollection, 182,0 km. Begin 41.0621,25.4864, eind 42.3625,25.7029. Beennaam: aannemelijk, een bron. Brief-risico: tag construction=yes, volume 3 bcm/j ontwerp.",
+    "overlap": "Geen overlap met bestaande leidingbenen (minder dan 5% binnen 2 km, ook niet met gas-kipoi-melendugno of gas-kiyikoy-kiskundorozsma). Id is nieuw.",
+    "webcheck": "Wikipedia: operationeel 1 okt 2022, 3-5 bcm/j, Azerbeidzjaans gas, 2024 klanten Slowakije/Moldavie/Oekraine: https://en.wikipedia.org/wiki/Gas_Interconnector_Greece%E2%80%93Bulgaria . OSM-ways via pyosmium op beide extracts, bbox 41.2-42.6 N."
+   }
+  },
+  {
+   "id": "olie-wilhelmshaven-koeln",
+   "g": "olie",
+   "as": {
+    "prioriteit": 3,
+    "as": "Reserve golf 15: Duitse kustpoort Wilhelmshaven naar de Rijn per Nord-West-Oelleitung",
+    "keten_id": "olie-wilhelmshaven-koeln",
+    "van_site": "Wilhelmshaven, NWO-tankenpark (OSM-begin 53.5560, 8.1460), site niet gelegd",
+    "naar_site": "NWO-eindpunt Koeln/Huerth-regio (OSM-eind 50.9438, 6.8503), site niet gelegd",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Wilhelmshaven NWO (OSM Oeltrasse, 53.556, 8.146)",
+      "naar": "Koeln, Rohoel NWO (50.944, 6.850)",
+      "corridor": "Nord-West-Oelleitung via Emsland, Rhede en Wesel naar Koeln; 28 OSM-ways in de extracts de-niedersachsen en de-nrw",
+      "km_indicatie": "330 km OSM; gepubliceerd ca. 390 km (niet zelf gecontroleerd): ca. -15%",
+      "geometrie_tool": "OSM-pipeline; ways 37246878, 1170483426, 331053888 en vervolg tot 945532321"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "de-niedersachsen",
+      "aanwezig": true
+     },
+     {
+      "regio": "de-nrw",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja: Nord-West-Oelleitung, ca. 28 ways doorlopend, naden max 0,09 km. Rotterdam-Rhein-Pipeline (256 km Europoort tot 50.928, 6.846) is ook compleet gemapt als alternatief.",
+    "jaarvolume_en_bron": "Niet gevonden; doorvoer en capaciteit van de NWO nog te bronnen (NWO/Uniper-pagina's, Wikipedia-DE).",
+    "risico": "Geen volume en geen afnemer genoemd; eindpunt is een OSM-eind, geen site. Km-toets loopt tegen -15%. Herkomst van de crude bij Wilhelmshaven onbekend.",
+    "bronnen_start": [
+     "https://de.wikipedia.org/wiki/Nord-West-Oelleitung",
+     "https://www.openstreetmap.org/way/95474852"
+    ],
+    "ankers_hergebruik": []
+   },
+   "toets": {
+    "keten_id": "olie-wilhelmshaven-koeln",
+    "haalbaar": true,
+    "problemen": [
+     "OSM-eind 50.9438,6.8503 ligt in woonwijk Koeln-Muengersdorf (z15), geen site; NWO loopt door naar Rheinland Raffinerie, ca. 15 km verder, niet gekarteerd.",
+     "Km: OSM 330.4 km tegen 391 km (Wilhelmshaven-Wesseling, DE-Wikipedia) = -15.5%, net buiten norm; na aftrek van ca. 15-20 km tot Wesseling ca. -11 tot -13%.",
+     "Shell staakte crude-verwerking in Wesseling in maart 2025; Godorf draait door. Wesseling dus niet als afnemer noemen.",
+     "Geen volumebron voor de leiding zelf; wel 18,2 Mt in 2020 aangeleverd, capaciteit 16,3 Mt/j."
+    ],
+    "aanpassing": "Stik 26 ways tot een FeatureCollection (37246878, 1170483426, 331053888, 1167228169, 1167982648, 1167228167, 802175179, 1167982649, 1167982650, 1170470432, 1167982651, 1167982652, 199070486, 1167982653, 1170046316, 95474852, 57882826, 57882823, 57857300, 56383213, 824960260, 751120616, 165992666, 166970499, 199084814, 945532321): 330.4 km, naden onder 0.2 km, takken (Gelsenkirchen, Hamburg) weglaten. Begin NWO-tankpark 53.5563,8.1458 bron-gelegd. Titel eind: Koeln (NWO-leidingeinde). Geen stippel naar Wesseling.",
+    "overlap": "Id nieuw; geen olie-keten in Duitsland met dit tracé. Rotterdam-Rhein-Pipeline eindigt vlakbij 50.9285,6.8464 maar is niet opgenomen.",
+    "webcheck": "DE-Wikipedia Nord-West-Oelleitung: Wilhelmshaven-Wesseling 391 km, 71 cm, 16,3 Mt/j, vier raffinaderijen, 18,2 Mt in 2020. Chemanager en Argus: Wesseling crude-verwerking gestopt maart 2025, Godorf blijft."
+   }
+  }
+ ]
+}

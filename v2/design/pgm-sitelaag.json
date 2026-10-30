@@ -98,12 +98,12 @@
    "naam": "Styldrift mijn (Royal Bafokeng Platinum, sinds 2023 Implats-dochter)",
    "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
    "rol": "mijn",
-   "lat": -25.45,
-   "lon": 27.1,
+   "lat": -25.3977,
+   "lon": 27.1084,
    "capaciteit_kt": 10.0,
    "capaciteit_bron": "Royal Bafokeng Platinum / Implats jaarcijfers 2023: ~320 koz 4E; koz ÷ 32,15 ≈ 10,0 t/j [B3][B6]",
-   "coord_bron": "kandidaat o.b.v. de bekende ligging NO van Rustenburg; DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "status": "aannemelijk",
+   "coord_bron": "was -25.45/27.1 (geografische aanduiding NO van Rustenburg, niet satelliet-bevestigd) — M31 golf 14 (2026-10-30): gelijkgetrokken met het keten-anker van pgm-bafokeng-waterval (pgm-bafokeng-styldrift, Styldrift I schachtcomplex, bron-gelegd op z15 in de brief; 5,9 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "Implats nam Royal Bafokeng Platinum in 2023 volledig over; Styldrift is de belangrijkste operationele mijn van RBPlat. 4E."
   },
   {

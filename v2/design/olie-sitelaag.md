@@ -71,7 +71,7 @@ expliciet in `capaciteit_bron`, niet in een apart veld.
 | `w-abqaiq` | Abqaiq Stabilization Plant | Saoedi-Arabië | mijn (stabilisatie Ghawar) | 25.9286, 49.6858 | 7000 | Wikipedia/CRS [B5][B6] | Wikipedia-geohack | aannemelijk |
 | `w-yanbu` | Yanbu-exportterminal (Petroline) | Saoedi-Arabië | terminal | 23.9330, 38.2500 | 4500 | wisdomandboats/ENR/geoconversation [B7][B8][B9] | satelliet z14 | **bron-gelegd** |
 | `w-jubail-satorp` | SATORP-raffinaderij (Jubail) | Saoedi-Arabië | raffinaderij | 27.0333, 49.6167 | 460 | Saudipedia/TotalEnergies [B10][B11] | industriezone-schatting | **onzeker** |
-| `w-fujairah` | Fujairah Oil Terminal (ADNOC) | VAE | terminal | 25.1500, 56.3200 | 1500 | Seatrade/CNBC/The National [B12][B13][B14] | satelliet z14, verschoven | aannemelijk |
+| `w-fujairah` | Fujairah Oil Terminal (ADNOC) | VAE | terminal | 25.2135, 56.3419 | 1500 | Seatrade/CNBC/The National [B12][B13][B14] | M31 golf 14 (2026-10-30): gelijkgetrokken met het keten-anker ol-fujairah-term (FOIZ, bron-gelegd, olie-habshan-chiba); was 25.1500/56.3200 satelliet z14 | bron-gelegd |
 | `w-ruwais` | Ruwais-raffinaderij (ADNOC) | VAE | raffinaderij | 24.1063, 52.7278 | 922 | ADNOC-corporate [B15] | Wikipedia-geohack | aannemelijk |
 | `w-kharg` | Kharg Island-exportterminal | Iran | terminal | 29.2400, 50.3100 | 1577 | Mansfield/CIA/Iran Open Data [B16][B17][B18] | satelliet z13 | **bron-gelegd** |
 | `w-basra-minaalbakr` | Al Başrah Oil Terminal (ABOT) | Irak | terminal | 29.6833, 48.8167 | 3000 | Wikipedia [B19] | Wikipedia-coördinaat; satelliet: niets zichtbaar | **onzeker** |

@@ -3016,6 +3016,214 @@
    "label": "Toromocho → Callao",
    "aan": true,
    "noot": "M31 · golf 13 (2026-10-29): Cu-concentraat van Toromocho per FCCA-spoor via Ticlio en de Galera-tunnel naar Callao, band naar de TCSA-mineraalterminal; stoppunt kade. Let op: zigzag-terugloop is echt (Ticlio); zijlijn plant–Ticlio onzeker; concentrator alleen op satelliet gelegd."
+  },
+  {
+   "sleutel": "gr-dk",
+   "bestand": "stroomroute-grafiet-dumai-kendal.json",
+   "grondstof": "grafiet",
+   "label": "Dumai → Kendal",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): groene petroleumcokes uit de Pertamina-cokerij Dumai per schip (aanname) naar Tanjung Emas en per truck naar BTR Kendal. Let op: zeevervoer Dumai → Tanjung Emas en de steiger zijn aannemelijk (geen bilaterale bron); truckbeen naar BTR Kendal is een letterlijke kopie van balama-kendal (31,3 km tegen 17,3 hemelsbreed, parkopgave 25 km)."
+  },
+  {
+   "sleutel": "gr-dh",
+   "bestand": "stroomroute-grafiet-dormagen-heroya.json",
+   "grondstof": "grafiet",
+   "label": "Dormagen → Herøya",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): grafietconcentraat uit cylib Dormagen per binnenvaart en zee via Rotterdam naar Vianode Via ONE Herøya (aannemelijk, één bron MoU, volume 0). Let op: recycling-MoU cylib → Vianode, volume 0 (één bron); cylib-plot in Dormagen niet satelliet-gelegd; Via ONE-marker 0,6 km van de lijn als bewust staartanker; Rijnbenen kopie van grafiet-molo-duisburg."
+  },
+  {
+   "sleutel": "ni-dsh",
+   "bestand": "stroomroute-nikkel-doniambo-shunan.json",
+   "grondstof": "nikkel",
+   "label": "Doniambo → Shunan",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): ferronikkel van SLN Doniambo (Nouméa) per zeeschip naar Nippon Steel Yamaguchi Works Shunan, aannemelijk: één bron (aandeelhoudersband). Let op: levering Doniambo → Shunan rust alleen op de aandeelhoudersband (Nippon Steel in SLN), geen leverbron; Shunan werkt grotendeels op schroot; sitelaag w-doniambo-sln ligt 1,4 km van de kade (centroïde, niet gelijkgetrokken)."
+  },
+  {
+   "sleutel": "ni-ct",
+   "bestand": "stroomroute-nikkel-codemin-timoteo.json",
+   "grondstof": "nikkel",
+   "label": "Codemin → Aperam Timóteo",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): ferronikkel per truck van Anglo's Codemin-fabriek in Niquelândia via BR-414, BR-080, BR-040 en BR-381 naar Aperam South America in Timóteo; stoppunt, afnemer aannemelijk: één bron (ANM over 2004). Let op: afnemer Aperam Timóteo alleen gebronnen over 2004 (ANM); truck is een aanname; 25 knikken (spikes en een krappe bocht) in het ene truckbeen van 1.202 km, omweg 1,41."
+  },
+  {
+   "sleutel": "ree-cs",
+   "bestand": "stroomroute-ree-cheongju-sanmarcos.json",
+   "grondstof": "ree",
+   "label": "KSM Metals Cheongju → Noveon San Marcos",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): NdPr-/NdFeB-legering van KSM Metals (Cheongju) per truck naar Busan, per containerschip naar Long Beach en per truck naar Noveon San Marcos; aannemelijk: B/L noemt Busan en LA/Long Beach. Let op: bestand 370 KB (lang truckbeen Long Beach → San Marcos); kop-anker KSM Cheongju onzeker; leverrelatie aannemelijk via een B/L die Busan en LA/Long Beach noemt; geen gepubliceerde wegkm."
+  },
+  {
+   "sleutel": "ree-kc",
+   "bestand": "stroomroute-ree-kuantan-chattanooga.json",
+   "grondstof": "ree",
+   "label": "Kuantan → Chattanooga",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): ceriumcarbonaat van LAMP Gebeng per truck naar Westports, per zeeschip via Suez naar Savannah en per truck (I-16, I-75) naar Grace Davison Chattanooga (aannemelijk: één bron). Let op: Chattanooga is een consignee-adres (Grace Davison, één bron); Savannah-aanloop schematisch (laatste 22 km koorde, naad 2,34 km); truckbeen Savannah → Chattanooga zonder gepubliceerde wegkm."
+  },
+  {
+   "sleutel": "pgm-zs",
+   "bestand": "stroomroute-pgm-zimplats-springs.json",
+   "grondstof": "pgm",
+   "label": "Zimplats SMC → Springs",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): PGM-matte van Zimplats SMC per truck via Beitbridge naar Impala Refining Services Springs (Implats-factsheet 2025). Let op: modaliteit truck is een aanname (Implats-factsheet noemt de matte-levering aan IRS Springs, niet het vervoer); b1 en b2 deels gedeeld met pgm-zimplats-rustenburg; b1 verhouding 1,42 op hemelsbreed."
+  },
+  {
+   "sleutel": "pgm-bw",
+   "bestand": "stroomroute-pgm-bafokeng-waterval.json",
+   "grondstof": "pgm",
+   "label": "Bafokeng → Waterval",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): PGM-concentraat van Impala Bafokeng Styldrift per truck over R565, Ottoman Highway, N4 en R24 naar de Waterval-smelter van Valterra bij Rustenburg (aannemelijk: één bron). Let op: Waterval-smelter als afnemer aannemelijk (één bron, Valterra-tollverwerking); 57,3 km tegen 65 km indicatie (-12%); sitelaag w-bafokeng-styldrift centraal gelijkgetrokken naar het bron-gelegde schachtcomplex (5,9 km)."
+  },
+  {
+   "sleutel": "li-bt",
+   "bestand": "stroomroute-lithium-bikita-tianjin.json",
+   "grondstof": "lithium",
+   "label": "Bikita → Tianjin",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): spodumeenconcentraat van Bikita per truck via Beitbridge naar Durban DCT Pier 2 en per zeeschip naar Tianjin Beijiang (Durban en Tianjin elk een zwakke bron). Let op: bestand 308 KB; geen wegkm-bron voor Bikita → Beitbridge → Durban; containerkades (Durban DCT Pier 2, Tianjin) aangenomen in plaats van bulkterminals; haven-aanlopen schematisch."
+  },
+  {
+   "sleutel": "li-gs",
+   "bestand": "stroomroute-lithium-greenbushes-shehong.json",
+   "grondstof": "lithium",
+   "label": "Greenbushes → Shehong",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Greenbushes-concentraat per truck naar Bunbury, per bulkcarrier naar de Yangtze-monding, per binnenschip naar Chongqing en per truck naar Tianqi Shehong. Let op: Yangtze-barge naar Chongqing (Guoyuan) niet gebronnen voor lithium; Shehong-anker onzeker; zee → Yangtze-overgang is de conventie-marker (2,69 km van de lijn, naad 4,93 km, kopie greenbushes-zhangjiagang)."
+  },
+  {
+   "sleutel": "ag-cm",
+   "bestand": "stroomroute-zilver-constancia-matarani.json",
+   "grondstof": "zilver",
+   "label": "Constancia → Matarani",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Cu-concentraat met het zilver van Hudbay Peru gaat per truck van de Constancia-concentrator via Yauri, Imata, Yura en de Arequipa-omleiding naar de Tisur-mineralenterminal in Matarani. Let op: wegverhouding 1,64 (466 km tegen 284 hemelsbreed) verklaard door de Andes-corridor via Yauri, Imata en Arequipa en de gepubliceerde 475 wegkm (Hudbay AIF); geen echte omweg."
+  },
+  {
+   "sleutel": "ag-yj",
+   "bestand": "stroomroute-zilver-ying-jiyuan.json",
+   "grondstof": "zilver",
+   "label": "Ying → Yuguang Jiyuan",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): lood-zilverconcentraat van Silvercorp's Ying-molens (Luoning) per truck via S249, G3615, Luoyang en Mengjin naar Yuguang Gold and Lead in Jiyuan, aannemelijk: één bron. Let op: wegkm alleen OSRM-indicatie; bestemming Yuguang Jiyuan op één bron; molenanker Ying aannemelijk; Ying ontbreekt in de zilver-sitelaag."
+  },
+  {
+   "sleutel": "kolen-cp",
+   "bestand": "stroomroute-kolen-conuma-princerupert.json",
+   "grondstof": "kolen",
+   "label": "Quintette → Trigon Prince Rupert",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): cokeskool van Quintette (Conuma, Tumbler Ridge) per trein via Prince George en de CN-lijn naar Trigon Pacific Terminals, Prince Rupert; stop bij de kade. Let op: spoorkm 988,5 is een router-indicatie (hemelsbreed 608,5, verhouding 1,62 door de gebergtecorridors); Conuma → Trigon rust op een krantenbron, niet Quintette-specifiek; bedrijfsstatus van de lijn niet uit OSM af te leiden."
+  },
+  {
+   "sleutel": "kolen-rn",
+   "bestand": "stroomroute-kolen-raspadskaya-ntmk.json",
+   "grondstof": "kolen",
+   "label": "Raspadskaya → Nizhny Tagil",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Kuzbass-cokeskool uit de Raspadskaya-wasserij per spoor over de Trans-Sib naar EVRAZ NTMK; NTMK-afname aannemelijk, één bron. Let op: NTMK-afname aannemelijk (één bron, EVRAZ-concern); wasserij-anker afgeleid; b1 en b5 zonder gepubliceerde spoorkm (omwegfactoren 1,03–1,28)."
+  },
+  {
+   "sleutel": "u-km",
+   "bestand": "stroomroute-uranium-kayelekera-malvesi.json",
+   "grondstof": "uranium",
+   "label": "Kayelekera → Malvési",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Yellowcake per truck van Kayelekera via Zambia en Sesheke naar Walvis Bay, per schip naar Hamburg (analogie) en per trein naar Orano Malvési; aannemelijk, één bron. Let op: bestand 597 KB (twee lange truckbenen door Zambia en Namibië); naad 4,17 km bij Hamburg (spoorbeen Steinweg → Bohmte); spoorbenen Hamburg → Malvési letterlijke kopie van uranium-rossing-malvesi; eerste zending okt/nov 2026, route aannemelijk."
+  },
+  {
+   "sleutel": "u-hm",
+   "bestand": "stroomroute-uranium-honeymoon-metropolis.json",
+   "grondstof": "uranium",
+   "label": "Honeymoon → Metropolis Works",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Yellowcake uit Honeymoon per truck over de A32 naar Outer Harbor, per zeeschip naar Oakland (aannemelijk, NRC 2012/2013) en per truck naar Honeywell Metropolis Works. Let op: bestand 608 KB (truckbeen Oakland → Metropolis 3.634 km, OSRM-indicatie); Oakland als aankomsthaven aannemelijk; twee terugloopjes van ca. 0,1 km."
+  },
+  {
+   "sleutel": "gas-ws",
+   "bestand": "stroomroute-gas-westnatuna-sakra.json",
+   "grondstof": "gas",
+   "label": "West Natuna → Pulau Sakra",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): West Natuna Block B-gas gaat via de 596 km onderzeese WNTS-leiding (28 inch, OSM way 182146492) naar Pulau Sakra, Jurong Island (Singapore). Let op: doorzet uit 2001 (peiljaar); aanlanding Pulau Sakra door geen bron bevestigd; beginplatform op West Natuna Block B onbekend (leidingkop uit OSM)."
+  },
+  {
+   "sleutel": "gas-si",
+   "bestand": "stroomroute-gas-snohvit-incukalns.json",
+   "grondstof": "gas",
+   "label": "Snøhvit → Inčukalns",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Snøhvit-gas per leiding naar Hammerfest LNG, als LNG via de Grote Belt naar FSRU Klaipėda en per leiding naar Inčukalns UGS (aannemelijk: één bron). Let op: leiding Klaipėda → Inčukalns 413 km over 13 onbenoemde OSM-ways (factor 1,5 op hemelsbreed, geen gepubliceerde lengte); LNG-lading Hammerfest → Klaipėda aannemelijk (geen cargo-specifieke bron)."
+  },
+  {
+   "sleutel": "olie-hf",
+   "bestand": "stroomroute-olie-heglig-fujairah.json",
+   "grondstof": "olie",
+   "label": "Heglig → Fujairah",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Nile Blend per Greater Nile-leiding van Heglig naar Bashayer (Port Sudan) en per tanker naar de Fujairah-exportterminal (bestemming een bron). Let op: leidingkop ligt 32 km noord van de Heglig-CPF (onzeker, OSM); bestemming Fujairah op één bron (Nile Blend-ladingen); haven-aanlopen Bashayer en Fujairah schematisch; sitelaag w-fujairah centraal gelijkgetrokken naar het bron-gelegde FOIZ-anker (7,4 km)."
+  },
+  {
+   "sleutel": "olie-pi",
+   "bestand": "stroomroute-olie-permian-ingleside.json",
+   "grondstof": "olie",
+   "label": "Permian → Ingleside",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Permian-ruwe olie per Gray Oak-pijpleiding (OSM, 687 km) van Reagan County naar de South Texas Gateway Terminal bij Ingleside. Let op: Gray Oak-leiding uit OSM (687 km tegen 550 hemelsbreed, indicatie); 16 spike-knikken op way-overgangen; startpunt Reagan County is een pompstation-anker, geen veld."
+  },
+  {
+   "sleutel": "dia-am",
+   "bestand": "stroomroute-diamant-aikhal-mirny.json",
+   "grondstof": "diamant",
+   "label": "Aikhal → Mirny",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Aikhal-ruw per truck van de Jubilee-put via het Aikhal-GOK en de 98K-004 (via Tsjernysjevski) naar het Mir-complex/sorteercentrum Mirny; aannemelijk, vervoersmiddel onbevestigd. Let op: vervoersmiddel Aikhal → Mirny onbevestigd (truck aangenomen); b1 Jubilee → GOK 32 km over mijn- en servicewegen (factor 2,3); GOK-anker aannemelijk, sitelaag w-aikhal 2,7 km ervandaan (beide onzeker, niet gelijkgetrokken)."
+  },
+  {
+   "sleutel": "dia-lm",
+   "bestand": "stroomroute-diamant-lomonosov-moskou.json",
+   "grondstof": "diamant",
+   "label": "Lomonosov → Moskou",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Ruwe diamant uit de Lomonosov-mijn (Severalmaz/Alrosa) per truck naar Talagi (ARH) en als vracht (aannemelijk) naar Sheremetyevo-Cargo, Moskou. Let op: vlucht Talagi → Sheremetyevo niet gebrond (aannemelijk); ARH-vrachtplatform onzeker; wegkm mijn → Talagi alleen hemelsbreed-indicatie."
+  },
+  {
+   "sleutel": "au-sp",
+   "bestand": "stroomroute-goud-sukari-pamp.json",
+   "grondstof": "goud",
+   "label": "Sukari → PAMP",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Sukari-doré per truck naar Marsa Alam Intl, per vrachtvlucht via Cairo naar Zürich, per truck over de Gotthard naar MKS PAMP; de vluchten en Castel San Pietro zijn aannemelijk. Let op: vluchten Marsa Alam → Caïro (één bron) en Caïro → Zürich (geen bron) aannemelijk; wegkm Sukari → Marsa Alam eigen OSM-meting; Sukari ontbreekt in de goud-sitelaag."
+  },
+  {
+   "sleutel": "au-ssp",
+   "bestand": "stroomroute-goud-salaresnorte-pamp.json",
+   "grondstof": "goud",
+   "label": "Salares Norte → MKS PAMP",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): doré van Salares Norte per truck naar SCL, per vrachtvlucht naar ZRH en per truck naar MKS PAMP (Zwitserland aannemelijk, 20-F noemt ook India). Let op: bestand 467 KB (truckbeen Salares Norte → Santiago 1.138 km); Zwitserland als bestemming op één bron (Gold Fields), vlucht SCL → ZRH aannemelijk; 40 m terugloop bij Diego de Almagro."
+  },
+  {
+   "sleutel": "cu-ch",
+   "bestand": "stroomroute-koper-cobrepanama-hamburg.json",
+   "grondstof": "koper",
+   "label": "Cobre Panamá → Hamburg",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): Cobre Panamá-concentraat (voorraadexport 2025) per bulkcarrier van Punta Rincón via de Atlantische route zonder Panamakanaal naar Brunsbüttel, binnenschip naar Aurubis Werk Ost (aannemelijk: één bron). Let op: haven-aanloop Punta Rincón is een rechte stippel van 111 km (router-timeout, geen gemeten route); Aurubis Hamburg als afnemer op één bron; Werk Ost-marker 0,28 km van de lijn; twee spikes in de kanaalroute."
+  },
+  {
+   "sleutel": "cu-qp",
+   "bestand": "stroomroute-koper-quebradablanca-patache.json",
+   "grondstof": "koper",
+   "label": "Quebrada Blanca → Puerto Patache",
+   "aan": true,
+   "noot": "M31 · golf 14 (2026-10-30): QB2-concentraat als slurry door een eigen leiding (stippel 21,5 km + 3 OSM-ways 133,6 km) naar het QB2-havenvlak bij Patache; stop daar, geen zeebeen. Let op: 13,9% stippel (eerste 21,5 km van de leiding niet in OSM); de OSM-ways zijn niet bewezen QB2-slurryleiding; eindigt op Puerto Patache zonder zeebeen (stoppunt)."
   }
  ],
  "uitgesloten": [
