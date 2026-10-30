@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (2e) (M31 golf 14 live `?v=145`; poort = telefoontest)*
+*Last updated: 2026-10-30 (3e) (telefoontest `?v=145` goed; golf 14 af)*
 
 
 ## 🔴 NIEUW 2026-10-30 (2e) — na M31 golf 14 live
 
-1. **Lars test `?v=145` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=145 — 26 nieuwe ketens (o.a. Kayelekera → Malvési, Snøhvit → Inčukalns, Cobre Panamá → Aurubis Hamburg, Bikita → Tianjin, Greenbushes → Shehong per Yangtze-barge, Sukari en Salares Norte → PAMP, Heglig → Fujairah, Permian → Ingleside). Goed → golf 14 af.
+1. ~~Lars test `?v=145` op de telefoon~~ ✅ 2026-10-30 "Ziet er goed uit" → golf 14 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=145 — 26 nieuwe ketens (o.a. Kayelekera → Malvési, Snøhvit → Inčukalns, Cobre Panamá → Aurubis Hamburg, Bikita → Tianjin, Greenbushes → Shehong per Yangtze-barge, Sukari en Salares Norte → PAMP, Heglig → Fujairah, Permian → Ingleside). Goed → golf 14 af.
 2. **Golf 15 (klein):** 17 getoetste reserves klaar (8 in `golf14-reserves.json` + 9 in `golf15-reserves.json`; de 2 grafiet-reserves van golf 14 hebben geen per-keten-toets → toets in de eerste pijplijnstap, golf 10-les) → `maak_golf12.py`-patroon, ~55 agenten.
 3. **Of een vijfde ontwerpronde zonder kobalt** (`maak_golf14.py`-patroon uit `golf14-script.mjs` + `golf14-resultaat.json`, 17 afgewezen assen); kobalt alleen na bronwerk vooraf.
 4. **De 30 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`.

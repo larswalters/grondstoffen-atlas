@@ -5,8 +5,8 @@
 > `golf15-reserves.json` (17 klaar met die van golf 13). Centraal: 5 vlaggen (bestanden 308–608 KB door lange truckbenen; Punta Rincón-aanloop rechte
 > stippel 111 km), **w-bafokeng-styldrift (5,9 km) en w-fujairah (7,4 km) gelijkgetrokken**, 26 noten; volumes-leesagent `v2/design/volumes/golf14.json`
 > (23 indicatie, 3 onbekend) → 358/402 met dikte; bundel 1.516 benen, `bundel-check` ok, `CODE_VERSIE` + `BUNDEL_VERSIE` 145; desktop + 375 px 0 fouten.
-> Vier nieuwe `maak_leidingbeen_*.py`. Lessen: bakhandleiding §14. LAR-652 Done. Kosten 5-uur 2 → 39%, week 32 → 38%. **→ VOLGENDE:** Lars' telefoontest
-> `?v=145` · golf 15 klein uit de 17 reserves (`maak_golf12.py`-patroon) of een vijfde ontwerpronde zonder kobalt.
+> Vier nieuwe `maak_leidingbeen_*.py`. Lessen: bakhandleiding §14. LAR-652 Done. Kosten 5-uur 2 → 39%, week 32 → 38%. **✅ Telefoontest Lars `?v=145` goed (2026-10-30).**
+> **→ VOLGENDE:** golf 15 klein uit de 17 reserves (`maak_golf12.py`-patroon) of een vijfde ontwerpronde zonder kobalt.
 
 > **🌍 M31 GOLF 13 LIVE `?v=144` — 376 STROMEN, DERDE ONTWERPRONDE (2026-10-29, EERDER).** Commit `794365b`. Lars: *"doe nog maar een
 > ontwerpronde."* `v2/tools/golf/maak_golf13.py` → `golf13-script.mjs` (uit het golf 11-script + `golf11-resultaat.json`: 19 afgewezen
@@ -1001,7 +1001,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-30 (laatst: M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-30 (laatst: M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145, telefoontest goed; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
