@@ -8,7 +8,7 @@
 - **Hoe:** `v2/tools/golf/maak_golf15.py` (patroon golf 12) bouwt `golf15-script.mjs` uit `golf14-script.mjs` + de 17 reserves uit `golf14-reserves.json` en `golf15-reserves.json`; de 2 grafiet-reserves zonder toets in de eerste pijplijnstap getoetst. `wf_e83d0d63-4ec`: 50 agenten op Sonnet, 8,2 M tokens, 21 min, 0 uitval, 16/17 (grafiet-teverola-heroya afgewezen: Teverola alleen in een fotobijschrift). **Geen reserves meer over.**
 - **Centraal (bakhandleiding §15):** `centraal_check.py` 16/16 (1 vlag: Pedra Azul 320 KB; markers Yangtze-monding 2,69 km en Salina Cruz 1,30 km bewust; 16,1% stippel Tratayén → Salliqueló); `sitelaag_check.py` 6 → **w-grootegeluk gelijkgetrokken** (3,9 km); 16 noten; `li-kamativi` → `li-kz`, `gas-ts` → `gas-tss`; tijdelijke `bash -n`-fouten door gelijktijdige edits (na afloop schoon, geen verwijderde regels); vijf nieuwe `maak_leidingbeen_*.py`.
 - **Volumes:** leesagent → `v2/design/volumes/golf15.json` (0 bron, 15 indicatie, 1 onbekend) → totaal 67 bron / 320 indicatie / 31 onbekend → `bundel`, `bundel-check` ok. Kosten: 5-uur 3 → 20%, week 39 → 42%.
-- **Poort:** Lars' telefoontest `?v=146`.
+- **✅ Telefoontest Lars `?v=146` goed (2026-10-30, "Ziet er goed uit") → golf 15 af.**
 
 
 

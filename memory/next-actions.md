@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (4e) (M31 golf 15 live `?v=146`; poort = telefoontest)*
+*Last updated: 2026-10-30 (5e) (telefoontest `?v=146` goed; golf 15 af)*
 
 
 ## 🔴 NIEUW 2026-10-30 (4e) — na M31 golf 15 live
 
-1. **Lars test `?v=146` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=146 — 16 nieuwe ketens (o.a. Kamativi → Beira → Zhangjiagang, Lynas → Narva, Curragh → Gladstone, Wheatstone → Futtsu, Trans-Sachalin, Nuevo Teapa → Salina Cruz, NWO Wilhelmshaven → Keulen, Metropolis → Eunice). Goed → golf 15 af.
+1. ~~Lars test `?v=146` op de telefoon~~ ✅ 2026-10-30 "Ziet er goed uit" → golf 15 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=146 — 16 nieuwe ketens (o.a. Kamativi → Beira → Zhangjiagang, Lynas → Narva, Curragh → Gladstone, Wheatstone → Futtsu, Trans-Sachalin, Nuevo Teapa → Salina Cruz, NWO Wilhelmshaven → Keulen, Metropolis → Eunice). Goed → golf 15 af.
 2. **Geen reserves meer.** Een volgende stromen-golf = ontwerpronde zonder kobalt (`maak_golf14.py`-patroon uit `golf14-script.mjs` + `golf14-resultaat.json`, de 17 afgewezen golf 14-assen in de prompts; ~100 agenten, ~6–7% weeklimiet).
 3. **De 31 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`.
 4. **Open bevindingen golf 15 (geen actie, wel weten):** Pedra Azul 320 KB; Tratayén → Salliqueló 16% stippel (5 OSM-gaten); gas-waha-aguadulce begint in Crockett County (westelijk 36-inch stuk naar Waha niet in OSM); olie-wilhelmshaven-koeln eindigt op een OSM-leidingeinde in een woonwijk (15–20 km tot Wesseling niet getekend); gas-wheatstone-kawagoe eindigt in Futtsu (id ≠ eindpunt); lithium-sitelaag noemt Huayou als eigenaar van Kamativi, de brief Yahua.
