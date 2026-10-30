@@ -1,5 +1,16 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-29 (3e) (M31 golf 13, derde ontwerpronde, live `?v=144`: 376 stromen)*
+*Last updated: 2026-10-30 (M31 golf 14, vierde ontwerpronde zonder kobalt, live `?v=145`: 402 stromen)*
+
+
+## Stand 2026-10-30 — M31 golf 14 live: 402 stromen (`?v=145`)
+
+- **Op de bol (`?v=145`, commit `0a3be85`):** 26 nieuwe ketens, 376 → 402, over 13 grondstoffen (elke grondstof 2/2; kobalt bewust overgeslagen). Bundel 402 stromen · 1.516 benen · 449 stippel · 1.351 markers · 451 sites · **358 met volume**; desktop + 375 px 402/402, 0 fouten.
+- **Hoe:** `v2/tools/golf/maak_golf14.py` bouwt `golf14-script.mjs` uit `golf13-script.mjs` + `golf13-resultaat.json` (de 24 in de toets afgewezen assen van golf 13 met hun eerste reden) + `golf14-reserves.json` (de 8 reserves als "NIET opnieuw ontwerpen" in de hint; `OVERSLAAN = {kobalt}`). `wf_528d40ea-79d`: 104 agenten op Sonnet, 20,3 M tokens, 101 min, 0 uitval, 26/26 gebakken en gekeurd (1 goed, 25 met bevindingen). 17 afgewezen in de toets.
+- **Reserves voor golf 15:** 9 in `golf15-reserves.json` (grafiet Teverola → Herøya en Kellyton → Hiller Carbon zónder toets; pgm Zondereinde → Port Elizabeth, lithium Kamativi → Zhangjiagang, kolen Dendrobium → Port Kembla en Grootegeluk → Medupi, gas Wheatstone → Kawagoe en Komotini → Stara Zagora, olie Wilhelmshaven → Keulen) — plus de 8 van golf 13 in `golf14-reserves.json`, dus 17 klaar.
+- **Centraal (bakhandleiding §14):** `centraal_check.py` 26/26 (5 vlaggen: bestanden 308–608 KB door lange truckbenen; markers Via ONE 0,6 km en Yangtze-monding 2,69 km), Punta Rincón-aanloop rechte stippel 111 km (router-timeout), naden tot 4,93 km (kopie), 13,9% stippel Quebrada Blanca → Patache; `sitelaag_check.py` 12 kandidaten → **w-bafokeng-styldrift (5,9 km) en w-fujairah (7,4 km) gelijkgetrokken**; 26 noten; geen sleutelbotsingen; een bake-agent herformatteerde andermans functie in `bak_stromen.sh` (inhoud gelijk); vier nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `v2/design/volumes/golf14.json` (0 bron, 23 indicatie, 3 onbekend) → `maak_stroomvolumes.py --schrijf` → totaal 67 bron / 305 indicatie / 30 onbekend → `bundel`, `bundel-check` ok. Kosten: 5-uur 2 → 39%, week 32 → 38%.
+- **Poort:** Lars' telefoontest `?v=145`.
+
 
 
 ## Stand 2026-10-29 (3e) — M31 golf 13 live: 376 stromen (`?v=144`)

@@ -1,12 +1,22 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (telefoontest `?v=144` goed; golf 13 af)*
+*Last updated: 2026-10-30 (2e) (M31 golf 14 live `?v=145`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-29 (3e) — na M31 golf 13 live
+## 🔴 NIEUW 2026-10-30 (2e) — na M31 golf 14 live
+
+1. **Lars test `?v=145` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=145 — 26 nieuwe ketens (o.a. Kayelekera → Malvési, Snøhvit → Inčukalns, Cobre Panamá → Aurubis Hamburg, Bikita → Tianjin, Greenbushes → Shehong per Yangtze-barge, Sukari en Salares Norte → PAMP, Heglig → Fujairah, Permian → Ingleside). Goed → golf 14 af.
+2. **Golf 15 (klein):** 17 getoetste reserves klaar (8 in `golf14-reserves.json` + 9 in `golf15-reserves.json`; de 2 grafiet-reserves van golf 14 hebben geen per-keten-toets → toets in de eerste pijplijnstap, golf 10-les) → `maak_golf12.py`-patroon, ~55 agenten.
+3. **Of een vijfde ontwerpronde zonder kobalt** (`maak_golf14.py`-patroon uit `golf14-script.mjs` + `golf14-resultaat.json`, 17 afgewezen assen); kobalt alleen na bronwerk vooraf.
+4. **De 30 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`.
+5. **Open bevindingen golf 14 (geen actie, wel weten):** bestanden > 300 KB bij lange truckbenen (5×, tot 608 KB) — simplify-stap in `bak_stroombundel.py` als het hinderlijk wordt; Punta Rincón-aanloop rechte stippel 111 km (router-timeout; volgende golf: tweede poging met ruimer venster in het recept); Yangtze-monding conventie-marker 2,69 km; w-aikhal 2,7 km van het GOK-anker (beide onzeker).
+6. **Gereedschap:** informatietextuur 2.048 benen, bundel 1.516 — verdubbelen rond 1.900; de `git diff bak_stromen.sh | grep '^-'`-controle na elke golf (een agent herformatteerde andermans functie).
+
+
+## 🟢 2026-10-29 (3e) — AFGEHANDELD (telefoontest goed, golf 14 gedraaid) — na M31 golf 13 live
 
 1. ~~Lars test `?v=144` op de telefoon~~ ✅ 2026-10-30 "Ziet er goed uit" → golf 13 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=144 — 24 nieuwe ketens (o.a. Balkan Stream Kıyıköy → Kiskundorozsma, Arctic LNG 2 Utrenneye → Beihai, Caserones → Saganoseki, Udachny → Dubai, Metropolis → Almelo, Lynas Kuantan → Pasadena, Agadem → Sèmè-Kpodji).
-2. **Golf 14 (klein):** 8 getoetste reserves in `v2/tools/golf/golf14-reserves.json` → `maak_golf12.py`-patroon (alle 8 hebben een per-keten-toets).
-3. **Een volgende ontwerpronde zónder kobalt** (of kobalt pas na bronwerk vooraf: een producent-haven-bron voor Beira/TAZARA/Durban, of een Chinese raffinaderij met een genoemde DRC-leverancier). De 19 + 19 afgewezen assen van golf 11 en 13 staan in `golf11-resultaat.json`/`golf13-resultaat.json` (toets, `haalbaar: false`) → in de prompts.
+2. ~~**Golf 14 (klein):** 8 getoetste reserves~~ (blijven liggen; golf 14 werd een ontwerpronde, de reserves gaan in golf 15) — in `v2/tools/golf/golf14-reserves.json` → `maak_golf12.py`-patroon (alle 8 hebben een per-keten-toets).
+3. ~~**Een volgende ontwerpronde zónder kobalt**~~ ✅ 2026-10-30 golf 14, 26/26 — (of kobalt pas na bronwerk vooraf: een producent-haven-bron voor Beira/TAZARA/Durban, of een Chinese raffinaderij met een genoemde DRC-leverancier). De 19 + 19 afgewezen assen van golf 11 en 13 staan in `golf11-resultaat.json`/`golf13-resultaat.json` (toets, `haalbaar: false`) → in de prompts.
 4. **De 27 onbekende volumes** (nu ook grafiet-seadrift-pamplona, nikkel-zapolyarny-monchegorsk) alleen met bronwerk via `stroomvolumes-handmatig.json`; pgm-platreef-zondereinde krijgt pas een dikte met een PGM-inhoud (nu tonnes concentraat).
 5. **Open bevindingen golf 13 (geen actie, wel weten):** uranium-metropolis-almelo 484 KB (truckbeen 21.115 punten); kade-markers 2,7–3,7 km bij zee-snaps (Tabang, Centenario → Yangtze conventie-anker, Sillamäe → Newark); naden 3,6–4,9 km (Hishikari, Caetité, Greenbushes → Qinzhou); olie-lagoagrio 9,7% stippel en eindpunt Charco Azul i.p.v. Chiriquí Grande; Houston/NOLA/SVO als aangenomen aankomstpunten.
 6. **Gereedschap:** informatietextuur 2.048 benen, bundel 1.416 — verdubbelen rond 1.900; `.gitattributes` `*.py text eol=lf` blijft een optie (deze golf geen CRLF).

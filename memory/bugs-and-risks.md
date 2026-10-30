@@ -1,5 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+*Last updated: 2026-10-30 (M31 golf 14, live `?v=145`)*
+
+
+## 🟡 NIEUW 2026-10-30 — uit M31 golf 14
+
+67. **Bestanden boven 300 KB zijn bij lange truckbenen de regel** (5 van 26: 308–608 KB; truckbenen van 1.100–3.600 km door Zambia/Namibië, de VS, Chili). De bundel draagt het, maar `stromen-fijn-*.bin` groeit mee; een simplify-stap in `bak_stroombundel.py` is de fix, niet herbakken.
+68. **Een haven-aanloop die op de router-timeout loopt wordt stil een rechte stippel** (Punta Rincón, 111 km, koper-cobrepanama-hamburg): de keuring laat het door als "bedoelde stippel". Volgende golf: in het bake-recept een tweede poging met ruimer venster vóór de rechte stippel.
+69. **Een bake-agent raakte andermans functie in `bak_stromen.sh`** (grafiet-epanko-duisburg: één regel → regelvervolgen, inhoud gelijk). Onschuldig nu, maar de regel "je raakt alleen je eigen bestanden" hield niet; controle na elke golf: `git diff v2/tools/bak_stromen.sh | grep '^-'`.
+70. **Volumes van golf 14 zijn allemaal indicatie of onbekend (0 bron):** o.a. cylib → Vianode MoU zonder tonnage, SLN alleen groepstotaal, Cobre Panamá eenmalige voorraadexport, twee REE-cijfers als steekproef/cumulatief. Totaal nu 30 onbekend van 402.
+71. **Aannames als aankomst- of vertrekpunt:** Oakland (Honeymoon → Metropolis), Shunan (SLN-aandeelhoudersband), Pulau Sakra (West Natuna), Reagan County als pompstation-anker (Permian), Heglig-leidingkop 32 km van de CPF. Staat in de noten; geen actie.
+
 
 
 ## 🟡 NIEUW 2026-10-29 (3e) — uit M31 golf 13

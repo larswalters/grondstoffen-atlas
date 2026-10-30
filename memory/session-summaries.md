@@ -2527,3 +2527,12 @@ overschiet-en-terug op het been-einde, structureel verklaard (anker-stub komt n�
 `git checkout` en opnieuw via het gereedschap gedaan.
 
 Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom), alle gepusht.
+
+## 2026-10-30 — M31 golf 14: vierde ontwerpronde zonder kobalt, 402 stromen live `?v=145`
+
+**TL;DR:** Lars: *"doe maar een nieuwe ontwerp ronde"*. `maak_golf14.py` uit het golf 13-script + `golf13-resultaat.json` (24 afgewezen assen met reden), kobalt overgeslagen, de 8 reserves als "niet opnieuw ontwerpen". `wf_528d40ea-79d`: 104 agenten op Sonnet, 20,3 M tokens, 101 min, 0 uitval, 26/26 gebakken en gekeurd (elke van de 13 grondstoffen 2/2); 17 afgewezen, 9 reserves → `golf15-reserves.json`. Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=145 (commit `0a3be85`), bundel 402 stromen · 1.516 benen · 1.351 markers · 358 met volume. LAR-652 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 26/26, 5 vlaggen (bestanden 308–608 KB; Via ONE 0,6 km; Yangtze-monding 2,69 km), Punta Rincón-aanloop rechte stippel 111 km, naden tot 4,93 km (kopie), 13,9% stippel QB → Patache; `sitelaag_check.py` 12 → w-bafokeng-styldrift (5,9 km) en w-fujairah (7,4 km) gelijkgetrokken; 26 noten; een agent herformatteerde andermans functie in `bak_stromen.sh`; vier nieuwe `maak_leidingbeen_*.py`; LF overal in orde.
+- **Volumes:** leesagent → `golf14.json` (23 indicatie, 3 onbekend) → totaal 67/305/30 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 145; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §14. Kosten: 5-uur 2 → 39%, week 32 → 38%.
+- **Volgende:** telefoontest `?v=145` · golf 15 klein uit 17 reserves of een vijfde ontwerpronde zonder kobalt · 30 onbekende volumes alleen met bronwerk.

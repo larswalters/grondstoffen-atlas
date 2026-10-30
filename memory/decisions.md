@@ -1,5 +1,16 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-29 (3e) (M31 golf 13, live `?v=144`)*
+*Last updated: 2026-10-30 (M31 golf 14, live `?v=145`)*
+
+
+## 2026-10-30 — M31 golf 14: vierde ontwerpronde zonder kobalt
+
+- **2026-10-30 · ✅ LARS — "doe maar een nieuwe ontwerp ronde"** (telefoontest `?v=144` goed; 5-uur 2%, week 32%). → golf 14, 26 ketens, live `?v=145`.
+- **2026-10-30 · Een ontwerpronde slaat kobalt over** (`OVERSLAAN = {kobalt}` in `maak_golf14.py`), conform bakhandleiding §13: 13 grondstoffen leverden elk 2/2 (104 agenten, 20,3 M tokens, 101 min).
+- **2026-10-30 · Klaarliggende reserves gaan als "NIET opnieuw ontwerpen" in de hint en blijven liggen voor een reserve-golf;** ze worden niet in de ontwerp-workflow meegebakken (de reserve-route zit niet meer in de golf 13-scriptlijn; een reserve-golf is `maak_golf12.py`-patroon).
+- **2026-10-30 · Bestanden > 300 KB door lange truckbenen zijn een noot, geen herbak;** wordt het hinderlijk, dan een simplify-stap in `bak_stroombundel.py` (de bol leest L0/L1, niet het bestand).
+- **2026-10-30 · Sitelaag gelijktrekken naar een bron-gelegd keten-anker ook over 5–8 km** als de sitecoördinaat een geografische aanduiding of een z14-kandidaat was (Styldrift 5,9 km, Fujairah 7,4 km); niet als het keten-anker zelf aannemelijk is (Aikhal-GOK).
+- **2026-10-30 · Een steekproef- of meerjarig cumulatief volumecijfer blijft indicatie mét toelichting** (ree-cheongju-sanmarcos, ree-kuantan-chattanooga); geen omrekening naar een jaarcijfer.
+
 
 
 ## 2026-10-29 (3e) — M31 golf 13: derde ontwerpronde
