@@ -1,5 +1,15 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (2e) (M31 golf 15, live `?v=146`)*
+*Last updated: 2026-10-30 (3e) (M31 golf 16, live `?v=147`)*
+
+
+## 2026-10-30 (3e) — M31 golf 16: grote ontwerpronde, 3 per grondstof
+
+- **2026-10-30 · ✅ LARS — "nieuwe ontwerpronde … nog meer als 50% weeklimiet over, kan nog wel een grote ronde doen"** (telefoontest `?v=146` goed; 5-uur 21%, week 42%). → golf 16 met 3 ketens per grondstof, 31 ketens, live `?v=147`.
+- **2026-10-30 · 3 per grondstof is een optie bij ruim limiet, geen nieuwe standaard:** ~25 M tokens en ~2 uur voor 31 ketens (tegen 20 M / 100 min voor 26); de ontwerpagenten leveren zelf minder waar de bronnen op zijn (diamant 1, lithium 1), de winst is spreiding.
+- **2026-10-30 · Een briefagent mag een keten afbreken als de lading aantoonbaar stilligt** (Kouaoua: weg al twee jaar onbruikbaar); `registreer_golf.py` slaat hem over.
+- **2026-10-30 · Een stroom-id bevat uitsluitend `[a-z0-9-]`;** een id met spatie wordt centraal hernoemd vóór registratie (json, brief, bak-functie, resultaat). Volgende stap: de regel in de prompts en een weigering in `registreer_golf.py`.
+- **2026-10-30 · Sitelaag gelijktrekken ook vanuit het v1-register** (w-ref-metalor stond in de stad Neuchâtel, 6,6 km) en vanuit een geohack (w-framatome-lingen, 4,2 km) naar bron-gelegde keten-ankers; niet als het keten-anker zelf aannemelijk is (Fruta del Norte).
+
 
 
 ## 2026-10-30 (2e) — M31 golf 15: reserve-golf over twee ontwerprondes

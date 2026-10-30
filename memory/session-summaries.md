@@ -2545,3 +2545,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf15.json` (15 indicatie, 1 onbekend) → totaal 67/320/31 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 146; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §15. Kosten: 5-uur 3 → 20%, week 39 → 42%.
 - **Volgende:** telefoontest `?v=146` · geen reserves meer: volgende stromen-golf = ontwerpronde zonder kobalt · 31 onbekende volumes alleen met bronwerk.
+
+## 2026-10-30 (3e) — M31 golf 16: grote ontwerpronde (3 per grondstof) zonder kobalt, 449 stromen live `?v=147`
+
+**TL;DR:** Lars: *"nog meer als 50% weeklimiet over … kan nog wel een grote ronde doen"*. `maak_golf16.py` = golf 14-patroon met `MAXP = 3` + de 18 afgewezen assen van golf 14/15. `wf_c97a59cc-3ff`: 120 agenten op Sonnet, 24,9 M tokens, 127 min, 0 uitval, 31/32 gebakken en gekeurd (Kouaoua door de briefagent afgebroken). Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=147 (commit `6dd01f3`), bundel 449 stromen · 1.651 benen · 1.486 markers · 401 met volume. 7 reserves → `golf17-reserves.json`. LAR-659 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 31/31, 4 vlaggen (bestanden 315–531 KB), markers als conventie/bewust; id met spatie hernoemd (`gas-mnazibay-daressalaam`); `ree-sk` → `ree-sks`, `pgm-nk` → `pgm-nkk`; `sitelaag_check.py` 8 → w-ref-metalor (6,6 km) en w-framatome-lingen (4,2 km) gelijkgetrokken; 31 noten; vijf nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `golf16.json` (1 bron, 27 indicatie, 3 onbekend) → totaal 68/347/34 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 147; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §16. Kosten: 5-uur 21 → 75%, week 42 → 52%.
+- **Volgende:** telefoontest `?v=147` · golf 17 klein uit 7 reserves of een ontwerpronde na de weekreset · id-regel in prompts + registreer_golf.py · 34 onbekende volumes · textuur verdubbelen vóór de volgende grote golf.

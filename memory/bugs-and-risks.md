@@ -1,5 +1,16 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-30 (2e) (M31 golf 15, live `?v=146`)*
+*Last updated: 2026-10-30 (3e) (M31 golf 16, live `?v=147`)*
+
+
+## 🟡 NIEUW 2026-10-30 (3e) — uit M31 golf 16
+
+77. **Een bake-agent kan een stroom-id met een spatie maken** (`gas-mnazibay-dares salaam` in json, brief, functienaam en `--stroom`); niets in de pijplijn weigerde het. Centraal hernoemd; de regel hoort in de prompt en in `registreer_golf.py`.
+78. **Vier bestanden boven 500 KB** (NOVONIX → Nevada 525, Silver Peak → Kings Mountain 531, Columbus → West Deptford 504, Santoku 315 KB): truckbenen van 3.300–3.900 km met 14.000–25.000 punten. De fijn-bins groeien mee (7,3 MB samen); een simplify-stap in `bak_stroombundel.py` is de fix.
+79. **Informatietextuur 2.048 benen, bundel nu 1.651:** een volgende ontwerpronde van 3 per grondstof (≈ +100 benen) komt tegen de 1.900-grens; verdubbelen vóór de volgende grote golf (`TEX_BREEDTE` + `MAX_BENEN`, golf 8-les).
+80. **Mine-mouth-ketens zonder gebronde afnemer** (Koniambo → Vavouto, smelter stil sinds 2024; Talnakh → Nadezhda-slurry) en leidingen die eindigen waar OSM ophoudt (Lunnan → Jiuquan i.p.v. Shanghai; Bovanenkovo lijn 1 tot Torzhok): titel en noot zeggen het, het id niet.
+81. **Volumes van golf 16: 1 bron, 27 indicatie, 3 onbekend** (NOVONIX volume 0 in 2026, Santoku alleen kwartaalcijfer, Gronau → Västerås per bestemming onbekend). Totaal 34 onbekend van 449.
+82. **`w-grib` (diamant-sitelaag) ligt volgens de bake-agent van diamant-grib-dubai fout;** niet gelijkgetrokken (geen bron-gelegd keten-anker voor de afzetting zelf) — apart bronwerk.
+
 
 
 ## 🟡 NIEUW 2026-10-30 (2e) — uit M31 golf 15

@@ -1,4 +1,15 @@
-> **🗺️ M31 GOLF 15 LIVE `?v=146` — 418 STROMEN, DE 17 RESERVE-ASSEN UIT GOLF 13 EN 14 (2026-10-30, LAATSTE).** Commit `f2cb2a5`. Lars na de
+> **🌍 M31 GOLF 16 LIVE `?v=147` — 449 STROMEN, GROTE ONTWERPRONDE (3 PER GRONDSTOF) ZONDER KOBALT (2026-10-30, LAATSTE).** Commit `6dd01f3`.
+> Lars na de goede telefoontest van `?v=146`: *"nog meer als 50% weeklimiet over … kan nog wel een grote ronde doen"*. `v2/tools/golf/maak_golf16.py` =
+> golf 14-patroon met `MAXP = 3` → `golf16-script.mjs` (18 afgewezen assen van golf 14/15 met reden). `wf_c97a59cc-3ff`: 120 agenten op Sonnet, 24,9 M
+> tokens, 127 min, 0 uitval, **31/32 gebakken en gekeurd** (nikkel-kouaoua-laadkade door de briefagent afgebroken: weg al twee jaar onbruikbaar); de
+> ontwerpagenten kozen zelf minder waar de bronnen op waren (32 van 39). Centraal: 4 vlaggen (bestanden 315–531 KB), **id met spatie hernoemd**
+> (`gas-mnazibay-daressalaam`), `ree-sk` → `ree-sks`, `pgm-nk` → `pgm-nkk`, **w-ref-metalor en w-framatome-lingen gelijkgetrokken**, 31 noten; volumes
+> `golf16.json` (1 bron, 27 indicatie, 3 onbekend) → 401/449 met dikte; bundel 1.651 benen (textuur 2.048 — verdubbelen vóór de volgende grote golf),
+> `bundel-check` ok, `CODE_VERSIE` + `BUNDEL_VERSIE` 147; desktop + 375 px 0 fouten. 7 reserves in `golf17-reserves.json`. Lessen: bakhandleiding §16.
+> LAR-659 Done. Kosten 5-uur 21 → 75%, week 42 → 52%. **→ VOLGENDE:** Lars' telefoontest `?v=147` · golf 17 klein uit de 7 reserves of een ontwerpronde
+> na de weekreset · id-regel `[a-z0-9-]` in de prompts + weigering in `registreer_golf.py`.
+
+> **🗺️ M31 GOLF 15 LIVE `?v=146` — 418 STROMEN, DE 17 RESERVE-ASSEN UIT GOLF 13 EN 14 (2026-10-30, EERDER).** Commit `f2cb2a5`. Lars na de
 > goede telefoontest van `?v=145`: *"Golf 15 uit reserves"*. `v2/tools/golf/maak_golf15.py` (patroon golf 12) → `golf15-script.mjs` uit het golf 14-script +
 > `golf14-reserves.json` + `golf15-reserves.json`; de 2 grafiet-reserves zonder toets in de eerste pijplijnstap getoetst. `wf_e83d0d63-4ec`: 50 agenten op
 > Sonnet, 8,2 M tokens, 21 min, 0 uitval, **16/17 gebakken en gekeurd** (grafiet-teverola-heroya afgewezen: bron alleen een fotobijschrift). **Geen reserves
@@ -1010,7 +1021,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-30 (laatst: M31 golf 15, reserve-golf, 418 stromen, live ?v=146, telefoontest goed; daarvoor M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145, telefoontest goed; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-30 (laatst: M31 golf 16, grote ontwerpronde 3 per grondstof zonder kobalt, 449 stromen, live ?v=147; daarvoor M31 golf 15, reserve-golf, 418 stromen, live ?v=146, telefoontest goed; daarvoor M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145, telefoontest goed; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3284,6 +3295,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-30 · M31 GOLF 16 LIVE `?v=147` (449 stromen).** 3 ketens per grondstof is een optie bij ruim limiet (~25 M tokens, ~2 uur, 31 ketens), geen nieuwe standaard; een briefagent mag een keten afbreken als de lading stilligt; een stroom-id bevat uitsluitend `[a-z0-9-]` (centraal hernoemen vóór registratie); sitelaag gelijktrekken ook vanuit het v1-register en een geohack naar een bron-gelegd keten-anker.
 - **2026-10-30 · M31 GOLF 15 LIVE `?v=146` (418 stromen).** Reserves van twee ontwerprondes gaan in één reserve-golf (`maak_golf15.py`, patroon golf 12); een ongetoetste reserve wordt in de eerste pijplijnstap getoetst en kan daar afvallen. Korte mine-mouth-ketens (transportband = leiding) horen erbij; een sleutel zonder xy-patroon wordt centraal gecorrigeerd. Geen reserves meer.
 - **2026-10-30 · M31 GOLF 14 LIVE `?v=145` (402 stromen).** Een ontwerpronde slaat kobalt over (`OVERSLAAN`) en zet klaarliggende reserves als "niet opnieuw ontwerpen" in de hint; 13 grondstoffen → 104 agenten, 26/26. Bestanden > 300 KB bij lange truckbenen = noot (simplify in de bundelbaker als het hindert); sitelaag gelijktrekken ook over 5–8 km naar een bron-gelegd keten-anker, niet als dat anker zelf aannemelijk is.
 - **2026-10-29 · M31 GOLF 13 LIVE `?v=144` (376 stromen).** Generator-keten `maak_golf<N>.py` uit het vorige ontwerpscript + `golf<N-2>-resultaat.json`; kobalt alleen nog met bronwerk vooraf (twee rondes 0 van 8); een bake-sleutel met cijfer wordt centraal een derde letter; concentraattonnage zonder metaalinhoud krijgt geen dikte.

@@ -1,5 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-30 (2e) (M31 golf 15, reserve-golf, live `?v=146`: 418 stromen)*
+*Last updated: 2026-10-30 (3e) (M31 golf 16, grote ontwerpronde zonder kobalt, live `?v=147`: 449 stromen)*
+
+
+## Stand 2026-10-30 (3e) — M31 golf 16 live: 449 stromen (`?v=147`)
+
+- **Op de bol (`?v=147`, commit `6dd01f3`):** 31 nieuwe ketens, 418 → 449, over 13 grondstoffen (ree/zilver/kolen/uranium/gas/olie/goud 3, grafiet/nikkel/pgm/koper 2, lithium/diamant 1; kobalt overgeslagen). Bundel 449 stromen · 1.651 benen · 484 stippel · 1.486 markers · 451 sites · **401 met volume**; desktop + 375 px 449/449, 0 fouten.
+- **Hoe:** `v2/tools/golf/maak_golf16.py` = `maak_golf14.py` met `MAXP = 3`, uit `golf14-script.mjs` + `golf14-resultaat.json` + `golf15-resultaat.json` (18 afgewezen assen met reden). `wf_c97a59cc-3ff`: 120 agenten op Sonnet, 24,9 M tokens, 127 min, 0 uitval, 31/32 gebakken en gekeurd (nikkel-kouaoua-laadkade door de briefagent afgebroken: SLN-persbericht, Serpentine-weg al twee jaar onbruikbaar). 32 gekozen van 39, 29 in de toets afgewezen. **7 reserves in `golf17-reserves.json`** (zilver Sindesar Khurd → Dariba, kolen Sugar Camp → Convent en Kostenko → Temirtau, gas Moomba → Wilton, olie Edmonton → Westridge en Fos → Feyzin, goud Geita → Rand Refinery; alle met toets).
+- **Centraal (bakhandleiding §16):** `centraal_check.py` 31/31 (4 vlaggen: NOVONIX 525, Silver Peak 531, Columbus 504, Santoku 315 KB; markers Yangtze-monding 4,45 km, SPb-kade 4,9 km, Northfleet 1,68 km als conventie/bewust); **id met spatie `gas-mnazibay-dares salaam` hernoemd** (json, brief, `bak_stromen.sh`, resultaat); `ree-sk` → `ree-sks`, `pgm-nk` → `pgm-nkk`; `sitelaag_check.py` 8 → **w-ref-metalor (6,6 km) en w-framatome-lingen (4,2 km) gelijkgetrokken** (niet: Fruta del Norte, Koniambo, Talnakh/Nadezhda, w-grib); 31 noten; `bash -n` schoon, geen verwijderde regels; vijf nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `v2/design/volumes/golf16.json` (1 bron, 27 indicatie, 3 onbekend) → totaal 68 bron / 347 indicatie / 34 onbekend → `bundel`, `bundel-check` ok. Kosten: 5-uur 21 → 75%, week 42 → 52%.
+- **Poort:** Lars' telefoontest `?v=147`.
+
 
 
 ## Stand 2026-10-30 (2e) — M31 golf 15 live: 418 stromen (`?v=146`)
