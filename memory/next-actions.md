@@ -1,11 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (3e) (telefoontest `?v=145` goed; golf 14 af)*
+*Last updated: 2026-10-30 (4e) (M31 golf 15 live `?v=146`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-30 (2e) — na M31 golf 14 live
+## 🔴 NIEUW 2026-10-30 (4e) — na M31 golf 15 live
+
+1. **Lars test `?v=146` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=146 — 16 nieuwe ketens (o.a. Kamativi → Beira → Zhangjiagang, Lynas → Narva, Curragh → Gladstone, Wheatstone → Futtsu, Trans-Sachalin, Nuevo Teapa → Salina Cruz, NWO Wilhelmshaven → Keulen, Metropolis → Eunice). Goed → golf 15 af.
+2. **Geen reserves meer.** Een volgende stromen-golf = ontwerpronde zonder kobalt (`maak_golf14.py`-patroon uit `golf14-script.mjs` + `golf14-resultaat.json`, de 17 afgewezen golf 14-assen in de prompts; ~100 agenten, ~6–7% weeklimiet).
+3. **De 31 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`.
+4. **Open bevindingen golf 15 (geen actie, wel weten):** Pedra Azul 320 KB; Tratayén → Salliqueló 16% stippel (5 OSM-gaten); gas-waha-aguadulce begint in Crockett County (westelijk 36-inch stuk naar Waha niet in OSM); olie-wilhelmshaven-koeln eindigt op een OSM-leidingeinde in een woonwijk (15–20 km tot Wesseling niet getekend); gas-wheatstone-kawagoe eindigt in Futtsu (id ≠ eindpunt); lithium-sitelaag noemt Huayou als eigenaar van Kamativi, de brief Yahua.
+5. **Gereedschap:** informatietextuur 2.048 benen, bundel 1.555 — verdubbelen rond 1.900; de `git diff bak_stromen.sh | grep '^-'`- en `bash -n`-controle na elke golf.
+
+
+## 🟢 2026-10-30 (3e) — AFGEHANDELD (golf 15 gedraaid) — na telefoontest `?v=145`
 
 1. ~~Lars test `?v=145` op de telefoon~~ ✅ 2026-10-30 "Ziet er goed uit" → golf 14 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=145 — 26 nieuwe ketens (o.a. Kayelekera → Malvési, Snøhvit → Inčukalns, Cobre Panamá → Aurubis Hamburg, Bikita → Tianjin, Greenbushes → Shehong per Yangtze-barge, Sukari en Salares Norte → PAMP, Heglig → Fujairah, Permian → Ingleside). Goed → golf 14 af.
-2. **Golf 15 (klein):** 17 getoetste reserves klaar (8 in `golf14-reserves.json` + 9 in `golf15-reserves.json`; de 2 grafiet-reserves van golf 14 hebben geen per-keten-toets → toets in de eerste pijplijnstap, golf 10-les) → `maak_golf12.py`-patroon, ~55 agenten.
+2. ~~**Golf 15 (klein):** 17 getoetste reserves klaar~~ ✅ 2026-10-30 golf 15, 16/17 — (8 in `golf14-reserves.json` + 9 in `golf15-reserves.json`; de 2 grafiet-reserves van golf 14 hebben geen per-keten-toets → toets in de eerste pijplijnstap, golf 10-les) → `maak_golf12.py`-patroon, ~55 agenten.
 3. **Of een vijfde ontwerpronde zonder kobalt** (`maak_golf14.py`-patroon uit `golf14-script.mjs` + `golf14-resultaat.json`, 17 afgewezen assen); kobalt alleen na bronwerk vooraf.
 4. **De 30 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`.
 5. **Open bevindingen golf 14 (geen actie, wel weten):** bestanden > 300 KB bij lange truckbenen (5×, tot 608 KB) — simplify-stap in `bak_stroombundel.py` als het hinderlijk wordt; Punta Rincón-aanloop rechte stippel 111 km (router-timeout; volgende golf: tweede poging met ruimer venster in het recept); Yangtze-monding conventie-marker 2,69 km; w-aikhal 2,7 km van het GOK-anker (beide onzeker).

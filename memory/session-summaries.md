@@ -2536,3 +2536,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf14.json` (23 indicatie, 3 onbekend) → totaal 67/305/30 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 145; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §14. Kosten: 5-uur 2 → 39%, week 32 → 38%.
 - **Volgende:** telefoontest `?v=145` · golf 15 klein uit 17 reserves of een vijfde ontwerpronde zonder kobalt · 30 onbekende volumes alleen met bronwerk.
+
+## 2026-10-30 (2e) — M31 golf 15: de 17 reserve-assen, 418 stromen live `?v=146`
+
+**TL;DR:** Lars: *"Golf 15 uit reserves"*. `maak_golf15.py` (patroon golf 12) uit het golf 14-script + `golf14-reserves.json` + `golf15-reserves.json`; 2 ongetoetste grafiet-reserves in de eerste pijplijnstap getoetst. `wf_e83d0d63-4ec`: 50 agenten op Sonnet, 8,2 M tokens, 21 min, 0 uitval, 16/17 gebakken en gekeurd (grafiet-teverola-heroya afgewezen). Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=146 (commit `f2cb2a5`), bundel 418 stromen · 1.555 benen · 1.389 markers · 373 met volume. Geen reserves meer. LAR-653 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 16/16, 1 vlag (Pedra Azul 320 KB), markers Yangtze-monding 2,69 km en Salina Cruz 1,30 km bewust, 16,1% stippel Tratayén; `sitelaag_check.py` 6 → w-grootegeluk gelijkgetrokken (3,9 km); 16 noten; `li-kamativi` → `li-kz`, `gas-ts` → `gas-tss`; tijdelijke `bash -n`-fouten door gelijktijdige edits (na afloop schoon); vijf nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `golf15.json` (15 indicatie, 1 onbekend) → totaal 67/320/31 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 146; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §15. Kosten: 5-uur 3 → 20%, week 39 → 42%.
+- **Volgende:** telefoontest `?v=146` · geen reserves meer: volgende stromen-golf = ontwerpronde zonder kobalt · 31 onbekende volumes alleen met bronwerk.

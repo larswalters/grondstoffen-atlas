@@ -1,5 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-30 (M31 golf 14, vierde ontwerpronde zonder kobalt, live `?v=145`: 402 stromen)*
+*Last updated: 2026-10-30 (2e) (M31 golf 15, reserve-golf, live `?v=146`: 418 stromen)*
+
+
+## Stand 2026-10-30 (2e) — M31 golf 15 live: 418 stromen (`?v=146`)
+
+- **Op de bol (`?v=146`, commit `f2cb2a5`):** 16 nieuwe ketens, 402 → 418 (grafiet 2, ree 1, pgm 1, lithium 1, kolen 3, uranium 1, gas 4, olie 3). Bundel 418 stromen · 1.555 benen · 462 stippel · 1.389 markers · 451 sites · **373 met volume**; desktop + 375 px 418/418, 0 fouten.
+- **Hoe:** `v2/tools/golf/maak_golf15.py` (patroon golf 12) bouwt `golf15-script.mjs` uit `golf14-script.mjs` + de 17 reserves uit `golf14-reserves.json` en `golf15-reserves.json`; de 2 grafiet-reserves zonder toets in de eerste pijplijnstap getoetst. `wf_e83d0d63-4ec`: 50 agenten op Sonnet, 8,2 M tokens, 21 min, 0 uitval, 16/17 (grafiet-teverola-heroya afgewezen: Teverola alleen in een fotobijschrift). **Geen reserves meer over.**
+- **Centraal (bakhandleiding §15):** `centraal_check.py` 16/16 (1 vlag: Pedra Azul 320 KB; markers Yangtze-monding 2,69 km en Salina Cruz 1,30 km bewust; 16,1% stippel Tratayén → Salliqueló); `sitelaag_check.py` 6 → **w-grootegeluk gelijkgetrokken** (3,9 km); 16 noten; `li-kamativi` → `li-kz`, `gas-ts` → `gas-tss`; tijdelijke `bash -n`-fouten door gelijktijdige edits (na afloop schoon, geen verwijderde regels); vijf nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `v2/design/volumes/golf15.json` (0 bron, 15 indicatie, 1 onbekend) → totaal 67 bron / 320 indicatie / 31 onbekend → `bundel`, `bundel-check` ok. Kosten: 5-uur 3 → 20%, week 39 → 42%.
+- **Poort:** Lars' telefoontest `?v=146`.
+
 
 
 ## Stand 2026-10-30 — M31 golf 14 live: 402 stromen (`?v=145`)

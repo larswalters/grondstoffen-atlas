@@ -1,5 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-30 (M31 golf 14, live `?v=145`)*
+*Last updated: 2026-10-30 (2e) (M31 golf 15, live `?v=146`)*
+
+
+## 🟡 NIEUW 2026-10-30 (2e) — uit M31 golf 15
+
+72. **Gelijktijdige edits van `bak_stromen.sh` geven tijdelijke `bash -n`-fouten en "command not found" bij andere agenten** (twee keurders meldden het over andermans functie); na de golf schoon. Controle na elke golf: `bash -n` + `git diff | grep '^-'`.
+73. **Een bake-agent maakt een sleutel zonder xy-patroon (`li-kamativi`)** naast de bekende cijfer-variant; centraal corrigeren vóór registratie.
+74. **Leidingen uit OSM eindigen waar OSM ophoudt:** gas-waha-aguadulce mist het westelijke 36-inch stuk naar Waha (lijn 21% korter dan gepubliceerd), olie-wilhelmshaven-koeln eindigt op een leidingeinde in een woonwijk (15–20 km tot Wesseling niet getekend), gas-tratayen-salliquelo heeft 5 gaten als stippel (16%). Noten; geen herbak.
+75. **Volumes van golf 15 zijn allemaal indicatie of onbekend (0 bron):** leiding- en contractcapaciteiten, mijntotalen; Kellyton volume nul (nog geen productie). Totaal nu 31 onbekend van 418.
+76. **Conflict in de lithium-sitelaag:** `w-li-kamativi` noemt Huayou als eigenaar, de brief lithium-kamativi-zhangjiagang Yahua (Sinomine/Yahua-joint venture). Nog niet opgelost; de brief is de recentere bron.
+
 
 
 ## 🟡 NIEUW 2026-10-30 — uit M31 golf 14

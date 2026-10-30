@@ -1,5 +1,15 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (M31 golf 14, live `?v=145`)*
+*Last updated: 2026-10-30 (2e) (M31 golf 15, live `?v=146`)*
+
+
+## 2026-10-30 (2e) — M31 golf 15: reserve-golf over twee ontwerprondes
+
+- **2026-10-30 · ✅ LARS — "Golf 15 uit reserves"** (telefoontest `?v=145` goed; 5-uur 3%, week 39%). → golf 15, 16 ketens, live `?v=146`.
+- **2026-10-30 · Reserves van twee ontwerprondes gaan in één reserve-golf** (`maak_golf15.py` leest beide reserve-bestanden, ontdubbelt ids, checkt grondstof en bestand); een ongetoetste reserve krijgt de toets in de eerste pijplijnstap en kan daar afvallen vóór er een brief-, bake- en keuringsagent aan werkt.
+- **2026-10-30 · Korte mine-mouth-ketens horen in de atlas** (Grootegeluk → Medupi 7,5 km transportband, Dendrobium → Port Kembla 10 km spoor): dikte uit het volume; een transportband is in de bol een leiding — geen zevende modaliteit.
+- **2026-10-30 · Een sleutel zonder xy-patroon (`li-kamativi`) wordt centraal naar het patroon gezet (`li-kz`)** vóór `registreer_golf.py`, zoals een cijfer-sleutel; een ontbrekende registerregel vult `registreer_golf.py` zelf.
+- **2026-10-30 · Sitelaag gelijktrekken blijft strikt:** deze golf alleen w-grootegeluk (Wikipedia-geohack, 3,9 km → bron-gelegde wasserij van dezelfde mijn).
+
 
 
 ## 2026-10-30 — M31 golf 14: vierde ontwerpronde zonder kobalt
