@@ -102,7 +102,7 @@ door elkaar lopen — vandaar "indicatief" bij elke losse site).
 | w-westinghouse-columbia | Westinghouse Columbia | VS | splijtstoffabricage | 33.8811, -80.9233 | ~1.400 t HM/j [B27] | aannemelijk |
 | w-gnf-wilmington | Global Nuclear Fuel-Americas | VS | splijtstoffabricage | 34.1667, -77.9333 | ~1.200 t HM/j indicatief [B28] | onzeker |
 | w-framatome-romans | Framatome Romans-sur-Isère | Frankrijk | splijtstoffabricage | 45.0512, 5.0982 | ~1.600 t HM/j indicatief [B29] | bron-gelegd (gelijkgetrokken 2026-10-09 met het anker uit de brief uranium-tricastin-romans; was 45.0500, 4.9667) |
-| w-framatome-lingen | Framatome/ANF Lingen | Duitsland | splijtstoffabricage | 52.5167, 7.3167 | ~800 t HM/j indicatief [B29] | onzeker |
+| w-framatome-lingen | Framatome/ANF Lingen | Duitsland | splijtstoffabricage | 52.4804, 7.3315 | ~800 t HM/j indicatief [B29] | bron-gelegd (M31 golf 16: gelijkgetrokken met keten-anker u-lingen-anf; was 52.5167, 7.3167 geohack) |
 | w-westinghouse-springfields | Westinghouse Springfields | VK | splijtstoffabricage | 53.7500, -2.8000 | ~700 t HM/j indicatief [B27] | onzeker |
 | w-tvel-novosibirsk | TVEL Novosibirsk (NZHK) | Rusland | splijtstoffabricage | 54.9667, 82.8833 | ~1.200 t HM/j indicatief [B30] | onzeker |
 | w-tvel-elektrostal | TVEL Elektrostal (MSZ) | Rusland | splijtstoffabricage | 55.7833, 38.4333 | ~1.200 t HM/j indicatief, VVER-lock-in [B30] | onzeker |

@@ -1,0 +1,415 @@
+{
+ "bron": "golf 16 (wf_c97a59cc-3ff), 2026-10-30: reserve-assen uit de grote ontwerpronde, toets uit golf 16 waar aanwezig",
+ "reserves": [
+  {
+   "id": "zilver-sindesarkhurd-dariba",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve, India: Sindesar Khurd (Hindustan Zinc) naar het Dariba-smeltcomplex",
+    "keten_id": "zilver-sindesarkhurd-dariba",
+    "van_site": "Sindesar Khurd-mijn (Hindustan Zinc), Rajsamand, Rajasthan",
+    "naar_site": "Dariba Smelting Complex (Hindustan Zinc), Rajsamand",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Sindesar Khurd",
+      "naar": "Dariba",
+      "corridor": "lokale wegen Rajsamand-district, nog te bepalen",
+      "geometrie_tool": "maak_stroombeen_weg (extract india)",
+      "km_indicatie": "niet gevonden, buurmijnen (hzlindia.com: complex draws on nearby mines)"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "india",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t.",
+    "ankers_hergebruik": [
+     "geen; mijn en smelter nog te leggen met sat_check"
+    ],
+    "jaarvolume_en_bron": "Niet gevonden; Chanderiya-cijfer 700 t Ag/j geldt voor een ander complex.",
+    "bronnen_start": [
+     "https://www.hzlindia.com/what-we-do/metal-smelting-sites/dariba-smelting-complex",
+     "https://en.wikipedia.org/wiki/Hindustan_Zinc"
+    ],
+    "risico": "Dun: een kort been, geen zilverstroom per site gebrond (Dariba-pagina noemt zink en lood, geen zilver), tweede HZL-keten. Alleen bruikbaar als de afstand en het zilvervolume te vinden zijn.",
+    "prioriteit_noot": "Reserve golf 17"
+   },
+   "toets": {
+    "keten_id": "zilver-sindesarkhurd-dariba",
+    "haalbaar": true,
+    "problemen": [
+     "Zeer kort: hemelsbreed circa 5 km, één truckbeen, geen zee of spoor; als lijn op de bol bijna onzichtbaar",
+     "Dariba-pagina noemt nearby mines Rajpura Dariba en Sindesar Khurd maar geen zilver; sitelaag zegt dat Sindesar-erts naar Chanderiya gaat",
+     "Smelteranker niet in Nominatim; alleen OSM landuse industrial Dariba 24.9543,74.1324 (Photon), nog satellietblik nodig",
+     "Geen gepubliceerde wegkm; Rajpura Dariba ligt naast Dariba"
+    ],
+    "aanpassing": "Titel en id behouden. Mijn-anker letterlijk uit sitelaag 24.9989,74.1430; smelteranker 24.9543,74.1324 pas na sat_check. Eén maak_stroombeen_weg-profiel (extract india). Beennaam aannemelijk: één bron; geen zilvervolume claimen. Laagste prioriteit; laten vallen bij volledige golf.",
+    "overlap": "Sindesar Khurd staat als sitelaag-site, geen stroom; geen overlap met de Rampura Agucha-keten naar Chanderiya.",
+    "webcheck": "hzlindia.com Dariba-pagina: integreert zink (250 kt) en lood (120 kt) met nearby Rajpura Dariba en Sindesar Khurd. Nominatim: mijn 24.9989,74.1430; Photon: industrial Dariba 24.9543,74.1324."
+   }
+  },
+  {
+   "id": "kolen-sugarcamp-convent",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Illinois-bekken naar de Amerikaanse Golfkust",
+    "keten_id": "kolen-sugarcamp-convent",
+    "van_site": "Sugar Camp-mijn (MC 1, Macedonia, Franklin County, Illinois), GEM 38.0264, -88.7679",
+    "naar_site": "Convent Marine Terminal (SunCoke, St. James Parish, Louisiana), OSM-landuse 30.0483, -90.8328",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Sugar Camp 38.0264, -88.7679",
+      "naar": "Convent Marine Terminal 30.0483, -90.8328",
+      "corridor": "Canadian National, ex-Illinois Central: Illinois, Kentucky, Tennessee, Mississippi, Louisiana",
+      "km_indicatie": "1047 in raw1op1; hemelsbreed 907 km, geen gepubliceerde spoorkm",
+      "geometrie_tool": "toets_spoorroute (BAKE_SUFFIX=-raw), via-punten 36.6125,-88.8493; 35.4646,-89.7501; 32.8589,-89.997; 30.8236,-90.5104"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-illinois",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-kentucky",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-tennessee",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-mississippi",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-louisiana",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "Sugar Camp 4,88 Mt ROM in 2025, 5,79 Mt in 2023 (GEM). Terminal CMT 15 miljoen short tons capaciteit (SunCoke). Eenheid Mt kolen per jaar.",
+    "risico": "Alleen een CN-overeenkomst van 2011 koppelt vier Illinois-mijnen aan Convent, Sugar Camp wordt niet genoemd; eigenaarswissels na het Foresight-faillissement; huidige stromen naar Convent onbevestigd. Aannemelijk: een bron.",
+    "bronnen_start": [
+     "https://www.gem.wiki/Convent_Marine_Terminal",
+     "https://www.gem.wiki/Sugar_Camp_Mine",
+     "https://www.suncoke.com/en/our-business/industrial-services/logistics",
+     "https://www.gem.wiki/Foresight_Reserves"
+    ]
+   },
+   "toets": {
+    "keten_id": "kolen-sugarcamp-convent",
+    "haalbaar": true,
+    "problemen": [
+     "Vrije route zonder via: 1079,6 km (3,1 procent boven 1047 met via-punten); passeert Fulton 0,1 km, Memphis 2,8 km, Jackson 0,1 km, McComb 0,2 km, Hammond 0,2 km, Gramercy 0,4 km; dus de CN-ex-Illinois Central lijn; Grenada 37 km ernaast, geen probleem",
+     "Convent-eind zit op CMT: z14 toont kolenstapel met dok aan de oostoever; MARNET-zeeknoop 56,8 km, maar er is geen zeebeen",
+     "Sugar Camp wordt niet bij naam genoemd bij CMT; wel: CN-contract 2011 met Savatran/Foresight/Cline voor vier Illinois-mijnen naar Convent, en in 2019 kwam ongeveer 5 Mt van Foresight via CMT (SunCoke)",
+     "Eigenaarswissel na Foresight-faillissement: huidige stroom niet bevestigd",
+     "Geen gepubliceerde spoorkm"
+    ],
+    "aanpassing": "Geen via-punten verplicht; houd de 4 via-punten uit het ontwerp voor een stabiele corridor of laat vrij routeren (verschil 3 procent). Zet in de beennaam 'aannemelijk: één bron'. Satelliet: Sugar Camp = mijn en laadlus op z15, CMT = stapel en dok op z14: bron-gelegd.",
+    "overlap": "Convent-marker 0,9 km van de grafiet-pilotstroom; geen overlap in product of lading. Sugar Camp ligt 7-14 km van enkele uranium- en grafiet-ketens, zonder gedeeld been.",
+    "webcheck": "WebSearch: CN verkocht IC RailMarine (Convent) in 2011 aan Foresight/Cline met 10-jarig contract voor vier Illinois-mijnen; SunCoke kocht CMT in 2015 voor 412 mln dollar; 2019: 5 Mt van 6,5 Mt via CMT van Foresight. GEM terminal-pagina niet leesbaar (403). Eenheid: Mt per jaar."
+   }
+  },
+  {
+   "id": "kolen-kostenko-temirtau",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: Kazachse cokeskool naar het eigen staalwerk",
+    "keten_id": "kolen-kostenko-temirtau",
+    "van_site": "Kostenko-mijn (Qarmet, Karaganda), GEM exact 49.8596, 73.1139",
+    "naar_site": "Karaganda Metallurgical Plant (Qarmet), Temirtau, OSM-landuse 50.0466, 73.0343",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Kostenko-mijn 49.8596, 73.1139",
+      "naar": "Karaganda Metallurgical Plant 50.0466, 73.0343",
+      "corridor": "Karaganda naar Temirtau, spoornet Kazachstan",
+      "km_indicatie": "54 in raw1op1; hemelsbreed 22 km, geen gepubliceerde spoorkm",
+      "geometrie_tool": "toets_spoorroute (BAKE_SUFFIX=-raw), geen via-punt nodig"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "kazachstan",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "Kostenko 0,5 Mt ROM in 2023, 1,7 Mt in 2017 (GEM). Eenheid Mt kolen per jaar.",
+    "risico": "Brandramp oktober 2023 (46 doden): mijn mogelijk gesloten, volume klein. GEM zegt dat de mijn het Temirtau-staalwerk voedt. Beter alternatief is een nog producerende Qarmet-mijn, niet gecontroleerd. Kort enkelvoudig been.",
+    "bronnen_start": [
+     "https://www.gem.wiki/Kostenko_coal_mine",
+     "https://en.wikipedia.org/wiki/Qarmet",
+     "https://en.wikipedia.org/wiki/Kostenko_mine"
+    ]
+   },
+   "toets": {
+    "keten_id": "kolen-kostenko-temirtau",
+    "haalbaar": true,
+    "problemen": [
+     "Router (BAKE_SUFFIX=-raw) geeft 42,9 km (verhouding 1,99 op 21,6 km hemelsbreed), niet de 54 km uit het ontwerp; snaps 0,18 en 0,28 km; geen gepubliceerde spoorkm",
+     "Mijn heropend: Mining Data Online zegt dat extractie in feb 2024 hervatte en in 2025 een nieuwe longwall kwam; maar Interfax meldde 12-01-2024 een Qarmet-verbod op herstart; tegenstrijdig, status waarschijnlijk operationeel",
+     "Koppeling Kostenko naar Temirtau: geen bron noemt expliciet het werk; GEM zou dat doen, maar 403; Qarmet's kolen gaan eerst naar een wasserij. Aannemelijk, een bron",
+     "Kort enkelvoudig been; volume klein (0,5 Mt in 2023)"
+    ],
+    "aanpassing": "Houd de keten, noem 'aannemelijk: één bron' en de heropening feb 2024 in de brief; beenkm 43 gemeten. Eindanker -50.0466? Nee: eind 50.0466, 73.0343 midden op het werk (z14 gezien, ruim in het complex). Geen via-punt nodig. Noem de mijnbrand van 28-10-2023 (46 doden) in open punten.",
+    "overlap": "Geen; uranium-inkai-stpetersburg ligt 5,8 km bij Kostenko maar is een ander product.",
+    "webcheck": "WebFetch Mining Data Online: Kostenko actief, herstart februari 2024. WebSearch Interfax: 5 andere Qarmet-mijnen hervatten op 31-10-2023, Kostenko-verbod 2024-01. Wikipedia Qarmet: Karaganda Metallurgical Plant in Temirtau. Eenheid: Mt kolen per jaar."
+   }
+  },
+  {
+   "id": "gas-moomba-wilton",
+   "g": "gas",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: Oost-Australische binnenlandse markt, Cooper-bekken naar Sydney (Moomba-Sydney)",
+    "keten_id": "gas-moomba-wilton",
+    "van_site": "Moomba-gasfabriek, Cooper-bekken (Santos)",
+    "naar_site": "Wilton-knoop, Sydney-regio (APA/Jemena)",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "leiding",
+      "van": "Moomba (-28.1157, 140.2062)",
+      "naar": "Wilton (-34.2330, 150.7106)",
+      "corridor": "Moomba-Sydney Gas Pipeline (DN850, via Young), 1 OSM-way",
+      "km_indicatie": "1.298,2 km (OSM); gepubliceerd lengte van de hoofdleiding nog te bronnen",
+      "geometrie_tool": "OSM-pipeline"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Geen."
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja: way 412224720 (Moomba Sydney Gas Pipeline, APA, DN850, 1.298 km, eerste punt -28.1157/140.2062, laatste -34.2330/150.7106); verlengstuk naar Horsley Park 50,9 km (way 1421707510) optioneel.",
+    "jaarvolume_en_bron": "Niet gevonden; zoek capaciteit en doorzet op apa.com.au (Moomba-Sydney) en AEMO Gas Statement of Opportunities.",
+    "risico": "Eén kort been (hoewel 1.300 km); volume nog niet gebronnen en het Cooper-bekken loopt terug, dus het Moomba-gas is mogelijk deels vervangen door Queensland-gas via Wallumbilla (niet in deze keten).",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Moomba%E2%80%93Sydney_Pipeline",
+     "https://www.apa.com.au"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-moomba-wilton",
+    "haalbaar": true,
+    "problemen": [
+     "OSM way 412224720: 1.298,2 km, 411 nodes (gem. 3,2 km), Moomba (-28.1157,140.2062) naar Wilton (-34.2330,150.7106), operator APA, DN850; Wikipedia Moomba 1.299 km (-0,1 procent). De 2.081 km op de pipeline-pagina omvat ethaan en laterals.",
+     "Sinds 2015 bi-directioneel (Wilton-ontvangstpunt kan noordwaarts naar Moomba voor Gladstone-LNG); de pijl Moomba naar Wilton is dus capaciteitsrichting, niet gemeten netto stroom. Geen volume gevonden; Moomba-plant overstroomd april 2025 (productie verlaagd).",
+     "Enkelvoudig been; Moomba-anker op z14 bron-gelegd (verwerkingsinstallatie, tanks en pijpenstraten op het kruis)."
+    ],
+    "aanpassing": "Houden. Brief: capaciteit 152 PJ/j (circa 4 bcm, SA-overheid) als capaciteit, niet als doorzet; vermeld de omkeerbaarheid. 50,9 km Horsley Park-verlengstuk niet tekenen.",
+    "overlap": "Geen: geen bestaande stroom in Zuid-Australie/NSW (Curtis Island-keten zit in Queensland).",
+    "webcheck": "Wikipedia Moomba, SA: 1.299 km, klaar 1976, eindigt bij Wilton; AEMO/AEMC: bi-directioneel sinds 2015, flooding Cooper Basin april 2025. https://aemc.gov.au/energy-system/gas/gas-pipeline-register/nsw-moomba-sydney-pipeline"
+   }
+  },
+  {
+   "id": "olie-edmonton-westridge",
+   "g": "olie",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE golf 17: Trans Mountain, de bronkant van olie-westridge-ulsan (Alberta naar de Pacifische kust)",
+    "keten_id": "olie-edmonton-westridge",
+    "van_site": "Edmonton Terminal (Trans Mountain, Sherwood Park, Alberta)",
+    "naar_site": "Westridge Marine Terminal, Burnaby (BC)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Edmonton Terminal",
+      "naar": "Westridge Marine Terminal",
+      "corridor": "Trans Mountain Pipeline (TMPL plus TMX-uitbreiding) via Jasper-Anchor Loop, Kamloops, Hope",
+      "km_indicatie": "ca. 1.150 km (algemene kennis, niet apart bevestigd)",
+      "geometrie_tool": "OSM-pipeline (pyosmium, Trans Mountain-ways stikken)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ol-westridge-term 49.2932,-122.9560 (olie-westridge-ulsan, bron-gelegd z17)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "canada",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja, zelf gescand: Trans Mountain Pipeline 483 + 182 + 116 + 113 + 88 + 83 + 63 + 57 + 55 km in losse ways (substance=oil), totaal ruim 1.200 km; stikken en keuze tussen parallelle lijnen nog te doen",
+    "jaarvolume_en_bron": "890 kb/d capaciteit sinds TMX-opening 1 mei 2024 (Wikipedia); werkelijke doorvoer niet bevestigd",
+    "risico": "Parallelle oude lijn, TMX-lus en Anchor Loop door elkaar; een deel van de Westridge-lading gaat naar de VS-westkust, dus de keten eindigt bewust bij de terminal. Overlap met olie-westridge-ulsan alleen op het eindanker.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Trans_Mountain_pipeline"
+    ],
+    "prioriteit_toelichting": ""
+   },
+   "toets": {
+    "keten_id": "olie-edmonton-westridge",
+    "haalbaar": true,
+    "problemen": [
+     "Edmonton Terminal niet gevonden: OSM-wayeinde 53.4976,-113.4187 ligt in industriegebied, geen tankenpark (z15)",
+     "OSM-ways wisselen van naam en operator (Corperation, Midway/Midwest Pipelines als aannemer, naamloze ways); nodig: oil-ways selecteren, niet op naam",
+     "Pijpeind ligt 0,5 km van het Westridge-anker"
+    ],
+    "aanpassing": "Een doorgetrokken leidingbeen Edmonton-wayeinde naar Westridge: Dijkstra over 39 OSM-ways (substance oil, Trans Mountain, Midway, plus naamloze ways 98238972 en 200617517). Resultaat 1143,5 km tegen 1150 km (-0,6%), 3168 punten, bruggen max 0,3 km. Begin onzeker (wayeinde), eind Westridge 49.2932,-122.9560 hergebruiken. Korte stippel voor de 0,5 km.",
+    "overlap": "Alleen eindanker Westridge gedeeld met olie-westridge-ulsan; geen leidingoverlap. Keten is de bronkant van die stroom.",
+    "webcheck": "Wikipedia Trans Mountain: TMX operationeel 1 mei 2024, capaciteit 890 kb/d; werkelijke doorvoer niet bevestigd. Westridge Lateral (Pembina, 1 km) is andere leiding, niet meenemen; Puget Sound-tak buiten selectie."
+   }
+  },
+  {
+   "id": "olie-fos-feyzin",
+   "g": "olie",
+   "as": {
+    "prioriteit": 5,
+    "as": "RESERVE golf 17: SPSE, Middellandse-Zeekant van Europa (Fos naar de Feyzin-raffinaderij bij Lyon; eerste Franse keten)",
+    "keten_id": "olie-fos-feyzin",
+    "van_site": "SPSE-tankenpark Fos-sur-Mer (2,26 Mm3, Fluxel; punt nog te leggen)",
+    "naar_site": "Feyzin-raffinaderij (TotalEnergies) bij Lyon via de SPSE-aflevering Lyon",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "SPSE-tankenpark Fos-sur-Mer",
+      "naar": "Feyzin-raffinaderij",
+      "corridor": "Pipeline Sud-Europeen (SPSE) Fos - Rhonevallei - Lyon/Feyzin",
+      "km_indicatie": "ca. 260 km (Wikipedia: Fos-Lyon 24-inch lijn 260 km)",
+      "geometrie_tool": "OSM-pipeline (pyosmium, SPSE-ways met operator Societe du Pipeline Sud-Europeen)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Feyzin: OSM-landuse raffinaderij 45.6722,4.8430 (Photon/OSM, nog satelliet)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "fr-provence-alpes-cote-d-azur",
+      "aanwezig": true
+     },
+     {
+      "regio": "fr-rhone-alpes",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Gedeeltelijk bevestigd: SPSE-ways 147 km (PACA) en 147,5 + 261,8 + 32 km (Rhone-Alpes), substance=oil, operator SPSE; welke ways de Fos-Feyzin-aftak zijn is niet gecontroleerd. Besancon/Jura-tak naar Cressier niet in OSM gevonden.",
+    "jaarvolume_en_bron": "SPSE-systeem 35 Mt/jaar max, ca. 23 Mt/jaar feitelijk (Wikipedia, ongedateerd); 34-inch lijn tot 2.600 m3/uur = ca. 390 kb/d (spse.fr); aandeel Feyzin onbekend",
+    "risico": "Meerdere parallelle SPSE-lijnen (24, 34, 40 inch) en de aftak naar Lyon is niet apart aan een way gekoppeld. Jaarvolume is ongedateerd en geldt voor het hele systeem. De Strasbourg/Karlsruhe-tak is volgens Wikipedia sinds 2011 stilgelegd.",
+    "bronnen_start": [
+     "https://www.spse.fr/en/transportation-and-storage-of-petroleum-products.php",
+     "https://en.wikipedia.org/wiki/South_European_Pipeline"
+    ],
+    "prioriteit_toelichting": ""
+   },
+   "toets": {
+    "keten_id": "olie-fos-feyzin",
+    "haalbaar": true,
+    "problemen": [
+     "OSM begint de SPSE-lijn op 43.484,4.884 (logistiek park, geen tankenpark): tankenpark Fos ligt 4 km zuidelijker op 43.459,4.914 (z15: grote tanks)",
+     "Gat van 10,8 km in OSM bij de Rhonekruising (43.794,4.895 naar 43.889,4.923) en de aftak naar Feyzin ontbreekt: OSM-hoofdleiding loopt 21 km oostelijk langs Feyzin",
+     "Design: ways met Besancon/Jura-tak horen niet bij Feyzin; SPSE is ruwe olie, geen producten"
+    ],
+    "aanpassing": "Leiding via SPSE-ways 232593022, 232593024, 514120690, 232717968, 457397240 tot 45.632,5.113 (ca. 257 km), stippels: Fos-tankenpark naar wayopening 4 km, Rhonegat 10,8 km, laatste 21,5 km naar Feyzin 45.672,4.843 (aftak niet in OSM). Totaal ca. 285 km tegen 260 km (+9%), stippel ca. 13 procent. Alternatief: TRC HC 16 inch way 1328508024 (oil, 16 km) als bruggetje.",
+    "overlap": "Geen bestaande Fos- of Rhonestroom (geen Feyzin, Fos of Lavera in markers). Geen overlap met keten 1-4.",
+    "webcheck": "Wikipedia SPSE: Fos naar Lyon Feyzin 24 inch, 260 km; systeem 35 Mt max, ca. 23 Mt feitelijk; Feyzin-raffinaderij draait (Seveso-fiche mei 2026, ca. 5,4-5,6 Mt/j); reconversie loopt, geen sluiting. Extracts fr-provence en fr-rhone-alpes aanwezig."
+   }
+  },
+  {
+   "id": "goud-geita-randrefinery",
+   "g": "goud",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve golf 17: Tanzania (Geita) naar Rand Refinery, her-ontwerp van afgewezen goud-geita-randrefinery",
+    "keten_id": "goud-geita-randrefinery",
+    "van_site": "Geita Gold Mine (AngloGold Ashanti), plant -2.8676,32.1865, Tanzania",
+    "naar_site": "Rand Refinery, Germiston, Zuid-Afrika",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Geita-plant",
+      "naar": "Mwanza-luchthaven (MWZ) vrachtzijde",
+      "corridor": "geasfalteerde weg Geita-Mwanza (ca 120 km west van Mwanza, TRS); corridor via T4/Usagara volgens golf 9, niet via Busisi",
+      "km_indicatie": "ca 120 (TRS); golf 9 mat 140,5 OSRM",
+      "geometrie_tool": "maak_stroombeen_weg (extract tanzania)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "lucht",
+      "van": "MWZ",
+      "naar": "JNB vrachtterminal",
+      "corridor": "vrachtvlucht MWZ naar JNB, grootcirkel (aannemelijk, ongebroond)",
+      "km_indicatie": "ca 2.683 grootcirkel (berekend)",
+      "geometrie_tool": "maak_luchtbeen"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "JNB",
+      "naar": "Rand Refinery",
+      "corridor": "R21/N12",
+      "km_indicatie": "25,7",
+      "geometrie_tool": "letterlijke kopie goud-kibali-randrefinery-weg-jnb-randrefinery.geojson"
+     }
+    ],
+    "ankers_hergebruik": [
+     "au-jnb-vracht -26.1440,28.2295",
+     "au-randrefinery -26.2189,28.1550"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "tanzania",
+      "aanwezig": true
+     },
+     {
+      "regio": "zuid-afrika",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt (geen leiding)",
+    "jaarvolume_en_bron": "15,3 t Au/j: Geita 491.644 oz in 2025 (AngloGold TRS, 26-03-2026); sinds juni 2025 gaat 20% naar de Bank of Tanzania via Geita Gold Refinery (20-F 2025)",
+    "risico": "Golf 9 wees dit af (Rand rustte op een opmerking uit ca 2015). Nieuw: TRS per 31-12-2025 zegt bullion 'shipped to Rand Refinery in Johannesburg'. Kan boilerplate zijn, en de rest van golf 9 (geen bron voor de vlucht MWZ-JNB) blijft open. Alleen bouwen als de toets dit aanvaardt.",
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/1973832/000197383226000062/geitatechnicalreportsumm.htm",
+     "https://www.sec.gov/Archives/edgar/data/1973832/000197383226000066/au-20251231.htm"
+    ]
+   },
+   "toets": {
+    "keten_id": "goud-geita-randrefinery",
+    "haalbaar": true,
+    "problemen": [
+     "Zwakste as: TRS 31-12-2025 (26 mrt 2026) zegt bullion bars shipped to Rand Refinery, maar dezelfde zin staat al in de Geita-TRS van FY2021 tot FY2025 (EDGAR, 4 treffers): boilerplate, geen nieuw bewijs ten opzichte van golf 9.",
+     "Sinds 17 juni 2025 gaat 20 procent via Geita Gold Refinery naar de Bank of Tanzania (20-F 2025): hooguit 80 procent, dus circa 12 t Au, naar Rand. AngloGold bezit 42,4 procent van Rand.",
+     "Geen bron voor MWZ als overslag of voor de vlucht MWZ-JNB; eigen strip is alleen voor personeel (TRS).",
+     "OSM-aerodrome-centroid MWZ (-2.4463,32.9314) ligt midden op de baan; terminal en platform liggen NW-kop (ca -2.4425,32.9230, z15) en moeten als anker gelegd worden."
+    ],
+    "aanpassing": "Truck A: profiel extract tanzania, plant -2.8676,32.1865 (z14: plant, TSF, put) naar MWZ-platform; getest 137,7 km tegen 120 (+14,8 procent: binnen 15 norm, golf 9 mat 140,5), eerste 6 km kleine klassen. Lucht MWZ-JNB 2.683 km, aannemelijk een bron. Truck C kopie kibali-JNB-Rand 25,7 km. Beennaam en brief: aannemelijk, TRS-boilerplate, maximaal 80 procent.",
+    "overlap": "Alleen JNB-Rand (25,7 km, 1 procent) is kopie van goud-kibali-randrefinery; MWZ-JNB en de corridor Geita-Mwanza zijn nieuw. Id was eerder afgewezen in golf 9 maar bestaat niet in v2/data.",
+    "webcheck": "EDGAR: Geita TRS 2026 en 20-F 2025 gelezen (Rand-zin, 20 procent via Geita Gold Refinery, 42,4 procent Rand). Geen bron voor het vervoer. Wegtest uitgevoerd."
+   }
+  }
+ ]
+}

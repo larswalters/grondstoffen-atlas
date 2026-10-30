@@ -382,12 +382,12 @@
    "naam": "Framatome/ANF Lingen",
    "land": "Duitsland (Nedersaksen)",
    "rol": "splijtstoffabricage",
-   "lat": 52.5167,
-   "lon": 7.3167,
+   "lat": 52.4804,
+   "lon": 7.3315,
    "capaciteit_kt": 800,
    "capaciteit_bron": "Framatome (Advanced Nuclear Fuels): nameplate indicatief ~800-1.000 t HM/j; blijft in bedrijf ondanks de Duitse kernuitstap (exportgerichte productie) [B29]",
-   "coord_bron": "Wikipedia-geohack Lingen industriezone; geen satellietblik deze ronde",
-   "status": "onzeker",
+   "coord_bron": "was 52.5167/7.3167 (Wikipedia-geohack industriezone, onzeker) — M31 golf 16 (2026-10-30): gelijkgetrokken met het keten-anker u-lingen-anf van uranium-stpetersburg-lingen (ANF-fabrieksterrein, bron-gelegd op z15; 4,2 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "-"
   },
   {

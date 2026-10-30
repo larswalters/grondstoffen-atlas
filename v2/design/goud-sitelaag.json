@@ -400,12 +400,12 @@
    "naam": "Metalor (Neuchâtel/Marin)",
    "land": "Zwitserland",
    "rol": "raffinaderij",
-   "lat": 46.99,
-   "lon": 6.93,
+   "lat": 47.0107,
+   "lon": 7.0112,
    "capaciteit_kt": 650,
    "capaciteit_bron": "Metalor bedrijfsopgave: nameplate-capaciteit ≈ 650 t/j [B50]",
-   "coord_bron": "v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-metalor): kruis aan het meer van Neuchâtel, gemengde stadsbebouwing, geen apart fabrieksgebouw herkenbaar op deze precisie",
-   "status": "onzeker",
+   "coord_bron": "was 46.99/6.93 (v1-register, stadsbebouwing Neuchâtel, onzeker) — M31 golf 16 (2026-10-30): gelijkgetrokken met het keten-anker au-ref-metalor (Metalor SA, Marin-Epagnier, bron-gelegd; gedeeld door goud-masbate-metalor en eerdere goudstromen; 6,6 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "Buiten Ticino maar Zwitsers; wereldwijde vestigingen (o.a. Hongkong, Singapore, VS)."
   },
   {
