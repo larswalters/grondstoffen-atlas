@@ -114,5 +114,21 @@
  "goud-sukari-pamp": "Let op: vluchten Marsa Alam → Caïro (één bron) en Caïro → Zürich (geen bron) aannemelijk; wegkm Sukari → Marsa Alam eigen OSM-meting; Sukari ontbreekt in de goud-sitelaag.",
  "goud-salaresnorte-pamp": "Let op: bestand 467 KB (truckbeen Salares Norte → Santiago 1.138 km); Zwitserland als bestemming op één bron (Gold Fields), vlucht SCL → ZRH aannemelijk; 40 m terugloop bij Diego de Almagro.",
  "koper-cobrepanama-hamburg": "Let op: haven-aanloop Punta Rincón is een rechte stippel van 111 km (router-timeout, geen gemeten route); Aurubis Hamburg als afnemer op één bron; Werk Ost-marker 0,28 km van de lijn; twee spikes in de kanaalroute.",
- "koper-quebradablanca-patache": "Let op: 13,9% stippel (eerste 21,5 km van de leiding niet in OSM); de OSM-ways zijn niet bewezen QB2-slurryleiding; eindigt op Puerto Patache zonder zeebeen (stoppunt)."
+ "koper-quebradablanca-patache": "Let op: 13,9% stippel (eerste 21,5 km van de leiding niet in OSM); de OSM-ways zijn niet bewezen QB2-slurryleiding; eindigt op Puerto Patache zonder zeebeen (stoppunt).",
+ "grafiet-pedraazul-vitoria": "Let op: haven Praia Mole niet gebrond (aannemelijk, één bron; een haven in Bahia kan dichterbij liggen); één truckbeen van 735 km (OSRM-indicatie, bestand 320 KB); functie van elke NdG-vestiging niet gepubliceerd.",
+ "ree-kuantan-narva": "Let op: Lynas als bron voor Narva alleen uit trade-pers (zwak); Silmet of Narva als bestemming niet gebronnen; Muuga-aanloop schematisch (naad 2,34 km); wegkm b1 en b4 niet gepubliceerd (indicatie).",
+ "kolen-curragh-gladstone": "Let op: 300 km is een ronde opgave (10-K/GEM); spoor over het ruwe net zonder toets_spoorroute (mijnuiteinde 11 km naast het gesnoeide net); stoppunt RG Tanna-kolenopslag zonder zeebeen; WICET en Stanwell niet getekend.",
+ "uranium-metropolis-eunice": "Let op: UF6 per truck is een aanname (één bron, WNN 2010); stoppunt Urenco Eunice; 5 oprit-spikes in het truckbeen van 1.654 km.",
+ "gas-tratayen-salliquelo": "Let op: Gasoducto Perito Moreno uit OSM met 5 gaten als stippel (91,5 km, 16%); Tratayén-anker is het OSM-leidingbegin, geen gebronde veldlocatie.",
+ "gas-waha-aguadulce": "Let op: het westelijke 36-inch stuk naar Waha ontbreekt in OSM: de lijn begint in Crockett County (572 km tegen 720 gepubliceerd); 1,4 km stippel naar Valley Crossing CS1.",
+ "olie-boatasyn-prigorodnoye": "Let op: start is de OPF Nogliki, niet Boatasyn (id blijft); Trans-Sachalin-leiding uit OSM (623 km) met 3 spikes en 3 krappe bochten; eindpunt is het tankpark (de offshore TLU staat niet in OSM); geen zeebeen.",
+ "olie-nuevoteapa-salinacruz": "Let op: raffinaderij-marker 1,30 km van het leidingeinde (bewust, geen last mile); alleen de 48-inch-reeks getekend; doorzet niet gebrond.",
+ "grafiet-kellyton-hillercarbon": "Let op: Hiller Carbon Dayton als afnemer aannemelijk (één bron); volume nul (Westwater Kellyton nog niet in productie); geen gepubliceerde wegkm; 22 spikes van 4–27 m zonder terugloop.",
+ "pgm-zondereinde-portelizabeth": "Let op: één terugloop bij Derdepoort (N1/N4, ca. 0,35 km U-draai uit OSM-topologie, niet hersteld); modaliteit truck aangenomen; stoppunt haven Port Elizabeth.",
+ "lithium-kamativi-zhangjiagang": "Let op: b1 verhouding 1,70 zonder gebronde wegkm; Beira-aanloop schematisch (haven-aanloop-router op timeout); Yangtze-monding conventie-marker 2,69 km; de lithium-sitelaag noemt Huayou als eigenaar van Kamativi, de brief Yahua (conflict, niet opgelost); sleutel centraal li-kamativi → li-kz.",
+ "kolen-dendrobium-portkembla": "Let op: 10,2 km tegen 7 km gepubliceerd — ander eindpunt (hoogovenzijde i.p.v. de CPP, die niet is gevonden), indicatie.",
+ "kolen-grootegeluk-medupi": "Let op: transportband (OSM goods_conveyor, als leiding getekend) 7,5 km tegen 5,4 km Wikipedia (+39%, lus in de OSM-ways, indicatie); 3 knikken.",
+ "gas-wheatstone-kawagoe": "Let op: eindpunt is Futtsu LNG (titel), niet Kawagoe (id); Futtsu-losplek 1 km west van de marker; MARNET-knoopomweg 95 km west van Wheatstone; bestemming op één bron; plantstand na de cycloon niet nagecheckt.",
+ "gas-komotini-starazagora": "ICGB-interconnector uit OSM: 182,0 km tegen 182,6 km gepubliceerd (-0,3%).",
+ "olie-wilhelmshaven-koeln": "Let op: eindpunt is het OSM-leidingeinde in een woonwijk (onzeker); de laatste 15–20 km tot Wesseling niet getekend; 330 km tegen 391 gepubliceerd (-15,5%, indicatie); 28 OSM-bochten."
 }

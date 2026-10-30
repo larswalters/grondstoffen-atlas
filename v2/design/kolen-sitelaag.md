@@ -79,7 +79,7 @@ rechtstreeks gepubliceerd, en dus niet blind bij mijnproductie mag worden opgete
 | `w-goonyella` | Goonyella Riverside | Australië (Qld) | mijn | -21,759, 147,977 | 17,1 | Wikipedia/BHP [B18]; BHP [B19] | Wikipedia-geohack | aannemelijk |
 | `w-peakdowns` | Peak Downs | Australië (Qld) | mijn | -22,2549, 148,1797 | 17,78 | GEM GCMT (aug-2026 release) [B1]; NS Energy/BHP [B20] | GEM Table 1 | aannemelijk |
 | `w-mtarthur` | Mount Arthur | Australië (NSW) | mijn | -32,3370, 150,8561 | 22,335 | GEM GCMT 2024 [B1]; BHP [B21] | GEM Table 1 | aannemelijk |
-| `w-grootegeluk` | Grootegeluk | Zuid-Afrika (Limpopo) | mijn | -23,6717, 27,5289 | 26,0 | Exxaro [B22]; Wikipedia [B23] | Wikipedia-geohack | aannemelijk |
+| `w-grootegeluk` | Grootegeluk | Zuid-Afrika (Limpopo) | mijn | -23,6497, 27,5584 | 26,0 | Exxaro [B22]; Wikipedia [B23] | M31 golf 15 (2026-10-30): gelijkgetrokken met het keten-anker Grootegeluk-wasserij (kolen-grootegeluk-medupi, bron-gelegd); was -23,6717/27,5289 Wikipedia-geohack | bron-gelegd |
 | `w-cerrejon` | Cerrejón | Colombia | mijn | 11,1207, -72,5596 | 19,2 | Glencore FY2024/2025 [B24]; Argus [B25] | anker `coal-cerrejon-laad` hergebruikt | **bron-gelegd** |
 | `w-tavantolgoi` | Tavan Tolgoi (ETT) | Mongolië | mijn | 43,625, 105,474 | 28,64 | Erdenes TT 2024 [B26][B27] | Wikipedia-geohack | aannemelijk |
 | `w-taldinsky` | Taldinsky (+ -Zapadny) | Rusland (Kuzbass) | mijn | 54,1943, 87,1387 | 9,1 | GEM GCMT (deelblok) [B1]; mediaberichten [B28] | GEM Table 1 (één van drie secties) | **onzeker** |

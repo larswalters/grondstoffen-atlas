@@ -610,7 +610,7 @@
    "toelichting": "Totale MP-productie FY2025; merendeel gaat naar Azië, aandeel naar Independence onbekend (Independence bouwt naar ~1.000 t NdFeB/j)",
    "basis": 2.599,
    "basisEenheid": "kt",
-   "rel": 0.299
+   "rel": 0.256
   },
   "ree-sillamae-narva": {
    "sleutel": "ree-sn",
@@ -627,7 +627,7 @@
    "toelichting": "Capaciteit Neo-magneetfabriek Narva (gepland, nu sample production), niet het oxidevolume Silmet naar Narva; dat is niet gepubliceerd",
    "basis": 2.0,
    "basisEenheid": "kt",
-   "rel": 0.217
+   "rel": 0.169
   },
   "kolen-datong-haimen": {
    "sleutel": "kolen-dh",
@@ -644,7 +644,7 @@
    "toelichting": "Terminalcapaciteit bestemd voor eigen centrale; aandeel Datong-kool via Qinhuangdao niet gepubliceerd (Daqin totaal 422 Mt, 2023).",
    "basis": 12.0,
    "basisEenheid": "Mt",
-   "rel": 0.577
+   "rel": 0.599
   },
   "kolen-sangatta-mundra": {
    "sleutel": "kolen-sm",
@@ -661,7 +661,7 @@
    "toelichting": "Contractafname van de centrale via handelaar, geen gepubliceerde KPC-lading; KPC produceerde 55,0 Mt in 2024.",
    "basis": 10.11,
    "basisEenheid": "Mt",
-   "rel": 0.489
+   "rel": 0.515
   },
   "kolen-goonyella-kalinganagar": {
    "sleutel": "kolen-gk",
@@ -712,7 +712,7 @@
    "toelichting": "Mijnproductie totaal, niet het aandeel via Vostochny (terminal 55 Mt/j capaciteit; export 13,4 Mt in H1 2024).",
    "basis": 9.1,
    "basisEenheid": "Mt",
-   "rel": 0.435
+   "rel": 0.464
   },
   "kolen-cerrejon-ruhr": {
    "sleutel": "kolen-cr",
@@ -729,7 +729,7 @@
    "toelichting": "Mijnproductie totaal; aandeel naar Rotterdam/Schwelgern niet vastgesteld; voor 2025 aangekondigd 11-16 Mt/j.",
    "basis": 16.8,
    "basisEenheid": "Mt",
-   "rel": 0.749
+   "rel": 0.762
   },
   "olie-rastanura-zhoushan": {
    "sleutel": "olie-rz",
@@ -746,7 +746,7 @@
    "toelichting": "Contractvolume Aramco aan ZPC (800 kb/d-complex); brief rekent om naar ~24 Mt/j.",
    "basis": 24.0,
    "basisEenheid": "Mt",
-   "rel": 0.449
+   "rel": 0.497
   },
   "olie-primorsk-jamnagar": {
    "sleutel": "olie-pj",
@@ -763,7 +763,7 @@
    "toelichting": "Nationale Indiase import van Russische crude, niet de lading Primorsk-Jamnagar zelf; brief rekent ~90 Mt/j.",
    "basis": 90.0,
    "basisEenheid": "Mt",
-   "rel": 0.904
+   "rel": 1.0
   },
   "olie-corpuschristi-rotterdam": {
    "sleutel": "olie-cr",
@@ -797,7 +797,7 @@
    "toelichting": "Totale Fujairah-export (~42-55 Mt/j); Japan-aandeel (~30% van ADNOC-export) is aggregaat, niet lading-specifiek.",
    "basis": 48.5,
    "basisEenheid": "Mt",
-   "rel": 0.691
+   "rel": 0.765
   },
   "olie-bonny-vadinar": {
    "sleutel": "olie-bv",
@@ -814,7 +814,7 @@
    "toelichting": "Raffinagecapaciteit van de bestemming, niet het Bonny-volume; Nigeria exporteert totaal ~1,3-1,4 mln vaten/dag (EIA 2025).",
    "basis": 20.0,
    "basisEenheid": "Mt",
-   "rel": 0.387
+   "rel": 0.428
   },
   "uranium-inkai-poti": {
    "sleutel": "u-ip",
@@ -831,7 +831,7 @@
    "toelichting": "Totale Kazachse Trans-Kaspische stroom via Azerbeidzjan, niet alleen Inkai; Inkai-aandeel niet gepubliceerd. Kazachstan totaal ~21.000 tU/j.",
    "basis": 2300.0,
    "basisEenheid": "t",
-   "rel": 0.734
+   "rel": 0.723
   },
   "uranium-mcarthurriver-porthope": {
    "sleutel": "u-mp",
@@ -848,7 +848,7 @@
    "toelichting": "Mijnproductie McArthur River/Key Lake (nameplate 18 Mlb), geen stroomcijfer; wat BWXT Peterborough bereikt is niet gepubliceerd.",
    "basis": 5576.7,
    "basisEenheid": "t",
-   "rel": 1.0
+   "rel": 0.986
   },
   "uranium-rossing-walvisbay": {
    "sleutel": "u-rw",
@@ -865,7 +865,7 @@
    "toelichting": "Mijnproductie Rössing, vrijwel alles via Walvis Bay; WNA geeft 2.476 tU voor 2023. Geen apart gepubliceerd stroomcijfer.",
    "basis": 2920.0,
    "basisEenheid": "t",
-   "rel": 0.806
+   "rel": 0.794
   },
   "uranium-arlit-cotonou": {
    "sleutel": "u-ac",
@@ -882,7 +882,7 @@
    "toelichting": "Historische SOMAIR-productie; actueel stroomvolume is nul (grenssluiting Niger-Benin 2023). Waarde is het historische niveau, 1.050 t voorraad gestrand.",
    "basis": 2000.0,
    "basisEenheid": "t",
-   "rel": 0.692
+   "rel": 0.682
   },
   "kobalt-kisanfu-daressalaam": {
    "sleutel": "co-kd",
@@ -1035,7 +1035,7 @@
    "toelichting": "Importcapaciteit Gate-terminal, geen cargocijfer; Sabine Pass zelf ~30 Mtpa. Brief noemt dit een corridor-illustratie.",
    "basis": 12.0,
    "basisEenheid": "bcm",
-   "rel": 0.513
+   "rel": 0.61
   },
   "gas-raslaffan-chiba": {
    "sleutel": "gas-rc",
@@ -1086,7 +1086,7 @@
    "toelichting": "Naamplaat Rudong-terminal (Pluto LNG ~10,9 Mtpa); geen Karratha→Rudong-cargocijfer gebrond.",
    "basis": 13.6,
    "basisEenheid": "bcm",
-   "rel": 0.572
+   "rel": 0.67
   },
   "gas-bonny-zeebrugge": {
    "sleutel": "gas-bz",
@@ -1103,7 +1103,7 @@
    "toelichting": "Regascapaciteit Zeebrugge (NLNG 22 Mtpa nominaal); geen Bonny→Zeebrugge-cargovolume gebrond.",
    "basis": 15.368,
    "basisEenheid": "bcm",
-   "rel": 0.629
+   "rel": 0.729
   },
   "koper-sentinel-walvisbay": {
    "sleutel": "cu-sw",
@@ -1324,7 +1324,7 @@
    "toelichting": "Scheidingscapaciteit Longnan-fabriek (na renovatie); ionklei-quotum nationaal 81.350 t REO (2024). b1 draagt uitloogconcentraat",
    "basis": 2.5,
    "basisEenheid": "kt",
-   "rel": 0.286
+   "rel": 0.243
   },
   "ree-kuantan-japan": {
    "sleutel": "ree-kj",
@@ -1341,7 +1341,7 @@
    "toelichting": "Lynas' totale NdPr-afzet, niet het Japan-aandeel; Dy-/Tb-oxide zonder apart tonnage. LAMP-nameplate ~10,5 kt NdPr/j",
    "basis": 7.337,
    "basisEenheid": "kt",
-   "rel": 0.623
+   "rel": 0.6
   },
   "ree-baotou-ningbo": {
    "sleutel": "ree-bn",
@@ -1358,7 +1358,7 @@
    "toelichting": "Capaciteit JL MAG Baotou (fase-2-project, gepland operationeel 2023), niet een gemeten stroom; modaliteit spoor is aanname",
    "basis": 23.0,
    "basisEenheid": "kt",
-   "rel": 0.98
+   "rel": 0.979
   },
   "kolen-ermelo-portqasim": {
    "sleutel": "kolen-ep",
@@ -1392,7 +1392,7 @@
    "toelichting": "Mijncapaciteit (voedt het spoorbeen); Newcastle→Hekinan-tonnage niet gebrond, JERA neemt ~13% van de Australische thermische export.",
    "basis": 20.0,
    "basisEenheid": "Mt",
-   "rel": 0.839
+   "rel": 0.847
   },
   "kolen-tabalong-fangchenggang": {
    "sleutel": "kolen-tf",
@@ -1426,7 +1426,7 @@
    "toelichting": "Doorvoer CPC-leiding (~80% van Kazachse productie, ~60-65 Mt/j); Tengiz is de grootste, niet de enige bron.",
    "basis": 62.5,
    "basisEenheid": "Mt",
-   "rel": 0.779
+   "rel": 0.861
   },
   "olie-albasrah-paradip": {
    "sleutel": "olie-ap",
@@ -1443,7 +1443,7 @@
    "toelichting": "Raffinagecapaciteit bestemming; Irak exporteerde ~3,3-3,5 mb/d (2024), Paradip-aandeel onbekend; export 2026 door Hormuz-crisis ingestort.",
    "basis": 15.0,
    "basisEenheid": "Mt",
-   "rel": 0.288
+   "rel": 0.318
   },
   "olie-kharg-dongjiakou": {
    "sleutel": "olie-kd",
@@ -1460,7 +1460,7 @@
    "toelichting": "Nationale Iran-China-import (~90% via teapots), Dongjiakou-deel niet gebrond; sept 2026 geraamd ~1 mb/d, dalend.",
    "basis": 70.0,
    "basisEenheid": "Mt",
-   "rel": 0.817
+   "rel": 0.904
   },
   "olie-kozmino-dalian": {
    "sleutel": "olie-kod",
@@ -1477,7 +1477,7 @@
    "toelichting": "Totale Kozmino-export (maandrecord), niet Dalian-specifiek; Dalian-raffinaderij heeft 20,5 Mt/j capaciteit.",
    "basis": 46.25,
    "basisEenheid": "Mt",
-   "rel": 0.675
+   "rel": 0.747
   },
   "uranium-inkai-stpetersburg": {
    "sleutel": "u-is",
@@ -1511,7 +1511,7 @@
    "toelichting": "Eenmalige overdracht uit 2013, geen jaarcijfer en geen bewijs van lopende stroom; Port Hope is vergund tot 12.500 tU/j UF6 voor alle klanten.",
    "basis": 400.0,
    "basisEenheid": "t",
-   "rel": 0.208
+   "rel": 0.205
   },
   "uranium-olympicdam-portadelaide": {
    "sleutel": "u-op",
@@ -1528,7 +1528,7 @@
    "toelichting": "Indicatieve Australische/Olympic Dam-productie (BHP: alle uraanoxide wordt geexporteerd via Outer Harbor); geen recenter BHP-jaarcijfer.",
    "basis": 5000.0,
    "basisEenheid": "t",
-   "rel": 0.967
+   "rel": 0.953
   },
   "kobalt-huayou-gunsan": {
    "sleutel": "co-hg",
@@ -1800,7 +1800,7 @@
    "toelichting": "Mijnproductie Mogalakwena, niet het deel dat naar Royston gaat. Geen site-specifiek Mogalakwena→Royston-volume gevonden.",
    "basis": 27.9931,
    "basisEenheid": "t",
-   "rel": 0.968
+   "rel": 0.963
   },
   "pgm-springs-zurich": {
    "sleutel": "pgm-sz",
@@ -1834,7 +1834,7 @@
    "toelichting": "Mijnproductie Zondereinde 4E, midden van het bereik; Northam-site noemt ~300 koz/j. Aandeel dat via JNB→FRA vliegt niet gebrond.",
    "basis": 14.7742,
    "basisEenheid": "t",
-   "rel": 0.57
+   "rel": 0.506
   },
   "pgm-rustenburg-tokio": {
    "sleutel": "pgm-rt",
@@ -1885,7 +1885,7 @@
    "toelichting": "6E-metaalinhoud van de Zimplats-matte (SMC-output), volgens de brief volledig naar Rustenburg PMR. H1 FY2025 tijdelijk lager door nieuwe smelter.",
    "basis": 19.9456,
    "basisEenheid": "t",
-   "rel": 0.757
+   "rel": 0.721
   },
   "pgm-norilsk-krasnojarsk": {
    "sleutel": "pgm-nk",
@@ -1919,7 +1919,7 @@
    "toelichting": "Totaal Amerikaanse operaties (Stillwater + East Boulder samen); aandeel van alleen Stillwater Mine niet gepubliceerd.",
    "basis": 14.7742,
    "basisEenheid": "t",
-   "rel": 0.57
+   "rel": 0.506
   },
   "pgm-sudbury-actonuk": {
    "sleutel": "pgm-sp",
@@ -2157,7 +2157,7 @@
    "toelichting": "Importcapaciteit Gate; Ras Laffan ~77 Mtpa. Geen Europa-specifiek cargovolume; praktijkroute sinds 2023 meestal via de Kaap.",
    "basis": 12.0,
    "basisEenheid": "bcm",
-   "rel": 0.513
+   "rel": 0.61
   },
   "gas-sabetta-zeebrugge": {
    "sleutel": "gas-sz",
@@ -2174,7 +2174,7 @@
    "toelichting": "Contractplafond transshipment Zeebrugge; Yamal totaal 17,4 Mtpa. Geen Sabetta→Zeebrugge-tonnage; transshipmentverbod sinds 27-3-2025.",
    "basis": 10.88,
    "basisEenheid": "bcm",
-   "rel": 0.468
+   "rel": 0.562
   },
   "koper-antamina-daye": {
    "sleutel": "cu-ad",
@@ -2225,7 +2225,7 @@
    "toelichting": "Terminaldoorvoer totaal (capaciteit ~29 Mt/j), deels Canadese cokeskool; aandeel Powder River Basin niet gepubliceerd.",
    "basis": 20.0,
    "basisEenheid": "Mt",
-   "rel": 0.839
+   "rel": 0.847
   },
   "olie-westridge-ulsan": {
    "sleutel": "olie-wu",
@@ -2327,7 +2327,7 @@
    "toelichting": "Mijnproductie Amandelbult, niet het VS-deel; geen site-specifiek volume voor de bestemmingsas Iselin.",
    "basis": 14.4631,
    "basisEenheid": "t",
-   "rel": 0.557
+   "rel": 0.491
   },
   "diamant-gahchokue-gaborone": {
    "sleutel": "dia-gg",
@@ -2446,7 +2446,7 @@
    "toelichting": "Historisch productiegemiddelde van de mijn; geen 2024/25-cijfer, en niet bevestigd dat Smith Ranch zelf deze corridor volgt.",
    "basis": 680.0,
    "basisEenheid": "t",
-   "rel": 0.368
+   "rel": 0.363
   },
   "uranium-jaduguda-hyderabad": {
    "sleutel": "u-jh",
@@ -2463,7 +2463,7 @@
    "toelichting": "Capaciteit van NFC Hyderabad (≈212 tU), niet de stroom; Jaduguda levert tot 25% van de reactorgrondstof, geen tU/jaar-cijfer gevonden.",
    "basis": 250.0,
    "basisEenheid": "t",
-   "rel": 0.067
+   "rel": 0.066
   },
   "uranium-malvesi-tricastin": {
    "sleutel": "u-mt",
@@ -2531,7 +2531,7 @@
    "toelichting": "Leidingcapaciteit Europipe II; geen vers jaarvolume (2025/2026) voor deze as gevonden.",
    "basis": 24.0,
    "basisEenheid": "bcm",
-   "rel": 0.837
+   "rel": 0.945
   },
   "gas-cautionbay-futtsu": {
    "sleutel": "gas-cf",
@@ -2548,7 +2548,7 @@
    "toelichting": "Productie van de hele PNG LNG-plant (7,4–8,5 Mtpa, 2017–2021), niet de lading naar Futtsu; Japan-aandeel niet gebrond.",
    "basis": 11.288,
    "basisEenheid": "bcm",
-   "rel": 0.485
+   "rel": 0.58
   },
   "gas-arzew-barcelona": {
    "sleutel": "gas-ab",
@@ -2582,7 +2582,7 @@
    "toelichting": "Installed capacity OSCOM; brief noemt ~30 t/dag. RED-scheiding ~4.000 t/j (input/output-eenheid onduidelijk). Geen stroomcijfer",
    "basis": 11.2,
    "basisEenheid": "kt",
-   "rel": 0.755
+   "rel": 0.74
   },
   "ree-georgia-whitemesa": {
    "sleutel": "ree-gw",
@@ -2599,7 +2599,7 @@
    "toelichting": "Contractminimum 2020; niet-geverifieerde noot: actueel ~500 t/j, langetermijndoel 10.000-15.000 t/j. Truck is aanname",
    "basis": 2.5,
    "basisEenheid": "kt",
-   "rel": 0.286
+   "rel": 0.243
   },
   "ree-chavara-aluva": {
    "sleutel": "ree-ca",
@@ -2769,7 +2769,7 @@
    "toelichting": "Mijnproductie totaal (schatting); Neptune verwerkte 59% van Tecks kolenvolume in 2023, geen tonnage voor deze stroom.",
    "basis": 9.0,
    "basisEenheid": "Mt",
-   "rel": 0.429
+   "rel": 0.459
   },
   "kolen-moatize-nacala": {
    "sleutel": "kolen-mn",
@@ -2786,7 +2786,7 @@
    "toelichting": "Mijnproductie totaal volgens eigen opgave; pit-to-port via de Nacala-corridor, exportaandeel niet apart gepubliceerd.",
    "basis": 16.3,
    "basisEenheid": "Mt",
-   "rel": 0.734
+   "rel": 0.748
   },
   "kolen-pocahontas-norfolk": {
    "sleutel": "kolen-pn",
@@ -2803,7 +2803,7 @@
    "toelichting": "Bovengrens: inclusief Logan (WV); een deel van Buchanan gaat via CNX Marine Terminal; Buchanan alleen niet gepubliceerd.",
    "basis": 5.3,
    "basisEenheid": "Mt",
-   "rel": 0.157
+   "rel": 0.202
   },
   "olie-sangachal-ceyhan": {
    "sleutel": "olie-sc",
@@ -2820,7 +2820,7 @@
    "toelichting": "Gemiddeld ~567 kb/d tegen nameplate 1,2 mb/d; jaarcijfer via zoekresultaat-samenvatting, niet op de pagina zelf gelezen.",
    "basis": 28.3562,
    "basisEenheid": "Mt",
-   "rel": 0.507
+   "rel": 0.561
   },
   "olie-rastanura-sidikerir": {
    "sleutel": "olie-rs",
@@ -2854,7 +2854,7 @@
    "toelichting": "Leidingcapaciteit, geen gemeten stroom; recentere systeemcapaciteit niet bevestigd, South Bow meldt 2026 open season ~450 kb/d extra.",
    "basis": 29.5,
    "basisEenheid": "Mt",
-   "rel": 0.52
+   "rel": 0.576
   },
   "pgm-unki-rustenburg": {
    "sleutel": "pgm-ur",
@@ -2888,7 +2888,7 @@
    "toelichting": "100%-basis uit het 50%-aandeel van 117.019 oz; ouder sitelaagcijfer ~130 koz 6E (FY2023) wijkt af in jaar en mix.",
    "basis": 7.2794,
    "basisEenheid": "t",
-   "rel": 0.13
+   "rel": 0.0
   },
   "grafiet-zavallya-constanta": {
    "sleutel": "gr-zc",
@@ -3007,7 +3007,7 @@
    "toelichting": "Mijnproductie Priargunsky; geen Priargunsky-Seversk-tonnage, relatie volgt uit eliminatie. Rusland totaal 2.738 tU (2024).",
    "basis": 1047.0,
    "basisEenheid": "t",
-   "rel": 0.497
+   "rel": 0.49
   },
   "uranium-eunice-columbia": {
    "sleutel": "u-ec",
@@ -3024,7 +3024,7 @@
    "toelichting": "Capaciteit van Columbia FFF (ontvanger), niet de Eunice-stroom; Urenco USA ~9% wereld-SWU. Geen Eunice-Columbia-tonnage; 2019 en 2024 zijn losse zendingen.",
    "basis": 1550.0,
    "basisEenheid": "t",
-   "rel": 0.615
+   "rel": 0.607
   },
   "gas-bintulu-pyeongtaek": {
    "sleutel": "gas-bp",
@@ -3058,7 +3058,7 @@
    "toelichting": "Gemeten levering 2023, deels voor Turkije en deels doorvoer naar de EU; ontwerpcapaciteit 31,5 bcm/j (2 lijnen).",
    "basis": 16.7,
    "basisEenheid": "bcm",
-   "rel": 0.668
+   "rel": 0.77
   },
   "ree-ganzhou-hanau": {
    "sleutel": "ree-gh",
@@ -3194,7 +3194,7 @@
    "toelichting": "Concentraatproductie Marikana, geen doorzet van het BMR→PMR-been (brief zegt dat zelf); PMR-doorzet ~3 t/maand.",
    "basis": 18.8733,
    "basisEenheid": "t",
-   "rel": 0.722
+   "rel": 0.681
   },
   "pgm-kevitsa-harjavalta": {
    "sleutel": "pgm-kh",
@@ -3296,7 +3296,7 @@
    "toelichting": "Export naar Reftinskaya; contract 10,4 Mt/j t/m 2027; jan-apr 2024 2,584 Mt (run-rate ~7,8 Mt/j).",
    "basis": 10.1,
    "basisEenheid": "Mt",
-   "rel": 0.488
+   "rel": 0.515
   },
   "kolen-tanjungenim-suralaya": {
    "sleutel": "kolen-ts",
@@ -3313,7 +3313,7 @@
    "toelichting": "Oud leveringscijfer PTBA naar Suralaya; recent volume niet gepubliceerd (Tanjung Enim produceerde 42,0 Mt in 2024).",
    "basis": 6.1,
    "basisEenheid": "Mt",
-   "rel": 0.229
+   "rel": 0.27
   },
   "kobalt-taganito-niihama": {
    "sleutel": "co-tn",
@@ -3364,7 +3364,7 @@
    "toelichting": "Druzhba-zuid naar HU+SK samen; aandeel dat Szazhalombatta haalt niet gevonden. Vooraf 200-235 kb/d, stilstand 27-1 tot 23-4-2026.",
    "basis": 8.25,
    "basisEenheid": "Mt",
-   "rel": 0.082
+   "rel": 0.091
   },
   "olie-prudhoebay-cherrypoint": {
    "sleutel": "ol-pc",
@@ -3381,7 +3381,7 @@
    "toelichting": "TAPS-totaal; aandeel naar Cherry Point niet gepubliceerd (ruwweg de helft van de Alaska-lading gaat naar Californie).",
    "basis": 23.15,
    "basisEenheid": "Mt",
-   "rel": 0.437
+   "rel": 0.483
   },
   "diamant-williamson-antwerpen": {
    "sleutel": "dia-wa",
@@ -3534,7 +3534,7 @@
    "toelichting": "Fabriekscapaciteit Romans (ontvanger); geen tonnage voor deze relatie en Romans krijgt ook Urenco-UF6. Georges Besse II ≈7.800 tU feed-eq./j.",
    "basis": 1600.0,
    "basisEenheid": "t",
-   "rel": 0.625
+   "rel": 0.616
   },
   "gas-nyhamna-easington": {
    "sleutel": "gas-ne",
@@ -3551,7 +3551,7 @@
    "toelichting": "Leidingcapaciteit Langeled, geen gemeten doorzet; herstart juni 2024 op 40–50 MMm³/d.",
    "basis": 25.5,
    "basisEenheid": "bcm",
-   "rel": 0.866
+   "rel": 0.974
   },
   "ree-larochelle-sanmarcos": {
    "sleutel": "ree-ls",
@@ -3585,7 +3585,7 @@
    "toelichting": "LGOK-concentraatproductie 2025; REO-gehalte niet gepubliceerd. b1 truck mijn naar Olenegorsk, b2 spoor naar SMZ",
    "basis": 5.8,
    "basisEenheid": "kt",
-   "rel": 0.55
+   "rel": 0.522
   },
   "uranium-tricastin-seversk": {
    "sleutel": "u-ts",
@@ -3602,7 +3602,7 @@
    "toelichting": "Eenmalige verkoop over meerdere zendingen, geen jaarcijfer; opslag Tricastin 33.000-35.000 t groeit ~1.000-1.100 t/j. U-inhoud niet gespecificeerd.",
    "basis": 1000.0,
    "basisEenheid": "t",
-   "rel": 0.484
+   "rel": 0.477
   },
   "uranium-poti-blindriver": {
    "sleutel": "u-pb",
@@ -3619,7 +3619,7 @@
    "toelichting": "Cameco-aandeel in Inkai-productie als stroombenadering; geen route-specifiek tonnage, Trans-Kaspisch aandeel schommelt (64% 2023, 26% 2024).",
    "basis": 1640.0,
    "basisEenheid": "t",
-   "rel": 0.632
+   "rel": 0.623
   },
   "zilver-dubai-mumbai": {
    "sleutel": "ag-dm",
@@ -3721,7 +3721,7 @@
    "toelichting": "Leidingcapaciteit TAP, geen kalenderjaarvolume; cumulatief >60 bcm tot juli 2026, waarvan 50 bcm naar Italië.",
    "basis": 10.0,
    "basisEenheid": "bcm",
-   "rel": 0.428
+   "rel": 0.522
   },
   "gas-groundbirch-incheon": {
    "sleutel": "gas-gt",
@@ -3738,7 +3738,7 @@
    "toelichting": "Plantcapaciteit LNG Canada (Coastal GasLink 2,1 bcf/d); aandeel Tongyeong/Zuid-Korea niet gebrond.",
    "basis": 19.04,
    "basisEenheid": "bcm",
-   "rel": 0.729
+   "rel": 0.833
   },
   "goud-grasberg-jakarta": {
    "sleutel": "au-gj",
@@ -3772,7 +3772,7 @@
    "toelichting": "Fase-1-capaciteit (bereikmidden 5 en 13,4); nog geen gerealiseerde export, eerste export gepland vóór eind 2026",
    "basis": 9.2,
    "basisEenheid": "kt",
-   "rel": 0.694
+   "rel": 0.675
   },
   "grafiet-balama-kendal": {
    "sleutel": "gr-bk",
@@ -3891,7 +3891,7 @@
    "toelichting": "Offtakecontract (~3,3 kt REO/j), nog niet gerealiseerd: eerste productie Q4 2026; Stage 1 ~15,3 kt/j, rest deels Gerald Metals",
    "basis": 6.0,
    "basisEenheid": "kt",
-   "rel": 0.56
+   "rel": 0.534
   },
   "ree-yunsheng-longbeach": {
    "sleutel": "ree-yl",
@@ -3908,7 +3908,7 @@
    "toelichting": "China-VS magneetexport jan-jul 2026 (3,5 kt) geannualiseerd; Yunsheng-aandeel onbekend (bedrijf: 14,2 kt verkocht in 2025)",
    "basis": 6.0,
    "basisEenheid": "kt",
-   "rel": 0.56
+   "rel": 0.534
   },
   "pgm-lacdesiles-kristiansand": {
    "sleutel": "pgm-lk",
@@ -3925,7 +3925,7 @@
    "toelichting": "6E-inhoud van het concentraat dat onder contract aan Glencore wordt verkocht (FY juli 2023–juni 2024); route zelf aannemelijk, één bron.",
    "basis": 8.7401,
    "basisEenheid": "t",
-   "rel": 0.243
+   "rel": 0.131
   },
   "pgm-tworivers-springs": {
    "sleutel": "pgm-tr",
@@ -3942,7 +3942,7 @@
    "toelichting": "100%-basis, FY juli 2023–juni 2024; concentraat gaat via life-of-mine offtake naar Impala. Rustenburg→Springs-leg is aannemelijk.",
    "basis": 9.0511,
    "basisEenheid": "t",
-   "rel": 0.265
+   "rel": 0.156
   },
   "pgm-booysendal-zondereinde": {
    "sleutel": "pgm-bz",
@@ -3959,7 +3959,7 @@
    "toelichting": "4E-metaalinhoud van Booysendal-concentraat; Northam bundelt het concentraat bij Zondereinde. F2026 531.668 oz.",
    "basis": 15.9296,
    "basisEenheid": "t",
-   "rel": 0.617
+   "rel": 0.56
   },
   "lithium-nal-quebec": {
    "sleutel": "li-nq",
@@ -4078,7 +4078,7 @@
    "toelichting": "Stroom over precies deze lijn; het grootste deel van de ~26 Mt verscheepte kool ging via Ulak-BAM naar Vanino.",
    "basis": 7.0,
    "basisEenheid": "Mt",
-   "rel": 0.3
+   "rel": 0.337
   },
   "kolen-blackthunder-scherer": {
    "sleutel": "kolen-bs",
@@ -4095,7 +4095,7 @@
    "toelichting": "Mijnproductie totaal (bovengrens); Scherer-afname per mijn niet gevonden, Buckskin is een representatieve keuze.",
    "basis": 11.0,
    "basisEenheid": "Mt",
-   "rel": 0.532
+   "rel": 0.556
   },
   "kolen-haerwusu-huanghua": {
    "sleutel": "kolen-hh",
@@ -4180,7 +4180,7 @@
    "toelichting": "Gemiddelde Gronau-Rusland, niet alleen Novouralsk; zending 03-2009 ≈ 845 tU (1.250 t UF6). Route alleen 2009 gedocumenteerd, daarna ander pad.",
    "basis": 1420.0,
    "basisEenheid": "t",
-   "rel": 0.589
+   "rel": 0.581
   },
   "uranium-elektrostal-paks": {
    "sleutel": "u-ep",
@@ -4231,7 +4231,7 @@
    "toelichting": "Eén maand (≈4,8 bcm/j geannualiseerd), incl. ~4,5 mln m3/d Argentijns transitgas; capaciteit 11 bcm/j.",
    "basis": 4.7523,
    "basisEenheid": "bcm",
-   "rel": 0.081
+   "rel": 0.162
   },
   "gas-temane-secunda": {
    "sleutel": "gas-ts",
@@ -4248,7 +4248,7 @@
    "toelichting": "ROMPCO-leidingcapaciteit (≈5,5 bcm/j, eigen omrekening); Sasol extern 42 PJ/j. Geen gemeten doorzet, deel gaat naar Sasolburg en derden.",
    "basis": 5.5789,
    "basisEenheid": "bcm",
-   "rel": 0.155
+   "rel": 0.239
   },
   "gas-raslaffan-taweelah": {
    "sleutel": "gas-rt",
@@ -4265,7 +4265,7 @@
    "toelichting": "Ontwerp-/aanvangsdoorzet Dolphin-leiding, geen meting 2025; ontwerpmaximum 3,2 bcf/d.",
    "basis": 20.7,
    "basisEenheid": "bcm",
-   "rel": 0.768
+   "rel": 0.873
   },
   "olie-taishet-kozmino": {
    "sleutel": "olie-tk",
@@ -4282,7 +4282,7 @@
    "toelichting": "Maandlaadplan aan de Kozmino-kant; Taishet-Skovorodino draagt ook de China-aftakking, leidingcapaciteit tot 1.600 kb/d.",
    "basis": 48.5,
    "basisEenheid": "Mt",
-   "rel": 0.691
+   "rel": 0.765
   },
   "olie-kirkuk-ceyhan": {
    "sleutel": "olie-kic",
@@ -4299,7 +4299,7 @@
    "toelichting": "Enkele bron, Rudaw noemt ~200 kb/d; nameplate ITP 1,5 mb/d; leiding herstartte sept 2025.",
    "basis": 12.5,
    "basisEenheid": "Mt",
-   "rel": 0.225
+   "rel": 0.249
   },
   "olie-acu-dongjiakou": {
    "sleutel": "olie-ad",
@@ -4316,7 +4316,7 @@
    "toelichting": "Acu ~30% van Braziliaanse export (~1.980 kb/d) x China-aandeel ~40%; aandeel dat Dongjiakou bereikt niet gepubliceerd.",
    "basis": 15.0,
    "basisEenheid": "Mt",
-   "rel": 0.288
+   "rel": 0.318
   },
   "diamant-orapa-gaborone": {
    "sleutel": "dia-og",
@@ -4503,7 +4503,7 @@
    "toelichting": "Volume Atasu-Alashankou; schakel Alashankou-Dushanzi is max ~10 Mt/j (capaciteit), Omsk-Atasu ~10 Mt/j Russisch.",
    "basis": 11.2,
    "basisEenheid": "Mt",
-   "rel": 0.187
+   "rel": 0.207
   },
   "olie-johansverdrup-mongstad": {
    "sleutel": "olie-jm",
@@ -4520,7 +4520,7 @@
    "toelichting": "Veldproductie in boe/d (incl. gas); olieflow door de leiding lager (ontwerp 660 kb/d). Dalend sinds begin 2025.",
    "basis": 37.75,
    "basisEenheid": "Mt",
-   "rel": 0.605
+   "rel": 0.669
   },
   "goud-pamp-newyork": {
    "sleutel": "au-pn",
@@ -4588,7 +4588,7 @@
    "toelichting": "Nationale bovengrens: alle Russische import naar Frankrijk (ook Romans/Lingen); douanemassa, U-inhoud niet gespecificeerd. 2023: 54%, 2024: 24%.",
    "basis": 312.0,
    "basisEenheid": "t",
-   "rel": 0.134
+   "rel": 0.132
   },
   "uranium-navoi-stpetersburg": {
    "sleutel": "u-ns",
@@ -4605,7 +4605,7 @@
    "toelichting": "Oezbeekse export naar Frankrijk, deels via Rusland; route-specifiek tonnage onbekend. Navoiyuran totaal ~3.500 tU/j (2015-2019).",
    "basis": 2515.0,
    "basisEenheid": "t",
-   "rel": 0.761
+   "rel": 0.75
   },
   "gas-raslaffan-dahej": {
    "sleutel": "gas-rd",
@@ -4622,7 +4622,7 @@
    "toelichting": "Contractvolume, geen geleverd volume; QatarEnergy force majeure sinds maart 2026. Dahej zelf 17,5 Mtpa.",
    "basis": 10.2,
    "basisEenheid": "bcm",
-   "rel": 0.437
+   "rel": 0.531
   },
   "gas-prigorodnoye-sodegaura": {
    "sleutel": "gas-ps",
@@ -4639,7 +4639,7 @@
    "toelichting": "Totale Sachalin-2-productie, 58% naar Japan; aandeel Sodegaura niet gebrond (Tokyo Gas-contract 1,1 Mtpa).",
    "basis": 14.008,
    "basisEenheid": "bcm",
-   "rel": 0.586
+   "rel": 0.685
   },
   "grafiet-epanko-duisburg": {
    "sleutel": "gr-ed",
@@ -4707,7 +4707,7 @@
    "toelichting": "100%-basis, F2025 = juli 2024–juni 2025; Valterra MRMR 2025 geeft 277 koz 6E. Metaalinhoud van wat de JV aan Valterra levert.",
    "basis": 8.7599,
    "basisEenheid": "t",
-   "rel": 0.245
+   "rel": 0.132
   },
   "lithium-manono-ningbo": {
    "sleutel": "li-mn",
@@ -4758,7 +4758,7 @@
    "toelichting": "Bedrijfstotaal van drie mijnen, bovengrens; Mine 7 apart niet gepubliceerd; deel gaat per schuit (bargeload-out).",
    "basis": 9.3,
    "basisEenheid": "Mt",
-   "rel": 0.446
+   "rel": 0.475
   },
   "kobalt-monchegorsk-harjavalta": {
    "sleutel": "co-mh",
@@ -4792,7 +4792,7 @@
    "toelichting": "Mijnproductie 2024; FY2025 ca. 1.150 tU. Enige gedocumenteerde zending is van 2010 (~97 tU); of de route in 2024+ loopt is niet gepubliceerd.",
    "basis": 691.0,
    "basisEenheid": "t",
-   "rel": 0.373
+   "rel": 0.367
   },
   "gas-aguadulce-tuxpan": {
    "sleutel": "gas-at",
@@ -4809,7 +4809,7 @@
    "toelichting": "Leidingcapaciteit, werkelijke doorzet niet gevonden; VS-pijpexport naar Mexico totaal 6,4 bcf/d (2024).",
    "basis": 26.9,
    "basisEenheid": "bcm",
-   "rel": 0.891
+   "rel": 1.0
   },
   "olie-allen-puertorosales": {
    "sleutel": "olie-apr",
@@ -4826,7 +4826,7 @@
    "toelichting": "Gemeten doorzet 2025; capaciteit na Duplicar 86.000 m3/d, ca. 541 kb/d.",
    "basis": 20.8,
    "basisEenheid": "Mt",
-   "rel": 0.4
+   "rel": 0.443
   },
   "diamant-antwerpen-newyork": {
    "sleutel": "dia-an",
@@ -5013,7 +5013,7 @@
    "toelichting": "Mijnproductie ROM, geen exportvolume; Puerto Drummond exporteerde 30,2 Mt in 2024 (alle Drummond-mijnen samen).",
    "basis": 21.7,
    "basisEenheid": "Mt",
-   "rel": 0.88
+   "rel": 0.887
   },
   "kolen-pniowek-zdzieszowice": {
    "sleutel": "kolen-pz",
@@ -5030,7 +5030,7 @@
    "toelichting": "Mijnproductie afgeleid uit dagcijfer; aandeel naar Zdzieszowice niet gepubliceerd (ArcelorMittal kocht 26% van JSW, 2015).",
    "basis": 3.9,
    "basisEenheid": "Mt",
-   "rel": 0.0
+   "rel": 0.053
   },
   "gas-camisea-pampamelchorita": {
    "sleutel": "gas-cp",
@@ -5047,7 +5047,7 @@
    "toelichting": "LNG-export 2023 als maat voor het voedingsgas via de leiding (brandstof niet meegerekend); nominaal 4,4 Mtpa, 2024: 57 ladingen.",
    "basis": 5.0,
    "basisEenheid": "bcm",
-   "rel": 0.104
+   "rel": 0.186
   },
   "gas-saihrawl-qalhat": {
    "sleutel": "gas-sq",
@@ -5064,7 +5064,7 @@
    "toelichting": "Leidingcapaciteit; fabriek maakte 11,5 Mtpa LNG in 2023 (≈15,6 bcm/j). Geen gepubliceerde doorzet van deze ene leiding.",
    "basis": 12.0,
    "basisEenheid": "bcm",
-   "rel": 0.513
+   "rel": 0.61
   },
   "olie-doba-kribi": {
    "sleutel": "olie-dk",
@@ -5081,7 +5081,7 @@
    "toelichting": "kb/d is eigen berekening (16,1 Mbbl in 120 dagen); nameplate 225-250 kb/d, Savannah noemt 124 kb/d voor 2022.",
    "basis": 6.7,
    "basisEenheid": "Mt",
-   "rel": 0.01
+   "rel": 0.012
   },
   "olie-trieste-ingolstadt": {
    "sleutel": "olie-ti",
@@ -5098,7 +5098,7 @@
    "toelichting": "Duitsland + Tsjechie na de Wurmlach-aftakking naar Oostenrijk (eigen optelling); SIOT-doorzet 2025 ca. 835 kb/d.",
    "basis": 32.4,
    "basisEenheid": "Mt",
-   "rel": 0.553
+   "rel": 0.611
   },
   "diamant-ramatgan-newyork": {
    "sleutel": "dia-rn",
@@ -5149,7 +5149,7 @@
    "toelichting": "Metaalinhoud in Mototolo-concentraat (2024: 276,5 koz). Route is reserve; bronconflict of het via Polokwane of rechtstreeks naar Waterval gaat.",
    "basis": 8.4228,
    "basisEenheid": "t",
-   "rel": 0.22
+   "rel": 0.104
   },
   "lithium-goulamina-yangtze": {
    "sleutel": "li-gy",
@@ -5217,7 +5217,7 @@
    "toelichting": "Derdenartikel, niet RWE; Hambach produceerde ca. 30 Mt in 2019; sindsdien geen nieuw peil gevonden.",
    "basis": 10.0,
    "basisEenheid": "Mt",
-   "rel": 0.483
+   "rel": 0.51
   },
   "kolen-gevra-korba": {
    "sleutel": "kolen-gko",
@@ -5234,7 +5234,7 @@
    "toelichting": "Contractvolume, niet werkelijke aanvoer; Gevra OCP produceerde 55,8 Mt in 2025.",
    "basis": 14.5,
    "basisEenheid": "Mt",
-   "rel": 0.674
+   "rel": 0.691
   },
   "kobalt-cdm-tongxiang": {
    "sleutel": "co-ct",
@@ -5302,7 +5302,7 @@
    "toelichting": "Verouderd (2004). Port of Morgan-invoer 2025 alleen 4,6 bcm (−38% t.o.v. 2022); Bakken-gas komt erbij. Ontwerp 2,4 bcf/d.",
    "basis": 23.9,
    "basisEenheid": "bcm",
-   "rel": 0.835
+   "rel": 0.943
   },
   "gas-asaluyeh-ankara": {
    "sleutel": "gas-aa",
@@ -5319,7 +5319,7 @@
    "toelichting": "Iraanse levering aan Turkije 2025; contract liep af 29-7-2026, H1 2026 4,5 bcm; leidingcapaciteit 14 bcm/j.",
    "basis": 7.6,
    "basisEenheid": "bcm",
-   "rel": 0.3
+   "rel": 0.389
   },
   "olie-haoudelhamra-skikda": {
    "sleutel": "olie-hs",
@@ -5336,7 +5336,7 @@
    "toelichting": "Totale Saharan Blend-export (ook Arzew en Bejaia); Skikda-aandeel en werkelijke OK1-stroom niet gepubliceerd.",
    "basis": 23.8,
    "basisEenheid": "Mt",
-   "rel": 0.446
+   "rel": 0.494
   },
   "olie-gdansk-schwedt": {
    "sleutel": "olie-gp",
@@ -5455,7 +5455,7 @@
    "toelichting": "Totale MP-verkoop 2025; Japans aandeel (Sumitomo-distributie) niet gepubliceerd, ook Zuid-Korea en rest van Azië",
    "basis": 1.994,
    "basisEenheid": "kt",
-   "rel": 0.216
+   "rel": 0.168
   },
   "ree-ganzhou-fremont": {
    "sleutel": "ree-gf",
@@ -5591,7 +5591,7 @@
    "toelichting": "Afgeleid uit terminaltotaal en PAMC-aandeel; PAMC produceerde 25,7 Mt in 2024; Bailey alleen niet apart gekoppeld.",
    "basis": 14.0,
    "basisEenheid": "Mt",
-   "rel": 0.656
+   "rel": 0.674
   },
   "kolen-semirara-calaca": {
    "sleutel": "kolen-sc",
@@ -5608,7 +5608,7 @@
    "toelichting": "Afgeleide bovengrens uit binnenlandse afzet min cement; Calaca-aandeel niet gepubliceerd (SMPC verscheepte 16,5 Mt in 2024).",
    "basis": 6.7,
    "basisEenheid": "Mt",
-   "rel": 0.278
+   "rel": 0.316
   },
   "uranium-novosibirsk-rooppur": {
    "sleutel": "u-nr",
@@ -5642,7 +5642,7 @@
    "toelichting": "U-inhoud van het getruckte erts (47.200 short tons); ertshaul 2024 gepauzeerd, sinds feb 2025 hervat, 2-10 trucks/dag.",
    "basis": 590.0,
    "basisEenheid": "t",
-   "rel": 0.325
+   "rel": 0.32
   },
   "gas-kyaukphyu-namhkam": {
    "sleutel": "gas-kn",
@@ -5659,7 +5659,7 @@
    "toelichting": "Peiljaar vaag (~2019-2020), bronnen niet direct leesbaar; Shwe ~20 mcm/d, capaciteit 12 bcm/j; burgeroorlog maakt doorzet onzeker.",
    "basis": 4.0,
    "basisEenheid": "bcm",
-   "rel": 0.0
+   "rel": 0.079
   },
   "gas-nybro-goleniow": {
    "sleutel": "gas-ng",
@@ -5676,7 +5676,7 @@
    "toelichting": "Leidingcapaciteit, doorzet niet gevonden; Equinor–PGNiG-contract 2,4 bcm/j (2023–2033).",
    "basis": 10.0,
    "basisEenheid": "bcm",
-   "rel": 0.428
+   "rel": 0.522
   },
   "olie-stanley-nederland": {
    "sleutel": "olie-sn",
@@ -5693,7 +5693,7 @@
    "toelichting": "DAPL-doorvoer; ETCOP-basiscapaciteit lager (360 kb/d) en het deel dat Nederland (TX) haalt is niet gepubliceerd.",
    "basis": 27.0,
    "basisEenheid": "Mt",
-   "rel": 0.49
+   "rel": 0.542
   },
   "olie-jose-jamnagar": {
    "sleutel": "olie-jj",
@@ -5710,7 +5710,7 @@
    "toelichting": "Venezuela naar heel India; aandeel Jose naar Jamnagar niet gepubliceerd. Stroom politiek volatiel (sancties).",
    "basis": 21.35,
    "basisEenheid": "Mt",
-   "rel": 0.409
+   "rel": 0.453
   },
   "diamant-mirny-smolensk": {
    "sleutel": "dia-msm",
@@ -5880,7 +5880,7 @@
    "toelichting": "Mijnproductie FY2024/25 (boekjaar), alles per spoor naar Abbot Point aangenomen; NQXT-doorvoer en afnemer niet gepubliceerd. Nameplate 15 Mtpa.",
    "basis": 12.9,
    "basisEenheid": "Mt",
-   "rel": 0.614
+   "rel": 0.634
   },
   "kolen-cerrejon-iskenderun": {
    "sleutel": "kolen-ci",
@@ -5914,7 +5914,7 @@
    "toelichting": "Capaciteit van de LNG-fabriek, geen gemeten stroom; bovengrens voor deze leiding. Productie FY2023-24 ca. 690 PJ (~18 bcm) incl. binnenlands.",
    "basis": 12.2,
    "basisEenheid": "bcm",
-   "rel": 0.521
+   "rel": 0.618
   },
   "gas-pointfortin-quintero": {
    "sleutel": "gas-pq",
@@ -6067,7 +6067,7 @@
    "toelichting": "Bovengrens voor deze as: totaal Maleisië naar VS (13% van ~9 kt, gemiddelde 2021-24), geen Ketjen- of Lynas-opgave. ImportGenius geeft alleen 239 t in 13 containers cumulatief.",
    "basis": 1.2,
    "basisEenheid": "kt",
-   "rel": 0.057
+   "rel": 0.0
   },
   "ree-sillamae-newark": {
    "sleutel": "ree-sne",
@@ -6203,7 +6203,7 @@
    "toelichting": "JSW-import van cokeskool via Mormugao in boekjaar 2020-21; wat daarvan per spoor naar Vijayanagar gaat is niet gebrond (Mormugao-Vijayanagar steunt op een bron uit 2018). Niet de terminalcapaciteit (7 Mt/j in 2017).",
    "basis": 7.07,
    "basisEenheid": "Mt",
-   "rel": 0.305
+   "rel": 0.342
   },
   "uranium-caetite-malvesi": {
    "sleutel": "u-cm",
@@ -6254,7 +6254,7 @@
    "toelichting": "Totaal van de hele Europese TurkStream-lijn, bovengrens voor deze leiding: het aandeel naar Servie/Hongarije is niet gevonden (Hongarije ≈7 bcm in 2025 uit een niet-geopend zoekresultaat; Servie->Hongarije mag tot 8,5 bcm/j). Ontwerpcapaciteit 15,75 bcm/j.",
    "basis": 18.1,
    "basisEenheid": "bcm",
-   "rel": 0.705
+   "rel": 0.808
   },
   "gas-utrenneye-beihai": {
    "sleutel": "gas-ub",
@@ -6271,7 +6271,7 @@
    "toelichting": "Geannualiseerde eigen rekensom van 2,6 Mt LNG in <10 maanden (ca. een zesde van de nameplate 19,8 Mtpa); tellingen verschillen per aanbieder (LSEG: 23 ladingen / 1,3 Mt in 2025). Beihai is de enige ontvanger.",
    "basis": 4.0,
    "basisEenheid": "bcm",
-   "rel": 0.0
+   "rel": 0.079
   },
   "olie-agadem-seme": {
    "sleutel": "olie-as",
@@ -6305,7 +6305,7 @@
    "toelichting": "Natte vinger: 40% (aandeel Panama in de Ecuadoraanse exportbestemmingen, periode onbekend) van de SOTE-capaciteit van 360 kb/d; jaarvolume voor de tanker- en terminalbenen is niet gebrond. Ecuador produceerde in 2025 gem. 468 kb/d.",
    "basis": 7.0,
    "basisEenheid": "Mt",
-   "rel": 0.025
+   "rel": 0.028
   },
   "diamant-udachny-dubai": {
    "sleutel": "dia-ud",
@@ -6509,7 +6509,7 @@
    "toelichting": "Meerjarig cumulatief totaal van B/L-records, begin- en einddatum niet gepubliceerd: geen jaarcijfer, hooguit een bovengrens voor het jaarvolume. Chattanooga is het consignee-adres, niet bewezen als eindbestemming.",
    "basis": 3.248,
    "basisEenheid": "kt",
-   "rel": 0.368
+   "rel": 0.33
   },
   "pgm-zimplats-springs": {
    "sleutel": "pgm-zs",
@@ -6526,7 +6526,7 @@
    "toelichting": "Matteproductie van de Selous Metallurgical Complex (FY2024, jul 2023 - jun 2024), bovengrens voor wat naar Springs gaat: de factsheet noemt Springs als bestemming onder een life-of-mine-akkoord, maar geen verscheepte tonnage of vervoerswijze.",
    "basis": 20.1,
    "basisEenheid": "t",
-   "rel": 0.762
+   "rel": 0.726
   },
   "pgm-bafokeng-waterval": {
    "sleutel": "pgm-bw",
@@ -6543,7 +6543,7 @@
    "toelichting": "Concentraatproductie van BRPM en Styldrift samen, bovengrens voor de lijn vanaf Styldrift; Waterval als bestemming rust op een afnameovereenkomst met Amplats/RPM zonder genoemde fysieke plant (aannemelijk, een bron).",
    "basis": 15.0,
    "basisEenheid": "t",
-   "rel": 0.58
+   "rel": 0.517
   },
   "lithium-bikita-tianjin": {
    "sleutel": "li-bt",
@@ -6645,7 +6645,7 @@
    "toelichting": "Totale verkoop van Raspadskaya 2025, bovengrens: het aandeel naar EVRAZ NTMK is niet gepubliceerd en de afname rust op bronnen uit 2010 (Fastmarkets) en GEM. Wasserijcapaciteit 15 Mt concentraat/j is niet gebruikt.",
    "basis": 13.8,
    "basisEenheid": "Mt",
-   "rel": 0.648
+   "rel": 0.667
   },
   "uranium-kayelekera-malvesi": {
    "sleutel": "u-km",
@@ -6662,7 +6662,7 @@
    "toelichting": "Productiedoel van Kayelekera, geen gemeten stroom en nog niet bereikt (Q2 2026: ca. 60 t U; productie gepauzeerd in juni, herstart aug 2026). De eerste zending van ca. 56 t U is eenmalig; Hamburg en de spoorroute naar Malvesi zijn analogie.",
    "basis": 923.0,
    "basisEenheid": "t",
-   "rel": 0.46
+   "rel": 0.453
   },
   "uranium-honeymoon-metropolis": {
    "sleutel": "u-hm",
@@ -6679,7 +6679,7 @@
    "toelichting": "Nameplate-doel (jaar 3), geen gerealiseerd jaarvolume, en een deel gaat naar een Europese utility: bovengrens. Het FY25-doel van minstens 850.000 lb (ca. 330 t U) ligt veel lager. Haven Oakland komt uit NRC-meldingen van 2012/2013, niet bevestigd voor Boss.",
    "basis": 940.0,
    "basisEenheid": "t",
-   "rel": 0.465
+   "rel": 0.458
   },
   "gas-westnatuna-sakra": {
    "sleutel": "gas-ws",
@@ -6747,7 +6747,7 @@
    "toelichting": "Leidingcapaciteit, geen gemeten doorvoer: bovengrens. De 1.020 kb/d komt uit een niet-leesbare RBN-pagina en is niet door een tweede bron bevestigd; niet alle Gray Oak-olie gaat naar Ingleside (ook Corpus Christi/Taft en Sweeny).",
    "basis": 51.0,
    "basisEenheid": "Mt",
-   "rel": 0.709
+   "rel": 0.784
   },
   "diamant-aikhal-mirny": {
    "sleutel": "dia-am",
@@ -6850,6 +6850,278 @@
    "basis": 207.8,
    "basisEenheid": "kt",
    "rel": 0.613
+  },
+  "grafiet-pedraazul-vitoria": {
+   "sleutel": "gr-pp",
+   "grondstof": "grafiet",
+   "tekst": "Pedra Azul-unit 35,2 kt grafiet in 2007 (van 61,1 kt voor het bedrijf); 2023: 57,2% van de grafiet-CFEM naar Pedra Azul (indicatie ~32 kt, CFEM is waardegebaseerd); bedrijf 70 kt/j capaciteit over drie mijnen",
+   "kort": "≈ 35,2 kt grafiet/j",
+   "waarde": 35.2,
+   "eenheid": "kt grafiet",
+   "per": "jaar",
+   "productvorm": "vlokgrafiet (beneficiated concentraat) per truck",
+   "peiljaar": 2007,
+   "bron": "ANM/DNPM, Sumario Mineral 2008 Grafita (Pedra Azul 35.162 t in 2007); ANM Sumario Mineral 2024 (CFEM 2023)",
+   "status": "indicatie",
+   "toelichting": "Productie van de Pedra Azul-unit in 2007 (oud), bovengrens voor deze lijn: geen bron koppelt Nacional de Grafite aan Praia Mole of geeft een aandeel naar die haven. De 70 kt/j bedrijfscapaciteit en de ~32 kt uit het CFEM-aandeel 2023 zijn niet gebruikt.",
+   "basis": 35.2,
+   "basisEenheid": "kt",
+   "rel": 0.697
+  },
+  "ree-kuantan-narva": {
+   "sleutel": "ree-kn",
+   "grondstof": "ree",
+   "tekst": "Lynas NdPr-verkoop 7,3 kt per jaar (FY2026, kt REO; nameplate 10,5 kt); Narva fase 1A 2 kt NdFeB per jaar, fase 2 5 kt; het Lynas-aandeel in Narva is niet gepubliceerd",
+   "kort": "≈ 7,34 kt REO/j",
+   "waarde": 7.337,
+   "eenheid": "kt REO",
+   "per": "jaar",
+   "productvorm": "NdPr-oxide per truck, containerschip en truck (kt REO, geen magneetlegering)",
+   "peiljaar": 2026,
+   "bron": "Lynas Rare Earths / Discovery Alert FY2026 (NdPr-verkoop 7.337 t), via de brief ree-kuantan-japan; Fastmarkets 2025 en Benchmark Minerals (Narva 2 kt NdFeB/j)",
+   "status": "indicatie",
+   "toelichting": "Totale NdPr-verkoop van Lynas in FY2026, een zeer ruwe bovengrens: Lynas als bron voor Narva rust op een enkele uitspraak van de Neo-CEO, geen contract, volume of datum, en Narva krijgt zijn oxide volgens dezelfde bron lokaal van Silmet. De nameplate van 10,5 kt en de 2 kt NdFeB van Narva (een ander product) zijn niet als stroomvolume gebruikt.",
+   "basis": 7.337,
+   "basisEenheid": "kt",
+   "rel": 0.6
+  },
+  "kolen-curragh-gladstone": {
+   "sleutel": "kolen-cg",
+   "grondstof": "kolen",
+   "tekst": "Curragh 10,6 Mt saleable in 2025 (10-K FY2025), waarvan 6,9 Mt cokeskool op de zeemarkt; treincontract naar RG Tanna 9,5 Mtpa (8,5 Aurizon + 1,0 Pacific National), naar WICET 2,0 Mtpa; GEM-ROM 2025 11,9 Mt",
+   "kort": "≈ 10,6 Mt/j",
+   "waarde": 10.6,
+   "eenheid": "Mt",
+   "per": "jaar",
+   "productvorm": "cokeskool en thermische kool per spoor (saleable)",
+   "peiljaar": 2025,
+   "bron": "Coronado Global Resources, 10-K FY2025 (StockTitan-weergave); Global Energy Monitor, Curragh",
+   "status": "indicatie",
+   "toelichting": "Verkoopbare productie van de mijn, bovengrens: een deel gaat naar WICET (2,0 Mtpa take-or-pay) en per spoor naar Stanwell, en het aandeel per terminal is niet gepubliceerd. Het treincontract van 9,5 Mtpa naar RG Tanna is een contractvolume en niet als stroomvolume gebruikt.",
+   "basis": 10.6,
+   "basisEenheid": "Mt",
+   "rel": 0.538
+  },
+  "uranium-metropolis-eunice": {
+   "sleutel": "u-me",
+   "grondstof": "uranium",
+   "tekst": "Urenco USA ~5.850 t U feed-equivalent/j (SCHATTING, ~9% wereld-SWU x ~65.000 t U, WNA 2023/24, sitelaag); aandeel Metropolis niet gepubliceerd; Metropolis nominaal 15.000 t U/j",
+   "kort": "≈ 5.850 tU/j",
+   "waarde": 5850,
+   "eenheid": "tU",
+   "per": "jaar",
+   "productvorm": "UF6 per truck (modaliteit en corridor zijn aanname)",
+   "peiljaar": 2023,
+   "bron": "Interne sitelaag uranium-sitelaag.json (w-urenco-eunice; WNA 2023/24); World Nuclear News 2010-10-11 (enige routebron, geen tonnage)",
+   "status": "indicatie",
+   "toelichting": "Geschatte feed van Urenco USA, bovengrens voor de lijn: de enige routebron (Transnuclear-contract 2010) noemt geen tonnage of modaliteit en Urenco USA kan UF6 ook van andere conversiefabrieken krijgen. De nominale 15.000 t U/j van Metropolis is capaciteit en niet gebruikt.",
+   "basis": 5850.0,
+   "basisEenheid": "t",
+   "rel": 1.0
+  },
+  "gas-tratayen-salliquelo": {
+   "sleutel": "gas-tss",
+   "grondstof": "gas",
+   "tekst": "21 mln m3/d = 7,7 bcm/j capaciteit van het Gasoducto Perito Moreno (2026); ENARSA noemt in mei 2025 tot 26 mln m3/d = 9,5 bcm/j; werkelijke doorzet niet gevonden",
+   "kort": "≈ 7,7 bcm/j",
+   "waarde": 7.7,
+   "eenheid": "bcm",
+   "per": "jaar",
+   "productvorm": "pijpgas in de Perito Moreno-leiding (36 inch)",
+   "peiljaar": 2026,
+   "bron": "Wikipedia (ES), Gasoducto Perito Francisco Pascasio Moreno; TGS persbericht 2026-02-09; LM Neuquen 2026-02-09",
+   "status": "indicatie",
+   "toelichting": "Leidingcapaciteit van precies deze route, maar geen gemeten doorzet: bovengrens. De uitbreiding naar 35 mln m3/d (klaar winter 2027) en de ENARSA-opgave van 26 mln m3/d zijn niet gebruikt.",
+   "basis": 7.7,
+   "basisEenheid": "bcm",
+   "rel": 0.395
+  },
+  "gas-waha-aguadulce": {
+   "sleutel": "gas-wa",
+   "grondstof": "gas",
+   "tekst": "Capaciteit GCX 2,0 bcf/d = ca. 20,7 bcm/j (eigen omrekening; GEM 20,5), in bedrijf 25 sept. 2019; uitbreiding naar 2,55 bcf/d = 26,4 bcm/j gemeld voor medio 2026, niet bevestigd; werkelijke doorzet niet gevonden",
+   "kort": "≈ 20,7 bcm/j",
+   "waarde": 20.7,
+   "eenheid": "bcm",
+   "per": "jaar",
+   "productvorm": "pijpgas in de Gulf Coast Express-leiding (42/48 inch)",
+   "peiljaar": 2019,
+   "bron": "Kinder Morgan, persbericht 2019-09-24 (2,0 bcf/d); Global Energy Monitor, Gulf Coast Express Pipeline (20,5 bcm/j)",
+   "status": "indicatie",
+   "toelichting": "Leidingcapaciteit uit 2019, geen gemeten doorzet: bovengrens. Een deel van het gas gaat bovendien niet naar Valley Crossing (ook HPL, Tejas, Southcross) en de uitbreiding naar 2,55 bcf/d is een bericht, geen bevestiging.",
+   "basis": 20.7,
+   "basisEenheid": "bcm",
+   "rel": 0.873
+  },
+  "olie-boatasyn-prigorodnoye": {
+   "sleutel": "olie-bp",
+   "grondstof": "olie",
+   "tekst": "Ontwerp ~180 kb/d; 2020: 108.000 naar 88.000 bpd na de OPEC+-korting; een Reuters-bron noemt ~4 Mt/j = ca. 80 kb/d; geen peiljaar-2025-cijfer gevonden",
+   "kort": "≈ 88 kb/d",
+   "waarde": 88,
+   "eenheid": "kb/d",
+   "per": "dag",
+   "productvorm": "Sakhalin Blend (olie plus condensaat) in de Trans-Sachalin-leiding",
+   "peiljaar": 2020,
+   "bron": "Wikipedia, Sakhalin Energy (2020: 108.000 naar 88.000 bpd na OPEC+); Wikipedia, Sakhalin-II (ontwerp ~180.000 bpd)",
+   "status": "indicatie",
+   "toelichting": "Laatst gevonden exportvolume van Sakhalin Energy (2020, onder een OPEC+-quotum, uit Wikipedia), geen gemeten leidingdoorzet en zes jaar oud. Het ontwerpvolume van 180 kb/d en de 395 kb/d uit de infobox zijn niet gebruikt.",
+   "basis": 4.4,
+   "basisEenheid": "Mt",
+   "rel": 0.0
+  },
+  "olie-nuevoteapa-salinacruz": {
+   "sleutel": "olie-ns",
+   "grondstof": "olie",
+   "tekst": "Leidingcapaciteit 500 kb/d (48 inch, lijn 2; 30 inch-lijn 240 kb/d); werkelijke leidingdoorzet niet gebrond; raffinaderij Salina Cruz ~208 kb/d jan-apr 2025 en 207 kb/d in april 2026",
+   "kort": "≈ 500 kb/d",
+   "waarde": 500,
+   "eenheid": "kb/d",
+   "per": "dag",
+   "productvorm": "ruwe olie in de Nuevo Teapa-Salina Cruz-leiding (48 inch)",
+   "peiljaar": null,
+   "bron": "Global Energy Monitor, Nuevo Teapa-Salina Cruz Oil Pipeline (CRE-vergunning 2015); OPIS 2026-05-27 (raffinaderijdoorzet)",
+   "status": "indicatie",
+   "toelichting": "Leidingcapaciteit van de 48 inch-lijn, bovengrens: de werkelijke doorzet is niet gebrond en de leiding is niet onafhankelijk als in bedrijf bevestigd (ruptuur gemeld feb. 2026). De raffinaderijdoorzet van ~207 kb/d is een andere maat en niet als stroomvolume gebruikt.",
+   "basis": 25.0,
+   "basisEenheid": "Mt",
+   "rel": 0.513
+  },
+  "grafiet-kellyton-hillercarbon": {
+   "sleutel": "gr-kh",
+   "grondstof": "grafiet",
+   "tekst": "Jaarvolume: 0 kt grafiet/j in 2024 (plant niet in productie); Phase I ontwerp 14 kt SG-fines/j; productiestart voorwaardelijk, streefjaar 2027",
+   "kort": null,
+   "waarde": null,
+   "eenheid": null,
+   "per": "jaar",
+   "productvorm": "SG-fines (grafietbijproduct) per truck (werkaanname)",
+   "peiljaar": 2024,
+   "bron": "Westwater Resources, Form 10-K FY2024 (Hiller-offtake 17 sep 2024)",
+   "status": "onbekend",
+   "toelichting": "Brief zegt expliciet: volume nul, de Kellyton-plant produceert niet en de offtake noemt alleen plants within the US zonder plaats. De 14 kt SG-fines/j van Phase I is ontwerpcapaciteit en niet als stroomvolume overgenomen.",
+   "basis": null,
+   "basisEenheid": "kt",
+   "rel": null
+  },
+  "pgm-zondereinde-portelizabeth": {
+   "sleutel": "pgm-zp",
+   "grondstof": "pgm",
+   "tekst": "Zondereinde 330.769 oz 4E (eigen raffinaat-equivalent) in FY2025 = ca. 10,3 t 4E/j; het aandeel dat naar Port Elizabeth gaat is niet gebrond",
+   "kort": "≈ 10,3 t 4E/j",
+   "waarde": 10.3,
+   "eenheid": "t 4E",
+   "per": "jaar",
+   "productvorm": "PGM-filterconcentraat per truck (modaliteit is aanname)",
+   "peiljaar": 2025,
+   "bron": "Northam Platinum, voluntary production update 2025-07-23 (SENS)",
+   "status": "indicatie",
+   "toelichting": "Mijn- en smelterproductie Zondereinde totaal, bovengrens: Northam noemt twee Heraeus-raffinaderijen (Hanau en Port Elizabeth) zonder verdeling, dus het aandeel Port Elizabeth en de modaliteit zijn niet gepubliceerd.",
+   "basis": 10.3,
+   "basisEenheid": "t",
+   "rel": 0.248
+  },
+  "lithium-kamativi-zhangjiagang": {
+   "sleutel": "li-kz",
+   "grondstof": "lithium",
+   "tekst": "Naamplaat fase 1+2: 350 kt spodumeenconcentraat/j uit 2,3 Mt erts (bedrijfsopgave 2024) = ca. 30 kt LCE/j (sitelaag B18, indicatie; eigen omrekening geeft 43 kt); geen gepubliceerde productie 2025",
+   "kort": "≈ 30 kt LCE/j",
+   "waarde": 30,
+   "eenheid": "kt LCE",
+   "per": "jaar",
+   "productvorm": "spodumeenconcentraat per truck en bulkcarrier",
+   "peiljaar": 2024,
+   "bron": "Interne sitelaag lithium-sitelaag.json (w-li-kamativi, B18); bedrijfsopgave 2024 via zoekresultaat (SMM/metal.com 2024-02-02 voor het eerste convooi)",
+   "status": "indicatie",
+   "toelichting": "Naamplaatcapaciteit van de mijn, bovengrens: geen gepubliceerde productie, de exportstop (feb. 2026) en quota drukken het werkelijke volume en de LCE-omrekening is indicatief (30 tegen 43 kt LCE). Zhangjiagang als bestemming rust op een projectie van SunSirs (ook Guangzhou-Nansha genoemd).",
+   "basis": 30.0,
+   "basisEenheid": "kt",
+   "rel": 0.3
+  },
+  "kolen-dendrobium-portkembla": {
+   "sleutel": "kolen-dp",
+   "grondstof": "kolen",
+   "tekst": "Dendrobium ~3,5 Mt ROM in 2025 (capaciteit 5,2 Mt); South32 leverde ~60% van BlueScopes cokeskool (Appin en Dendrobium); de tonnage Dendrobium naar BlueScope apart is niet gebrond",
+   "kort": "≈ 3,5 Mt/j",
+   "waarde": 3.5,
+   "eenheid": "Mt",
+   "per": "jaar",
+   "productvorm": "ROM-kool (mijnproductie, nog niet tot cokeskool gewassen) per spoor",
+   "peiljaar": 2025,
+   "bron": "Global Energy Monitor, Dendrobium Coal Mine (ROM 3,535 Mt in 2025); Illawarra Mercury 2019/2023 (aandeel ~60%)",
+   "status": "indicatie",
+   "toelichting": "Ruwe mijnproductie (ROM, niet saleable) van Dendrobium, bovengrens: het gewassen cokeskoolvolume en het deel naar BlueScope zijn niet gepubliceerd. Het mijnvolume is niet omgerekend; de capaciteit van 5,2 Mt is niet gebruikt.",
+   "basis": 3.5,
+   "basisEenheid": "Mt",
+   "rel": 0.0
+  },
+  "kolen-grootegeluk-medupi": {
+   "sleutel": "kolen-gm",
+   "grondstof": "kolen",
+   "tekst": "Contractvolume 14,6 Mt kolen per jaar, 40 jaar (Exxaro-Eskom, 2008); mijn 18,8 Mt eindproduct per jaar (Wikipedia, geen jaartal), Exxaro noemt 17 Mt per jaar; Eskom-afname gedrukt door storingen in 2024",
+   "kort": "≈ 14,6 Mt/j",
+   "waarde": 14.6,
+   "eenheid": "Mt",
+   "per": "jaar",
+   "productvorm": "thermische steenkool over een overlandband",
+   "peiljaar": 2008,
+   "bron": "Wikipedia (EN), Grootegeluk Coal Mine en Medupi Power Station (Exxaro-Eskom-contract 14,6 Mt/j, 2008); Engineering News 2014-12-12",
+   "status": "indicatie",
+   "toelichting": "Contractvolume voor precies deze relatie, maar een contractwaarde uit 2008 en geen gemeten levering (Eskom-afname was in 2024 lager door storingen): bovengrens. De 18,8 Mt eindproduct van de mijn is niet gebruikt.",
+   "basis": 14.6,
+   "basisEenheid": "Mt",
+   "rel": 0.694
+  },
+  "gas-wheatstone-kawagoe": {
+   "sleutel": "gas-wk",
+   "grondstof": "gas",
+   "tekst": "JERA is de grootste koper van Wheatstone: 4,1 + 0,4 Mtpa volgens Chevron-contractlijst, 5,2 Mtpa volgens een persbericht = ca. 6,1-7,1 bcm/j contractvolume; plant 8,9 Mtpa = 12,1 bcm/j",
+   "kort": "≈ 6,1 bcm/j",
+   "waarde": 6.1,
+   "eenheid": "bcm",
+   "per": "jaar",
+   "productvorm": "LNG per tanker (Wheatstone naar Futtsu)",
+   "peiljaar": null,
+   "bron": "NS Energy, Wheatstone LNG Project (JERA 4,1 + 0,4 Mtpa); SAFETY4SEA 2017-11-12 (JERA-contract 5,2 Mtpa, eerste lading Futtsu)",
+   "status": "indicatie",
+   "toelichting": "Contractvolume van JERA, bovengrens: het aandeel dat per lading naar Futtsu gaat is niet gepubliceerd (JERA heeft meer terminals) en twee bronnen verschillen (6,1 tegen 7,1 bcm/j, hier de lagere). Het eindpunt Futtsu rust op de eerste lading van 2017; plantcapaciteit 12,1 bcm/j niet gebruikt.",
+   "basis": 6.1,
+   "basisEenheid": "bcm",
+   "rel": 0.283
+  },
+  "gas-komotini-starazagora": {
+   "sleutel": "gas-ks",
+   "grondstof": "gas",
+   "tekst": "Werkelijke doorzet 2025 ca. 1 bcm/j (6,74 TWh in jan-aug 2025, eigen omrekening); 3 bcm/j capaciteit (uitbreiding naar 5 bcm/j vergund)",
+   "kort": "≈ 1 bcm/j",
+   "waarde": 1.0,
+   "eenheid": "bcm",
+   "per": "jaar",
+   "productvorm": "pijpgas in de IGB-leiding (DN800)",
+   "peiljaar": 2025,
+   "bron": "ICGB / Bulgartransgaz (34,5 mln MWh sinds start tot juni 2025; 6,74 TWh in jan-aug 2025); Wikipedia, Gas Interconnector Greece-Bulgaria",
+   "status": "indicatie",
+   "toelichting": "Gemeten doorzet van precies deze leiding, maar over een deel van het jaar en met eigen omrekening van TWh naar bcm (ca. 1-1,3 bcm/j, calorische waarde onbekend), dus een benadering. De capaciteit van 3 bcm/j is niet gebruikt.",
+   "basis": 1.0,
+   "basisEenheid": "bcm",
+   "rel": 0.0
+  },
+  "olie-wilhelmshaven-koeln": {
+   "sleutel": "olie-wk",
+   "grondstof": "olie",
+   "tekst": "~283 kb/d (2024) doorvoer van de hele NWO-leiding (14,1 Mt); 2025 ca. 10,9 Mt (219 kb/d); capaciteit 16,3 Mt/j (327 kb/d); welk deel Koeln bereikt is niet gepubliceerd",
+   "kort": "≈ 283 kb/d",
+   "waarde": 283,
+   "eenheid": "kb/d",
+   "per": "dag",
+   "productvorm": "ruwe olie in de Nord-West-Oelleitung",
+   "peiljaar": 2024,
+   "bron": "NWO GmbH, Daten und Fakten (2024: 14,1 Mt via NWO; 2025 ca. 10,9 Mt); Wikipedia (de), Nord-West Oelleitung",
+   "status": "indicatie",
+   "toelichting": "Doorvoer van de hele NWO naar meerdere raffinaderijen (Lingen, Scholven, Horst), bovengrens voor het zuidelijke eind: geen bron splitst per afnemer, en het stuk tot Koeln kan veel lager liggen. De 2025-doorvoer van ca. 219 kb/d en de capaciteit van 327 kb/d zijn niet gebruikt.",
+   "basis": 14.15,
+   "basisEenheid": "Mt",
+   "rel": 0.296
   }
  }
 }

@@ -3224,6 +3224,134 @@
    "label": "Quebrada Blanca → Puerto Patache",
    "aan": true,
    "noot": "M31 · golf 14 (2026-10-30): QB2-concentraat als slurry door een eigen leiding (stippel 21,5 km + 3 OSM-ways 133,6 km) naar het QB2-havenvlak bij Patache; stop daar, geen zeebeen. Let op: 13,9% stippel (eerste 21,5 km van de leiding niet in OSM); de OSM-ways zijn niet bewezen QB2-slurryleiding; eindigt op Puerto Patache zonder zeebeen (stoppunt)."
+  },
+  {
+   "sleutel": "gr-pp",
+   "bestand": "stroomroute-grafiet-pedraazul-vitoria.json",
+   "grondstof": "grafiet",
+   "label": "Paca-mijn Pedra Azul → Porto de Praia Mole, Vitória",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): vlokgrafiet van de Paca-mijn (Nacional de Grafite) per truck over BR-116, Ataléia, Colatina en BR-101 naar Praia Mole; aannemelijk: één bron, haven niet gebrond. Let op: haven Praia Mole niet gebrond (aannemelijk, één bron; een haven in Bahia kan dichterbij liggen); één truckbeen van 735 km (OSRM-indicatie, bestand 320 KB); functie van elke NdG-vestiging niet gepubliceerd."
+  },
+  {
+   "sleutel": "ree-kn",
+   "bestand": "stroomroute-ree-kuantan-narva.json",
+   "grondstof": "ree",
+   "label": "Kuantan → Narva",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Lynas-oxide van LAMP Gebeng per truck naar Westports, per zee naar de Finse Golf, stippel-aanloop naar Muuga en per truck over weg 1/E20 naar Neo Narva (aannemelijk: één bron). Let op: Lynas als bron voor Narva alleen uit trade-pers (zwak); Silmet of Narva als bestemming niet gebronnen; Muuga-aanloop schematisch (naad 2,34 km); wegkm b1 en b4 niet gepubliceerd (indicatie)."
+  },
+  {
+   "sleutel": "kolen-cg",
+   "bestand": "stroomroute-kolen-curragh-gladstone.json",
+   "grondstof": "kolen",
+   "label": "Curragh → RG Tanna (Gladstone)",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): cokeskool van Curragh per spoor (Aurizon Blackwater-systeem, 304 km) naar de RG Tanna-kolenopslag in Gladstone, zonder zeebeen. Let op: 300 km is een ronde opgave (10-K/GEM); spoor over het ruwe net zonder toets_spoorroute (mijnuiteinde 11 km naast het gesnoeide net); stoppunt RG Tanna-kolenopslag zonder zeebeen; WICET en Stanwell niet getekend."
+  },
+  {
+   "sleutel": "u-me",
+   "bestand": "stroomroute-uranium-metropolis-eunice.json",
+   "grondstof": "uranium",
+   "label": "Metropolis Works → Urenco USA Eunice",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): UF6 per truck (aannemelijk, één bron: WNN 2010) van Metropolis Works over IL-37, I-57, I-55, I-40, I-30, I-20 en TX-176 naar Urenco USA Eunice, stoppunt. Let op: UF6 per truck is een aanname (één bron, WNN 2010); stoppunt Urenco Eunice; 5 oprit-spikes in het truckbeen van 1.654 km."
+  },
+  {
+   "sleutel": "gas-tss",
+   "bestand": "stroomroute-gas-tratayen-salliquelo.json",
+   "grondstof": "gas",
+   "label": "Tratayén (Vaca Muerta) → Salliqueló (Gasoducto Perito Moreno",
+   "aan": true,
+   "noot": "M31 · golf 7 (2026-10-09). Let op: Gasoducto Perito Moreno uit OSM met 5 gaten als stippel (91,5 km, 16%); Tratayén-anker is het OSM-leidingbegin, geen gebronde veldlocatie."
+  },
+  {
+   "sleutel": "gas-wa",
+   "bestand": "stroomroute-gas-waha-aguadulce.json",
+   "grondstof": "gas",
+   "label": "Crockett County (GCX) → Agua Dulce",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Permian-gas via de Gulf Coast Express (OSM ref=GCX, 570,8 km) naar het Agua Dulce-eindpunt, 1,4 km stippel naar Valley Crossing CS1; westelijk 36 inch-stuk naar Waha open. Let op: het westelijke 36-inch stuk naar Waha ontbreekt in OSM: de lijn begint in Crockett County (572 km tegen 720 gepubliceerd); 1,4 km stippel naar Valley Crossing CS1."
+  },
+  {
+   "sleutel": "olie-bp",
+   "bestand": "stroomroute-olie-boatasyn-prigorodnoye.json",
+   "grondstof": "olie",
+   "label": "OPF Nogliki → Prigorodnoje-oliesterminal",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Sakhalin Blend per Trans-Sachalin-leiding (622,9 km OSM, doorgetrokken) van de OPF Nogliki naar het tankpark van Prigorodnoje; geen zeebeen. Let op: start is de OPF Nogliki, niet Boatasyn (id blijft); Trans-Sachalin-leiding uit OSM (623 km) met 3 spikes en 3 krappe bochten; eindpunt is het tankpark (de offshore TLU staat niet in OSM); geen zeebeen."
+  },
+  {
+   "sleutel": "olie-ns",
+   "bestand": "stroomroute-olie-nuevoteapa-salinacruz.json",
+   "grondstof": "olie",
+   "label": "Nuevo Teapa → Salina Cruz",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Crude uit Pemex-station Nuevo Teapa per 48-inch leiding (Pemex Logística, 1979) over de Isthmus naar raffinaderij Salina Cruz, alleen leiding, doorgetrokken. Let op: raffinaderij-marker 1,30 km van het leidingeinde (bewust, geen last mile); alleen de 48-inch-reeks getekend; doorzet niet gebrond."
+  },
+  {
+   "sleutel": "gr-kh",
+   "bestand": "stroomroute-grafiet-kellyton-hillercarbon.json",
+   "grondstof": "grafiet",
+   "label": "Kellyton → Hiller Carbon",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): SG-fines van de Westwater-plant bij Kellyton (Alabama) per truck over I-65, I-10 en US-90 naar de Hiller Carbon-locatie in Dayton, Texas (aannemelijk: één bron). Let op: Hiller Carbon Dayton als afnemer aannemelijk (één bron); volume nul (Westwater Kellyton nog niet in productie); geen gepubliceerde wegkm; 22 spikes van 4–27 m zonder terugloop."
+  },
+  {
+   "sleutel": "pgm-zp",
+   "bestand": "stroomroute-pgm-zondereinde-portelizabeth.json",
+   "grondstof": "pgm",
+   "label": "Zondereinde → Port Elizabeth (Heraeus)",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Northam-filterconcentraat per truck over R510/N4/N1/N9/N10 van Zondereinde naar Heraeus Port Elizabeth (bestemming aannemelijk, één bron). Let op: één terugloop bij Derdepoort (N1/N4, ca. 0,35 km U-draai uit OSM-topologie, niet hersteld); modaliteit truck aangenomen; stoppunt haven Port Elizabeth."
+  },
+  {
+   "sleutel": "li-kz",
+   "bestand": "stroomroute-lithium-kamativi-zhangjiagang.json",
+   "grondstof": "lithium",
+   "label": "Kamativi → Zhangjiagang",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): spodumeenconcentraat van Kamativi (Yahua) per truck via Bulawayo, Harare en Mutare naar Beira, per bulkcarrier naar Zhangjiagang (aannemelijk: één bron). Let op: b1 verhouding 1,70 zonder gebronde wegkm; Beira-aanloop schematisch (haven-aanloop-router op timeout); Yangtze-monding conventie-marker 2,69 km; de lithium-sitelaag noemt Huayou als eigenaar van Kamativi, de brief Yahua (conflict, niet opgelost); sleutel centraal li-kamativi → li-kz."
+  },
+  {
+   "sleutel": "kolen-dp",
+   "bestand": "stroomroute-kolen-dendrobium-portkembla.json",
+   "grondstof": "kolen",
+   "label": "Dendrobium → Port Kembla",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): cokeskool per spoor over de Kemira Valley Branch van de Dendrobium-mijn naar de hoogovenzijde van BlueScope Port Kembla Steelworks, geen zeebeen. Let op: 10,2 km tegen 7 km gepubliceerd — ander eindpunt (hoogovenzijde i.p.v. de CPP, die niet is gevonden), indicatie."
+  },
+  {
+   "sleutel": "kolen-gm",
+   "bestand": "stroomroute-kolen-grootegeluk-medupi.json",
+   "grondstof": "kolen",
+   "label": "Grootegeluk → Medupi",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Grootegeluk-kool gaat per overlandband (OSM, 7,5 km) van de wasserij naar de kolenopslag van Medupi; stoppunt de kolenopslag. Let op: transportband (OSM goods_conveyor, als leiding getekend) 7,5 km tegen 5,4 km Wikipedia (+39%, lus in de OSM-ways, indicatie); 3 knikken; sitelaag w-grootegeluk centraal gelijkgetrokken naar de bron-gelegde wasserij (3,9 km)."
+  },
+  {
+   "sleutel": "gas-wk",
+   "bestand": "stroomroute-gas-wheatstone-kawagoe.json",
+   "grondstof": "gas",
+   "label": "Wheatstone → Futtsu",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): LNG uit Chevron Wheatstone (Onslow) vaart via Lombok, Makassar en de Filipijnenzee naar de Futtsu-terminal (JERA) in Tokiobaai; bestemming aannemelijk (een bron). Let op: eindpunt is Futtsu LNG (titel), niet Kawagoe (id); Futtsu-losplek 1 km west van de marker; MARNET-knoopomweg 95 km west van Wheatstone; bestemming op één bron; plantstand na de cycloon niet nagecheckt."
+  },
+  {
+   "sleutel": "gas-ks",
+   "bestand": "stroomroute-gas-komotini-starazagora.json",
+   "grondstof": "gas",
+   "label": "Komotini → Stara Zagora",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Gas uit de Zuidelijke Gascorridor (TAP-gas plus LNG) takt bij Komotini af en gaat door de 182 km lange DN800-leiding IGB/ICGB naar het meetstation Stara Zagora. ICGB-interconnector uit OSM: 182,0 km tegen 182,6 km gepubliceerd (-0,3%)."
+  },
+  {
+   "sleutel": "olie-wk",
+   "bestand": "stroomroute-olie-wilhelmshaven-koeln.json",
+   "grondstof": "olie",
+   "label": "Wilhelmshaven → Köln",
+   "aan": true,
+   "noot": "M31 · golf 15 (2026-10-30): Ruwe olie uit tankers bij het NWO-tankenpark Wilhelmshaven gaat via de Nord-West-Oelleitung (71 cm, ondergronds) naar het OSM-leidingeinde in Köln-Müngersdorf, één leidingbeen van 330 km. Let op: eindpunt is het OSM-leidingeinde in een woonwijk (onzeker); de laatste 15–20 km tot Wesseling niet getekend; 330 km tegen 391 gepubliceerd (-15,5%, indicatie); 28 OSM-bochten."
   }
  ],
  "uitgesloten": [

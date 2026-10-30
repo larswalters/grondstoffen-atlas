@@ -94,6 +94,32 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # Routebrief lithium-kamativi-zhangjiagang, been b1 (LICHTE werkwijze M31 golf 15).
+    # Truck spodumeenconcentraat Kamativi-mijn/-plant (Yahua via Sichuan PD Technology/
+    # Kamativi Mining Company, Matabeleland Noord) -> A8 Bulawayo -> A5 Gweru-Kwekwe-
+    # Chegutu-Harare -> A3 Ruwa-Rusape-Mutare -> Forbes/Machipanda-grens.
+    # Geen doorgaande bronopgave voor de rit: hemelsbreed 601 km (berekend), ontwerp-
+    # indicatie ~950 km; +-15%-toets (808-1.093 km) is een indicatie, geen norm.
+    "lithium-kamativi-zhangjiagang-plant-forbes": {
+        "via": [
+            ("Kamativi-plant (put/procesterrein), anker li-kamativi-plant", (27.0505, -18.3315)),
+            ("Bulawayo-noord, A8 (8 km voor het centrum)", (28.5567, -20.0896)),
+            ("Gweru-noord, A5 (8 km voorbij het centrum)", (29.8249, -19.3925)),
+            ("Kwekwe-noord, A5 (8 km voorbij het centrum)", (29.7976, -18.8606)),
+            ("Chegutu-oost, A5 (8 km voorbij het centrum)", (30.2204, -18.1202)),
+            ("Ruwa, A3-inrit", (31.2427, -17.8902)),
+            ("Rusape, A3 (kruispunt A14)", (32.1257, -18.5335)),
+            ("Forbes Border Post (ZW) / Machipanda (MZ), N6, anker li-forbes-grens", (32.7123, -19.0052)),
+        ],
+        "id": "li-kamativi-forbes",
+        "naam": "Kamativi-plant → A8 Bulawayo → A5 Gweru–Kwekwe–Chegutu–Harare → A3 Ruwa–Rusape–Mutare → Forbes/Machipanda-grens",
+        "extracts": ["zimbabwe"],
+        "refs": ["A8", "A5", "A3"],
+        "gepubliceerdKm": 950,
+        "bronnoot": "Geen doorgaande bronopgave: hemelsbreed 601 km (berekend); deelbronnen Bulawayo-Harare 439 km (Wikipedia A5), Harare-Mutare 270,8 km (Wikipedia R5/A3) + Mutare-Forbes ~8 km = 718,8 km; Kamativi-Bulawayo ongebrond; ontwerp-indicatie ~950 km; de +-15%-toets is een indicatie, geen norm.",
+        "vensterKm": 75,
+        "uit": "lithium-kamativi-zhangjiagang-weg-plant-forbes.geojson",
+    },
     # Routebrief nikkel-codemin-timoteo, been b1 (LICHTE werkwijze, M31 golf 14).
     # Truck ferronikkel Codemin (Niquelandia, Goias) -> Aperam South America (Timoteo, MG).
     # Geen gepubliceerde wegkm of wegnummers (brief §2/§7): hemelsbreed 851 km; de via-punten
@@ -913,6 +939,138 @@ PROFIELEN = {
         "uit": "koper-quellaveco-ilo-weg-quellaveco-engieilo.geojson",
     },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief pgm-zondereinde-portelizabeth, been b1 (LICHTE werkwijze M31 golf 15) ──
+    # Truck Northam Zondereinde mijn/smelter/BMR -> Heraeus Port Elizabeth (Gqeberha): R510, N4 (Marikana, Brits), N1 (Johannesburg, Bloemfontein),
+    # N9 (Colesberg-Middelburg), N10 (Cradock-Gqeberha). Geen gepubliceerde wegkm: hemelsbreed 1.017 km, indicatie ~1.340 km (geen bron); proefbake 1.360,9 km.
+    "pgm-zondereinde-portelizabeth-zondereinde-portelizabeth": {
+        "via": [
+            ("Northam Zondereinde-complex (anker pgm-zondereinde-mijnsmelter)", (27.3669, -24.8333)),
+            ("R510 bij Northam (way/1218957980)",                  (27.2616, -24.9564)),
+            ("N4 bij Marikana (way/374081795)",                    (27.5097, -25.7470)),
+            ("N4 bij Brits (way/994850525)",                       (27.8183, -25.6794)),
+            ("N1 Johannesburg-noord/Buccleuch (way/622909118)",    (28.1022, -26.0426)),
+            ("N1 Bloemfontein-omleiding (way/55761473)",           (26.1737, -29.0864)),
+            ("N9 zuid van Colesberg (way/61238686)",               (25.0857, -30.7502)),
+            ("N10 noord van Cradock (way/55925589)",               (25.4771, -31.9670)),
+            ("Heraeus Port Elizabeth (anker pgm-heraeus-portelizabeth)", (25.5589, -33.8421)),
+        ],
+        "id": "pgm-zondereinde-portelizabeth-weg",
+        "naam": "Zondereinde → Heraeus Port Elizabeth (R510/N4/N1/N9/N10)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["R510", "N4", "N1", "N9", "N10"],
+        "gepubliceerdKm": 1340,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 1.017 km; indicatie ~1.340 km (haalbaarheidstoets, geen bron), proefbake 1.360,9 km",
+        "vensterKm": 40,
+        "uit": "pgm-zondereinde-portelizabeth-weg-zondereinde-portelizabeth.geojson",
+    },
+    # ── Routebrief grafiet-kellyton-hillercarbon, been b1 (LICHTE werkwijze M31 golf 15) ──
+    # Truck SG-fines Westwater Kellyton Graphite Plant -> Hiller Carbon, Dayton TX: AL-115/AL-9, US-231, I-65, I-10 (Slidell), I-12 om Baton Rouge,
+    # I-10 (Lafayette, Lake Charles), US-90, TX-146. Geen gepubliceerde wegkm: hemelsbreed 904 km, OSRM 1047,0 (indicatie, +-15% geen norm).
+    # Via-punten = b3-punten van grafiet-balama-kellyton in omgekeerde volgorde (12 punten); geen punt in Baton Rouge of Houston.
+    "grafiet-kellyton-hillercarbon-kellyton-dayton": {
+        "via": [
+            ("Westwater Kellyton Graphite Plant (anker gr-kellyton-plant)", (-86.0390, 32.9625)),
+            ("AL-9 / AL-115-splitsing",                            (-86.0613, 32.9344)),
+            ("AL-9 bij Jacksons Gap",                              (-86.1004, 32.7547)),
+            ("US-231 bij Wetumpka",                                (-86.1907, 32.5458)),
+            ("I-65 Montgomery",                                    (-86.3649, 32.2536)),
+            ("I-65 bij Evergreen",                                 (-86.9578, 31.4665)),
+            ("I-65 noord van Mobile",                              (-87.9845, 30.9071)),
+            ("I-10 Mississippi kust",                              (-88.7294, 30.4455)),
+            ("I-10 Slidell",                                       (-89.7679, 30.2375)),
+            ("I-10 oost van Lafayette",                            (-91.9492, 30.2815)),
+            ("I-10 west van Lake Charles",                         (-93.3005, 30.2287)),
+            ("US-90 west van Beaumont",                            (-94.2405, 30.0607)),
+            ("US-90 / TX-146 Dayton-noord",                        (-94.8934, 30.0420)),
+            ("Hiller Carbon Dayton TX (anker gr-hiller-dayton)",   (-94.9091, 29.9850)),
+        ],
+        "id": "gr-hiller-weg",
+        "naam": "Kellyton -> AL-9 -> I-65 -> I-10 -> I-12 -> I-10 -> US-90 -> TX-146 -> Hiller Carbon Dayton",
+        "extracts": ["us-alabama", "us-mississippi", "us-louisiana", "us-texas"],
+        "refs": ["I-65", "US-231", "AL-9", "AL-115", "I-10", "I-12", "US-90", "TX-146", "65", "231", "9", "115", "10", "12", "90", "146"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 904 km, indicatie OSRM 1047,0 (OSM)",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "grafiet-kellyton-hillercarbon-weg-kellyton-dayton.geojson",
+    },
+    # ── Routebrief grafiet-pedraazul-vitoria, been b1 (LICHTE werkwijze M31 golf 15) ──
+    # Truck vlokgrafiet Paca-mijn Nacional de Grafite (Pedra Azul, MG) -> Porto de Praia Mole (Vitoria, ES): LMG-610 -> BR-116 (Medina,
+    # Teofilo Otoni) -> BR-418/BR-342 (Ataleia) -> ES-080 -> BR-381 (Colatina) -> BR-259 -> BR-101. Geen wegkm gepubliceerd: hemelsbreed
+    # 498 km, OSRM-indicatie 718, toets-tool 734 (indicatie, +-15% geen norm). Aannemelijk: een bron voor de mijn, geen bron voor de haven.
+    "grafiet-pedraazul-vitoria-pedraazul-praiamole": {
+        "via": [
+            ("Paca-mijn Nacional de Grafite, Pedra Azul (anker, gr-pedraazul-mijn)", (-41.0732, -15.8804)),
+            ("BR-116 bij Medina", (-41.4760, -16.3170)),
+            ("BR-116 bij Pontalete (Catuji)", (-41.5314, -17.3518)),
+            ("Ataleia (BR-418)", (-41.1124, -17.9628)),
+            ("Vila Nelita, Agua Doce do Norte (ES-080)", (-41.0159, -18.4671)),
+            ("Sao Domingos do Norte (ES)", (-40.6233, -19.1211)),
+            ("BR-101 bij Ibiracu", (-40.3688, -19.8285)),
+            ("Porto de Praia Mole, Vitoria (anker, gr-praiamole-kade)", (-40.2350, -20.28965)),
+        ],
+        "id": "gr-pedraazul-praiamole",
+        "naam": "Paca-mijn Pedra Azul -> Porto de Praia Mole (BR-116, BR-418/342, ES-080, BR-381, BR-259, BR-101)",
+        "extracts": ["brazilie"],
+        "refs": ["BR-116", "BR-418", "BR-342", "BR-259", "BR-101"],
+        "gepubliceerdKm": 717,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 498 km, OSRM-indicatie 717-718 km (geen bron), toets-tool 734 km; lengtetoets alleen indicatie",
+        "vensterKm": 40,
+        "uit": "grafiet-pedraazul-vitoria-weg-pedraazul-praiamole.geojson",
+    },
+    # ── Routebrief uranium-metropolis-eunice, been b1 (LICHTE werkwijze M31 golf 15) ──
+    # Truck UF6 Metropolis Works (Illinois) -> Urenco USA Eunice (New Mexico): IL-37 -> I-57 -> I-55 -> I-40 (West Memphis -> Little Rock)
+    # -> I-30 (Texarkana, Dallas) -> I-20 (Fort Worth -> Big Spring) -> TX-176 -> NM-176. Geen wegkm gepubliceerd; hemelsbreed 1.408 km,
+    # OSRM-indicatie 1.653 km. eindKlassen zonder service: bij Eunice kaapt een geisoleerd service-lusje (way 905682611) de snap
+    # (zie uranium-eunice-columbia). Venster 65 km (zes extracts, lange lijn).
+    "uranium-metropolis-eunice-metropolis-eunice": {
+        "via": [
+            ("Metropolis Works (anker u-metropolis-conversie)", (-88.7570, 37.1718)),
+            ("I-57/US-51 merge vanaf IL-37", (-89.1813, 37.1252)),
+            ("I-57/I-55-knoop Missouri-bootheel", (-89.5332, 36.8742)),
+            ("I-55/I-40 West Memphis", (-90.1975, 35.1696)),
+            ("I-30/US-67/US-70 Benton AR", (-92.6247, 34.5501)),
+            ("I-20/I-30 west-Fort Worth", (-97.5819, 32.7253)),
+            ("I-20 afslag TX-176 bij Big Spring", (-101.5043, 32.2609)),
+            ("Urenco USA Eunice (anker u-eunice-verrijking)", (-103.0796, 32.4356)),
+        ],
+        "id": "uranium-metropolis-eunice",
+        "naam": "Metropolis Works -> Urenco USA Eunice (IL-37 -> I-57 -> I-55 -> I-40 -> I-30 -> I-20 -> TX-176 -> NM-176)",
+        "extracts": ["us-illinois", "us-missouri", "us-arkansas", "us-texas", "us-new-mexico"],
+        "refs": ["I 57", "I 55", "I 40", "I 30", "I 20", "TX 176"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 1.408 km, OSRM-indicatie 1.653 km; lengtetoets alleen indicatie.",
+        "vensterKm": 65,
+        "eindKlassen": ["residential", "tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "trimStaart": True,
+        "uit": "uranium-metropolis-eunice-weg-metropolis-eunice.geojson",
+    },
+    # ── Routebrief ree-kuantan-narva, been b4 (LICHTE werkwijze M31 golf 15) ──
+    # Truck Lynas-oxide Muuga-containerterminal (HHLA TK Estonia) -> Muuga sadama tee (94) -> weg 1/E20 (Tallinn-Narva mnt)
+    # -> afslag Kulgu-tooestuspark -> Neo-magneetfabriek Narva. 5 via-punten op weg 1 (uit ree-sillamae-newark/-narva briefs).
+    # GEEN wegkm gepubliceerd: hemelsbreed 180,4 km, OSRM 206,3 km (indicatie); de +-15%-toets is een indicatie.
+    # Het begin Muuga sadama tee (59.4526, 24.9828) is bewust NIET gebruikt (6 km omweg, brief par.4).
+    "ree-kuantan-narva-muuga-narva": {
+        "via": [
+            ("Muuga-containerterminal, HHLA TK Estonia (anker, ree-muuga-ct)",   (24.9675, 59.4915)),
+            ("weg 1 ten oosten van Tallinn (Kuusalu-streek)",                    (25.3533, 59.4440)),
+            ("weg 1 NW van Rakvere",                                             (26.2455, 59.4267)),
+            ("weg 1 westelijk van Kohtla-Jarve/Johvi",                           (27.0591, 59.4064)),
+            ("weg 1/E20 bij Vaivara",                                            (28.0131, 59.4010)),
+            ("afslag weg 1 naar Kulgu-tooestuspark",                             (28.1541, 59.3767)),
+            ("Neo-magneetfabriek, Kulgu-tooestuspark Narva (anker, ree-narva-magneetfabriek)", (28.1478, 59.3618)),
+        ],
+        "id": "ree-muuga-narva",
+        "naam": "Muuga-containerterminal -> Neo-magneetfabriek Narva (Muuga sadama tee -> weg 1/E20 Tallinn-Narva mnt)",
+        "extracts": ["estland"],
+        "refs": ["1", "E20", "94"],
+        "gepubliceerdKm": 206,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 180,4 km, OSRM 206,3 km (indicatie, brief par.2/8[11])",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "ree-kuantan-narva-weg-muuga-narva.geojson",
+    },
     # ── Routebrief uranium-honeymoon-metropolis, been b1 (LICHTE werkwijze M31 golf 14) ──
     # Truck yellowcake-drums Honeymoon-fabriek (Boss Energy) -> Honeymoon-mijnweg (Yarramba Rd, Mooleulooloo Rd) -> A32 Barrier Highway
     # (Olary, Yunta, Terowie-Burra) -> Sturt Hwy/A20/M2 bij Gawler -> Outer Harbor, Port Adelaide. Aannemelijk: modaliteit/haven niet door Boss bevestigd.
