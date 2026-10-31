@@ -1,5 +1,15 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (M31 golf 17, live `?v=148`)*
+*Last updated: 2026-10-31 (3e) (M31 golf 18, live `?v=150`)*
+
+
+## 2026-10-31 (3e) — M31 golf 18: de 14 reserve-assen
+
+- **2026-10-31 · ✅ LARS — "Golf 18 uit reserves"** (5-uur 12%, week 9%). → golf 18, 14 ketens, live `?v=150`; geen reserves meer over.
+- **2026-10-31 · Een reserve-golf is de goedkope golf** (~0,48 M tokens per keten tegen ~0,77 M in een ontwerpronde: ontwerp en toets zijn de dure stappen), maar levert zelf geen reserves — de volgende golf is weer een ontwerpronde.
+- **2026-10-31 · De `\n`-controle op `bak_stromen.sh` gebeurt in Python** (toegevoegde diff-regels tellen op `chr(92) + "n"`); de grep uit §17 telt in Git Bash óók "route naar" en is onbetrouwbaar.
+- **2026-10-31 · Het volume van een zilverlijn die een koper- of goudlijn dubbelt is de zilverinhoud**, niet de concentraat- of dorétonnage (Collahuasi 161 t Ag, Salares Norte 70,5 t Ag).
+- **2026-10-31 · `access=no`-plantwegen worden niet omzeild:** stippel naar de eerste openbare knoop en daar het wegbeen beginnen (El Peñón, b0 1,29 km).
+
 
 
 ## 2026-10-31 — M31 golf 17: tweede grote ontwerpronde

@@ -2563,3 +2563,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf17.json` (2 bron, 22 indicatie, 6 onbekend; ree-ochang-narva centraal op onbekend) → totaal 70/369/40 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 148; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §17. Kosten: 5-uur 4 → 43%; week gereset tijdens de ronde (6%).
 - **Volgende:** telefoontest `?v=148` · textuur verdubbelen vóór een volgende grote golf · `registreer_golf.py` id-weigering · golf 18 klein uit 14 reserves of een derde grote ronde · 40 onbekende volumes · w-zimplats-ngezi en w-grib nakijken.
+
+## 2026-10-31 (3e) — M31 golf 18: de 14 reserve-assen uit golf 16 en 17, 493 stromen live `?v=150`
+
+**TL;DR:** Lars: *"Golf 18 uit reserves"*. `maak_golf18.py` (patroon golf 15) uit het golf 17-script + `golf17-` en `golf18-reserves.json`, alle 14 al getoetst. `wf_0b6cfe5f-8dd`: 42 agenten op Sonnet, 6,7 M tokens, 20 min, 0 uitval, 14/14 gebakken en gekeurd. Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=150 (commit `cb5882a`), bundel 493 stromen · 1.774 benen · 1.617 markers · 434 met volume. Geen reserves meer over. LAR-661 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 14/14, 2 vlaggen (467/384 KB); `sitelaag_check.py` 4 kandidaten, geen gelijkgetrokken; 14 noten; gedeelde tools schoon (Python-telling op backslash-n; de grep uit §17 is onbetrouwbaar); zes nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `golf18.json` (0 bron, 9 indicatie, 5 onbekend) → totaal 70/378/45 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 150; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §18 (+ §17-weergave hersteld). Reserve-golf ≈ 0,48 M tokens per keten. Kosten: 5-uur 12 → 24%, week 9 → 12%.
+- **Volgende:** telefoontest `?v=150` · ontwerpronde zonder kobalt (geen reserves meer) · `registreer_golf.py` id-weigering · 45 onbekende volumes · w-zimplats-ngezi en w-grib · `sitelaag_check.py --ids`.

@@ -1,12 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (2e) (telefoontest `?v=148` goed; golf 16 en 17 af)*
+*Last updated: 2026-10-31 (3e) (M31 golf 18 live `?v=150`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-31 — na M31 golf 17 live
+## 🔴 NIEUW 2026-10-31 (3e) — na M31 golf 18 live
+
+1. **Lars test `?v=150` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=150 — 14 nieuwe ketens (zilver Sindesar Khurd → Dariba, Collahuasi → Tongling en Salares Norte → MKS PAMP; kolen Sugar Camp → Convent, Kostenko → Temirtau en Kolubara → Nikola Tesla; gas Moomba → Wilton, Draupner → Duinkerke en Brighouse Bay → Gormanston; olie Edmonton → Westridge, Fos-sur-Mer → Feyzin en Omišalj → Pančevo; goud Geita → Rand Refinery en El Peñón → Argor-Heraeus). Goed → golf 18 af.
+2. **Volgende golf = ontwerpronde zonder kobalt** (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`; 2 of 3 per grondstof naar limiet) — er liggen geen reserves meer. **Vooraf:** `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter; de `\n`-telling in Python (bakhandleiding §18) in de checklist.
+3. **De 45 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; `sitelaag_check.py` een `--ids`-vlag geven (na registratie kijkt hij nu naar niets).
+4. **Open bevindingen golf 18 (geen actie, wel weten):** zilver-salaresnorte-pamp 467 KB en goud-elpenon-argorheraeus 384 KB (lange truckbenen); Edmonton-lijn begint 7 km vóór de Trans Mountain-terminal (OSM-pijpeinde); gas-brighousebay-gormanston alleen IC2 (IC1 parallel, Brits aanvoerstuk ontbreekt); olie-fos-feyzin bronconflict 24/34 inch; kolen-kostenko mijnstatus tegenstrijdig; twee zilverlijnen dubbelen de koper-/goudlijn; olie-omisalj-pancevo aanvoer stil sinds de sancties van okt 2025.
+
+
+## 🟢 2026-10-31 — AFGEHANDELD (golf 18 gedraaid) — na M31 golf 17 live
 
 1. ~~Lars test `?v=148` op de telefoon~~ ✅ 2026-10-31 "Ziet er goed uit vanaf de telefoon" → golf 16 én 17 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=148 — 30 nieuwe ketens (o.a. Okanjande → Yanbu, Kasiya → Nacala, Zimplats → Baltimore, Ochang → Narva, Harjavalta → Norilsk, NAL → Robstown, Deadhorse → Fairbanks, Greenstream, Mountain Valley, Angarsk → Ulaanbaatar, IKL, Nyurba → Mirny, Antwerpen → Shanghai, Jacobina/Orcopampa → Brampton, Mount Milligan, Asarel, Red Chris). Goed → golf 16 én 17 af.
 2. ~~Informatietextuur verdubbelen~~ ✅ 2026-10-31: informatietextuur verdubbeld naar 4.096 benen (`TEX_BREEDTE` + `MAX_BENEN`, `?v=149`, commit `053b9fa`; desktop + 375 px 0 fouten). **Nog vóór een volgende grote golf:** `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter · de `\n`-controle (`grep -c 'route \n' v2/tools/bak_stromen.sh` = 0) naast `git diff | grep '^-'` in de checklist.
-3. **Golf 18 (klein):** 14 getoetste reserves (`golf17-reserves.json` + `golf18-reserves.json`) → `maak_golf15.py`-patroon (~45 agenten). Of een derde grote ontwerpronde (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`).
+3. ~~**Golf 18 (klein):** 14 getoetste reserves~~ ✅ 2026-10-31 gedraaid (42 agenten, 20 min, 14/14, live `?v=150`). Of een derde grote ontwerpronde (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`).
 4. **De 40 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` (42,5 km van het Ngezi-anker) en `w-grib` nakijken in de sitelagen.
 5. **Open bevindingen golf 17 (geen actie, wel weten):** Zimplats → Baltimore 369 KB met Seagirt-marker 2,67 km; Ellesmere Port → Kokomo 342 KB; Harjavalta → Norilsk scheepvaart stil sinds april 2026 (EU-sanctie); twee zilverlijnen dubbelen de koperlijn; olie-vohburg-nelahozeves naad 9,7 km met olie-trieste-ingolstadt; PVG-anker op passagiersapron (gedeeld bron-gelegd anker, geen actie).
 

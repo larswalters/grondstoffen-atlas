@@ -1,5 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-31 (M31 golf 17, tweede grote ontwerpronde zonder kobalt, live `?v=148`: 479 stromen)*
+*Last updated: 2026-10-31 (3e) (M31 golf 18, de 14 reserve-assen, live `?v=150`: 493 stromen)*
+
+
+## Stand 2026-10-31 (3e) — M31 golf 18 live: 493 stromen (`?v=150`)
+
+- **Op de bol (`?v=150`, commit `cb5882a`):** 14 nieuwe ketens, 479 → 493 (zilver 3, kolen 3, gas 3, olie 3, goud 2). Bundel 493 stromen · 1.774 benen · 516 stippel · 1.617 markers · 451 sites · **434 met volume**; desktop + 375 px 493/493, 0 fouten. Informatietextuur 4.096 (ruimte voor ~25 grote golven).
+- **Hoe:** `v2/tools/golf/maak_golf18.py` (patroon golf 15) bouwt `golf18-script.mjs` uit `golf17-script.mjs` + `golf17-reserves.json` + `golf18-reserves.json`; alle 14 al getoetst → brief, bake, keuring. `wf_0b6cfe5f-8dd`: 42 agenten op Sonnet, 6,7 M tokens, 20 min, 0 uitval, 14/14 gebakken en gekeurd (1 goed, 13 met bevindingen): zilver Sindesar Khurd → Dariba, Collahuasi → Tongling en Salares Norte → MKS PAMP; kolen Sugar Camp → Convent, Kostenko → Temirtau en Kolubara → Nikola Tesla; gas Moomba → Wilton, Draupner → Duinkerke en Brighouse Bay → Gormanston; olie Edmonton → Westridge, Fos-sur-Mer → Feyzin en Omišalj → Pančevo; goud Geita → Rand Refinery en El Peñón → Argor-Heraeus. **Geen reserves meer over** — de volgende golf is weer een ontwerpronde.
+- **Centraal (bakhandleiding §18):** `centraal_check.py` 14/14, 2 vlaggen (zilver-salaresnorte-pamp 467 KB, goud-elpenon-argorheraeus 384 KB: truckbenen van 1.100–1.300 km door Chili); `sitelaag_check.py` 4 kandidaten, geen gelijkgetrokken (JNB ↔ Rand Refinery, PAMP ↔ Valcambi, MXP ↔ Valcambi: andere faciliteit; Collahuasi-pompstation 1,6 km); 14 noten; zes nieuwe `maak_leidingbeen_*.py`, twee wegprofielen; gedeelde tools schoon (`git diff | grep '^-'` leeg, 0 letterlijke `\n` in 299 toegevoegde regels; de grep uit §17 is in Git Bash onbetrouwbaar → Python-telling). Zilver dubbelt bewust de koper- en goudlijn (Collahuasi → Tongling, Salares Norte → PAMP); El Peñón: stippel b0 naar de eerste openbare knoop (`access=no`-plantwegen); Edmonton begint bij het OSM-pijpeinde 7 km vóór de terminal.
+- **Volumes:** leesagent → `v2/design/volumes/golf18.json` (0 bron, 9 indicatie, 5 onbekend; indicaties zijn mijn-/systeemtotalen als bovengrens; zilver = zilverinhoud) → totaal 70 bron / 378 indicatie / 45 onbekend → `bundel`, `bundel-check` ok. Kosten: reserve-golf ≈ 0,48 M tokens per keten (ontwerpronde 0,77 M); 5-uur 12 → 24%, week 9 → 12%.
+- **Poort:** telefoontest van Lars `?v=150`.
 
 
 ## Stand 2026-10-31 — M31 golf 17 live: 479 stromen (`?v=148`)

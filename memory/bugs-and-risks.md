@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-31 (M31 golf 17, live `?v=148`)*
+*Last updated: 2026-10-31 (3e) (M31 golf 18, live `?v=150`)*
+
+
+## 🔴 NIEUW 2026-10-31 (3e) — uit M31 golf 18
+
+88. **De `\n`-grep uit golf 17 is onbetrouwbaar in Git Bash:** `grep -c 'route \n\nn'` geeft 10 treffers in een schone HEAD ("route naar" matcht). Vervangen door een Python-telling over de toegevoegde diff-regels (bakhandleiding §18); deze golf 0 van 299.
+89. **`sitelaag_check.py` kijkt alleen naar niet-geregistreerde bestanden:** na `registreer_golf.py` vindt hij niets meer; gedraaid op een scratchpad-kopie met de 14 ids. Een `--ids`-vlag ontbreekt.
+90. **Volumes van golf 18: 0 bron, 9 indicatie, 5 onbekend** (Sindesar Khurd geen zilvercijfer per site, Moomba en Draupner alleen leidingcapaciteit, Fos capaciteit + SPSE-bronconflict, Omišalj aanvoer stil sinds okt 2025). Totaal 45 onbekend van 493. De indicaties zijn mijn-/systeemtotalen en dus bovengrenzen (Edmonton 761 kb/d is het hele Trans Mountain-systeem; Westridge laadt hooguit 630).
+91. **Open punten in de brieven:** Edmonton-lijn begint bij het OSM-pijpeinde 7 km vóór de terminal; gas-brighousebay-gormanston alleen IC2 zonder Brits aanvoerstuk (sitelaag mist de drie punten); olie-fos-feyzin 24 vs 34 inch; kolen-kostenko mijnstatus tegenstrijdig; goud-geita b4 kopie van kibali (ratio 2,3).
+
 
 
 ## 🔴 NIEUW 2026-10-31 — uit M31 golf 17
