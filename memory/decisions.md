@@ -1,5 +1,17 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (3e) (M31 golf 16, live `?v=147`)*
+*Last updated: 2026-10-31 (M31 golf 17, live `?v=148`)*
+
+
+## 2026-10-31 — M31 golf 17: tweede grote ontwerpronde
+
+- **2026-10-31 · ✅ LARS — "Doe nog maar een grote golf want over 1.5 uur wordt de weeklimiet gereset … ik heb ruimte genoeg"** (5-uur 4%, week 52%). → golf 17, 30 ketens, live `?v=148`.
+- **2026-10-31 · Afgebroken ketens gaan als afgewezen mét reden in de volgende prompts** (`maak_golf17.py`: `afgebroken` uit het overzicht); anders struikelt de generator op een haalbare-maar-niet-geregistreerde as.
+- **2026-10-31 · De controle op de gedeelde tools na elke golf is tweeledig:** `git diff v2/tools/bak_stromen.sh | grep '^-'` leeg én geen letterlijke `\n` in `route`-regels; `bash -n` alleen is niet genoeg (twee bestaande functies waren kapot terwijl `bash -n` slaagde).
+- **2026-10-31 · Zilver in koperconcentraat mag de koperlijn letterlijk dubbelen** (Aitik → Rönnskär, Motheo → Walvis Bay; precedent iwip-tongxiang): per grondstof één lijn in de eigen kleur, noot in het register.
+- **2026-10-31 · Een brief wordt centraal naar het id hernoemd** als een agent onderweg een beter eindpunt kiest (nikkel-zimplats-baltimore → -springs); het id blijft, titel en label noemen het echte eindpunt.
+- **2026-10-31 · Een plantcapaciteit bij een monsterschaal-levering is onbekend, geen indicatie** (ree-ochang-narva, zoals Santoku in golf 16).
+- **2026-10-31 · De informatietextuur wordt vóór de volgende ronde verdubbeld** (bundel 1.735 van 2.048 benen).
+
 
 
 ## 2026-10-30 (3e) — M31 golf 16: grote ontwerpronde, 3 per grondstof

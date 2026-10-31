@@ -1,11 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-30 (6e) (M31 golf 16 live `?v=147`; poort = telefoontest)*
+*Last updated: 2026-10-31 (M31 golf 17 live `?v=148`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-30 (6e) — na M31 golf 16 live
+## 🔴 NIEUW 2026-10-31 — na M31 golf 17 live
+
+1. **Lars test `?v=148` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=148 — 30 nieuwe ketens (o.a. Okanjande → Yanbu, Kasiya → Nacala, Zimplats → Baltimore, Ochang → Narva, Harjavalta → Norilsk, NAL → Robstown, Deadhorse → Fairbanks, Greenstream, Mountain Valley, Angarsk → Ulaanbaatar, IKL, Nyurba → Mirny, Antwerpen → Shanghai, Jacobina/Orcopampa → Brampton, Mount Milligan, Asarel, Red Chris). Goed → golf 16 én 17 af.
+2. **Vóór een volgende grote golf:** informatietextuur verdubbelen (`TEX_BREEDTE` + `MAX_BENEN`, golf 8-les; bundel 1.735 van 2.048) · `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter · de `\n`-controle (`grep -c 'route \n' v2/tools/bak_stromen.sh` = 0) naast `git diff | grep '^-'` in de checklist.
+3. **Golf 18 (klein):** 14 getoetste reserves (`golf17-reserves.json` + `golf18-reserves.json`) → `maak_golf15.py`-patroon (~45 agenten). Of een derde grote ontwerpronde (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`).
+4. **De 40 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` (42,5 km van het Ngezi-anker) en `w-grib` nakijken in de sitelagen.
+5. **Open bevindingen golf 17 (geen actie, wel weten):** Zimplats → Baltimore 369 KB met Seagirt-marker 2,67 km; Ellesmere Port → Kokomo 342 KB; Harjavalta → Norilsk scheepvaart stil sinds april 2026 (EU-sanctie); twee zilverlijnen dubbelen de koperlijn; olie-vohburg-nelahozeves naad 9,7 km met olie-trieste-ingolstadt; PVG-anker op passagiersapron (gedeeld bron-gelegd anker, geen actie).
+
+
+## 🟢 2026-10-30 (6e) — AFGEHANDELD (golf 17 gedraaid) — na M31 golf 16 live
 
 1. **Lars test `?v=147` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=147 — 31 nieuwe ketens (o.a. Marovintsy → Toamasina, Mnazi Bay → Dar es Salaam, Vareš → Ploče, Fruta del Norte → Harjavalta, Mirador → Tongling, Bogdanka → Kozienice, Mina al-Ahmadi → Nghi Son, Fekola → Rand Refinery, Bovanenkovo → Torzhok, Hardisty → Superior, Rotterdam → Basel, Koniambo mine-mouth, Talnakh-slurry). Goed → golf 16 af.
-2. **Golf 17 (klein):** 7 getoetste reserves in `golf17-reserves.json` → `maak_golf15.py`-patroon (~25 agenten). Of een volgende ontwerpronde zonder kobalt na de weekreset (2026-10-31 00:00; `maak_golf16.py`-patroon met `MAXP` 2 of 3, de 29 afgewezen golf 16-assen in de prompts).
+2. ~~**Golf 17 (klein):** 7 getoetste reserves in `golf17-reserves.json`~~ ✅ 2026-10-31 golf 17 werd een tweede grote ronde (30/31); de reserves blijven liggen — → `maak_golf15.py`-patroon (~25 agenten). Of een volgende ontwerpronde zonder kobalt na de weekreset (2026-10-31 00:00; `maak_golf16.py`-patroon met `MAXP` 2 of 3, de 29 afgewezen golf 16-assen in de prompts).
 3. **Id-regel:** in de bake-prompt expliciet "stroom-id uitsluitend `[a-z0-9-]`" en `registreer_golf.py` laten weigeren bij spatie/hoofdletter (golf 16: `gas-mnazibay-dares salaam`).
 4. **De 34 onbekende volumes** alleen met bronwerk via `stroomvolumes-handmatig.json`; `w-grib` (diamant-sitelaag) nakijken (bake-agent: site ligt fout).
 5. **Open bevindingen golf 16 (geen actie, wel weten):** vier bestanden > 500 KB door truckbenen van 3.300–3.900 km (simplify-stap in `bak_stroombundel.py` wordt aantrekkelijk); gas-lunnan-shanghai eindigt in Jiuquan, gas-bovanenkovo-moskou in Torzhok (id ≠ eindpunt); nikkel-koniambo-vavouto en nikkel-talnakh-nadezhda zijn mine-mouth zonder gebronde afnemer; koper-cadia-portkembla b1 volledig stippel; informatietextuur 2.048 benen, bundel 1.651 — **verdubbelen vóór de volgende grote golf**.

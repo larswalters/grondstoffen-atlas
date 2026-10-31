@@ -2554,3 +2554,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf16.json` (1 bron, 27 indicatie, 3 onbekend) → totaal 68/347/34 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 147; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §16. Kosten: 5-uur 21 → 75%, week 42 → 52%.
 - **Volgende:** telefoontest `?v=147` · golf 17 klein uit 7 reserves of een ontwerpronde na de weekreset · id-regel in prompts + registreer_golf.py · 34 onbekende volumes · textuur verdubbelen vóór de volgende grote golf.
+
+## 2026-10-31 — M31 golf 17: tweede grote ontwerpronde (3 per grondstof) zonder kobalt, 479 stromen live `?v=148`
+
+**TL;DR:** Lars: *"doe nog maar een grote golf … ruimte genoeg"*. `maak_golf17.py` = golf 16-patroon + afgebroken ketens als afgewezen + de 7 reserves als niet-opnieuw-ontwerpen + id-regel `[a-z0-9-]`. `wf_a55afd0d-28b`: 117 agenten op Sonnet, 23,2 M tokens, 67 min, 0 uitval, 30/31 gebakken en gekeurd (goud Blanket afgebroken: helikopter). Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=148 (commit `25210cc`), bundel 479 stromen · 1.735 benen · 1.578 markers · 425 met volume. 7 reserves → `golf18-reserves.json` (14 klaar). LAR-660 Done; poort = telefoontest.
+
+- **Centraal:** ⚠️ twee bestaande functies in `bak_stromen.sh` door een agent met letterlijke `\n` kapotgeschreven (bash -n zag het niet) → hersteld uit HEAD; brief `-baltimore` → `-springs` (id); `dia-as` → `dia-ass`; `centraal_check.py` 30/30, 2 vlaggen; `sitelaag_check.py` 3, geen gelijkgetrokken; 30 noten; vijf nieuwe `maak_leidingbeen_*.py`.
+- **Volumes:** leesagent → `golf17.json` (2 bron, 22 indicatie, 6 onbekend; ree-ochang-narva centraal op onbekend) → totaal 70/369/40 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 148; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §17. Kosten: 5-uur 4 → 43%; week gereset tijdens de ronde (6%).
+- **Volgende:** telefoontest `?v=148` · textuur verdubbelen vóór een volgende grote golf · `registreer_golf.py` id-weigering · golf 18 klein uit 14 reserves of een derde grote ronde · 40 onbekende volumes · w-zimplats-ngezi en w-grib nakijken.

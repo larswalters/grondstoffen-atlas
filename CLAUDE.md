@@ -1,4 +1,15 @@
-> **🌍 M31 GOLF 16 LIVE `?v=147` — 449 STROMEN, GROTE ONTWERPRONDE (3 PER GRONDSTOF) ZONDER KOBALT (2026-10-30, LAATSTE).** Commit `6dd01f3`.
+> **🌍 M31 GOLF 17 LIVE `?v=148` — 479 STROMEN, TWEEDE GROTE ONTWERPRONDE ZONDER KOBALT (2026-10-31, LAATSTE).** Commit `25210cc`. Lars:
+> *"doe nog maar een grote golf want over 1.5 uur wordt de weeklimiet gereset … ik heb ruimte genoeg"*. `v2/tools/golf/maak_golf17.py` = golf 16-patroon
+> (3 per grondstof, kobalt overgeslagen) + de 23 afgewezen/afgebroken golf 16-assen + de 7 reserves als "niet opnieuw ontwerpen" + **id-regel `[a-z0-9-]`**
+> in de prompts. `wf_a55afd0d-28b`: 117 agenten op Sonnet, 23,2 M tokens, 67 min, 0 uitval, **30/31 gebakken en gekeurd** (goud-blanket-fidelity afgebroken:
+> helikopter). ⚠️ **Twee bestaande functies in `bak_stromen.sh` (koper TFM → Durban, Las Bambas) door een bake-agent met letterlijke `\n`-tekens
+> herschreven — `bash -n` zag het niet; gevonden met `git diff | grep '^-'`, hersteld uit HEAD.** Brief `-baltimore` → `-springs` (id), `dia-as` → `dia-ass`,
+> 30 noten, 2 vlaggen; volumes `golf17.json` (2 bron, 22 indicatie, 6 onbekend) → 425/479 met dikte; bundel 1.735 benen (**textuur 2.048: verdubbelen vóór de
+> volgende ronde**), `bundel-check` ok, `CODE_VERSIE` + `BUNDEL_VERSIE` 148; desktop + 375 px 0 fouten. 14 reserves klaar. Lessen: bakhandleiding §17.
+> LAR-660 Done. Kosten 5-uur 4 → 43%, week gereset (6%). **→ VOLGENDE:** Lars' telefoontest `?v=148` · textuur verdubbelen + `registreer_golf.py`
+> id-weigering + `\n`-controle · golf 18 klein uit 14 reserves of een derde grote ronde.
+
+> **🌍 M31 GOLF 16 LIVE `?v=147` — 449 STROMEN, GROTE ONTWERPRONDE (3 PER GRONDSTOF) ZONDER KOBALT (2026-10-30, EERDER).** Commit `6dd01f3`.
 > Lars na de goede telefoontest van `?v=146`: *"nog meer als 50% weeklimiet over … kan nog wel een grote ronde doen"*. `v2/tools/golf/maak_golf16.py` =
 > golf 14-patroon met `MAXP = 3` → `golf16-script.mjs` (18 afgewezen assen van golf 14/15 met reden). `wf_c97a59cc-3ff`: 120 agenten op Sonnet, 24,9 M
 > tokens, 127 min, 0 uitval, **31/32 gebakken en gekeurd** (nikkel-kouaoua-laadkade door de briefagent afgebroken: weg al twee jaar onbruikbaar); de
@@ -1021,7 +1032,7 @@
 
 # Grondstoffen Atlas — project spec
 
-*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-30 (laatst: M31 golf 16, grote ontwerpronde 3 per grondstof zonder kobalt, 449 stromen, live ?v=147; daarvoor M31 golf 15, reserve-golf, 418 stromen, live ?v=146, telefoontest goed; daarvoor M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145, telefoontest goed; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
+*Categorie: General · Linear-project: "Grondstoffen Atlas" (team Lars / LAR) · Laatst bijgewerkt: 2026-10-31 (laatst: M31 golf 17, tweede grote ontwerpronde zonder kobalt, 479 stromen, live ?v=148; daarvoor M31 golf 16, grote ontwerpronde 3 per grondstof zonder kobalt, 449 stromen, live ?v=147; daarvoor M31 golf 15, reserve-golf, 418 stromen, live ?v=146, telefoontest goed; daarvoor M31 golf 14, vierde ontwerpronde zonder kobalt, 402 stromen, live ?v=145, telefoontest goed; daarvoor M31 golf 13, derde ontwerpronde, 376 stromen, live ?v=144; daarvoor golf 12 + LAR-642 hoeveelheden bij de stromen, 352 stromen, live ?v=143; daarvoor M31 golf 11, 341 stromen, live ?v=142, nieuwe ontwerpronde; daarvoor M31 golf 10, 315 stromen, live ?v=141; daarvoor golf 2 afgesloten na Lars' telefoontest van ?v=140, LAR-618 Done; daarvoor golf 2 deel 3, stadslichten, live ?v=140; daarvoor golf 2 deel 2, labels per zoomband, live ?v=139; daarvoor M31 golf 8+9, 300 stromen, live ?v=138; daarvoor golf 7, 221 totaal, ?v=136; daarvoor golf 1 af + golf 2 deel 1, de gloed als lichtpunt, live ?v=134; daarvoor M31 golf 6 LIVE ?v=131 — grote ontwerpronde, 24 ketens over elf grondstoffen; 182 stromen over 14 grondstoffen; commit 04a97b1)*
 
 > **🎯 DE ANKER-CHECK — DE CORRIDORS KLOPPEN, DE UITEINDEN NIET (2026-07-28, LAATSTE).**
 > Live `?v=097` (commits `7890253` → `1424ffa`).
@@ -3295,6 +3306,7 @@ plekken waar alles samenknijpt zie je dat letterlijk gebeuren.
 ## D - Decisions
 
 Zie `memory/decisions.md`. Kernbesluiten:
+- **2026-10-31 · M31 GOLF 17 LIVE `?v=148` (479 stromen).** Afgebroken ketens gaan als afgewezen mét reden in de volgende prompts; de controle op de gedeelde tools is `git diff | grep '^-'` leeg én geen letterlijke `\n` in route-regels (bash -n is niet genoeg); zilver in koperconcentraat mag de koperlijn dubbelen; een brief wordt centraal naar het id hernoemd; plantcapaciteit bij monsterschaal = onbekend; textuur verdubbelen vóór de volgende ronde.
 - **2026-10-30 · M31 GOLF 16 LIVE `?v=147` (449 stromen).** 3 ketens per grondstof is een optie bij ruim limiet (~25 M tokens, ~2 uur, 31 ketens), geen nieuwe standaard; een briefagent mag een keten afbreken als de lading stilligt; een stroom-id bevat uitsluitend `[a-z0-9-]` (centraal hernoemen vóór registratie); sitelaag gelijktrekken ook vanuit het v1-register en een geohack naar een bron-gelegd keten-anker.
 - **2026-10-30 · M31 GOLF 15 LIVE `?v=146` (418 stromen).** Reserves van twee ontwerprondes gaan in één reserve-golf (`maak_golf15.py`, patroon golf 12); een ongetoetste reserve wordt in de eerste pijplijnstap getoetst en kan daar afvallen. Korte mine-mouth-ketens (transportband = leiding) horen erbij; een sleutel zonder xy-patroon wordt centraal gecorrigeerd. Geen reserves meer.
 - **2026-10-30 · M31 GOLF 14 LIVE `?v=145` (402 stromen).** Een ontwerpronde slaat kobalt over (`OVERSLAAN`) en zet klaarliggende reserves als "niet opnieuw ontwerpen" in de hint; 13 grondstoffen → 104 agenten, 26/26. Bestanden > 300 KB bij lange truckbenen = noot (simplify in de bundelbaker als het hindert); sitelaag gelijktrekken ook over 5–8 km naar een bron-gelegd keten-anker, niet als dat anker zelf aannemelijk is.

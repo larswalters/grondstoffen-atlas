@@ -1,5 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-30 (3e) (M31 golf 16, grote ontwerpronde zonder kobalt, live `?v=147`: 449 stromen)*
+*Last updated: 2026-10-31 (M31 golf 17, tweede grote ontwerpronde zonder kobalt, live `?v=148`: 479 stromen)*
+
+
+## Stand 2026-10-31 — M31 golf 17 live: 479 stromen (`?v=148`)
+
+- **Op de bol (`?v=148`, commit `25210cc`):** 30 nieuwe ketens, 449 → 479, over 13 grondstoffen (zilver/kolen/gas/olie/diamant/koper 3, grafiet/ree/pgm/lithium/goud 2, nikkel/uranium 1; kobalt overgeslagen). Bundel 479 stromen · 1.735 benen · 504 stippel · 1.578 markers · 451 sites · **425 met volume**; desktop + 375 px 479/479, 0 fouten. **Informatietextuur 2.048 benen: verdubbelen vóór de volgende ronde.**
+- **Hoe:** `v2/tools/golf/maak_golf17.py` = `maak_golf16.py` uit `golf16-script.mjs` + `golf16-resultaat.json` (23 afgewezen én afgebroken assen met reden) + `golf17-reserves.json` (7 reserves als "niet opnieuw ontwerpen"), met de id-regel `[a-z0-9-]` in de prompts. `wf_a55afd0d-28b`: 117 agenten op Sonnet, 23,2 M tokens, 67 min, 0 uitval, 30/31 gebakken en gekeurd (goud-blanket-fidelity door de briefagent afgebroken: Caledonia 20-F, goud per helikopter). 31 gekozen van 39, 30 afgewezen. **7 reserves in `golf18-reserves.json`** (zilver Collahuasi → Tongling en Salares Norte → PAMP, kolen Kolubara → Nikola Tesla, gas Draupner → Dunkerque en Brighouse Bay → Gormanston, olie Omišalj → Pančevo, goud El Peñón → Argor-Heraeus) — met de 7 van golf 16: 14 klaar.
+- **Centraal (bakhandleiding §17):** ⚠️ **twee bestaande functies in `bak_stromen.sh` (koper TFM → Durban, Las Bambas) door een bake-agent met letterlijke `\n`-tekens herschreven** — `bash -n` slaagt, bash zou `route n --graaf` draaien; gevonden met `git diff | grep '^-'`, hersteld uit HEAD (`herstel_bak17.py`-patroon). Brief `nikkel-zimplats-baltimore.md` → `-springs.md` (id blijft; eindpunt Baltimore in titel/label); `dia-as` → `dia-ass`; `centraal_check.py` 30/30, 2 vlaggen (Zimplats 369 KB + Seagirt 2,67 km; Ellesmere Port → Kokomo 342 KB); `sitelaag_check.py` 3 kandidaten, geen gelijkgetrokken (w-zimplats-ngezi 42,5 km af → nakijken); 30 noten; vijf nieuwe `maak_leidingbeen_*.py`. Twee zilverlijnen dubbelen bewust de koperlijn (Aitik → Rönnskär, Motheo → Walvis Bay).
+- **Volumes:** leesagent → `v2/design/volumes/golf17.json` (2 bron, 22 indicatie, 6 onbekend; ree-ochang-narva centraal van plantcapaciteit naar onbekend, Santoku-precedent) → totaal 70 bron / 369 indicatie / 40 onbekend → `bundel`, `bundel-check` ok. Kosten: 5-uur 4 → 43%; week gereset tijdens de ronde (52% → 6%).
+- **Poort:** Lars' telefoontest `?v=148` (`?v=147` van golf 16 staat ook nog open).
+
 
 
 ## Stand 2026-10-30 (3e) — M31 golf 16 live: 449 stromen (`?v=147`)
