@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (3e) (M31 golf 18 live `?v=150`; poort = telefoontest)*
+*Last updated: 2026-10-31 (4e) (telefoontest `?v=150` goed; golf 18 af)*
 
 
 ## 🔴 NIEUW 2026-10-31 (3e) — na M31 golf 18 live
 
-1. **Lars test `?v=150` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=150 — 14 nieuwe ketens (zilver Sindesar Khurd → Dariba, Collahuasi → Tongling en Salares Norte → MKS PAMP; kolen Sugar Camp → Convent, Kostenko → Temirtau en Kolubara → Nikola Tesla; gas Moomba → Wilton, Draupner → Duinkerke en Brighouse Bay → Gormanston; olie Edmonton → Westridge, Fos-sur-Mer → Feyzin en Omišalj → Pančevo; goud Geita → Rand Refinery en El Peñón → Argor-Heraeus). Goed → golf 18 af.
+1. ~~Lars test `?v=150` op de telefoon~~ ✅ 2026-10-31 "Ziet er goed uit" → golf 18 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=150 — 14 nieuwe ketens (zilver Sindesar Khurd → Dariba, Collahuasi → Tongling en Salares Norte → MKS PAMP; kolen Sugar Camp → Convent, Kostenko → Temirtau en Kolubara → Nikola Tesla; gas Moomba → Wilton, Draupner → Duinkerke en Brighouse Bay → Gormanston; olie Edmonton → Westridge, Fos-sur-Mer → Feyzin en Omišalj → Pančevo; goud Geita → Rand Refinery en El Peñón → Argor-Heraeus). Goed → golf 18 af.
 2. **Volgende golf = ontwerpronde zonder kobalt** (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`; 2 of 3 per grondstof naar limiet) — er liggen geen reserves meer. **Vooraf:** `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter; de `\n`-telling in Python (bakhandleiding §18) in de checklist.
 3. **De 45 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; `sitelaag_check.py` een `--ids`-vlag geven (na registratie kijkt hij nu naar niets).
 4. **Open bevindingen golf 18 (geen actie, wel weten):** zilver-salaresnorte-pamp 467 KB en goud-elpenon-argorheraeus 384 KB (lange truckbenen); Edmonton-lijn begint 7 km vóór de Trans Mountain-terminal (OSM-pijpeinde); gas-brighousebay-gormanston alleen IC2 (IC1 parallel, Brits aanvoerstuk ontbreekt); olie-fos-feyzin bronconflict 24/34 inch; kolen-kostenko mijnstatus tegenstrijdig; twee zilverlijnen dubbelen de koper-/goudlijn; olie-omisalj-pancevo aanvoer stil sinds de sancties van okt 2025.
