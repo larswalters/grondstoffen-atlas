@@ -3600,6 +3600,246 @@
    "label": "Mirador → Tongling",
    "aan": true,
    "noot": "M31 · golf 16 (2026-10-30): Mirador-concentraat per truck via Cuenca en de Cajas naar Fertisa (Guayaquil), per zee naar de Yangtze-monding en per binnenvaart (gedeeld been) naar de Tongling-kade; bestemming aannemelijk via eigenaar. Let op: weg Mirador → Puerto Bolívar 1,81× hemelsbreed (Andes, Cajas) en +10,9% op 354 km; Shanghai/Luojing-marker 4,4 km (gedeeld conventie-anker); Tongling als afnemer (CRCC-Tongguan) één bron."
+  },
+  {
+   "sleutel": "gr-oy",
+   "bestand": "stroomroute-grafiet-okanjande-yanbu.json",
+   "grondstof": "grafiet",
+   "label": "Okanjande → Yanbu",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Okanjande-vlokconcentraat per truck naar Walvis Bay, per zeeschip via de Kaap en Rode Zee naar de KFIP-kade bij Yanbu voor de geplande BAM-fabriek (pre-FID, volume nu 0). Let op: pre-FID (BAM-fabriek Yanbu gepland, volume nu 0); Okanjande-terrein aannemelijk; Walvis Bay-afstand in de bronnen tegenstrijdig; haven Yanbu (KFIP) aangenomen; wegkm OSRM-indicatie."
+  },
+  {
+   "sleutel": "gr-kn",
+   "bestand": "stroomroute-grafiet-kasiya-nacala.json",
+   "grondstof": "grafiet",
+   "label": "Kasiya → Nacala",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Kasiya-vlokgrafiet (Sovereign, pre-productie) per spoor Lilongwe-Nkaya en de Nacala-corridor naar de containerterminal van Nacala, stoppunt kade. Let op: Kasiya (Sovereign) pre-productie, anker onzeker; haven Nacala aannemelijk; geen gepubliceerde spoorkm voor Lilongwe → Nkaya en de Nacala-corridor; 17,8 km bewuste stippel mijn → Lilongwe-laadpunt."
+  },
+  {
+   "sleutel": "ni-zs",
+   "bestand": "stroomroute-nikkel-zimplats-springs.json",
+   "grondstof": "nikkel",
+   "label": "Zimplats → Baltimore",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Ni-houdende matte van Zimplats SMC per truck via Beitbridge naar IRS Springs, nikkelpoeder per truck over de N3 naar Durban DCT Pier 2 en per zeeschip naar Seagirt Baltimore (Baltimore rust op een bron, truck Springs-Durban is aanname). Let op: eindpunt is Seagirt Baltimore (titel en label), het id stopt bij Springs; Baltimore op één bron, truck Springs → Durban is een aanname; Seagirt-marker 2,67 km van het lijneinde; bestand 369 KB; brief centraal hernoemd van -baltimore naar -springs."
+  },
+  {
+   "sleutel": "ree-on",
+   "bestand": "stroomroute-ree-ochang-narva.json",
+   "grondstof": "ree",
+   "label": "Ochang → Narva",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Dy/Tb-metaal van KMP Ochang per truck naar Busan, per zee via Suez naar de Finse Golf, stippel-aanloop Muuga en truck over weg 1 naar Neo Narva; landbenen en aanlopen zijn letterlijke kopieen, bestemming aannemelijk (een bron). Let op: Neo Narva als afnemer van KMP Ochang op één bron; KMP-anker onzeker; landbenen en aanlopen zijn letterlijke kopieën (ree-cheongju-sanmarcos, ree-kuantan-narva) met 50 geërfde knikken; wegkm indicatie."
+  },
+  {
+   "sleutel": "ree-ek",
+   "bestand": "stroomroute-ree-ellesmereport-kokomo.json",
+   "grondstof": "ree",
+   "label": "Ellesmere Port → Kokomo",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): La-Ni-legeringspoeder van LCM Ellesmere Port per truck naar Felixstowe, per containerschip naar Port Newark en per truck naar Haynes Kokomo; aannemelijk. Let op: haven Port Newark en de Kokomo-hal (Haynes) zijn aannames; naden 4,7 en 3,6 km (Felixstowe- en Newark-aanloop onder de grens); bestand 342 KB door het truckbeen Newark → Kokomo; wegkm OSRM-indicatie."
+  },
+  {
+   "sleutel": "pgm-hn",
+   "bestand": "stroomroute-pgm-harjavalta-norilsk.json",
+   "grondstof": "pgm",
+   "label": "Harjavalta → Norilsk Koperfabriek",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): PGM-houdende koperkoek per truck naar Pori, schip naar Moermansk en Dudinka, spoor naar de Koperfabriek Norilsk; scheepvaart sinds apr 2026 stil door EU-sanctie. Let op: Nornickel-lus (PGM-houdende koperkoek terug naar Norilsk); scheepvaart Pori → Moermansk ligt sinds april 2026 stil door de EU-sanctie; markers Moermansk en Dudinka 1,2 km van de lijn; spoor-terugloop bij het emplacement Koperfabriek; naad 3,08 km."
+  },
+  {
+   "sleutel": "pgm-ns",
+   "bestand": "stroomroute-pgm-ngezi-selous.json",
+   "grondstof": "pgm",
+   "label": "Ngezi → Selous",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): PGM-concentraat van het Zimplats Ngezi-complex per truck over de Platinum Highway naar de Zimplats-smelter bij Selous. Let op: truck over de Platinum Highway historisch gebrond; Ngezi-anker aannemelijk; sitelaag w-zimplats-ngezi ligt 42,5 km verder (andere coördinaat van het complex, niet gelijkgetrokken)."
+  },
+  {
+   "sleutel": "li-nr",
+   "bestand": "stroomroute-lithium-nal-robstown.json",
+   "grondstof": "lithium",
+   "label": "NAL → Tesla Robstown",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): NAL-concentraat per truck en CN-spoor naar Port de Québec, per bulkschip naar Corpus Christi en per truck naar Tesla Robstown. Let op: Tesla Robstown als afnemer van NAL-concentraat op één bron; b1 omwegfactor 1,83 (Abitibi → Québec, in de brief verklaard); 5 geërfde terugloopknikken; wegkm b1/b4 indicatie."
+  },
+  {
+   "sleutel": "li-uy",
+   "bestand": "stroomroute-lithium-uis-yangtze.json",
+   "grondstof": "lithium",
+   "label": "Uis → Yangtze-monding",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Namibisch lithiumerts van Uis per truck via Henties Bay naar Walvis Bay en per schip rond de Kaap naar de Yangtze-monding (conventie-anker, aannemelijk: één bron; mijnanker onzeker proxy). Let op: Uis-mijnanker is een proxy (onzeker); eindpunt de Yangtze-monding (conventie-marker 2,69 km), afnemer in China niet benoemd; wegkm niet gepubliceerd."
+  },
+  {
+   "sleutel": "ag-mw",
+   "bestand": "stroomroute-zilver-motheo-walvisbay.json",
+   "grondstof": "zilver",
+   "label": "Motheo → Walvis Bay",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): koper-zilverconcentraat van Sandfire Motheo per truck over de Trans-Kalahari naar de Walvis Bay-kade (letterlijke kopie van koper-motheo-walvisbay). Let op: geometrie identiek aan koper-motheo-walvisbay (zilver in het koperconcentraat, bewust dubbel); wegkm niet gebronnen; één keerpunt bij de plant-stub."
+  },
+  {
+   "sleutel": "ag-ar",
+   "bestand": "stroomroute-zilver-aitik-ronnskar.json",
+   "grondstof": "zilver",
+   "label": "Aitik → Rönnskär",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Koper-goud-zilverconcentraat van Aitik (Boliden) per spoor over Malmbanan en Norra stambanan naar de Rönnskär-smelter; stoppunt smelter. Let op: lijn is een letterlijke kopie van koper-aitik-helsingborg b1 (zilver in het Aitik-concentraat naar Rönnskär, bewust dubbel; 397 km, -0,7% op ca. 400)."
+  },
+  {
+   "sleutel": "ag-of",
+   "bestand": "stroomroute-zilver-oyutolgoi-feishang.json",
+   "grondstof": "zilver",
+   "label": "Oyu Tolgoi → Feishang",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): zilver als bijproduct in OT-koperconcentraat per truck over de OT-betonweg naar Ganqimaodu en over G242/G335 naar de Feishang-smelter; geen zee, kopie van de koperbenen. Let op: deelt de G335-benen met koper-oyutolgoi; bonded-marker Ganqimaodu 2,07 km van het wegeind (zoals de koperstroom); 5 spike-knikken; geen onafhankelijke wegkm voor b2."
+  },
+  {
+   "sleutel": "kolen-vc",
+   "bestand": "stroomroute-kolen-vorgashorskaya-cherepovets.json",
+   "grondstof": "kolen",
+   "label": "Vorgashorskaya → Cherepovets",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): cokeskoolconcentraat van de Vorgashorskaya-wasserij bij Vorkuta per spoor (Pechora-lijn, Kotlas, Vologda) naar het kolenpark van Severstal Cherepovets; afname aannemelijk, een bron. Let op: Severstal-afname aannemelijk (één bron); geen gepubliceerde spoorkm voor het geheel (1.889 km router); markers 0,2–0,4 km (laadlus, cokesfabriek)."
+  },
+  {
+   "sleutel": "kolen-sos",
+   "bestand": "stroomroute-kolen-solntsevsky-shakhtersk.json",
+   "grondstof": "kolen",
+   "label": "Solntsevsky → Shakhtersk",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Solntsevsky-dagbouw (Sachalin) via de 23 km kolenband Ugolny konveyer naar de pier van kolenhaven Shakhtersk; lijn stopt bij de scheepsbelader, geen afnemer genoemd. Transportband mijn → haven Shakhtersk (Sachalin) uit OSM als leiding, 23,9 km, drie benen met 1,3% stippel."
+  },
+  {
+   "sleutel": "kolen-nv",
+   "bestand": "stroomroute-kolen-nigahi-vindhyachal.json",
+   "grondstof": "kolen",
+   "label": "Nigahi → Vindhyachal",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Nigahi-kolen (NCL) per NTPC/NCL-MGR-spoor naar de kolenaflaad van NTPC Vindhyachal STPS, stippel over eigen terrein naar de ketelhuizen; koppeling aannemelijk. Let op: 11 km mine-mouth (spoorlus + band) met 8,9% stippel; koppeling Nigahi → Vindhyachal aannemelijk (één bron); spoorkm router-indicatie (10,2 tegen 7,4 hemelsbreed)."
+  },
+  {
+   "sleutel": "u-na",
+   "bestand": "stroomroute-uranium-novosibirsk-akkuyu.json",
+   "grondstof": "uranium",
+   "label": "Novosibirsk → Akkuyu",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): VVER-1200-splijtstof van NZHK per truck naar OVB, per vrachtvlucht naar Adana en per truck via O-51 en D400 naar Akkuyu. Let op: luchtbeen OVB → ADA (Adana) aannemelijk; ADA-apron onzeker; vertrek-luchthaven Tolmachevo aangenomen; wegkm niet gebrond; eerste splijtstof Akkuyu 2023–2026."
+  },
+  {
+   "sleutel": "gas-mg",
+   "bestand": "stroomroute-gas-mellitah-gela.json",
+   "grondstof": "gas",
+   "label": "Mellitah → Gela",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Libisch gas (Wafa, Bahr Essalam) uit het Mellitah-complex via de Greenstream-onderzeeleiding (32 inch, 502 km) naar de Eni-terminal bij Gela, Sicilië. Let op: Greenstream-onderzeeleiding uit OSM is bijna recht (13 punten, 502 km tegen 510–540 gepubliceerd); twee spike-knikken bij Gela; Mellitah-marker 0,48 km van de lijn."
+  },
+  {
+   "sleutel": "gas-mc",
+   "bestand": "stroomroute-gas-mobley-chatham.json",
+   "grondstof": "gas",
+   "label": "Mobley → Chatham",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Appalachen-gas via de Mountain Valley Pipeline (42 inch, OSM 487,6 km, doorgetrokken) van het begin bij Mobley (WV) naar Transco Compressor Station 165 bij Chatham (VA). Mountain Valley Pipeline uit OSM: 487,7 km tegen 488 gepubliceerd; knikken zijn OSM-vertexzigzags."
+  },
+  {
+   "sleutel": "gas-df",
+   "bestand": "stroomroute-gas-deadhorse-fairbanks.json",
+   "grondstof": "gas",
+   "label": "Deadhorse → Fairbanks",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): LNG uit de Harvest-fabriek bij Deadhorse per tankwagen over de Dalton Highway naar de IGU-opslagtank in Fairbanks, enige gasketen over de weg. Let op: kop is een Spine Road-vertex (Prudhoe Bay-LNG-fabriek niet gevonden); IGU-tank Fairbanks aannemelijk; volume indicatief; truck Dalton Highway."
+  },
+  {
+   "sleutel": "olie-au",
+   "bestand": "stroomroute-olie-angarsk-ulaanbaatar.json",
+   "grondstof": "olie",
+   "label": "Angarsk → Ulaanbaatar",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): benzine en diesel per spoor van Rosneft ANHK Angarsk via Naushki/Sukhbaatar naar een tankenpark in Ulaanbaatar (aannemelijk: één bron). Let op: depot in Ulaanbaatar niet benoemd (aannemelijk, één bron); geen gepubliceerde spoorkm (1.140 km router)."
+  },
+  {
+   "sleutel": "olie-fm",
+   "bestand": "stroomroute-olie-fahud-minaalfahal.json",
+   "grondstof": "olie",
+   "label": "Fahud → Mina al-Fahal",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): ruwe olie per PDO Main Oil Line (276,9 km OSM, doorgetrokken) van pompstation Fahud naar het tankenpark Mina al-Fahal bij Muscat, geen zeebeen. Let op: identiteit van de naamloze OSM-ways (MOL-hoofdleiding) steunt op lengte en begin/eind; geen zeebeen of havenbewijs; stoppunt Mina al Fahal."
+  },
+  {
+   "sleutel": "olie-vn",
+   "bestand": "stroomroute-olie-vohburg-nelahozeves.json",
+   "grondstof": "olie",
+   "label": "Vohburg → Nelahozeves",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): ruwe olie per IKL-leiding (MERO, 28 inch) van de kopstation Vohburg in het Bayernoil-terrein via Rozvadov naar het MERO-tankenpark Nelahozeves, 322,4 km OSM, geen zee. Let op: IKL-leiding uit OSM, Duits deel -11% op de gepubliceerde lengte; naad 9,7 km met olie-trieste-ingolstadt (ander anker bij Vohburg); sitelaag mist beide sites; 21 OSM-knikken."
+  },
+  {
+   "sleutel": "dia-nm",
+   "bestand": "stroomroute-diamant-nyurba-mirny.json",
+   "grondstof": "diamant",
+   "label": "Nyurba → Mirny",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Ruwe diamant van Alrosa's Nyurba GOK (Nakyn) per truck over de seizoenswinterweg en de 98K-004 via Tsjernysjevski naar het Mir-complex/sorteercentrum Mirny (aannemelijk, alleen bestemming gebrond). Let op: omwegfactor 1,75 door de seizoenswinterweg en de OSM-route; vervoer per truck Nyurba → Mirny aannemelijk."
+  },
+  {
+   "sleutel": "dia-ass",
+   "bestand": "stroomroute-diamant-antwerpen-shanghai.json",
+   "grondstof": "diamant",
+   "label": "Antwerpen → Shanghai",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): gepolijste diamant van AWDC Antwerpen per truck naar Brucargo, vrachtvlucht BRU → PVG (aannemelijk, één bron) en per truck naar het China Diamond Exchange Center in Lujiazui. Let op: PVG-anker ligt op de passagiersapron (vrachtplatform niet gelegd); geen bron voor een directe vlucht BRU → PVG; wegkm indicatie."
+  },
+  {
+   "sleutel": "dia-rh",
+   "bestand": "stroomroute-diamant-ramatgan-hongkong.json",
+   "grondstof": "diamant",
+   "label": "Ramat Gan → Hongkong",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): gepolijste diamant van de Israel Diamond Exchange per truck (stippel) naar Maman Cargo TLV, vrachtvlucht (grootcirkel, aannemelijk) naar Cathay Cargo HKG en per truck naar het HK Diamond Exchange Building. Let op: gekopieerd HK-wegbeen (diamant-surat-hongkong) met omweg 1,70 en een terugloop; b1 Ramat Gan → TLV hemelsbreed; vlucht TLV → HKG aannemelijk."
+  },
+  {
+   "sleutel": "au-ja",
+   "bestand": "stroomroute-goud-jacobina-asahibrampton.json",
+   "grondstof": "goud",
+   "label": "Jacobina → Asahi Brampton",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): doré van Jacobina (aannemelijk) per truck naar Salvador, per vrachtvlucht naar Toronto Pearson en per truck naar Asahi Refining Canada in Brampton. Let op: vervoer en vlucht (Salvador → Toronto) zijn aannames; Brampton-pand (Asahi) onzeker; b5 ratio 1,85 (OSRM 13 km)."
+  },
+  {
+   "sleutel": "au-oa",
+   "bestand": "stroomroute-goud-orcopampa-asahibrampton.json",
+   "grondstof": "goud",
+   "label": "Orcopampa → Asahi Brampton",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): doré van Orcopampa (Buenaventura) per truck naar SPOR, per vlucht via Lima naar Toronto Pearson en per truck naar Asahi Refining Canada in Brampton. Let op: vluchten Arequipa → Lima → Toronto aannemelijk; Brampton-been omwegratio 1,85; wegkm van een OSRM-demo; deelt het Brampton-anker met goud-jacobina-asahibrampton."
+  },
+  {
+   "sleutel": "cu-mv",
+   "bestand": "stroomroute-koper-mountmilligan-vancouver.json",
+   "grondstof": "koper",
+   "label": "Mount Milligan → Vancouver Wharves",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Mount Milligan-concentraat per truck over de FSR's naar Mackenzie Yard en per CN/ex-BC Rail-spoor (942 km) naar Vancouver Wharves; stoppunt op de kade. Let op: wegkm niet gebronnen (omweg 1,63 Mount Milligan → Mackenzie-laadpunt); spoor CN naar Vancouver (Neptune/Fraser Surrey) aannemelijk."
+  },
+  {
+   "sleutel": "cu-ap",
+   "bestand": "stroomroute-koper-asarel-pirdop.json",
+   "grondstof": "koper",
+   "label": "Asarel-Medet → Aurubis Pirdop",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): koperconcentraat per truck van Asarel-Medet via mijnweg, II-37 en I-6 naar de Aurubis-smelter in Pirdop (aannemelijk: één bron). Let op: 33 km truck Asarel → Aurubis Pirdop, ratio 1,66, km indicatief; afname op één bron (Aurubis)."
+  },
+  {
+   "sleutel": "cu-rs",
+   "bestand": "stroomroute-koper-redchris-stewart.json",
+   "grondstof": "koper",
+   "label": "Red Chris → Stewart",
+   "aan": true,
+   "noot": "M31 · golf 17 (2026-10-31): Red Chris-concentraat gaat per truck via BC 37 en 37A naar de kade van Stewart Bulk Terminals; keten stopt op de kade. Let op: wegkm niet gepubliceerd (315,6 km indicatie); kade-anker Stewart (bulkterminal) aannemelijk; keten stopt op de kade (geen zeebeen)."
   }
  ],
  "uitgesloten": [

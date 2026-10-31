@@ -94,6 +94,73 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # ── Routebrief koper-asarel-pirdop, been b1 (LICHTE werkwijze M31 golf 17) ──
+    # Truck koperconcentraat Asarel-Medet (Panagyurishte) -> Aurubis Pirdop-smelter: Asarel-mijnweg (OSM way 178849344, tertiary, access=private)
+    # -> II-37 (Panagyurski kolonii -> Zlatitsa) -> I-6 (Zlatitsa -> Pirdop) -> smelter. Geen wegkm gepubliceerd: hemelsbreed 20 km,
+    # OSRM-indicatie 31,8 km (haalbaarheidstoets); de +-15%-toets is indicatie. Zonder eindToegangPrivaat gaat de route via Panagyurishte (47 km).
+    "koper-asarel-pirdop-asarel-pirdop": {
+        "via": [
+            ("Asarel-Medet - concentrator (anker cu-asarel-laad)", (24.1517, 42.5419)),
+            ("Asarel-mijnweg (tertiary, access=private), Sredna Gora-flank", (24.1629, 42.5819)),
+            ("II-37 ten noordwesten van de aansluiting van de Asarel-mijnweg", (24.1654, 42.6258)),
+            ("II-37 ten zuiden van Zlatitsa", (24.1298, 42.6875)),
+            ("I-6 tussen Zlatitsa en Pirdop (ten zuiden van de smelter)", (24.1457, 42.7087)),
+            ("Aurubis Pirdop - smelter (anker cu-pirdop-smelter)", (24.1590, 42.7200)),
+        ],
+        "id": "cu-asarel-pirdop",
+        "naam": "Asarel-Medet -> Aurubis Pirdop (truck; mijnweg -> II-37 -> I-6)",
+        "extracts": ["bulgarije"],
+        "refs": ["37", "6"],
+        "gepubliceerdKm": 32,
+        "bronnoot": "geen wegkm; hemelsbreed 20 km, OSRM-indicatie 31,8 km (haalbaarheidstoets) -- lengtetoets is indicatie",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,   # Asarel-mijnweg (tertiary, access=private) is de directe weg plant -> II-37
+        "uit": "koper-asarel-pirdop-weg-asarel-pirdop.geojson",
+    },
+    # ── Routebrief pgm-harjavalta-norilsk, been b1 (LICHTE werkwijze M31 golf 17) ──
+    # Truck Norilsk Nickel Harjavalta (raffinaderij, PGM-houdende koperkoek) -> Pori Mantyluoto noordkade over vt 2 (Harjavalta - Nakkila - Pori).
+    # Via-punten uit grafiet-harjavalta-heroya-fortum-pori, alleen het kopanker is het NN-raffinaderijanker. Geen wegkm gepubliceerd (hemelsbreed 45,3 km).
+    "pgm-harjavalta-norilsk-nn-pori": {
+        "via": [
+            ("Norilsk Nickel Harjavalta raffinaderij (anker, pgm-nn-harjavalta)", (22.1225, 61.3188)),
+            ("vt 2 west van Harjavalta",                                          (22.0253, 61.3446)),
+            ("vt 2 bij Nakkila",                                                  (21.9161, 61.4068)),
+            ("vt 2 / vt 8 west van Pori",                                         (21.7600, 61.4792)),
+            ("vt 2 noordoost van Pori",                                           (21.5906, 61.5494)),
+            ("Pori Mantyluoto noordkade (anker, pgm-pori-kade)",                  (21.4966, 61.5959)),
+        ],
+        "id": "pgm-nn-pori", "naam": "Norilsk Nickel Harjavalta -> Pori Mantyluoto (vt 2)",
+        "extracts": ["finland"], "refs": ["2"],
+        "gepubliceerdKm": None, "bronnoot": "hemelsbreed 45,3 km, geen wegkm gepubliceerd",
+        "vensterKm": 25,
+        "uit": "pgm-harjavalta-norilsk-weg-nn-pori.geojson",
+    },
+    # ── Routebrief ree-ellesmereport-kokomo, been b3 (LICHTE werkwijze M31 golf 17) ──
+    # Truck lanthaan-nikkellegering Port Newark Container Terminal -> Haynes Kokomo Manufacturing Facility (2000 W Defenbaugh St):
+    # I-280/I-80 (NJ) -> I-80 (PA, Ohio) -> I-76 -> I-71 -> US-30 -> I-75 -> US-33 -> SR-29/SR-67 -> SR-18 (brief §2/§4).
+    # Geen wegkm gepubliceerd: hemelsbreed 1.014 km, OSRM-indicatie 1.145 km (1.160 km met via-punten); de +-15%-toets is indicatie.
+    "ree-ellesmereport-kokomo-newark-kokomo": {
+        "via": [
+            ("Port Newark Container Terminal (anker ree-newark-ct)", (-74.1499, 40.6873)),
+            ("I-80/I-280-overgang, Parsippany-regio NJ", (-74.3745, 40.8592)),
+            ("I-80 midden Pennsylvania (Clearfield-regio)", (-78.0533, 40.9760)),
+            ("I-80/I-76-overgang, Youngstown-regio Ohio", (-80.8384, 41.1100)),
+            ("I-76/I-71-overgang, Medina Ohio", (-81.9077, 41.0240)),
+            ("US-30 bij Mansfield Ohio", (-82.5610, 40.7739)),
+            ("I-75 tussen Lima en Wapakoneta Ohio", (-84.1304, 40.6771)),
+            ("SR-18 ten oosten van Kokomo (Indiana)", (-85.3275, 40.5517)),
+            ("Haynes International, Kokomo Manufacturing Facility, 2000 W Defenbaugh St (anker ree-haynes-kokomo)", (-86.1594, 40.4691)),
+        ],
+        "id": "ree-ellesmereport-kokomo-b3",
+        "naam": "Port Newark -> I-80 -> I-76 -> I-71 -> US-30 -> I-75 -> US-33 -> SR-18 -> Haynes Kokomo",
+        "extracts": ["us-new-jersey", "us-pennsylvania", "us-ohio", "us-indiana"],
+        "refs": ["I-80", "I-76", "I-71", "US-30", "I-75", "US-33", "SR-29", "SR-18"],
+        "gepubliceerdKm": 1145,
+        "bronnoot": "geen operator-wegkm; hemelsbreed 1.014 km, OSRM-indicatie 1.145 km (brief §2 b3) -- lengtetoets is indicatie",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,   # containerterminalwegen Port Newark kunnen access=private dragen
+        "uit": "ree-ellesmereport-kokomo-weg-newark-kokomo.geojson",
+    },
     # -- Routebrief uranium-gronau-vasteras, been b1 (LICHTE werkwijze M31 golf 16) --
     # Truck verrijkt UF6 Urenco Gronau -> Rostock Seehafen (veerterminal Rostock-Trelleborg): A31 noord naar AK A31/A30,
     # A30 naar AK Lotte/Osnabrueck, A1 via Bremer Kreuz en Maschener Kreuz, Hamburg-Ost (A1/A24), A1 naar AK Luebeck,
@@ -1041,7 +1108,293 @@ PROFIELEN = {
         "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
         "uit": "koper-quellaveco-ilo-weg-quellaveco-engieilo.geojson",
     },
+    # -- Routebrief koper-redchris-stewart, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: truck Red Chris-concentrator -> Stewart Bulk Terminals: Mine Access Road -> BC 37 zuid -> Meziadin Jct -> BC 37A -> Dyke Road.
+    # GEEN wegkm gepubliceerd: hemelsbreed 202 km, OSRM-indicatie 315,6 km; de km-toets is een indicatie, geen norm.
+    "koper-redchris-stewart-redchris-stewart": {
+        "via": [
+            ("Red Chris-molenhal (anker cu-redchris-laad)",         (-129.7650, 57.7297)),
+            ("Mine Access Road x BC 37 (Tatogga)",                  (-129.9949, 57.7094)),
+            ("BC 37 bij Bob Quinn Lake",                            (-130.2501, 56.9731)),
+            ("Meziadin Junction",                                   (-129.3073, 56.1007)),
+            ("BC 37A, Bear Pass",                                   (-129.6695, 56.1062)),
+            ("BC 37A x Dyke Road",                                  (-129.9794, 55.9483)),
+            ("Stewart Bulk Terminals, kade (anker cu-stewart-kade)", (-129.9955, 55.9180)),
+        ],
+        "id": "cu-redchris-stewart",
+        "naam": "Red Chris -> Stewart Bulk Terminals (Mine Access Road -> BC 37 -> BC 37A -> Dyke Road)",
+        "extracts": ["canada"],
+        "refs": ["37", "37A"],
+        "gepubliceerdKm": 316,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 202 km; OSRM-indicatie 315,6 km",
+        "vensterKm": 75,
+        "eindToegangPrivaat": True,
+        "corridorKlassen": ["unclassified"],   # Mine Access Road (18 km) is OSM unclassified, buiten de 12-km-eindzone
+        "uit": "koper-redchris-stewart-weg-redchris-stewart.geojson",
+    },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # Routebrief gas-deadhorse-fairbanks, been b1 (LICHTE werkwijze M31 golf 17).
+    # b1: truck LNG (Harvest, Deadhorse) -> IGU-opslag Fairbanks over de Spine Road, Dalton Hwy (AK 11), Elliott Hwy (AK 2), Steese Expy.
+    # Gepubliceerd ca. 500 mijl = ca. 805 km (AK Business Magazine); haalbaarheidsrun 806,3 km. Kop is een Spine Road-vertex (onzeker).
+    "gas-deadhorse-fairbanks-deadhorse-fairbanks": {
+        "via": [
+            ("Spine Road, Deadhorse (anker gas-deadhorse-lng, onzeker)", (-148.3990, 70.2465)),
+            ("Coldfoot, Dalton Hwy",                                    (-150.1776, 67.2544)),
+            ("Yukon-rivierbrug, Dalton Hwy",                            (-149.7185, 65.8787)),
+            ("Dalton zuideinde / Elliott Hwy",                          (-148.6613, 65.4906)),
+            ("IGU-opslagtank zuid-Fairbanks (anker gas-fairbanks-igu)", (-147.7992, 64.8044)),
+        ],
+        "id": "gas-deadhorse-fairbanks",
+        "naam": "Deadhorse LNG -> IGU Fairbanks (Spine Road -> Dalton Hwy AK 11 -> Elliott Hwy AK 2 -> Steese Expy)",
+        "extracts": ["us-alaska"],
+        "refs": ["AK 11", "AK 2"],
+        "gepubliceerdKm": 805,
+        "bronnoot": "ca. 500 mijl = 805 km (AK Business Magazine, feb 2026); eigen routering 806,3 km in de haalbaarheidsrun",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "gas-deadhorse-fairbanks-weg-deadhorse-fairbanks.geojson",
+    },
+    # Routebrief diamant-antwerpen-shanghai, been b3 (LICHTE werkwijze M31 golf 17).
+    # Truck Shanghai Pudong (PVG) vrachtplatform -> China Diamond Exchange Center (SDE),
+    # Pudian Rd, Lujiazui — binnenstedelijk Pudong, geen via-punten (brief §4), patroon
+    # goud-pamp-shanghai-pvg-sge. Geen gepubliceerde wegkm: hemelsbreed 27,7 km, OSRM-demo
+    # 43,7 km (indicatie); de +-15%-toets is dus een indicatie. PVG-anker ligt airside
+    # (brief §7): het wegbeen begint op de eerste openbare weg, de bak-functie sluit af
+    # met een korte airside-stippel.
+    "diamant-antwerpen-shanghai-pvg-sde": {
+        "via": [
+            ("Shanghai Pudong International Airport vrachtplatform (PVG) (anker, dia-pvg-cargo)", (121.8025, 31.1335)),
+            ("China Diamond Exchange Center (SDE), Pudian Rd, Lujiazui (anker, dia-sde)", (121.5320, 31.2265)),
+        ],
+        "id": "dia-pvg-sde-weg",
+        "naam": "Shanghai Pudong vrachtplatform -> China Diamond Exchange Center (binnenstedelijk Pudong)",
+        "extracts": ["china"],
+        "refs": [],
+        "gepubliceerdKm": 28,
+        "bronnoot": "hemelsbreed 27,7 km, geen wegkm; OSRM-demo 43,7 km (indicatie, brief §2/§7)",
+        "vensterKm": 30,
+        "uit": "diamant-antwerpen-shanghai-weg-pvg-sde.geojson",
+    },
+    # -- Routebrief grafiet-okanjande-yanbu, been b1b (LICHTE werkwijze M31 golf 17) --
+    # b1b: D2515-aansluiting -> D2515 -> B1 -> Otjiwarongo (einde = vertex 4058 van de kopie b1c). Geen wegkm gepubliceerd: OSRM-indicatie 21,3 km.
+    "grafiet-okanjande-yanbu-okanjande-otjiwarongo": {
+        "via": [
+            ("D2515-aansluiting, begin profiel", (16.6018, -20.6005)),
+            ("D2515 naar B1",                    (16.6841, -20.5109)),
+            ("Otjiwarongo B1, einde profiel",    (16.650971, -20.461853)),
+        ],
+        "id": "gr-okanjande-otjiwarongo",
+        "naam": "D2515-aansluiting -> Otjiwarongo B1 (D2515 -> B1)",
+        "extracts": ["namibie"],
+        "refs": ["D2515", "B1"],
+        "gepubliceerdKm": 21,
+        "bronnoot": "geen wegkm gepubliceerd; OSRM-indicatie 21,3 km (put -> Otjiwarongo 23,5 km)",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "grafiet-okanjande-yanbu-weg-okanjande-otjiwarongo.geojson",
+    },
+    # -- Routebrief diamant-nyurba-mirny, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: truck Nakyn-complex (Nyurba GOK) -> zimnik (winterweg, OSM unclassified) Nakyn -> 98K-004 -> Tsjernysjevski -> Mirny.
+    # GEEN echte wegkm: hemelsbreed 316 km (ru-wiki 300-320 km), OSM-scan 553,4 km = indicatie; km-toets geen norm.
+    # corridorKlassen unclassified: de winterweg is OSM highway=unclassified (winter_road=yes); zonder die klasse geen pad.
+    "diamant-nyurba-mirny-nakyn-mirny": {
+        "via": [
+            ("Nakyn-verwerkingscomplex Nyurba GOK (anker dia-nyurba-nakyn)", (117.0916, 65.0150)),
+            ("zimnik Nakyn westwaarts", (115.4536, 64.4898)),
+            ("zimnik Nakyn middenstuk", (113.6092, 64.2865)),
+            ("knoop zimnik - 98K-004", (112.4899, 64.3170)),
+            ("98K-004 Sadynski-nasleg", (112.5788, 64.1385)),
+            ("98K-004 bij Tsjernysjevski", (112.5236, 63.0090)),
+            ("98K-004 Mirny-aanloop", (113.3721, 62.7979)),
+            ("Mir-put / Alrosa-complex Mirny (anker dia-mirny-mijn)", (113.9842, 62.5258)),
+        ],
+        "id": "dia-nyurba-mirny-weg",
+        "naam": "Nakyn-complex (Nyurba GOK) -> Mir-complex Mirny (zimnik Nakyn -> 98K-004 via Tsjernysjevski)",
+        "extracts": ["rusland-verrehoosten"],
+        "refs": ["98К-004"],
+        "corridorKlassen": ["unclassified"],
+        "gepubliceerdKm": 316,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 316 km (ru-wiki 300-320 km NO van Mirny); OSM-route 553,4 km (indicatie)",
+        "vensterKm": 90,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified"],
+        "uit": "diamant-nyurba-mirny-weg-nakyn-mirny.geojson",
+    },
+    # -- Routebrief pgm-ngezi-selous, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: Zimplats Ngezi-complex (aannemelijk) -> Ngezi-Selous Road (Platinum Highway) -> A5-rotonde Selous -> servicewegen naar de SMC-smelter.
+    # Gepubliceerd 77-78 km (Wikipedia, Implats; gemeten vanaf de put 3,7 km zuidelijker), 80 (2009-brochure); proefmeting vanaf het complex 73,8 km.
+    "pgm-ngezi-selous-ngezi-smc": {
+        "via": [
+            ("Zimplats Ngezi-complex (anker pgm-ngezi-concentrator, aannemelijk)", (30.3498, -18.6335)),
+            ("Ngezi-Selous Road midden (Platinum Highway)",                       (30.4027, -18.3299)),
+            ("Selous-rotonde A5 (Halfway)",                                       (30.4276, -18.0795)),
+            ("Zimplats SMC (anker pgm-zimplats-smc)",                             (30.4334, -18.0328)),
+        ],
+        "id": "pgm-ngezi-selous-weg",
+        "naam": "Ngezi-complex -> SMC (Ngezi-Selous Road / Platinum Highway, A5-rotonde Selous; aannemelijk: één bron voor de modaliteit)",
+        "extracts": ["zimbabwe"],
+        "refs": [],
+        "gepubliceerdKm": 77,
+        "bronnoot": "77-78 km (Wikipedia A5 road, Implats-factsheet) gemeten vanaf de put (3,7 km zuidelijker); 80 km (2009-brochure).",
+        "vensterKm": 40,
+        "uit": "pgm-ngezi-selous-weg-ngezi-smc.geojson",
+    },
+    # -- Routebrief koper-mountmilligan-vancouver, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: Mount Milligan concentrator -> Community Connector FSR / Finlay-Causeway FSR (OSM tertiary, deels unpaved) -> Hwy 39 -> Mackenzie Yard.
+    # GEEN wegkm-bron: hemelsbreed 59 km, OSRM 97,9 km (indicatie). FSR als highway=track: stippel met reden (centraal te beoordelen).
+    "koper-mountmilligan-vancouver-mountmilligan-mackenzie": {
+        "via": [
+            ("Mount Milligan concentrator (anker cu-mountmilligan-laad)", (-124.0130, 55.1099)),
+            ("oost van de mijn, FSR (Community Connector)",               (-123.9530, 55.1290)),
+            ("FSR halverwege (Finlay-Causeway)",                          (-123.6470, 55.0980)),
+            ("FSR nabij Mackenzie",                                       (-123.2480, 55.1150)),
+            ("toegang Mackenzie, Hwy 39",                                 (-123.1060, 55.2800)),
+            ("Mackenzie Yard (anker cu-mackenzie-verlaad)",               (-123.1498, 55.3050)),
+        ],
+        "id": "cu-mountmilligan-mackenzie",
+        "naam": "Mount Milligan -> Mackenzie Yard (Community Connector FSR, Finlay-Causeway FSR, Hwy 39)",
+        "extracts": ["canada"],
+        "refs": ["39"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 59 km, OSRM 97,9 km (indicatie); de +-15%-toets is een indicatie, geen norm.",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "eindToegangPrivaat": True,
+        "uit": "koper-mountmilligan-vancouver-weg-mountmilligan-mackenzie.geojson",
+    },
+    # -- Routebrief lithium-uis-yangtze, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: Uis-mijngebied (OSM Uis Tin Mine, proxy; onzeker) -> C36/C35 west -> Henties Bay (C34 kustweg) -> B2/MR44 bij Swakopmund -> C14 -> NamPort Walvis Bay.
+    # GEEN wegkm-bron: hemelsbreed 194 km, eigen OSM-routering 237,9 km, Africamining noemt ca. 220 km (geen wegkm). +-15%-toets = indicatie.
+    "lithium-uis-yangtze-uis-walvisbay": {
+        "via": [
+            ("Uis-mijngebied (anker li-uis-mijn, onzeker proxy)",     (14.8787, -21.2408)),
+            ("uitgang mijnweg C36/C35 west van Uis",                  (14.8546, -21.2301)),
+            ("Henties Bay C35/C34",                                   (14.2588, -22.0687)),
+            ("B2/MR44 bij Swakopmund",                                (14.5276, -22.6783)),
+            ("NamPort Walvis Bay (anker li-walvisbay-kade)",          (14.4840, -22.9465)),
+        ],
+        "id": "li-uis-walvisbay",
+        "naam": "Uis -> Walvis Bay-kade (C36/C35, Henties Bay, C34, B2/MR44, C14; aannemelijk: één bron voor modus en haven)",
+        "extracts": ["namibie"],
+        "refs": ["C36", "C35", "C34", "B2", "MR44", "C14"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 194 km, eigen routering 237,9 km (brief), Africamining 'ca. 220 km' is geen wegkm; "
+                    "de +-15%-toets is een indicatie, geen norm.",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "lithium-uis-yangtze-weg-uis-walvisbay.geojson",
+    },
+    # -- Routebrief nikkel-zimplats-baltimore, been b3 (LICHTE werkwijze M31 golf 17; stroom-id nikkel-zimplats-springs) --
+    # b3: Springs IRS -> Wit Road (R29) -> Heidelberg -> N3 (Villiers, Harrismith, Mooi River, Pinetown) -> Durban DCT Pier 2.
+    # GEEN wegkm-bron: hemelsbreed 478 km, OSRM 559,3 km; N3 Heidelberg-Durban 501 km (Wikipedia) + Springs-Heidelberg ~35 + havenstraten ~20. +-15% = indicatie.
+    "nikkel-zimplats-springs-springs-durban": {
+        "via": [
+            ("Impala Refining Services, Springs (anker ni-springs-irs)", (28.4437, -26.2227)),
+            ("Wit Road (R29-oost Springs-Heidelberg)",                    (28.4573, -26.3584)),
+            ("Heidelberg N3-oprit",                                       (28.3783, -26.4946)),
+            ("Villiers N3",                                               (28.6268, -27.0414)),
+            ("Harrismith N3-bypass",                                      (29.1322, -28.2664)),
+            ("Mooi River N3",                                             (30.0021, -29.2076)),
+            ("Pinetown N3 bij M7-afslag",                                 (30.8010, -29.8235)),
+            ("Durban DCT Pier 2, noordkade (anker ni-durban-kade)",       (31.0160, -29.8790)),
+        ],
+        "id": "ni-springs-durban",
+        "naam": "Springs IRS -> Wit Road -> Heidelberg -> N3 -> Durban DCT Pier 2",
+        "extracts": ["zuid-afrika"],
+        "refs": ["N3"],
+        "gepubliceerdKm": 559,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 478 km; OSRM 559,3 km; N3 Heidelberg-Durban 501 km (Wikipedia) + ~55",
+        "vensterKm": 40,
+        "uit": "nikkel-zimplats-springs-weg-springs-durban.geojson",
+    },
+    # -- Routebrief goud-orcopampa-asahibrampton, been b1 (LICHTE werkwijze M31 golf 17) --
+    # b1: Orcopampa-plant (Buenaventura) -> NO-kop SPOR-gravelbaan, AR-660 -> AR-655. 5,56 wegkm (OSRM, geen officiele opgave); hemelsbreed 4,4.
+    "goud-orcopampa-asahibrampton-plant-spor": {
+        "via": [
+            ("Orcopampa-verwerkingsplant (Buenaventura) - anker au-orcopampa-plant", (-72.3297, -15.2718)),
+            ("AR-660 / AR-655-splitsing ZO-rand Orcopampa", (-72.3381, -15.2729)),
+            ("AR-655 halverwege", (-72.3345, -15.2964)),
+            ("Orcopampa Airport SPOR, apron NO-kop - anker au-orcopampa-spor", (-72.3471, -15.3077)),
+        ],
+        "id": "goud-orcopampa-asahibrampton-plant-spor-weg",
+        "naam": "Orcopampa-plant -> AR-660 -> AR-655 -> SPOR-apron (NO-kop)",
+        "extracts": ["peru"],
+        "refs": ["AR-660", "AR-655"],
+        "gepubliceerdKm": 5.56,
+        "bronnoot": "OSRM-demo-router 5,555 km (geen officiele opgave); hemelsbreed 4,4 km",
+        "vensterKm": 10,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-orcopampa-asahibrampton-weg-plant-spor.geojson",
+    },
+    # -- Routebrief goud-jacobina-asahibrampton, benen b1 en b5 (LICHTE werkwijze M31 golf 17) --
+    # b1: Jacobina-plant -> weg bij SSA-vrachtloods, BR-324 -> BA-526 (Estrada CIA Aeroporto). 340 km gepubliceerd (AIF Pan American); OSRM 345,4.
+    # Aannemelijk: geen bron voor het vervoer. BR-324 loopt in Feira de Santana door de stad: via 4 en 5 pinnen de contorno.
+    "goud-jacobina-asahibrampton-jacobina-ssa": {
+        "via": [
+            ("Jacobina-plant (Pan American Silver) - anker au-jacobina-plant", (-40.5195, -11.2575)),
+            ("BR-324 ZO van Jacobina", (-40.4529, -11.2090)),
+            ("BR-324 bij Capim Grosso/Riachao do Jacuipe", (-39.7863, -11.4727)),
+            ("BR-324 ca 160 km", (-39.3706, -11.8211)),
+            ("BR-324 N van Feira de Santana", (-39.0632, -12.0051)),
+            ("BR-324 ZO van Feira de Santana (contorno)", (-38.8867, -12.3093)),
+            ("BR-324 Simoes Filho-zone", (-38.6028, -12.5302)),
+            ("knoop BR-324 / BA-526 (afslag luchthaven)", (-38.4085, -12.8206)),
+            ("weg bij SSA-vrachtloods (Rua Eng. Jose Afonso Teixeira)", (-38.3278, -12.9152)),
+        ],
+        "id": "goud-jacobina-asahibrampton-jacobina-ssa-weg",
+        "naam": "Jacobina-plant -> BR-324 -> BA-526 -> weg bij SSA-vrachtloods",
+        "extracts": ["brazilie"],
+        "refs": ["BR-324", "BA-526"],
+        "gepubliceerdKm": 340,
+        "bronnoot": "340 km Jacobina-Salvador (AIF Pan American Silver FY2025); OSRM 345,4 km (brief b1).",
+        "vensterKm": 40,
+        "uit": "goud-jacobina-asahibrampton-weg-jacobina-ssa.geojson",
+    },
+    # b5: YYZ landside (openbare weg W van de cargo-loodsen) -> Asahi Refining Canada, 130 Glidden Rd, Brampton.
+    # Britannia Rd E -> Courtneypark Dr E -> Dixie Rd -> Steeles Ave E -> West Dr -> Glidden Rd. GEEN gepubliceerde wegkm: hemelsbreed 7,1 km, OSRM 13,0.
+    "goud-jacobina-asahibrampton-yyz-asahi": {
+        "via": [
+            ("YYZ landside, openbare weg W van de cargo-loodsen (Britannia Road East)", (-79.6345, 43.6786)),
+            ("Britannia Rd E / Courtneypark Dr E", (-79.6315, 43.6660)),
+            ("Courtneypark Dr E / Dixie Rd", (-79.6581, 43.6636)),
+            ("Dixie Rd / Steeles Ave E", (-79.7011, 43.6952)),
+            ("West Dr", (-79.7062, 43.6907)),
+            ("Asahi Refining Canada, 130 Glidden Rd, Brampton - anker au-asahi-brampton", (-79.7196, 43.6907)),
+        ],
+        "id": "goud-jacobina-asahibrampton-yyz-asahi-weg",
+        "naam": "Toronto Pearson landside -> Britannia Rd E -> Dixie Rd -> Steeles Ave E -> Glidden Rd -> Asahi Brampton",
+        "extracts": ["canada"],
+        "refs": [],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm: hemelsbreed 7,1 km; OSRM 13,0 km (indicatie)",
+        "vensterKm": 15,
+        "corridorKlassen": ["unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "goud-jacobina-asahibrampton-weg-yyz-asahi.geojson",
+    },
+    # -- Routebrief uranium-novosibirsk-akkuyu, been b3 (LICHTE werkwijze M31 golf 17) --
+    # Truck VVER-1200-splijtstof Adana (ADA) landside -> Akkuyu NPP (Buyukeceli): O-51 (ring N van Mersin) -> D400 via
+    # Silifke. Bron (NEI/Turks ministerie van Energie 2023-04): "drie trucks over land" van Adana Airport naar de site.
+    # GEEN gepubliceerde wegkm: hemelsbreed 182,6 km; OSRM-indicatie 212; gepubliceerdKm None.
+    # Zonder via-punten kiest de router D400 dwars door Mersin; de twee via-punten houden de lijn op O-51 en de kustweg.
+    "uranium-novosibirsk-akkuyu-ada-akkuyu": {
+        "via": [
+            ("ADA landside, Dumlupinar (secondary) oostrand luchthaven", (35.2989, 36.9834)),
+            ("O-51 noordelijke ring buiten Mersin", (34.6413, 36.8893)),
+            ("D400 oost van Silifke", (34.0336, 36.3815)),
+            ("Akkuyu NPP - anker u-akkuyu", (33.5411, 36.1444)),
+        ],
+        "id": "uranium-novosibirsk-akkuyu-b3",
+        "naam": "Adana (ADA) landside -> O-51 -> D400 via Mersin en Silifke -> Akkuyu NPP",
+        "extracts": ["turkije"],
+        "refs": ["O-51", "D400"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 182,6 km; OSRM-indicatie 212 km",
+        "vensterKm": 55,
+        "eindToegangPrivaat": True,
+        "uit": "uranium-novosibirsk-akkuyu-weg-ada-akkuyu.geojson",
+    },
     # ── Routebrief grafiet-novonix-nevada, been b1 in TWEE scans (LICHTE werkwijze M31 golf 16) ──
     # Truck (werkaanname, aannemelijk: een bron) NOVONIX Riverside (Chattanooga) -> Tesla Gigafactory 1 / Panasonic Energy Nevada (TRIC),
     # ~3.800 km: I-24 -> I-40 W (Memphis, OKC, Amarillo, Albuquerque, Flagstaff, Kingman) -> US-93 -> I-11/US-95 N -> US-95A -> I-80 -> USA Parkway.

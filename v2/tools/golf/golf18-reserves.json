@@ -1,0 +1,482 @@
+{
+ "bron": "golf 17 (wf_a55afd0d-28b), 2026-10-31: reserve-assen uit de tweede grote ontwerpronde, toets uit golf 17 waar aanwezig",
+ "reserves": [
+  {
+   "id": "zilver-collahuasi-tongling",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE golf 18: Collahuasi naar Tongling, met als nieuw voor zilver een OSM-gekarteerde slurryleiding en Yangtze-binnenvaart, afnemer TNMG (grote Chinese edelmetaalproducent)",
+    "keten_id": "zilver-collahuasi-tongling",
+    "van_site": "Collahuasi, pompstation kop van de leiding (Tarapaca, Chili)",
+    "naar_site": "Tongling Nonferrous (TNMG), kade van de smelter (Anhui, China)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Collahuasi pompstation",
+      "naar": "Puerto Patache",
+      "corridor": "slurryleiding Collahuasi-Patache, OSM-tracé (laatste 736 m stippel)",
+      "km_indicatie": "192,4 doorgetrokken plus 0,9 stippel",
+      "geometrie_tool": "letterlijke kopie benen 1-2 van stroomroute-koper-collahuasi-tongling.json (OSM-pipeline)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Patache-pier",
+      "naar": "Patache-zeeknoop",
+      "corridor": "haven-aanloop Patache",
+      "km_indicatie": "77,9 stippel",
+      "geometrie_tool": "stippel (kopie koper-brief)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Patache",
+      "naar": "Yangtze-monding (31.42704, 121.47618)",
+      "corridor": "Stille Oceaan",
+      "km_indicatie": "18.511,6 (MARNET)",
+      "geometrie_tool": "MARNET (kopie)"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "binnenvaart",
+      "van": "Yangtze-monding",
+      "naar": "Tongling-kade (30.98656, 117.7718)",
+      "corridor": "Yangtze, oostgeul",
+      "km_indicatie": "516,5",
+      "geometrie_tool": "kopie rivierbeen-yangtze-tongling-gedeeld.geojson"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Collahuasi pompstation -20.97783, -68.64395",
+     "Puerto Patache -20.8027, -70.1989",
+     "Yangtze-monding 31.42704, 121.47618",
+     "Tongling-kade 30.98656, 117.7718"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "chili",
+      "aanwezig": true
+     },
+     {
+      "regio": "china",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja, 192,4 km gekarteerd (laatste 736 m niet)",
+    "jaarvolume_en_bron": "Geen zilvercijfer gevonden. Sitelaag w-collahuasi-ag zet 180 t Ag/j, een afgeleide schatting (onzeker). Wikipedia: ongeveer 560 kt Cu in 2018, zilver niet genoemd.",
+    "risico": "Zilver in Collahuasi-concentraat niet gebrond en de TNMG-afname is per koper-brief aannemelijk; zonder een zilvercijfer is dit geen sterke as. Overlap met escondida-guixi qua Chili-China-verhaal.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Collahuasi",
+     "v2/design/routebrieven/koper-collahuasi-tongling.md (D1, D7)"
+    ]
+   },
+   "toets": {
+    "keten_id": "zilver-collahuasi-tongling",
+    "haalbaar": true,
+    "problemen": [
+     "Niet via bak_stromen.sh gebakken: er is geen functie en geen losse geojson voor de zee- en stippelbenen, alleen leidingbeen-collahuasi-patache.geojson en rivierbeen-yangtze-tongling-gedeeld.geojson.",
+     "Zilvercijfer niet primair gebrond; sitelaag 180 t Ag is een afgeleide schatting. Afnemer TNMG is aannemelijk (Nantong-lospartijen, geen Collahuasi-contract).",
+     "Stippel 78,8 km (haven-aanloop Patache 77,9 plus 0,9) op 19.300 km: 0,4%, acceptabel en bevestigd (zeeknoop 4663 op 77,9 km)."
+    ],
+    "aanpassing": "Snij benen 2 tot 5 uit stroomroute-koper-collahuasi-tongling.json (lonlat) tot FeatureCollections: stippel 0,9 km, stippel 77,9 km, zee 18.511,6 km van -20.2313,-70.6311 naar 31.5100,121.4187, daarna het gedeelde rivierbeen. Laat de kathode-trucks en foliefabriek (b6, b7) weg. Volume: leeg laten tenzij Glencore of Anglo een Ag-cijfer geeft; noem dan de bron.",
+    "overlap": "Geometrie 100% koper-collahuasi-tongling b1-b5; thema Chili-China deelt het met zilver-escondida-guixi maar mijn, haven en smelter verschillen. Yangtze-deel gedeeld met koper (letterlijke kopie). Id is nieuw.",
+    "webcheck": "Zilver bestaat: GlobalData-schatting 8,65 Moz in 2023 (mining-technology five-largest-silver-mines-chile) en Kadoa-kwartaaltabel ca 414-444 koz, beide secundair en niet bevestigd. Glencore 44%, Anglo 44%. Primair cijfer in Glencore Production Report nog op te zoeken."
+   }
+  },
+  {
+   "id": "zilver-salaresnorte-pamp",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 5,
+    "as": "RESERVE golf 18: Salares Norte goud-zilverdoré per truck en vrachtvlucht naar de LBMA-raffinaderij MKS PAMP (doré naar raffinaderij, rol die zilver mist)",
+    "keten_id": "zilver-salaresnorte-pamp",
+    "van_site": "Salares Norte, verwerkingsplant (Gold Fields, Atacama, Chili)",
+    "naar_site": "MKS PAMP, Castel San Pietro (Zwitserland), aannemelijk: 20-F noemt India of Zwitserland",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Salares Norte-plant",
+      "naar": "Santiago SCL vrachtterminal",
+      "corridor": "C-13/C-173/C-167, Diego de Almagro, C-17, Ruta 31/30, Ruta 5",
+      "km_indicatie": "1.137,9 gemeten; 183 tot Diego de Almagro (20-F); geen totale wegkm",
+      "geometrie_tool": "letterlijke kopie uit goud-salaresnorte-pamp"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "lucht",
+      "van": "SCL",
+      "naar": "ZRH",
+      "corridor": "vrachtvlucht grootcirkel, aannemelijk",
+      "km_indicatie": "11.957,6 grootcirkel",
+      "geometrie_tool": "maak_luchtbeen (kopie), plus twee stippels airside last mile 0,15 en 0,91 km"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "ZRH-vrachtplatform",
+      "naar": "MKS PAMP",
+      "corridor": "A1/A4, A14, A2 Gotthard",
+      "km_indicatie": "263,3 gemeten",
+      "geometrie_tool": "letterlijke kopie van goud-pamp-shanghai geojson, omgekeerd"
+     }
+    ],
+    "ankers_hergebruik": [
+     "au-salaresnorte-plant -26.0220, -68.8917",
+     "au-scl-vrachtterminal -33.4105, -70.7874",
+     "au-zrh-vrachtterminal 47.4647, 8.5492",
+     "au-pamp-raffinaderij 45.8546, 9.0025 (goud-salaresnorte-pamp)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "chili",
+      "aanwezig": true
+     },
+     {
+      "regio": "zwitserland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "n.v.t. (geen leiding)",
+    "jaarvolume_en_bron": "Geen zilvercijfer gevonden. 2025: 396,5 koz Au-eq (12,3 t Au-eq) waarin zilver zit (Gold Fields 20-F FY2025); zilver-oz in het 20-F nog op te zoeken (bestand te groot voor WebFetch).",
+    "risico": "Zilveraandeel onbekend, vervoerswijze en luchthaven niet gebrond, eindpunt Zwitserland of India open. Geometrie is 100% gelijk aan goud-salaresnorte-pamp: alleen zinvol als het zilveraandeel groot blijkt.",
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/1172724/000162828026021904/gfi-20251231.htm",
+     "v2/design/routebrieven/goud-salaresnorte-pamp.md"
+    ]
+   },
+   "toets": {
+    "keten_id": "zilver-salaresnorte-pamp",
+    "haalbaar": true,
+    "problemen": [
+     "Vlucht en luchthaven niet gebrond; het 20-F zegt alleen doré naar MKS-raffinaderijen in India of Zwitserland (FCA, geen vervoerswijze). Zwitserland en SCL-ZRH zijn aannemelijk, dezelfde aanname als het gebakken goud-salaresnorte-pamp.",
+     "De MKS-raffinage- en offtake-overeenkomst loopt tot 31 december 2026 (verlenging mogelijk): over twee maanden verlopen.",
+     "Ontwerp zegt omgekeerde kopie van de ZRH-PAMP weg, maar goud-salaresnorte-pamp-weg-zrh-pamp.geojson ligt al in de juiste richting."
+    ],
+    "aanpassing": "Kopieer letterlijk de vijf benen van goud-salaresnorte-pamp: weg-plant-scl.geojson, lucht-scl-zrh.geojson, weg-zrh-pamp.geojson (NIET nogmaals omkeren), plus stippels 0,15 en 0,91 km uit het goud-json. Alle beennamen met aannemelijk en in de titel het eindpunt Zwitserland (aannemelijk; India open). Volume 2.268.179 oz Ag verkocht in 2025 = 70,5 t. Laatste in de wachtrij.",
+    "overlap": "Geometrie 100% goud-salaresnorte-pamp. Bevat hetzelfde Zürich-PAMP-slot als goud-pamp-shanghai. Geen zilverstroom met een luchtbeen bestaand. Id is nieuw.",
+    "webcheck": "Gold Fields 20-F FY2025 (sec.gov gfi-20251231): Salares Norte verkocht 363.573 oz goud en 2.268.179 oz zilver in 2025; produceert ook zilverdoré; doré naar MKS PAMP, India of Zwitserland; overeenkomst geldig tot 31-12-2026. Geverifieerd in de tekst."
+   }
+  },
+  {
+   "id": "kolen-kolubara-nikolatesla",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Balkan-bruinkool, Kolubara-bekken naar TENT Obrenovac per industrieel spoor (nieuw land en regio op de kolenbol)",
+    "keten_id": "kolen-kolubara-nikolatesla",
+    "van_site": "RB Kolubara, Tamnava-West/veld C/E/G bij Lazarevac (Servie): alleen bedrijfspunt 44.4289, 20.2864 (Wikipedia), mijnlaadstation te zoeken; Wikipedia noemt laadstation Tamnava",
+    "naar_site": "TPP Nikola Tesla A en B (EPS), Obrenovac, 44.6717, 20.1572 (Wikipedia)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Kolubara-laadstation (Tamnava/Vreoci)",
+      "naar": "TENT-kolenontvangst Obrenovac",
+      "corridor": "Industriele spoorlijn Obrenovac-Vreoci",
+      "km_indicatie": "32,45 km gepubliceerd (Wikipedia, Obrenovac-Vreoci); proefroute raw1op1 32,8 km (+1 procent) vanaf het bedrijfspunt",
+      "geometrie_tool": "toets_spoorroute (BAKE_SUFFIX=-raw, extract servie); 0 via-punten"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "servie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "n.v.t.",
+    "jaarvolume_en_bron": "RB Kolubara 22,6 Mt in 2025, ca. 90 procent naar TENT (Wikipedia RB Kolubara); spoorlijn tot 37 Mt per jaar. Eenheid Mt bruinkool per jaar.",
+    "risico": "Bruinkool, geen steenkool (zoals Hambach); het bekken heeft geen enkel punt-anker met bron: 44.4289, 20.2864 is het bedrijfspunt, geen pit. Productiecijfers tussen bronnen 22 tot 40 Mt.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/TPP_Nikola_Tesla",
+     "https://en.wikipedia.org/wiki/RB_Kolubara",
+     "https://www.eps.rs/eng/Poslovanje-ugalj/Pages/Kopovi.aspx"
+    ]
+   },
+   "toets": {
+    "keten_id": "kolen-kolubara-nikolatesla",
+    "haalbaar": true,
+    "problemen": [
+     "Bruinkool, geen steenkool; product in de beennaam vermelden.",
+     "Start 44.4289,20.2864 is het bedrijfs- en Vreoci-punt, geen pit; op z13 staat daar wel de verwerkings- en spooremplacement-installatie.",
+     "Productiecijfers lopen uiteen (22 tot 40 Mt)."
+    ],
+    "aanpassing": "Houd de ontwerp-run: 44.4289,20.2864 naar 44.6717,20.1572, geen via-punten, extract servie: 32,5 km tegen 32,45 gepubliceerd (+0,2%), snaps 0,13 en 0,07 km, geen omkeringen. Optionele aanvullende marker: OSM-pit Tamnava West 44.4804,20.2139 (named coal quarry, hoge zekerheid) als bron-gelegd; ankerstatus Vreoci aannemelijk tot een z15-blik.",
+    "overlap": "Geen overlap; alleen goud-luchtlegs (goud-metalor-istanbul) over Servie.",
+    "webcheck": "Ontwerp bronnen niet herhaald; wel gecontroleerd in OSM (Overpass): Tamnava West/Zuid/Oost, Veliki Crljeni en polen E/D/B als landuse=quarry resource=coal, TENT A plant op 44.6717,20.1583. Spoorroute volgt de Tamnava-corridor naar Obrenovac."
+   }
+  },
+  {
+   "id": "gas-draupner-dunkerque",
+   "g": "gas",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Noors gas naar Frankrijk, Franpipe (Draupner naar Duinkerke)",
+    "keten_id": "gas-draupner-dunkerque",
+    "van_site": "Draupner E-riser (Gassco), Noordzee, 58.1845,2.4463",
+    "naar_site": "Ontvangstterminal Port Ouest, Duinkerke (Gassco/Elengy)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Draupner E",
+      "naar": "Duinkerke Port Ouest",
+      "corridor": "Franpipe, 42 inch, onderzees",
+      "km_indicatie": "OSM 833,4 km (way 174152585 800,1 + 903860200 33,3); gepubliceerd 840 km",
+      "geometrie_tool": "OSM-pipeline: twee ways stikken"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "belgie",
+      "aanwezig": true
+     },
+     {
+      "regio": "fr-nord-pas-de-calais",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja, volledig: 800,1 km in belgie-extract plus 33,3 km tot 51.0406,2.2493 in het Franse extract.",
+    "ankers_hergebruik": [
+     "geen; zelfde Noorse bron als gas-karsto-dornum maar ander land en andere leiding"
+    ],
+    "jaarvolume_en_bron": "Capaciteit 19,6 bcm/j (Wikipedia); werkelijke doorzet niet gevonden.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Franpipe",
+     "https://www.gassco.no"
+    ],
+    "risico": "Derde Noorse leiding naar Noordwest-Europa; verhaal is nieuw land, niet nieuwe bron. Doorzet en aandeel in Franse invoer niet gebronnen.",
+    "prioriteit_noot": "Reserve golf 18; Zeepipe I (Sleipner naar Zeebrugge, OSM 812 km, 15 bcm/j) is de tweelingleiding."
+   },
+   "toets": {
+    "keten_id": "gas-draupner-dunkerque",
+    "haalbaar": true,
+    "problemen": [
+     "OSM-einde 51.0406,2.2493 ligt op het strand naast het Port Ouest-kanaal (z15); de terminal ligt landinwaarts ten zuiden en wordt niet getekend",
+     "Doorzet niet gebronnen; derde Noorse leiding naar Noordwest-Europa, verhaal is een nieuw land (Frankrijk)"
+    ],
+    "aanpassing": "Stik de ways 174152585 (800,1 km, 102 punten) en 903860200 (33,3 km) tot 833,4 km (gepubliceerd 840 km, -0,8%); begin 58.1845,2.4463, einde 51.0406,2.2493, beide Gassco-ways. Zet aanlanding Duinkerke-Port Ouest als anker, geen terminal. Noteer capaciteit 19,6 bcm per jaar en 'doorzet onbekend'.",
+    "overlap": "Geen: Franpipe deelt geen way met karsto-dornum (Europipe II), nyhamna-easington (Langeled) of de Zeebrugge-ketens",
+    "webcheck": "OSM-API: way 174152585 man_made=pipeline, name Franpipe, operator Gassco, substance gas, diameter 1067; omwegfactor 1,05; geen landdoorsnijding in NE 10m."
+   }
+  },
+  {
+   "id": "gas-brighousebay-gormanston",
+   "g": "gas",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: Brits gas naar Ierland, Interconnector 2 (Brighouse Bay naar Gormanston)",
+    "keten_id": "gas-brighousebay-gormanston",
+    "van_site": "Compressorstation Brighouse Bay (Gas Networks Ireland UK), Dumfries and Galloway, 54.7890,-4.1096",
+    "naar_site": "Gormanston, County Meath (Gas Networks Ireland), 53.6386,-6.2227",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Brighouse Bay",
+      "naar": "Gormanston",
+      "corridor": "UK-Ireland Interconnector 2 (IC2), 30 inch, onder de Ierse Zee",
+      "km_indicatie": "OSM 193,1 km (ways 440429967, 440424760, 902882373, 902882374, 174267017); gepubliceerd 192 km",
+      "geometrie_tool": "OSM-pipeline: vijf ways stikken"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "groot-brittannie",
+      "aanwezig": true
+     },
+     {
+      "regio": "ierland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja voor de zeeleiding. Beattock naar Brighouse Bay (36 inch overland) is maar deels gekarteerd en blijft buiten de lijn.",
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "jaarvolume_en_bron": "Niet gevonden; Gas Networks Ireland publiceert Moffat-instroom, nog op te zoeken. Opgelet: Kinsale-veld sloot in 2020 (Wikipedia).",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/United_Kingdom%E2%80%93Ireland_natural_gas_interconnectors",
+     "https://www.gasnetworks.ie"
+    ],
+    "risico": "Zonder jaarvolume is de keten zwak; zeeleiding in OSM ligt als twee parallelle strengen (IC1 en IC2), kies IC2 en noem IC1 in de beennaam. Brits aanvoerpunt Beattock niet getekend.",
+    "prioriteit_noot": "Reserve golf 18; brengt Ierland voor het eerst op de gasbol."
+   },
+   "toets": {
+    "keten_id": "gas-brighousebay-gormanston",
+    "haalbaar": true,
+    "problemen": [
+     "Brits aanvoerstuk Beattock naar Brighouse Bay niet gekarteerd en niet getekend",
+     "Jaarvolume niet gevonden; Kinsale-veld sloot 2020",
+     "IC1 loopt parallel in OSM: in de beennaam IC2 noemen en IC1 vermelden"
+    ],
+    "aanpassing": "Stik in deze volgorde 174267017 (0,9 km), 902882374 (30,3), 902882373 (53,1), 440424760 (107,6), 440429967 (1,2) tot 193,1 km (gepubliceerd 192 km, +0,6%); begin 53.6386,-6.2227 (Gormanston, z15: omheind AGI-terrein), einde 54.7890,-4.1096 (Brighouse Bay compressor, z15 gezien); richting Brighouse Bay naar Gormanston omdraaien. Geen stippel.",
+    "overlap": "Geen: geen bestaande stroom met Ierland of de Ierse Zee; geen gedeeld been met andere ontwerpketens",
+    "webcheck": "OSM-API: alle vijf ways man_made=pipeline, IC2, operator Gas Networks Ireland, diameter 600, substance gas; omwegfactor 1,03 en land alleen bij beide aanlandingen (2,7 km NE 10m). Volume nog te zoeken (Gas Networks Ireland of Moffat-instroom); zonder bron 'volume onbekend'."
+   }
+  },
+  {
+   "id": "olie-omisalj-pancevo",
+   "g": "olie",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: JANAF-tak naar het Servische NIS Pancevo (sancties)",
+    "keten_id": "olie-omisalj-pancevo",
+    "van_site": "JANAF-terminal Omisalj (eiland Krk)",
+    "naar_site": "NIS-raffinaderij Pancevo (Servie), coordinaat nog op te zoeken",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Omisalj",
+      "naar": "Sisak",
+      "corridor": "JANAF Omisalj-Sisak",
+      "km_indicatie": "177 km OSM, letterlijke kopie van olie-omisalj-szazhalombatta",
+      "geometrie_tool": "kopie bestaande leidingbeen"
+     },
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Sisak",
+      "naar": "Pancevo",
+      "corridor": "JANAF-oostelijke tak via Slavonski Brod en Sotin, Novi Sad",
+      "km_indicatie": "155 + 144 + 64 km OSM = 363 km, gepubliceerde lengte niet gevonden; OSM stopt ca. 20 km voor Pancevo (45.01, 20.54)",
+      "geometrie_tool": "OSM-pipeline, eigen maak_leidingbeen_olie_omisalj_pancevo.py"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Omisalj-JANAF-anker uit olie-omisalj-szazhalombatta (letterlijk)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "kroatie",
+      "aanwezig": true
+     },
+     {
+      "regio": "servie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja: Jadranski naftovod, Sisak-Slavonski Brod 155 km, Slavonski Brod-Sotin 144 km, Servie-deel 64 km, naam in OSM",
+    "jaarvolume_en_bron": "Geen cijfer gecontroleerd; NIS-doorzet via JANAF moet nog uit JANAF/NIS-bron.",
+    "risico": "Gedeeld Omisalj-Sisak-stuk maakt de nieuwe schakel kort (360 km); Servische kop mist ca. 20 km; sanctietoestand NIS 2025-26 niet gecontroleerd; Pancevo-coordinaat ontbreekt.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Adria_pipeline",
+     "https://www.janaf.hr"
+    ]
+   },
+   "toets": {
+    "keten_id": "olie-omisalj-pancevo",
+    "haalbaar": true,
+    "problemen": [
+     "Ontwerp mist 14,5 km: way 1165593222 (45.1712, 17.9515 tot 45.1673, 18.1274) sluit Sisak-Brod aan op Brod-Sotin; naad daar 0,3 km.",
+     "Rond Novi Sad zit een rechte naad van ca. 1,2 km door het NIS-terrein tussen way 1165598505 en 1165601440.",
+     "OSM stopt op 45.0054, 20.5401, 22,5 km voor de raffinaderij (4% van de keten als stippel).",
+     "Sanctierisico: JANAF-transport naar NIS loopt op OFAC-licenties, de laatste bekende tot 30 sept 2026."
+    ],
+    "aanpassing": "BINDEND: 177,1 km Omisalj-Sisak als LETTERLIJKE kopie, gestikt met dezelfde ways A1 eerste negen (276522179 tot 275828600) uit de cache van olie-omisalj-szazhalombatta; dan ways 847788794, 1165593222, 879643929, 1057915310, 1055540678, 1165598505, naad 1,2 km, 1165601440, 1055818470 (samen ca. 365,7 km); dan stippel 22,5 km naar NIS Pancevo 44.8310, 20.6860 (z14 op raffinaderij) met reden OSM-leiding eindigt. Omisalj-anker 45.2208, 14.5331 hergebruiken.",
+    "overlap": "177 van ca. 565 km (31%) is gedeeld met olie-omisalj-szazhalombatta, als letterlijke kopie benoemen; Sisak-Gola-tak niet meenemen. Nieuw deel is 366 km, id is nieuw.",
+    "webcheck": "n1info.rs (29 aug 2026): OFAC verlengt JANAF-licentie voor transport naar NIS tot 30 sept; ogj.com: Pancevo herstart jan 2026 na stop op 2 dec 2025, MOL neemt 56,15% NIS. Status na 30 sept 2026 niet gecontroleerd: noem als open punt."
+   }
+  },
+  {
+   "id": "goud-elpenon-argorheraeus",
+   "g": "goud",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve golf 18, Chili naar Zwitserland: El Peñón-doré (Pan American Silver) naar Argor-Heraeus",
+    "keten_id": "goud-elpenon-argorheraeus",
+    "van_site": "El Peñón-mijn (Pan American Silver), ca 165 km ZO van Antofagasta",
+    "naar_site": "Argor-Heraeus SA, Mendrisio (Ticino)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "El Peñón-plant",
+      "naar": "Antofagasta (ANF) vrachtloods",
+      "corridor": "wegen naar Antofagasta, nog te bepalen",
+      "km_indicatie": "hemelsbreed ca 165 (AIF), geen wegkm",
+      "geometrie_tool": "maak_stroombeen_weg (extract chili)"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "lucht",
+      "van": "ANF",
+      "naar": "SCL vrachtterminal",
+      "corridor": "binnenlandse vrachtvlucht, aannemelijk",
+      "km_indicatie": "ca 1.109 grootcirkel",
+      "geometrie_tool": "maak_luchtbeen"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "lucht",
+      "van": "SCL",
+      "naar": "MXP vrachtterminal",
+      "corridor": "vrachtvlucht SCL naar MXP, aannemelijk",
+      "km_indicatie": "ca 11.863 grootcirkel",
+      "geometrie_tool": "maak_luchtbeen"
+     },
+     {
+      "fase": "D",
+      "modaliteit": "truck",
+      "van": "MXP vrachtterminal",
+      "naar": "Argor-Heraeus, Mendrisio",
+      "corridor": "A8/A9 naar Chiasso",
+      "km_indicatie": "ca 70, omgekeerde kopie goud-argor-mumbai been 1",
+      "geometrie_tool": "kopie van het geojson van goud-argor-mumbai"
+     }
+    ],
+    "ankers_hergebruik": [
+     "au-scl-vrachtterminal -33.4105,-70.7874 (goud-salaresnorte-pamp)",
+     "au-air-mxp 45.6142,8.7186",
+     "au-ref-argor 45.8749,8.9818"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "chili",
+      "aanwezig": true
+     },
+     {
+      "regio": "italie",
+      "aanwezig": true
+     },
+     {
+      "regio": "zwitserland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt (geen leiding)",
+    "jaarvolume_en_bron": "3,6 t Au/j: El Peñón 115,2 koz goud in 2025 (Pan American AIF FY2025, gedeeld door 32,15); dore naar MKS PAMP en Argor-Heraeus.",
+    "risico": "Het AIF noemt twee raffinaderijen (PAMP en Argor-Heraeus) zonder verdeling; Argor is een keuze. Keten lijkt op goud-salaresnorte-pamp (Chili naar Ticino); nieuw zijn alleen mijn, Antofagasta en Argor als ontvanger. Geen bron voor het vervoer.",
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/771992/000077199226000019/aif-2025ye.htm"
+    ]
+   },
+   "toets": {
+    "keten_id": "goud-elpenon-argorheraeus",
+    "haalbaar": true,
+    "problemen": [
+     "AIF 2025: contracten met MKS PAMP en Argor-Heraeus zonder verdeling; Argor is een aanname, 50% kans per zending.",
+     "Geen bron voor het vervoer; de route ANF-SCL-MXP is aannemelijk, een rechtstreekse truck naar SCL (patroon goud-salaresnorte-pamp) kan ook.",
+     "AIF zegt 165 km van Antofagasta (hemelsbreed 124 km); OSRM geeft 197 km naar ANF-luchthaven (Ruta Minera 102 km), wegklasse onbekend.",
+     "ANF-vrachtanker niet gelegd (z15: apron en kleine terminal, geen herkenbare loods)."
+    ],
+    "aanpassing": "Plantanker Wikidata Q16969356 -24.4108,-69.4962 (z14: plant en gebouwen naast tailingsdam, put ten noorden), status bron-gelegd. Beennaam vluchten: aannemelijk, een van twee contractraffinaderijen (PAMP of Argor). Km in brief: hemelsbreed 124 en OSRM 197 voor het wegbeen, geen gepubliceerde wegkm; AIF-165 noemen als bronwaarde zonder norm. SCL-anker -33.4105,-70.7874 en MXP-anker 45.6142,8.7186 en Argor 45.8749,8.9818 letterlijk hergebruiken; laatste been is een omgekeerde kopie van goud-argor-mumbai been 1 (76 km, niet 70). ANF-vrachtanker bepalen op z15-z16 of been B vervalt.",
+    "overlap": "Deelt het SCL-anker met goud-salaresnorte-pamp (vlucht SCL-MXP is nieuw, andere mijn en raffinaderij); alleen het Argor-MXP-been is gekopieerd, dus geen herhaling van een bestaande stroom.",
+    "webcheck": "Bevestigd: Pan American AIF 2025 (sec.gov aif-2025ye.htm): El Penon 115,2 koz goud in 2025, doré naar MKS PAMP en Argor-Heraeus, mijn 165 km ZO van Antofagasta."
+   }
+  }
+ ]
+}
