@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (5e) (M31 golf 19 live `?v=151`; poort = telefoontest)*
+*Last updated: 2026-11-01 (telefoontest `?v=151` goed; golf 19 af)*
 
 
 ## 🔴 NIEUW 2026-10-31 (5e) — na M31 golf 19 live
 
-1. **Lars test `?v=151` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=151 — 34 nieuwe ketens (o.a. Chedde → Seadrift, Luleå → Himeji, Rio Tuba → Hachinohe, Ganzhou → Florence KY, Zhaobao → Leduc, Tharisa → Waterval, Pilgangoora → Morowali, Pirquitas → Buenos Aires, Stockton → Lyttelton, Tricastin → Lingen, Maghreb-Europa omgekeerd, Goldfields Gas, Tangguh → Putian, Uzen → Samara, Forties, RRP, Gaborone → Dubai, Macraes → Perth Mint, Cerro Verde → Huelva) én de 12 geregenereerde gloedsites. Goed → golf 19 af.
+1. ~~Lars test `?v=151` op de telefoon~~ ✅ 2026-11-01 "Ziet er goed uit op de telefoon" → golf 19 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=151 — 34 nieuwe ketens (o.a. Chedde → Seadrift, Luleå → Himeji, Rio Tuba → Hachinohe, Ganzhou → Florence KY, Zhaobao → Leduc, Tharisa → Waterval, Pilgangoora → Morowali, Pirquitas → Buenos Aires, Stockton → Lyttelton, Tricastin → Lingen, Maghreb-Europa omgekeerd, Goldfields Gas, Tangguh → Putian, Uzen → Samara, Forties, RRP, Gaborone → Dubai, Macraes → Perth Mint, Cerro Verde → Huelva) én de 12 geregenereerde gloedsites. Goed → golf 19 af.
 2. **Golf 20:** klein uit de 6 reserves (`golf20-reserves.json`: zilver-endeavor-adelaide, gas-inkoo-kiili (Balticconnector), olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul; `maak_golf18.py`-patroon, ~18 agenten) of een vierde grote ontwerpronde (`maak_golf19.py`-patroon uit `golf19-script.mjs` + `golf19-resultaat.json`).
 3. **Checklist-regel:** na elke sitelaag-gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel`, en de driftcheck design ↔ gloednodes (bakhandleiding §19) draaien.
 4. **De 61 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; overweeg een simplify-stap voor bronbestanden > 500 KB (chedde-seadrift 1.053 KB).
