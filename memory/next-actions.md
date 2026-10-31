@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (M31 golf 17 live `?v=148`; poort = telefoontest)*
+*Last updated: 2026-10-31 (2e) (telefoontest `?v=148` goed; golf 16 en 17 af)*
 
 
 ## 🔴 NIEUW 2026-10-31 — na M31 golf 17 live
 
-1. **Lars test `?v=148` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=148 — 30 nieuwe ketens (o.a. Okanjande → Yanbu, Kasiya → Nacala, Zimplats → Baltimore, Ochang → Narva, Harjavalta → Norilsk, NAL → Robstown, Deadhorse → Fairbanks, Greenstream, Mountain Valley, Angarsk → Ulaanbaatar, IKL, Nyurba → Mirny, Antwerpen → Shanghai, Jacobina/Orcopampa → Brampton, Mount Milligan, Asarel, Red Chris). Goed → golf 16 én 17 af.
+1. ~~Lars test `?v=148` op de telefoon~~ ✅ 2026-10-31 "Ziet er goed uit vanaf de telefoon" → golf 16 én 17 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=148 — 30 nieuwe ketens (o.a. Okanjande → Yanbu, Kasiya → Nacala, Zimplats → Baltimore, Ochang → Narva, Harjavalta → Norilsk, NAL → Robstown, Deadhorse → Fairbanks, Greenstream, Mountain Valley, Angarsk → Ulaanbaatar, IKL, Nyurba → Mirny, Antwerpen → Shanghai, Jacobina/Orcopampa → Brampton, Mount Milligan, Asarel, Red Chris). Goed → golf 16 én 17 af.
 2. **Vóór een volgende grote golf:** informatietextuur verdubbelen (`TEX_BREEDTE` + `MAX_BENEN`, golf 8-les; bundel 1.735 van 2.048) · `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter · de `\n`-controle (`grep -c 'route \n' v2/tools/bak_stromen.sh` = 0) naast `git diff | grep '^-'` in de checklist.
 3. **Golf 18 (klein):** 14 getoetste reserves (`golf17-reserves.json` + `golf18-reserves.json`) → `maak_golf15.py`-patroon (~45 agenten). Of een derde grote ontwerpronde (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`).
 4. **De 40 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` (42,5 km van het Ngezi-anker) en `w-grib` nakijken in de sitelagen.
