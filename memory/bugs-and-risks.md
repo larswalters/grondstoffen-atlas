@@ -5,7 +5,7 @@
 ## 🔴 NIEUW 2026-10-31 — uit M31 golf 17
 
 83. **Een bake-agent herschreef twee BESTAANDE functies in `bak_stromen.sh` met letterlijke `\n`-tekens** (koper TFM → Durban, Las Bambas): `bash -n` slaagt, maar bash leest `\n` buiten aanhalingstekens als `n` → `route n --graaf …`. Hersteld uit HEAD. De regel "je raakt alleen je eigen functie" houdt bij gelijktijdige edits niet; de controle `git diff | grep '^-'` + `grep -c 'route \n'` is nu verplicht na elke golf.
-84. **Informatietextuur 2.048 benen, bundel 1.735:** een volgende 3-per-grondstof-ronde (~85–100 benen) past nog net; verdubbelen vóór de ronde erna, liever nu.
+84. **Informatietextuur 2.048 benen, bundel 1.735 (✅ 2026-10-31 verdubbeld naar 4.096, ?v=149):** een volgende 3-per-grondstof-ronde (~85–100 benen) past nog net; verdubbelen vóór de ronde erna, liever nu.
 85. **Brief en id kunnen uit elkaar lopen** als een agent tijdens het schrijven het eindpunt verlegt (nikkel-zimplats-baltimore.md bij id -springs); centraal hernoemd. De keuring meldde het, de bake-agent niet.
 86. **Volumes van golf 17: 2 bron, 22 indicatie, 6 onbekend** (pre-FID Okanjande, pre-productie Kasiya, Harjavalta → Norilsk stil, twee diamantstromen zonder karaatcijfer, Ochang → Narva monsterschaal). Totaal 40 onbekend van 479.
 87. **Sitelaag-coördinaten die ver van het keten-anker liggen zonder dat het dezelfde faciliteit is:** w-zimplats-ngezi 42,5 km van het Ngezi-anker (waarschijnlijk verkeerde site-coördinaat), w-grib (golf 16). Apart bronwerk; niet gelijkgetrokken.

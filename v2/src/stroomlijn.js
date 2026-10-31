@@ -38,7 +38,7 @@ import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js
 import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
 import { LIJNSTIJL } from "./stroomstijl.js?v=134";
 
-export const TEX_BREEDTE = 2048;    // benen per textuur (golf 8: 1.024 → 2.048, want 272 stromen = ~1.100 benen); de baker faalt luid boven dit getal
+export const TEX_BREEDTE = 4096;    // benen per textuur (golf 8: 1.024 → 2.048; na golf 17: 2.048 → 4.096, want 479 stromen = 1.735 benen); de baker faalt luid boven dit getal
 export const VLAG_AAN = 1;          // bit 0: de HUD heeft dit been aan
 export const VLAG_FIJN = 2;         // bit 1: het fijn-object tekent dit been nu
 
