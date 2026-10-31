@@ -1,5 +1,14 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-31 (3e) (M31 golf 18, de 14 reserve-assen, live `?v=150`: 493 stromen)*
+*Last updated: 2026-10-31 (4e) (M31 golf 19, derde grote ontwerpronde zonder kobalt, live `?v=151`: 527 stromen)*
+
+
+## Stand 2026-10-31 (4e) — M31 golf 19 live: 527 stromen (`?v=151`)
+
+- **Op de bol (`?v=151`, commit `5893bd4`):** 34 nieuwe ketens, 493 → 527, over 13 grondstoffen (grafiet/nikkel/zilver/kolen/uranium/gas/olie/diamant/goud 3, ree/pgm/lithium 2, koper 1; kobalt overgeslagen). Bundel 527 stromen · 1.877 benen · 547 stippel · 1.725 markers · 451 sites · **452 met volume**; desktop + 375 px 527/527, 0 fouten. Informatietextuur 4.096 (bundel 1.877).
+- **Hoe:** `v2/tools/golf/maak_golf19.py` = `maak_golf17.py` uit `golf17-script.mjs` + `golf17-resultaat.json` (28 afgewezen én afgebroken assen met reden), geen reserves vooraf. `wf_1d63a26f-716`: 128 agenten op Sonnet, 25,6 M tokens, 121 min, 0 uitval, 34/34 gebakken en gekeurd (2 goed, 32 met bevindingen); 34 van 39 gekozen, 31 in de toets afgewezen. **6 reserves in `golf20-reserves.json`** (zilver-endeavor-adelaide, gas-inkoo-kiili (Balticconnector), olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul).
+- **Centraal (bakhandleiding §19):** `centraal_check.py` 34/34, 3 vlaggen (chedde-seadrift 1.053 KB, ganzhou-florence 562 KB, pirquitas 305 KB); `registreer_golf.py` weigert nu een id buiten `[a-z0-9-]`, `sitelaag_check.py` neemt ids als argument; sitelaag 15 kandidaten, w-westinghouse-springfields (3,1 km) en w-tharisa (18 km) gelijkgetrokken; 34 noten; gedeelde tools schoon (879 toegevoegde regels, 0 verwijderd, 0 letterlijke `\n`). **⚠️ Vondst: de sitelaag-gelijktrekkingen sinds golf 11 (12 sites) bereikten de gloednodes en dus de bundel nooit** — `voeg_sites_toe.py --grondstof <gs> --schrijf` was nooit opnieuw gedraaid; nu voor zeven grondstoffen geregenereerd (12 coördinaten, 0 gewichten), driftcheck design ↔ gloednodes gebouwd.
+- **Volumes:** leesagent → `v2/design/volumes/golf19.json` (0 bron, 18 indicatie, 16 onbekend; mijn-/systeemtotalen als bovengrens) → totaal 70 bron / 396 indicatie / 61 onbekend → `bundel`, `bundel-check` ok. Kosten: week 12 → 21% (Fable 14%).
+- **Poort:** telefoontest van Lars `?v=151`.
 
 
 ## Stand 2026-10-31 (3e) — M31 golf 18 live: 493 stromen (`?v=150`)

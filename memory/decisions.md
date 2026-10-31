@@ -1,5 +1,15 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (3e) (M31 golf 18, live `?v=150`)*
+*Last updated: 2026-10-31 (4e) (M31 golf 19, live `?v=151`)*
+
+
+## 2026-10-31 (4e) — M31 golf 19: derde grote ontwerpronde
+
+- **2026-10-31 · ✅ LARS — "Ja, ontwerpronde"** (5-uur 24%, week 12%). → golf 19, 34 ketens, live `?v=151`; 6 reserves voor golf 20.
+- **2026-10-31 · De sitelaag-json is de bron, de gloednodes zijn afgeleid: na elke gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel`**, plus de driftcheck design ↔ gloednodes. Reden: 12 gelijktrekkingen sinds golf 11 bereikten de bundel nooit.
+- **2026-10-31 · Gekopieerde benen erven hun bevindingen** (JNB → Rand Refinery, YYZ → Brampton, jwaneng-b3): noot, geen reparatie; de kopie is bewust.
+- **2026-10-31 · OSM-leidingen met weinig knopen blijven doorgetrokken** (Maghreb-Europa Tanger → Taza, 4 knopen): OSM-geometrie is de bron, de noot zegt het.
+- **2026-10-31 · Grote bronbestanden (tot 1.053 KB) zijn geen reden tot herbak;** de bundel bakt L0/L1, een simplify-stap in de bronbestanden blijft een optie.
+
 
 
 ## 2026-10-31 (3e) — M31 golf 18: de 14 reserve-assen

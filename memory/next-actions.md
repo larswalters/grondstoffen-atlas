@@ -1,11 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (4e) (telefoontest `?v=150` goed; golf 18 af)*
+*Last updated: 2026-10-31 (5e) (M31 golf 19 live `?v=151`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-31 (3e) — na M31 golf 18 live
+## 🔴 NIEUW 2026-10-31 (5e) — na M31 golf 19 live
+
+1. **Lars test `?v=151` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=151 — 34 nieuwe ketens (o.a. Chedde → Seadrift, Luleå → Himeji, Rio Tuba → Hachinohe, Ganzhou → Florence KY, Zhaobao → Leduc, Tharisa → Waterval, Pilgangoora → Morowali, Pirquitas → Buenos Aires, Stockton → Lyttelton, Tricastin → Lingen, Maghreb-Europa omgekeerd, Goldfields Gas, Tangguh → Putian, Uzen → Samara, Forties, RRP, Gaborone → Dubai, Macraes → Perth Mint, Cerro Verde → Huelva) én de 12 geregenereerde gloedsites. Goed → golf 19 af.
+2. **Golf 20:** klein uit de 6 reserves (`golf20-reserves.json`: zilver-endeavor-adelaide, gas-inkoo-kiili (Balticconnector), olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul; `maak_golf18.py`-patroon, ~18 agenten) of een vierde grote ontwerpronde (`maak_golf19.py`-patroon uit `golf19-script.mjs` + `golf19-resultaat.json`).
+3. **Checklist-regel:** na elke sitelaag-gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel`, en de driftcheck design ↔ gloednodes (bakhandleiding §19) draaien.
+4. **De 61 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; overweeg een simplify-stap voor bronbestanden > 500 KB (chedde-seadrift 1.053 KB).
+5. **Open bevindingen golf 19 (geen actie, wel weten):** Luleå-anker onzeker (9 km van een marina-anker elders); Hachinohe-kade niet gelegd; Hyuga → Shunan 27,8% stippel; Maghreb-Europa-leiding Tanger → Taza uit 4 OSM-knopen; Springfields-lijn bestaat sinds eind 2014 niet meer (historisch); Port Kavkaz-veerboot niet meer in dienst; Epsilon Brunswick County nog niet gebouwd; twee terugloop-lussen in uranium-tricastin-lingen.
+
+
+## 🟢 2026-10-31 (3e) — AFGEHANDELD (golf 19 gedraaid) — na M31 golf 18 live
 
 1. ~~Lars test `?v=150` op de telefoon~~ ✅ 2026-10-31 "Ziet er goed uit" → golf 18 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=150 — 14 nieuwe ketens (zilver Sindesar Khurd → Dariba, Collahuasi → Tongling en Salares Norte → MKS PAMP; kolen Sugar Camp → Convent, Kostenko → Temirtau en Kolubara → Nikola Tesla; gas Moomba → Wilton, Draupner → Duinkerke en Brighouse Bay → Gormanston; olie Edmonton → Westridge, Fos-sur-Mer → Feyzin en Omišalj → Pančevo; goud Geita → Rand Refinery en El Peñón → Argor-Heraeus). Goed → golf 18 af.
-2. **Volgende golf = ontwerpronde zonder kobalt** (`maak_golf17.py`-patroon uit `golf17-script.mjs` + `golf17-resultaat.json`; 2 of 3 per grondstof naar limiet) — er liggen geen reserves meer. **Vooraf:** `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter; de `\n`-telling in Python (bakhandleiding §18) in de checklist.
+2. ~~**Volgende golf = ontwerpronde zonder kobalt**~~ ✅ 2026-10-31 golf 19 gedraaid (128 agenten, 121 min, 34/34, live `?v=151`); id-weigering en `--ids` gebouwd. **Vooraf:** `registreer_golf.py` laten weigeren bij een id met spatie/hoofdletter; de `\n`-telling in Python (bakhandleiding §18) in de checklist.
 3. **De 45 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; `sitelaag_check.py` een `--ids`-vlag geven (na registratie kijkt hij nu naar niets).
 4. **Open bevindingen golf 18 (geen actie, wel weten):** zilver-salaresnorte-pamp 467 KB en goud-elpenon-argorheraeus 384 KB (lange truckbenen); Edmonton-lijn begint 7 km vóór de Trans Mountain-terminal (OSM-pijpeinde); gas-brighousebay-gormanston alleen IC2 (IC1 parallel, Brits aanvoerstuk ontbreekt); olie-fos-feyzin bronconflict 24/34 inch; kolen-kostenko mijnstatus tegenstrijdig; twee zilverlijnen dubbelen de koper-/goudlijn; olie-omisalj-pancevo aanvoer stil sinds de sancties van okt 2025.
 

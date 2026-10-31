@@ -1,5 +1,15 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-31 (3e) (M31 golf 18, live `?v=150`)*
+*Last updated: 2026-10-31 (4e) (M31 golf 19, live `?v=151`)*
+
+
+## 🔴 NIEUW 2026-10-31 (4e) — uit M31 golf 19
+
+92. **De sitelaag-gelijktrekkingen bereikten de bundel nooit (golf 11–19, 12 sites):** `v2/design/<gs>-sitelaag.json` werd bijgewerkt, maar de bundel leest `v2/data/gloednodes-<gs>.json`, die alleen `voeg_sites_toe.py --schrijf` vult (gloednodes-goud stond op 2026-09-28). Hersteld voor zeven grondstoffen (12 coördinaten, 0 gewichten). Driftcheck per id gebouwd; hoort in de checklist (§19). Nog niet als repo-tool vastgelegd.
+93. **Bronbestanden tot 1.053 KB** (grafiet-chedde-seadrift; ree-ganzhou-florence 562 KB): de repo groeit, de browser niet. Simplify-stap voor bronbestanden > 500 KB overwegen.
+94. **Volumes van golf 19: 0 bron, 18 indicatie, 16 onbekend** — geen enkele brief geeft een cijfer voor precies de lijn; de indicaties zijn mijn-/systeemtotalen (bovengrens). Totaal 61 onbekend van 527.
+95. **Historische of stilgevallen lijnen op de bol:** uranium-springfields-gronau (UF6 per veerboot tot eind 2014), uranium-portkavkaz-kozloduy (laatste TVEL-zending, veerboot uit dienst), grafiet-lakecharles-brunswick (fabriek nog niet gebouwd), olie-omisalj-pancevo (aanvoer stil sinds okt 2025). De weg is echt, de lading niet (meer) — zoals Balama D/E; staat in de noten.
+96. **Tijdelijke bash-parsefouten in `bak_stromen.sh` tijdens parallelle appends** (twee agenten meldden het): zelfherstellend, `bash -n` na afloop schoon; de controle achteraf blijft de poort.
+
 
 
 ## 🔴 NIEUW 2026-10-31 (3e) — uit M31 golf 18

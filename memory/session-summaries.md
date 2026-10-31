@@ -2572,3 +2572,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf18.json` (0 bron, 9 indicatie, 5 onbekend) → totaal 70/378/45 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 150; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §18 (+ §17-weergave hersteld). Reserve-golf ≈ 0,48 M tokens per keten. Kosten: 5-uur 12 → 24%, week 9 → 12%.
 - **Volgende:** telefoontest `?v=150` · ontwerpronde zonder kobalt (geen reserves meer) · `registreer_golf.py` id-weigering · 45 onbekende volumes · w-zimplats-ngezi en w-grib · `sitelaag_check.py --ids`.
+
+## 2026-10-31 (4e) — M31 golf 19: derde grote ontwerpronde (3 per grondstof) zonder kobalt, 527 stromen live `?v=151`
+
+**TL;DR:** Lars: *"Ja, ontwerpronde"*. `maak_golf19.py` = golf 17-patroon, geen reserves vooraf. `wf_1d63a26f-716`: 128 agenten op Sonnet, 25,6 M tokens, 121 min, 0 uitval, 34/34 gebakken en gekeurd; 6 reserves → `golf20-reserves.json`. Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=151 (commit `5893bd4`), bundel 527 stromen · 1.877 benen · 1.725 markers · 452 met volume. LAR-663 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 34/34, 3 vlaggen (tot 1.053 KB); `registreer_golf.py` id-weigering en `sitelaag_check.py --ids` gebouwd en gebruikt; sitelaag: Springfields en Tharisa gelijkgetrokken; 34 noten; gedeelde tools schoon. **Vondst:** de gelijktrekkingen sinds golf 11 bereikten de gloednodes nooit → `voeg_sites_toe.py` voor zeven grondstoffen opnieuw gedraaid (12 coördinaten).
+- **Volumes:** leesagent → `golf19.json` (0 bron, 18 indicatie, 16 onbekend) → totaal 70/396/61 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 151; desktop + 375 px 0 fouten.
+- **Lessen:** bakhandleiding §19. Kosten: week 12 → 21%.
+- **Volgende:** telefoontest `?v=151` · golf 20 klein uit 6 reserves of een vierde grote ronde · `voeg_sites_toe.py --schrijf` na elke gelijktrekking · 61 onbekende volumes · w-zimplats-ngezi en w-grib.
