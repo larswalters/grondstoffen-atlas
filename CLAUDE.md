@@ -6,8 +6,8 @@
 > herschreven — `bash -n` zag het niet; gevonden met `git diff | grep '^-'`, hersteld uit HEAD.** Brief `-baltimore` → `-springs` (id), `dia-as` → `dia-ass`,
 > 30 noten, 2 vlaggen; volumes `golf17.json` (2 bron, 22 indicatie, 6 onbekend) → 425/479 met dikte; bundel 1.735 benen (**textuur 2.048: verdubbelen vóór de
 > volgende ronde**), `bundel-check` ok, `CODE_VERSIE` + `BUNDEL_VERSIE` 148; desktop + 375 px 0 fouten. 14 reserves klaar. Lessen: bakhandleiding §17.
-> LAR-660 Done. Kosten 5-uur 4 → 43%, week gereset (6%). **✅ Telefoontest Lars `?v=148` goed (2026-10-31) → golf 16 én 17 af.** **→ VOLGENDE:** textuur verdubbelen + `registreer_golf.py`
-> id-weigering + `\n`-controle · golf 18 klein uit 14 reserves of een derde grote ronde.
+> LAR-660 Done. Kosten 5-uur 4 → 43%, week gereset (6%). **✅ Telefoontest Lars `?v=148` goed (2026-10-31) → golf 16 én 17 af.** ✅ 2026-10-31: informatietextuur verdubbeld naar 4.096 benen (`TEX_BREEDTE` + `MAX_BENEN`, `?v=149`, commit `053b9fa`; desktop + 375 px 0 fouten). **→ VOLGENDE:** `registreer_golf.py`
+> id-weigering · golf 18 klein uit 14 reserves of een derde grote ronde.
 
 > **🌍 M31 GOLF 16 LIVE `?v=147` — 449 STROMEN, GROTE ONTWERPRONDE (3 PER GRONDSTOF) ZONDER KOBALT (2026-10-30, EERDER).** Commit `6dd01f3`.
 > Lars na de goede telefoontest van `?v=146`: *"nog meer als 50% weeklimiet over … kan nog wel een grote ronde doen"*. `v2/tools/golf/maak_golf16.py` =
