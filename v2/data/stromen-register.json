@@ -3840,6 +3840,118 @@
    "label": "Red Chris → Stewart",
    "aan": true,
    "noot": "M31 · golf 17 (2026-10-31): Red Chris-concentraat gaat per truck via BC 37 en 37A naar de kade van Stewart Bulk Terminals; keten stopt op de kade. Let op: wegkm niet gepubliceerd (315,6 km indicatie); kade-anker Stewart (bulkterminal) aannemelijk; keten stopt op de kade (geen zeebeen)."
+  },
+  {
+   "sleutel": "ag-sd",
+   "bestand": "stroomroute-zilver-sindesarkhurd-dariba.json",
+   "grondstof": "zilver",
+   "label": "Sindesar Khurd → Dariba",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): zink-lood-zilvererts per truck, ca. 5,5 km lokale weg van de Sindesar Khurd-mijn naar het Dariba Smelting Complex (Hindustan Zinc, aannemelijk: één bron). Let op: 5,5 km lokale weg mijn → Dariba Smelting Complex (Hindustan Zinc), koppeling aannemelijk (één bron); wegkm OSRM-indicatie (gemeten 5,98 km); twee knikken bij de ankers."
+  },
+  {
+   "sleutel": "kolen-sco",
+   "bestand": "stroomroute-kolen-sugarcamp-convent.json",
+   "grondstof": "kolen",
+   "label": "Sugar Camp → Convent",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): thermische kolen van de Sugar Camp-mijn (Illinois) per CN-spoor via Memphis, Grenada en Jackson naar de Convent Marine Terminal (Louisiana); aannemelijk: één bron. Let op: CN-spoor Sugar Camp → Memphis → Convent Marine Terminal zonder gepubliceerde spoorkm (1.075 km router-indicatie); koppeling mijn → terminal op één bron; marker Sugar Camp 0,85 km van de lijn; geen zeebeen."
+  },
+  {
+   "sleutel": "kolen-kt",
+   "bestand": "stroomroute-kolen-kostenko-temirtau.json",
+   "grondstof": "kolen",
+   "label": "Kostenko → Temirtau",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Kazachse cokeskool uit de Kostenko-mijn (Qarmet) per spoor naar het staalwerk Karaganda Metallurgical Plant in Temirtau, aannemelijk: één bron (GEM). Let op: Qarmet-cokeskool per spoor naar het staalwerk Temirtau op één bron (GEM); mijnstatus in de bronnen tegenstrijdig; spoor 43,7 km tegen 21,4 hemelsbreed (factor 2,04, boog van het Kazachse net)."
+  },
+  {
+   "sleutel": "gas-mw",
+   "bestand": "stroomroute-gas-moomba-wilton.json",
+   "grondstof": "gas",
+   "label": "Moomba → Wilton",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Cooper-bekkengas uit de Moomba-gasfabriek (Santos) gaat door de 1.298 km lange Moomba Sydney Pipeline (APA) naar de Wilton-knoop bij Sydney. Moomba Sydney Pipeline (APA) uit OSM: 1.298 km tegen 1.299–1.300 gepubliceerd; 3 OSM-knikken zonder omkering."
+  },
+  {
+   "sleutel": "olie-ew",
+   "bestand": "stroomroute-olie-edmonton-westridge.json",
+   "grondstof": "olie",
+   "label": "Edmonton → Westridge",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Canadese ruwe olie per Trans Mountain-pijpleiding (TMPL plus TMX) van het OSM-pijpeinde bij Edmonton naar de Westridge Marine Terminal in Burnaby. Let op: Trans Mountain (TMPL + TMX parallel, als één corridor) uit OSM; de lijn begint bij het OSM-pijpeinde ca. 7 km vóór de Edmonton Terminal (niet gelegd, open punt); 0,04% stippel."
+  },
+  {
+   "sleutel": "olie-ff",
+   "bestand": "stroomroute-olie-fos-feyzin.json",
+   "grondstof": "olie",
+   "label": "Fos-sur-Mer → Feyzin",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Ruwe olie per Pipeline Sud-Européen van het SPSE-tankenpark Fos-sur-Mer via de Rhônevallei en de Lyon-aflevering naar raffinaderij Feyzin, 281 km, 5,5% stippel. Let op: SPSE 34 inch gevolgd terwijl fr.wikipedia de 24 inch inactief noemt (bronconflict); volume niet gebronnen; TRC-aftak uit ligging afgeleid; 5,5% stippel (Rhône)."
+  },
+  {
+   "sleutel": "au-gr",
+   "bestand": "stroomroute-goud-geita-randrefinery.json",
+   "grondstof": "goud",
+   "label": "Geita → Rand Refinery",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): doré van Geita per truck over de T4 naar Mwanza-vrachtplatform, per vrachtvlucht naar JNB en per truck naar Rand Refinery (aannemelijk: één bron). Let op: doré per truck T4 Geita → Mwanza, vlucht MWZ → JNB en truck naar Rand Refinery aannemelijk (één bron, dun); b4 letterlijke kopie van goud-kibali-randrefinery (ratio 2,3); b1 +14,5% op TRS-120 (geen wegkm)."
+  },
+  {
+   "sleutel": "ag-cot",
+   "bestand": "stroomroute-zilver-collahuasi-tongling.json",
+   "grondstof": "zilver",
+   "label": "Collahuasi → Tongling",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): zilver in Collahuasi-concentraat per slurryleiding naar Patache, per bulkcarrier naar de Yangtze-monding en per binnenvaart naar de TNMG-kade in Tongling (aannemelijk: één bron). Let op: zilver in het Collahuasi-concentraat, geometrie van de koperstroom (bewust dubbel; aannemelijk: één bron); marker Yangtze-monding 4,45 km (geërfde ankerconventie); naad 1,82 km."
+  },
+  {
+   "sleutel": "ag-sp",
+   "bestand": "stroomroute-zilver-salaresnorte-pamp.json",
+   "grondstof": "zilver",
+   "label": "Salares Norte → MKS PAMP",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): zilverdoré van Salares Norte per truck naar SCL, per vrachtvlucht naar ZRH en per truck naar MKS PAMP (Zwitserland aannemelijk), geometrie gelijk aan goud-salaresnorte-pamp. Let op: geometrie 100% gelijk aan goud-salaresnorte-pamp (zilver in het doré, bewust dubbel); eindpunt MKS PAMP (Zwitserland) of India onzeker; b1 geen gepubliceerde wegkm (factor 1,35); bestand 467 KB."
+  },
+  {
+   "sleutel": "kolen-kn",
+   "bestand": "stroomroute-kolen-kolubara-nikolatesla.json",
+   "grondstof": "kolen",
+   "label": "Kolubara → Nikola Tesla",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): bruinkool uit RB Kolubara (Vreoci) per EPS-industrieel spoor naar de kolenontvangst van TPP Nikola Tesla in Obrenovac. Let op: bruinkool onder kolen; TENT-aandeel van Kolubara ongebrond; spoorkm alleen uit Wikipedia (32,7 km)."
+  },
+  {
+   "sleutel": "gas-dd",
+   "bestand": "stroomroute-gas-draupner-dunkerque.json",
+   "grondstof": "gas",
+   "label": "Draupner E → Duinkerke",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Noors Noordzeegas via Franpipe (42 inch, ~840 km) van Draupner E naar de aanlanding bij Port Ouest, Duinkerke. Franpipe uit OSM: 833,5 km tegen 840 gepubliceerd (−0,8%); doorgetrokken, 0 knikken."
+  },
+  {
+   "sleutel": "gas-bg",
+   "bestand": "stroomroute-gas-brighousebay-gormanston.json",
+   "grondstof": "gas",
+   "label": "Brighouse Bay → Gormanston",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): Brits netgas gaat via compressorstation Brighouse Bay door Interconnector 2 (30 inch, 193 km, OSM) onder de Ierse Zee naar Gormanston AGI in Ierland. Let op: alleen Interconnector 2 getekend (IC1 loopt parallel); Brits aanvoerstuk naar Brighouse Bay ontbreekt; sitelaag mist de drie punten; 193,1 km tegen 192 gepubliceerd."
+  },
+  {
+   "sleutel": "olie-op",
+   "bestand": "stroomroute-olie-omisalj-pancevo.json",
+   "grondstof": "olie",
+   "label": "Omišalj → Pančevo",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): JANAF-leiding van Omišalj via Sisak, Slavonski Brod en Novi Sad naar NIS Pančevo, 544 km OSM doorgetrokken plus 24,4 km stippel. Let op: JANAF-oosttak via Sisak en Novi Sad uit OSM; laatste 22,5 km naar Pančevo stippel (OSM kent de leiding daar niet, 4,3%); b3 geen gepubliceerde lengte; 17 OSM-knikken."
+  },
+  {
+   "sleutel": "au-ea",
+   "bestand": "stroomroute-goud-elpenon-argorheraeus.json",
+   "grondstof": "goud",
+   "label": "El Peñón → Argor-Heraeus",
+   "aan": true,
+   "noot": "M31 · golf 18 (2026-10-31): doré van El Peñón per truck over Ruta 5 naar SCL-vracht, per vrachtvlucht naar MXP en per truck naar Argor-Heraeus Mendrisio (Argor aannemelijk, AIF noemt ook PAMP). Let op: Argor-Heraeus als afnemer is een aanname; plantwegen access=no → b0 stippel 1,29 km, b1 vanaf de eerste openbare mijnwegknoop; b2 wegkm indicatie; b5 MXP → Mendrisio kopie van goud-argor-mumbai (factor 2,14); bestand 384 KB."
   }
  ],
  "uitgesloten": [

@@ -94,6 +94,30 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # ── Routebrief zilver-sindesarkhurd-dariba, been b1 (LICHTE werkwijze M31 golf 18) ──
+    # Truck Sindesar Khurd-mijn/concentrator (Hindustan Zinc, Rajsamand) -> Dariba Smelting Complex (Hindustan Zinc): lokale weg zuidwaarts,
+    # west van de Rajpura Dariba-put. AANNEMELIJK: een bron (hzlindia.com Dariba: "leveraging nearby Rajpura Dariba and Sindesar Khurd mines").
+    # Geen gepubliceerde wegkm: hemelsbreed 5,4 km tussen de ankers; OSRM-indicatie 5,4 km over OSM -> de +-15%-toets is een indicatie.
+    "zilver-sindesarkhurd-dariba-sindesarkhurd-dariba": {
+        "via": [
+            ("Sindesar Khurd-mijn/concentrator (anker, ag-sindesarkhurd-mijn)", (74.1430, 24.9989)),
+            ("Weg ten zuiden van de mijnpoort (bocht)", (74.1371, 24.9884)),
+            ("Weg zuidwaarts, ter hoogte van de Rajpura Dariba-tailings", (74.1349, 24.9755)),
+            ("Weg west van de Rajpura Dariba-put", (74.1326, 24.9665)),
+            ("Weg richting Dariba-poort", (74.1312, 24.9565)),
+            ("Dariba Smelting Complex (anker, ag-dariba-smelter)", (74.1330, 24.9510)),
+        ],
+        "id": "ag-sindesarkhurd-dariba-weg",
+        "naam": "Sindesar Khurd-mijn -> lokale weg west van Rajpura Dariba -> Dariba Smelting Complex",
+        "extracts": ["india"],
+        "refs": [],
+        "gepubliceerdKm": 5.4,
+        "bronnoot": "geen gepubliceerde wegkm; 5,4 km = hemelsbreed tussen de ankers en OSRM-indicatie over OSM "
+                    "(geen officiele bron) - de +-15%-toets is een indicatie, geen norm (brief par. 2/7)",
+        "vensterKm": 15,
+        "eindToegangPrivaat": True,
+        "uit": "zilver-sindesarkhurd-dariba-weg-sindesarkhurd-dariba.geojson",
+    },
     # ── Routebrief koper-asarel-pirdop, been b1 (LICHTE werkwijze M31 golf 17) ──
     # Truck koperconcentraat Asarel-Medet (Panagyurishte) -> Aurubis Pirdop-smelter: Asarel-mijnweg (OSM way 178849344, tertiary, access=private)
     # -> II-37 (Panagyurski kolonii -> Zlatitsa) -> I-6 (Zlatitsa -> Pirdop) -> smelter. Geen wegkm gepubliceerd: hemelsbreed 20 km,
@@ -1133,6 +1157,61 @@ PROFIELEN = {
         "uit": "koper-redchris-stewart-weg-redchris-stewart.geojson",
     },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # ── Routebrief goud-elpenon-argorheraeus, been b1 (LICHTE werkwijze M31 golf 18) ──
+    # Truck doré El Penon-plant (Pan American Silver) -> mijnweg -> Ruta 5 Norte -> Chanaral -> Copiapo-bypass -> Ruta 5 -> Vespucio Norte
+    # -> openbare weg Osvaldo Croquevielle bij SCL (de laatste 0,15 km airside is stippel b2). GEEN echte wegkm voor het hele been:
+    # hemelsbreed 1.008,6 km, indicatie 1.293 (501,6 OSM-meting plant -> Copiapo-bypass + 791,1 goud-salaresnorte-pamp). Via 5-9 hergebruik.
+    # De plant ligt op access=no-wegen (way 1041555126, 112893889): b1 begint op de eerste openbare mijnwegknoop 1,3 km W van de plant, de plant zelf
+    # is een korte stippel in de bake-functie (plant-anker au-elpenon-plant -69.4962,-24.4108).
+    "goud-elpenon-argorheraeus-plant-scl": {
+        "via": [
+            ("begin mijnweg W van El Penon (OSM-knoop 1282090468, way 112891152; plantwegen access=no)", (-69.5089, -24.4104)),
+            ("Ruta 5 Norte, 10 km ZO van de mijnweg-aansluiting", (-69.7962, -24.5706)),
+            ("Ruta 5 Z van B-905-afslag (Cruce Agua Verdes)", (-70.0851, -25.5467)),
+            ("Ruta 5 18 km Z van Chanaral", (-70.7003, -26.5092)),
+            ("Ruta 5 bypass Copiapo zuidkop (hergebruik)", (-70.4491, -27.5060)),
+            ("Ruta 5 N van La Serena (hergebruik)", (-71.2746, -29.8174)),
+            ("Ruta 5 N van Los Vilos (hergebruik)", (-71.5156, -31.8403)),
+            ("Ruta 5 bij Tiltil (hergebruik)", (-70.8138, -32.9352)),
+            ("Autopista Vespucio Norte (ref 70) (hergebruik)", (-70.7821, -33.4053)),
+            ("openbare weg Osvaldo Croquevielle bij SCL-vrachtzone (hergebruik)", (-70.7890, -33.4108)),
+        ],
+        "id": "au-elpenon-scl-weg",
+        "naam": "El Penon -> mijnweg -> Ruta 5 -> Chanaral -> Copiapo-bypass -> Vespucio Norte -> SCL-vrachtzone",
+        "extracts": ["chili"],
+        "refs": ["5", "70", "72"],
+        "corridorKlassen": ["tertiary", "unclassified", "service"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen wegkm gepubliceerd voor het hele been; hemelsbreed 1.008,6 km, indicatie 1.293 (501,6 OSM plant-Copiapo-bypass + 791,1 salaresnorte-pamp); AIF 165 km geldt mijn-Antofagasta",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "goud-elpenon-argorheraeus-weg-plant-scl.geojson",
+    },
+    # Routebrief goud-geita-randrefinery, been b1 (LICHTE werkwijze M31 golf 18).
+    # Truck Geita-verwerkingscomplex (AngloGold Ashanti) -> R152 bij het Mwanza-vrachtplatform (MWZ) over
+    # mijnwegen (eerste ~6 km), T4 Geita-Usagara, R153 en R152; de laatste 0,13 km airside is stippel b2.
+    # TRS: "approximately 120km west of Mwanza" = afstandsopgave, geen wegkm; OSRM-proef 137,5 km;
+    # hemelsbreed 94,1 km. De +-15%-toets (103-138) is een indicatie. Via-punten (brief §4) op de T4.
+    "goud-geita-randrefinery-plant-mwz": {
+        "via": [
+            ("Geita-verwerkingscomplex (anker au-geita-plant)", (32.1865, -2.8676)),
+            ("T4 ten O van Geita",                              (32.2562, -2.8738)),
+            ("T4",                                              (32.4945, -2.7822)),
+            ("T4 bij rotonde",                                  (32.6219, -2.6609)),
+            ("T4 richting Usagara",                             (32.8575, -2.7270)),
+            ("Usagara-rotonde",                                 (32.9933, -2.6805)),
+            ("R153 noord van Usagara",                          (32.9205, -2.5840)),
+            ("R152 bij Mwanza-vrachtplatform (openbare weg)",   (32.9186, -2.4410)),
+        ],
+        "id": "au-geita-mwz",  "naam": "Geita-plant -> T4 -> Usagara -> R153/R152 (Mwanza-vrachtplatform)",
+        "extracts": ["tanzania"],
+        "refs": ["T4", "R153", "R152"],
+        "gepubliceerdKm": 120, "bronnoot": "TRS: ca. 120 km W van Mwanza (afstandsopgave, geen wegkm); OSRM 137,5; hemelsbreed 94,1",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "eindToegangPrivaat": True,   # eerste 6 km mijnwegen van Geita kunnen access=private dragen
+        "uit": "goud-geita-randrefinery-weg-plant-mwz.geojson",
+    },
     # Routebrief gas-deadhorse-fairbanks, been b1 (LICHTE werkwijze M31 golf 17).
     # b1: truck LNG (Harvest, Deadhorse) -> IGU-opslag Fairbanks over de Spine Road, Dalton Hwy (AK 11), Elliott Hwy (AK 2), Steese Expy.
     # Gepubliceerd ca. 500 mijl = ca. 805 km (AK Business Magazine); haalbaarheidsrun 806,3 km. Kop is een Spine Road-vertex (onzeker).

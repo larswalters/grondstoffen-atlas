@@ -1,0 +1,117 @@
+"""Golf 18: bouwt golf18-script.mjs uit golf17-script.mjs -- ALLEEN de reserve-route (brief, bake, keuring), geen ontwerpronde (patroon golf 12/15).
+Invoer: golf17-script.mjs (uit deze map), golf17-reserves.json (de 7 reserves uit golf 16, alle met toets) + golf18-reserves.json (de 7 reserves
+uit golf 17, alle met toets; een reserve zonder toets zou in het script eerst een toets krijgen, in de eerste pijplijnstap), het register (bestaande ketens +
+bezette sleutels per grondstof).
+Uitvoer: golf18-script.mjs (LF, zonder U+FE0F) en golf18-grondstoffen.json in de uitvoermap.
+Gebruik: python maak_golf18.py [<uitvoermap>] [<scratchpad van de sessie die de workflow start>]
+"""
+import glob, io, json, os, re, sys
+
+HIER = os.path.dirname(os.path.abspath(__file__))
+OUT = sys.argv[1] if len(sys.argv) > 1 else HIER
+SCRATCH = sys.argv[2] if len(sys.argv) > 2 else OUT
+REPO = "C:/automation/Projects/General/grondstoffen-atlas"
+GOLF, VORIG = 18, 17
+
+src = io.open(HIER + "/golf17-script.mjs", encoding="utf-8", newline="").read().replace("\r\n", "\n")
+rs = (json.load(io.open(HIER + "/golf17-reserves.json", encoding="utf-8"))["reserves"]
+      + json.load(io.open(HIER + "/golf18-reserves.json", encoding="utf-8"))["reserves"])
+reg = json.load(io.open(REPO + "/v2/data/stromen-register.json", encoding="utf-8"))
+
+G17 = None
+for l in src.split("\n"):
+    if l.startswith("const GRONDSTOFFEN_DATA = "):
+        G17 = json.loads(l[len("const GRONDSTOFFEN_DATA = "):])
+assert G17, "GRONDSTOFFEN_DATA niet gevonden in golf17-script.mjs"
+
+bestaand, sleutels = {}, {}
+for s in reg["stromen"]:
+    bestaand.setdefault(s["grondstof"], []).append(s["bestand"].replace("stroomroute-", "").replace(".json", ""))
+    sleutels.setdefault(s["grondstof"], []).append(s["sleutel"])
+bestaand["grafiet"] = ["grafiet-balama-vidalia (bestand stroomroute-pilot.json, tot Casa Grande)" if x == "pilot" else x for x in bestaand["grafiet"]]
+bekend = {s["bestand"] for s in reg["stromen"]} | {u["bestand"] for u in reg["uitgesloten"]}
+op_schijf = sorted(os.path.basename(p)[len("stroomroute-"):-5] for p in glob.glob(REPO + "/v2/data/stroomroute-*.json") if os.path.basename(p) not in bekend)
+
+RES = [{"id": r["id"], "g": r["g"], "as": r["as"], "toets": r.get("toets")} for r in rs]
+ids = [r["id"] for r in RES]
+assert len(ids) == len(set(ids)), "dubbele reserve-ids"
+for r in RES:
+    assert r["as"], "reserve zonder ontwerp-as: " + r["id"]
+    assert f"stroomroute-{r['id']}.json" not in bekend and not os.path.exists(REPO + "/v2/data/stroomroute-" + r["id"] + ".json"), "bestaat al: " + r["id"]
+    assert r["g"] in {g["sleutel"] for g in G17}, "grondstof niet in het script (kobalt?): " + r["id"]
+
+G18 = []
+for g in G17:
+    g = dict(g)
+    k = g["sleutel"]
+    g["bestaand"] = list(dict.fromkeys(bestaand[k] + [x for x in op_schijf if x.startswith(k + "-")]))
+    g["sleutels"] = sleutels[k]
+    g["hint"] = re.sub(r" GOLF 17: er staan al.*$", "", g["hint"], flags=re.S).strip()
+    G18.append(g)
+
+meta = """export const meta = {
+  name: 'atlas-m31-golf18-reserves',
+  description: 'Grondstoffen Atlas M31 golf 18: de 14 reserve-assen uit golf 16 en 17 bakken (toets waar nodig, brief, bake, keuring); geen ontwerpronde',
+  phases: [
+    { title: 'Toets', detail: 'alleen voor reserve-assen die in hun ontwerpronde geen per-keten-oordeel kregen' },
+    { title: 'Brieven', detail: 'een agent per keten: lichte routebrief met satellietblik' },
+    { title: 'Bakken', detail: 'een agent per keten: geometrie, toets, bak-noot' },
+    { title: 'Keuring', detail: 'onafhankelijke natoets per keten, alleen mechanisch herstel' },
+  ],
+}
+"""
+j = src.index("const GRONDSTOFFEN_DATA")
+body = meta + "\n" + src[j:]
+lines = body.split("\n")
+for n, l in enumerate(lines):
+    if l.startswith("const GRONDSTOFFEN_DATA = "):
+        lines[n] = "const GRONDSTOFFEN_DATA = " + json.dumps(G18, ensure_ascii=True)
+    elif l.startswith("const RESERVES_DATA = "):
+        lines[n] = "const RESERVES_DATA = " + json.dumps(RES, ensure_ascii=True)
+    elif l.startswith("const SCRATCH = "):
+        lines[n] = "const SCRATCH = " + json.dumps(SCRATCH)
+body = "\n".join(lines)
+
+# De orkestratie: alleen de reserve-route; ontwerp/toets-functies blijven staan (toetsPrompt wordt gebruikt voor ongetoetste reserves).
+oud_start = body.index("const ontwerpStroom = () => pipeline(GRONDSTOFFEN,")
+nieuw_slot = """const reserveItems = RESERVES.map((r) => ({ id: r.id, as: r.as, toets: r.toets, g: GBY[r.g], afgewezen: false }))
+const reserveRes = await ketenPipeline(reserveItems)
+const reserveKetens = (reserveRes || []).filter(Boolean)
+const resultaten = []
+
+const alle = reserveKetens
+const ok = alle.filter((k) => k.bake && k.bake.gebakken)
+log(`klaar: ${ok.length}/${alle.length} gebakken, ${ok.filter((k) => !k.keuring || k.keuring.oordeel !== 'niet-registreren').length} registreerbaar van ${RESERVES.length} reserve-assen (${reserveItems.filter((it) => it.afgewezen).length} in de toets afgewezen)`)
+"""
+oud_eind = body.index("return {\n  overzicht:")
+body = body[:oud_start] + nieuw_slot + body[oud_eind:]
+oud_staart = "  afgewezen: Object.fromEntries(resultaten.map((r) => [r.grondstof, r.afgewezen])),\n  resultaten,\n}"
+assert oud_staart in body, "staart van het eindrapport niet gevonden"
+body = body.replace(oud_staart, "  afgewezen_in_toets: reserveItems.filter((it) => it.afgewezen).map((it) => ({ id: it.id, toets: it.toets })),\n}")
+
+oud_stap = """    async (it) => {
+      const g = it.g
+      const brief = await agentR(briefPrompt(it)"""
+nieuw_stap = """    async (it) => {
+      const g = it.g
+      if (!it.toets) {
+        const t = await agentR(toetsPrompt(g, { grondstof: g.naam, assen: [it.as] }), { label: `toets:${it.id}`, phase: 'Toets', effort: 'high', schema: TOETS_SCHEMA, ...OPTS })
+        const k = t && (t.ketens || []).find((x) => x.keten_id === it.id)
+        it.toets = k || { opmerking: 'geen per-keten-oordeel gevonden', algemeen: t && t.algemeen }
+        if (k && k.haalbaar === false) {
+          log(`${it.id}: toets wijst af — ${(k.problemen || []).join(' | ').slice(0, 200)}`)
+          it.afgewezen = true
+          return { id: it.id, grondstof: g.sleutel, toets: it.toets, brief: null, afgewezen_in_toets: true }
+        }
+      }
+      const brief = await agentR(briefPrompt(it)"""
+assert oud_stap in body, "eerste pijplijnstap niet gevonden"
+body = body.replace(oud_stap, nieuw_stap)
+
+for a, b in [("M31 golf 17", "M31 golf 18"), ("golf 17 van M31", "golf 18 van M31"), ("M31 · golf 17 (", "M31 · golf 18 ("), ("(M31 golf 17)", "(M31 golf 18)")]:
+    body = body.replace(a, b)
+body = body.replace(chr(0xFE0F), "")
+assert "ontwerpStroom" not in body and "parallel([" not in body
+io.open(OUT + "/golf18-script.mjs", "w", encoding="utf-8", newline=chr(10)).write(body)
+io.open(OUT + "/golf18-grondstoffen.json", "w", encoding="utf-8").write(json.dumps(G18, ensure_ascii=False, indent=1))
+print("golf18-script.mjs:", len(body), "tekens;", len(RES), "reserves (", sum(1 for r in RES if not r["toets"]), "zonder toets );", len(G18), "grondstoffen; register", len(reg["stromen"]), "; op schijf niet geregistreerd:", len(op_schijf))
