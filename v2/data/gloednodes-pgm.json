@@ -132,8 +132,8 @@
   {
    "id": "w-bafokeng-styldrift",
    "naam": "Styldrift mijn (Royal Bafokeng Platinum, sinds 2023 Implats-dochter)",
-   "lon": 27.1,
-   "lat": -25.45,
+   "lon": 27.1084,
+   "lat": -25.3977,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -143,15 +143,15 @@
    "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
    "gewicht": 10.0,
    "gewicht_bron": "capaciteit t PGM/j — Royal Bafokeng Platinum / Implats jaarcijfers 2023: ~320 koz 4E; koz ÷ 32,15 ≈ 10,0 t/j [B3][B6]",
-   "bron": "kandidaat o.b.v. de bekende ligging NO van Rustenburg; DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "was -25.45/27.1 (geografische aanduiding NO van Rustenburg, niet satelliet-bevestigd) — M31 golf 14 (2026-10-30): gelijkgetrokken met het keten-anker van pgm-bafokeng-waterval (pgm-bafokeng-styldrift, Styldrift I schachtcomplex, bron-gelegd op z15 in de brief; 5,9 km verschoven)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Implats nam Royal Bafokeng Platinum in 2023 volledig over; Styldrift is de belangrijkste operationele mijn van RBPlat. 4E."
   },
   {
    "id": "w-tharisa",
    "naam": "Tharisa mijn (Tharisa plc)",
-   "lon": 27.63,
-   "lat": -25.63,
+   "lon": 27.4978,
+   "lat": -25.7421,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -161,8 +161,8 @@
    "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
    "gewicht": 4.8,
    "gewicht_bron": "capaciteit t PGM/j — Tharisa plc jaarverslag FY2023: ~155 koz 6E-PGM als bijproduct van chroomwinning; koz ÷ 32,15 ≈ 4,8 t/j [B7]",
-   "bron": "kandidaat o.b.v. de bekende ligging op de Western Limb (Vlakfontein); DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "was -25.63/27.63 (geografische aanduiding Vlakfontein, niet satelliet-bevestigd) — M31 golf 19 (2026-10-31): gelijkgetrokken met het keten-anker pgm-tharisa-plant van pgm-tharisa-waterval (Tharisa Mine Processing Plants, Mooinooi/Marikana, z15 plantcomplex, bron-gelegd; 18 km verschoven)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "PGM is hier BIJPRODUCT van chroomertswinning (Tharisa's hoofdproduct is chroom); 6E-conventie."
   },
   {

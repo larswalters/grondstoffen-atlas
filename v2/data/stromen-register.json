@@ -3952,6 +3952,278 @@
    "label": "El Peñón → Argor-Heraeus",
    "aan": true,
    "noot": "M31 · golf 18 (2026-10-31): doré van El Peñón per truck over Ruta 5 naar SCL-vracht, per vrachtvlucht naar MXP en per truck naar Argor-Heraeus Mendrisio (Argor aannemelijk, AIF noemt ook PAMP). Let op: Argor-Heraeus als afnemer is een aanname; plantwegen access=no → b0 stippel 1,29 km, b1 vanaf de eerste openbare mijnwegknoop; b2 wegkm indicatie; b5 MXP → Mendrisio kopie van goud-argor-mumbai (factor 2,14); bestand 384 KB."
+  },
+  {
+   "sleutel": "gr-cs",
+   "bestand": "stroomroute-grafiet-chedde-seadrift.json",
+   "grondstof": "grafiet",
+   "label": "Chedde → Seadrift",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): NBG-18 nucleair grafiet van SGL Chedde per truck naar Le Havre, per schip naar Baltimore, per truck via SGL St. Marys naar de Long Mott-kavel bij Seadrift (Texas). Let op: bestand 1.053 KB (truckbenen Baltimore → St. Marys → Seadrift); b4 omweg 1,61 (Appalachen-corridor I-70/I-76/I-99); geen gepubliceerde wegkm; naad 2,67 km; extra via-punt I-40 bij Nashville tegen een terugloop."
+  },
+  {
+   "sleutel": "gr-lh",
+   "bestand": "stroomroute-grafiet-lulea-himeji.json",
+   "grondstof": "grafiet",
+   "label": "Luleå → Himeji",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Talnode-C anodemateriaal van Talga Talnode (Luleå) per zeeschip via Suez naar Dainen Materials in Himeji; aannemelijk, havens niet gebronnet, EXW. Let op: Talnode-C Luleå → Himeji per zeeschip via Suez aannemelijk (EXW, havens niet gebrond); markers 3,8 en 4,2 km van de lijneinden (bewuste naad); Luleå-anker onzeker (9 km van het marina-anker in een andere stroom)."
+  },
+  {
+   "sleutel": "gr-lb",
+   "bestand": "stroomroute-grafiet-lakecharles-brunswick.json",
+   "grondstof": "grafiet",
+   "label": "Lake Charles → Brunswick County",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): naaldcokes (geen grafiet) van P66 Lake Charles per truck (werkaanname) naar het geplande Epsilon-anodepark in Brunswick County NC; aannemelijk, een bron, fabriek nog niet gebouwd. Let op: naaldcokes (geen grafiet) van P66 Lake Charles naar het geplande Epsilon-anodepark Brunswick County NC (fabriek nog niet gebouwd); truck is een werkaanname, km OSRM-indicatie; één bron."
+  },
+  {
+   "sleutel": "ni-rh",
+   "bestand": "stroomroute-nikkel-riotuba-hachinohe.json",
+   "grondstof": "nikkel",
+   "label": "Rio Tuba → Hachinohe",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): saproliet-DSO uit de Rio Tuba-pit per plantweg naar de RTN-pier en per zeeschip naar de Hachinohe-havenmond (PAMCO, kade niet gelegd), aannemelijk: een bron. Let op: saproliet-DSO Rio Tuba → Hachinohe (PAMCO) aannemelijk (één bron); kade Hachinohe niet gelegd (havenmond); zeeroute ~77% overlap met nikkel-taganito-niihama."
+  },
+  {
+   "sleutel": "ni-hs",
+   "bestand": "stroomroute-nikkel-hyuga-shunan.json",
+   "grondstof": "nikkel",
+   "label": "Hyuga → Shunan",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): ferronikkel van Hyuga Smelting (Miyazaki) per zeeschip naar Nippon Steel Yamaguchi Works, Shunan (aannemelijk: één bron, aandeelhoudersband). Let op: ferronikkel Hyuga → Nippon Steel Shunan op één bron (aandeelhoudersband), geen vervoersbron; beide aanlopen schematische stippel (27,8%); keerpunt 121° aan zeeknoop 9069."
+  },
+  {
+   "sleutel": "ni-ty",
+   "bestand": "stroomroute-nikkel-taganito-yangtze.json",
+   "grondstof": "nikkel",
+   "label": "Taganito → Yangtze-monding",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Filipijns erts van Taganito per bulkschip oostelijk om Taiwan naar China, eindpunt Yangtze-monding. Filipijns erts Taganito → Yangtze-monding per bulkschip oostelijk om Taiwan; conventie-marker Yangtze-monding 2,69 km; afnemer in China niet benoemd."
+  },
+  {
+   "sleutel": "ree-gfl",
+   "bestand": "stroomroute-ree-ganzhou-florence.json",
+   "grondstof": "ree",
+   "label": "Ganzhou → Florence",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): speed-magneten JL MAG Ganzhou per truck naar Xiamen, per containerschip naar Long Beach, per truck (I-15, I-40, I-44, I-64, I-71) naar Bosch Steering Florence KY (aannemelijk: één bron). Let op: speed-magneten JL MAG → Bosch Steering Florence KY op één bron; bestand 562 KB (truck Long Beach → Kentucky); b5 wegkm OSRM-indicatie; b1 kopie van ree-ganzhou-elpaso; 4 teruglopen in de knikkentoets."
+  },
+  {
+   "sleutel": "ree-zl",
+   "bestand": "stroomroute-ree-zhaobao-leduc.json",
+   "grondstof": "ree",
+   "label": "Zhaobao → Leduc",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): NdFeB-magneten van Ningbo Zhaobao per containerschip naar Tacoma en per truck over I-5, Coquihalla en Yellowhead naar Interra in Leduc (aannemelijk: één bron). Let op: NdFeB Zhaobao → Beilun → Tacoma → Leduc aannemelijk (één bron); Husky als afnemer is een aanname, geen fabrieksanker; Beilun-marker 1,95 km (MARNET-snap); wegkm onbekend; eigen wegtool ree_zhaobao_leduc_weg.py."
+  },
+  {
+   "sleutel": "pgm-tw",
+   "bestand": "stroomroute-pgm-tharisa-waterval.json",
+   "grondstof": "pgm",
+   "label": "Tharisa → Waterval",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Tharisa-PGM-concentraat per truck over Marikana Road, Karee Road en de R104-corridor naar Waterval/PMR (Valterra), aannemelijk: één bron, vanaf 1-1-2027. Let op: 24,5 km truck Tharisa → Waterval/PMR; leveringspunt Waterval is een aanname; wegkm onbekend; sitelaag w-tharisa wijkt 18 km af (nakijken)."
+  },
+  {
+   "sleutel": "pgm-msl",
+   "bestand": "stroomroute-pgm-mimosa-selous.json",
+   "grondstof": "pgm",
+   "label": "Mimosa → Zimplats SMC Selous",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Mimosa-PGM-concentraat per truck over Shurugwi en de A5 naar de Zimplats SMC bij Selous voor tolsmelt tot matte; aannemelijk, een bron, aandeel onbekend. Let op: truck Mimosa → Selous is een aanname; mijn-anker op de rand van de tailingsdam; geen doorgaande wegkm-bron; 9 spike-knikken."
+  },
+  {
+   "sleutel": "li-pm",
+   "bestand": "stroomroute-lithium-pilgangoora-morowali.json",
+   "grondstof": "lithium",
+   "label": "Pilgangoora → Morowali",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): spodumeenconcentraat van de Pilgan-plant per road train naar Utah Point en per bulkcarrier naar de IMIP-kade Bahodopi; aannemelijk een bron. Let op: concentraat Pilgangoora → Port Hedland → Morowali aannemelijk (één bron); b1 kopie van pilgangoora-gwang (omweg 1,65 binnen de gepubliceerde 120–140 km) met een terugloop; geen zeekm-toets."
+  },
+  {
+   "sleutel": "li-sma",
+   "bestand": "stroomroute-lithium-sabistar-morowali.json",
+   "grondstof": "lithium",
+   "label": "Sabi Star → IMIP Morowali",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): spodumeenconcentraat van Sabi Star per truck via Odzi, Mutare en de EN6 naar Beira en per bulkcarrier naar de IMIP-kade bij Morowali (aannemelijk: één bron). Let op: Morowali-bestemming afgeleid; b1 (Sabi Star → Beira) zonder gepubliceerde wegkm."
+  },
+  {
+   "sleutel": "ag-pb",
+   "bestand": "stroomroute-zilver-pirquitas-buenosaires.json",
+   "grondstof": "zilver",
+   "label": "Pirquitas → Buenos Aires",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): zilver-loodconcentraat van de Pirquitas-fabriek (Puna Operations) per truck via Susques, RN 52 en RN 9 naar de TRP-kade in Buenos Aires (haven aannemelijk, één bron). Let op: 1.906 km truck Pirquitas → Buenos Aires (haven aannemelijk, één bron) via Susques als OSM-via-punt; geen gepubliceerde wegkm; bestand 305 KB."
+  },
+  {
+   "sleutel": "ag-zb",
+   "bestand": "stroomroute-zilver-zhezkazgan-balkhash.json",
+   "grondstof": "zilver",
+   "label": "Zhezkazgan → Balkhash-PMP",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): koperelektrolyse-slijk per weg van de Zhezkazgan-smelter naar het PMP-slijkterrein van de Balkhash-smelter, aannemelijk: een bron. Let op: zilverhoudend slijk Zhezkazgan → Balkhash per truck, corridor uit OSM (696 km, omweg 1,25, geen gepubliceerde wegkm); zilveraandeel onbekend; 25 knikken zonder omkering."
+  },
+  {
+   "sleutel": "ag-gt",
+   "bestand": "stroomroute-zilver-guanacevi-torreon.json",
+   "grondstof": "zilver",
+   "label": "Guanaceví → Torreón",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): zilverdoré van de Guanaceví-molen per truck (aannemelijk) naar Met-Mex Peñoles Torreón, stoppunt. Let op: tracé is de kortste OSM-route, niet de bewezen; geen echte wegkm; 25 spikes van 4–35 m."
+  },
+  {
+   "sleutel": "kolen-sl",
+   "bestand": "stroomroute-kolen-stockton-lyttelton.json",
+   "grondstof": "kolen",
+   "label": "Stockton → Lyttelton",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): cokeskool van Stockton Mine per truck en kabelbaan naar Ngakawau en per spoor (Midland-lijn) naar de kolenterminal van Lyttelton. Stockton-plateau → Burma Road (7,4 km, omweg 1,9 bewust: bronopgave) → kabelbaan als leiding → spoor Ngakawau → Lyttelton; marker Lyttelton 0,24 km."
+  },
+  {
+   "sleutel": "kolen-ws",
+   "bestand": "stroomroute-kolen-welzow-schwarzepumpe.json",
+   "grondstof": "kolen",
+   "label": "Welzow-Süd → Schwarze Pumpe",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): bruinkool per LEAG/ZEB-werkspoor van het kolenlager Welzow-Süd naar het kolenemplacement van Kraftwerk Schwarze Pumpe. Let op: bruinkool onder kolen; 12,6 km werkspoor Welzow-Süd → Schwarze Pumpe, lijn eindigt op de aansluiting; geen gepubliceerde spoorkm (verhouding 1,53)."
+  },
+  {
+   "sleutel": "kolen-rm",
+   "bestand": "stroomroute-kolen-rotterdam-mannheim.json",
+   "grondstof": "kolen",
+   "label": "EMO Rotterdam → Mannheim (GKM)",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): steenkool van EMO Maasvlakte per binnenschip 620 km over Waal en Rijn naar de kolenkade van het Grosskraftwerk Mannheim; aannemelijk, één bron voor aanvoer per schip. Let op: binnenvaart EMO → Rijn → Mannheim (GKM) op één bron; benen b1–b4 kopie (knikken, 1 terugloop); EMO-marker 0,61 km (anker ≠ routeerpunt); laatste 4,3 km stippel."
+  },
+  {
+   "sleutel": "u-tl",
+   "bestand": "stroomroute-uranium-tricastin-lingen.json",
+   "grondstof": "uranium",
+   "label": "Tricastin → Lingen",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): verrijkt UF6 van Orano Tricastin per truck over A7, A46, A6/A31, Luxemburg en de Eifel naar Framatome Lingen; aannemelijk, een bron (19 transporten 2017), route niet gepubliceerd. Let op: 1.110 km truck Tricastin → Lingen; 2 terugloop-lussen van 100–200 m (Lyon A46, Leverkusen) niet gerepareerd."
+  },
+  {
+   "sleutel": "u-sg",
+   "bestand": "stroomroute-uranium-springfields-gronau.json",
+   "grondstof": "uranium",
+   "label": "Springfields → Gronau",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): UF6 per truck naar Hull, per veer naar Zeebrugge en per truck naar Urenco Gronau; aannemelijk, één bron, eindjaar 2014. Let op: Springfields → Hull → Zeebrugge → Gronau aannemelijk (eigen bron); b1 start op een routeanker (plantweg was een eigen component); Zeebrugge-aanloop rechte stippel; naad 1,83 km; wegkm indicatie; sitelaag Springfields 3,1 km (nakijken)."
+  },
+  {
+   "sleutel": "u-pk",
+   "bestand": "stroomroute-uranium-portkavkaz-kozloduy.json",
+   "grondstof": "uranium",
+   "label": "Port Kavkaz → Kozloduy (via Varna)",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): laatste Russische TVEL-splijtstofzending per veer Port Kavkaz naar Varna en per truck naar Kozloduy, vertrekhaven en truck aannemelijk. Let op: vertrekhaven Port Kavkaz en truck Varna → Kozloduy aannemelijk; geen gepubliceerde wegkm; naden tot 1,26 km."
+  },
+  {
+   "sleutel": "gas-ca",
+   "bestand": "stroomroute-gas-cordoba-ainbenimathar.json",
+   "grondstof": "gas",
+   "label": "Córdoba → Ain Beni Mathar",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Spaans hervergast LNG-gas gaat via de omgekeerde Maghreb-Europe-gasleiding (GME) van Córdoba naar de ONEE-centrale Ain Beni Mathar. Let op: Maghreb-Europa-leiding uit OSM: de way Tanger → Taza heeft 4 knopen (rechte koorden van 148 en 100 km, tientallen km naast de echte route); 0,4% stippel."
+  },
+  {
+   "sleutel": "gas-yk",
+   "bestand": "stroomroute-gas-yarraloola-kalgoorlie.json",
+   "grondstof": "gas",
+   "label": "Yarraloola → Kalgoorlie",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Carnarvon-bekkengas loopt bij Yarraloola de Goldfields Gas Pipeline in en volgt die als één doorgetrokken OSM-leiding van 1.412 km naar het eindstation bij Kalgoorlie. Goldfields Gas Pipeline uit OSM: 1.412 km tegen 1.378 gepubliceerd (+2,4%); lijnkop op een toevoerlijn op de getijdenplaat; afnemer niet benoemd; 9 OSM-knikken."
+  },
+  {
+   "sleutel": "gas-tp",
+   "bestand": "stroomroute-gas-tangguh-putian.json",
+   "grondstof": "gas",
+   "label": "Tangguh → Fujian",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): LNG van Tangguh (BP, Bintuni-baai) per carrier via Celebes-/Soeloezee en Straat Taiwan naar de CNOOC Fujian LNG-terminal bij Putian; twee haven-aanlopen als stippel. Let op: LNG Tangguh → Putian aannemelijk, doorzet niet bron-bevestigd; aanloop Tangguh schematisch (221 km stippel, 5,9%); zeekm indicatief."
+  },
+  {
+   "sleutel": "olie-usa",
+   "bestand": "stroomroute-olie-uzen-samara.json",
+   "grondstof": "olie",
+   "label": "Uzen → Samara",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Mangystau-olie per Uzen-Atyrau-Samara-leiding (1016 mm) via Atyrau/PS-1 naar het Transneft-knooppunt in Samara-oblast, 1.397 km, twee OSM-leidingbenen. Let op: Uzen → Atyrau → Samara per OSM-leiding (b1 via Beyneu, verhouding 1,62); eindknoop Samara aannemelijk; OSM-lengte tegen > 1.380 km gepubliceerd is indicatie; omkering 173° bij Atyrau is een gestikte naad."
+  },
+  {
+   "sleutel": "olie-fh",
+   "bestand": "stroomroute-olie-fortiesunity-houndpoint.json",
+   "grondstof": "olie",
+   "label": "Forties Unity → Hound Point",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Forties-olie gaat per 36-inch Ineos-leiding van platform Forties Unity via Cruden Bay en Kinneil naar de laadsteiger Hound Point, eind bij de steiger. Forties-leiding Unity → Cruden Bay → Hound Point uit OSM, 3 benen; markers tot 0,25 km."
+  },
+  {
+   "sleutel": "olie-eg",
+   "bestand": "stroomroute-olie-europoort-godorf.json",
+   "grondstof": "olie",
+   "label": "Europoort → Godorf",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Ruwe olie via de Rotterdam-Rijn-Pijpleiding (twee OSM-leidingbenen, stippelslot Hurth-Godorf) van Europoort naar Shell Werk Nord Godorf. Let op: RRP Europoort → Godorf uit OSM; a3 stippel 12,3 km (4,6%); a2+a3 −10% tegen 103 km gepubliceerd; 14 OSM-knikken."
+  },
+  {
+   "sleutel": "dia-gdu",
+   "bestand": "stroomroute-diamant-gaborone-dubai.json",
+   "grondstof": "diamant",
+   "label": "Gaborone → Dubai",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): ruwe diamant uit het ODC-kanaal gaat per truck van de Gaborone-campus naar GBE, vliegt als grootcirkel (aannemelijk: één bron) naar DXB en rijdt naar de Dubai Diamond Exchange. Let op: vlucht GBE → DXB is een aanname; GBE-apron 0,5 km van het anker in diamant-jwaneng-antwerpen; wegkm hemelsbreed (ratio 1,16 en 1,08)."
+  },
+  {
+   "sleutel": "dia-ra",
+   "bestand": "stroomroute-diamant-ramatgan-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Ramat Gan → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Israëlische diamant van de IDE via Ben Gurion per grootcirkel-vrachtvlucht naar Brucargo en over de E19 naar de AWDC in Antwerpen. Let op: b3 gekopieerd uit diamant-jwaneng-antwerpen (6 spikes); vlucht TLV → BRU aannemelijk; naad 0,15 km."
+  },
+  {
+   "sleutel": "dia-da",
+   "bestand": "stroomroute-diamant-dubai-antwerpen.json",
+   "grondstof": "diamant",
+   "label": "Dubai → Antwerpen",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): diamant van DMCC per truck naar DXB-vracht, grootcirkel-vrachtvlucht naar Brucargo (aannemelijk: één bron) en per truck over de E19 naar het AWDC Antwerpen. Let op: vlucht DXB → BRU op één bron (aannemelijk); wegkm alleen hemelsbreed (ratio 1,08)."
+  },
+  {
+   "sleutel": "au-mp",
+   "bestand": "stroomroute-goud-macraes-perthmint.json",
+   "grondstof": "goud",
+   "label": "Macraes → Perth Mint",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): doré van de Macraes-plant per truck naar Christchurch Airport, aannemelijk per vrachtvlucht naar Perth en per truck naar The Perth Mint. Let op: vervoer, vlucht CHC → PER en CHC-ankers aannemelijk; geen gepubliceerde wegkm (b1 −0,5% tegen OSRM); Perth Mint ligt 10,1 km van het Qantas-vrachtanker (andere faciliteit, niet gelijkgetrokken)."
+  },
+  {
+   "sleutel": "au-or",
+   "bestand": "stroomroute-goud-otjikoto-randrefinery.json",
+   "grondstof": "goud",
+   "label": "Otjikoto → Rand Refinery",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): doré van Otjikoto per truck naar WDH, vrachtvlucht naar JNB, truck naar Rand Refinery; aannemelijk, één bron voor de afnemer. Let op: Otjikoto → Windhoek → JNB → Rand Refinery op één bron; geen wegkm; b3 kopie van goud-kibali-randrefinery (ratio 2,3)."
+  },
+  {
+   "sleutel": "au-ba",
+   "bestand": "stroomroute-goud-borborema-asahibrampton.json",
+   "grondstof": "goud",
+   "label": "Borborema → Asahi Brampton",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): doré van de Borborema-plant gaat (aannemelijk) per truck naar de NAT-vrachtloods, per vrachtvlucht naar Toronto Pearson en per truck naar Asahi Refining Canada in Brampton. Let op: bewegingen (truck naar Natal, vlucht Natal → Toronto) aannemelijk zonder bron; keerlus 167° op b1; b5 YYZ → Brampton kopie van Jacobina (ratio 1,84); wegkm indicatief."
+  },
+  {
+   "sleutel": "cu-che",
+   "bestand": "stroomroute-koper-cerroverde-huelva.json",
+   "grondstof": "koper",
+   "label": "Cerro Verde → Huelva",
+   "aan": true,
+   "noot": "M31 · golf 19 (2026-10-31): Cerro Verde-concentraat per truck en spoor naar Matarani, zee via Panama naar Puerto de Huelva en per truck naar Atlantic Copper (aannemelijk, één bron). Let op: concentraat Cerro Verde → La Joya → Matarani → Huelva (Atlantic Copper); 7 benen, naad 0,13 km, haven-aanlopen aanwezig; inhoudelijke open punten in de brief (afname Huelva, wegkm)."
   }
  ],
  "uitgesloten": [

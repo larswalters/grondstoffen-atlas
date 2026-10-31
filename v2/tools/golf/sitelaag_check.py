@@ -1,4 +1,5 @@
-"""Vergelijk de markers van nieuwe (niet-geregistreerde) stromen met de sitelaag-sites van dezelfde grondstof.
+"""Vergelijk de markers van nieuwe (niet-geregistreerde) stromen met de sitelaag-sites van dezelfde grondstof;
+of van de opgegeven ids (python sitelaag_check.py id id ...) -- nodig na registreer_golf.py, want dan is er niets meer "nieuw".
 Een site op 0,3-40 km van een marker is een kandidaat om gelijk te trekken (centroide vs satelliet-gelegd anker)."""
 import io, json, math, glob, os, sys
 
@@ -17,6 +18,11 @@ def gc(a, b):
 reg = json.load(io.open(REPO + "/v2/data/stromen-register.json", encoding="utf-8"))
 bekend = {s["bestand"] for s in reg["stromen"]} | {u["bestand"] for u in reg["uitgesloten"]}
 nieuw = [p for p in sorted(glob.glob(REPO + "/v2/data/stroomroute-*.json")) if os.path.basename(p) not in bekend]
+# ids als argument (bv. na registreer_golf.py, als de stromen al in het register staan): python sitelaag_check.py id id ...
+ids = [a for a in sys.argv[1:] if not a.startswith("-")]
+if ids:
+    nieuw = [REPO + "/v2/data/stroomroute-" + i + ".json" for i in ids]
+    assert all(os.path.exists(p) for p in nieuw), [p for p in nieuw if not os.path.exists(p)]
 sites = {}
 for p in glob.glob(REPO + "/v2/design/*-sitelaag.json"):
     gs = os.path.basename(p).split("-sitelaag")[0]

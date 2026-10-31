@@ -330,8 +330,8 @@
   {
    "id": "w-longharbour-vale",
    "naam": "Long Harbour (Vale, raffinaderij)",
-   "lon": -53.82,
-   "lat": 47.43,
+   "lon": -53.8133,
+   "lat": 47.4101,
    "level": "site",
    "parent": null,
    "rol": "raffinaderij",
@@ -341,7 +341,7 @@
    "land": "Canada",
    "gewicht": 45.0,
    "gewicht_bron": "capaciteit kt Ni/j — Vale Base Metals: nameplate ≈ 45 kt Ni/j + 20 kt Cu/j + 2,6 kt Co/j; volledige ramp-up verwacht 2026 [B28]",
-   "bron": "Wikipedia-geohack 'Long Harbour, Newfoundland and Labrador' (en) — géén satellietblik deze ronde",
+   "bron": "Wikipedia-geohack 'Long Harbour, Newfoundland and Labrador' (en) — géén satellietblik deze ronde — M31 golf 12 (2026-10-29): gelijkgetrokken met het keten-anker ni-longharbour-fabriek van nikkel-thompson-longharbour (bron-gelegd)",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
    "notitie": "Verwerkt concentraat van Voisey's Bay tot afgewerkt nikkel, via een hydrometallurgisch (niet-smelt) proces."
   },

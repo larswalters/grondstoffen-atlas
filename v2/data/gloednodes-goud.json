@@ -258,8 +258,8 @@
   {
    "id": "w-paracatu",
    "naam": "Paracatu",
-   "lon": -46.8667,
-   "lat": -17.2167,
+   "lon": -46.8836,
+   "lat": -17.182,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -269,7 +269,7 @@
    "land": "Brazilië (Minas Gerais)",
    "gewicht": 15.0,
    "gewicht_bron": "capaciteit t Au/j — Kinross Gold jaarverslag 2024: ≈ 460.000-480.000 oz Au (≈ 14-15 t) [B28][B29]",
-   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde",
+   "bron": "v1-register (data/goud.js); geen satellietblik deze ronde — M31 golf 11 (2026-10-29): gelijkgetrokken met het keten-anker van goud-paracatu-zurich (au-paracatu-mijn, satelliet-gelegd in de brief)",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
    "notitie": "Kinross Gold."
   },
@@ -546,8 +546,8 @@
   {
    "id": "w-ref-metalor",
    "naam": "Metalor (Neuchâtel/Marin)",
-   "lon": 6.93,
-   "lat": 46.99,
+   "lon": 7.0112,
+   "lat": 47.0107,
    "level": "site",
    "parent": null,
    "rol": "raffinaderij",
@@ -557,8 +557,8 @@
    "land": "Zwitserland",
    "gewicht": 650.0,
    "gewicht_bron": "capaciteit t Au/j — Metalor bedrijfsopgave: nameplate-capaciteit ≈ 650 t/j [B50]",
-   "bron": "v1-register (data/goud.js); satelliet z15 (sitelaag-goud-ref-metalor): kruis aan het meer van Neuchâtel, gemengde stadsbebouwing, geen apart fabrieksgebouw herkenbaar op deze precisie",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status onzeker",
+   "bron": "was 46.99/6.93 (v1-register, stadsbebouwing Neuchâtel, onzeker) — M31 golf 16 (2026-10-30): gelijkgetrokken met het keten-anker au-ref-metalor (Metalor SA, Marin-Epagnier, bron-gelegd; gedeeld door goud-masbate-metalor en eerdere goudstromen; 6,6 km verschoven)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Buiten Ticino maar Zwitsers; wereldwijde vestigingen (o.a. Hongkong, Singapore, VS)."
   },
   {

@@ -94,6 +94,126 @@ import fetch_waterways as fw  # noqa: E402 — km()
 # kopie van dit bestand: een gekopieerd recept loopt stil uit de pas (de
 # generator-driftles van cu-guixi-spoor, 741 m).
 PROFIELEN = {
+    # Routebrief zilver-guanacevi-torreon, been b1 (LICHTE werkwijze M31 golf 19).
+    # Truck zilverdore Guanacevi-molen (Endeavour Silver, Durango) -> Met-Mex Penoles
+    # Torreon. Modaliteit niet gebrond (AIF: "delivered to the Penoles Torreon
+    # refinery"), dus het been is aannemelijk. Geen gepubliceerde wegkm: hemelsbreed
+    # 255 km, haalbaarheidstoets mat 380,6 km -> de +-15%-toets is INDICATIE.
+    # Corridor via Ciénega de Escobar (25.630,-105.712), Indé/El Mirador-San Bernardo
+    # (26.098,-105.202) en El Palmito-Mapimi (25.873,-104.108). Groot venster i.v.m. afstand.
+    "zilver-guanacevi-torreon-guanacevi-torreon": {
+        "via": [
+            ("Guanaceví-molen (Endeavour Silver) (anker, ag-guanacevi-molen)", (-105.9539, 25.9209)),
+            ("Carretera Santa María del Oro–Ciénega de Escobar (corridorkeuze zuid-oost)", (-105.712, 25.630)),
+            ("Entronque El Mirador–San Bernardo (Indé) (corridorkeuze noord-oost)", (-105.202, 26.098)),
+            ("Carretera El Palmito–Mapimí (aanloop La Laguna)", (-104.108, 25.873)),
+            ("Met-Mex Peñoles-raffinaderij Torreón (anker, ag-penoles-torreon)", (-103.4417, 25.5278)),
+        ],
+        "id": "ag-guanacevi-torreon-weg",
+        "naam": "Guanaceví-molen → Ciénega de Escobar → Indé/San Bernardo → El Palmito–Mapimí → Met-Mex Peñoles Torreón",
+        "extracts": ["mexico"],
+        "refs": [],
+        "gepubliceerdKm": 255.4,
+        "bronnoot": "geen gepubliceerde wegkm; 255 km is hemelsbreed tussen de twee ankers ('geen wegkm') - "
+                    "de +-15%-toets geldt als indicatie; haalbaarheidstoets mat 380,6 km over de weg.",
+        "vensterKm": 200,
+        "uit": "zilver-guanacevi-torreon-weg-guanacevi-torreon.geojson",
+    },
+    "uranium-portkavkaz-kozloduy-varna-kozloduy": {
+        "via": [
+            # ROUTEANKER != VEERANKER (27.6763, 43.1870; die blijft de marker u-varna-veer): de terminalstubs zijn
+            # access=no en hangen los van het openbare net; route start op het kruispunt met weg 9004 (OSRM-eerste afslag, ~0,3 km).
+            ("weg 9004 bij de afslag van het Varna Ferry Complex - routeanker", (27.67866, 43.18474)),
+            ("A2 Hemus west van Varna", (27.4484, 43.2542)),
+            ("weg 51 tussen Shumen en Targovishte", (26.7773, 43.3976)),
+            ("weg 51 tussen Targovishte en Popovo", (26.4331, 43.3320)),
+            ("weg 5 bij Byala (Jantra-oversteek)", (25.7272, 43.4663)),
+            ("weg 3 ten oosten van Pleven", (24.7846, 43.4188)),
+            ("aansluiting weg 3/13 ten westen van Pleven", (24.4409, 43.4169)),
+            ("weg 13 richting Kozloduy (westelijk van Pleven)", (24.0911, 43.4888)),
+            ("weg 11 naderend Kozloduy", (23.8424, 43.6909)),
+            ("Kozloduy kerncentrale - anker u-kozloduy", (23.7706, 43.7461)),
+        ],
+        "id": "uranium-portkavkaz-kozloduy-b2",
+        "naam": "Varna Ferry Complex -> A2 Hemus -> 51 -> 5 -> 3 -> 13 -> 11 -> Kozloduy kerncentrale (truck, aannemelijk)",
+        "extracts": ["bulgarije"],
+        "refs": ["A2", "2", "51", "5", "3", "13", "11"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed ~340 km; OSRM-indicatie 389 km (A2 Hemus, 51, 5, 3, 13, 11)",
+        "vensterKm": 40,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "eindToegangPrivaat": True,
+        "uit": "uranium-portkavkaz-kozloduy-weg-varna-kozloduy.geojson",
+    },
+    # Routebrief lithium-sabistar-morowali, been b1 (LICHTE werkwijze M31 golf 19). Truck spodumeenconcentraat
+    # Sabi Star (Chengxin/Max Minds, Buhera) -> Odzi (R5/A3 Harare-Mutare) -> Forbes/Machipanda-grens (door Mutare).
+    # Geen gepubliceerde wegkm: hemelsbreed 81 km (berekend); toets-OSRM 113 km via Odzi; indicatie, geen norm.
+    # Corridorklassen tertiary/unclassified voor de naamloze mijnweg (ca. 67 km).
+    "lithium-sabistar-morowali-plant-forbes": {
+        "via": [
+            ("Sabi Star-plant (put/tailings/plant), anker li-sabistar-plant", (31.9658, -19.1983)),
+            ("Odzi, R5/A3 Harare-Mutare (buiten Mutare)", (32.4158, -18.9199)),
+            ("Forbes Border Post (ZW) / Machipanda (MZ), N6, anker li-forbes-grens", (32.7123, -19.0052)),
+        ],
+        "id": "li-sabistar-forbes",
+        "naam": "Sabi Star-plant -> naamloze mijnweg -> Odzi (R5/A3) -> Mutare (A3/N6) -> Forbes/Machipanda-grens",
+        "extracts": ["zimbabwe"],
+        "refs": ["A3", "R5"],
+        "gepubliceerdKm": 113,
+        "bronnoot": "Geen gepubliceerde wegkm: hemelsbreed 81 km (berekend); haalbaarheidstoets (OSRM/OSM-route via Odzi): 113 km, waarvan ca. 67 km naamloze weg; indicatie, geen norm.",
+        "vensterKm": 60,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "lithium-sabistar-morowali-weg-plant-forbes.geojson",
+    },
+    # Routebrief ree-zhaobao-leduc, been b3 (LICHTE werkwijze M31 golf 19). Truck NdFeB-magneten Tacoma (Husky Terminal) -> Leduc
+    # (Allard Ave): I-5 -> SR 9 -> Sumas/Abbotsford -> BC 11 -> TCH 1 -> Hope -> BC 5 (Coquihalla) -> Kamloops -> Yellowhead 5/16
+    # (Tete Jaune, Jasper, Hinton) -> Edmonton (216) -> Hwy 2 -> Leduc. Geen gepubliceerde wegkm: gepubliceerdKm = OSRM-indicatie
+    # (OSM-afgeleid), hemelsbreed 919 km; de +-15%-toets is een indicatie. Aannemelijk: modaliteit onbekend (in-bond, ook trein mogelijk).
+    "ree-zhaobao-leduc-husky-leduc": {
+        "via": [
+            ("Husky Terminal, Tacoma - anker ree-tacoma-kade",                      (-122.4110, 47.2733)),
+            ("I-5 bij Bellingham",                                                   (-122.4749, 48.7038)),
+            ("Sumas/Abbotsford grensovergang (SR 9 / BC 11)",                        (-122.2651, 49.0020)),
+            ("Hope, begin BC 5 Coquihalla",                                          (-121.3627, 49.3617)),
+            ("Kamloops west, TCH 1 / BC 5",                                          (-120.4417, 50.6662)),
+            ("Clearwater, YH 5 North Thompson",                                      (-120.0400, 51.6511)),
+            ("Tete Jaune Cache, YH 5 / YH 16",                                       (-119.4226, 52.9759)),
+            ("Hinton, Hwy 16",                                                       (-117.5815, 53.4021)),
+            ("Edmonton west, Hwy 16 / Anthony Henday 216",                           (-113.6780, 53.5719)),
+            ("Interra Energy Services EMFTS, Leduc - anker ree-leduc-afnemer",       (-113.5170, 53.2914)),
+        ],
+        "id": "ree-zhaobao-leduc-b3",
+        "naam": "Tacoma (Husky Terminal) -> Leduc (I-5 -> BC 11 -> TCH 1 -> BC 5 Coquihalla -> Yellowhead 5 en 16 -> Hwy 216 -> Hwy 2)",
+        "extracts": ["us-washington", "canada"],
+        "refs": ["I 5", "SR 9", "BC 11", "TCH 1", "BC 5", "YH 5", "YH 16", "16", "216", "2"],
+        "gepubliceerdKm": 1352,
+        "bronnoot": "OSRM-indicatie 1.352 km (OSM-afgeleid, geen bedrijfs- of overheidsopgave); hemelsbreed 919 km; km-toets is indicatie",
+        "vensterKm": 40,
+        "trimStaart": True,
+        "uit": "ree-zhaobao-leduc-weg-husky-leduc.geojson",
+    },
+    # ── Routebrief kolen-stockton-lyttelton, been b1 (LICHTE werkwijze M31 golf 19) ──
+    # Truck steenkool Stockton-mijn (BT Mining, Denniston Plateau) -> Burma Road (mijnweg, OSM service/access=private, "7,4 km haul road" volgens Bathurst)
+    # -> bovenstation van de Stockton-kabelbaan (OSM way 153734257). Mijnanker = GEM-coordinaat (-41,6619/171,8764): over OSM-mijnwegen 7,4 km.
+    # Alleen privewegen: geen openbaar net; eindToegangPrivaat + corridorKlassen service. Laatste ~90 m is highway=track access=no (stub).
+    "kolen-stockton-lyttelton-mijn-kabelbaan": {
+        "via": [
+            ("Stockton-mijn (anker kolen-stockton-mijn)",                 (171.8764, -41.6619)),
+            ("Burma Road noord (kruising mijnwegen)",                     (171.8925, -41.6550)),
+            ("Burma Road oost (lus om de Stockton-plateaurand)",          (171.9037, -41.6342)),
+            ("Stockton-kabelbaan bovenstation (anker kolen-stockton-kabelbaan-boven)", (171.8889, -41.6283)),
+        ],
+        "id": "kolen-stockton-kabelbaan-weg",
+        "naam": "Stockton-mijn -> Burma Road (mijnweg, prive) -> kabelbaan-bovenstation",
+        "extracts": ["nieuw-zeeland"],
+        "refs": [],
+        "corridorKlassen": ["service"],
+        "gepubliceerdKm": 7.4,
+        "bronnoot": "Bathurst Resources-presentatie (via WebSearch-samenvatting): 7,4 km haul road van de Stockton-mijn naar de kabelbaan",
+        "vensterKm": 15,
+        "eindToegangPrivaat": True,
+        "uit": "kolen-stockton-lyttelton-weg-mijn-kabelbaan.geojson",
+    },
     # ── Routebrief zilver-sindesarkhurd-dariba, been b1 (LICHTE werkwijze M31 golf 18) ──
     # Truck Sindesar Khurd-mijn/concentrator (Hindustan Zinc, Rajsamand) -> Dariba Smelting Complex (Hindustan Zinc): lokale weg zuidwaarts,
     # west van de Rajpura Dariba-put. AANNEMELIJK: een bron (hzlindia.com Dariba: "leveraging nearby Rajpura Dariba and Sindesar Khurd mines").
@@ -1157,6 +1277,389 @@ PROFIELEN = {
         "uit": "koper-redchris-stewart-weg-redchris-stewart.geojson",
     },
     # ── NIEUWE PROFIELEN HIERONDER INVOEGEN (één per been; coördinaten (lon, lat)) ──
+    # -- Routebrief grafiet-chedde-seadrift, benen b1 + b4 + b5 (LICHTE werkwijze M31 golf 19) --
+    # b1 truck NBG-18-billets SGL Chedde (Passy) -> Le Havre Port 2000 kade: A40 (Nantua) -> A6 (Beaune, Fontainebleau) -> A86 zuidwest -> A13 (Mantes, Rouen) -> A131.
+    # Geen gepubliceerde wegkm: hemelsbreed 629 km, OSRM-indicatie 791 (geen bron); de +-15%-toets is een indicatie. Controle: A86 Velizy/Rueil (Duplex-tunnel).
+    "grafiet-chedde-seadrift-chedde-lehavre": {
+        "via": [
+            ("SGL Carbon Chedde, Passy (anker gr-chedde-sgl)",       (6.7285, 45.9263)),   # anker
+            ("A40 bij Nantua",                                       (5.6089, 46.1400)),
+            ("A6 bij Beaune",                                        (4.8675, 47.0153)),
+            ("A6 ten zuiden van Fontainebleau",                      (2.5845, 48.3535)),
+            ("A86 bij A6-knooppunt",                                 (2.3383, 48.7563)),
+            ("A86 bij Velizy",                                       (2.1999, 48.7792)),
+            ("A13 bij Mantes",                                       (1.7142, 48.9775)),
+            ("A13 bij Rouen",                                        (1.0882, 49.3288)),
+            ("A131 bij Lillebonne",                                  (0.4859, 49.4631)),
+            ("Le Havre Port 2000 kade TPO (anker gr-lehavre-kade)",  (0.1619, 49.4580)),   # anker
+        ],
+        "id": "gr-chedde-lehavre",
+        "naam": "SGL Chedde -> Le Havre-kade (A40 -> A6 -> A86 zuidwest -> A13 -> A131)",
+        "extracts": ["fr-rhone-alpes", "fr-bourgogne", "fr-ile-de-france", "fr-haute-normandie"],
+        "refs": ["A40", "A6", "A86", "A13", "A131"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 629 km, OSRM-indicatie 791 km (geen bron); toets is indicatie",
+        "vensterKm": 60,
+        "uit": "grafiet-chedde-seadrift-weg-chedde-lehavre.geojson",
+    },
+    # b4 truck Seagirt Marine Terminal Baltimore -> SGL Carbon LLC St. Marys (PA): I-695 W -> I-70 -> I-70/I-76 Breezewood -> I-99/US-220 -> I-80 DuBois -> PA-255.
+    # Geen gepubliceerde wegkm: hemelsbreed 295 km, OSRM-indicatie 429 (geen bron); de +-15%-toets is een indicatie.
+    "grafiet-chedde-seadrift-seagirt-stmarys": {
+        "via": [
+            ("Seagirt Marine Terminal Baltimore (anker gr-baltimore-seagirt)", (-76.5468, 39.2573)),   # anker
+            ("I-695 west van Baltimore",                                       (-76.7357, 39.2843)),
+            ("I-70 bij Hancock",                                               (-78.1507, 39.6956)),
+            ("I-70/I-76 bij Breezewood",                                       (-78.2297, 39.9896)),
+            ("I-99/US-220 bij Altoona",                                        (-78.3706, 40.5095)),
+            ("I-99/US-220 bij State College",                                  (-77.8484, 40.8257)),
+            ("I-80 bij DuBois",                                                (-78.7548, 41.1447)),
+            ("SGL Carbon LLC St. Marys (anker gr-stmarys-sgl)",                (-78.5423, 41.4315)),   # anker
+        ],
+        "id": "gr-seagirt-stmarys",
+        "naam": "Seagirt Baltimore -> SGL St. Marys (I-695 -> I-70 -> I-76 -> I-99/US-220 -> I-80 -> PA-255)",
+        "extracts": ["us-maryland", "us-pennsylvania"],
+        "refs": ["I-695", "I-70", "I-76", "I-99", "US-220", "I-80", "PA-255"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 295 km, OSRM-indicatie 429 km (geen bron); toets is indicatie",
+        "vensterKm": 50,
+        "uit": "grafiet-chedde-seadrift-weg-seagirt-stmarys.geojson",
+    },
+    # b5 truck SGL Carbon St. Marys (PA) -> Long Mott-kavel Seadrift (TX): I-80 -> I-76/I-71 -> I-65 -> I-40 (Memphis) -> I-30 -> US-59 -> TX-185.
+    # Aannemelijk: een bron noemt project Seadrift, levering/route niet gebronnet. Geen gepubliceerde wegkm: hemelsbreed 2.186 km, OSRM-indicatie 2.595; toets is indicatie.
+    "grafiet-chedde-seadrift-stmarys-seadrift": {
+        "via": [
+            ("SGL Carbon LLC St. Marys (anker gr-stmarys-sgl)",         (-78.5423, 41.4315)),   # anker
+            ("I-80 bij DuBois",                                         (-78.7548, 41.1447)),
+            ("I-71 bij Medina",                                         (-81.8162, 41.1068)),
+            ("I-71 bij Carrollton KY",                                  (-85.1520, 38.6260)),
+            ("I-65 bij Bowling Green",                                  (-86.4313, 36.9116)),
+            ("I-40 ten westen van Nashville (OSM-vertex; dwingt I-65 -> I-40, niet US-79)", (-87.0245, 36.0768)),   # extra via: zonder dit koos de router Russellville/US-79 buiten Nashville om, met een terugloop bij Bowling Green
+            ("I-40 bij Memphis",                                        (-90.0213, 35.1528)),
+            ("I-30 bij Texarkana",                                      (-94.0563, 33.4694)),
+            ("US-59 bij Lufkin",                                        (-94.7070, 31.3166)),
+            ("US-59/I-69 bij Victoria",                                 (-96.9475, 28.7938)),
+            ("Long Mott-kavel bij Seadrift (anker gr-seadrift-kavel)",  (-96.7619, 28.5283)),   # anker
+        ],
+        "id": "gr-stmarys-seadrift",
+        "naam": "SGL St. Marys -> Long Mott-kavel Seadrift (I-80 -> I-71 -> I-65 -> I-40 -> I-30 -> US-59 -> TX-185)",
+        "extracts": ["us-pennsylvania", "us-ohio", "us-kentucky", "us-tennessee", "us-arkansas", "us-texas"],
+        "refs": ["I-80", "I-76", "I-71", "I-65", "I-40", "I-30", "US-59", "TX-185"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 2186 km, OSRM-indicatie 2595 km (geen bron); toets is indicatie",
+        "vensterKm": 50,
+        "uit": "grafiet-chedde-seadrift-weg-stmarys-seadrift.geojson",
+    },
+    # -- Routebrief zilver-pirquitas-buenosaires, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck zilver-loodconcentraat (1 t big bags) Pirquitas-fabriek -> Buenos Aires containerkade TRP: Susques, RN 52 -> Purmamarca,
+    # RN 9 (S.S. de Jujuy) -> Tucuman (RN 34/RN 9) -> Rosario -> Buenos Aires. Kopie van lithium-olaroz-naraha-baires, eerste via-punt = plant.
+    # Geen gepubliceerde totaal-wegkm: gepubliceerdKm = hemelsbreed ~1.540 km (indicatie); de 335 km Pirquitas -> Jujuy (TRS) is alleen een deelcontrole.
+    # Susques is bewust WEL via-punt (afwijking van de brief): zonder koos de router de noordroute via Abra Pampa (TRS noemt Susques).
+    # Hooggebergte-secundaire wegen: corridorKlassen breed, eindKlassen met track (patroon Olaroz).
+    "zilver-pirquitas-buenosaires-planta-baires": {
+        "via": [
+            ("Pirquitas-verwerkingsfabriek (Puna Operations)",       (-66.4830, -22.6925)),  # anker
+            ("Susques (RN52, TRS: concentraat per truck naar Susques)", (-66.3676, -23.3992)),  # corridorkeuze Susques/RN52 i.p.v. noordroute Abra Pampa; OSM-Nominatim (Wikipedia -23.4167,-66.4833 ligt ~12 km te ver westelijk)
+            ("Purmamarca (RN52 -> RN9-knoop)",                       (-65.4992, -23.7466)),
+            ("San Salvador de Jujuy",                                (-65.2995, -24.1853)),
+            ("Tucuman (RN34/RN9-splitsing)",                         (-65.2226, -26.8241)),
+            ("Rosario",                                              (-60.6505, -32.9442)),
+            ("Buenos Aires containerkade - TRP Puerto Nuevo",        (-58.3631, -34.5847)),  # anker
+        ],
+        "id": "ag-pirquitas-baires",
+        "naam": "Pirquitas-fabriek -> Buenos Aires containerkade (Susques, RN52 -> RN9 -> RN34/RN9 -> Rosario)",
+        "extracts": ["argentina"],
+        "refs": ["RN52", "52", "RN9", "9", "RN34", "34", "RN A008"],
+        "gepubliceerdKm": 1540,
+        "bronnoot": "geen totaal-wegkm gepubliceerd; hemelsbreed ~1.540 km als indicatie, geen norm "
+                    "(alleen Pirquitas -> Jujuy 335 km in de TRS Puna 2024; gemeten Jujuy-deel 318,5 km)",
+        "vensterKm": 75,
+        "corridorKlassen": ["tertiary", "unclassified", "residential"],
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "zilver-pirquitas-buenosaires-weg-pirquitas-baires.geojson",
+    },
+    # -- Routebrief zilver-zhezkazgan-balkhash, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck: elektrolyse-slijk Zhezkazgan Copper Smelter -> Balkhash-smelter (PMP-slijkterrein): KAZ14 / KAZ22 / KAZ01 via Zhana-Arka en Shet.
+    # Geen gepubliceerde wegkm: hemelsbreed 555 km; OSM-meting haalbaarheidstoets 695,5 km (indicatie, geen norm). Aannemelijk: een bron.
+    "zilver-zhezkazgan-balkhash-zhezkazgan-balkhash": {
+        "via": [
+            ("Zhezkazgan Copper Smelter (anker ag-zhezkazgan-smelter)",   (67.7211, 47.7769)),
+            ("Zhana-Arka-district, op de trunk",                          (70.0950, 48.4540)),
+            ("Shet-district, ten Z van Karaganda",                        (72.0030, 48.6810)),
+            ("Shet-district, weg naar Balkhash",                          (74.1540, 47.8210)),
+            ("Balkhash-smelter, PMP-slijkterrein (anker ag-balkhash-pmp)", (74.9461, 46.8338)),
+        ],
+        "id": "ag-zhezkazgan-balkhash",
+        "naam": "Zhezkazgan-smelter -> Balkhash-PMP (KAZ14 / KAZ22 / KAZ01; aannemelijk: een bron)",
+        "extracts": ["kazachstan"],
+        "refs": ["KAZ14", "KAZ22", "KAZ01"],
+        "gepubliceerdKm": None,
+        "bronnoot": "geen gepubliceerde wegkm; hemelsbreed 555 km; OSM-meting haalbaarheidstoets 695,5 km",
+        "vensterKm": 230,
+        "uit": "zilver-zhezkazgan-balkhash-weg-zhezkazgan-balkhash.geojson",
+    },
+    # -- Routebrief ree-ganzhou-florence, been b5 (LICHTE werkwijze M31 golf 19) --
+    # Truck speed-magneten Long Beach-kade -> Bosch Automotive Steering, 4175 Aero Parkway, Florence KY: I-710/I-105/I-605/I-10 ->
+    # I-15 Cajon -> I-40 (Barstow, Needles, Santa Rosa, Amarillo) -> I-44 (OKC, Tulsa, Springfield) -> I-64 (St. Louis) -> I-265/KY 841 -> I-71.
+    # Aannemelijk: een bron, route niet bekend. Geen gepubliceerde wegkm: hemelsbreed 3.043 km, OSRM-indicatie 3.527 km; +-15%-toets is indicatie.
+    "ree-ganzhou-florence-longbeach-bosch": {
+        "via": [
+            ("Containerkade Long Beach (anker ree-longbeach-kade, hergebruik)",       (-118.2132, 33.7600)),
+            ("I-15 Cajon Pass - I-15 naar Barstow i.p.v. I-10 via Blythe",           (-117.4747, 34.3114)),
+            ("I-40 bij Needles - Mojave",                                             (-114.5965, 34.8218)),
+            ("I-40 Santa Rosa NM",                                                    (-104.6782, 34.9472)),
+            ("I-40 Amarillo - Texas Panhandle",                                       (-101.8699, 35.1948)),
+            ("I-44 Turner Turnpike noord van Oklahoma City",                          (-97.4246, 35.5993)),
+            ("I-44 bij Lebanon MO - Ozarks",                                          (-92.6919, 37.6193)),
+            ("I-64 Illinois oost van Belleville",                                     (-89.6018, 38.4946)),
+            ("I-71 zuid van Carrollton - naar Florence",                              (-85.1933, 38.5651)),
+            ("Bosch Automotive Steering, 4175 Aero Parkway, Florence (anker ree-florence-bosch)", (-84.6458, 39.0185)),
+        ],
+        "id": "ree-longbeach-bosch",
+        "naam": "Long Beach-kade -> Bosch Steering Florence (I-10 -> I-15 -> I-40 -> I-44 -> I-64 -> I-71; aannemelijk: een bron)",
+        "extracts": ["us-california", "us-arizona", "us-new-mexico", "us-texas", "us-oklahoma", "us-missouri", "us-illinois", "us-indiana", "us-kentucky"],
+        "refs": ["I 710", "I 105", "I 605", "I 10", "I 15", "I 40", "I 44", "I 64", "I 265", "I 71"],
+        "gepubliceerdKm": 3527,
+        "bronnoot": "Geen gepubliceerde wegkm: hemelsbreed 3.043 km, OSRM 3.527,2 km (OSM-afgeleid, indicatie); de +-15%-toets is "
+                    "alleen een indicatie, geen norm (brief §2/§7).",
+        "vensterKm": 75,
+        "eindToegangPrivaat": True,   # havenwegen Long Beach / bedrijventerrein Aero Parkway kunnen access=private dragen
+        "uit": "ree-ganzhou-florence-weg-longbeach-bosch.geojson",
+    },
+    # -- Routebrief grafiet-lakecharles-brunswick, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck (werkaanname) naaldcokes P66 Lake Charles cokesveld -> Epsilon-park Brunswick County (NC):
+    # I-10 -> I-12 -> I-10 -> I-65 -> I-85 -> I-285 ZO-Atlanta -> I-20 -> I-95 -> I-74/US-74 -> US-74/76.
+    # Geen gepubliceerde wegkm: hemelsbreed 1487 km, OSRM-indicatie 1691 km; de +-15%-toets is indicatie.
+    # KOP OP PRIVE-TERREINWEGEN (P66 Lake Charles-complex) -> eindToegangPrivaat.
+    "grafiet-lakecharles-brunswick-lakecharles-brunswick": {
+        "via": [
+            ("P66 Lake Charles - cokesveld/coker (anker gr-lakecharles-cokes)", (-93.2770, 30.2420)),
+            ("I-12 oost van Baton Rouge (Walker)", (-90.8576, 30.4707)),
+            ("I-65 N na I-10 bij Mobile", (-88.1271, 30.6679)),
+            ("I-85 O van I-65/I-85 Montgomery", (-86.2500, 32.3585)),
+            ("I-285 ZO-Atlanta", (-84.2988, 33.6907)),
+            ("I-95 N na I-20 bij Florence", (-79.8315, 34.2072)),
+            ("I-74/US-74 O van I-95 Lumberton", (-79.0481, 34.5795)),
+            ("US-74/76 bypass Whiteville", (-78.6990, 34.3508)),
+            ("Epsilon Mid-Atlantic Industrial Rail Park (anker gr-brunswick-fabriek)", (-78.1868, 34.3037)),
+        ],
+        "id": "gr-lakecharles-brunswick",
+        "naam": "P66 Lake Charles cokesveld -> Epsilon-park Brunswick County (I-10, I-12, I-65, I-85, I-285, I-20, I-95, US-74/76)",
+        "extracts": ["us-louisiana", "us-mississippi", "us-alabama", "us-georgia", "us-south-carolina", "us-north-carolina"],
+        "refs": ["I-10", "I-12", "I-65", "I-85", "I-285", "I-20", "I-95", "I-74", "US-74", "US-76",
+                 "10", "12", "65", "85", "285", "20", "95", "74", "76"],
+        "gepubliceerdKm": 1691,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 1487 km, OSRM-indicatie 1691 km (routebrief §2/§8[11])",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "uit": "grafiet-lakecharles-brunswick-weg-lakecharles-brunswick.geojson",
+    },
+    # -- Routebrief goud-macraes-perthmint, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck doré Macraes-verwerkingsplant (OceanaGold, Otago) -> Air NZ Cargo, Ron Guthrey Rd, Christchurch Airport:
+    # Golden Point Rd / Macraes Rd -> SH85 (Dunback, Palmerston) -> SH1 (Oamaru, Waitaki, Timaru, Ashburton, Rakaia) -> Pound Rd.
+    # Geen wegkm gepubliceerd: OSRM 338,8 km, hemelsbreed 267,1; de +-15%-toets is indicatie. Aannemelijk: vervoer niet gebronnd.
+    "goud-macraes-perthmint-macraes-chc": {
+        "via": [
+            ("Macraes-verwerkingsplant (anker au-macraes-plant)", (170.4290, -45.3592)),
+            ("Dunback, begin SH85", (170.6288, -45.3843)),
+            ("Palmerston, SH85/SH1", (170.7220, -45.4809)),
+            ("Pukeuri, ten N van Oamaru (SH1)", (170.9997, -45.0619)),
+            ("Waitaki-rivier, SH1 bij Glenavy", (171.1006, -44.9135)),
+            ("Timaru-noord, SH1", (171.2369, -44.3463)),
+            ("Hinds, ten Z van Ashburton (SH1)", (171.5787, -43.9969)),
+            ("Dunsandel / Rakaia-zijde (SH1)", (172.0286, -43.7517)),
+            ("Templeton, SH1 (afslag Pound Rd)", (172.3511, -43.6016)),
+            ("Air NZ Cargo, Ron Guthrey Rd, CHC (anker au-chc-cargo)", (172.5467, -43.4926)),
+        ],
+        "id": "au-macraes-chc-weg",
+        "naam": "Macraes-plant -> Dunback -> Palmerston -> Oamaru -> Timaru -> Ashburton -> Christchurch Airport Air NZ Cargo (SH85, SH1)",
+        "extracts": ["nieuw-zeeland"],
+        "refs": ["SH85", "SH1"],
+        "gepubliceerdKm": 339,
+        "bronnoot": "geen wegkm gepubliceerd; OSRM-indicatie 338,8 km, hemelsbreed 267,1 km (routebrief §2/§8[7])",
+        "vensterKm": 40,
+        "eindToegangPrivaat": True,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "goud-macraes-perthmint-weg-macraes-chc.geojson",
+    },
+    # -- Routebrief uranium-springfields-gronau, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck UF6 Springfields (Salwick) -> Hull Ferry Terminal (Hedon Road): M55 -> M6 -> M61 -> M60 -> M62 -> A63 Clive
+    # Sullivan Way. Geen gepubliceerde wegkm: hemelsbreed 166 km, OSRM-indicatie 212 km; de +-15%-toets is indicatie.
+    # Aannemelijk: bron (urantransport.de) noemt alleen "per LKW auf einer Faehre ueber Belgien"; Hull is afgeleid.
+    "uranium-springfields-gronau-springfields-hull": {
+        "via": [
+            # ROUTEANKER != SITEANKER (53.7775, -2.8081; die blijft de marker u-springfields): de dichtstbijzijnde OSM-knoop
+            # (0,22 km) ligt op een los plantwegje (eigen component, 1 way) -> "geen wegpad tussen punt 0 en 1". Route start
+            # op een knoop van het VERBONDEN net (OSM service-weg, 0,38 km van het siteanker, in de grootste component).
+            ("Springfields, Salwick - routeanker (verbonden net; siteanker u-springfields 0,38 km)", (-2.8136, 53.7764)),
+            ("M55/M6 Preston-bypass", (-2.6938, 53.8037)),
+            ("M6/M61 Bamber Bridge", (-2.6499, 53.7378)),
+            ("M61/M60 Worsley", (-2.3632, 53.5277)),
+            ("M60/M62 Simister", (-2.2698, 53.5468)),
+            ("M62 Brighouse", (-1.7324, 53.7296)),
+            ("M62 Birstall", (-1.6495, 53.7464)),
+            ("A63 Clive Sullivan Way", (-0.4742, 53.7223)),
+            ("Hull Ferry Terminal, Hedon Road (anker u-hull-veer)", (-0.2788, 53.7419)),
+        ],
+        "id": "uranium-springfields-gronau-b1",
+        "naam": "Springfields -> M55 -> M6 -> M61 -> M60 -> M62 -> A63 -> Hull Ferry Terminal",
+        "extracts": ["groot-brittannie"],
+        "refs": ["M55", "M6", "M61", "M60", "M62", "A63"],
+        "gepubliceerdKm": None,
+        "bronnoot": "hemelsbreed 166 km, geen wegkm gepubliceerd; OSRM-indicatie 212 km; de OSM-scan is de indicatie",
+        "vensterKm": 50,
+        "uit": "uranium-springfields-gronau-weg-springfields-hull.geojson",
+    },
+    # -- Routebrief uranium-springfields-gronau, been b3 (LICHTE werkwijze M31 golf 19) --
+    # Truck UF6 Zeebrugge (P&O-terminal Leopold II-dam) -> Urenco Gronau: A11 -> N49/E34 -> R1 Antwerpen -> E34 -> A67
+    # Eindhoven -> A57 Moers -> A3/A2 Oberhausen -> A31 Bottrop -> Gronau. Geen gepubliceerde wegkm: hemelsbreed 284 km,
+    # OSRM-indicatie 385 km; de +-15%-toets is indicatie. Gronau: routeanker 52.2184, 7.0723 (verbonden net; plantanker
+    # u-gronau 52.2154, 7.0739 ligt op een los plantwegje), letterlijk uit uranium-gronau-vasteras. Duitse refs met spatie.
+    "uranium-springfields-gronau-zeebrugge-gronau": {
+        "via": [
+            ("Zeebrugge, P&O-terminal Leopold II-dam (anker u-zeebrugge-veer)", (3.1897, 51.3410)),
+            ("A11 Zeebrugge-Brugge", (3.2549, 51.2950)),
+            ("N49 Expresweg Maldegem", (3.4109, 51.2211)),
+            ("R1 Antwerpen zuidwest", (4.3518, 51.2226)),
+            ("E34 Zandhoven", (4.5702, 51.2030)),
+            ("A67 Eindhoven-ring", (5.4906, 51.4049)),
+            # AANGEPAST t.o.v. brief (6.6032, 51.4398): dat punt snapte op een zijweg 0,4 km noordelijk van de A57 en gaf een
+            # keerlus (TERUGLOOP 170 gr, toets_knikken). Nu een knoop op de A57-hoofdbaan zelf.
+            ("A57 Moers (hoofdbaan)", (6.6035, 51.4363)),
+            ("A3/A2 Oberhausen", (6.8172, 51.4918)),
+            ("A31 begin Bottrop", (6.9262, 51.5555)),
+            ("Gronau bij Urenco - routeanker (verbonden net; plantanker u-gronau 0,35 km)", (7.0723, 52.2184)),
+        ],
+        "id": "uranium-springfields-gronau-b3",
+        "naam": "Zeebrugge -> A11 -> N49/E34 -> R1 Antwerpen -> E34 -> A67 -> A57 -> A3/A2 -> A31 -> Urenco Gronau",
+        "extracts": ["belgie", "nederland", "de-nrw"],
+        "refs": ["A11", "N49", "R1", "E34", "E 34", "A67", "A57", "A 57", "A 3", "A 2", "A 31"],
+        "gepubliceerdKm": None,
+        "bronnoot": "hemelsbreed 284 km, geen wegkm gepubliceerd; OSRM-indicatie 385 km; de OSM-scan is de indicatie",
+        "vensterKm": 50,
+        "uit": "uranium-springfields-gronau-weg-zeebrugge-gronau.geojson",
+    },
+    # -- Routebrief goud-otjikoto-randrefinery, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck dore Otjikoto-plant (B2Gold) -> Hosea Kutako (WDH) vrachtapron: mijnweg (OSM service, asfalt) -> B1 (Otjiwarongo)
+    # -> A1-bypass Okahandja -> A1 Western Bypass Windhoek -> Nelson Mandela Ave -> B6 (Sam Nujoma Dr). Aannemelijk: vervoer niet gebronnd.
+    # GEEN wegkm gepubliceerd: hemelsbreed 280 km, AIF "ca. 300 km noord van Windhoek", OSRM-indicatie 364 km; de +-15%-toets is indicatie.
+    "goud-otjikoto-randrefinery-plant-wdh": {
+        "via": [
+            ("Otjikoto-verwerkingscomplex (anker, au-otjikoto-plant)",      (17.0906, -19.9923)),
+            ("B1 bij de mijntoegang (mijnweg-aansluiting)",                  (17.0683, -19.9808)),
+            ("B1 ten Z van Otjiwarongo (buiten het centrum)",                (16.7462, -20.5857)),
+            ("A1-bypass W van Okahandja (niet het stadspunt)",               (16.8810, -22.0098)),
+            ("A1 Western Bypass Windhoek-noord",                             (17.0727, -22.5242)),
+            ("Nelson Mandela Avenue (A1 naar B6 zonder CBD)",                (17.0868, -22.5509)),
+            ("B6 Sam Nujoma Drive (oostwaarts naar WDH)",                    (17.1168, -22.5796)),
+            ("Hosea Kutako WDH terminal-/vrachtapron (anker, au-wdh-vracht)", (17.4643, -22.4863)),
+        ],
+        "id": "au-otjikoto-wdh",  "naam": "Otjikoto-plant -> B1 -> A1 -> B6 -> WDH-vrachtapron",
+        "extracts": ["namibie"],
+        "refs": ["B1", "A1", "B6"],
+        "gepubliceerdKm": None, "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 280 km, AIF ca. 300 km noord van Windhoek, OSRM-indicatie 364 km (brief §2)",
+        "vensterKm": 40,
+        "uit": "goud-otjikoto-randrefinery-weg-plant-wdh.geojson",
+    },
+    # -- Routebrief uranium-tricastin-lingen, been b1 (LICHTE werkwijze M31 golf 19) --
+    # Truck verrijkt UF6 Orano Tricastin (Pierrelatte) -> Framatome ANF Lingen: A7 -> A46 Lyon-oost -> A6 -> A31 (Dijon, Nancy, Metz, Thionville)
+    # -> Luxemburg (A3/A1) -> Eifel (A64/B51/A60/B51) -> A1 Keulen -> A3 -> A31 Dorsten -> B213 (brief §2/§4). Aannemelijk: een bron (19 transporten 2017), route niet gepubliceerd.
+    # GEEN wegkm gepubliceerd: hemelsbreed 927 km, OSRM-indicatie 1.125 km; de +-15%-toets is indicatie, geen norm.
+    # Via-punten alleen bij een corridorkeuze en op de doorgaande weg (OSRM-geometrie), nooit in een stadscentrum. Duitse en Franse refs staan in OSM met spatie ("A 7"): beide schrijfwijzen.
+    "uranium-tricastin-lingen-tricastin-lingen": {
+        "via": [
+            ("Orano Tricastin - Georges Besse II, Pierrelatte (anker, u-tricastin)", (4.7167, 44.3250)),
+            ("A46 Rocade Est Lyon (NO van Lyon; Lyon-oost i.p.v. het centrum)",       (4.9239, 45.8061)),
+            ("A31 ten zuiden van Dijon (A6 naar A31, Beaune-Dijon)",                   (5.0652, 47.2467)),
+            ("A31 bij Thionville (Nancy-Metz-Luxemburg, niet via Saarbruecken)",       (6.1857, 49.3301)),
+            ("A1 bij Luxemburg (ring, Findel-zijde; A3 naar A1 richting Trier)",       (6.1607, 49.5868)),
+            ("B51 Eifel ten noorden van Pruem (Eifelroute i.p.v. Rijndal)",            (6.4611, 50.2409)),
+            ("A1 bij Erftstadt (west van Keulen, A1 tot Keulen)",                      (6.8267, 50.8944)),
+            ("A3 bij Duesseldorf/Ratingen (A3 noordwaarts)",                           (6.9067, 51.2765)),
+            ("A31 bij Dorsten (A31 Bottrop-Gronau-Lingen)",                            (6.9233, 51.6631)),
+            ("Framatome ANF Brennelementfertigung, Lingen (anker, u-lingen-anf)",      (7.3315, 52.4804)),
+        ],
+        "id": "u-tricastin-lingen-b1",
+        "naam": "Orano Tricastin -> A7 -> A46 Lyon-oost -> A6/A31 -> Luxemburg -> Eifel (B51) -> A1 -> A3 -> A31 -> Framatome ANF Lingen (aannemelijk: een bron, route niet gepubliceerd)",
+        "extracts": ["fr-rhone-alpes", "fr-bourgogne", "fr-champagne-ardenne", "fr-lorraine", "luxemburg",
+                     "de-rheinland-pfalz", "de-nrw", "de-niedersachsen"],
+        "refs": ["A7", "A 7", "A46", "A 46", "A6", "A 6", "A31", "A 31", "A3", "A 3", "A1", "A 1", "A64", "A 64",
+                 "A60", "A 60", "B51", "B 51", "B213", "B 213"],
+        "gepubliceerdKm": 1107,
+        "bronnoot": "geen wegkm gepubliceerd: hemelsbreed 927 km, OSRM-indicatie 1.107 km (zonder A46-oost) / 1.125 km (met) -- lengtetoets is indicatie, geen norm",
+        "vensterKm": 40,
+        "uit": "uranium-tricastin-lingen-weg-tricastin-lingen.geojson",
+    },
+    # -- Routebrief goud-borborema-asahibrampton, been b1 (LICHTE werkwijze M31 golf 19) --
+    # b1: Borborema-plant (Currais Novos) -> BR-226 -> BR-304 -> Rodovia Humberto Pessoa -> weg bij NAT-vrachtloods. Aannemelijk: geen bron voor het vervoer.
+    # GEEN gepubliceerde wegkm naar NAT: hemelsbreed 113,6 km; OSRM 148,8; TRS 172 km geldt Natal-stad (indicatie, geen norm).
+    "goud-borborema-asahibrampton-plant-nat": {
+        "via": [
+            ("Borborema-plant (Aura Minerals) - anker au-borborema-plant", (-36.2945, -6.2030)),
+            ("BR-226, ca 20 km ten O van de plant", (-36.1484, -6.1962)),
+            ("BR-226 voorbij Santa Cruz (omleiding)", (-35.9191, -6.2584)),
+            ("BR-226 voorbij Tangara", (-35.7141, -6.1122)),
+            ("BR-226 ca 100 km", (-35.5952, -5.9900)),
+            ("knoop BR-226 / BR-304", (-35.4937, -5.8910)),
+            ("BR-304 voor de afslag Rodovia Humberto Pessoa (brief-punt lag op een zijtak, 2e poging op het dubbelbaanstuk gaf nog een keerlus)", (-35.3778, -5.8688)),
+            ("Rodovia Humberto Pessoa noordwaarts", (-35.3597, -5.7950)),
+            ("weg bij NAT-vrachtloods", (-35.3668, -5.7634)),
+        ],
+        "id": "goud-borborema-asahibrampton-plant-nat-weg",
+        "naam": "Borborema-plant -> BR-226 -> BR-304 -> Rodovia Humberto Pessoa -> weg bij NAT-vrachtloods",
+        "extracts": ["brazilie"],
+        "refs": ["BR-226", "BR-304"],
+        "gepubliceerdKm": 172,
+        "bronnoot": "TRS: 172 km tot Natal-stad, indicatie; OSRM 148,8 km; hemelsbreed 113,6 km, geen wegkm",
+        "vensterKm": 40,
+        "eindKlassen": ["residential", "service", "tertiary", "unclassified", "track"],
+        "uit": "goud-borborema-asahibrampton-weg-plant-nat.geojson",
+    },
+    # -- Routebrief pgm-tharisa-waterval, been b1 (LICHTE werkwijze M31 golf 19) --
+    # b1: Tharisa Mine (Mooinooi/Marikana) -> Marikana Road D1325 -> Karee Road D108 -> onbenoemde tertiary (R104-corridor) west -> Waterval/PMR (Valterra), Rustenburg. NIET de N4.
+    # GEEN wegkm-bron: hemelsbreed 18,3 km; OSRM-indicatie 24,2 km -> de 15%-toets is een indicatie.
+    "pgm-tharisa-waterval-tharisa-waterval": {
+        "via": [
+            ("Tharisa Mine Processing Plants (anker pgm-tharisa-plant)",   (27.4978, -25.7421)),
+            ("Marikana Road D1325 / Karee Road D108",                      (27.4888, -25.6971)),
+            ("R104-corridor tertiary (oost)",                              (27.4551, -25.6887)),
+            ("R104-corridor tertiary (west)",                              (27.3860, -25.6803)),
+            ("Afslag naar Waterval-complex",                               (27.3333, -25.6739)),
+            ("Waterval/PMR-complex Valterra (anker pgm-rustenburg-pmr)",   (27.3272, -25.6838)),
+        ],
+        "id": "pgm-tharisa-waterval-weg",
+        "naam": "Tharisa Mine -> Marikana Road D1325 -> Karee Road D108 -> R104-corridor west -> Waterval/PMR (aannemelijk: een bron)",
+        "extracts": ["zuid-afrika"],
+        "refs": ["D1325", "D108", "R104"],
+        "gepubliceerdKm": 24,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 18,3 km; OSRM-indicatie 24,2 km -> de 15%-toets is een indicatie.",
+        "vensterKm": 20,
+        "corridorKlassen": ["tertiary", "unclassified"],
+        "uit": "pgm-tharisa-waterval-weg-tharisa-waterval.geojson",
+    },
+    # -- Routebrief pgm-mimosa-selous, been b1 (LICHTE werkwijze M31 golf 19) --
+    # b1: Mimosa Mine (Zvishavane) -> Zvishavane-Shurugwi-weg -> Shurugwi -> Gweru -> A5 (Kwekwe, Kadoma, Chegutu) -> Selous-rotonde -> SMC.
+    # GEEN doorgaande wegkm-bron: hemelsbreed 262 km; indicatie som wegdelen 32 + 121 + 200 = 353 (Wikipedia Zvishavane/Gweru/A5), OSRM 356,6.
+    "pgm-mimosa-selous-mimosa-smc": {
+        "via": [
+            ("Mimosa Mine (anker pgm-mimosa-mijn)",                    (29.8368, -20.3179)),
+            ("Zvishavane-Shurugwi-weg, 14 km NW van Zvishavane",       (29.9526, -20.2035)),
+            ("Shurugwi-noord, weg naar Gweru",                         (29.9609, -19.6224)),
+            ("A5 21 km N van Gweru",                                   (29.7885, -19.2641)),
+            ("A5 10 km N van Kwekwe",                                  (29.8004, -18.8389)),
+            ("A5 vlak voor Kadoma",                                    (29.8336, -18.3954)),
+            ("A5 5 km O van Chegutu",                                  (30.1903, -18.1229)),
+            ("Selous-rotonde A5 (Halfway)",                            (30.4276, -18.0795)),
+            ("Zimplats SMC (anker pgm-zimplats-smc)",                  (30.4334, -18.0328)),
+        ],
+        "id": "pgm-mimosa-selous-weg",
+        "naam": "Mimosa Mine -> Zvishavane -> Shurugwi -> A5 (Gweru, Kwekwe, Kadoma, Chegutu) -> Selous-rotonde -> SMC (aannemelijk: één bron voor de tolsmelt)",
+        "extracts": ["zimbabwe"],
+        "refs": [],
+        "gepubliceerdKm": 375,
+        "bronnoot": "geen wegkm gepubliceerd; hemelsbreed 262 km; indicatie som wegdelen 32 + 121 + 200 = 353 (Wikipedia), OSRM 356,6 km",
+        "vensterKm": 50,
+        "uit": "pgm-mimosa-selous-weg-mimosa-smc.geojson",
+    },
     # ── Routebrief goud-elpenon-argorheraeus, been b1 (LICHTE werkwijze M31 golf 18) ──
     # Truck doré El Penon-plant (Pan American Silver) -> mijnweg -> Ruta 5 Norte -> Chanaral -> Copiapo-bypass -> Ruta 5 -> Vespucio Norte
     # -> openbare weg Osvaldo Croquevielle bij SCL (de laatste 0,15 km airside is stippel b2). GEEN echte wegkm voor het hele been:

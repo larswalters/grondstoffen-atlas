@@ -78,8 +78,8 @@
   {
    "id": "w-fujairah",
    "naam": "Fujairah Oil Terminal (ADNOC)",
-   "lon": 56.32,
-   "lat": 25.15,
+   "lon": 56.3419,
+   "lat": 25.2135,
    "level": "site",
    "parent": null,
    "rol": "terminal",
@@ -89,8 +89,8 @@
    "land": "Verenigde Arabische Emiraten",
    "gewicht": 1500.0,
    "gewicht_bron": "capaciteit kb/d — Seatrade/CNBC/The National (2026): Habshan-Fujairah-pijpleiding nameplate 1,8 mln vaten/dag, praktische capaciteit ~1,5 mln vaten/dag; Fujairah exporteerde vorig jaar gemiddeld >1,7 mln vaten/dag ruwe olie + producten; uitbreiding naar 3 mln vaten/dag gepland voor 2027 [B12][B13][B14]",
-   "bron": "satelliet z14 (sitelaag-olie-fujairah + -v2): kruis verschoven van een woonwijk naar de rand van het zichtbare tankenpark ten noordwesten van Fujairah-stad",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "was 25.15/56.32 (satelliet z14, rand van het tankenpark NW van Fujairah-stad) — M31 golf 14 (2026-10-30): gelijkgetrokken met het keten-anker ol-fujairah-term (FOIZ-tankenpark, bron-gelegd; gedeeld met olie-habshan-chiba en olie-heglig-fujairah; 7,4 km verschoven)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Terminus van ADNOC's Murban-pijpleiding vanaf Habshan — de Hormuz-bypass van de VAE; ook grote bunker-/opslaghub."
   },
   {

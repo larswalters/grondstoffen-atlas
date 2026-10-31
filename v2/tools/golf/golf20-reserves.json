@@ -1,0 +1,386 @@
+{
+ "bron": "golf 19 (wf_1d63a26f-716), 2026-10-31: reserve-assen uit de tweede grote ontwerpronde, toets uit golf 19 waar aanwezig",
+ "reserves": [
+  {
+   "id": "zilver-endeavor-adelaide",
+   "g": "zilver",
+   "as": {
+    "prioriteit": 5,
+    "as": "RESERVE: heropgestarte primaire zilvermijn Endeavor (Cobar, NSW) met concentraat per spoor naar de haven van Adelaide (Berth 29), nieuwe corridor voor Australisch zilver.",
+    "keten_id": "zilver-endeavor-adelaide",
+    "van_site": "Endeavor-mijn en -fabriek (Polymetals Resources), 40 km ten noorden van Cobar, New South Wales",
+    "naar_site": "Adelaide, Berth 29 (Outer Harbor)",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "spoor",
+      "van": "Endeavor-spoorlaadstation (spoortak naar Cobar)",
+      "naar": "Adelaide Berth 29",
+      "corridor": "Cobar-spoortak, hoofdspoor via Parkes en Broken Hill naar Adelaide (ASX-plan noemt Newcastle of Port Pirie als alternatief)",
+      "km_indicatie": "niet gepubliceerd; hemelsbreed ca. 1.000 km, route via Parkes veel langer",
+      "geometrie_tool": "toets_spoorroute (spoornet australie)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Port Pirie en Broken Hill-lijn uit zilver-brokenhill-portpirie, Adelaide uit koper-olympicdam-portadelaide (controleren)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "australie",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "osm_leiding": "niet van toepassing",
+    "jaarvolume_en_bron": "356 koz Ag in 2025 (= 11 t); 547 koz in Q1 2026 en 396 koz in Q2 2026; plan 10,6 Moz Ag over 10 jaar (Metalla, Polymetals ASX-plan). Eenheid t Ag/j.",
+    "risico": "Klein volume; het zilver zit in het lood-zilverconcentraat waarvan de bestemming niet genoemd is (zinkconcentraat gaat naar Adelaide, Onsan genoemd door een samenvatting); railroute via Parkes onzeker en lang; Direct Shipping Ore-proef kan het patroon wijzigen.",
+    "bronnen_start": [
+     "https://www.metallaroyalty.com/royalties/endeavor",
+     "https://cdn-api.markitdigital.com/apiman-gateway/ASX/asx-research/1.0/file/2924-02835338-2A1539031",
+     "https://finance.yahoo.com/news/polymetals-resources-endeavor-mine-australia-135332601.html",
+     "https://www.listcorp.com/asx/pol/polymetals-resources/news/endeavor-silver-zinc-mine-september-update-3240635.html"
+    ]
+   },
+   "toets": {
+    "keten_id": "zilver-endeavor-adelaide",
+    "haalbaar": true,
+    "problemen": [
+     "ASX-plan aug 2024 noemt spoor vanaf de mijn naar Newcastle of Port Pirie; zoekresultaten sept 2025 noemen Qube-roadtrains naar Broken Hill en dan spoor naar Berth 29 (pagina's 403, niet los gelezen)",
+     "Afnemer van het lood-zilverconcentraat onbekend; stop bij Berth 29",
+     "Klein volume ca 11 t Ag in 2025; incident 28-10-2025, hervat nov; Q1 547 koz, Q2 2026 396 koz"
+    ],
+    "aanpassing": "Drie benen. b1 truck Endeavor-fabriek -31.1622,145.6579 naar Broken Hill spoorzone -31.9494,141.4844: gemeten 503,6 km via A32 Cobar, extract australie. b2 spoor: letterlijke kopie zilver-brokenhill-portpirie b1 (371,4 km). b3 spoor: kopie koper-olympicdam-portadelaide b4 (194,1 km, Berth 29 -34.8330,138.5075). Naden ca 0,1 km. Beennaam aannemelijk.",
+    "overlap": "b2 en b3 (565 km) zijn kopieën van bestaande stromen; nieuw is alleen het truckbeen van 504 km.",
+    "webcheck": "mining-technology.com: zink en lood-zilverconcentraat vanaf Berth 29 Adelaide; metallaroyalty.com: productie sinds 2025-06-16, 356 koz Ag 2025. OSM: Enedeavor Mine -31.1609,145.6561; sat z15 toont plant en tailings."
+   }
+  },
+  {
+   "id": "gas-inkoo-kiili",
+   "g": "gas",
+   "as": {
+    "prioriteit": 5,
+    "as": "Balticconnector: Finland en Estland, de gasbrug na 2022 (reserve voor golf 20)",
+    "keten_id": "gas-inkoo-kiili",
+    "van_site": "Ingaa (Inkoo), Balticconnector-aanlanding en compressorstation, Finland",
+    "naar_site": "Kiili (Kersalu), Elering-station, Estland",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Siuntio, Finse net",
+      "naar": "Ingaa-aanlanding (60.013,23.965)",
+      "corridor": "Ingaa-Siuntio, niet in OSM (ca. 21 km)",
+      "km_indicatie": "ca. 21 km gepubliceerd",
+      "geometrie_tool": "stippel: leiding, schematisch, geen OSM-way"
+     },
+     {
+      "fase": "B",
+      "modaliteit": "leiding",
+      "van": "Ingaa-aanlanding",
+      "naar": "Paldiski (59.385,24.077)",
+      "corridor": "Balticconnector onderzee, 500 mm (OSM way 804553521, 76,9 km)",
+      "km_indicatie": "77 km OSM tegen 77 km gepubliceerd",
+      "geometrie_tool": "OSM-pipeline, doorgetrokken"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "leiding",
+      "van": "Paldiski",
+      "naar": "Kiili (59.273,24.785)",
+      "corridor": "Balticconnector Estland (OSM way 702684306, 53,3 km)",
+      "km_indicatie": "53 km OSM tegen 55 km gepubliceerd",
+      "geometrie_tool": "OSM-pipeline, doorgetrokken"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "finland",
+      "aanwezig": true
+     },
+     {
+      "regio": "estland",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Ja, doorlopend voor 131 km (Ingaa-aanlanding tot Kiili); Fins landdeel ontbreekt.",
+    "jaarvolume_en_bron": "Capaciteit 0,9 tot 2,6 bcm/j, 151 km, in dienst 2020 (Wikipedia). Actuele jaarstroom niet gevonden. Beschadigd 8-10-2023 (anker NewNew Polar Bear), hersteld 22-4-2024.",
+    "risico": "Korte keten van een leidingbeen met stippelstart; Finse land-stippel is 14%. Richting en jaarvolume schommelen, jaarcijfer ontbreekt. Het verhaal (sabotage 2023, FSRU Exemplar in Inkoo) is voor de FSRU nog niet gebrond.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Balticconnector",
+     "https://elering.ee/en/balticconnector"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-inkoo-kiili",
+    "haalbaar": true,
+    "problemen": [
+     "Het Finse landdeel bestaat wel in OSM (Gasgrid Finland way 951523992, 20,7 km): de geplande 21 km stippel is onnodig",
+     "Kiili (Kersalu) klopt niet: Kersalu is een dorp bij 59.343,24.19, de OSM-lijn eindigt bij Kiili op 59.273,24.785",
+     "Jaarvolume en actuele richting niet gevonden"
+    ],
+    "aanpassing": "Start bij de Inkoo FSRU-steiger 60.0143,23.9202 (z15: LNG-schip aan de kade, bron-gelegd). Ways: 1150930993 (2,2 km), 951523992 tot vertex 23.9475,60.0182 (1,25 km), 804553521 (76,9), 1019045277 (0,5), 702684306 (53,3): totaal 134,2 km, alles OSM, geen stippel. Titel: Inkoo FSRU naar Kiili (Elering), gelabeld op de eind van de OSM-lijn.",
+    "overlap": "Geen overlap met gas-snohvit-incukalns of andere ketens.",
+    "webcheck": "Argus en Elering: Balticconnector hersteld april 2024, nominaties na herstart overwegend richting Estland. FSRU Exemplar in 2026 niet bevestigd, schip wel zichtbaar op de satellietopname: aannemelijk."
+   }
+  },
+  {
+   "id": "olie-stabroek-rotterdam",
+   "g": "olie",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Guyana (Stabroek-blok) naar Europa, de nieuwe producent op de Atlantische as",
+    "keten_id": "olie-stabroek-rotterdam",
+    "van_site": "Stabroek-blok FPSO (Liza-veld, Guyana; coordinaat nog te vinden)",
+    "naar_site": "Maasvlakte Olie Terminal, Rotterdam (aannemelijk: bron noemt alleen Nederland)",
+    "benen": [
+     {
+      "fase": "B",
+      "modaliteit": "zee",
+      "van": "Stabroek FPSO (offshore, ca. 200 km uit de kust)",
+      "naar": "Maasvlakte Olie Terminal",
+      "corridor": "Atlantische Oceaan, Nauw van Calais, Noordzee",
+      "km_indicatie": "ca. 8.000 km hemelsbreed, geen gepubliceerde routelengte",
+      "geometrie_tool": "MARNET plus haven-aanloop (maak_havenaanloop.py) vanaf de FPSO"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ol-rotterdam-mot Maasvlakte Olie Terminal 51.97273, 4.06243 uit olie-corpuschristi-rotterdam"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "guyana",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "Nee, n.v.t.; geen pijp, de FPSO laadt rechtstreeks op tankers.",
+    "jaarvolume_en_bron": "Ca. 260 mln vaten verscheept in 2025 (ca. 712 kb/d totaal Guyana), OilNOW op basis van scheepvaartvolging; Q1 2025 14 ladingen naar Nederland en 14 naar Panama. Aandeel Rotterdam niet gevonden. Peiljaar 2025.",
+    "risico": "Het FPSO-coordinaat is niet gevonden (Wikipedia, Photon en OSM leverden niets); zonder bron blijft het open en kan de keten pas na een zoekslag starten. Nederland is een landcijfer, geen haven; Vlissingen of Amsterdam zijn alternatieven. OilNOW-pagina's kon ik alleen als zoekresultaat lezen.",
+    "bronnen_start": [
+     "https://oilnow.gy/news/panama-and-netherlands-top-destinations-for-guyanas-crude-in-q1-2025",
+     "https://oilnow.gy/news/guyanas-crude-on-the-move-who-gets-it-and-why-it-matters/",
+     "https://oilnow.gy/?p=91258"
+    ]
+   },
+   "toets": {
+    "keten_id": "olie-stabroek-rotterdam",
+    "haalbaar": true,
+    "problemen": [
+     "FPSO-coordinaat niet in OSM of Wikipedia; enige vondst is een veldpunt 8.2244,-56.9426 uit een MarineLink-aggregator (veldniveau, niet vaartuig): onzeker",
+     "Dichtste MARNET-zeeknoop ligt 57 km van dat punt (knoop 696 op 8.2122,-56.4243): meer dan de snapgrens van 25 km",
+     "Rotterdam als haven is een aanname binnen het landcijfer Nederland; een bron noemt een VLCC naar Rotterdam, geen vaste herkomstketen",
+     "Staart (Kanaal tot MOT) loopt gelijk met olie-corpuschristi-rotterdam, circa 5% van de km"
+    ],
+    "aanpassing": "Begin = Liza-veldpunt 8.2244,-56.9426, status onzeker, in beennaam en marker. Stippel zee 57 km FPSO naar knoop 696 met reden: MARNET reikt niet offshore (maak_havenaanloop.py of rechte stippel). Dan MARNET naar MOT 51.97273,4.06243 (snap 1,7 km, geen aanloop). Eind Rotterdam aannemelijk. Ca 7.330 km hemelsbreed; geen gepubliceerde routelengte.",
+    "overlap": "Eindanker MOT en kanaalstaart gedeeld met olie-corpuschristi-rotterdam, maar de Atlantische route is anders; geen letterlijke kopie nodig, de router levert dezelfde staart.",
+    "webcheck": "OilNOW via zoekresultaat: 11 van 32 cargos Jan-feb naar Nederland; VLCC Red Nova na dubbele lift onderweg naar Rotterdam. Volume 2025 ca 712 kb/d (OilNOW). Stabroek-pagina zelf niet leesbaar: alleen zoekresultaat."
+   }
+  },
+  {
+   "id": "diamant-gaborone-ramatgan",
+   "g": "diamant",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve golf 20: Botswana naar Israel, de vijfde bestemming van Botswaanse diamant (OEC 2022: 498 mln USD) en ODC werft actief Israelische kopers.",
+    "keten_id": "diamant-gaborone-ramatgan",
+    "van_site": "DTCB/DBGSS-campus, Gaborone",
+    "naar_site": "Israel Diamond Exchange, Ramat Gan",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "DTCB/DBGSS-campus Gaborone",
+      "naar": "GBE-vrachtapron",
+      "corridor": "A1 / Western Bypass, kopie diamant-gaborone-surat b1",
+      "km_indicatie": "4,3 km (kopie)",
+      "geometrie_tool": "kopie van bestaand geojson"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "lucht",
+      "van": "GBE-vrachtapron",
+      "naar": "Maman Cargo Terminal (TLV)",
+      "corridor": "vlucht GBE naar TLV, grootcirkel, aannemelijk: één bron",
+      "km_indicatie": "6.360 km grootcirkel (eigen berekening)",
+      "geometrie_tool": "maak_luchtbeen"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "Maman Cargo Terminal (TLV)",
+      "naar": "Israel Diamond Exchange Ramat Gan",
+      "corridor": "last mile zonder net, omgekeerde kopie diamant-dubai-ramatgan b3",
+      "km_indicatie": "13,6 km hemelsbreed, stippel (kopie)",
+      "geometrie_tool": "stippel"
+     }
+    ],
+    "ankers_hergebruik": [
+     "dia-gaborone-dtc",
+     "dia-gbe-cargo",
+     "dia-tlv-cargo",
+     "dia-ide"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "botswana",
+      "aanwezig": true
+     },
+     {
+      "regio": "israel",
+      "aanwezig": false
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Onbekend in karaat. Waarde: Botswana naar Israel 498 mln USD (OEC 2022); ODC mikte in 2013 op meer Israelische klanten (ISDE 2013-11-21).",
+    "risico": "Bronnen zijn een 2013-artikel en een landentabel uit 2022; geen lading- of vluchtbron. Israel-extract ontbreekt, dus 100% last-mile-stippel aan de Israelische kant.",
+    "bronnen_start": [
+     "https://en.isde.co.il/article.aspx?id=27658",
+     "https://www.oec.world/profile/bilateral-product/diamonds/reporter/bwa"
+    ]
+   },
+   "toets": {
+    "keten_id": "diamant-gaborone-ramatgan",
+    "haalbaar": true,
+    "problemen": [
+     "Het ontwerpcijfer 498 mln USD (OEC 2022) is niet te verifieren; Trendeconomy geeft 215 mln voor 2023.",
+     "Alleen een landentabel als bron; geen vluchtbron; Israel-kant is volledig stippel (13,6 km, 1 van 3 benen)."
+    ],
+    "aanpassing": "Bindend (reserve, blijft): gebruik 'Botswana naar Israel 215 mln USD, 4,96%, vijfde bestemming (Trendeconomy 2023)'. b3 is de omgekeerde stippel van dubai-ramatgan b3 met reden 'last mile (geen net op deze korrel: Israel-extract ontbreekt)'; schrijf 'hemelsbreed 13,6 km, geen wegkm'.",
+    "overlap": "Alleen vlucht GBE naar TLV (6359,9 km) is nieuw; geen bestaand GBE naar TLV-been.",
+    "webcheck": "https://trendeconomy.com/data/h2/Botswana/7102 (Israel 5e, 215 mln, 2023). IDE-noodmodus maart 2026 (Rapaport)."
+   }
+  },
+  {
+   "id": "diamant-gaborone-hongkong",
+   "g": "diamant",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve golf 20: Botswana naar Hongkong, de vierde bestemming van Botswaanse diamant (OEC 2022: 549 mln USD); legt Gaborone voor het eerst aan Oost-Azie.",
+    "keten_id": "diamant-gaborone-hongkong",
+    "van_site": "DTCB/DBGSS-campus, Gaborone",
+    "naar_site": "Hong Kong Diamond Exchange Building, Central",
+    "benen": [
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "DTCB/DBGSS-campus Gaborone",
+      "naar": "GBE-vrachtapron",
+      "corridor": "A1 / Western Bypass, kopie diamant-gaborone-surat b1",
+      "km_indicatie": "4,3 km (kopie)",
+      "geometrie_tool": "kopie van bestaand geojson"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "lucht",
+      "van": "GBE-vrachtapron",
+      "naar": "Cathay Pacific Cargo Terminal (HKG)",
+      "corridor": "vlucht GBE naar HKG, grootcirkel, aannemelijk: één bron",
+      "km_indicatie": "10.827 km grootcirkel (eigen berekening)",
+      "geometrie_tool": "maak_luchtbeen"
+     },
+     {
+      "fase": "C",
+      "modaliteit": "truck",
+      "van": "Cathay Pacific Cargo Terminal (HKG)",
+      "naar": "Hong Kong Diamond Exchange Building",
+      "corridor": "North Lantau Hwy, Tsing Ma Bridge, Kwai Chung, Western Harbour Crossing, kopie diamant-ramatgan-hongkong b3",
+      "km_indicatie": "40,8 km (kopie)",
+      "geometrie_tool": "kopie van bestaand geojson"
+     }
+    ],
+    "ankers_hergebruik": [
+     "dia-gaborone-dtc",
+     "dia-gbe-cargo",
+     "dia-hkg-cargo (22.2975, 113.9247)",
+     "dia-hk-exchange (22.2797, 114.157)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "botswana",
+      "aanwezig": true
+     },
+     {
+      "regio": "china",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Onbekend in karaat. Waarde: Botswana naar Hongkong 549 mln USD (OEC 2022).",
+    "risico": "Alleen een landentabel als bron, geen koper of lading genoemd; kan door de toets worden afgewezen. Vlucht van 10.800 km is lang en waarschijnlijk met tussenlanding.",
+    "bronnen_start": [
+     "https://www.oec.world/profile/bilateral-product/diamonds/reporter/bwa",
+     "https://en.wikipedia.org/wiki/List_of_countries_by_diamond_exports"
+    ]
+   },
+   "toets": {
+    "keten_id": "diamant-gaborone-hongkong",
+    "haalbaar": true,
+    "problemen": [
+     "Alleen een landentabel als bron; geen koper of vlucht genoemd.",
+     "Vlucht van 10.827 km zonder bron voor tussenlanding; GBE-apron geen cargo-benoemd terminal."
+    ],
+    "aanpassing": "Bindend (reserve, blijft): bron Trendeconomy 2023: Botswana naar Hongkong 321 mln USD, 7,43%, vierde bestemming. Houd 'aannemelijk: een bron' in de vluchtnaam en noteer 'rechtstreeks aangenomen, geen tussenlanding' (precedent gahchokue-gaborone). b3 kopie ramatgan-hongkong b3 (40,8 km, extract china dekt Hongkong).",
+    "overlap": "Alleen vlucht GBE naar HKG (10826,9 km) is nieuw; geen bestaande GBE naar HKG.",
+    "webcheck": "https://trendeconomy.com/data/h2/Botswana/7102 (Hongkong 4e, 321 mln, 2023)."
+   }
+  },
+  {
+   "id": "goud-copler-istanbul",
+   "g": "goud",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE golf 20: Turkije als goudproducent, doré van Çöpler naar de Istanbul Gold Refinery",
+    "keten_id": "goud-copler-istanbul",
+    "van_site": "Çöpler-mijn (SSR Mining, Erzincan), 120 km W van Erzincan",
+    "naar_site": "Istanbul Gold Refinery (IAR), Kuyumcukent, Yenibosna",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Çöpler-plant",
+      "naar": "Kuyumcukent, Istanbul",
+      "corridor": "via Sivas en Ankara (550 km van Çöpler) naar de TEM; aannemelijk, vervoer niet gebronnd",
+      "km_indicatie": "circa 1.050 (schatting)",
+      "geometrie_tool": "maak_stroombeen_weg (turkije), via-punten Sivas en Ankara-rand"
+     }
+    ],
+    "ankers_hergebruik": [
+     "au-kuyumcukent (41.0035, 28.8148) uit goud-metalor-istanbul"
+    ],
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/921638/000094787124000126/ss2975198_ex9601.htm",
+     "https://www.sec.gov/Archives/edgar/data/921638/000092163826000035/ssrm-20251231.htm"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "turkije",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "jaarvolume_en_bron": "Circa 10 t Au/j in 2023 (niet geverifieerd; SSR 10-K FY2023 nakijken). TRS 12-02-2024: 100% van goud en zilver gaat naar de Istanbul Gold Refinery.",
+    "risico": "Mijn stil sinds 13-02-2024 (heap-leach-slip), vergunning ingetrokken 2026, verkoop aan Cengiz aangekondigd; IAR in 2025-2026 vervolgd. Alleen bruikbaar als historische keten (peiljaar 2023); fabrieksterrein IAR niet gevonden, Kuyumcukent is statutair adres. Eén lang been, dun.",
+    "osm_leiding": ""
+   },
+   "toets": {
+    "keten_id": "goud-copler-istanbul",
+    "haalbaar": true,
+    "problemen": [
+     "Mijn stil sinds feb 2024, verkocht aan Cengiz (gesloten 24-06-2026): alleen historische keten, peiljaar 2023",
+     "Een been; IAR-terrein niet gevonden, Kuyumcukent is statutair adres (al anker in goud-metalor-istanbul)",
+     "Volume circa 10 t/j in 2023 niet geverifieerd; vervoerswijze niet gebronnd (TRS: gemiddeld 3,84 USD/oz vracht)",
+     "SSR 10-K FY2025 noemt IAR niet meer; bron is TRS 12-02-2024"
+    ],
+    "aanpassing": "Brief als historisch (peiljaar 2023, mijn stil) opzetten. Plantanker 39.4370,38.5354 (verwerkingsgebouwen met schoorsteen, noordrand pit, z14 gezien), niet het OSM-putpunt 39.4219,38.5276. Eind hergebruik au-kuyumcukent 41.0035,28.8148. OSRM 1.061 wegkm, ontwerp circa 1.050 (+1%); via-punten op Sivas- en Ankara-ringweg, niet in het centrum.",
+    "overlap": "Alleen eindanker au-kuyumcukent gedeeld met goud-metalor-istanbul; geen gedeeld been.",
+    "webcheck": "TRS 12-02-2024: 100 procent van goud en zilver naar Istanbul Gold Refinery (sec.gov ss2975198_ex9601). SSR sloot verkoop Copler 24-06-2026 (nasdaq, mining weekly via WebSearch)."
+   }
+  }
+ ]
+}

@@ -111,12 +111,12 @@
    "naam": "Tharisa mijn (Tharisa plc)",
    "land": "Zuid-Afrika (Noordwest, Rustenburg-omgeving, Westelijke rand Bushveld)",
    "rol": "mijn",
-   "lat": -25.63,
-   "lon": 27.63,
+   "lat": -25.7421,
+   "lon": 27.4978,
    "capaciteit_kt": 4.8,
    "capaciteit_bron": "Tharisa plc jaarverslag FY2023: ~155 koz 6E-PGM als bijproduct van chroomwinning; koz ÷ 32,15 ≈ 4,8 t/j [B7]",
-   "coord_bron": "kandidaat o.b.v. de bekende ligging op de Western Limb (Vlakfontein); DEZE RONDE NIET satelliet-bevestigd — open punt",
-   "status": "aannemelijk",
+   "coord_bron": "was -25.63/27.63 (geografische aanduiding Vlakfontein, niet satelliet-bevestigd) — M31 golf 19 (2026-10-31): gelijkgetrokken met het keten-anker pgm-tharisa-plant van pgm-tharisa-waterval (Tharisa Mine Processing Plants, Mooinooi/Marikana, z15 plantcomplex, bron-gelegd; 18 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "PGM is hier BIJPRODUCT van chroomertswinning (Tharisa's hoofdproduct is chroom); 6E-conventie."
   },
   {

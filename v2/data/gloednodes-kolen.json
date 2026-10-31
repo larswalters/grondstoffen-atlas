@@ -1,7 +1,7 @@
 {
  "versie": 2,
  "toelichting": "Gloedlaag kolen voor het LOD-systeem (LAR-490). LOSSE laag: raakt stroomroute-*.json niet en wordt niet gebakken. Bevat uitsluitend UITGEZOCHTE sites uit de sitelaag — nadrukkelijk geen generieke havenlijst. Alleen knopen met level 'site' worden getekend. || Gevuld uit v2/design/kolen-sitelaag.json via v2/tools/voeg_sites_toe.py --grondstof kolen: ids 'w-*', gewicht = capaciteit in Mt/j (bron per site in gewicht_bron); coördinaten op site-niveau volgens de lichte werkwijze (routebrief-licht.md).",
- "gewicht_waarschuwing": "Alle sites dragen capaciteit in Mt/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron.",
+ "gewicht_waarschuwing": "Alle sites dragen capaciteit in Mt/j (bron per site in gewicht_bron); vergelijk alleen sites met een bron in gewicht_bron. Uitzondering: 4 sites dragen een eigen eenheid (staat in gewicht_bron) en zijn niet vergelijkbaar met de rest.",
  "knopen": [
   {
    "id": "w-narm",
@@ -294,8 +294,8 @@
   {
    "id": "w-grootegeluk",
    "naam": "Grootegeluk",
-   "lon": 27.52889,
-   "lat": -23.67167,
+   "lon": 27.5584,
+   "lat": -23.6497,
    "level": "site",
    "parent": null,
    "rol": "mijn",
@@ -305,8 +305,8 @@
    "land": "Zuid-Afrika (Limpopo, Waterberg)",
    "gewicht": 26.0,
    "gewicht_bron": "capaciteit Mt/j — Exxaro-corporate: ~26 Mtpa (varianten in andere bronnen tot 18,8 Mt 'final coal products'); Exxaro's grootste mijn, ~50% van de resterende Zuid-Afrikaanse kolenreserves [B22]; Wikipedia 'Grootegeluk Coal Mine' [B23]",
-   "bron": "Wikipedia-geohack 'Grootegeluk Coal Mine' (23°40'18\"S 27°31'44\"E); niet satelliet-gelegd deze ronde",
-   "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
+   "bron": "was -23.67167/27.52889 (Wikipedia-geohack, niet satelliet-gelegd) — M31 golf 15 (2026-10-30): gelijkgetrokken met het keten-anker van kolen-grootegeluk-medupi (Grootegeluk-wasserij, beginpunt van de OSM-transportband, bron-gelegd; 3,9 km verschoven)",
+   "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "Exxaro Resources; thermisch, vrijwel volledig binnenlands naar de aangrenzende Eskom-centrales Medupi en Matimba (mine-mouth-mijn, geen aparte transportketen)."
   },
   {
@@ -682,7 +682,7 @@
    ],
    "land": "China (Binnen-Mongolië, Hohhot)",
    "gewicht": 11.7,
-   "gewicht_bron": "capaciteit Mt/j — Afgeleid: 33,317 TWh netto output/jaar (Wikipedia 'Tuoketuo Power Station') × ~0,35 kg standaardkolen/kWh (typisch voor een moderne Chinese kolencentrale) ≈ 11,7 Mt/j — geen directe verbruiksbron gevonden [B59]; power-technology/GEM: nameplate 6.720 MW, grootste kolencentrale ter wereld, voedt uit het Junggar-kolenveld 50 km verderop [B60]",
+   "gewicht_bron": "capaciteit Mt kolenverbruik/j (afgeleid uit MW/TWh, niet direct gepubliceerd, dus niet blind optelbaar met mijnproductie) — Afgeleid: 33,317 TWh netto output/jaar (Wikipedia 'Tuoketuo Power Station') × ~0,35 kg standaardkolen/kWh (typisch voor een moderne Chinese kolencentrale) ≈ 11,7 Mt/j — geen directe verbruiksbron gevonden [B59]; power-technology/GEM: nameplate 6.720 MW, grootste kolencentrale ter wereld, voedt uit het Junggar-kolenveld 50 km verderop [B60]",
    "bron": "Wikipedia-geohack 'Tuoketuo Power Station' (40°11'49\"N 111°21'52\"E); niet satelliet-gelegd deze ronde",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
    "notitie": "Datang International; 6.720 MW, 's werelds grootste kolengestookte centrale op één locatie. Kolenverbruik is een AFLEIDING (zie eenheid_site) — geen enkele bron publiceert het rechtstreeks in Mt/j."
@@ -700,7 +700,7 @@
    ],
    "land": "India (Madhya Pradesh, Singrauli)",
    "gewicht": 17.1,
-   "gewicht_bron": "capaciteit Mt/j — NTPC/CERC-rapportage: kolenbehoefte fase I-III ~17,1 Mt/j (oudere, kleinere configuratie) [B61]; power-technology/GEM: huidig opgesteld vermogen 4.760-4.783 MW over 13 eenheden, India's grootste kolencentrale, kolen uit de Nigahi-mijn [B62]",
+   "gewicht_bron": "capaciteit Mt kolenverbruik/j (gepubliceerd voor fase I-III; huidige volledige 4.760-4.783 MW-capaciteit dekt dit cijfer niet, dus onderschatting) — NTPC/CERC-rapportage: kolenbehoefte fase I-III ~17,1 Mt/j (oudere, kleinere configuratie) [B61]; power-technology/GEM: huidig opgesteld vermogen 4.760-4.783 MW over 13 eenheden, India's grootste kolencentrale, kolen uit de Nigahi-mijn [B62]",
    "bron": "Wikipedia-geohack 'Vindhyachal Thermal Power Station' (24°05'50\"N 82°40'25\"E); niet satelliet-gelegd deze ronde",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
    "notitie": "NTPC Limited; India's grootste kolencentrale op één locatie, gevoed door de nabijgelegen Nigahi-mijn (NCL/Coal India). Het gepubliceerde Mt-cijfer dekt alleen de oudere fase I-III, niet de volledige huidige capaciteit — zie eenheid_site."
@@ -718,7 +718,7 @@
    ],
    "land": "India (Odisha, Jajpur)",
    "gewicht": 2.1,
-   "gewicht_bron": "capaciteit Mt/j — Hellenic Shipping News/Mysteel: nieuwe cokesfabriek ~1,5 Mt cokes/j → cokeskoolbehoefte ~2,1 Mt/j [B63]; Tata Group: fase-II-uitbreiding brengt de totale staalcapaciteit van 3 naar 8 Mtpa [B64]",
+   "gewicht_bron": "capaciteit Mt cokeskool-behoefte/j (alleen de nieuwe cokesfabriek; de totale staalcapaciteit van de site is 8 Mtpa staal, geen kolen-eenheid) — Hellenic Shipping News/Mysteel: nieuwe cokesfabriek ~1,5 Mt cokes/j → cokeskoolbehoefte ~2,1 Mt/j [B63]; Tata Group: fase-II-uitbreiding brengt de totale staalcapaciteit van 3 naar 8 Mtpa [B64]",
    "bron": "Wikipedia-geohack 'Kalinganagar' (20°56'45\"N 86°7'45\"E); niet satelliet-gelegd deze ronde",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status aannemelijk",
    "notitie": "Tata Steel; geïntegreerd staalcomplex (pelletfabriek, cokesfabriek, hoogoven — India's grootste hoogoven), cokeskool vooral geïmporteerd via Dhamra/Paradip. Mt-cijfer is de cokeskoolbehoefte van de nieuwe cokesfabriek, niet de totale staalcapaciteit — zie eenheid_site."
@@ -736,7 +736,7 @@
    ],
    "land": "Duitsland",
    "gewicht": 3.5,
-   "gewicht_bron": "capaciteit Mt/j — Afgeleid: Kokerei Schwelgern produceert 2,6 Mt cokes/j (thyssenkrupp Industrial Solutions-brochure) [B65] ÷ ~0,75 kolen→cokes-rendement ≈ 3,5 Mt cokeskool-input/j — geen directe inputbron gevonden; bestaande brief kolen-cerrejon-ruhr.md noemt de Schwelgern-kade totaal (erts+kolen) op ±23 Mt/j [B66]",
+   "gewicht_bron": "capaciteit Mt cokeskool-input/j (afgeleid uit de cokescapaciteit; niet rechtstreeks gepubliceerd, dus niet blind optelbaar met mijn-/terminalcijfers) — Afgeleid: Kokerei Schwelgern produceert 2,6 Mt cokes/j (thyssenkrupp Industrial Solutions-brochure) [B65] ÷ ~0,75 kolen→cokes-rendement ≈ 3,5 Mt cokeskool-input/j — geen directe inputbron gevonden; bestaande brief kolen-cerrejon-ruhr.md noemt de Schwelgern-kade totaal (erts+kolen) op ±23 Mt/j [B66]",
    "bron": "Anker HERGEBRUIKT: `coal-duisburg-kade` uit v2/data/aansluitingen.json — OSM way man_made=pier bij Schwelgern met moorings, satelliet-gelegd in kolen-cerrejon-ruhr.md",
    "korrel": "site-niveau, lichte werkwijze (M29.1); status bron-gelegd",
    "notitie": "thyssenkrupp Steel (Kokerei Schwelgern, wereld's modernste cokesfabrieken); ontvangt cokeskool via de Rijn (o.a. uit Rotterdam/EMO). Anker letterlijk hergebruikt; Mt-cijfer is een AFLEIDING uit de cokescapaciteit, niet rechtstreeks gepubliceerd."

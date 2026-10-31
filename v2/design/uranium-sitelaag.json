@@ -395,12 +395,12 @@
    "naam": "Westinghouse Springfields",
    "land": "Verenigd Koninkrijk (Lancashire)",
    "rol": "splijtstoffabricage",
-   "lat": 53.75,
-   "lon": -2.8,
+   "lat": 53.7775,
+   "lon": -2.8081,
    "capaciteit_kt": 700,
    "capaciteit_bron": "Westinghouse: nameplate indicatief ~700 t HM/j (AGR- en PWR-brandstof); geen recent los cijfer publiek gevonden deze ronde [B27]",
-   "coord_bron": "Wikipedia-geohack Springfields nuclear site (Preston); geen satellietblik deze ronde",
-   "status": "onzeker",
+   "coord_bron": "was 53.75/-2.80 (Wikipedia-geohack, onzeker) — M31 golf 19 (2026-10-31): gelijkgetrokken met het keten-anker van uranium-springfields-gronau (Springfields nuclear site, Salwick, UF6-conversie, bron-gelegd; 3,1 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "Ook conversie van UF6→UO2-poeder op hetzelfde terrein (niet los meegewogen)."
   },
   {

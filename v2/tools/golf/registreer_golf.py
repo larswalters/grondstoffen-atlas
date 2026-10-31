@@ -42,6 +42,9 @@ for f in bestanden:
 nieuw, overgeslagen = [], []
 for o in kandidaten:
     i = o["id"]
+    if not re.fullmatch(r"[a-z0-9-]+", i):
+        overgeslagen.append((i, "id buiten [a-z0-9-] (spatie, hoofdletter of diakriet) -- centraal hernoemen in json, brief, bak_stromen.sh en resultaat, dan opnieuw registreren"))
+        continue
     if not o.get("gebakken"):
         overgeslagen.append((i, "niet gebakken"))
         continue
