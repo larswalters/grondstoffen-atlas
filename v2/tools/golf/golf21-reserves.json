@@ -1,0 +1,377 @@
+{
+ "bron": "golf 20 (wf_d0405c03-c2f), 2026-11-01: reserve-assen uit de vierde grote ontwerpronde, toets uit golf 20 waar aanwezig",
+ "reserves": [
+  {
+   "id": "kolen-baganuur-ulaanbaatartpp4",
+   "g": "kolen",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: Mongolie-noord, Baganuur-mijn per zijlijn naar Ulaanbaatar TPP-4, het grootste Mongoolse stadsverwarmingsblok",
+    "keten_id": "kolen-baganuur-ulaanbaatartpp4",
+    "van_site": "Baganuur Coal Mine, Ulaanbaatar; Wikipedia 47.7202, 108.3085",
+    "naar_site": "Thermal Power Plant No. 4 (663 MW), Bayangol, Ulaanbaatar; Wikipedia 47.8941, 106.8037",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "spoor",
+      "van": "Baganuur 47.7202,108.3085",
+      "naar": "TPP-4 47.8941,106.8037",
+      "corridor": "Baganuur-zijlijn, aansluiting op de hoofdlijn bij Bagakhangai, dan Ulaanbaatar",
+      "km_indicatie": "211,7 gemeten in OSM-net (proef); hemelsbreed 114 km; geen gepubliceerde spoorkm",
+      "geometrie_tool": "toets_spoorroute (mongolia); via-punt rond 47.4236,107.8677 (afgeleid)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Baganuur",
+     "https://en.wikipedia.org/wiki/Thermal_Power_Plant_No._4_(Ulaanbaatar)",
+     "https://www.gem.wiki/Mongolia_and_coal"
+    ],
+    "jaarvolume_en_bron": "Baganuur capaciteit 4 Mt per jaar, 2,8 Mt in 2005 (GEM Mongolia and coal); recent cijfer niet gevonden.",
+    "osm_leiding": "n.v.t.",
+    "regios_extracts": [
+     {
+      "regio": "mongolia",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": true,
+    "risico": "Koppeling mijn naar TPP-4 zwak: Wikipedia zegt dat vrachttreinen kolen naar Ulaanbaatar brengen, een oude bron noemt Baganuur de hoofdleverancier; TPP-4 brandt bruinkool. Aannemelijk, twee zwakke bronnen."
+   },
+   "toets": {
+    "keten_id": "kolen-baganuur-ulaanbaatartpp4",
+    "haalbaar": true,
+    "problemen": [
+     "Aandeel Baganuur in TPP-4 onbekend: power-technology noemt Baganuur en Shivee-Ovoo, ongedateerde gogo.mn 50%; aannemelijk, een bron",
+     "Omkering 176 graden bij 47.753,108.3646 (Baganuur-station): kopmaak op emplacement, geen via-punt bijschuiven",
+     "Geen gepubliceerde totaal-km; alleen branch Baganuur-Bagakhangai 85 km (1982): route 97,6 km is +14,8%, net binnen de norm"
+    ],
+    "aanpassing": "Een toets_spoorroute-run (BAKE_SUFFIX=-raw, hoofd-km=100) van 47.7202,108.3085 naar 47.8941,106.8037: 210,9 km, snapt 1,7 km en 0,4 km, geen via-punten nodig (de run loopt over Bagakhangai 47.3556,107.4884 binnen 1 km). Het ontworpen via-punt 47.4236,107.8677 laten vervallen. Beennaam aannemelijk: een bron. Km in de brief: 85 km branch gepubliceerd, rest hemelsbreed 114 km totaal, geen spoorkm.",
+    "overlap": "Geen overlap met bestaande stromen; id is nieuw.",
+    "webcheck": "Wikipedia Trans-Mongolian en Baganuur: branch 85 km gebouwd 1982, sluit aan bij Bagakhangai, vrachttreinen brengen kolen naar Ulaanbaatar. gem.wiki Baganuur: kolen naar UB-centrales 2, 3 en 4; Wikipedia TPP-4: 663 MW, bruinkool. Sat z14/z15: pit bij 47.7202,108.3085 en TPP-4 met kolenpark en spoor gezien."
+   }
+  },
+  {
+   "id": "gas-khormor-erbil",
+   "g": "gas",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve golf 21: Koerdistan-gas voor de eigen stroomvoorziening (Khor Mor naar Erbil), nieuw land Irak",
+    "keten_id": "gas-khormor-erbil",
+    "van_site": "Khor Mor gasverwerking (Pearl Petroleum / Dana Gas), Chamchamal-district, Sulaymaniyah",
+    "naar_site": "gascentrale-zone Erbil (OSM-eind bij Pir Dawud, Erbil District), nog te bevestigen",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Khor Mor (35.1380,44.8234 OSM-begin)",
+      "naar": "Pir Dawud, Erbil District (36.0110,43.9180 OSM-eind)",
+      "corridor": "Dana Gas-pijpleiding Khor Mor - Chamchamal - Erbil, twee OSM-ways 822138161 en 460179551",
+      "km_indicatie": "ca. 173 gemeten (OSM); Wikipedia: 180 km leiding",
+      "geometrie_tool": "OSM-pipeline: twee ways operator Dana Gas, naad 0,1 km"
+     }
+    ],
+    "ankers_hergebruik": [
+     "geen"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "irak",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja: 2 ways operator Dana Gas, substance=gas, doorlopend",
+    "jaarvolume_en_bron": "niet gebronnen: capaciteit Khor Mor ca. 650 MMscf/d (geheugen, te verifieren bij Dana Gas/Pearl), ca. 6,7 bcm/j indicatie",
+    "risico": "Eindpunt is een OSM-eind, niet bij een benoemde centrale; drone-aanvallen op Khor Mor (2023, 2025) en de recente uitbreiding vragen verse bronnen. Volume niet gebronnen.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Pearl_Petroleum",
+     "https://en.wikipedia.org/wiki/Dana_Gas"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-khormor-erbil",
+    "haalbaar": true,
+    "problemen": [
+     "Eindpunt is een OSM-eind bij Pir Dawud; op satelliet ligt daar een grote thermische centrale direct zuidwest ervan, naam niet gevonden.",
+     "Keten is onderbroken: aanval op Khor Mor 26-11-2025 en productiestop op 5-3-2026 (security): niet als continu vermelden.",
+     "Volume ontbrak in het ontwerp."
+    ],
+    "aanpassing": "Hoofdlijn: twee ways 822138161 plus 460179551, 172,9 km (Wikipedia: 180 km, -4%), naad 0,09 km, geen stippel. Eind: Erbil-gascentrale bij Pir Dawud, status aannemelijk. Volume: 525 MMscf/d in maart 2025 is ca 5,4 bcm/j, capaciteit 750 MMscf/d na KM250; de oude 650 MMscf/d niet gebruiken. Brief vermeldt de verstoringen.",
+    "overlap": "Geen overlap: nieuw land Irak, geen bestaande gas-stroom.",
+    "webcheck": "Wikipedia Pearl Petroleum: gas voedt de Erbil-centrale sinds okt 2008, ca 180 km pijp. Zoekresultaat: 525 MMscf/d, KM250 750, productiestop 5-3-2026. Khor Mor-plant op satelliet z15 zichtbaar bij het begin, bron-gelegd."
+   }
+  },
+  {
+   "id": "gas-beineu-shymkent",
+   "g": "gas",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve golf 21: Kazachstans eigen gas naar het zuiden, Beineu - Bozoi - Shymkent",
+    "keten_id": "gas-beineu-shymkent",
+    "van_site": "Compressorstation Beineu (Mangystau), eventueel met voedingsstuk uit het Shagyrly-Shomyshty-veld",
+    "naar_site": "Shymkent (Turkistan-regio), aansluiting op Centraal-Azie-China-lijn",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Beineu (45.3409,55.2006)",
+      "naar": "Shymkent-zijde (42.3692,69.9185 OSM-eind, Akbulak, Sayram)",
+      "corridor": "Gazoprovod Beineu - Shymkent (Trans-Asia Gas Pipeline Company), via Aral/Kyzylorda",
+      "km_indicatie": "OSM ca. 1.440; Wikipedia 1.475 (Galkynysh-brief)",
+      "geometrie_tool": "OSM-pipeline: ways 381739565, 427645737, 427645736, 792163847, naad ca. 12 km bij Aral District (46.7696,60.2606 tot 46.8034,60.4098): stippel of herstel"
+     }
+    ],
+    "ankers_hergebruik": [
+     "Shymkent-knoop uit gas-galkynysh-khorgos.md (sectie 5)"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "kazachstan",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja, met een naad van ca. 12 km (> 5 km-toets)",
+    "jaarvolume_en_bron": "capaciteit 15 bcm/j (Wikipedia via gas-galkynysh-khorgos.md); geen gemeten doorzet",
+    "risico": "Naad > 5 km en het eigenlijke voedingsgas (bron en volume) niet gevonden; Shymkent is ook de aansluiting van de Galkynysh-keten, dus ligt dicht bij een bestaande stroom.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Central_Asia%E2%80%93China_gas_pipeline",
+     "https://www.openstreetmap.org/copyright"
+    ]
+   },
+   "toets": {
+    "keten_id": "gas-beineu-shymkent",
+    "haalbaar": true,
+    "problemen": [
+     "De beweerde naad van 12 km bestaat niet: een naamloos gas-way 427645738 (12,06 km) overbrugt hem exact; de keten is dus gesloten. Wel zijn de ways 381739565 en 427645737 naamloos en hebben een foute overground-tag.",
+     "Begin: de pijp start 2,56 km oost van compressorstation Beineu (55.189,45.3413).",
+     "Eind (69.9185,42.3692) ligt op een OSM-gasterrein, ca 18 km van de CAC-lijn bij 69.773,42.2475: aansluiting niet in OSM; het eind ligt ca 25 km oost van Shymkent-stad.",
+     "Geen gemeten doorzet; bronnen: Karachaganak, Tengiz, Kashagan (Wikipedia)."
+    ],
+    "aanpassing": "Stik 5 ways: 381739565, 427645737, 427645738, 427645736, 792163847: gemeten 1441,1 km, alle naden 0,0 km, tegen 1454 werkelijk (Beineu-Bozoi 311 plus Bozoi-Shymkent 1143) is -0,9%. Begin met korte stippel last mile 2,6 km (geen net op deze korrel) vanaf KS Beineu; eindig op het OSM-gasterrein, geen verbinding naar AGP tekenen. Titel: Shymkent-regio (Akbulak). Capaciteit 15 bcm/j labelen.",
+    "overlap": "Beperkt: de AGP bij Shymkent zit in gas-galkynysh-khorgos, maar geen gedeelde ways; deze keten is los (1441 km west-oost).",
+    "webcheck": "Wikipedia Central Asia-China pipeline: ca 1400 km, 15 bcm/j, gestart 2014, koppelt bij Shymkent met de CAC-lijn. KS Beineu en gasterrein bij het eind bestaan in OSM (landuse industrial, industrial gas); begin op satelliet leeg steppe, geen last-mile-weg."
+   }
+  },
+  {
+   "id": "olie-shaybah-abqaiq",
+   "g": "olie",
+   "as": {
+    "prioriteit": 4,
+    "as": "Reserve: Shaybah (1 mln vaten per dag, Rub al-Khali) naar Abqaiq",
+    "keten_id": "olie-shaybah-abqaiq",
+    "van_site": "Shaybah-olieveld (Saudi Aramco), Rub al-Khali, 10 km van de VAE-grens",
+    "naar_site": "Abqaiq Stabilization Plant (Saudi Aramco)",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Shaybah (22.5104, 53.9519; OSM-leidingeind 22.53, 54.041, 9 km oostelijk)",
+      "naar": "Abqaiq (25.9286, 49.6858)",
+      "corridor": "Shaybah-Abqaiq-hoofdleiding door de Rub al-Khali",
+      "km_indicatie": "OSM-way 219942632 = 638,1 km; gepubliceerd 645 km (Wikipedia Shaybah) = -1,1%",
+      "geometrie_tool": "OSM-pipeline (een enkele way)"
+     }
+    ],
+    "ankers_hergebruik": [
+     "ol-abqaiq-stab 25.9286, 49.6858 letterlijk (olie-abqaiq-yanbu); OSM-eind 1 km van dit anker"
+    ],
+    "regios_extracts": [
+     {
+      "regio": "gcc-staten",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja: way 219942632 (substance oil) 638 km, geen naam in de tags",
+    "jaarvolume_en_bron": "Shaybah-capaciteit 1 mln vaten per dag sinds 2016 (Wikipedia Shaybah); werkelijke doorzet niet gebrond.",
+    "risico": "Tweede Saoedi-leidingketen na Abqaiq-Yanbu; de way heeft geen naam of operator in OSM, dus controleer dat het de crude- en niet de NGL-lijn is. Shaybah-veldeind 9 km van de Wikipedia-coordinaat.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Shaybah",
+     "https://www.aramco.com/en/what-we-do/energy-and-chemicals/exploration-and-production"
+    ],
+    "keten_id_nb": ""
+   },
+   "toets": {
+    "keten_id": "olie-shaybah-abqaiq",
+    "haalbaar": true,
+    "problemen": [
+     "OSM-way 219942632 (638,1 km, substance oil) heeft geen naam of diameter: kan de ruwe-olielijn of de NGL-lijn zijn; beide lopen in dezelfde corridor, een tweede way vond ik niet",
+     "Shaybah-Wikipedia-coordinaat (22.51,53.95) ligt 9 km van de OSM-kop; de OSM-kop ligt op de verwerkingsinstallatie",
+     "OSM-eind 25.9219,49.6930 ligt ca 1 km van het bestaande anker ol-abqaiq-stab (25.9286,49.6858) en 0,9 km van de Petroline-kop van olie-abqaiq-yanbu; z15-beeld daar laagresolutie"
+    ],
+    "aanpassing": "Een been doorgetrokken over way 219942632: kop 22.5303,54.0406 (z15: gas-olie-scheidingsinstallatie, bron-gelegd), staart OSM-eind 25.9219,49.6930; marker op ol-abqaiq-stab letterlijk, naad ca 0,9 km (<5 km, geen eigen been). Beennaam: 'Shaybah-Abqaiq-leiding (OSM-way zonder naam, aannemelijk ruwe olie)'. Toets 638,1 tegen 645 km: -1,1%. Geen zeebeen; stop bij Abqaiq.",
+    "overlap": "Geen noemenswaardig: overlap-toets max 3,7% (laatste km bij Abqaiq met olie-abqaiq-yanbu); verder 0%.",
+    "webcheck": "en.wikipedia.org/wiki/Shaybah: 645 km hogedrukleiding naar Abqaiq plus een aparte NGL-leiding, 1 mb/d sinds 2016, 10 km van VAE-grens; z15-beelden bij Shaybah-installatie bevestigd."
+   }
+  },
+  {
+   "id": "olie-ekofisk-teesside",
+   "g": "olie",
+   "as": {
+    "prioriteit": 5,
+    "as": "Reserve: Norpipe, Ekofisk naar Teesside (Noordzee-route naar Engeland)",
+    "keten_id": "olie-ekofisk-teesside",
+    "van_site": "Ekofisk-complex (ConocoPhillips Skandinavia), Noorse Noordzee",
+    "naar_site": "Teesside-olieterminal (Norpipe Terminal), Seal Sands, Engeland",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "leiding",
+      "van": "Ekofisk (56.55, 3.198)",
+      "naar": "Teesside Seal Sands (54.636, -1.210)",
+      "corridor": "Norpipe-oliepijpleiding, onderzees 34 inch",
+      "km_indicatie": "OSM 346,4 km (ways 903702283 + 174743430) + ca. 5 km onshore; gepubliceerd 354 km (Wikipedia Norpipe) = -2,2%",
+      "geometrie_tool": "OSM-pipeline (twee ways, onshore Seal Sands-stukje apart controleren)"
+     }
+    ],
+    "ankers_hergebruik": [],
+    "regios_extracts": [
+     {
+      "regio": "groot-brittannie",
+      "aanwezig": true
+     },
+     {
+      "regio": "noorwegen",
+      "aanwezig": true
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "ja: Norpipe tagged 'Norpipe', operator ConocoPhillips, substance oil, 346 km; onshore Seal Sands-oliestukken los",
+    "jaarvolume_en_bron": "Geen jaarvolume gevonden: Wikipedia geeft alleen 104,6 Mt cumulatief tot eind 2021 (Norpipe-terminal). Peiljaar 2021.",
+    "risico": "Geen actueel jaarvolume; Ekofisk bij UK-Noorwegen al in de bol (Forties, Sverdrup); het onshore stuk naar de Seal Sands-tanks bestaat uit veel losse kleine ways.",
+    "bronnen_start": [
+     "https://en.wikipedia.org/wiki/Norpipe",
+     "https://en.wikipedia.org/wiki/Ekofisk_oil_field"
+    ],
+    "keten_id_nb": ""
+   },
+   "toets": {
+    "keten_id": "olie-ekofisk-teesside",
+    "haalbaar": true,
+    "problemen": [
+     "Offshore-kop 56.5496,3.1978 is niet met satelliet te controleren: status aannemelijk (OSM-eind van de leiding)",
+     "Landfall 54.6552,-1.1779 sluit niet aan op de onshore way: twee naden van 1,29 en 0,54 km (<5 km)",
+     "De onshore way 1156173004 (1,3 km, alleen substance oil) is niet benoemd als Norpipe: aannemelijk",
+     "Geen actueel jaarvolume in Wikipedia: alleen cumulatief 104,6 Mt tot 2021; lading is mengsel Ekofisk, Valhall, Gyda, Ula en Britse velden"
+    ],
+    "aanpassing": "Been 1 doorgetrokken: ways 903702283 + 174743430 (346,4 km, naam Norpipe, naad 0,0), dan naad 1,29 km naar 54.6454,-1.1886, way 1156173004 (54.6454,-1.1886 naar 54.6361,-1.2016), naad 0,54 km naar het Seal Sands-tankenpark 54.6360,-1.2100 (z14: tankenpark zichtbaar, bron-gelegd). Totaal ca 349,5 tegen 354 km gepubliceerd: -1,3%. Beennaam: 'Norpipe-oliepijpleiding (aannemelijk, een bron voor Ekofisk-Teesside)'.",
+    "overlap": "Geen: overlap-toets max 2,6% (gas-nyhamna-easington, alleen bij de Engelse kust); Norpipe-gas (gas-karsto-dornum) is een andere leiding.",
+    "webcheck": "en.wikipedia.org/wiki/Norpipe: olieleiding 354 km, 34 inch, start Ekofisk 2/4-J, landfall Teesside, eigenaar Norpipe Oil AS met ConocoPhillips als operator, toestemming tot 2028, 104,6 Mt tot eind 2021."
+   }
+  },
+  {
+   "id": "goud-haile-northattleborough",
+   "g": "goud",
+   "as": {
+    "prioriteit": 4,
+    "as": "RESERVE VS-oostkust: Haile (Zuid-Carolina) naar Metalor USA, North Attleborough (Zwitserse raffinaderij op Amerikaanse bodem)",
+    "keten_id": "goud-haile-northattleborough",
+    "van_site": "Haile Gold Mine (OceanaGold), 5 km NO van Kershaw, Lancaster County, South Carolina",
+    "naar_site": "Metalor USA Refining Corporation, North Attleborough, Massachusetts",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Haile-plant",
+      "naar": "Metalor USA, North Attleborough",
+      "corridor": "US-521/I-77/I-85 naar I-95 noord via Richmond, Baltimore, NJ Turnpike, New York; vanaf de NY-CT-grens stippel (Connecticut, Rhode Island, Massachusetts ontbreken)",
+      "geometrie_tool": "maak_stroombeen_weg (extracts us-south-carolina, -north-carolina, -virginia, -maryland, -delaware, -new-jersey, -new-york) plus stippel ca 200 km",
+      "km_indicatie": "hemelsbreed ca 1.150 km, geen wegkm"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "us-south-carolina, us-north-carolina, us-virginia, us-maryland, us-delaware, us-new-jersey, us-new-york",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-connecticut, us-rhode-island, us-massachusetts",
+      "aanwezig": false
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Haile 2025: 184,8 koz = 5,75 t Au (OceanaGold FY2025 MD&A) [1]",
+    "risico": "Een keten van een been is dun; vervoerswijze (truck of vlucht) niet gebronnd; contract loopt tot 31-1-2027, TR neemt verlenging aan. Ontbrekende NE-extracts maken ca 15-20% stippel.",
+    "ankers_hergebruik": [],
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/1487326/000162828026021651/exhibit9961-40xf.htm (TR Haile 27-3-2026, par 19 Metalor USA)",
+     "https://www.sec.gov/Archives/edgar/data/1487326/000162828026021651/oceanagold-ex9911xmdafy202.htm (Haile 184,8 koz)"
+    ]
+   },
+   "toets": {
+    "keten_id": "goud-haile-northattleborough",
+    "haalbaar": true,
+    "problemen": [
+     "Een been, modaliteit niet gebronnd (truck aannemelijk; OSRM 1.358 wegkm, hemelsbreed 1.151)",
+     "Metalor-contract loopt tot 31-1-2027 met verlenging voorbehouden; nu nog geldig",
+     "Geen extracts CT/RI/MA en DC: ca 250 km stippel NY-grens tot North Attleboro, plus OSRM-route door DC (BW Parkway); lang bestand door 1.100 km truck",
+     "Haile-plant is niet het geografische middelpunt in de TR (34.5794,-80.5436, pitmeer)"
+    ],
+    "aanpassing": "BINDEND: plantanker ca 34.5975,-80.5365 (z14: verwerkingsgebouwen noordelijk van de pits, aannemelijk, z16 nog doen). Eind Metalor USA 255 John L. Dietsch Blvd 41.9829,-71.3001 (z16 gezien: bedrijventerrein, I-95 oostelijk). b1 truck via I-77/I-85/I-95, Beltway buiten DC; vanaf NY-CT-grens stippel met reden. Beennaam truck aannemelijk.",
+    "overlap": "Nieuw id. Geen gedeeld been met bestaande goud-stromen. Alleen eindanker gedeeld met goud-westwood-northattleborough; stippels naderen van verschillende kant.",
+    "webcheck": "TR Haile 27-3-2026 par 19 (sec.gov exhibit9961-40xf): contract Metalor USA Refining Corp, North Attleboro, effective 31-1-2020, verlengd tot 31-1-2027. 2025: 184,8 koz. Adres 255 John L. Dietsch Blvd: globalspec en mass.gov-lijst. Extracts SC, NC, VA, MD, DE, NJ, NY aanwezig."
+   }
+  },
+  {
+   "id": "goud-westwood-northattleborough",
+   "g": "goud",
+   "as": {
+    "prioriteit": 5,
+    "as": "RESERVE Quebec naar New England: Westwood (IAMGOLD) naar Metalor USA, North Attleborough",
+    "keten_id": "goud-westwood-northattleborough",
+    "van_site": "Westwood Complex (IAMGOLD), Abitibi, Quebec (coordinaat nog te leggen)",
+    "naar_site": "Metalor USA Refining Corporation, North Attleborough, Massachusetts",
+    "benen": [
+     {
+      "fase": "A",
+      "modaliteit": "truck",
+      "van": "Westwood-plant",
+      "naar": "Metalor USA, North Attleborough",
+      "corridor": "Route 117/Autoroute 15 naar Montreal, I-87 zuid, I-90 oost, stippel vanaf NY-MA-grens (Massachusetts ontbreekt, ca 250 km)",
+      "geometrie_tool": "maak_stroombeen_weg (canada, us-new-york) plus stippel",
+      "km_indicatie": "hemelsbreed ca 890 km, geen wegkm"
+     }
+    ],
+    "regios_extracts": [
+     {
+      "regio": "canada, us-new-york",
+      "aanwezig": true
+     },
+     {
+      "regio": "us-massachusetts",
+      "aanwezig": false
+     }
+    ],
+    "spoornet_nodig": false,
+    "osm_leiding": "nvt",
+    "jaarvolume_en_bron": "Westwood 2025: 113.900 oz = 3,54 t Au (IAMGOLD Q4 2025 MD&A) [2]",
+    "risico": "TR zegt geshipt vanaf de mijn naar Metalor in Massachusetts, geen modaliteit. Eind deelt het met reserve 4 (letterlijke kopie). Een been, dus dun; het refining contract is IAMGOLD-breed.",
+    "ankers_hergebruik": [
+     "Metalor USA North Attleborough (van prioriteit 4, na bakken)"
+    ],
+    "bronnen_start": [
+     "https://www.sec.gov/Archives/edgar/data/1203464/000106299325000625/exhibit99-1.htm (TR Westwood jan 2025, par 19.1)",
+     "https://www.sec.gov/Archives/edgar/data/1203464/000162828026008683/q42025mda.htm (Westwood 113.900 oz)"
+    ]
+   },
+   "toets": {
+    "keten_id": "goud-westwood-northattleborough",
+    "haalbaar": true,
+    "problemen": [
+     "Alleen TR van jan 2025 (par 19.1) noemt Metalor in Massachusetts; geen modaliteit, geen 2026-bron; contract is IAMGOLD-breed",
+     "Geen extracts MA, VT, NH: stippel van NY-MA-grens (ca 42.3,-73.4) naar North Attleboro, ca 200 km van 905 km",
+     "Een been, dun; eindanker en stippel-eind gelijk aan reserve 4, maar andere aanloop",
+     "Westwood-plant: Doyon-complex, verwerkingsgebouwen ca 48.2585,-78.5275 niet satelliet-gelegd op z16"
+    ],
+    "aanpassing": "BINDEND: plantanker Doyon-mill ca 48.2585,-78.5275 (z14 gezien: pits, tailings), z16 nog doen. Eind Metalor USA 41.9829,-71.3001 hergebruiken uit reserve 4. b1 truck via Rouyn-Noranda, Hwy 117, A-15 Montreal, I-87, I-90, daarna stippel met reden. OSRM 1.140 wegkm, hemelsbreed 905 km. Beennaam aannemelijk; promoveer pas na reserve 4.",
+    "overlap": "Nieuw id. Geen gedeeld been met goud-malartic-ottawa (andere bestemming), mogelijk korte overlap in Abitibi (Hwy 117) maar geen letterlijke kopie.",
+    "webcheck": "TR Westwood jan 2025 (sec.gov 000106299325000625 exhibit99-1) par 19.1: gold shipped from mine to the Metalor refinery in Massachusetts, sold at spot. 113.900 oz 2025 (MD&A Q4). Satcheck Doyon-Westwood complex z14. OSRM 1.140 km."
+   }
+  }
+ ]
+}

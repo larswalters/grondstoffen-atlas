@@ -421,12 +421,12 @@
    "naam": "TVEL Elektrostal (MSZ)",
    "land": "Rusland (Moskou-oblast)",
    "rol": "splijtstoffabricage",
-   "lat": 55.7833,
-   "lon": 38.4333,
+   "lat": 55.7875,
+   "lon": 38.4875,
    "capaciteit_kt": 1200,
    "capaciteit_bron": "TVEL/Rosatom: nameplate indicatief ~1.200 t HM/j — draagt de VVER-brandstofexport naar Midden-Europa (Paks/Dukovany/Kozloduy/Mochovce) [B30]",
-   "coord_bron": "Wikipedia-geohack Machinery-Building Plant Elektrostal; geen satellietblik deze ronde",
-   "status": "onzeker",
+   "coord_bron": "was 55.7833/38.4333 (Wikipedia-geohack, onzeker) — M31 golf 20 (2026-11-01): gelijkgetrokken met het keten-anker u-elemash (TVEL Elemash Machine-Building Plant, laadplek, bron-gelegd; gedeeld door uranium-elektrostal-paks en uranium-elektrostal-xiapu; 3,4 km verschoven)",
+   "status": "bron-gelegd",
    "notitie": "Draagt letterlijk de VVER-brandstof-lock-in in Midden-Europa: Rusland levert splijtstof voor zijn eigen reactorontwerpen — Westinghouse kwalificeert nu VVER-brandstof om die lock-in te breken."
   }
  ],

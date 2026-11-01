@@ -105,7 +105,7 @@ door elkaar lopen — vandaar "indicatief" bij elke losse site).
 | w-framatome-lingen | Framatome/ANF Lingen | Duitsland | splijtstoffabricage | 52.4804, 7.3315 | ~800 t HM/j indicatief [B29] | bron-gelegd (M31 golf 16: gelijkgetrokken met keten-anker u-lingen-anf; was 52.5167, 7.3167 geohack) |
 | w-westinghouse-springfields | Westinghouse Springfields | VK | splijtstoffabricage | 53.7775, -2.8081 | ~700 t HM/j indicatief [B27] | bron-gelegd (M31 golf 19: gelijkgetrokken met het keten-anker van uranium-springfields-gronau; was 53.7500, -2.8000 geohack) |
 | w-tvel-novosibirsk | TVEL Novosibirsk (NZHK) | Rusland | splijtstoffabricage | 54.9667, 82.8833 | ~1.200 t HM/j indicatief [B30] | onzeker |
-| w-tvel-elektrostal | TVEL Elektrostal (MSZ) | Rusland | splijtstoffabricage | 55.7833, 38.4333 | ~1.200 t HM/j indicatief, VVER-lock-in [B30] | onzeker |
+| w-tvel-elektrostal | TVEL Elektrostal (MSZ) | Rusland | splijtstoffabricage | 55.7875, 38.4875 | ~1.200 t HM/j indicatief, VVER-lock-in [B30] | bron-gelegd (M31 golf 20: gelijkgetrokken met keten-anker u-elemash; was 55.7833, 38.4333 geohack) |
 
 ## Buiten scope / zonder gewicht (9)
 
