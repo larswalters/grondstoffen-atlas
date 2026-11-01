@@ -2581,3 +2581,12 @@ Commits `162560b` (guards) · `c9f56ce` (voeg_been_toe) · `1b78556` (de stroom)
 - **Volumes:** leesagent → `golf19.json` (0 bron, 18 indicatie, 16 onbekend) → totaal 70/396/61 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 151; desktop + 375 px 0 fouten.
 - **Lessen:** bakhandleiding §19. Kosten: week 12 → 21%.
 - **Volgende:** telefoontest `?v=151` · golf 20 klein uit 6 reserves of een vierde grote ronde · `voeg_sites_toe.py --schrijf` na elke gelijktrekking · 61 onbekende volumes · w-zimplats-ngezi en w-grib.
+
+## 2026-11-01 — M31 golf 20: vierde grote ontwerpronde (3 per grondstof) zonder kobalt, 558 stromen live `?v=152`
+
+**TL;DR:** Lars: *"Doe nog maar een ontwerpronde … geen sessielimiet meer"*. `maak_golf20.py` = golf 19-patroon + 6 reserves in de prompts. `wf_d0405c03-c2f`: 119 agenten op Sonnet, 22,9 M tokens, 111 min, 0 uitval, 31/31 gebakken en gekeurd; 7 reserves → `golf21-reserves.json` (13 klaar). Live https://larswalters.github.io/grondstoffen-atlas/v2/?v=152 (commit `6cdc50c`), bundel 558 stromen · 1.985 benen · 1.827 markers · 467 met volume. LAR-664 Done; poort = telefoontest.
+
+- **Centraal:** `centraal_check.py` 31/31, 3 vlaggen (tot 405 KB); `kolen-cg` → `kolen-cgg`; sitelaag: w-tvel-elektrostal gelijkgetrokken + `voeg_sites_toe.py` uranium; 31 noten; gedeelde tools schoon.
+- **Volumes:** leesagent → `golf20.json` (2 bron, 13 indicatie, 16 onbekend) → totaal 72/409/77 → bundel, `bundel-check` ok; `CODE_VERSIE` + `BUNDEL_VERSIE` 152; desktop + 375 px 0 fouten.
+- **Signaal:** opbrengst per ronde daalt (grafiet/pgm/lithium 1) → volgende golf eerst de 13 reserves, dan `MAXP = 2`. Bakhandleiding §20. Kosten: week 21 → 30%.
+- **Volgende:** telefoontest `?v=152` · golf 21 klein uit 13 reserves · 77 onbekende volumes · w-zimplats-ngezi en w-grib · driftcheck als repo-tool.

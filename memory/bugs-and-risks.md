@@ -1,5 +1,14 @@
 # Bugs & risks — Grondstoffen Atlas
-*Last updated: 2026-10-31 (4e) (M31 golf 19, live `?v=151`)*
+*Last updated: 2026-11-01 (M31 golf 20, live `?v=152`)*
+
+
+## 🔴 NIEUW 2026-11-01 — uit M31 golf 20
+
+97. **De opbrengst per ontwerpronde daalt:** golf 20 koos 31 van 39 (grafiet, pgm, lithium 1), de toets wees 33 van 65 af; de nieuwe ketens zijn vaker aannemelijk-op-één-bron, historisch of contractstroom. Drie per grondstof is bij die drie grondstoffen uitgeput; eerst de 13 reserves, dan `MAXP = 2`.
+98. **Volumes van golf 20: 2 bron, 13 indicatie, 16 onbekend** — diamant alleen in USD (drie lijnen), capaciteiten en groepstotalen bij olie/gas/nikkel/zilver. Totaal 77 onbekend van 558. Port Hope → Rokkasho staat op "bron" voor één zending (423 t U, okt 2025) — strikt genomen geen jaarvolume.
+99. **Geërfde terugloop-knikken in kopieën** (diamant-dubai-newyork b3 uit diamant-mumbai-newyork; dubai-hongkong b3; sorowako b1): niet hersteld; wie de moederstroom herstelt, hoort de kopieën mee te nemen.
+100. **Historische of eenmalige lijnen op de bol (golf 20):** ree-whitemesa-sillamae (gestopt 2024), uranium-elektrostal-xiapu (eenmalig 2022), pgm-tharisa-marikana (vervalt 1-1-2027), uranium-porthope-rokkasho (één zending na 11 jaar). Peiljaar in de noot en het volume.
+
 
 
 ## 🔴 NIEUW 2026-10-31 (4e) — uit M31 golf 19

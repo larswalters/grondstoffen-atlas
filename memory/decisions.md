@@ -1,5 +1,14 @@
 # Decisions — Grondstoffen Atlas
-*Last updated: 2026-10-31 (4e) (M31 golf 19, live `?v=151`)*
+*Last updated: 2026-11-01 (M31 golf 20, live `?v=152`)*
+
+
+## 2026-11-01 — M31 golf 20: vierde grote ontwerpronde
+
+- **2026-11-01 · ✅ LARS — "Doe nog maar een ontwerpronde, ik zie namelijk ook geen sessielimiet meer, alleen nog week- en Fable-limiet"** (week 21%). → golf 20, 31 ketens, live `?v=152`; 13 reserves klaar.
+- **2026-11-01 · Volgende golf eerst de reserves, daarna `MAXP = 2`:** de opbrengst van drie per grondstof daalt (grafiet, pgm en lithium nog 1; 33 van 65 afgewezen), een reserve-golf is de goedkope golf.
+- **2026-11-01 · Opvolger-lijnen van dezelfde mijn mogen naast elkaar** (Tharisa → Marikana tot 2027, Tharisa → Waterval vanaf 2027); tijdsvolgorde in de noten, peiljaar in het volume.
+- **2026-11-01 · De sitelaag-regel blijft strikt:** een satelliet-gelegde site blijft staan ook als het keten-anker 6–8 km verderop op een ander deel van het complex ligt (POSCO Pohang, Sorowako); alleen een onzekere site tegenover een bron-gelegd anker van dezelfde faciliteit wordt gelijkgetrokken (Elektrostal).
+
 
 
 ## 2026-10-31 (4e) — M31 golf 19: derde grote ontwerpronde

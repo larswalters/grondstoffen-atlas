@@ -1,11 +1,20 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-11-01 (telefoontest `?v=151` goed; golf 19 af)*
+*Last updated: 2026-11-01 (2e) (M31 golf 20 live `?v=152`; poort = telefoontest)*
 
 
-## 🔴 NIEUW 2026-10-31 (5e) — na M31 golf 19 live
+## 🔴 NIEUW 2026-11-01 — na M31 golf 20 live
+
+1. **Lars test `?v=152` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=152 — 31 nieuwe ketens (o.a. POSCO Pohang → Warren, Sorowako → Clydach, Cuba → Yangtze, Serra Verde → Silmet, Elektrostal → Xiapu, Port Hope → Rokkasho, Ruby Pipeline, Line 5, Carmichael → Godda, Ok Tedi → Port Moresby, drie diamantlijnen, Didipio → ABC Refinery). Goed → golf 20 af.
+2. **Golf 21 (klein) uit de 13 reserves** (golf20-reserves.json: zilver-endeavor-adelaide, gas-inkoo-kiili, olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul · golf21-reserves.json: kolen-baganuur-ulaanbaatartpp4, gas-khormor-erbil, gas-beineu-shymkent, olie-shaybah-abqaiq, olie-ekofisk-teesside, goud-haile-northattleborough, goud-westwood-northattleborough; `maak_golf18.py`-patroon, ~40 agenten, ~3% week). Daarna pas een ontwerpronde, met `MAXP = 2` of een plafond per grondstof (bakhandleiding §20: grafiet/pgm/lithium leveren bij 3 niets meer).
+3. **Checklist blijft:** na elke sitelaag-gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel` + driftcheck design ↔ gloednodes (als repo-tool vastleggen).
+4. **De 77 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; simplify-stap voor bronbestanden > 500 KB; diamant-mumbai-newyork b3 (moederstroom van de twee terugloop-knikken) herstellen en de kopieën meenemen.
+5. **Open bevindingen golf 20 (geen actie, wel weten):** Port Hope → Rokkasho via Montréal/Panama botst met een bron uit 2007 (westkust); Elektrostal → Xiapu eenmalig (2022); White Mesa → Silmet gestopt na 2023; Sharara → Zawiya laatste 100 km stippel; Pohang-leverfabriek en havens aannames; Saindak-corridor niet gebrond; Hamilton ontbreekt in de kolen-sitelaag.
+
+
+## 🟢 2026-10-31 (5e) — AFGEHANDELD (golf 20 gedraaid) — na M31 golf 19 live
 
 1. ~~Lars test `?v=151` op de telefoon~~ ✅ 2026-11-01 "Ziet er goed uit op de telefoon" → golf 19 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=151 — 34 nieuwe ketens (o.a. Chedde → Seadrift, Luleå → Himeji, Rio Tuba → Hachinohe, Ganzhou → Florence KY, Zhaobao → Leduc, Tharisa → Waterval, Pilgangoora → Morowali, Pirquitas → Buenos Aires, Stockton → Lyttelton, Tricastin → Lingen, Maghreb-Europa omgekeerd, Goldfields Gas, Tangguh → Putian, Uzen → Samara, Forties, RRP, Gaborone → Dubai, Macraes → Perth Mint, Cerro Verde → Huelva) én de 12 geregenereerde gloedsites. Goed → golf 19 af.
-2. **Golf 20:** klein uit de 6 reserves (`golf20-reserves.json`: zilver-endeavor-adelaide, gas-inkoo-kiili (Balticconnector), olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul; `maak_golf18.py`-patroon, ~18 agenten) of een vierde grote ontwerpronde (`maak_golf19.py`-patroon uit `golf19-script.mjs` + `golf19-resultaat.json`).
+2. ~~**Golf 20:** klein uit de 6 reserves of een vierde grote ontwerpronde~~ ✅ 2026-11-01 golf 20 werd een vierde grote ronde (119 agenten, 111 min, 31/31, live `?v=152`); de 6 reserves blijven liggen.
 3. **Checklist-regel:** na elke sitelaag-gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel`, en de driftcheck design ↔ gloednodes (bakhandleiding §19) draaien.
 4. **De 61 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; overweeg een simplify-stap voor bronbestanden > 500 KB (chedde-seadrift 1.053 KB).
 5. **Open bevindingen golf 19 (geen actie, wel weten):** Luleå-anker onzeker (9 km van een marina-anker elders); Hachinohe-kade niet gelegd; Hyuga → Shunan 27,8% stippel; Maghreb-Europa-leiding Tanger → Taza uit 4 OSM-knopen; Springfields-lijn bestaat sinds eind 2014 niet meer (historisch); Port Kavkaz-veerboot niet meer in dienst; Epsilon Brunswick County nog niet gebouwd; twee terugloop-lussen in uranium-tricastin-lingen.

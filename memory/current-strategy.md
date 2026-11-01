@@ -1,5 +1,15 @@
 # Current strategy — Grondstoffen Atlas
-*Last updated: 2026-10-31 (4e) (M31 golf 19, derde grote ontwerpronde zonder kobalt, live `?v=151`: 527 stromen)*
+*Last updated: 2026-11-01 (M31 golf 20, vierde grote ontwerpronde zonder kobalt, live `?v=152`: 558 stromen)*
+
+
+## Stand 2026-11-01 — M31 golf 20 live: 558 stromen (`?v=152`)
+
+- **Op de bol (`?v=152`, commit `6cdc50c`):** 31 nieuwe ketens, 527 → 558, over 13 grondstoffen (ree/zilver/kolen/uranium/gas/olie/diamant/goud 3, nikkel/koper 2, grafiet/pgm/lithium 1; kobalt overgeslagen). Bundel 558 stromen · 1.985 benen · 583 stippel · 1.827 markers · 451 sites · **467 met volume**; desktop + 375 px 558/558, 0 fouten. Informatietextuur 4.096 (bundel 1.985).
+- **Hoe:** `v2/tools/golf/maak_golf20.py` = golf 19-patroon uit `golf19-script.mjs` + `golf19-resultaat.json` (25 afgewezen assen met reden) + `golf20-reserves.json` (6 reserves als niet-opnieuw-ontwerpen). `wf_d0405c03-c2f`: 119 agenten op Sonnet, 22,9 M tokens, 111 min, 0 uitval, 31/31 gebakken en gekeurd (5 goed, 26 met bevindingen); 31 van 39 gekozen, 33 in de toets afgewezen. **7 reserves in `golf21-reserves.json`; met de 6 van golf 19: 13 klaar** (golf20-reserves.json: zilver-endeavor-adelaide, gas-inkoo-kiili, olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul · golf21-reserves.json: kolen-baganuur-ulaanbaatartpp4, gas-khormor-erbil, gas-beineu-shymkent, olie-shaybah-abqaiq, olie-ekofisk-teesside, goud-haile-northattleborough, goud-westwood-northattleborough).
+- **Signaal (bakhandleiding §20):** de opbrengst per ontwerpronde daalt — grafiet, pgm en lithium kozen nog maar één as, de toets wees 33 van 65 af. **Volgende golf eerst de 13 reserves** (reserve-golf ~40 agenten, ~0,48 M tokens per keten), daarna een ontwerpronde met `MAXP = 2` of een plafond per grondstof.
+- **Centraal:** `centraal_check.py` 31/31, 3 vlaggen (eunice-richland 405 KB, elektrostal-xiapu 393 KB, whitemesa-sillamae 356 KB); `kolen-cg` → `kolen-cgg`; sitelaag 10 kandidaten, w-tvel-elektrostal (3,4 km) gelijkgetrokken + `voeg_sites_toe.py --grondstof uranium --schrijf` (§19-regel, drift 0; POSCO Pohang en Sorowako bewust niet: site zelf satelliet-gelegd); 31 noten; gedeelde tools schoon (841 toegevoegde regels, 0 verwijderd, 0 letterlijke `\n`). Opvolger-lijnen van dezelfde mijn naast elkaar (Tharisa → Marikana tot 2027, → Waterval vanaf 2027).
+- **Volumes:** leesagent → `v2/design/volumes/golf20.json` (2 bron, 13 indicatie, 16 onbekend) → totaal 72 bron / 409 indicatie / 77 onbekend → `bundel`, `bundel-check` ok. Kosten: week 21 → 30% (Fable 14 → 20%); op Ultra geen 5-uursvenster meer.
+- **Poort:** telefoontest van Lars `?v=152`.
 
 
 ## Stand 2026-10-31 (4e) — M31 golf 19 live: 527 stromen (`?v=151`)
