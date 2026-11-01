@@ -1,10 +1,10 @@
 # Next actions — Grondstoffen Atlas
-*Last updated: 2026-11-01 (2e) (M31 golf 20 live `?v=152`; poort = telefoontest)*
+*Last updated: 2026-11-01 (3e) (telefoontest `?v=152` goed; golf 20 af)*
 
 
 ## 🔴 NIEUW 2026-11-01 — na M31 golf 20 live
 
-1. **Lars test `?v=152` op de telefoon:** https://larswalters.github.io/grondstoffen-atlas/v2/?v=152 — 31 nieuwe ketens (o.a. POSCO Pohang → Warren, Sorowako → Clydach, Cuba → Yangtze, Serra Verde → Silmet, Elektrostal → Xiapu, Port Hope → Rokkasho, Ruby Pipeline, Line 5, Carmichael → Godda, Ok Tedi → Port Moresby, drie diamantlijnen, Didipio → ABC Refinery). Goed → golf 20 af.
+1. ~~Lars test `?v=152` op de telefoon~~ ✅ 2026-11-01 "Ziet er goed uit" → golf 20 af. (Was: https://larswalters.github.io/grondstoffen-atlas/v2/?v=152 — 31 nieuwe ketens (o.a. POSCO Pohang → Warren, Sorowako → Clydach, Cuba → Yangtze, Serra Verde → Silmet, Elektrostal → Xiapu, Port Hope → Rokkasho, Ruby Pipeline, Line 5, Carmichael → Godda, Ok Tedi → Port Moresby, drie diamantlijnen, Didipio → ABC Refinery). Goed → golf 20 af.
 2. **Golf 21 (klein) uit de 13 reserves** (golf20-reserves.json: zilver-endeavor-adelaide, gas-inkoo-kiili, olie-stabroek-rotterdam, diamant-gaborone-ramatgan, diamant-gaborone-hongkong, goud-copler-istanbul · golf21-reserves.json: kolen-baganuur-ulaanbaatartpp4, gas-khormor-erbil, gas-beineu-shymkent, olie-shaybah-abqaiq, olie-ekofisk-teesside, goud-haile-northattleborough, goud-westwood-northattleborough; `maak_golf18.py`-patroon, ~40 agenten, ~3% week). Daarna pas een ontwerpronde, met `MAXP = 2` of een plafond per grondstof (bakhandleiding §20: grafiet/pgm/lithium leveren bij 3 niets meer).
 3. **Checklist blijft:** na elke sitelaag-gelijktrekking `voeg_sites_toe.py --grondstof <gs> --schrijf` vóór `bundel` + driftcheck design ↔ gloednodes (als repo-tool vastleggen).
 4. **De 77 onbekende volumes** alleen met bronwerk; `w-zimplats-ngezi` en `w-grib` nakijken; simplify-stap voor bronbestanden > 500 KB; diamant-mumbai-newyork b3 (moederstroom van de twee terugloop-knikken) herstellen en de kopieën meenemen.

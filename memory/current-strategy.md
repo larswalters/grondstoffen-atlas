@@ -9,7 +9,7 @@
 - **Signaal (bakhandleiding §20):** de opbrengst per ontwerpronde daalt — grafiet, pgm en lithium kozen nog maar één as, de toets wees 33 van 65 af. **Volgende golf eerst de 13 reserves** (reserve-golf ~40 agenten, ~0,48 M tokens per keten), daarna een ontwerpronde met `MAXP = 2` of een plafond per grondstof.
 - **Centraal:** `centraal_check.py` 31/31, 3 vlaggen (eunice-richland 405 KB, elektrostal-xiapu 393 KB, whitemesa-sillamae 356 KB); `kolen-cg` → `kolen-cgg`; sitelaag 10 kandidaten, w-tvel-elektrostal (3,4 km) gelijkgetrokken + `voeg_sites_toe.py --grondstof uranium --schrijf` (§19-regel, drift 0; POSCO Pohang en Sorowako bewust niet: site zelf satelliet-gelegd); 31 noten; gedeelde tools schoon (841 toegevoegde regels, 0 verwijderd, 0 letterlijke `\n`). Opvolger-lijnen van dezelfde mijn naast elkaar (Tharisa → Marikana tot 2027, → Waterval vanaf 2027).
 - **Volumes:** leesagent → `v2/design/volumes/golf20.json` (2 bron, 13 indicatie, 16 onbekend) → totaal 72 bron / 409 indicatie / 77 onbekend → `bundel`, `bundel-check` ok. Kosten: week 21 → 30% (Fable 14 → 20%); op Ultra geen 5-uursvenster meer.
-- **Poort:** telefoontest van Lars `?v=152`.
+- **✅ Telefoontest Lars `?v=152` goed (2026-11-01, "Ziet er goed uit") → golf 20 af.**
 
 
 ## Stand 2026-10-31 (4e) — M31 golf 19 live: 527 stromen (`?v=151`)
